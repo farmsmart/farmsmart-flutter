@@ -5,5 +5,11 @@ jobs:
       - image: cirrusci/flutter
     steps:
       - checkout
-      - run: flutter doctor
-      - run: flutter test 
+
+      - run: 
+          name: Check flutter status
+          command: flutter doctor
+
+      - run: 
+          name: Run Flutter tests.
+          command: flutter test 
