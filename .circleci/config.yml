@@ -5,12 +5,5 @@ jobs:
       - image: cirrusci/flutter
     steps:
       - checkout
-
-      - run: 
-          name: Check flutter status
-          command: flutter doctor
-
-      - run: 
-          name: Run Flutter tests.
-          command: |
-            echo TODO flutter test
+      - run: flutter doctor
+      - run: flutter test 
