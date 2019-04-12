@@ -1,15 +1,14 @@
 
 // Define here the general app colours.
 
-// TODO Add app real colours.
+const primaryColour = 0xFF9CBD3A; // App's classic green
 
 const black = 0xFF000000;
-const primaryGrey = 0xFFFAFAFA;
+const primaryGrey = 0xFF757575; // Used on top bar
+const primaryGreyDark = 0xFF444444; // Used on title text
+
 const primaryWhite = 0xFFFFFFFF;
 const primaryDarkGrey = 0xFF999999;
 
-const backgroundColor = 0xFFF0F0F0;
+const backgroundColor = 0xFFFFFFFF; // White
 
-const titleBlack = 0xFF1B1B34;
-const subtitleGrey = 0xFF4C4C6D;
-const footerGrey = 0xFF9B9BAD;
