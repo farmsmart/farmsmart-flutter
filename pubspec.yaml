@@ -49,6 +49,17 @@ flutter:
   - assets/raw/community_mock.png
   - assets/raw/profit_mock.png
 
+  - assets/icons/app_icon_v2.png
+  - assets/icons/app_icon.png
+  - assets/icons/community_selected.png
+  - assets/icons/community.png
+  - assets/icons/discover_selected.png
+  - assets/icons/discover.png
+  - assets/icons/my_plot_selected.png
+  - assets/icons/my_plot.png
+  - assets/icons/profit_loss_selected.png
+  - assets/icons/profit_loss.png
+
   # To add assets to your application, add an assets section, like this:
   # assets:
   #  - images/a_dot_burr.jpeg
