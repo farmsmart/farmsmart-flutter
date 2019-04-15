@@ -17,3 +17,5 @@ abstract class Margins {
     return EdgeInsets.only(left: 10);
   }
 }
+
+const double bottomBarIconSize = 30.0;

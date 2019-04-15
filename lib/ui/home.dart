@@ -5,6 +5,7 @@ import 'package:farmsmart_flutter/ui/home_viewmodel.dart';
 import 'package:farmsmart_flutter/ui/myplot/my_plot_child.dart';
 import 'package:farmsmart_flutter/ui/profitloss/profit_loss_child.dart';
 import 'package:farmsmart_flutter/utils/colors.dart';
+import 'package:farmsmart_flutter/utils/dimens.dart';
 import 'package:farmsmart_flutter/utils/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -44,7 +45,7 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Widget content(HomeViewmodel viewmodel) {
+  Widget content(HomeViewmodel viewModel) {
     return Scaffold(
         appBar: AppBar(
           title: Text(Strings.appTitle),
@@ -52,26 +53,31 @@ class _HomeState extends State<Home> {
         body: _children[viewmodel.currentTab],
         bottomNavigationBar: Theme(
           data: Theme.of(context).copyWith(
-            canvasColor: const Color(primaryColour),
+            primaryColor: Color(primaryGreen)
           ),
           child: BottomNavigationBar(
-            onTap: viewmodel.changeTab,
-            currentIndex: viewmodel.currentTab,
+            type: BottomNavigationBarType.fixed,
+            onTap: viewModel.changeTab,
+            currentIndex: viewModel.currentTab,
             items: [
               BottomNavigationBarItem(
-                icon: Icon(Icons.event_available),
+                activeIcon: Image.asset("assets/icons/my_plot_selected.png", height: bottomBarIconSize),
+                icon: Image.asset("assets/icons/my_plot.png", height: bottomBarIconSize),
                 title: Text(Strings.myPlotTab),
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.attach_money),
+                activeIcon: Image.asset("assets/icons/profit_loss_selected.png", height: bottomBarIconSize),
+                icon: Image.asset("assets/icons/profit_loss.png", height: bottomBarIconSize),
                 title: Text(Strings.profitLossTab),
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.map),
+                activeIcon: Image.asset("assets/icons/discover_selected.png", height: bottomBarIconSize),
+                icon: Image.asset("assets/icons/discover.png", height: bottomBarIconSize),
                 title: Text(Strings.articlesTab),
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.accessibility),
+                activeIcon: Image.asset("assets/icons/community_selected.png", height: bottomBarIconSize),
+                icon: Image.asset("assets/icons/community.png", height: bottomBarIconSize),
                 title: Text(Strings.communityTab),
               ),
             ],

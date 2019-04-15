@@ -13,7 +13,7 @@ abstract class Styles {
   }
 
   static TextStyle footerTextStyle() {
-    return TextStyle(fontSize: 13, color: Color(primaryDarkGrey));
+    return TextStyle(fontSize: 12, color: Color(black), decorationColor: Color(primaryGreen));
   }
 
 }
