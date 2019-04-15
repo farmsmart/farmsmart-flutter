@@ -8,7 +8,5 @@ const primaryGrey = 0xFF757575; // Used on top bar
 const primaryGreyDark = 0xFF444444; // Used on title text
 
 const primaryWhite = 0xFFFFFFFF;
-const primaryDarkGrey = 0xFF999999;
-
 const backgroundColor = 0xFFFFFFFF; // White
 

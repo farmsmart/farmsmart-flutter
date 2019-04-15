@@ -19,3 +19,4 @@ abstract class Margins {
 }
 
 const double bottomBarIconSize = 30.0;
+const double appBarIconSize = 30.0;
