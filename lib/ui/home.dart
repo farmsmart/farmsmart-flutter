@@ -1,4 +1,5 @@
 import 'package:farmsmart_flutter/redux/app/app_state.dart';
+import 'package:farmsmart_flutter/ui/app_bar.dart';
 import 'package:farmsmart_flutter/ui/articles/articles_child.dart';
 import 'package:farmsmart_flutter/ui/community/community_child.dart';
 import 'package:farmsmart_flutter/ui/home_viewmodel.dart';
@@ -47,10 +48,8 @@ class _HomeState extends State<Home> {
 
   Widget content(HomeViewmodel viewModel) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(Strings.appTitle),
-        ),
-        body: _children[viewmodel.currentTab],
+        appBar: CustomAppBar.build(viewModel.currentTab),
+        body: _children[viewModel.currentTab],
         bottomNavigationBar: Theme(
           data: Theme.of(context).copyWith(
             primaryColor: Color(primaryGreen)
