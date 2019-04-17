@@ -12,4 +12,5 @@ jobs:
 
       - run: 
           name: Run Flutter tests.
-          command: echo 'TODO: call flutter test'
+          command: |
+            echo TODO flutter test
