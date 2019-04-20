@@ -7,7 +7,7 @@ class Strings {
 
   static String myPlotTab = "My Plot";
   static String profitLossTab = "Profit/Loss";
-  static String articlesTab = "Articles";
+  static String discoverTab = "Discover";
   static String communityTab = "Community";
 
 }
