@@ -11,6 +11,7 @@ class MyPlotMiddleWare extends MiddlewareClass<AppState>{
     if(action is FetchCropListAction) {
       final listOfCrops = await PlotRepository.get().getListOfCrops();
       listOfCrops.removeWhere((CropEntity cropEntity) => cropEntity.status == Status.DRAFT);
+      store.dispatch(UpdateCropListAction(listOfCrops));
     }
 
     next(action);

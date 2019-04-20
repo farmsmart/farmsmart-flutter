@@ -3,8 +3,10 @@
 
 class Crop {
   String id;
-  String title;
+  String name;
+  String description;
+  String stages;
 
-  Crop(this.id, this.title);
+  Crop(this.id, this.name, this.description, this.stages);
 
 }
