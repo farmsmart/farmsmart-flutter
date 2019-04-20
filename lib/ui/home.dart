@@ -1,7 +1,7 @@
 import 'package:farmsmart_flutter/redux/app/app_state.dart';
 import 'package:farmsmart_flutter/ui/app_bar.dart';
-import 'package:farmsmart_flutter/ui/articles/articles_child.dart';
 import 'package:farmsmart_flutter/ui/community/community_child.dart';
+import 'package:farmsmart_flutter/ui/discover/discover_child.dart';
 import 'package:farmsmart_flutter/ui/home_viewmodel.dart';
 import 'package:farmsmart_flutter/ui/myplot/my_plot_child.dart';
 import 'package:farmsmart_flutter/ui/profitloss/profit_loss_child.dart';
@@ -25,7 +25,7 @@ class _HomeState extends State<Home> {
   final List<Widget> _children = [
     HomeMyPlotChild(),
     HomeProfitLossChild(),
-    HomeArticlesChild(),
+    HomeDiscoverChild(),
     HomeCommunityChild()
 
     // TODO add here the 4 screens of the home
@@ -72,7 +72,7 @@ class _HomeState extends State<Home> {
               BottomNavigationBarItem(
                 activeIcon: Image.asset("assets/icons/discover_selected.png", height: bottomBarIconSize),
                 icon: Image.asset("assets/icons/discover.png", height: bottomBarIconSize),
-                title: Text(Strings.articlesTab),
+                title: Text(Strings.discoverTab),
               ),
               BottomNavigationBarItem(
                 activeIcon: Image.asset("assets/icons/community_selected.png", height: bottomBarIconSize),

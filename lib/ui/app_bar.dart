@@ -16,7 +16,7 @@ abstract class CustomAppBar {
         return buildWithTitle(Strings.profitLossTab);
         break;
       case 2: // Articles
-        return buildWithTitle(Strings.articlesTab);
+        return buildWithTitle(Strings.discoverTab);
         break;
       case 3: // Community
         return buildWithTitle(Strings.communityTab);
