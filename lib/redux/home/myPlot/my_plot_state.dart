@@ -1,3 +1,4 @@
+import 'package:farmsmart_flutter/data/model/crop_entity.dart';
 import 'package:farmsmart_flutter/model/crop.dart';
 import 'package:farmsmart_flutter/model/loading_status.dart';
 import 'package:meta/meta.dart';
@@ -9,7 +10,7 @@ class MyPlotState {
   // Atributes and functions of the my plot state
 
   final LoadingStatus loadingStatus;
-  final List<Crop> cropList;
+  final List<CropEntity> cropList;
 
   MyPlotState({@required this.loadingStatus, @required this.cropList});
 
@@ -21,7 +22,7 @@ class MyPlotState {
   }
 
   // Helper method to create a similar (or equal state) of the home state.
-  MyPlotState copyWith({LoadingStatus loadingStatus, List<Crop> cropList}) {
+  MyPlotState copyWith({LoadingStatus loadingStatus, List<CropEntity> cropList}) {
     return new MyPlotState(
         loadingStatus: loadingStatus ?? this.loadingStatus,
         cropList: cropList ?? this.cropList);
