@@ -1,6 +1,8 @@
 // Middleware in charge of act upon myPlot actions that require network data.
 
+import 'package:farmsmart_flutter/data/model/crop_entity.dart';
 import 'package:farmsmart_flutter/data/repositories/plot_repository.dart';
+import 'package:farmsmart_flutter/model/enums.dart';
 import 'package:farmsmart_flutter/redux/app/app_state.dart';
 import 'package:farmsmart_flutter/redux/home/myPlot/my_plot_actions.dart';
 import 'package:redux/redux.dart';

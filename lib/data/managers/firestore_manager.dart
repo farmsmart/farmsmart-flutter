@@ -14,7 +14,15 @@ class FireStoreManager {
 
   Future<List<CropEntity>> getCrops() async {
     List<CropEntity> cropsEntities;
-    await Firestore.instance.collection('fl_content').getDocuments().then((snapshot)  {
+
+    // Filters defined by product definition.
+    var query = Firestore.instance.collection('fl_content')
+        .where('_fl_meta_.schema', isEqualTo: 'crop')
+        .where('_fl_meta_.env', isEqualTo: 'production')
+        .where('_fl_meta_.locale', isEqualTo: 'en-US')
+        .where('status', isEqualTo: 'PUBLISHED');
+
+    await query.getDocuments().then((snapshot)  {
       cropsEntities = snapshot.documents.map((cropDocument) {
         return CropEntity.cropFromDocument(cropDocument);
       }).toList();
