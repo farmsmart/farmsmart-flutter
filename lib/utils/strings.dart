@@ -10,4 +10,8 @@ class Strings {
   static String discoverTab = "Discover";
   static String communityTab = "Community";
 
+  static String myPlotCurrentStagesMOCK = "Stages 1 of 6";
+  static String myPlotCurrentStage = "CURRENT STAGE";
+  static String myPlotDetails = "DETAILS";
+
 }

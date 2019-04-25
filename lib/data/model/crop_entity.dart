@@ -9,7 +9,8 @@ class CropEntity {
   String content;
   List<String> cropsInRotation;
   CropType cropType;
-  String image; // TODO Update when images are needed
+  String imagePathReference;
+  String imagePath;
   String name;
   List<String> nonCompanionPlants;
   LoHi profitability;
@@ -26,7 +27,8 @@ class CropEntity {
     this.content,
     this.cropsInRotation,
     this.cropType,
-    this.image,
+    this.imagePathReference,
+    this.imagePath,
     this.name,
     this.nonCompanionPlants,
     this.profitability,
@@ -38,27 +40,14 @@ class CropEntity {
     this.waterRequirement,
   });
 
-//  CropEntity.cropFromDocument(DocumentSnapshot cropDocument) {
-//    summary = cropDocument.data["summary"];
-//    imagePath = getImageFromPath(cropDocument.data["image"]);
-//    relatedArticles = cropDocument.data["relatedArticles"]
-//        .toString(); // TODO Treated as a string until we need to develop articles
-//    id = cropDocument.data["id"];
-//    title = cropDocument.data["title"];
-//    content = cropDocument.data["content"];
-//    status = Status.values.firstWhere(
-//        (value) => value.toString() == "Status." + cropDocument.data["status"],
-//        orElse: () => null); // Tricky but didnt find another solution
-//  }
-
-
   factory CropEntity.cropFromDocument(DocumentSnapshot cropDocument) => new CropEntity(
     companionPlants: cropDocument.data["companionPlants"] == null ? null : new List<String>.from(cropDocument.data["companionPlants"].map((x) => x)),
     complexity: cropDocument.data["complexity"] == null ? null : begAdvValues.map[cropDocument.data["complexity"]],
     content: cropDocument.data["content"],
     cropsInRotation: cropDocument.data["cropsInRotation"] == null ? null : new List<String>.from(cropDocument.data["cropsInRotation"].map((x) => x)),
     cropType: cropTypeValues.map[cropDocument.data["cropType"]],
-    image: "",
+    imagePathReference: cropDocument.data["image"].first.path,
+    imagePath: "",
     name: cropDocument.data["name"],
     nonCompanionPlants: cropDocument.data["nonCompanionPlants"] == null ? null : new List<String>.from(cropDocument.data["nonCompanionPlants"].map((x) => x)),
     profitability: cropDocument.data["profitability"] == null ? null : loHiValues.map[cropDocument.data["profitability"]],
@@ -69,15 +58,8 @@ class CropEntity {
     summary: cropDocument.data["summary"],
     waterRequirement: cropDocument.data["waterRequirement"] == null ? null : loHiValues.map[cropDocument.data["waterRequirement"]],
   );
-}
 
-
-String getImageFromPath(data) {
-  String image = "";
-  if (data != null) {
-    data[0].get().then((snapshot) {
-      image = snapshot.toString();
-    });
+  void setImagePath(String imagePath) {
+    this.imagePath = imagePath;
   }
-  return image;
 }

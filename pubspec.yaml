@@ -54,6 +54,7 @@ flutter:
   - assets/raw/articles_mock.png
   - assets/raw/community_mock.png
   - assets/raw/profit_mock.png
+  - assets/raw/crop_image_mock.png
 
   - assets/icons/community_selected.png
   - assets/icons/community.png
