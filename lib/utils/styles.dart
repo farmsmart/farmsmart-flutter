@@ -5,11 +5,11 @@ import 'package:flutter/painting.dart';
 abstract class Styles {
 
   static TextStyle titleTextStyle() {
-    return TextStyle(fontSize: 27, fontWeight: FontWeight.bold, color: Color(primaryGrey));
+    return TextStyle(fontSize: 27, fontWeight: FontWeight.normal, color: Color(black));
   }
 
   static TextStyle subtitleTextStyle() {
-    return TextStyle(fontSize: 15, color: Color(primaryGrey));
+    return TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(primaryGreen));
   }
 
   static TextStyle appBarTextStyle() {
