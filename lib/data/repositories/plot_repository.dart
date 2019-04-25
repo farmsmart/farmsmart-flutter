@@ -20,6 +20,11 @@ class PlotRepository{
     return _firestoreManager.getCrops();
   }
 
+  Future<List<CropEntity>> getListOfCropsWithImages(List<CropEntity> cropsWithoutImages) {
+    return _firestoreManager.getCropsImagePath(cropsWithoutImages);
+  }
+
+
   // Define here the case of use situations "getPlots" "getPlotDetail" and so on.
 
 }

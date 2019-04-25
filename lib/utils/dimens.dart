@@ -13,6 +13,10 @@ abstract class Margins {
     return EdgeInsets.all(21);
   }
 
+  static boxSmallPadding(){
+    return EdgeInsets.all(11);
+  }
+
   static leftPaddingSmall(){
     return EdgeInsets.only(left: 10);
   }
