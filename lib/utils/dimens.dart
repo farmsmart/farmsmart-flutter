@@ -5,16 +5,33 @@ import 'package:flutter/widgets.dart';
 
 abstract class Margins {
 
-  static SizedBox generalListMargin() {
-    return SizedBox(height: 21);
+  static SizedBox generalListBigMargin() {
+    return SizedBox(height: 20);
   }
 
+  static SizedBox generalListMargin() {
+    return SizedBox(height: 16);
+  }
+
+  static SizedBox generalListSmallMargin() {
+    return SizedBox(height: 12);
+  }
+
+  static SizedBox generalHorizontalPadding() {
+    return SizedBox(width: 16);
+  }
+
+  static boxBigPadding(){
+    return EdgeInsets.all(20);
+  }
+
+
   static boxPadding(){
-    return EdgeInsets.all(21);
+    return EdgeInsets.all(16);
   }
 
   static boxSmallPadding(){
-    return EdgeInsets.all(11);
+    return EdgeInsets.all(12);
   }
 
   static leftPaddingSmall(){
