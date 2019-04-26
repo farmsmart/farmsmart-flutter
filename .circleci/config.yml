@@ -10,6 +10,6 @@ jobs:
           name: Check flutter status
           command: flutter doctor
 
-      - run: 
-          name: Run Flutter tests.
-          command: flutter test 
+#      - run:
+#          name: Run Flutter tests.
+#          command: flutter test
