@@ -5,7 +5,6 @@ jobs:
       - image: cirrusci/flutter
     steps:
       - checkout
-<<<<<<< HEAD
 
       - run: 
           name: Check flutter status
@@ -14,7 +13,3 @@ jobs:
 #      - run:
 #          name: Run Flutter tests.
 #          command: flutter test
-=======
-      - run: flutter doctor
-      - run: flutter test 
->>>>>>> [FARM-170] Add Circle CI config file
