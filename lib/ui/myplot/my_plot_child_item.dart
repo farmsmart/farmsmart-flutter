@@ -22,9 +22,12 @@ class MyPlotListItem {
                   topLeft: Radius.circular(8.0),
                   topRight: Radius.circular(8.0),
                 ),
-//                      child: FadeInImage.assetNetwork(image: cropsData.imagePath, placeholder: 'assets/raw/crop_image_mock.png', fit: BoxFit.cover),
-                child: Image.asset('assets/raw/crop_image_mock.png',
-                    fit: BoxFit.cover),
+                child: FadeInImage.assetNetwork(
+                    image: cropsData.imageUrl,
+                    height: listImageHeight,
+                    width: listImageWidth,
+                    placeholder: 'assets/raw/crop_image_mock.png',
+                    fit: BoxFit.fitWidth),
               ),
               Padding(
                   padding: Margins.boxBigPadding(),

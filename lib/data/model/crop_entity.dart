@@ -10,7 +10,7 @@ class CropEntity {
   List<String> cropsInRotation;
   CropType cropType;
   String imagePathReference;
-  String imagePath;
+  String imageUrl;
   String name;
   List<String> nonCompanionPlants;
   LoHi profitability;
@@ -28,7 +28,7 @@ class CropEntity {
     this.cropsInRotation,
     this.cropType,
     this.imagePathReference,
-    this.imagePath,
+    this.imageUrl,
     this.name,
     this.nonCompanionPlants,
     this.profitability,
@@ -47,7 +47,7 @@ class CropEntity {
     cropsInRotation: cropDocument.data["cropsInRotation"] == null ? null : new List<String>.from(cropDocument.data["cropsInRotation"].map((x) => x)),
     cropType: cropTypeValues.map[cropDocument.data["cropType"]],
     imagePathReference: cropDocument.data["image"].first.path,
-    imagePath: "",
+    imageUrl: "",
     name: cropDocument.data["name"],
     nonCompanionPlants: cropDocument.data["nonCompanionPlants"] == null ? null : new List<String>.from(cropDocument.data["nonCompanionPlants"].map((x) => x)),
     profitability: cropDocument.data["profitability"] == null ? null : loHiValues.map[cropDocument.data["profitability"]],
@@ -59,7 +59,10 @@ class CropEntity {
     waterRequirement: cropDocument.data["waterRequirement"] == null ? null : loHiValues.map[cropDocument.data["waterRequirement"]],
   );
 
-  void setImagePath(String imagePath) {
-    this.imagePath = imagePath;
+  /*
+   ## Image url is referenced from Firebase Storage, thus, needs to be deducted from firestore's Document, asynchronously and then saved.
+   */
+  void setImageUrl(String imageUrl) {
+    this.imageUrl = imageUrl;
   }
 }

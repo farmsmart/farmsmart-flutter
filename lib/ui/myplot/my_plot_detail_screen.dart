@@ -40,13 +40,18 @@ class _CropDetailState extends State<CropDetailScreen> {
                 borderRadius: BorderRadius.circular(8.0),
               ),
               child: ListView(children: <Widget>[
-                Image.asset('assets/raw/crop_image_mock.png', fit: BoxFit.cover),
+                FadeInImage.assetNetwork(
+                    image: selectedCropData.imageUrl,
+                    height: listImageHeight,
+                    width: listImageWidth,
+                    placeholder: 'assets/raw/crop_image_mock.png',
+                    fit: BoxFit.fitWidth),
                 Padding(
-                    padding: Margins.boxPadding(),
+                    padding: Margins.boxBigPadding(),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Text(selectedCropData.summary, style: Styles.titleTextStyle()),
+                        Text(selectedCropData.summary, style: Styles.descriptionTextStyle()),
                         Margins.generalListMargin(),
                         Html(data: selectedCropData.content),
                       ],
