@@ -7,12 +7,15 @@ import 'package:redux/redux.dart';
 class MyPlotViewModel {
   LoadingStatus loadingStatus;
   final List<CropEntity> cropsList;
+  final CropEntity selectedCrop;
+
 
   final Function fetchCrops;
   final Function(CropEntity cropData) goToDetail;
 
   MyPlotViewModel({this.loadingStatus,
     this.cropsList,
+    this.selectedCrop,
     this.fetchCrops,
     this.goToDetail});
 
@@ -20,6 +23,8 @@ class MyPlotViewModel {
     return MyPlotViewModel(
         loadingStatus: store.state.myPlotState.loadingStatus,
         cropsList: store.state.myPlotState.cropList,
+        selectedCrop: store.state.myPlotState.selectedCrop,
+        goToDetail: (CropEntity crop) => store.dispatch(GoToCropDetailAction(crop)),
         fetchCrops: () =>
             store.dispatch(new FetchCropListAction())
     );
