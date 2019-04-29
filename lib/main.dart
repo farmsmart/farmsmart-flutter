@@ -19,7 +19,7 @@ void main() async{
     DeviceOrientation.portraitUp,
   ]);
 
-  debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
+  debugDefaultTargetPlatformOverride = TargetPlatform.android;
   var store = await createStore();
   runApp(new FarmsmartApp(store));
 }
@@ -28,7 +28,6 @@ class FarmsmartApp extends StatefulWidget {
   final Store<AppState> store;
   FarmsmartApp(this.store);
 
-  // Async Creation of the App State
   @override
   _AppState createState() => _AppState();
 }
