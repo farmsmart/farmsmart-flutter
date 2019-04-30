@@ -25,13 +25,13 @@ class HomeViewmodel {
         loadingStatus: store.state.homeState.loadingStatus,
         currentTab: store.state.homeState.currentHomeTab,
         showMyPlotChild: () =>
-            store.dispatch(new SwitchTabAction(HomeScreen.MY_PLOT_TAB)),
+            store.dispatch(SwitchTabAction(HomeScreen.MY_PLOT_TAB)),
         showProfitLossChild: () =>
-            store.dispatch(new SwitchTabAction(HomeScreen.PROFIT_LOSS_TAB)),
+            store.dispatch(SwitchTabAction(HomeScreen.PROFIT_LOSS_TAB)),
         showArticlesChild: () =>
-            store.dispatch(new SwitchTabAction(HomeScreen.ARTICLES_TAB)),
+            store.dispatch(SwitchTabAction(HomeScreen.ARTICLES_TAB)),
         showCommunityChild: () =>
-            store.dispatch(new SwitchTabAction(HomeScreen.COMMUNITY_TAB)));
+            store.dispatch(SwitchTabAction(HomeScreen.COMMUNITY_TAB)));
   }
 
   void changeTab(int value) {

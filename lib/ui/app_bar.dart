@@ -1,3 +1,5 @@
+import 'package:farmsmart_flutter/redux/home/screens.dart';
+import 'package:farmsmart_flutter/utils/assets.dart';
 import 'package:flutter/material.dart';
 import 'package:farmsmart_flutter/utils/strings.dart';
 import 'package:farmsmart_flutter/utils/colors.dart';
@@ -9,16 +11,16 @@ import 'package:farmsmart_flutter/utils/styles.dart';
 abstract class CustomAppBar {
   static AppBar build(int currentHomeTab) {
     switch (currentHomeTab) {
-      case 0: // MyPlot
+      case MY_PLOT_TAB:
         return buildForHome(Strings.myPlotTab, profileAction(), homeIcon() );
         break;
-      case 1: // Profit / Loss
+      case PROFIT_LOSS_TAB:
         return buildWithTitle(Strings.profitLossTab);
         break;
-      case 2: // Articles
+      case ARTICLES_TAB:
         return buildWithTitle(Strings.discoverTab);
         break;
-      case 3: // Community
+      case COMMUNITY_TAB:
         return buildWithTitle(Strings.communityTab);
         break;
     }
@@ -46,6 +48,6 @@ abstract class CustomAppBar {
   }
 
   static Widget homeIcon() {
-    return Image.asset("assets/icons/app_icon.png");
+    return Image.asset(Assets.APP_ICON);
   }
 }

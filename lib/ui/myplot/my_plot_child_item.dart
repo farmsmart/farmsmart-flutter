@@ -1,6 +1,8 @@
 import 'package:farmsmart_flutter/data/model/crop_entity.dart';
 import 'package:farmsmart_flutter/ui/myplot/my_plot_item_footer.dart';
+import 'package:farmsmart_flutter/utils/assets.dart';
 import 'package:farmsmart_flutter/utils/box_shadows.dart';
+import 'package:farmsmart_flutter/utils/colors.dart';
 import 'package:farmsmart_flutter/utils/dimens.dart';
 import 'package:farmsmart_flutter/utils/strings.dart';
 import 'package:farmsmart_flutter/utils/styles.dart';
@@ -13,7 +15,7 @@ class MyPlotListItem {
         padding: Margins.boxPadding(),
         child: Container(
             decoration: BoxDecoration(
-                color: Colors.white,
+                color: Color(white),
                 borderRadius: BorderRadius.circular(8.0),
                 boxShadow: BoxShadows.plotListItemShadow()),
             child: Column(children: <Widget>[
@@ -26,7 +28,7 @@ class MyPlotListItem {
                     image: cropsData.imageUrl,
                     height: listImageHeight,
                     width: listImageWidth,
-                    placeholder: 'assets/raw/crop_image_mock.png',
+                    placeholder: Assets.IMAGE_PLACE_HOLDER,
                     fit: BoxFit.fitWidth),
               ),
               Padding(

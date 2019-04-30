@@ -1,8 +1,6 @@
-
-
 enum CropComplexity { BEGINNER, INTERMEDIATE, ADVANCED }
 
-final begAdvValues = new EnumValues({
+final begAdvValues = EnumValues({
   "ADVANCED": CropComplexity.ADVANCED,
   "BEGINNER": CropComplexity.BEGINNER,
   "INTERMEDIATE": CropComplexity.INTERMEDIATE
@@ -10,25 +8,18 @@ final begAdvValues = new EnumValues({
 
 enum CropType { SINGLE, ROTATION }
 
-final cropTypeValues = new EnumValues({
-  "ROTATION": CropType.ROTATION,
-  "SINGLE": CropType.SINGLE
-});
+final cropTypeValues =
+    EnumValues({"ROTATION": CropType.ROTATION, "SINGLE": CropType.SINGLE});
 
 enum LoHi { LOW, MEDIUM, HIGH }
 
-final loHiValues = new EnumValues({
-  "HIGH": LoHi.HIGH,
-  "LOW": LoHi.LOW,
-  "MEDIUM": LoHi.MEDIUM
-});
+final loHiValues =
+    EnumValues({"HIGH": LoHi.HIGH, "LOW": LoHi.LOW, "MEDIUM": LoHi.MEDIUM});
 
 enum Status { DRAFT, PUBLISHED }
 
-final statusValues = new EnumValues({
-  "DRAFT": Status.DRAFT,
-  "PUBLISHED": Status.PUBLISHED
-});
+final statusValues =
+    EnumValues({"DRAFT": Status.DRAFT, "PUBLISHED": Status.PUBLISHED});
 
 class EnumValues<T> {
   Map<String, T> map;

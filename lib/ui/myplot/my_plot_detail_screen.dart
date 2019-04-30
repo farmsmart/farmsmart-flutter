@@ -1,4 +1,5 @@
 import 'package:farmsmart_flutter/data/model/crop_entity.dart';
+import 'package:farmsmart_flutter/utils/assets.dart';
 import 'package:farmsmart_flutter/utils/dimens.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -44,7 +45,7 @@ class _CropDetailState extends State<CropDetailScreen> {
                     image: selectedCropData.imageUrl,
                     height: listImageHeight,
                     width: listImageWidth,
-                    placeholder: 'assets/raw/crop_image_mock.png',
+                    placeholder: Assets.IMAGE_PLACE_HOLDER,
                     fit: BoxFit.fitWidth),
                 Padding(
                     padding: Margins.boxBigPadding(),

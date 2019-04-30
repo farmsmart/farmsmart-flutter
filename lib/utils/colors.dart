@@ -3,6 +3,7 @@
 
 const primaryGreen = 0xFF9CBD3A; // App's classic green
 
+const white = 0xFFFFFFFF;
 const black = 0xFF000000;
 const primaryGrey = 0xFF757575; // Used on top bar
 const primaryGreyLight = 0xFFDFDFDF;

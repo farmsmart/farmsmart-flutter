@@ -41,22 +41,22 @@ class CropEntity {
   });
 
   factory CropEntity.cropFromDocument(DocumentSnapshot cropDocument) => new CropEntity(
-    companionPlants: cropDocument.data["companionPlants"] == null ? null : new List<String>.from(cropDocument.data["companionPlants"].map((x) => x)),
-    complexity: cropDocument.data["complexity"] == null ? null : begAdvValues.map[cropDocument.data["complexity"]],
+    companionPlants: extractListOfString(cropDocument, "companionPlants"),
+    complexity: extractComplexity(cropDocument),
     content: cropDocument.data["content"],
-    cropsInRotation: cropDocument.data["cropsInRotation"] == null ? null : new List<String>.from(cropDocument.data["cropsInRotation"].map((x) => x)),
+    cropsInRotation: extractListOfString(cropDocument, "cropsInRotation"),
     cropType: cropTypeValues.map[cropDocument.data["cropType"]],
     imagePathReference: cropDocument.data["image"].first.path,
     imageUrl: "",
     name: cropDocument.data["name"],
-    nonCompanionPlants: cropDocument.data["nonCompanionPlants"] == null ? null : new List<String>.from(cropDocument.data["nonCompanionPlants"].map((x) => x)),
-    profitability: cropDocument.data["profitability"] == null ? null : loHiValues.map[cropDocument.data["profitability"]],
-    setupCost: cropDocument.data["setupCost"] == null ? null : loHiValues.map[cropDocument.data["setupCost"]],
-    soilType: cropDocument.data["soilType"] == null ? null : new List<String>.from(cropDocument.data["soilType"].map((x) => x)),
+    nonCompanionPlants: extractListOfString(cropDocument, "nonCompanionPlants"),
+    profitability: extractProfitability(cropDocument),
+    setupCost: extractSetupCost(cropDocument),
+    soilType: cropDocument.data["soilType"].first.path,
     stages: "",
     status: statusValues.map[cropDocument.data["status"]],
     summary: cropDocument.data["summary"],
-    waterRequirement: cropDocument.data["waterRequirement"] == null ? null : loHiValues.map[cropDocument.data["waterRequirement"]],
+    waterRequirement: extractWaterRequirements(cropDocument),
   );
 
   /*
@@ -65,4 +65,39 @@ class CropEntity {
   void setImageUrl(String imageUrl) {
     this.imageUrl = imageUrl;
   }
+}
+
+List<String> extractListOfString(DocumentSnapshot document, String valueToBeExtracted){
+  if(document.data[valueToBeExtracted] != null) {
+    return List<String>.from(document.data[valueToBeExtracted].map((x) => x));
+  }
+  return null;
+}
+
+CropComplexity extractComplexity(DocumentSnapshot document) {
+  if (document.data["complexity"] != null) {
+    return begAdvValues.map[document.data["complexity"]];
+  }
+  return null;
+}
+
+LoHi extractProfitability(DocumentSnapshot document) {
+  if (document.data["profitability"] != null) {
+    return loHiValues.map[document.data["profitability"]];
+  }
+  return null;
+}
+
+LoHi extractSetupCost(DocumentSnapshot document) {
+  if (document.data["setupCost"] != null) {
+    return  loHiValues.map[document.data["setupCost"]];
+  }
+  return null;
+}
+
+LoHi extractWaterRequirements(DocumentSnapshot document) {
+  if (document.data["waterRequirement"] != null) {
+    return  loHiValues.map[document.data["waterRequirement"]];
+  }
+  return null;
 }

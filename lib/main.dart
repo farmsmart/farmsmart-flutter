@@ -41,7 +41,6 @@ class _AppState extends State<FarmsmartApp> {
           theme: ThemeData(
             brightness: Brightness.light,
             scaffoldBackgroundColor: Color(backgroundColor),
-            // ignore: strong_mode_invalid_cast_new_expr
             primaryColor: const Color(backgroundColor),
             accentColor: const Color(primaryGrey),
           ),

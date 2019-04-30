@@ -4,7 +4,7 @@ import 'package:farmsmart_flutter/data/model/crop_entity.dart';
 // Unique source of data access for the plot feature.
 
 class PlotRepository{
-  static final PlotRepository _repo = new PlotRepository._internal();
+  static final PlotRepository _repo = PlotRepository._internal();
 
   FireStoreManager _firestoreManager;
 
@@ -24,7 +24,5 @@ class PlotRepository{
     return _firestoreManager.getCropsImagePath(cropsWithoutImages);
   }
 
-
   // Define here the case of use situations "getPlots" "getPlotDetail" and so on.
-
 }

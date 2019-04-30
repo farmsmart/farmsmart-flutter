@@ -20,7 +20,7 @@ class MyPlotState {
   // We define an initial state
   factory MyPlotState.initial() {
     return new MyPlotState(
-        loadingStatus: LoadingStatus.loading, cropList: new List(0));
+        loadingStatus: LoadingStatus.LOADING, cropList: new List(0));
   }
 
   // Helper method to create a similar (or equal state) of the home state.
