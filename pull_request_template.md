@@ -32,3 +32,7 @@ Screenshots / external resources
 #### 🕵️‍♂️ How to test
 
 Notes for QA
+
+#### Reviewers
+
+@farmsmart/amido @farmsmart/wamf
