@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 class MyPlotListItem {
   Widget buildListItem(CropEntity cropsData, goToDetail) {
     return Padding(
-        key: ValueKey(cropsData.name ?? "No Title"),
+        key: ValueKey(cropsData.name ?? Strings.myPlotItemDefaultTitle),
         padding: Margins.boxPadding(),
         child: Container(
             decoration: BoxDecoration(
@@ -36,7 +36,7 @@ class MyPlotListItem {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text(cropsData.name ?? "No Title",
+                      Text(cropsData.name ?? Strings.myPlotItemDefaultTitle,
                           style: Styles.titleTextStyle()),
                       Margins.generalListSmallMargin(),
                       Text(Strings.myPlotCurrentStagesMOCK),

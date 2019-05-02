@@ -14,4 +14,6 @@ class Strings {
   static String myPlotCurrentStage = "CURRENT STAGE";
   static String myPlotDetails = "DETAILS";
 
+  static String myPlotItemDefaultTitle = "My Crop";
+
 }

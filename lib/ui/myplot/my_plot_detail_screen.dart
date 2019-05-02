@@ -1,5 +1,6 @@
 import 'package:farmsmart_flutter/data/model/crop_entity.dart';
 import 'package:farmsmart_flutter/utils/assets.dart';
+import 'package:farmsmart_flutter/utils/colors.dart';
 import 'package:farmsmart_flutter/utils/dimens.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -37,7 +38,7 @@ class _CropDetailState extends State<CropDetailScreen> {
           ),
           body : Container(
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Color(white),
                 borderRadius: BorderRadius.circular(8.0),
               ),
               child: ListView(children: <Widget>[
