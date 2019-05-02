@@ -1,8 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:farmsmart_flutter/data/firebase_const.dart';
-import 'package:farmsmart_flutter/model/enums.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:farmsmart_flutter/data/model/crop_entity.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class FireStoreManager {
   static final FireStoreManager _firebaseManager =

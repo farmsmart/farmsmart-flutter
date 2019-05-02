@@ -40,7 +40,7 @@ class CropEntity {
     this.waterRequirement,
   });
 
-  factory CropEntity.cropFromDocument(DocumentSnapshot cropDocument) => new CropEntity(
+  factory CropEntity.cropFromDocument(DocumentSnapshot cropDocument) => CropEntity(
     companionPlants: extractListOfString(cropDocument, "companionPlants"),
     complexity: extractComplexity(cropDocument),
     content: cropDocument.data["content"],
@@ -52,7 +52,7 @@ class CropEntity {
     nonCompanionPlants: extractListOfString(cropDocument, "nonCompanionPlants"),
     profitability: extractProfitability(cropDocument),
     setupCost: extractSetupCost(cropDocument),
-    soilType: cropDocument.data["soilType"].first.path,
+    soilType: extractListOfString(cropDocument, "soilType"),
     stages: "",
     status: statusValues.map[cropDocument.data["status"]],
     summary: cropDocument.data["summary"],
