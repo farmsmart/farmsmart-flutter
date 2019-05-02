@@ -40,7 +40,10 @@ class FireStoreManager {
           .document(crop.imagePathReference)
           .get()
           .then((imageSnapshot) async {
-        final imagePath = await getImageDownloadURL(imageSnapshot);
+        var imagePath = "";
+            if(imageSnapshot.data != null) {
+              imagePath = await getImageDownloadURL(imageSnapshot);
+            }
         crop.setImageUrl(imagePath);
         cropsEntitiesWithImagePath.add(crop);
       });
@@ -49,9 +52,6 @@ class FireStoreManager {
   }
 
   Future<String> getImageDownloadURL(DocumentSnapshot imageDocument) async {
-    if(imageDocument != null) {
-
-    }
     final sizePath = imageDocument.data["sizes"].first["path"];
     final imageFileNamePath = imageDocument.data["file"];
     final flamelinkPath =
