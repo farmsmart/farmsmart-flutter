@@ -30,9 +30,8 @@ dependencies:
   flutter_html: ^0.8.2
   flutter_launcher_icons: ^0.7.0
 
-  firebase_core: ^0.2.5
-  firebase_analytics: ^1.0.4
-  cloud_firestore: ^0.8.2+3
+  firebase_storage: ^2.1.1+1
+  cloud_firestore: ^0.10.1
 
 dev_dependencies:
   flutter_test:

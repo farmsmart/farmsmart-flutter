@@ -12,16 +12,16 @@ final homeReducer = combineReducers<HomeState>([
 HomeState _switchTab(HomeState state, SwitchTabAction action) {
   switch (action.screen) {
     case HomeScreen.MY_PLOT_TAB:
-      return state.copyWith(currentHomeTab: 0);
+      return state.copyWith(currentHomeTab: MY_PLOT_TAB);
       break;
     case HomeScreen.PROFIT_LOSS_TAB:
-      return state.copyWith(currentHomeTab: 1);
+      return state.copyWith(currentHomeTab: PROFIT_LOSS_TAB);
       break;
     case HomeScreen.ARTICLES_TAB:
-      return state.copyWith(currentHomeTab: 2);
+      return state.copyWith(currentHomeTab: ARTICLES_TAB);
       break;
     case HomeScreen.COMMUNITY_TAB:
-      return state.copyWith(currentHomeTab: 3);
+      return state.copyWith(currentHomeTab: COMMUNITY_TAB);
       break;
   }
   return state;

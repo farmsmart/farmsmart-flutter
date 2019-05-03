@@ -2,6 +2,8 @@ import 'package:farmsmart_flutter/model/loading_status.dart';
 import 'package:farmsmart_flutter/redux/home/myPlot/my_plot_state.dart';
 import 'package:meta/meta.dart';
 
+import 'screens.dart';
+
 // State that controls the home screens / views toggled by the bottom bar.
 
 @immutable
@@ -19,8 +21,8 @@ class HomeState {
   // We set all the states initial values
   factory HomeState.initial() {
     return HomeState(
-        loadingStatus: LoadingStatus.loading,
-        currentHomeTab: 0);
+        loadingStatus: LoadingStatus.LOADING,
+        currentHomeTab: MY_PLOT_TAB);
   }
 
   // Copies the states of the app or replaces for new ones if needed.

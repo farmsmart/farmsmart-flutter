@@ -1,3 +1,4 @@
+import 'package:farmsmart_flutter/utils/assets.dart';
 import 'package:flutter/material.dart';
 
 class HomeDiscoverChild extends StatelessWidget {
@@ -6,7 +7,7 @@ class HomeDiscoverChild extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox.expand(
-      child: Image.asset('assets/raw/articles_mock.png', fit: BoxFit.cover),
+      child: Image.asset(Assets.ARTICLE_MOCK_BACKGROUND, fit: BoxFit.cover),
     );
   }
 }

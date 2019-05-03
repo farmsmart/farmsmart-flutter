@@ -27,15 +27,13 @@ class _MyPlotState extends State<HomeMyPlotChild> {
 
   Widget _buildBody(BuildContext context, MyPlotViewModel viewModel) {
     switch (viewModel.loadingStatus) {
-      case LoadingStatus.loading:
+      case LoadingStatus.LOADING:
         return Container(
             child: CircularProgressIndicator(), alignment: Alignment.center);
-      case LoadingStatus.success:
+      case LoadingStatus.SUCCESS:
         return _buildList(context, viewModel.cropsList, viewModel.goToDetail); // Change fetch crops to go to detail
-      case LoadingStatus.error:
-        return Text("Error");
-      case LoadingStatus.x:
-        return Text("Error");
+      case LoadingStatus.ERROR:
+        return Text("Error"); // TODO Check FARM-203
     }
   }
 }

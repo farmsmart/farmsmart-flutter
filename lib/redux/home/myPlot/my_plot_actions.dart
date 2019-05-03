@@ -11,3 +11,8 @@ class UpdateCropListAction {
   List<CropEntity> cropsList;
   UpdateCropListAction(this.cropsList);
 }
+
+class GoToCropDetailAction {
+  CropEntity crop;
+  GoToCropDetailAction(this.crop);
+}

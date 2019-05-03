@@ -12,6 +12,10 @@ abstract class Styles {
     return TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(primaryGreen));
   }
 
+  static TextStyle descriptionTextStyle() {
+    return TextStyle(fontSize: 17, fontWeight: FontWeight.normal, color: Color(primaryGreyDark));
+  }
+
   static TextStyle appBarTextStyle() {
     return TextStyle(fontSize: 22,  fontWeight: FontWeight.bold,  color: Color(primaryGrey), letterSpacing: 1);
   }

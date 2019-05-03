@@ -1,6 +1,5 @@
 enum LoadingStatus {
-  loading,
-  error,
-  success,
-  x
+  LOADING,
+  ERROR,
+  SUCCESS
 }
