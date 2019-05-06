@@ -2,6 +2,8 @@ import 'package:farmsmart_flutter/data/model/article_entity.dart';
 import 'package:farmsmart_flutter/model/loading_status.dart';
 import 'package:meta/meta.dart';
 
+
+
 @immutable
 class DiscoverState {
   final LoadingStatus loadingStatus;
