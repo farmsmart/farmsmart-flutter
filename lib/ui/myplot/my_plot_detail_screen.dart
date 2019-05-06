@@ -1,4 +1,5 @@
 import 'package:farmsmart_flutter/data/model/crop_entity.dart';
+import 'package:farmsmart_flutter/model/crop_detail_property.dart';
 import 'package:farmsmart_flutter/utils/assets.dart';
 import 'package:farmsmart_flutter/utils/colors.dart';
 import 'package:farmsmart_flutter/utils/dimens.dart';
@@ -8,6 +9,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:farmsmart_flutter/redux/app/app_state.dart';
 import 'package:farmsmart_flutter/utils/styles.dart';
 
+import 'my_plot_detail_properties.dart';
 import 'myplot_viewmodel.dart';
 
 class CropDetailScreen extends StatefulWidget {
@@ -23,12 +25,12 @@ class _CropDetailState extends State<CropDetailScreen> {
     return Scaffold(
       body: StoreConnector<AppState, MyPlotViewModel>(
           builder: (_, viewModel) =>
-              _buildBody(context, viewModel.selectedCrop),
+              _buildBody(context, viewModel.selectedCrop, viewModel.getCropDetailProperties(viewModel.selectedCrop)),
           converter: (store) => MyPlotViewModel.fromStore(store)),
     );
   }
 
-  Widget _buildBody(BuildContext context, CropEntity selectedCropData) {
+  Widget _buildBody(BuildContext context, CropEntity selectedCropData, List<CropDetailProperty> cropDetailProperties) {
     return
 
       Scaffold(
@@ -56,6 +58,7 @@ class _CropDetailState extends State<CropDetailScreen> {
                         Text(selectedCropData.summary, style: Styles.descriptionTextStyle()),
                         Margins.generalListMargin(),
                         Html(data: selectedCropData.content),
+                        MyPlotDetailProperties().build(cropDetailProperties)
                       ],
                     )),
               ]))
