@@ -1,8 +1,10 @@
 import 'package:farmsmart_flutter/data/model/crop_entity.dart';
 import 'package:farmsmart_flutter/model/crop_detail_property.dart';
+import 'package:farmsmart_flutter/model/enums.dart';
 import 'package:farmsmart_flutter/model/loading_status.dart';
 import 'package:farmsmart_flutter/redux/app/app_state.dart';
 import 'package:farmsmart_flutter/redux/home/myPlot/my_plot_actions.dart';
+import 'package:farmsmart_flutter/utils/string_utils.dart';
 import 'package:farmsmart_flutter/utils/strings.dart';
 import 'package:redux/redux.dart';
 
@@ -35,13 +37,16 @@ class MyPlotViewModel {
     List<CropDetailProperty> listOfProperties = List();
 
     if(cropEntity.complexity != null) {
-      listOfProperties.add(CropDetailProperty(Strings.myPlotDetailComplexityTitle, cropEntity.complexity.toString()));
+      String complexity = begAdvValues.reverse[cropEntity.complexity];
+      listOfProperties.add(CropDetailProperty(Strings.myPlotDetailComplexityTitle, Utils.capitalize(complexity)));
     }
-    if(cropEntity.soilType != null) {
-      listOfProperties.add(CropDetailProperty(Strings.myPlotDetailSoilTypeTitle, cropEntity.soilType.toString()));
+    if(Utils.listIsNotNullOrEmpty(cropEntity.soilType)) {
+      String soilType = cropEntity.soilType.join(", ");
+      listOfProperties.add(CropDetailProperty(Strings.myPlotDetailSoilTypeTitle, Utils.capitalize(soilType)));
     }
-    if(cropEntity.cropsInRotation != null) {
-      listOfProperties.add(CropDetailProperty(Strings.myPlotDetailCropsToBeRotatedTitle, cropEntity.cropsInRotation.toString()));
+    if(Utils.listIsNotNullOrEmpty(cropEntity.cropsInRotation)) {
+      String soilType = cropEntity.cropsInRotation.join(", ");
+      listOfProperties.add(CropDetailProperty(Strings.myPlotDetailCropsToBeRotatedTitle, Utils.capitalize(soilType)));
     }
 
     return listOfProperties;

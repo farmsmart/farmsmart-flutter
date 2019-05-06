@@ -9,7 +9,8 @@ class MyPlotDetailProperties {
   Widget build(List<CropDetailProperty> cropProperties) {
     return
         ExpansionTile(
-            title: Text(Strings.myPlotDetailPropertiesTitle),
+          initiallyExpanded: true,
+            title: Text(Strings.myPlotDetailPropertiesTitle, style: Styles.detailTitleTextStyle()),
             children: (cropProperties
                 .map((cropProperty) => buildPropertyItem(cropProperty))).toList());
   }
@@ -18,10 +19,12 @@ class MyPlotDetailProperties {
     return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(cropProperty.title, style: Styles.titleTextStyle()),
+          Text(cropProperty.title, style: Styles.detailSubtitleTextStyle()),
           Margins.generalListSmallMargin(),
           Text(cropProperty.properties),
-          Divider(height: 4, color: Color(black))
+          Margins.generalListSmallMargin(),
+          Divider(height: 4, color: Color(black)),
+          Margins.generalListMargin(),
         ]);
   }
 }
