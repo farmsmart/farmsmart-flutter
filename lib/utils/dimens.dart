@@ -28,6 +28,9 @@ abstract class Margins {
     return EdgeInsets.all(20);
   }
 
+  static SizedBox generalListSmallerMargin() {
+    return SizedBox(height: 7);
+  }
 
   static boxPadding(){
     return EdgeInsets.all(16);
