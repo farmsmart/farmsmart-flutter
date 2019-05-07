@@ -31,6 +31,12 @@ if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 }
 
+
+// Project won't compile for android if you don't have google-services.json and key.properties.
+// key.properties should be inside android/ folder
+// google-services.json should be inside android/app folder
+
+
 android {
     compileSdkVersion 28
 
@@ -51,23 +57,44 @@ android {
 
     signingConfigs {
         release {
-//      Commented to build without release keys
-//            keyAlias keystoreProperties['keyAlias']
-//            keyPassword keystoreProperties['keyPassword']
-//            storeFile file(keystoreProperties['storeFile'])
-//            storePassword keystoreProperties['storePassword']
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile file(keystoreProperties['storeFile'])
+            storePassword keystoreProperties['storePassword']
         }
     }
 
     buildTypes {
-        release {
-            // To release we need to switch to signingConfigs.release
+        debug {
+            // default
             signingConfig signingConfigs.debug
+        }
+
+        release {
+            // add --release to run command
+            signingConfig signingConfigs.release
 
             minifyEnabled true
             useProguard true
 
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    flavorDimensions "flavors"
+
+    productFlavors {
+        // Add particular setup into different app flavors.
+        // Also, you can create a different main to define global variables.
+        // Recommended read https://medium.com/flutter-community/flutter-ready-to-go-e59873f9d7de
+        development {
+            // To run  flutter run --flavor development -v lib/main.dart
+            dimension "flavors"
+            applicationId = "co.farmsmart.app.dev"
+        }
+        production {
+            // To run  flutter run --flavor production -v lib/main.dart
+            dimension "flavors"
         }
     }
 }
@@ -77,7 +104,7 @@ flutter {
 }
 
 dependencies {
-    implementation 'com.android.support:multidex:1.0.3'
+    implementation 'androidx.multidex:multidex:2.0.0'
 
     testImplementation 'junit:junit:4.12'
 
