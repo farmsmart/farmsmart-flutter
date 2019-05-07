@@ -1,4 +1,4 @@
-[FARM-XXX]
+[FARM-XXX - Please use Spring JIRA ticket and not subtasks]
 
 #### 📲 What
 
@@ -18,11 +18,11 @@ Screenshots / external resources
 		 
 #### ✅ Acceptance criteria
 
-- [ ] Manually tested
+- [ ] Manually tested and verified on Android device/emulator (min. Lollipop 5.1)
 - [ ] Showcase video / automation test
 - [ ] Passing all tests
 - [ ] Rebased/merged with latest changes from dev/release and re-tested
-- [ ] Removed TODOs and FIXMEs
+- [ ] Removed unsed comments. TODOs must have JIRA for future work.
 
 #### Coding Standards Checklist
 - [ ] unit tests 80% coverage on testable code (functions, methods, class)
