@@ -24,10 +24,15 @@ Screenshots / external resources
 - [ ] Rebased/merged with latest changes from dev/release and re-tested
 - [ ] Removed TODOs and FIXMEs
 
-#### ⏰ TODO
-
-- [ ] Got planned refactors to come: [LI-XXX](https://lunadisco.atlassian.net/browse/LI-XXX)
-- [ ] Will add more tests
+#### Coding Standards Checklist
+- [ ] unit tests 80% coverage on testable code (functions, methods, class)
+- [ ] (Architecture) redux state, reducers, actions, middleware defined under lib/redux
+- [ ] ui elements defined under lib/ui. 
+- [ ] Strings ready for localisation (e.g. defined in lib/utils/strings.dart)
+- [ ] Assets (images/icons path) defined in lib/utils/assets.dart
+- [ ] Colors defined in lib/utils/colors.dart
+- [ ] Dimensions (ie margins padding) defined in lib/utils/dimens.dart
+- [ ] TextStyles defined in lib/utils/styles.dart
 
 #### 🕵️‍♂️ How to test
 
