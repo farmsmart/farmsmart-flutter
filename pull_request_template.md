@@ -18,10 +18,11 @@ Screenshots / external resources
 		 
 #### ✅ Acceptance criteria
 
+- [ ] Design Review for UI with BA completed. 
 - [ ] Manually tested and verified on Android device/emulator (min. Lollipop 5.1)
 - [ ] Showcase video / automation test
 - [ ] Passing all tests
-- [ ] Rebased/merged with latest changes from dev/release and re-tested
+- [ ] Rebased/merged with latest changes from development and re-tested
 - [ ] Removed unsed comments. TODOs must have JIRA for future work.
 
 #### Coding Standards Checklist
