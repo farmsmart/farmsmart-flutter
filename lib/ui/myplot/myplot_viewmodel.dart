@@ -48,7 +48,30 @@ class MyPlotViewModel {
       String soilType = cropEntity.cropsInRotation.join(", ");
       listOfProperties.add(CropDetailProperty(Strings.myPlotDetailCropsToBeRotatedTitle, Utils.capitalize(soilType)));
     }
-
+    if(cropEntity.cropType != null) {
+      String cropType = cropTypeValues.reverse[cropEntity.cropType];
+      listOfProperties.add(CropDetailProperty(Strings.myPlotDetailCropTypeTitle, Utils.capitalize(cropType)));
+    }
+    if(cropEntity.waterRequirement != null) {
+      String waterRequirement = loHiValues.reverse[cropEntity.waterRequirement];
+      listOfProperties.add(CropDetailProperty(Strings.myPlotDetailWaterRequirementTitle, Utils.capitalize(waterRequirement)));
+    }
+    if(cropEntity.setupCost != null) {
+      String setupCost = loHiValues.reverse[cropEntity.setupCost];
+      listOfProperties.add(CropDetailProperty(Strings.myPlotDetailSetupCostTitle, Utils.capitalize(setupCost)));
+    }
+    if(cropEntity.profitability != null) {
+      String profitability = loHiValues.reverse[cropEntity.profitability];
+      listOfProperties.add(CropDetailProperty(Strings.myPlotDetailSetupCostTitle, Utils.capitalize(profitability)));
+    }
+    if(Utils.listIsNotNullOrEmpty(cropEntity.companionPlants)) {
+      String companionPlants = cropEntity.companionPlants.join(", ");
+      listOfProperties.add(CropDetailProperty(Strings.myPlotDetailCropsToBeRotatedTitle, Utils.capitalize(companionPlants)));
+    }
+    if(Utils.listIsNotNullOrEmpty(cropEntity.nonCompanionPlants)) {
+      String nonCompanionPlants = cropEntity.nonCompanionPlants.join(", ");
+      listOfProperties.add(CropDetailProperty(Strings.myPlotDetailCropsToBeRotatedTitle, Utils.capitalize(nonCompanionPlants)));
+    }
     return listOfProperties;
   }
 }
