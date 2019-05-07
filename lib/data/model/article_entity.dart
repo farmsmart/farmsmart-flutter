@@ -5,7 +5,7 @@ class ArticleEntity {
   String content;
   String imagePathReference;
   String imageUrl;
-  //String relatedArticles; //TODO Ask how it works
+  //String relatedArticles; //TODO [FARM-95]
   Status status;
   String summary;
   String title;
@@ -23,7 +23,7 @@ class ArticleEntity {
     content: articleDocument.data["content"],
     imagePathReference: articleDocument.data["image"].first.path,
     imageUrl: "",
-    //relatedArticles: articleDocument.data[""],
+    //relatedArticles: articleDocument.data[""], //TODO [FARM-95]
     status: statusValues.map[articleDocument.data["status"]],
     summary: articleDocument.data["summary"],
     title: articleDocument.data["title"]
