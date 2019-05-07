@@ -32,9 +32,9 @@ if (keystorePropertiesFile.exists()) {
 }
 
 
-//
 // Project won't compile for android if you don't have google-services.json and key.properties.
-//
+// key.properties should be inside android/ folder
+// google-services.json should be inside android/app folder
 
 
 android {
