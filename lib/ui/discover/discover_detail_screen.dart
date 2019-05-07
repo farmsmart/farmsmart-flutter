@@ -51,7 +51,7 @@ class _ArticleDetailState extends State<ArticleDetailScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Text(selectedArticleData.summary, style: Styles.descriptionTextStyle()),
+                        Text(selectedArticleData.title, style: Styles.titleTextStyle()),
                         Margins.generalListMargin(),
                         Html(data: selectedArticleData.content),
                       ],
