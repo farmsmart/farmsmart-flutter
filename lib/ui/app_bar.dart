@@ -27,8 +27,9 @@ abstract class CustomAppBar {
     return AppBar();
   }
 
-  static AppBar buildWithTitle(String title, [Widget profileActions, Widget homeIcon]) {
+  static AppBar buildWithTitle(String title) {
     return AppBar(
+      centerTitle: true,
       title: Text(title, style: Styles.appBarTextStyle()));
   }
 
@@ -38,6 +39,16 @@ abstract class CustomAppBar {
       automaticallyImplyLeading: true, // adds the back button automatically
       title: Text(title, style: Styles.appBarTextStyle()),
       actions: <Widget>[profileActions],
+      centerTitle: true,
+    );
+  }
+
+  static AppBar buildForDetail(String title) {
+    return AppBar(
+      leading: backIcon(),
+      automaticallyImplyLeading: true, // adds the back button automatically
+      title: Text(title, style: Styles.appBarDetailTextStyle()),
+      centerTitle: true,
     );
   }
 
@@ -49,5 +60,9 @@ abstract class CustomAppBar {
 
   static Widget homeIcon() {
     return Image.asset(Assets.APP_ICON);
+  }
+
+  static Widget backIcon() {
+    return BackButton(color: Color(primaryGreen));
   }
 }

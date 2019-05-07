@@ -9,6 +9,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:farmsmart_flutter/redux/app/app_state.dart';
 import 'package:farmsmart_flutter/utils/styles.dart';
 
+import '../app_bar.dart';
 import 'my_plot_detail_properties.dart';
 import 'myplot_viewmodel.dart';
 
@@ -34,10 +35,7 @@ class _CropDetailState extends State<CropDetailScreen> {
     return
 
       Scaffold(
-          appBar: AppBar(
-            // Define custom appbar here
-            automaticallyImplyLeading: true,
-          ),
+          appBar: CustomAppBar.buildForDetail(selectedCropData.name),
           body : Container(
               decoration: BoxDecoration(
                 color: Color(white),

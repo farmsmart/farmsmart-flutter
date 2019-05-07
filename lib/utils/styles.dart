@@ -20,6 +20,10 @@ abstract class Styles {
     return TextStyle(fontSize: 22,  fontWeight: FontWeight.bold,  color: Color(primaryGrey), letterSpacing: 1);
   }
 
+  static TextStyle appBarDetailTextStyle() {
+    return TextStyle(fontSize: 22,  fontWeight: FontWeight.bold,  color: Color(primaryGreyDark), letterSpacing: 1);
+  }
+
   static TextStyle footerTextStyle() {
     return TextStyle(fontSize: 12, color: Color(black), decorationColor: Color(primaryGreen));
   }
