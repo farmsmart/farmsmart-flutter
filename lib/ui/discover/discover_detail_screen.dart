@@ -35,10 +35,7 @@ class _ArticleDetailState extends State<ArticleDetailScreen> {
             automaticallyImplyLeading: true,
           ),
           body : Container(
-              decoration: BoxDecoration(
-                color: Color(white),
-                borderRadius: BorderRadius.circular(8.0),
-              ),
+
               child: ListView(children: <Widget>[
                 FadeInImage.assetNetwork(
                     image: selectedArticleData.imageUrl,

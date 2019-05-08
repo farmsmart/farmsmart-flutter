@@ -1,6 +1,6 @@
 import 'package:farmsmart_flutter/model/loading_status.dart';
 import 'package:farmsmart_flutter/redux/app/app_state.dart';
-import 'package:farmsmart_flutter/utils/assets.dart';
+import 'package:farmsmart_flutter/utils/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:farmsmart_flutter/data/model/article_entity.dart';
@@ -34,7 +34,7 @@ class _DiscoveryState extends State<HomeDiscoverChild> {
       case LoadingStatus.SUCCESS:
         return _buildList(context, viewModel.articlesList, viewModel.goToArticleDetail);
       case LoadingStatus.ERROR:
-        return Text("Error");
+        return Text(Strings.errorString);
     }
   }
 }

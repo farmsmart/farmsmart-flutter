@@ -15,58 +15,68 @@ class DiscoveryListItem {
           goToArticleDetail(articleData);
         },
         child: Padding(
-            key: ValueKey(articleData.title ?? "No Title"),
-            padding: Margins.articlePadding(),
-            child: Container(
-                height: 90,
-                child: Row(
-                  children: <Widget>[
-                    FadeInImage.assetNetwork(
-                        image: articleData.imageUrl,
-                        placeholder: Assets.IMAGE_PLACE_HOLDER,
-                        fit: BoxFit.fill),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10),
-                    ),
-                    Expanded(
-                      flex: 5,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(articleData.title ?? "No Title",
-                              style: Styles.subtitleTextStyle()),
-                          Margins.generalListSmallerMargin(),
-                          Text(
-                              articleData.summary ??
-                                  Strings.myPlotItemDefaultTitle,
-                              maxLines: 4,
-                              overflow: TextOverflow.ellipsis,
-                              style: Styles.footerTextStyle()),
-                          //Margins.generalListSmallMargin(),
-                          //MyPlotItemFooter().build()
-                        ],
+          key: ValueKey(articleData.title ?? Strings.noTitleString),
+          padding: Margins.listOfArticlesPadding(),
+          child: Container(
+              height: 120,
+              child: Column(
+                children: <Widget>[
+                  Row(
+                    children: <Widget>[
+                      FadeInImage.assetNetwork(
+                          image: articleData.imageUrl,
+                          placeholder: Assets.IMAGE_PLACE_HOLDER,
+                          height: 90,
+                          fit: BoxFit.fill),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10),
                       ),
-                    ),
-                    Expanded(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: <Widget>[
-                          Icon(
+                      Expanded(
+                        flex: 6,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(articleData.title ?? Strings.noTitleString,
+                                style: Styles.articleListTitleStyle()),
+                            Margins.generalListSmallerMargin(),
+                            Text(
+                                articleData.summary ??
+                                    Strings.myPlotItemDefaultTitle,
+                                maxLines: 4,
+                                overflow: TextOverflow.ellipsis,
+                                style: Styles.footerTextStyle()),
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: <Widget>[
+                            Icon(
                               Icons.arrow_forward_ios,
+                              size: 17,
                               color: Color(primaryGrey),
-                          )
-                          //Margins.generalListSmallMargin(),
-                          //MyPlotItemFooter().build()
-                        ],
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 10),
-                    ),
-                  ],
-                )),
-
-));
+                      Padding(
+                        padding: const EdgeInsets.only(right: 13),
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                  ),
+                  Divider(
+                    height: 1,
+                    color: Color(black),
+                    indent: 145,
+                  )
+                ],
+              )
+          ),
+        ));
   }
 }
