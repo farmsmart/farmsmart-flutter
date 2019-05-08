@@ -18,7 +18,6 @@ abstract class CustomAppBar {
         return buildWithTitle(Strings.profitLossTab);
         break;
       case ARTICLES_TAB:
-        //return buildWithTitle(Strings.discoverTab);
         return buildForHome(Strings.discoverTab, profileAction(), homeIcon());
         break;
       case COMMUNITY_TAB:

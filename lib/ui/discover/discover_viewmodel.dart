@@ -24,9 +24,10 @@ class DiscoverViewModel {
       loadingStatus:  store.state.discoverState.loadingStatus,
       articlesList: store.state.discoverState.articleList,
       selectedArticle: store.state.discoverState.selectedArticle,
-      goToArticleDetail: (ArticleEntity article) => store.dispatch(GoToArticleDetailAction(article)),
+      goToArticleDetail: (ArticleEntity article) =>
+          store.dispatch(GoToArticleDetailAction(article)),
       fetchArticles: () =>
-          store.dispatch(new FetchArticleListAction())
+          store.dispatch(FetchArticleListAction())
     );
   }
 }

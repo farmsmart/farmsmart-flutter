@@ -51,6 +51,10 @@ abstract class Margins {
   static sidesPadding(){
     return EdgeInsets.only(left: 15, right: 15);
   }
+    
+  static listOfArticlesPadding(){
+    return EdgeInsets.only(left: 16, top: 8, bottom: 16);
+  }
 }
 
 abstract class Dividers {
