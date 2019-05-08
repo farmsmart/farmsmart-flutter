@@ -90,7 +90,6 @@ class FireStoreManager {
     }
     return articlesEntitiesWithImagePath;
   }
-
   Future<String> getImageDownloadURL(DocumentSnapshot imageDocument) async {
     final sizePath = imageDocument.data["sizes"].first["path"];
     final imageFileNamePath = imageDocument.data["file"];

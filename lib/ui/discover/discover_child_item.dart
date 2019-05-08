@@ -8,7 +8,6 @@ import 'package:farmsmart_flutter/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:farmsmart_flutter/utils/assets.dart';
 
-
 class DiscoveryListItem {
   Widget buildListItem(ArticleEntity articleData, goToArticleDetail) {
     return GestureDetector(
@@ -17,26 +16,15 @@ class DiscoveryListItem {
         },
         child: Padding(
             key: ValueKey(articleData.title ?? "No Title"),
-            padding: Margins.boxPadding(),
+            padding: Margins.articlePadding(),
             child: Container(
                 height: 90,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(8.0),
-                    boxShadow: BoxShadows.plotListItemShadow()),
                 child: Row(
                   children: <Widget>[
-                    ClipRRect(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(8.0),
-                        bottomLeft: Radius.circular(8.0),
-                      ),
-//                      child: FadeInImage.assetNetwork(image: cropsData.imagePath, placeholder: 'assets/raw/crop_image_mock.png', fit: BoxFit.cover),
-                      child: FadeInImage.assetNetwork(
-                          image: articleData.imageUrl,
-                          placeholder: Assets.IMAGE_PLACE_HOLDER,
-                          fit: BoxFit.fill),
-                    ),
+                    FadeInImage.assetNetwork(
+                        image: articleData.imageUrl,
+                        placeholder: Assets.IMAGE_PLACE_HOLDER,
+                        fit: BoxFit.fill),
                     Padding(
                       padding: const EdgeInsets.only(left: 10),
                     ),
@@ -64,10 +52,9 @@ class DiscoveryListItem {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: <Widget>[
-                          Image.asset(
-                            "assets/icons/profit_loss.png",
-                            height: 15,
-                            width: 15,
+                          Icon(
+                              Icons.arrow_forward_ios,
+                              color: Color(primaryGrey),
                           )
                           //Margins.generalListSmallMargin(),
                           //MyPlotItemFooter().build()
@@ -78,6 +65,8 @@ class DiscoveryListItem {
                       padding: const EdgeInsets.only(right: 10),
                     ),
                   ],
-                ))));
+                )),
+
+));
   }
 }
