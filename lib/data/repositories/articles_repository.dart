@@ -1,16 +1,16 @@
 import 'package:farmsmart_flutter/data/managers/firestore_manager.dart';
 import 'package:farmsmart_flutter/data/model/article_entity.dart';
 
-class DiscoverRepository {
-  static final DiscoverRepository _repo = DiscoverRepository._internal();
+class ArticlesRepository {
+  static final ArticlesRepository _repo = ArticlesRepository._internal();
 
   FireStoreManager _fireStoreManager;
 
-  static DiscoverRepository get() {
+  static ArticlesRepository get() {
     return _repo;
   }
 
-  DiscoverRepository._internal() {
+  ArticlesRepository._internal() {
     _fireStoreManager = FireStoreManager.get();
   }
 

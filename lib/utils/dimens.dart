@@ -36,6 +36,10 @@ abstract class Margins {
     return EdgeInsets.all(16);
   }
 
+  static articlePadding(){
+    return EdgeInsets.only(left: 16, top: 8, right: 16, bottom: 16);
+  }
+
   static boxSmallPadding(){
     return EdgeInsets.all(12);
   }
