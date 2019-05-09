@@ -62,7 +62,7 @@ class MyPlotViewModel {
     }
     if(cropEntity.profitability != null) {
       String profitability = loHiValues.reverse[cropEntity.profitability];
-      listOfProperties.add(CropDetailProperty(Strings.myPlotDetailSetupCostTitle, Utils.capitalize(profitability)));
+      listOfProperties.add(CropDetailProperty(Strings.myPlotDetailProfitabilityTitle, Utils.capitalize(profitability)));
     }
     if(Utils.listIsNotNullOrEmpty(cropEntity.companionPlants)) {
       String companionPlants = cropEntity.companionPlants.join(", ");

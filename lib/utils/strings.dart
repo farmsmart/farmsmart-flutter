@@ -27,5 +27,6 @@ class Strings {
   static String myPlotDetailProfitabilityTitle = "Profitability";
   static String myPlotDetailCompanionPlantsTitle = "Companion Plants";
   static String myPlotDetailNonCompanionPlantsTitle = "Non-Companion Plants";
+  static String myPlotDetailStepByStepTitle = "Step-by-step guide";
 
 }

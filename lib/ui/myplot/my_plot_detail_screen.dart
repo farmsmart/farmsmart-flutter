@@ -3,6 +3,7 @@ import 'package:farmsmart_flutter/model/crop_detail_property.dart';
 import 'package:farmsmart_flutter/utils/assets.dart';
 import 'package:farmsmart_flutter/utils/colors.dart';
 import 'package:farmsmart_flutter/utils/dimens.dart';
+import 'package:farmsmart_flutter/utils/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -58,6 +59,9 @@ class _CropDetailState extends State<CropDetailScreen> {
                   Margins.generalListMargin(),
                   Html(data: selectedCropData.content),
                   MyPlotDetailProperties().build(cropDetailProperties, context),
+                  Padding(
+                      padding: Margins.boxPadding(),
+                      child: Text(Strings.myPlotDetailStepByStepTitle, style: Styles.detailTitleTextStyle()),),
                   MyPlotDetailStages().build(selectedCropData.stages)
                 ],
               ),
