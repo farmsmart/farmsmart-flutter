@@ -6,15 +6,15 @@ import 'package:farmsmart_flutter/utils/styles.dart';
 import 'package:flutter/material.dart';
 
 class MyPlotDetailStages {
-  Widget build(List<Stage> stagesList) {
+  Widget build(List<Stage> stagesList, goToStageDetail) {
     return Column (
-        children: (stagesList.map((stage) => buildStageItem(stage))).toList());
+        children: (stagesList.map((stage) => buildStageItem(stage, goToStageDetail))).toList());
   }
 
-  Widget buildStageItem(Stage stageData) {
+  Widget buildStageItem(Stage stageData, goToStageDetail) {
     return GestureDetector(
         onTap: () {
-//          goToStageDetail(stageData);
+          goToStageDetail(stageData);
         },
         child: Padding(
           key: ValueKey(stageData.name),

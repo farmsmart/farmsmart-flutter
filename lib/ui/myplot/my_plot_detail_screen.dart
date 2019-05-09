@@ -28,13 +28,13 @@ class _CropDetailState extends State<CropDetailScreen> {
     return Scaffold(
       body: StoreConnector<AppState, MyPlotViewModel>(
           builder: (_, viewModel) => _buildBody(context, viewModel.selectedCrop,
-              viewModel.getCropDetailProperties(viewModel.selectedCrop)),
+              viewModel.getCropDetailProperties(viewModel.selectedCrop), viewModel.goToStage),
           converter: (store) => MyPlotViewModel.fromStore(store)),
     );
   }
 
   Widget _buildBody(BuildContext context, CropEntity selectedCropData,
-      List<CropDetailProperty> cropDetailProperties) {
+      List<CropDetailProperty> cropDetailProperties, goToStageDetail) {
     return Scaffold(
         appBar: CustomAppBar.buildForDetail(selectedCropData.name),
         body: Container(
@@ -62,7 +62,7 @@ class _CropDetailState extends State<CropDetailScreen> {
                   Padding(
                       padding: Margins.boxPadding(),
                       child: Text(Strings.myPlotDetailStepByStepTitle, style: Styles.detailTitleTextStyle()),),
-                  MyPlotDetailStages().build(selectedCropData.stages)
+                  MyPlotDetailStages().build(selectedCropData.stages, goToStageDetail)
                 ],
               ),
             ])));

@@ -1,4 +1,5 @@
 import 'package:farmsmart_flutter/data/model/crop_entity.dart';
+import 'package:farmsmart_flutter/data/model/stage.dart';
 import 'package:farmsmart_flutter/model/crop_detail_property.dart';
 import 'package:farmsmart_flutter/model/enums.dart';
 import 'package:farmsmart_flutter/model/loading_status.dart';
@@ -12,22 +13,28 @@ class MyPlotViewModel {
   LoadingStatus loadingStatus;
   final List<CropEntity> cropsList;
   final CropEntity selectedCrop;
+  final Stage selectedStage;
 
   final Function fetchCrops;
   final Function(CropEntity cropData) goToDetail;
+  final Function(Stage stageData) goToStage;
 
   MyPlotViewModel({this.loadingStatus,
     this.cropsList,
     this.selectedCrop,
+    this.selectedStage,
     this.fetchCrops,
-    this.goToDetail});
+    this.goToDetail,
+    this.goToStage});
 
   static MyPlotViewModel fromStore(Store<AppState> store) {
     return MyPlotViewModel(
         loadingStatus: store.state.myPlotState.loadingStatus,
         cropsList: store.state.myPlotState.cropList,
         selectedCrop: store.state.myPlotState.selectedCrop,
+        selectedStage: store.state.myPlotState.selectedStage,
         goToDetail: (CropEntity crop) => store.dispatch(GoToCropDetailAction(crop)),
+        goToStage: (Stage stage) => store.dispatch(GoToStageAction(stage)),
         fetchCrops: () =>
             store.dispatch(FetchCropListAction())
     );
