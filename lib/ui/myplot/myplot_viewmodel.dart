@@ -66,11 +66,11 @@ class MyPlotViewModel {
     }
     if(Utils.listIsNotNullOrEmpty(cropEntity.companionPlants)) {
       String companionPlants = cropEntity.companionPlants.join(", ");
-      listOfProperties.add(CropDetailProperty(Strings.myPlotDetailCropsToBeRotatedTitle, Utils.capitalize(companionPlants)));
+      listOfProperties.add(CropDetailProperty(Strings.myPlotDetailCompanionPlantsTitle, Utils.capitalize(companionPlants)));
     }
     if(Utils.listIsNotNullOrEmpty(cropEntity.nonCompanionPlants)) {
       String nonCompanionPlants = cropEntity.nonCompanionPlants.join(", ");
-      listOfProperties.add(CropDetailProperty(Strings.myPlotDetailCropsToBeRotatedTitle, Utils.capitalize(nonCompanionPlants)));
+      listOfProperties.add(CropDetailProperty(Strings.myPlotDetailNonCompanionPlantsTitle, Utils.capitalize(nonCompanionPlants)));
     }
     return listOfProperties;
   }
