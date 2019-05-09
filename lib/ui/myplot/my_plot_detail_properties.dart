@@ -8,23 +8,28 @@ import 'package:flutter/material.dart';
 class MyPlotDetailProperties {
   Widget build(List<CropDetailProperty> cropProperties) {
     return
-        ExpansionTile(
+      ExpansionTile(
           initiallyExpanded: true,
-            title: Text(Strings.myPlotDetailPropertiesTitle, style: Styles.detailTitleTextStyle()),
-            children: (cropProperties
-                .map((cropProperty) => buildPropertyItem(cropProperty))).toList());
+          title: Text(Strings.myPlotDetailPropertiesTitle,
+              style: Styles.detailTitleTextStyle()),
+          children: (cropProperties
+              .map((cropProperty) => buildPropertyItem(cropProperty)))
+              .toList());
   }
 
   Widget buildPropertyItem(CropDetailProperty cropProperty) {
-    return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(cropProperty.title, style: Styles.detailSubtitleTextStyle()),
-          Margins.generalListSmallMargin(),
-          Text(cropProperty.properties),
-          Margins.generalListSmallMargin(),
-          Divider(height: 4, color: Color(black)),
-          Margins.generalListMargin(),
-        ]);
+    return Padding(
+        padding: Margins.sidesPadding(),
+        child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(cropProperty.title, style: Styles.detailSubtitleTextStyle()),
+              Margins.generalListSmallMargin(),
+              Text(cropProperty.properties),
+              Margins.generalListSmallMargin(),
+              Divider(height: 4, color: Color(black)),
+              Margins.generalListMargin(),
+            ])
+    );
   }
 }

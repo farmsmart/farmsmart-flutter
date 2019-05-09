@@ -25,41 +25,40 @@ class _CropDetailState extends State<CropDetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: StoreConnector<AppState, MyPlotViewModel>(
-          builder: (_, viewModel) =>
-              _buildBody(context, viewModel.selectedCrop, viewModel.getCropDetailProperties(viewModel.selectedCrop)),
+          builder: (_, viewModel) => _buildBody(context, viewModel.selectedCrop,
+              viewModel.getCropDetailProperties(viewModel.selectedCrop)),
           converter: (store) => MyPlotViewModel.fromStore(store)),
     );
   }
 
-  Widget _buildBody(BuildContext context, CropEntity selectedCropData, List<CropDetailProperty> cropDetailProperties) {
-    return
-
-      Scaffold(
-          appBar: CustomAppBar.buildForDetail(selectedCropData.name),
-          body : Container(
-              decoration: BoxDecoration(
-                color: Color(white),
-                borderRadius: BorderRadius.circular(8.0),
+  Widget _buildBody(BuildContext context, CropEntity selectedCropData,
+      List<CropDetailProperty> cropDetailProperties) {
+    return Scaffold(
+        appBar: CustomAppBar.buildForDetail(selectedCropData.name),
+        body: Container(
+            decoration: BoxDecoration(
+              color: Color(white),
+              borderRadius: BorderRadius.circular(8.0),
+            ),
+            child: ListView(children: <Widget>[
+              FadeInImage.assetNetwork(
+                  image: selectedCropData.imageUrl,
+                  height: listImageHeight,
+                  width: listImageWidth,
+                  placeholder: Assets.IMAGE_PLACE_HOLDER,
+                  fit: BoxFit.fitWidth),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Padding(
+                      padding: Margins.boxPadding(),
+                      child: Text(selectedCropData.summary,
+                          style: Styles.descriptionTextStyle())),
+                  Margins.generalListMargin(),
+                  Html(data: selectedCropData.content),
+                  MyPlotDetailProperties().build(cropDetailProperties)
+                ],
               ),
-              child: ListView(children: <Widget>[
-                FadeInImage.assetNetwork(
-                    image: selectedCropData.imageUrl,
-                    height: listImageHeight,
-                    width: listImageWidth,
-                    placeholder: Assets.IMAGE_PLACE_HOLDER,
-                    fit: BoxFit.fitWidth),
-                Padding(
-                    padding: Margins.boxBigPadding(),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(selectedCropData.summary, style: Styles.descriptionTextStyle()),
-                        Margins.generalListMargin(),
-                        Html(data: selectedCropData.content),
-                        MyPlotDetailProperties().build(cropDetailProperties)
-                      ],
-                    )),
-              ]))
-      );
+            ])));
   }
 }

@@ -1,5 +1,8 @@
 
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+
+import 'colors.dart';
 
 // We define here generic margins for the app
 
@@ -37,8 +40,17 @@ abstract class Margins {
   static leftPaddingSmall(){
     return EdgeInsets.only(left: 10);
   }
+
+  static sidesPadding(){
+    return EdgeInsets.only(left: 15, right: 15);
+  }
 }
 
+abstract class Dividers {
+  static ExpandableDivider(){
+    return Divider(height: 4, color: Color(black));
+  }
+}
 const double bottomBarIconSize = 30.0;
 const double appBarIconSize = 30.0;
 const double listImageHeight = 200.0;
