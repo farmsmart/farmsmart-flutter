@@ -44,7 +44,7 @@ class _ArticleDetailState extends State<ArticleDetailScreen> {
                     placeholder: Assets.IMAGE_PLACE_HOLDER,
                     fit: BoxFit.fitWidth),
                 Padding(
-                    padding: Margins.boxBigPadding(),
+                    padding: Paddings.boxBigPadding(),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[

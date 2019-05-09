@@ -59,6 +59,28 @@ class _CropDetailState extends State<CropDetailScreen> {
                   MyPlotDetailProperties().build(cropDetailProperties, context)
                 ],
               ),
+<<<<<<< HEAD
             ])));
+=======
+              child: ListView(children: <Widget>[
+                FadeInImage.assetNetwork(
+                    image: selectedCropData.imageUrl,
+                    height: listImageHeight,
+                    width: listImageWidth,
+                    placeholder: Assets.IMAGE_PLACE_HOLDER,
+                    fit: BoxFit.fitWidth),
+                Padding(
+                    padding: Paddings.boxBigPadding(),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(selectedCropData.summary, style: Styles.descriptionTextStyle()),
+                        Margins.generalListMargin(),
+                        Html(data: selectedCropData.content),
+                      ],
+                    )),
+              ]))
+      );
+>>>>>>> [PR Comments] my_plot_child renamed into my_plot_page, discover_child renamed into discover_page, HomeMyPlotChild renamed into HomeMyPlotPage,
   }
 }

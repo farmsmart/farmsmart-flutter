@@ -7,14 +7,14 @@ import 'package:farmsmart_flutter/ui/myplot/myplot_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
-class HomeMyPlotChild extends StatefulWidget {
+class HomeMyPlotPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     return _MyPlotState();
   }
 }
 
-class _MyPlotState extends State<HomeMyPlotChild> {
+class _MyPlotState extends State<HomeMyPlotPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

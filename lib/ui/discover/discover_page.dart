@@ -9,13 +9,13 @@ import 'package:farmsmart_flutter/ui/discover/discover_viewmodel.dart';
 import 'package:farmsmart_flutter/redux/home/discover/discover_actions.dart';
 
 
-class HomeDiscoverChild extends StatefulWidget {
+class HomeDiscoverPage extends StatefulWidget {
   State<StatefulWidget> createState() {
     return _DiscoveryState();
   }
 }
 
-class _DiscoveryState extends State<HomeDiscoverChild> {
+class _DiscoveryState extends State<HomeDiscoverPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
