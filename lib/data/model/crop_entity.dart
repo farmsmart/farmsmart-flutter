@@ -47,7 +47,7 @@ class CropEntity {
       CropEntity(
         companionPlants: extractListOfString(cropDocument, "companionPlants"),
         complexity: extractComplexity(cropDocument),
-        content: cropDocument.data["content"],
+        content: (cropDocument.data["content"] != null) ? cropDocument.data["content"] : "",
         cropsInRotation: extractListOfString(cropDocument, "cropsInRotation"),
         cropType: cropTypeValues.map[cropDocument.data["cropType"]],
         imagePathReference: cropDocument.data["image"].first.path,

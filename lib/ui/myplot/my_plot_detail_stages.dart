@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 class MyPlotDetailStages {
   Widget build(List<Stage> stagesList, goToStageDetail) {
     return Column (
-        children: (stagesList.map((stage) => buildStageItem(stage, goToStageDetail))).toList());
+        children: (stagesList != null) ? (stagesList.map((stage) => buildStageItem(stage, goToStageDetail))).toList() : null);
   }
 
   Widget buildStageItem(Stage stageData, goToStageDetail) {

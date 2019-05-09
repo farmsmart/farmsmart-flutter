@@ -38,15 +38,17 @@ class FireStoreManager {
     List<CropEntity> cropsWithStages = List();
 
     for (var crop in cropsList) {
-      for (var stagesPathReference in crop.stagesPathReference) {
-        await Firestore.instance
-            .document(stagesPathReference)
-            .get()
-            .then((stagesSnapshot) async {
-          if (stagesSnapshot.data != null) {
-            crop.addStage(Stage.stageFromDocument(stagesSnapshot));
-          }
-        });
+      if (crop.stagesPathReference != null) {
+        for (var stagesPathReference in crop.stagesPathReference) {
+          await Firestore.instance
+              .document(stagesPathReference)
+              .get()
+              .then((stagesSnapshot) async {
+            if (stagesSnapshot.data != null) {
+              crop.addStage(Stage.stageFromDocument(stagesSnapshot));
+            }
+          });
+        }
       }
       cropsWithStages.add(crop);
     }
