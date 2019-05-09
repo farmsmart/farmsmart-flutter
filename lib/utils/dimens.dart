@@ -48,7 +48,7 @@ abstract class Paddings {
   }
 
   static listOfArticlesPadding() {
-    return EdgeInsets.only(left: 16, top: 8, bottom: 16);
+    return EdgeInsets.only(left: 16, top: 8, bottom: 0);
   }
 
   static leftPaddingSmall() {
