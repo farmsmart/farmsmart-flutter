@@ -30,11 +30,4 @@ class Strings {
   static String myPlotDetailProfitabilityTitle = "Profitability";
   static String myPlotDetailCompanionPlantsTitle = "Companion Plants";
   static String myPlotDetailNonCompanionPlantsTitle = "Non-Companion Plants";
-    
-  static String documentFieldContent = "content";
-  static String documentFieldImage = "image";
-  static String documentFieldStatus = "status";
-  static String documentFieldSummary = "summary";
-  static String documentFileTitle = "title";
-
 }
