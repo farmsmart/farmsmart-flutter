@@ -32,6 +32,26 @@ class FireStoreManager {
     return cropsEntities;
   }
 
+  Future<List<CropEntity>> getStages(List<CropEntity> cropsList) async {
+    List<CropEntity> cropsWithStages = List();
+
+    for (var crop in cropsList) {
+      await Firestore.instance
+          .document(crop.stagesPathReference.first)
+          .get()
+          .then((stagesSnapshot) async {
+        var stages = "";
+        if(stagesSnapshot.data != null) {
+
+//          stages = await getStagesData()
+        }
+        crop.setStages(stages);
+        cropsWithStages.add(crop);
+      });
+    }
+    return cropsWithStages;
+  }
+
   Future<List<CropEntity>> getCropsImagePath(List<CropEntity> cropsList) async {
     List<CropEntity> cropsEntitiesWithImagePath = List();
 

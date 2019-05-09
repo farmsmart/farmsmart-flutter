@@ -4,61 +4,36 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:farmsmart_flutter/model/enums.dart';
 
 class CropEntity {
-  List<String> companionPlants;
-  CropComplexity complexity;
-  String content;
-  List<String> cropsInRotation;
-  CropType cropType;
-  String imagePathReference;
-  String imageUrl;
   String name;
-  List<String> nonCompanionPlants;
-  LoHi profitability;
-  LoHi setupCost;
-  List<String> soilType;
-  String stages;
-  List<String> stagesPathReference;
+  String crop;
   Status status;
-  String summary;
-  LoHi waterRequirement;
+  String content;
+  String relatedArticles; // TODO proper design on FARM-95
 
   CropEntity({
-    this.companionPlants,
-    this.complexity,
-    this.content,
-    this.cropsInRotation,
-    this.cropType,
-    this.imagePathReference,
-    this.imageUrl,
     this.name,
-    this.nonCompanionPlants,
-    this.profitability,
-    this.setupCost,
-    this.soilType,
-    this.stages,
-    this.stagesPathReference,
+    this.crop,
     this.status,
-    this.summary,
-    this.waterRequirement,
+    this.content,
+    this.relatedArticles
   });
 
   factory CropEntity.cropFromDocument(DocumentSnapshot cropDocument) =>
       CropEntity(
-        companionPlants: extractListOfString(cropDocument, "companionPlants"),
-        complexity: extractComplexity(cropDocument),
+        name: cropDocument.data["stageName"],
+        crop: cropDocument.data["crop"],
+        status: statusValues.map[cropDocument.data["status"]],
         content: cropDocument.data["content"],
         cropsInRotation: extractListOfString(cropDocument, "cropsInRotation"),
         cropType: cropTypeValues.map[cropDocument.data["cropType"]],
         imagePathReference: cropDocument.data["image"].first.path,
         imageUrl: "",
-        name: cropDocument.data["name"],
         nonCompanionPlants:
             extractListOfString(cropDocument, "nonCompanionPlants"),
         profitability: extractProfitability(cropDocument),
         setupCost: extractSetupCost(cropDocument),
         soilType: extractListOfString(cropDocument, "soilType"),
         stagesPathReference: extractStagesPaths(cropDocument),
-        status: statusValues.map[cropDocument.data["status"]],
         summary: cropDocument.data["summary"],
         waterRequirement: extractWaterRequirements(cropDocument),
       );
