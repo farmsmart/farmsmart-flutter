@@ -6,15 +6,17 @@ import 'package:farmsmart_flutter/utils/styles.dart';
 import 'package:flutter/material.dart';
 
 class MyPlotDetailProperties {
-  Widget build(List<CropDetailProperty> cropProperties) {
-    return
+  Widget build(List<CropDetailProperty> cropProperties, BuildContext buildContext) {
+    return Theme (child:
       ExpansionTile(
           initiallyExpanded: true,
           title: Text(Strings.myPlotDetailPropertiesTitle,
               style: Styles.detailTitleTextStyle()),
           children: (cropProperties
               .map((cropProperty) => buildPropertyItem(cropProperty)))
-              .toList());
+              .toList()),
+      data: Theme.of(buildContext).copyWith(dividerColor: Color(white)),
+    );
   }
 
   Widget buildPropertyItem(CropDetailProperty cropProperty) {
