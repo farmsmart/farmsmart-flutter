@@ -11,6 +11,7 @@ import 'package:farmsmart_flutter/utils/styles.dart';
 
 import '../app_bar.dart';
 import 'my_plot_detail_properties.dart';
+import 'my_plot_detail_stages.dart';
 import 'myplot_viewmodel.dart';
 
 class CropDetailScreen extends StatefulWidget {
@@ -56,7 +57,8 @@ class _CropDetailState extends State<CropDetailScreen> {
                           style: Styles.descriptionTextStyle())),
                   Margins.generalListMargin(),
                   Html(data: selectedCropData.content),
-                  MyPlotDetailProperties().build(cropDetailProperties, context)
+                  MyPlotDetailProperties().build(cropDetailProperties, context),
+                  MyPlotDetailStages().build(selectedCropData.stages)
                 ],
               ),
             ])));

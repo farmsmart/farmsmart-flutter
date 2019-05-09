@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:farmsmart_flutter/data/firebase_const.dart';
 import 'package:farmsmart_flutter/data/model/crop_entity.dart';
+import 'package:farmsmart_flutter/data/model/stage.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 class FireStoreManager {
@@ -20,7 +21,8 @@ class FireStoreManager {
     var query = Firestore.instance
         .collection(FLAME_LINK_CONTENT)
         .where(FLAME_LINK_SCHEMA, isEqualTo: Schema.CROP)
-        .where(FLAME_LINK_ENVIROMENT, isEqualTo: FirestoreEnvironment.PRODUCTION)
+        .where(FLAME_LINK_ENVIROMENT,
+            isEqualTo: FirestoreEnvironment.PRODUCTION)
         .where(FLAME_LINK_LOCALE, isEqualTo: Locale.EN_US)
         .where(PUBLICATION_STATUS, isEqualTo: DataStatus.PUBLISHED);
 
@@ -36,18 +38,17 @@ class FireStoreManager {
     List<CropEntity> cropsWithStages = List();
 
     for (var crop in cropsList) {
-      await Firestore.instance
-          .document(crop.stagesPathReference.first)
-          .get()
-          .then((stagesSnapshot) async {
-        var stages = "";
-        if(stagesSnapshot.data != null) {
-
-//          stages = await getStagesData()
-        }
-        crop.setStages(stages);
-        cropsWithStages.add(crop);
-      });
+      for (var stagesPathReference in crop.stagesPathReference) {
+        await Firestore.instance
+            .document(stagesPathReference)
+            .get()
+            .then((stagesSnapshot) async {
+          if (stagesSnapshot.data != null) {
+            crop.addStage(Stage.stageFromDocument(stagesSnapshot));
+          }
+        });
+      }
+      cropsWithStages.add(crop);
     }
     return cropsWithStages;
   }
@@ -61,9 +62,9 @@ class FireStoreManager {
           .get()
           .then((imageSnapshot) async {
         var imagePath = "";
-            if(imageSnapshot.data != null) {
-              imagePath = await getImageDownloadURL(imageSnapshot);
-            }
+        if (imageSnapshot.data != null) {
+          imagePath = await getImageDownloadURL(imageSnapshot);
+        }
         crop.setImageUrl(imagePath);
         cropsEntitiesWithImagePath.add(crop);
       });

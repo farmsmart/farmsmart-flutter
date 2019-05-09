@@ -1,6 +1,7 @@
 // Maybe we can separate ui and data model with this class.
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:farmsmart_flutter/data/model/stage.dart';
 import 'package:farmsmart_flutter/model/enums.dart';
 
 class CropEntity {
@@ -16,7 +17,7 @@ class CropEntity {
   LoHi profitability;
   LoHi setupCost;
   List<String> soilType;
-  String stages;
+  List<Stage> stages;
   List<String> stagesPathReference;
   Status status;
   String summary;
@@ -57,6 +58,7 @@ class CropEntity {
         profitability: extractProfitability(cropDocument),
         setupCost: extractSetupCost(cropDocument),
         soilType: extractListOfString(cropDocument, "soilType"),
+        stages: List(),
         stagesPathReference: extractStagesPaths(cropDocument),
         status: statusValues.map[cropDocument.data["status"]],
         summary: cropDocument.data["summary"],
@@ -70,8 +72,8 @@ class CropEntity {
     this.imageUrl = imageUrl;
   }
 
-  void setStages(String stages) {
-    this.stages = stages;
+  void addStage(Stage stage) {
+    this.stages.add(stage);
   }
 }
 
