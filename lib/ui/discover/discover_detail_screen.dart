@@ -7,6 +7,7 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:farmsmart_flutter/redux/app/app_state.dart';
 import 'package:farmsmart_flutter/utils/styles.dart';
+import '../app_bar.dart';
 
 import 'discover_viewmodel.dart';
 
@@ -30,10 +31,7 @@ class _ArticleDetailState extends State<ArticleDetailScreen> {
 
   Widget _buildBody(BuildContext context, ArticleEntity selectedArticleData) {
     return Scaffold(
-          appBar: AppBar(
-            // Define custom appbar here
-            automaticallyImplyLeading: true,
-          ),
+          appBar: CustomAppBar.buildForDetail(selectedArticleData.title),
           body : Container(
 
               child: ListView(children: <Widget>[
@@ -42,14 +40,12 @@ class _ArticleDetailState extends State<ArticleDetailScreen> {
                     height: listImageHeight,
                     width: listImageWidth,
                     placeholder: Assets.IMAGE_PLACE_HOLDER,
-                    fit: BoxFit.fitWidth),
+                    fit: BoxFit.cover),
                 Padding(
                     padding: Paddings.boxBigPadding(),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Text(selectedArticleData.title, style: Styles.titleTextStyle()),
-                        Margins.generalListMargin(),
                         Html(data: selectedArticleData.content),
                       ],
                     )),

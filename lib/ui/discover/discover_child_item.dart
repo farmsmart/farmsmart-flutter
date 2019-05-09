@@ -16,7 +16,7 @@ class DiscoveryListItem {
           key: ValueKey(articleData.title ?? Strings.noTitleString),
           padding: Paddings.listOfArticlesPadding(),
           child: Container(
-              height: 120,
+              height: 101,
               child: Column(
                 children: <Widget>[
                   Row(
@@ -46,7 +46,8 @@ class DiscoveryListItem {
         image: articleData.imageUrl,
         placeholder: Assets.IMAGE_PLACE_HOLDER,
         height: 90,
-        fit: BoxFit.fill);
+        width: 140,
+        fit: BoxFit.cover);
   }
 
   _buildArticleTitle(ArticleEntity articleData) {
