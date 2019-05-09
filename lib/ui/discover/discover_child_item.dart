@@ -1,6 +1,4 @@
 import 'package:farmsmart_flutter/data/model/article_entity.dart';
-import 'package:farmsmart_flutter/ui/myplot/my_plot_item_footer.dart';
-import 'package:farmsmart_flutter/utils/box_shadows.dart';
 import 'package:farmsmart_flutter/utils/colors.dart';
 import 'package:farmsmart_flutter/utils/dimens.dart';
 import 'package:farmsmart_flutter/utils/strings.dart';
@@ -16,67 +14,80 @@ class DiscoveryListItem {
         },
         child: Padding(
           key: ValueKey(articleData.title ?? Strings.noTitleString),
-          padding: Margins.listOfArticlesPadding(),
+          padding: Paddings.listOfArticlesPadding(),
           child: Container(
               height: 120,
               child: Column(
                 children: <Widget>[
                   Row(
                     children: <Widget>[
-                      FadeInImage.assetNetwork(
-                          image: articleData.imageUrl,
-                          placeholder: Assets.IMAGE_PLACE_HOLDER,
-                          height: 90,
-                          fit: BoxFit.fill),
+                      _buildListItemImage(articleData),
                       Padding(
-                        padding: const EdgeInsets.only(left: 10),
+                        padding: Paddings.leftPaddingSmall(),
                       ),
-                      Expanded(
-                        flex: 6,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(articleData.title ?? Strings.noTitleString,
-                                style: Styles.articleListTitleStyle()),
-                            Margins.generalListSmallerMargin(),
-                            Text(
-                                articleData.summary ??
-                                    Strings.myPlotItemDefaultTitle,
-                                maxLines: 4,
-                                overflow: TextOverflow.ellipsis,
-                                style: Styles.footerTextStyle()),
-                          ],
-                        ),
-                      ),
-                      Expanded(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: <Widget>[
-                            Icon(
-                              Icons.arrow_forward_ios,
-                              size: 17,
-                              color: Color(primaryGrey),
-                            ),
-                          ],
-                        ),
-                      ),
+                      _buildArticleTitle(articleData),
+                      _buildListIcon(),
                       Padding(
-                        padding: const EdgeInsets.only(right: 13),
+                        padding: Paddings.rightPaddingSmall(),
                       ),
                     ],
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(bottom: 10),
+                    padding: Paddings.bottomPaddingSmall(),
                   ),
-                  Divider(
-                    height: 1,
-                    color: Color(black),
-                    indent: 145,
-                  )
+                  _buildDividerLine()
                 ],
-              )
-          ),
+              )),
         ));
+  }
+
+  _buildListItemImage(ArticleEntity articleData) {
+    return FadeInImage.assetNetwork(
+        image: articleData.imageUrl,
+        placeholder: Assets.IMAGE_PLACE_HOLDER,
+        height: 90,
+        fit: BoxFit.fill);
+  }
+
+  _buildArticleTitle(ArticleEntity articleData) {
+    return Expanded(
+      flex: 6,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(articleData.title ?? Strings.noTitleString,
+              style: Styles.articleListTitleStyle()),
+          Margins.generalListSmallerMargin(),
+          Text(articleData.summary ?? Strings.myPlotItemDefaultTitle,
+              maxLines: 4,
+              overflow: TextOverflow.ellipsis,
+              style: Styles.footerTextStyle()),
+        ],
+      ),
+    );
+  }
+
+  _buildListIcon() {
+    return Expanded(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: <Widget>[
+          Icon(
+            Icons.arrow_forward_ios,
+            size: arrowIconSize,
+            color: Color(primaryGrey),
+          ),
+        ],
+      ),
+    );
+  }
+
+  _buildDividerLine() {
+    return Divider(
+      height: 1,
+      color: Color(black),
+      indent: 145,
+    );
   }
 }
