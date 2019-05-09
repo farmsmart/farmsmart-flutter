@@ -79,7 +79,7 @@ class CropEntity {
 
 List<String> extractListOfString(
     DocumentSnapshot document, String valueToBeExtracted) {
-  if (document.data[valueToBeExtracted] != null) {
+  if (document.data[valueToBeExtracted] != null && document.data[valueToBeExtracted] != "") {
     return List<String>.from(document.data[valueToBeExtracted].map((x) => x));
   }
   return null;
