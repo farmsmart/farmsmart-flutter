@@ -7,6 +7,12 @@ const FLAME_LINK_LOCALE = '_fl_meta_.locale';
 const PUBLICATION_STATUS = 'status';
 const DASH = '/';
 
+const String documentFieldContent = "content";
+const String documentFieldImage = "image";
+const String documentFieldStatus = "status";
+const String documentFieldSummary = "summary";
+const String documentFileTitle = "title";
+
 class DataStatus {
   static const DRAFT = 'DRAFT';
   static const PUBLISHED = 'PUBLISHED';
