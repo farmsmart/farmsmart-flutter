@@ -72,8 +72,8 @@ abstract class CustomAppBar {
         onPressed: () {});
   }
 
-  static const List<String> popUpMenu = const <String>[
-    "Privacy Policy"
+  static List<String> popUpMenu = <String>[
+    Strings.appbarPopUpPolicies
   ];
 
   static Widget homeIcon() {
