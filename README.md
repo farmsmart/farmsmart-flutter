@@ -1,37 +1,17 @@
-## Welcome to GitHub Pages
+# Farmsmart [![CircleCI](https://circleci.com/gh/farmsmart/farmsmart-flutter.svg?style=svg)](https://circleci.com/gh/farmsmart/farmsmart-flutter)
 
-You can use the [editor on GitHub](https://github.com/farmsmart/farmsmart-flutter/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+This isn't your typical farming app. FarmSmart is for anyone who wants to grow more with less, built with and for its community.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+Tailored recommendations on what to grow. Built in chat. The best techniques in farming - available for free.
 
-### Markdown
+# Website
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+https://www.farmsmart.co/
 
-```markdown
-Syntax highlighted code block
+# Google Play Internal Test Track
 
-# Header 1
-## Header 2
-### Header 3
+To download a developer copy from the Play Store click the link below to join the program.
+https://play.google.com/apps/internaltest/4698261731148956175/join?hl=en-GB
 
-- Bulleted
-- List
+If the link does not work please send a request to @farmsmart/amido
 
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/farmsmart/farmsmart-flutter/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.

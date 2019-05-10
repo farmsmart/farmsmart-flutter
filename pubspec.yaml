@@ -23,6 +23,17 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
+  flutter_redux: ^0.5.2
+  redux: ^3.0.0
+  shared_preferences: ^0.4.3
+  redux_logging: ^0.3.0
+  flutter_html: ^0.8.2
+  flutter_launcher_icons: ^0.7.0
+
+  firebase_storage: ^2.1.1+1
+  cloud_firestore: ^0.10.1
+
+  webview_flutter: ^0.3.6
 
 dev_dependencies:
   flutter_test:
@@ -39,6 +50,30 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+  assets:
+  - assets/icons/app_icon.png
+  - assets/raw/articles_mock.png
+  - assets/raw/community_mock.png
+  - assets/raw/profit_mock.png
+  - assets/raw/crop_image_mock.png
+
+  - assets/icons/community_selected.png
+  - assets/icons/community.png
+  - assets/icons/discover_selected.png
+  - assets/icons/discover.png
+  - assets/icons/my_plot_selected.png
+  - assets/icons/my_plot.png
+  - assets/icons/profit_loss_selected.png
+  - assets/icons/profit_loss.png
+
+  - assets/privacy_policy.html
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icons/app_icon_v2.png"
+
+  # To update the app icon check https://pub.dartlang.org/packages/flutter_launcher_icons
 
   # To add assets to your application, add an assets section, like this:
   # assets:
