@@ -45,7 +45,7 @@ class FireStoreManager {
               .document(stagesPathReference)
               .get()
               .then((stagesSnapshot) async {
-            if (stagesSnapshot.data != null) {
+            if (stagesSnapshot.data != null && stagesSnapshot.data["status"] == DataStatus.PUBLISHED) {
               crop.addStage(Stage.stageFromDocument(stagesSnapshot));
             }
           });

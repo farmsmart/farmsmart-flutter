@@ -45,23 +45,23 @@ class CropEntity {
 
   factory CropEntity.cropFromDocument(DocumentSnapshot cropDocument) =>
       CropEntity(
-        companionPlants: extractListOfString(cropDocument, "companionPlants"),
+        companionPlants: extractListOfString(cropDocument, COMPANION_PLANTS),
         complexity: extractComplexity(cropDocument),
-        content: (cropDocument.data["content"] != null) ? cropDocument.data["content"] : "",
-        cropsInRotation: extractListOfString(cropDocument, "cropsInRotation"),
-        cropType: cropTypeValues.map[cropDocument.data["cropType"]],
-        imagePathReference: cropDocument.data["image"].first.path,
+        content: (cropDocument.data[CONTENT] != null) ? cropDocument.data[CONTENT] : "",
+        cropsInRotation: extractListOfString(cropDocument, CROP_ROTATION),
+        cropType: cropTypeValues.map[cropDocument.data[CROP_TYPE]],
+        imagePathReference: cropDocument.data[IMAGE].first.path,
         imageUrl: "",
-        name: cropDocument.data["name"],
+        name: cropDocument.data[NAME],
         nonCompanionPlants:
-            extractListOfString(cropDocument, "nonCompanionPlants"),
+            extractListOfString(cropDocument, NONCOMPANION_PLANTS),
         profitability: extractProfitability(cropDocument),
         setupCost: extractSetupCost(cropDocument),
-        soilType: extractListOfString(cropDocument, "soilType"),
+        soilType: extractListOfString(cropDocument, SOIL_TYPE),
         stages: List(),
         stagesPathReference: extractStagesPaths(cropDocument),
-        status: statusValues.map[cropDocument.data["status"]],
-        summary: cropDocument.data["summary"],
+        status: statusValues.map[cropDocument.data[STATUS]],
+        summary: cropDocument.data[SUMMARY],
         waterRequirement: extractWaterRequirements(cropDocument),
       );
 
@@ -77,46 +77,63 @@ class CropEntity {
   }
 }
 
+const COMPANION_PLANTS = "companionPlants";
+const CROP_TYPE = "cropType";
+const CROP_ROTATION = "cropsInRotation";
+const CONTENT = "content";
+const IMAGE = "image";
+const NAME = "name";
+const NONCOMPANION_PLANTS = "nonCompanionPlants";
+const COMPLEXITY = "complexity";
+const STAGES = "stages";
+const CROP_STAGE = "cropStage";
+const PROFITABILITY = "profitability";
+const SETUP_COST = "setupCost";
+const WATER_REQUIREMENT = "waterRequirement";
+const SUMMARY = "summary";
+const STATUS = "status";
+const SOIL_TYPE = "soilType";
+
 List<String> extractListOfString(
     DocumentSnapshot document, String valueToBeExtracted) {
   if (document.data[valueToBeExtracted] != null && document.data[valueToBeExtracted] != "") {
-    return List<String>.from(document.data[valueToBeExtracted].map((x) => x));
+    return List<String>.from(document.data[valueToBeExtracted].map((value) => value));
   }
   return null;
 }
 
 List<String> extractStagesPaths(DocumentSnapshot document) {
-  if (document.data["stages"] != null) {
+  if (document.data[STAGES] != null) {
     return List<String>.from(
-        document.data["stages"].map((x) => x["cropStage"].path));
+        document.data[STAGES].map((stage) => stage[CROP_STAGE].path));
   }
   return null;
 }
 
 CropComplexity extractComplexity(DocumentSnapshot document) {
-  if (document.data["complexity"] != null) {
-    return begAdvValues.map[document.data["complexity"]];
+  if (document.data[COMPLEXITY] != null) {
+    return begAdvValues.map[document.data[COMPLEXITY]];
   }
   return null;
 }
 
 LoHi extractProfitability(DocumentSnapshot document) {
-  if (document.data["profitability"] != null) {
-    return loHiValues.map[document.data["profitability"]];
+  if (document.data[PROFITABILITY] != null) {
+    return loHiValues.map[document.data[PROFITABILITY]];
   }
   return null;
 }
 
 LoHi extractSetupCost(DocumentSnapshot document) {
-  if (document.data["setupCost"] != null) {
-    return loHiValues.map[document.data["setupCost"]];
+  if (document.data[SETUP_COST] != null) {
+    return loHiValues.map[document.data[SETUP_COST]];
   }
   return null;
 }
 
 LoHi extractWaterRequirements(DocumentSnapshot document) {
-  if (document.data["waterRequirement"] != null) {
-    return loHiValues.map[document.data["waterRequirement"]];
+  if (document.data[WATER_REQUIREMENT] != null) {
+    return loHiValues.map[document.data[WATER_REQUIREMENT]];
   }
   return null;
 }

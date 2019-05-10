@@ -27,11 +27,3 @@ class Stage {
         relatedArticles: stageDocument.data["relatedArticles"].toString(),
       );
 }
-
-List<String> extractListOfString(
-    DocumentSnapshot document, String valueToBeExtracted) {
-  if (document.data[valueToBeExtracted] != null) {
-    return List<String>.from(document.data[valueToBeExtracted].map((x) => x));
-  }
-  return null;
-}

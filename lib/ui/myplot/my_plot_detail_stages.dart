@@ -20,11 +20,7 @@ class MyPlotDetailStages {
           key: ValueKey(stageData.name),
           padding: Paddings.boxSmallPadding(),
           child: Container(
-              decoration: BoxDecoration(
-                  color: Color(white),
-                  border: Border.all(color : Color(primaryGreen)),
-                  borderRadius: BorderRadius.circular(8.0),
-                  boxShadow: BoxShadows.plotListItemShadow()),
+              decoration: Styles.stageGreenBoxDecoration(),
               height: 100,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
