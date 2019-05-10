@@ -13,12 +13,15 @@ class HomeViewmodel {
   final Function showArticlesChild;
   final Function showCommunityChild;
 
+  final Function goToPrivacyPolicy;
+
   HomeViewmodel({this.loadingStatus,
     this.currentTab,
     this.showArticlesChild,
     this.showCommunityChild,
     this.showMyPlotChild,
-    this.showProfitLossChild});
+    this.showProfitLossChild,
+    this.goToPrivacyPolicy});
 
   static HomeViewmodel fromStore(Store<AppState> store) {
     return HomeViewmodel(
@@ -31,7 +34,10 @@ class HomeViewmodel {
         showArticlesChild: () =>
             store.dispatch(SwitchTabAction(HomeScreen.ARTICLES_TAB)),
         showCommunityChild: () =>
-            store.dispatch(SwitchTabAction(HomeScreen.COMMUNITY_TAB)));
+            store.dispatch(SwitchTabAction(HomeScreen.COMMUNITY_TAB)),
+      goToPrivacyPolicy:  (String value) =>
+          store.dispatch(GoToPrivacyPoliciesAction())
+    );
   }
 
   void changeTab(int value) {

@@ -1,8 +1,10 @@
 import 'package:farmsmart_flutter/redux/app/app_state.dart';
 import 'package:farmsmart_flutter/redux/keys.dart';
 import 'package:farmsmart_flutter/redux/store.dart';
+import 'package:farmsmart_flutter/ui/discover/discover_detail_screen.dart';
 import 'package:farmsmart_flutter/ui/home.dart';
 import 'package:farmsmart_flutter/ui/myplot/my_plot_detail_screen.dart';
+import 'package:farmsmart_flutter/ui/privacy_policies_screen.dart';
 import 'package:farmsmart_flutter/utils/colors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -49,6 +51,8 @@ class _AppState extends State<FarmsmartApp> {
           routes:  <String, WidgetBuilder>{
             // Here you need to add all the different navigation transitions you may have
             AppRoutes.cropDetail: (BuildContext context) => CropDetailScreen(),
+            AppRoutes.articleDetail: (BuildContext context) => ArticleDetailScreen(),
+            AppRoutes.privacyPolicies: (BuildContext context) => PrivacyPoliciesScreen(),
           }
       ),
     );
