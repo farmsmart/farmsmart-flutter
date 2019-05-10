@@ -68,7 +68,7 @@ abstract class Paddings {
 }
 
 abstract class Dividers {
-  static ExpandableDivider(){
+  static expandableDivider(){
     return Divider(height: 4, color: Color(black));
   }
 }

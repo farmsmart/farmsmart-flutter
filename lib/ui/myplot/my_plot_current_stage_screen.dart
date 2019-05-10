@@ -1,7 +1,5 @@
 import 'package:farmsmart_flutter/data/model/stage.dart';
 import 'package:farmsmart_flutter/redux/app/app_state.dart';
-import 'package:farmsmart_flutter/utils/box_shadows.dart';
-import 'package:farmsmart_flutter/utils/colors.dart';
 import 'package:farmsmart_flutter/utils/dimens.dart';
 import 'package:farmsmart_flutter/utils/styles.dart';
 import 'package:flutter/material.dart';
@@ -36,11 +34,11 @@ class _CurrentStageState extends State<MyPlotCurrentStageScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Padding(
-              padding: Margins.boxSmallPadding(),
+              padding: Paddings.boxSmallPadding(),
                 child: Text(stageData.name,
                     style: Styles.detailTitleTextStyle())),
             Padding(
-                padding: Margins.boxSmallPadding(),
+                padding: Paddings.boxSmallPadding(),
                 child: Html(data: stageData.content)),
           ],
         ));

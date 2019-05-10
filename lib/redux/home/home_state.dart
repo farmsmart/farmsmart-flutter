@@ -1,5 +1,4 @@
 import 'package:farmsmart_flutter/model/loading_status.dart';
-import 'package:farmsmart_flutter/redux/home/myPlot/my_plot_state.dart';
 import 'package:meta/meta.dart';
 
 import 'screens.dart';

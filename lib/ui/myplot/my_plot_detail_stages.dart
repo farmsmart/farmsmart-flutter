@@ -18,7 +18,7 @@ class MyPlotDetailStages {
         },
         child: Padding(
           key: ValueKey(stageData.name),
-          padding: Margins.boxSmallPadding(),
+          padding: Paddings.boxSmallPadding(),
           child: Container(
               decoration: BoxDecoration(
                   color: Color(white),
@@ -33,17 +33,17 @@ class MyPlotDetailStages {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Padding(
-                        padding: Margins.boxSmallPadding(),
+                        padding: Paddings.boxSmallPadding(),
                       ),
                       _buildArticleText(stageData.name, stageData.status.toString()),
                       _buildListIcon(),
                       Padding(
-                          padding: Margins.boxSmallPadding()
+                          padding: Paddings.boxSmallPadding()
                       ),
                     ],
                   ),
                   Padding(
-                    padding: Margins.leftPaddingSmall()
+                    padding: Paddings.leftPaddingSmall()
                   ),
                 ],
               )),
@@ -63,7 +63,7 @@ class MyPlotDetailStages {
             children: <Widget>[
               Icon(Icons.check), //TODO Get the proper status icon asset.
               Padding(
-                padding: Margins.leftPaddingSmall(),
+                padding: Paddings.leftPaddingSmall(),
               ),
               Text("Complete"), //TODO Get the completion status. Doesn't comes from backend (so far)
             ],
