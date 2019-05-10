@@ -38,6 +38,7 @@ abstract class CustomAppBar {
       automaticallyImplyLeading: true, // adds the back button automatically
       title: Text(title, style: Styles.appBarTextStyle()),
       actions: <Widget>[profileActions],
+      key: Key('appBar'),
     );
   }
 
