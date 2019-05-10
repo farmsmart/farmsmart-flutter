@@ -8,6 +8,8 @@ class Strings {
   static String noTitleString = "No Title";
   static String appDescription = "Farmsmart Flutter App";
 
+  static String appbarPopUpPolicies = "Privacy Policies";
+
   static String myPlotTab = "My Plot";
   static String profitLossTab = "Profit/Loss";
   static String discoverTab = "Discover";
