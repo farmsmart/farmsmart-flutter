@@ -33,6 +33,8 @@ dependencies:
   firebase_storage: ^2.1.1+1
   cloud_firestore: ^0.10.1
 
+  webview_flutter: ^0.3.6
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -63,6 +65,8 @@ flutter:
   - assets/icons/my_plot.png
   - assets/icons/profit_loss_selected.png
   - assets/icons/profit_loss.png
+
+  - assets/privacy_policy.html
 
 flutter_icons:
   android: "launcher_icon"

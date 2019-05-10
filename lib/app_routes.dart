@@ -6,4 +6,5 @@ class AppRoutes {
   static const cropDetail = "/cropDetail";
   static const cropCurrentStage = "/cropCurrentStage";
   static const articleDetail = "/articleDetail";
+  static const privacyPolicies = "/privacyPolicies";
 }
