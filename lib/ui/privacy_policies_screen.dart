@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:farmsmart_flutter/ui/app_bar.dart';
+import 'package:farmsmart_flutter/utils/assets.dart';
 import 'package:farmsmart_flutter/utils/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -34,7 +35,7 @@ class PrivacyPoliciesState extends State<PrivacyPoliciesScreen> {
   }
 
   _loadHtmlFromAssets() async {
-    String fileText = await rootBundle.loadString('assets/privacy_policy.html');
+    String fileText = await rootBundle.loadString(Assets.PRIVACY_POLICIES_ASSET);
     _controller.loadUrl( Uri.dataFromString(
         fileText,
         mimeType: 'text/html',
