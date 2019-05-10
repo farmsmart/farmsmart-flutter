@@ -58,7 +58,6 @@ abstract class Paddings {
   static sidesPadding(){
     return EdgeInsets.only(left: 15, right: 15);
   }
-
   static rightPaddingSmall() {
     return EdgeInsets.only(right: 10);
   }
@@ -69,7 +68,7 @@ abstract class Paddings {
 }
 
 abstract class Dividers {
-  static ExpandableDivider(){
+  static expandableDivider(){
     return Divider(height: 4, color: Color(black));
   }
 }

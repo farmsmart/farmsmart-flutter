@@ -15,6 +15,9 @@ class NavigationMiddleware extends MiddlewareClass<AppState>{
     if(action is GoToCropDetailAction){
       Keys.navKey.currentState.pushNamed(AppRoutes.cropDetail);
     }
+    if(action is GoToStageAction){
+      Keys.navKey.currentState.pushNamed(AppRoutes.cropCurrentStage);
+    }
     if(action is GoToArticleDetailAction) {
       Keys.navKey.currentState.pushNamed(AppRoutes.articleDetail);
     }
