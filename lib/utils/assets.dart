@@ -8,6 +8,8 @@ class Assets {
   static const String PROFIT_MOCK_BACKGROUND = "assets/raw/profit_mock.png";
   static const String IMAGE_PLACE_HOLDER = "assets/raw/crop_image_mock.png";
 
+  static const String PRIVACY_POLICIES_ASSET = "assets/privacy_policy.html";
+
   static const String APP_ICON = "assets/icons/app_icon.png";
   static const String BOTTOM_BAR_COMMUNITY_SELECTED = "assets/icons/community_selected.png";
   static const String BOTTOM_BAR_COMMUNITY_UNSELECTED = "assets/icons/community.png";
