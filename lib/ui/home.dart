@@ -47,7 +47,7 @@ class _HomeState extends State<Home> {
 
   Widget content(HomeViewmodel viewModel) {
     return Scaffold(
-        appBar: CustomAppBar.build(viewModel.currentTab),
+        appBar: CustomAppBar.build(viewModel.currentTab, viewModel.goToPrivacyPolicy), // We could share a list of pre defined actions for the app bar.
         body: _children[viewModel.currentTab],
         bottomNavigationBar: Theme(
           data: Theme.of(context).copyWith(
