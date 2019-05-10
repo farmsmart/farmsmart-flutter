@@ -21,7 +21,7 @@ class MyPlotDetailProperties {
 
   Widget buildPropertyItem(CropDetailProperty cropProperty) {
     return Padding(
-        padding: Margins.sidesPadding(),
+        padding: Paddings.sidesPadding(),
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[

@@ -7,7 +7,7 @@ class MyPlotItemFooter {
   Widget build(goToDetail, goToStage, cropsData) {
     return Row(children: <Widget>[
       Padding(
-          padding: Margins.leftPaddingSmall(),
+          padding: Paddings.leftPaddingSmall(),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,

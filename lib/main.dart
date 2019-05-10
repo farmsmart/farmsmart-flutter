@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
+import 'package:farmsmart_flutter/ui/discover/discover_detail_screen.dart';
 
 import 'app_routes.dart';
 
@@ -51,6 +52,7 @@ class _AppState extends State<FarmsmartApp> {
             // Here you need to add all the different navigation transitions you may have
             AppRoutes.cropDetail: (BuildContext context) => CropDetailScreen(),
             AppRoutes.cropCurrentStage: (BuildContext context) => MyPlotCurrentStageScreen(),
+            AppRoutes.articleDetail: (BuildContext context) => ArticleDetailScreen(),
           }
       ),
     );

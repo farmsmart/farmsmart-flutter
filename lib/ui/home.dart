@@ -1,9 +1,9 @@
 import 'package:farmsmart_flutter/redux/app/app_state.dart';
 import 'package:farmsmart_flutter/ui/app_bar.dart';
 import 'package:farmsmart_flutter/ui/community/community_child.dart';
-import 'package:farmsmart_flutter/ui/discover/discover_child.dart';
+import 'package:farmsmart_flutter/ui/discover/discover_page.dart';
 import 'package:farmsmart_flutter/ui/home_viewmodel.dart';
-import 'package:farmsmart_flutter/ui/myplot/my_plot_child.dart';
+import 'package:farmsmart_flutter/ui/myplot/my_plot_page.dart';
 import 'package:farmsmart_flutter/ui/profitloss/profit_loss_child.dart';
 import 'package:farmsmart_flutter/utils/assets.dart';
 import 'package:farmsmart_flutter/utils/colors.dart';
@@ -24,9 +24,9 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   final List<Widget> _children = [
-    HomeMyPlotChild(),
+    HomeMyPlotPage(),
     HomeProfitLossChild(),
-    HomeDiscoverChild(),
+    HomeDiscoverPage(),
     HomeCommunityChild()
   ];
 

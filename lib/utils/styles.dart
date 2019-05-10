@@ -36,5 +36,8 @@ abstract class Styles {
     return TextStyle(fontSize: 19, fontWeight: FontWeight.normal, color: Color(primaryGreyDark));
   }
 
+  static TextStyle articleListTitleStyle() {
+    return TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Color(black), decorationColor: Color(primaryGreen));
+  }
 
 }

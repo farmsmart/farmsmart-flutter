@@ -53,14 +53,14 @@ class _CropDetailState extends State<CropDetailScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Padding(
-                      padding: Margins.boxPadding(),
+                      padding: Paddings.boxPadding(),
                       child: Text(selectedCropData.summary,
                           style: Styles.descriptionTextStyle())),
                   Margins.generalListMargin(),
                   Html(data: selectedCropData.content),
                   MyPlotDetailProperties().build(cropDetailProperties, context),
                   Padding(
-                      padding: Margins.boxPadding(),
+                      padding: Paddings.boxPadding(),
                       child: Text(Strings.myPlotDetailStepByStepTitle, style: Styles.detailTitleTextStyle()),),
                   MyPlotDetailStages().build(selectedCropData.stages, goToStageDetail)
                 ],

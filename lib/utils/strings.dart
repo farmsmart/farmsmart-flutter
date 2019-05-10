@@ -2,7 +2,10 @@
 
 class Strings {
 
+  static String emptyString = "";
+  static String errorString = "Error";
   static String appTitle = "Farmsmart" ;
+  static String noTitleString = "No Title";
   static String appDescription = "Farmsmart Flutter App";
 
   static String myPlotTab = "My Plot";
@@ -28,5 +31,4 @@ class Strings {
   static String myPlotDetailCompanionPlantsTitle = "Companion Plants";
   static String myPlotDetailNonCompanionPlantsTitle = "Non-Companion Plants";
   static String myPlotDetailStepByStepTitle = "Step-by-step guide";
-
 }

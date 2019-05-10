@@ -28,7 +28,6 @@ class HomeState {
   // Copies the states of the app or replaces for new ones if needed.
   HomeState copyWith(
       {LoadingStatus loadingStatus,
-      MyPlotState myPlotState,
       int currentHomeTab}) {
     return HomeState(
         loadingStatus: loadingStatus ?? this.loadingStatus,

@@ -12,7 +12,7 @@ class MyPlotListItem {
   Widget buildListItem(CropEntity cropsData, goToDetail, goToStage) {
     return Padding(
         key: ValueKey(cropsData.name ?? Strings.myPlotItemDefaultTitle),
-        padding: Margins.boxPadding(),
+        padding: Paddings.boxPadding(),
         child: Container(
             decoration: BoxDecoration(
                 color: Color(white),
@@ -32,7 +32,7 @@ class MyPlotListItem {
                     fit: BoxFit.fitWidth),
               ),
               Padding(
-                  padding: Margins.boxBigPadding(),
+                  padding: Paddings.boxBigPadding(),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
