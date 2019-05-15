@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:farmsmart_flutter/data/firebase_const.dart';
+import 'package:farmsmart_flutter/data/model/articles_directory_entity.dart';
 import 'package:farmsmart_flutter/data/model/crop_entity.dart';
 import 'package:farmsmart_flutter/data/model/stage.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -113,6 +114,7 @@ class FireStoreManager {
     }
     return articlesEntitiesWithImagePath;
   }
+
   Future<String> getImageDownloadURL(DocumentSnapshot imageDocument) async {
     final sizePath = imageDocument.data["sizes"].first["path"];
     final imageFileNamePath = imageDocument.data["file"];
@@ -121,5 +123,48 @@ class FireStoreManager {
     final storageReference =
         FirebaseStorage.instance.ref().child(flamelinkPath);
     return await storageReference.getDownloadURL();
+  }
+
+  ////////////////// NEW ARTICLES DIRECTORY /////////////////
+
+  // GET ARTICLES DIRECTORY
+  Future<ArticlesDirectoryEntity> getArticlesDirectory() async {
+    ArticlesDirectoryEntity articlesDirectory;
+
+    var query = Firestore.instance
+        .collection(FLAME_LINK_CONTENT)
+        .where(FLAME_LINK_SCHEMA, isEqualTo: Schema.ARTICLE_DIRECTORY)
+        .where(FLAME_LINK_SCHEMA_TYPE, isEqualTo: SchemaType.SINGLE)
+        .where(FLAME_LINK_ENVIROMENT, isEqualTo: FirestoreEnvironment.PRODUCTION)
+        .where(FLAME_LINK_LOCALE, isEqualTo: Locale.EN_US);
+
+    // TODO: First problem here
+    await query.getDocuments().then((snapshot) {
+      articlesDirectory = snapshot.documents.map((articlesDirectoryDocument) {
+        return ArticlesDirectoryEntity.featuredArticlesFromDocument(
+            articlesDirectoryDocument);
+      }).first;
+  });
+    return articlesDirectory;
+}
+
+// GET FEATURED ARTICLES
+Future <ArticlesDirectoryEntity> getFeaturedArticles(ArticlesDirectoryEntity articlesDirectory) async {
+      ArticlesDirectoryEntity articledirectoryWithFeaturedArticles;
+
+      if (articlesDirectory.articlesPathReference != null) {
+        for (var articlePathReference in articlesDirectory.articlesPathReference) {
+          await Firestore.instance
+              .document(articlePathReference)
+              .get()
+              .then((featuredArticlesSnapshot) async {
+            if (featuredArticlesSnapshot.data != null && featuredArticlesSnapshot.data["status"] == DataStatus.PUBLISHED) {
+              articlesDirectory.addArticle(ArticleEntity.articleFromDocument(featuredArticlesSnapshot));
+            }
+          });
+        }
+      }
+      articledirectoryWithFeaturedArticles = articlesDirectory;
+      return articledirectoryWithFeaturedArticles;
   }
 }

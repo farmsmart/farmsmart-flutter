@@ -4,21 +4,21 @@ import 'package:farmsmart_flutter/data/model/article_entity.dart';
 class ArticlesRepository {
   static final ArticlesRepository _repo = ArticlesRepository._internal();
 
-  FireStoreManager _fireStoreManager;
+  FireStoreManager _firestoreManager;
 
   static ArticlesRepository get() {
     return _repo;
   }
 
   ArticlesRepository._internal() {
-    _fireStoreManager = FireStoreManager.get();
+    _firestoreManager = FireStoreManager.get();
   }
 
   Future<List<ArticleEntity>> getListOfArticles(){
-    return _fireStoreManager.getArticles();
+    return _firestoreManager.getArticles();
   }
 
   Future<List<ArticleEntity>> getListOfArticlesWithImages(List<ArticleEntity> articlesWithoutImages) {
-    return _fireStoreManager.getArticlesImagePath(articlesWithoutImages);
+    return _firestoreManager.getArticlesImagePath(articlesWithoutImages);
   }
 }
