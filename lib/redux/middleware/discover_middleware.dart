@@ -9,6 +9,7 @@ class DiscoverMiddleWare extends MiddlewareClass<AppState> {
     if(action is FetchArticleDirectoryAction) {
         var articlesDirectory = await ArticlesDirectoryRepository.get().getDirectory();
         articlesDirectory = await ArticlesDirectoryRepository.get().getListOfArticles(articlesDirectory);
+        articlesDirectory.articles = await ArticlesDirectoryRepository.get().getListOfArticlesWithImages(articlesDirectory.articles);
         store.dispatch(UpdateArticleDirectoryAction(articlesDirectory));
     }
     next(action);

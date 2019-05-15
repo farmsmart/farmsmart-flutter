@@ -1,6 +1,8 @@
 
 import 'package:farmsmart_flutter/data/managers/firestore_manager.dart';
 import 'package:farmsmart_flutter/data/model/articles_directory_entity.dart';
+import 'package:farmsmart_flutter/data/model/article_entity.dart';
+
 
 class ArticlesDirectoryRepository {
   static final ArticlesDirectoryRepository _articlesDir = ArticlesDirectoryRepository._internal();
@@ -21,5 +23,9 @@ class ArticlesDirectoryRepository {
 
   Future<ArticlesDirectoryEntity> getListOfArticles(ArticlesDirectoryEntity featuredDirectoryWithoutArticles) {
     return _firestoreManager.getFeaturedArticles(featuredDirectoryWithoutArticles);
+  }
+
+  Future<List<ArticleEntity>> getListOfArticlesWithImages(List<ArticleEntity> articlesWithoutImages) {
+    return _firestoreManager.getArticlesImagePath(articlesWithoutImages);
   }
 }
