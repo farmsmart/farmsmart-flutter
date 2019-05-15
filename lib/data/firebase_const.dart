@@ -8,11 +8,16 @@ const FLAME_LINK_LOCALE = '_fl_meta_.locale';
 const PUBLICATION_STATUS = 'status';
 const DASH = '/';
 
+const String EMPTY = "";
 const String documentFieldContent = "content";
 const String documentFieldImage = "image";
 const String documentFieldStatus = "status";
 const String documentFieldSummary = "summary";
-const String documentFileTitle = "title";
+const String documentFieldTitle = "title";
+
+const String imageSizes = "sizes";
+const String imagePath = "path";
+const String imageFile = "file";
 
 class DataStatus {
   static const DRAFT = 'DRAFT';

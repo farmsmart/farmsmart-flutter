@@ -1,4 +1,4 @@
-import 'package:farmsmart_flutter/data/model/stage.dart';
+import 'package:farmsmart_flutter/data/model/stage_entity.dart';
 import 'package:farmsmart_flutter/utils/box_shadows.dart';
 import 'package:farmsmart_flutter/utils/colors.dart';
 import 'package:farmsmart_flutter/utils/dimens.dart';
@@ -6,12 +6,12 @@ import 'package:farmsmart_flutter/utils/styles.dart';
 import 'package:flutter/material.dart';
 
 class MyPlotDetailStages {
-  Widget build(List<Stage> stagesList, goToStageDetail) {
+  Widget build(List<StageEntity> stagesList, goToStageDetail) {
     return Column (
         children: (stagesList != null) ? (stagesList.map((stage) => buildStageItem(stage, goToStageDetail))).toList() : null);
   }
 
-  Widget buildStageItem(Stage stageData, goToStageDetail) {
+  Widget buildStageItem(StageEntity stageData, goToStageDetail) {
     return GestureDetector(
         onTap: () {
           goToStageDetail(stageData);

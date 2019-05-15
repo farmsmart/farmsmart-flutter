@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:farmsmart_flutter/data/model/article_entity.dart';
+import 'package:farmsmart_flutter/data/model/entities_const.dart';
 
 class ArticlesDirectoryEntity {
   List<ArticleEntity> articles;
@@ -22,9 +23,9 @@ class ArticlesDirectoryEntity {
 }
 
 List<String> extractArticlesPaths(DocumentSnapshot document) {
-  if (document.data["articles"] != null) {
+  if (document.data[ARTICLES] != null) {
     return List<String>.from(
-        document.data["articles"].map((article) => article["article"].path));
+        document.data[ARTICLES].map((article) => article[ARTICLE].path));
   }
   return null;
 }
