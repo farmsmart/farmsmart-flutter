@@ -1,31 +1,31 @@
 // General
-const String CONTENT = "content";
-const String IMAGE = "image";
-const String STATUS = "status";
-const String SUMMARY = "summary";
+const CONTENT = "content";
+const IMAGE = "image";
+const STATUS = "status";
+const SUMMARY = "summary";
 
 // Article entity
-const String ARTICLES = "articles";
-const String ARTICLE = "article";
+const ARTICLES = "articles";
+const ARTICLE = "article";
 
 // Articles Directory Entity
-const String TITLE = "title";
+const TITLE = "title";
 
 // Crop Entity
-const String COMPANION_PLANTS = "companionPlants";
-const String CROP_TYPE = "cropType";
-const String CROP_ROTATION = "cropsInRotation";
-const String NAME = "name";
-const String NONCOMPANION_PLANTS = "nonCompanionPlants";
-const String COMPLEXITY = "complexity";
-const String STAGES = "stages";
-const String CROP_STAGE = "cropStage";
-const String PROFITABILITY = "profitability";
-const String SETUP_COST = "setupCost";
-const String WATER_REQUIREMENT = "waterRequirement";
-const String SOIL_TYPE = "soilType";
+const COMPANION_PLANTS = "companionPlants";
+const CROP_TYPE = "cropType";
+const CROP_ROTATION = "cropsInRotation";
+const NAME = "name";
+const NONCOMPANION_PLANTS = "nonCompanionPlants";
+const COMPLEXITY = "complexity";
+const STAGES = "stages";
+const CROP_STAGE = "cropStage";
+const PROFITABILITY = "profitability";
+const SETUP_COST = "setupCost";
+const WATER_REQUIREMENT = "waterRequirement";
+const SOIL_TYPE = "soilType";
 
 // Stage Entity
-const String STAGE_NAME = "stageName";
-const String CROP = "crop";
-const String RELATED_ARTICLES = "relatedArticles";
+const STAGE_NAME = "stageName";
+const CROP = "crop";
+const RELATED_ARTICLES = "relatedArticles";
