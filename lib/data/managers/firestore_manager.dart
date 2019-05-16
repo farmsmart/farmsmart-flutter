@@ -129,13 +129,11 @@ class FireStoreManager {
     return articlesDirectory;
   }
 
-  Future<ArticlesDirectoryEntity> getFeaturedArticles(
-      ArticlesDirectoryEntity articlesDirectory) async {
-    ArticlesDirectoryEntity articlesDirectoryWithFeaturedArticles;
+  Future<List<ArticleEntity>> getFeaturedArticles(List<String> articlesDirectory) async {
+    List<ArticleEntity> listOfFeaturedArticles = List();
 
-    if (articlesDirectory.articlesPathReference != null) {
-      for (var articlePathReference
-          in articlesDirectory.articlesPathReference) {
+    if (articlesDirectory != null) {
+      for (var articlePathReference in articlesDirectory) {
         await Firestore.instance
             .document(articlePathReference)
             .get()
@@ -143,13 +141,12 @@ class FireStoreManager {
           if (featuredArticlesSnapshot.data != null &&
               featuredArticlesSnapshot.data[documentFieldStatus] ==
                   DataStatus.PUBLISHED) {
-            articlesDirectory.addArticle(
+            listOfFeaturedArticles.add(
                 ArticleEntity.articleFromDocument(featuredArticlesSnapshot));
           }
         });
       }
     }
-    articlesDirectoryWithFeaturedArticles = articlesDirectory;
-    return articlesDirectoryWithFeaturedArticles;
+    return listOfFeaturedArticles;
   }
 }

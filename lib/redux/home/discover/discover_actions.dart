@@ -6,8 +6,8 @@ class FetchArticleDirectoryAction {
 }
 
 class UpdateArticleDirectoryAction {
-  ArticlesDirectoryEntity articlesList;
-  UpdateArticleDirectoryAction(this.articlesList);
+  ArticlesDirectoryEntity articlesDirectory;
+  UpdateArticleDirectoryAction(this.articlesDirectory);
 }
 
 class GoToArticleDetailAction {

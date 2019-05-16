@@ -27,7 +27,6 @@ class DiscoverViewModel {
         selectedArticle: store.state.discoverState.selectedArticle,
         goToDetail: (ArticleEntity article) =>
             store.dispatch(GoToArticleDetailAction(article)),
-        //TODO: Check
         fetchArticleDirectory: () => store.dispatch(FetchArticleDirectoryAction()));
   }
 }

@@ -10,7 +10,7 @@ final discoverReducer = combineReducers<DiscoverState>([
 ]);
 
 DiscoverState _updateArticles(DiscoverState state, UpdateArticleDirectoryAction action) =>
-    state.copyWith(loadingStatus: LoadingStatus.SUCCESS, articlesDirectory: action.articlesList);
+    state.copyWith(loadingStatus: LoadingStatus.SUCCESS, articlesDirectory: action.articlesDirectory);
 
 DiscoverState _goToArticleDetail(DiscoverState state, GoToArticleDetailAction action) =>
     state.copyWith(selectedArticle: action.article);
