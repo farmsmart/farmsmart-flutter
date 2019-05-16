@@ -47,8 +47,7 @@ class FireStoreManager {
               .get()
               .then((stagesSnapshot) async {
             if (stagesSnapshot.data != null &&
-                stagesSnapshot.data[documentFieldStatus] ==
-                    DataStatus.PUBLISHED) {
+                stagesSnapshot.data[documentFieldStatus] == DataStatus.PUBLISHED) {
               crop.addStage(StageEntity.stageFromDocument(stagesSnapshot));
             }
           });
@@ -139,8 +138,7 @@ class FireStoreManager {
             .get()
             .then((featuredArticlesSnapshot) async {
           if (featuredArticlesSnapshot.data != null &&
-              featuredArticlesSnapshot.data[documentFieldStatus] ==
-                  DataStatus.PUBLISHED) {
+              featuredArticlesSnapshot.data[documentFieldStatus] == DataStatus.PUBLISHED) {
             listOfFeaturedArticles.add(
                 ArticleEntity.articleFromDocument(featuredArticlesSnapshot));
           }
