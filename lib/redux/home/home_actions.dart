@@ -7,3 +7,7 @@ class SwitchTabAction {
   final HomeScreen screen;
   SwitchTabAction(this.screen);
 }
+
+class GoToPrivacyPoliciesAction {
+  GoToPrivacyPoliciesAction();
+}

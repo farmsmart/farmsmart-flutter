@@ -10,6 +10,7 @@ class MyPlotMiddleWare extends MiddlewareClass<AppState>{
   Future call(Store<AppState> store, dynamic action, NextDispatcher next) async {
     if(action is FetchCropListAction) {
       var listOfCrops = await PlotRepository.get().getListOfCrops();
+      listOfCrops = await PlotRepository.get().getListOfCropStages(listOfCrops);
       listOfCrops = await PlotRepository.get().getListOfCropsWithImages(listOfCrops);
       store.dispatch(UpdateCropListAction(listOfCrops));
     }

@@ -9,10 +9,10 @@ import 'package:farmsmart_flutter/utils/styles.dart';
 import 'package:flutter/material.dart';
 
 class MyPlotListItem {
-  Widget buildListItem(CropEntity cropsData, goToDetail) {
+  Widget buildListItem(CropEntity cropsData, goToDetail, goToStage) {
     return Padding(
         key: ValueKey(cropsData.name ?? Strings.myPlotItemDefaultTitle),
-        padding: Margins.boxPadding(),
+        padding: Paddings.boxPadding(),
         child: Container(
             decoration: BoxDecoration(
                 color: Color(white),
@@ -32,7 +32,7 @@ class MyPlotListItem {
                     fit: BoxFit.fitWidth),
               ),
               Padding(
-                  padding: Margins.boxBigPadding(),
+                  padding: Paddings.boxBigPadding(),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
@@ -41,7 +41,7 @@ class MyPlotListItem {
                       Margins.generalListSmallMargin(),
                       Text(Strings.myPlotCurrentStagesMOCK),
                       Margins.generalListBigMargin(),
-                      MyPlotItemFooter().build(goToDetail, cropsData)
+                      MyPlotItemFooter().build(goToDetail, goToStage, cropsData)
                     ],
                   )),
             ])));
