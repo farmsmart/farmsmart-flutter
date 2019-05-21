@@ -35,10 +35,8 @@ Flutter code often involves building fairly deep tree-shaped data structures, fo
 
 Before pushing and merging changes made in the code, we should run before the auto format, that can be run executing ***dartfmt*** (*dartfmt* can be found right-clicking in the code window and then select ***Reformat Code with dartfmt***)
 
-## Naming
-
-
 ## Quotes
+
 In Dart / Flutter, we would use single quote `'` instead of double quote `"`
 
 ## Comments
@@ -52,14 +50,79 @@ In Dart / Flutter, we would use single quote `'` instead of double quote `"`
 
 ## Constants
 
-## Type inferance
+We should group inside a class all the constants that referes to a same concept.
 
+We should avoid:
+```
+const documentTitle = ""
+const documentDescription = ""
+const documentLink = ""
+```
+We should do:
+```
+class Document {
+    const title = ""
+    const description = ""
+    const link = ""
+}
+```
 ## Strings
 
+The same that we said with Constants applies with Strings.
+
+In order to keep our resources clean and organized, we would separate the Strings by their use.
+
+Let's see an example:
+
+```
+String homeTab = ""
+String profileTab = ""
+String newsTab = ""
+String moreTab = ""
+
+String myProfileTitle = ""
+String myProfileName = ""
+String myProfileDescription = ""
+String myProfileDate = ""
+String myProfileStarts = ""
+```
+We should refactor that an have:
+
+```
+class BottomBarTabs {
+    String home = ""
+    String profile = ""
+    String news = ""
+    String more = ""
+}
+```
+```
+class MyProfile{ 
+    String title = ""
+    String name = ""
+    String description = ""
+    String date = ""
+    String starts = ""
+}
+```
+
+This would help in code when we access to this specific strings get a clear context of where we are going, and if there's a change, where we should apply the changes.
+
+## Type system and inferance
+
+We encourage to check the [Type System](https://dart.dev/guides/language/sound-dart) in Dart to get a better overview of **Do** and **Don't Do** in Dart.
+
 ## Widgets
+
+When building a Widget in Flutter, we should use [Trailing commas](https://flutter.dev/docs/development/tools/formatting#using-trailing-commas), as said in the specified point.
+
+Another practices we should follow:
+- We should extract in methods the Widgets instead of embedding them one inside another in a hierarchical view.
+
 
 ## Resources
 
 Here are some resources that helped to define the code style for this project:
 - [Effective Dart](https://dart.dev/guides/language/effective-dart/style)
 - [Style Guide for Flutter](https://github.com/flutter/flutter/wiki/Style-guide-for-Flutter-repo)
+- [Type System](https://dart.dev/guides/language/sound-dart)
