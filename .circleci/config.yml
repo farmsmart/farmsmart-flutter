@@ -15,11 +15,11 @@ jobs:
           command: pub global activate junitreport
 
       - run:
-          name: Create test-results in tmp
+          name: Create directory structure for test-results
           command: mkdir --parents /tmp/test-results/flutter
 
       - run:
-          name: Get Flutter packages
+          name: Get Flutter packages to avoid stdout in JSON
           command: flutter packages get
 
       - run:
@@ -31,7 +31,4 @@ jobs:
           command: $HOME/.pub-cache/bin/tojunit --input /tmp/test-results/flutter/TEST-report.json --output /tmp/test-results/flutter/junit.xml
 
       - store_test_results:
-          path: /tmp/test-results
-
-      - store_artifacts:
           path: /tmp/test-results
