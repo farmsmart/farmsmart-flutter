@@ -102,7 +102,7 @@ class MyProfile{
     String name = ""
     String description = ""
     String date = ""
-    String starts = ""
+    String skills = ""
 }
 ```
 
