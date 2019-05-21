@@ -19,6 +19,10 @@ jobs:
           command: mkdir --parents /tmp/test-results/flutter
 
       - run:
+          name: Get Flutter packages
+          command: flutter packages get
+
+      - run:
           name: Run Flutter tests.
           command: flutter test --machine > /tmp/test-results/flutter/TEST-report.json
 
