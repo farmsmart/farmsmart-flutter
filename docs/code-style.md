@@ -84,7 +84,7 @@ String myProfileTitle = ""
 String myProfileName = ""
 String myProfileDescription = ""
 String myProfileDate = ""
-String myProfileStarts = ""
+String myProfileSkills = ""
 ```
 We should refactor that an have:
 
