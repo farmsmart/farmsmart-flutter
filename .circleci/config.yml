@@ -20,4 +20,4 @@ jobs:
 
       - run:
           name: Run Flutter tests.
-          command: flutter test --machine | $HOME/.pub-cache/bin/tojunit > /tmp/test-results/flutter/TEST-report.xml
+          command: flutter test --machine > /tmp/test-results/flutter/TEST-report.json
