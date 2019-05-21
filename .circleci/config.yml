@@ -19,5 +19,9 @@ jobs:
           command: mkdir --parents /tmp/test-results/flutter
 
       - run:
+          name: DEBUG Flutter Path
+          command: ls -la $HOME/.pub-cache/bin
+
+      - run:
           name: Run Flutter tests.
           command: flutter test --machine | $HOME/.pub-cache/bin/tojunit > /tmp/test-results/flutter/TEST-report.xml
