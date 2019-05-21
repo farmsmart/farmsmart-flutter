@@ -11,5 +11,13 @@ jobs:
           command: flutter doctor
 
       - run:
+          name: Install JUnitReport
+          command: pub global activate junitreport
+
+      - run:
+          name: Create test-results in tmp
+          command: mkdir --parents /tmp/test-results/flutter
+
+      - run:
           name: Run Flutter tests.
-          command: flutter test
+          command: flutter test --machine | tojunit > /tmp/test-results/flutter/TEST-report.xml
