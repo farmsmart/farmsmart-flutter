@@ -45,7 +45,7 @@ In Dart / Flutter, we would use single quote `'` instead of double quote `"`
   - Leaving commented code that would not be needed anymore
   - Leave comments that are not giving too much value
 - We should clean the TODO's FIXME's comments as quick as we can
-- Methods and classes should be self explanatory and they should don't need comments
+- Methods and classes should be self explanatory and they shouldn't need comments
 - If we need to add a comment, this one should be brief
 
 ## Constants
@@ -60,7 +60,7 @@ const documentLink = ""
 ```
 We should do:
 ```
-class Document {
+class DocumentConstants {
     const title = ""
     const description = ""
     const link = ""
@@ -75,34 +75,37 @@ In order to keep our resources clean and organized, we would separate the String
 Let's see an example:
 
 ```
-String homeTab = ""
-String profileTab = ""
-String newsTab = ""
-String moreTab = ""
+class Strings {
+    String homeTab = ""
+    String profileTab = ""
+    String newsTab = ""
+    String moreTab = ""
 
-String myProfileTitle = ""
-String myProfileName = ""
-String myProfileDescription = ""
-String myProfileDate = ""
-String myProfileSkills = ""
+    String myProfileTitle = ""
+    String myProfileName = ""
+    String myProfileDescription = ""
+    String myProfileDate = ""
+    String myProfileSkills = ""
+}
 ```
 We should refactor that an have:
 
 ```
-class BottomBarTabs {
-    String home = ""
-    String profile = ""
-    String news = ""
-    String more = ""
-}
-```
-```
-class MyProfile{ 
-    String title = ""
-    String name = ""
-    String description = ""
-    String date = ""
-    String skills = ""
+class Strings {
+    class BottomBarTabs {
+        String home = ""
+        String profile = ""
+        String news = ""
+        String more = ""
+    }
+
+    class MyProfile{ 
+        String title = ""
+        String name = ""
+        String description = ""
+        String date = ""
+        String skills = ""
+    }
 }
 ```
 
@@ -119,7 +122,49 @@ When building a Widget in Flutter, we should use [Trailing commas](https://flutt
 Another practices we should follow:
 - We should extract in methods the Widgets instead of embedding them one inside another in a hierarchical view.
 
+## Assets / Images separation
 
+Inside the assets folder, we should separate the different resources by folders that identifies the place where this is being used.
+
+## Literals & magic numbers
+
+We would not have hardcoded literals or numbers in our code, that adds complexity when we try to change any of them, or if we want tu reuse them. we should place them in the correct Strings or Constants file or in the top of the current class if they are only used there.
+
+```
+class XYZ {
+
+    void example() {
+        runMethod1('current position');
+        for(int i=0; i<3; i++) {
+            runMethod1("current position $i");
+        }
+    }
+
+    void runMethod1(String text) {
+        print(text);
+    }
+
+}
+```
+
+```
+class XYZ {
+
+    void example() {
+        const currentPosition = 'current position';
+        const numberOfPositions = 3;
+        runMethod1(currentPosition);
+        for(int i=0; i<numberOfPositions; i++) {
+            runMethod1("$currentPosition $i");
+        }
+    }
+
+    void runMethod1(String text) {
+        print(text);
+    }
+
+}
+```
 ## Resources
 
 Here are some resources that helped to define the code style for this project:
