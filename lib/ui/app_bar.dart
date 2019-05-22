@@ -83,6 +83,4 @@ abstract class CustomAppBar {
   static Widget backIcon() {
     return BackButton(color: Color(primaryGreen));
   }
-
-
 }

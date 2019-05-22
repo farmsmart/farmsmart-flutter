@@ -1,5 +1,6 @@
+
 import 'package:farmsmart_flutter/data/model/crop_entity.dart';
-import 'package:farmsmart_flutter/data/model/stage.dart';
+import 'package:farmsmart_flutter/data/model/stage_entity.dart';
 import 'package:farmsmart_flutter/model/loading_status.dart';
 import 'package:meta/meta.dart';
 
@@ -12,7 +13,7 @@ class MyPlotState {
   final LoadingStatus loadingStatus;
   final List<CropEntity> cropList;
   final CropEntity selectedCrop;
-  final Stage selectedStage;
+  final StageEntity selectedStage;
 
   MyPlotState(
       {@required this.loadingStatus,
@@ -31,7 +32,7 @@ class MyPlotState {
       {LoadingStatus loadingStatus,
       List<CropEntity> cropList,
       CropEntity selectedCrop,
-      Stage selectedStage }) {
+      StageEntity selectedStage }) {
     return new MyPlotState(
         loadingStatus: loadingStatus ?? this.loadingStatus,
         cropList: cropList ?? this.cropList,

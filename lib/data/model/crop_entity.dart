@@ -1,8 +1,9 @@
 // Maybe we can separate ui and data model with this class.
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:farmsmart_flutter/data/model/stage.dart';
+import 'package:farmsmart_flutter/data/model/stage_entity.dart';
 import 'package:farmsmart_flutter/model/enums.dart';
+import 'package:farmsmart_flutter/data/model/entities_const.dart';
 
 class CropEntity {
   List<String> companionPlants;
@@ -17,7 +18,7 @@ class CropEntity {
   LoHi profitability;
   LoHi setupCost;
   List<String> soilType;
-  List<Stage> stages;
+  List<StageEntity> stages;
   List<String> stagesPathReference;
   Status status;
   String summary;
@@ -72,27 +73,11 @@ class CropEntity {
     this.imageUrl = imageUrl;
   }
 
-  void addStage(Stage stage) {
+  void addStage(StageEntity stage) {
     this.stages.add(stage);
   }
 }
 
-const COMPANION_PLANTS = "companionPlants";
-const CROP_TYPE = "cropType";
-const CROP_ROTATION = "cropsInRotation";
-const CONTENT = "content";
-const IMAGE = "image";
-const NAME = "name";
-const NONCOMPANION_PLANTS = "nonCompanionPlants";
-const COMPLEXITY = "complexity";
-const STAGES = "stages";
-const CROP_STAGE = "cropStage";
-const PROFITABILITY = "profitability";
-const SETUP_COST = "setupCost";
-const WATER_REQUIREMENT = "waterRequirement";
-const SUMMARY = "summary";
-const STATUS = "status";
-const SOIL_TYPE = "soilType";
 
 List<String> extractListOfString(
     DocumentSnapshot document, String valueToBeExtracted) {
