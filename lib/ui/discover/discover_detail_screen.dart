@@ -33,7 +33,7 @@ class _ArticleDetailState extends State<ArticleDetailScreen> {
 
   Widget _buildBody(BuildContext context, ArticleEntity selectedArticleData) {
     return Scaffold(
-          appBar: CustomAppBar.buildForDetail(selectedArticleData.title, CustomAppBar.shareAction(selectedArticleData.id)),
+          appBar: CustomAppBar.buildForArticleDetail(selectedArticleData.title, CustomAppBar.shareAction(selectedArticleData.id)),
           body : Container(
 
               child: ListView(children: <Widget>[
