@@ -34,6 +34,12 @@ dependencies:
   cloud_firestore: ^0.10.1
 
   webview_flutter: ^0.3.6
+  firebase_dynamic_links: ^0.4.0
+  flutter_share_me: ^0.1.3
+  package_info: ^0.4.0+3
+
+
+
 
 dev_dependencies:
   flutter_test:

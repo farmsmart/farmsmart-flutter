@@ -5,6 +5,16 @@ import 'package:farmsmart_flutter/utils/strings.dart';
 import 'package:farmsmart_flutter/utils/colors.dart';
 import 'package:farmsmart_flutter/utils/dimens.dart';
 import 'package:farmsmart_flutter/utils/styles.dart';
+import 'package:farmsmart_flutter/ui/discover/discover_detail_screen.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_share_me/flutter_share_me.dart';
+import 'dart:io';
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
+import 'package:path/path.dart';
+import 'package:package_info/package_info.dart';
+
+
+
 
 // We define here generic margins for the app
 
@@ -43,11 +53,12 @@ abstract class CustomAppBar {
     );
   }
 
-  static AppBar buildForDetail(String title) {
+  static AppBar buildForDetail(String title, Widget shareActions) {
     return AppBar(
       leading: backIcon(),
       automaticallyImplyLeading: true, // adds the back button automatically
       title: Text(title, style: Styles.appBarDetailTextStyle()),
+      actions: <Widget>[shareActions],
       centerTitle: true,
     );
   }
@@ -56,6 +67,42 @@ abstract class CustomAppBar {
     return IconButton(
         icon: Icon(Icons.account_circle, color: Color(primaryGreen), size: appBarIconSize),
         onPressed: () {});
+  }
+
+  static Widget shareAction(String articleID) {
+    return IconButton(
+      icon: Icon(Icons.share, color: Color(primaryGreen), size: appBarIconSize),
+      onPressed: ()  async {
+        Future<String> packageName= getPackageInfo();
+        String link = buildLink(packageName, articleID);
+        print (link);
+        var response = await FlutterShareMe().shareToSystem(
+              msg: link);
+          if (response == 'success') {
+            print('navigate success');
+          }
+      },
+    );
+  }
+
+  static Future<String> getPackageInfo() async {
+    //String dynamicUrl = "https://farmsmart.page.link/?link=https://www.farmsmart.co?id="+articleID+"&type=article&apn="+packageName+"&efr=1";
+
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+
+    String appName = packageInfo.appName;
+    String packageName = packageInfo.packageName;
+    String version = packageInfo.version;
+    String buildNumber = packageInfo.buildNumber;
+
+    //String dynamicUrl = "https://farmsmart.page.link/?link=https://www.farmsmart.co?id="+articleID+"&type=article&apn="+"co.farmsmart.app.dev"+"&efr=1";
+    return packageName;
+  }
+
+  static Future<String> buildLink(Future<String> packageName, String articleID) async {
+    Future<String> package = packageName;
+    String dynamicUrl = "https://farmsmart.page.link/?link=https://www.farmsmart.co?id="+articleID+"&type=article&apn="+packageName+"&efr=1";
+    return dynamicUrl;
   }
 
   static Widget popUpMenuAction(Function goToPrivacyPolicy) {

@@ -28,8 +28,9 @@ class _CurrentStageState extends State<MyPlotCurrentStageScreen> {
   }
 
   Widget _buildBody(BuildContext context, StageEntity stageData, String cropTitle) {
+    String deepLink;
     return Scaffold(
-        appBar: CustomAppBar.buildForDetail(cropTitle),
+        appBar: CustomAppBar.buildForDetail(cropTitle, CustomAppBar.shareAction(deepLink)),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[

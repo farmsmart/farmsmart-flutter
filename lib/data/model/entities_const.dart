@@ -3,6 +3,7 @@ const CONTENT = "content";
 const IMAGE = "image";
 const STATUS = "status";
 const SUMMARY = "summary";
+const ID = "id";
 
 // Article entity
 const ARTICLES = "articles";

@@ -35,8 +35,9 @@ class _CropDetailState extends State<CropDetailScreen> {
 
   Widget _buildBody(BuildContext context, CropEntity selectedCropData,
       List<CropDetailProperty> cropDetailProperties, goToStageDetail) {
+    String deepLink;
     return Scaffold(
-        appBar: CustomAppBar.buildForDetail(selectedCropData.name),
+        appBar: CustomAppBar.buildForDetail(selectedCropData.name, CustomAppBar.shareAction(deepLink)),
         body: Container(
             decoration: BoxDecoration(
               color: Color(white),
