@@ -73,8 +73,8 @@ abstract class CustomAppBar {
     return IconButton(
       icon: Icon(Icons.share, color: Color(primaryGreen), size: appBarIconSize),
       onPressed: ()  async {
-        Future<String> packageName= getPackageInfo();
-        String link = buildLink(packageName, articleID);
+        //Future<String> packageName= getPackageInfo();
+        String link = buildLink(articleID);
         print (link);
         var response = await FlutterShareMe().shareToSystem(
               msg: link);
@@ -99,9 +99,14 @@ abstract class CustomAppBar {
     return packageName;
   }
 
-  static Future<String> buildLink(Future<String> packageName, String articleID) async {
+  /*static String buildLink(Future<String> packageName, String articleID) async {
     Future<String> package = packageName;
-    String dynamicUrl = "https://farmsmart.page.link/?link=https://www.farmsmart.co?id="+articleID+"&type=article&apn="+packageName+"&efr=1";
+    String dynamicUrl = await "https://farmsmart.page.link/?link=https://www.farmsmart.co?id="+articleID+"&type=article&apn="+packageName+"&efr=1";
+    return dynamicUrl;
+  } */
+
+  static String buildLink(String articleID) {
+    String dynamicUrl = "https://farmsmart.page.link/?link=https://www.farmsmart.co?id="+articleID+"&type=article&apn="+"co.farmsmart.app.dev"+"&efr=1";
     return dynamicUrl;
   }
 
