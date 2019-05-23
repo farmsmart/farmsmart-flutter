@@ -1,15 +1,112 @@
-version: 2
+version: 2.1
+
+references:
+  working_dir: &working_dir
+    /tmp/workspace/farmsmart
+
+  workspace: &workspace
+    /tmp/workspace
+
+  source-env: &source-env
+    run: source /tmp/workspace/farmsmart/env.sh
+
+  restore_workspace: &restore_workspace
+    attach_workspace:
+      at: *workspace
+
+  save_workspace: &save_workspace
+    persist_to_workspace:
+      root: *workspace
+      paths:
+      - farmsmart
+
 jobs:
-  build:
+
+  decrypt-secrets:
     docker:
-      - image: cirrusci/flutter
+      - image: farmsmart/build-agent
+    working_directory: *working_dir
     steps:
       - checkout
+      - run: |
+          SECRETS_DIR=./creds
+          mkdir -p ${SECRETS_DIR}
+          echo ${GOOGLE_SERVICE_ACCOUNT} | base64 -di | tee ${SECRETS_DIR}/service-account.json | gcloud auth activate-service-account --key-file=-
+          export GOOGLE_APPLICATION_CREDENTIALS=${SECRETS_DIR}/service-account.json
+          ./secrets/sops-decrypt.sh
+      - *save_workspace
 
-      - run: 
-          name: Check flutter status
-          command: flutter doctor
+  get-next-version:
+    docker:
+      - image: circleci/python:3.7.3
+    working_directory: *working_dir
+    steps:
+      - *restore_workspace
+      - run: |
+          if echo $CIRCLE_BRANCH | grep -E -i -q "release"
+            then
+              BRANCH=release
+            else
+              BRANCH=develop
+          fi
+          source ./ci/env.${BRANCH}.sh
+          sudo pip3 install -r ./ci/playstore/requirements.txt
+          VERSION_INFO=$(sudo python3 ./ci/playstore/get_next_version.py co.farmsmart.app ${VERSION} ${TRACK})
+          VERSION_NAME=$(echo ${VERSION_INFO} | jq '.version_name')
+          VERSION_CODE=$(echo ${VERSION_INFO} | jq '.version_code')
+          sudo echo "export VERSION_NAME=${VERSION_NAME}" >> ./env.sh
+          sudo echo "export VERSION_CODE=${VERSION_CODE}" >> ./env.sh
+          sudo cat ./ci/env.${BRANCH}.sh >> ./env.sh
+      - *save_workspace
 
-      - run:
-          name: Run Flutter tests.
-          command: flutter test
+  flutter-build:
+    docker:
+      - image: cirrusci/flutter:v1.2.1
+    working_directory: *working_dir
+    steps:
+      - *restore_workspace
+      - run: |
+          source ./env.sh
+          echo "Building flutter apk - BUILD_NAME:${VERSION_NAME}, BUILD_NUMBER=${VERSION_CODE}"
+          flutter build apk --build-name=${VERSION_NAME} --build-number=${VERSION_CODE} --release --flavor production
+      - *save_workspace
+
+  promote-apk-to-track:
+      docker:
+        - image: circleci/python:3.7.3
+      working_directory: *working_dir
+      steps:
+        - *restore_workspace
+        - run: |
+            source ./env.sh
+            sudo pip3 install -r ./ci/playstore/requirements.txt
+            sudo python3 ./ci/playstore/promote_apk_to_track.py co.farmsmart.app ${TRACK} ${VERSION_NAME} ${VERSION_CODE} ./Release_notes build/app/outputs/apk/production/release/app-production-release.apk
+
+workflows:
+  run:
+    jobs:
+      - decrypt-secrets:
+          filters:
+            branches:
+              only: / (develop) | (release.*)/
+
+      - get-next-version:
+          requires:
+            - decrypt-secrets
+          filters:
+            branches:
+              only: / (develop) | (release.*)/
+
+      - flutter-build:
+          requires:
+            - get-next-version
+          filters:
+            branches:
+              only: / (develop) | (release.*)/
+
+      - promote-apk-to-track:
+          requires:
+            - flutter-build
+          filters:
+            branches:
+              only: / (develop) | (release.*)/
