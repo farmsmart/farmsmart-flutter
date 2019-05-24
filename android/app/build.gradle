@@ -85,8 +85,8 @@ android {
 
     productFlavors {
 
-        local {
-            // To run  flutter run --flavor local -v lib/main.dart
+        development {
+            // To run  flutter run --flavor development -v lib/main.dart
             // This apk can be installed alongside actual app
             dimension "flavors"
             applicationId "co.farmsmart.app.dev"
@@ -95,9 +95,9 @@ android {
         // Add particular setup into different app flavors.
         // Also, you can create a different main to define global variables.
         // Recommended read https://medium.com/flutter-community/flutter-ready-to-go-e59873f9d7de
-        development {
+        qa {
             // To generate apk for uploading to google play store for internal app sharing
-            // flutter build apk --debug --flavor development -t lib/main<entrypoint>.dart
+            // flutter build apk --release --flavor qa -t lib/main.dart
             dimension "flavors"
             versionNameSuffix "-dev"
         }
@@ -110,6 +110,7 @@ android {
         }
 
     }
+
 }
 
 flutter {
