@@ -81,6 +81,18 @@ jobs:
             source ./env.sh
             sudo pip3 install -r ./ci/playstore/requirements.txt
             sudo python3 ./ci/playstore/promote_apk_to_track.py co.farmsmart.app ${TRACK} ${VERSION_NAME} ${VERSION_CODE} ./Release_notes build/app/outputs/apk/production/release/app-production-release.apk
+        - *save_workspace
+
+  slack-notification:
+      docker:
+        - image: circleci/python:3.7.3
+      working_directory: *working_dir
+      steps:
+        - *restore_workspace
+        - run: |
+            source ./env.sh
+            sudo pip3 install -r ./ci/playstore/requirements.txt
+            sudo python3 ./ci/playstore/notify.py ${SLACK_FARMSMART_TOKEN} ${TRACK} ${TRACK_URL} ${VERSION_NAME}
 
 workflows:
   run:
@@ -88,25 +100,32 @@ workflows:
       - decrypt-secrets:
           filters:
             branches:
-              only: / (develop) | (release.*)/
+              only: /(develop|release.*)/
 
       - get-next-version:
           requires:
             - decrypt-secrets
           filters:
             branches:
-              only: / (develop) | (release.*)/
+              only: /(develop|release.*)/
 
       - flutter-build:
           requires:
             - get-next-version
           filters:
             branches:
-              only: / (develop) | (release.*)/
+              only: /(develop|release.*)/
 
       - promote-apk-to-track:
           requires:
             - flutter-build
           filters:
             branches:
-              only: / (develop) | (release.*)/
+              only: /(develop|release.*)/
+
+      - slack-notification:
+          requires:
+            - promote-apk-to-track
+          filters:
+            branches:
+              only: /(develop|release.*)/
