@@ -6,6 +6,8 @@ import 'package:farmsmart_flutter/data/model/stage_entity.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:farmsmart_flutter/data/model/article_entity.dart';
 
+import 'package:farmsmart_flutter/flavors/flavor.dart';
+
 class FireStoreManager {
   static final FireStoreManager _firebaseManager =
       new FireStoreManager._internal();
@@ -24,7 +26,7 @@ class FireStoreManager {
         .collection(FLAME_LINK_CONTENT)
         .where(FLAME_LINK_SCHEMA, isEqualTo: Schema.CROP)
         .where(FLAME_LINK_ENVIROMENT,
-            isEqualTo: FirestoreEnvironment.PRODUCTION)
+            isEqualTo: await getEnvironment())
         .where(FLAME_LINK_LOCALE, isEqualTo: Locale.EN_US)
         .where(PUBLICATION_STATUS, isEqualTo: DataStatus.PUBLISHED);
 
@@ -116,7 +118,7 @@ class FireStoreManager {
         .where(FLAME_LINK_SCHEMA, isEqualTo: Schema.ARTICLE_DIRECTORY)
         .where(FLAME_LINK_SCHEMA_TYPE, isEqualTo: SchemaType.SINGLE)
         .where(FLAME_LINK_ENVIROMENT,
-            isEqualTo: FirestoreEnvironment.PRODUCTION)
+            isEqualTo: await getEnvironment())
         .where(FLAME_LINK_LOCALE, isEqualTo: Locale.EN_US);
 
     await query.getDocuments().then((snapshot) {

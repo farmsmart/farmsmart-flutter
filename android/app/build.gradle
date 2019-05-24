@@ -99,7 +99,7 @@ android {
             // To generate apk for uploading to google play store for internal app sharing
             // flutter build apk --release --flavor qa -t lib/main.dart
             dimension "flavors"
-            versionNameSuffix "-dev"
+            versionNameSuffix "-test"
         }
 
         production {
