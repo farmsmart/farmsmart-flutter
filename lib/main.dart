@@ -1,10 +1,13 @@
 import 'package:farmsmart_flutter/redux/app/app_state.dart';
 import 'package:farmsmart_flutter/redux/keys.dart';
 import 'package:farmsmart_flutter/redux/store.dart';
+import 'package:farmsmart_flutter/redux/home/discover/discover_actions.dart';
 import 'package:farmsmart_flutter/ui/discover/discover_detail_screen.dart';
 import 'package:farmsmart_flutter/ui/home.dart';
 import 'package:farmsmart_flutter/ui/myplot/my_plot_current_stage_screen.dart';
 import 'package:farmsmart_flutter/ui/myplot/my_plot_detail_screen.dart';
+import 'package:farmsmart_flutter/ui/profitloss/profit_loss_child.dart';
+import 'package:farmsmart_flutter/ui/myplot/my_plot_page.dart';
 import 'package:farmsmart_flutter/ui/privacy_policies_screen.dart';
 import 'package:farmsmart_flutter/utils/colors.dart';
 import 'package:flutter/foundation.dart';
@@ -12,7 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
-
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'app_routes.dart';
 
 void main() async{
@@ -35,7 +38,26 @@ class FarmsmartApp extends StatefulWidget {
   _AppState createState() => _AppState();
 }
 
-class _AppState extends State<FarmsmartApp> {
+class _AppState extends State<FarmsmartApp> with WidgetsBindingObserver{
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    WidgetsBinding.instance.removeObserver(this);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      _retrieveDynamicLink();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return StoreProvider<AppState>(
@@ -58,5 +80,19 @@ class _AppState extends State<FarmsmartApp> {
           }
       ),
     );
+  }
+
+  Future<void> _retrieveDynamicLink() async {
+
+    final PendingDynamicLinkData data = await FirebaseDynamicLinks.instance.retrieveDynamicLink();
+    final Uri deepLink = data?.link;
+    print("------------------------");
+    print(deepLink.queryParameters);
+    print(deepLink.path);
+    print(deepLink.query);
+    print("------------------------");
+    print(context);
+
+    Navigator.pushNamed(context, "/article");
   }
 }
