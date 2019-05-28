@@ -1,4 +1,5 @@
 import 'package:farmsmart_flutter/redux/app/app_state.dart';
+import 'package:farmsmart_flutter/redux/home/home_actions.dart';
 import 'package:farmsmart_flutter/redux/keys.dart';
 import 'package:farmsmart_flutter/redux/store.dart';
 import 'package:farmsmart_flutter/redux/home/discover/discover_actions.dart';
@@ -84,15 +85,17 @@ class _AppState extends State<FarmsmartApp> with WidgetsBindingObserver{
 
   Future<void> _retrieveDynamicLink() async {
 
-    final PendingDynamicLinkData data = await FirebaseDynamicLinks.instance.retrieveDynamicLink();
+    final PendingDynamicLinkData data =
+    await FirebaseDynamicLinks.instance.retrieveDynamicLink();
     final Uri deepLink = data?.link;
-    print("------------------------");
-    print(deepLink.queryParameters);
-    print(deepLink.path);
-    print(deepLink.query);
-    print("------------------------");
-    print(context);
 
-    Navigator.pushNamed(context, "/article");
+    //This if is the dynamic form for the deepLink, but for testing if it works, we are hardcoding it for now.
+    /*
+    if (deepLink != null) {
+      Navigator.pushNamed(context, deepLink.path);
+    }*/
+
+    //The link is hardcoded here, now it's going to the privacyPolicies page.
+    Keys.navKey.currentState.pushNamed(AppRoutes.privacyPolicies);
   }
 }
