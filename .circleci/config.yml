@@ -7,9 +7,6 @@ references:
   workspace: &workspace
     /tmp/workspace
 
-  source-env: &source-env
-    run: source /tmp/workspace/farmsmart/env.sh
-
   restore_workspace: &restore_workspace
     attach_workspace:
       at: *workspace
