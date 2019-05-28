@@ -103,6 +103,8 @@ workflows:
       # dev
       - decrypt-secrets:
           name: decrypt-secrets-dev
+          requires:
+            - flutter-test
           context: dev
           filters:
             branches:
@@ -147,6 +149,8 @@ workflows:
       # prod
       - decrypt-secrets:
           name: decrypt-secrets-prod
+          requires:
+            - flutter-test
           context: prod
           filters:
             branches:
