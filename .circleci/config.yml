@@ -109,7 +109,7 @@ workflows:
           context: dev
           filters:
             branches:
-              only: /.*/
+              only: /develop/
 
       - get-next-version:
           name: get-next-version-dev
@@ -118,7 +118,7 @@ workflows:
           context: dev
           filters:
             branches:
-              only: /.*/
+              only: /develop/
 
       - flutter-build:
           name: flutter-build-dev
@@ -127,7 +127,7 @@ workflows:
           context: dev
           filters:
             branches:
-              only: /.*/
+              only: /develop/
 
       - promote-apk-to-track:
           name: promote-apk-to-track-dev
@@ -136,7 +136,7 @@ workflows:
           context: dev
           filters:
             branches:
-              only: /.*/
+              only: /develop/
 
       - slack-notification:
           name: slack-notification
@@ -145,7 +145,7 @@ workflows:
           context: dev
           filters:
             branches:
-              only: /.*/
+              only: /develop/
 
       # prod
       - decrypt-secrets:
