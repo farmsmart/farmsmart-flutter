@@ -110,7 +110,6 @@ class FireStoreManager {
   }
 
   Future<ArticlesDirectoryEntity> getArticlesDirectory() async {
-    ArticlesDirectoryEntity articlesDirectory;
 
     // Filters defined by product definition. - ARTICLES DIRECTORY
     var query = Firestore.instance
@@ -121,12 +120,12 @@ class FireStoreManager {
             isEqualTo: await getEnvironment())
         .where(FLAME_LINK_LOCALE, isEqualTo: Locale.EN_US);
 
-    await query.getDocuments().then((snapshot) {
-      articlesDirectory = snapshot.documents.map((articlesDirectoryDocument) {
-        return ArticlesDirectoryEntity.featuredArticlesFromDocument(
-            articlesDirectoryDocument);
-      }).first;
-    });
+    // Returns a single directory entity or empty if the record does not exist.
+    ArticlesDirectoryEntity articlesDirectory = await query.getDocuments()
+        .then((snapshot) => snapshot.documents
+          .map((doc) => ArticlesDirectoryEntity.featuredArticlesFromDocument(doc))
+          .singleWhere((_) => true, orElse: () => ArticlesDirectoryEntity.empty()));
+
     return articlesDirectory;
   }
 
