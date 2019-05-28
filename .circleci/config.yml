@@ -43,20 +43,14 @@ jobs:
     steps:
       - *restore_workspace
       - run: |
-          if echo $CIRCLE_BRANCH | grep -E -i -q "release"
-            then
-              BRANCH=release
-            else
-              BRANCH=develop
-          fi
-          source ./ci/env.${BRANCH}.sh
+          source ./ci/env.${ENVIRONMENT}.sh
           sudo pip3 install -r ./ci/playstore/requirements.txt
           VERSION_INFO=$(sudo python3 ./ci/playstore/get_next_version.py co.farmsmart.app ${VERSION} ${TRACK})
           VERSION_NAME=$(echo ${VERSION_INFO} | jq '.version_name')
           VERSION_CODE=$(echo ${VERSION_INFO} | jq '.version_code')
           sudo echo "export VERSION_NAME=${VERSION_NAME}" >> ./env.sh
           sudo echo "export VERSION_CODE=${VERSION_CODE}" >> ./env.sh
-          sudo cat ./ci/env.${BRANCH}.sh >> ./env.sh
+          sudo cat ./ci/env.${ENVIRONMENT}.sh >> ./env.sh
       - *save_workspace
 
   flutter-build:
@@ -97,35 +91,90 @@ jobs:
 workflows:
   run:
     jobs:
+      # dev
       - decrypt-secrets:
+          name: decrypt-secrets-dev
+          context: dev
           filters:
             branches:
-              only: /(develop|release.*)/
+              only: /develop/
 
       - get-next-version:
+          name: get-next-version-dev
           requires:
-            - decrypt-secrets
+            - decrypt-secrets-dev
+          context: dev
           filters:
             branches:
-              only: /(develop|release.*)/
+              only: /develop/
 
       - flutter-build:
+          name: flutter-build-dev
           requires:
-            - get-next-version
+            - get-next-version-dev
+          context: dev
           filters:
             branches:
-              only: /(develop|release.*)/
+              only: /develop/
 
       - promote-apk-to-track:
+          name: promote-apk-to-track-dev
           requires:
-            - flutter-build
+            - flutter-build-dev
+          context: dev
           filters:
             branches:
-              only: /(develop|release.*)/
+              only: /develop/
 
       - slack-notification:
+          name: slack-notification
           requires:
-            - promote-apk-to-track
+            - promote-apk-to-track-dev
+          context: dev
           filters:
             branches:
-              only: /(develop|release.*)/
+              only: /develop/
+
+      # prod
+      - decrypt-secrets:
+          name: decrypt-secrets-prod
+          context: prod
+          filters:
+            branches:
+              only: /release.*/
+
+      - get-next-version:
+          name: get-next-version-prod
+          requires:
+            - decrypt-secrets-prod
+          context: prod
+          filters:
+            branches:
+              only: /release.*/
+
+      - flutter-build:
+          name: flutter-build-prod
+          requires:
+            - get-next-version-prod
+          context: prod
+          filters:
+            branches:
+              only: /release.*/
+
+      - promote-apk-to-track:
+          name: promote-apk-to-track-prod
+          requires:
+            - flutter-build-prod
+          context: prod
+          filters:
+            branches:
+              only: /release.*/
+
+      - slack-notification:
+          name: slack-notification
+          requires:
+            - promote-apk-to-track-prod
+          context: prod
+          filters:
+            branches:
+              only: /release.*/
