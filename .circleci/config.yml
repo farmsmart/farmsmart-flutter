@@ -1,15 +1,194 @@
-version: 2
+version: 2.1
+
+references:
+  working_dir: &working_dir
+    /tmp/workspace/farmsmart
+
+  workspace: &workspace
+    /tmp/workspace
+
+  restore_workspace: &restore_workspace
+    attach_workspace:
+      at: *workspace
+
+  save_workspace: &save_workspace
+    persist_to_workspace:
+      root: *workspace
+      paths:
+      - farmsmart
+
 jobs:
-  build:
+
+  flutter-test:
     docker:
-      - image: cirrusci/flutter
+      - image: cirrusci/flutter:v1.2.1
+    working_directory: *working_dir
     steps:
       - checkout
+      - run: |
+          flutter test
+      - *save_workspace
 
-      - run: 
-          name: Check flutter status
-          command: flutter doctor
+  decrypt-secrets:
+    docker:
+      - image: farmsmart/build-agent:1.0.0
+    working_directory: *working_dir
+    steps:
+      - *restore_workspace
+      - run: |
+          SECRETS_DIR=./creds
+          mkdir -p ${SECRETS_DIR}
+          echo ${GOOGLE_SERVICE_ACCOUNT} | base64 -di | tee ${SECRETS_DIR}/service-account.json | gcloud auth activate-service-account --key-file=-
+          export GOOGLE_APPLICATION_CREDENTIALS=${SECRETS_DIR}/service-account.json
+          ./secrets/sops-decrypt.sh
+      - *save_workspace
 
-      - run:
-          name: Run Flutter tests.
-          command: flutter test
+  get-next-version:
+    docker:
+      - image: circleci/python:3.7.3
+    working_directory: *working_dir
+    steps:
+      - *restore_workspace
+      - run: |
+          source ./ci/env.${ENVIRONMENT}.sh
+          sudo pip3 install -r ./ci/playstore/requirements.txt
+          VERSION_INFO=$(sudo python3 ./ci/playstore/get_next_version.py co.farmsmart.app ${VERSION} ${TRACK})
+          VERSION_NAME=$(echo ${VERSION_INFO} | jq '.version_name')
+          VERSION_CODE=$(echo ${VERSION_INFO} | jq '.version_code')
+          sudo echo "export VERSION_NAME=${VERSION_NAME}" >> ./env.sh
+          sudo echo "export VERSION_CODE=${VERSION_CODE}" >> ./env.sh
+          sudo cat ./ci/env.${ENVIRONMENT}.sh >> ./env.sh
+      - *save_workspace
+
+  flutter-build:
+    docker:
+      - image: cirrusci/flutter:v1.2.1
+    working_directory: *working_dir
+    steps:
+      - *restore_workspace
+      - run: |
+          source ./env.sh
+          flutter packages get
+          echo "Building flutter apk - BUILD_NAME:${VERSION_NAME}, BUILD_NUMBER=${VERSION_CODE}"
+          flutter build apk --build-name=${VERSION_NAME} --build-number=${VERSION_CODE} --release --flavor production
+      - *save_workspace
+
+  promote-apk-to-track:
+      docker:
+        - image: circleci/python:3.7.3
+      working_directory: *working_dir
+      steps:
+        - *restore_workspace
+        - run: |
+            source ./env.sh
+            sudo pip3 install -r ./ci/playstore/requirements.txt
+            sudo python3 ./ci/playstore/promote_apk_to_track.py co.farmsmart.app ${TRACK} ${VERSION_NAME} ${VERSION_CODE} ./Release_notes build/app/outputs/apk/production/release/app-production-release.apk
+        - *save_workspace
+
+  slack-notification:
+      docker:
+        - image: circleci/python:3.7.3
+      working_directory: *working_dir
+      steps:
+        - *restore_workspace
+        - run: |
+            source ./env.sh
+            sudo pip3 install -r ./ci/playstore/requirements.txt
+            sudo python3 ./ci/playstore/notify.py ${SLACK_FARMSMART_TOKEN} ${TRACK} ${TRACK_URL} ${VERSION_NAME}
+
+workflows:
+  run:
+    jobs:
+      - flutter-test
+
+      # dev
+      - decrypt-secrets:
+          name: decrypt-secrets-dev
+          requires:
+            - flutter-test
+          context: dev
+          filters:
+            branches:
+              only: /develop/
+
+      - get-next-version:
+          name: get-next-version-dev
+          requires:
+            - decrypt-secrets-dev
+          context: dev
+          filters:
+            branches:
+              only: /develop/
+
+      - flutter-build:
+          name: flutter-build-dev
+          requires:
+            - get-next-version-dev
+          context: dev
+          filters:
+            branches:
+              only: /develop/
+
+      - promote-apk-to-track:
+          name: promote-apk-to-track-dev
+          requires:
+            - flutter-build-dev
+          context: dev
+          filters:
+            branches:
+              only: /develop/
+
+      - slack-notification:
+          name: slack-notification
+          requires:
+            - promote-apk-to-track-dev
+          context: dev
+          filters:
+            branches:
+              only: /develop/
+
+      # prod
+      - decrypt-secrets:
+          name: decrypt-secrets-prod
+          requires:
+            - flutter-test
+          context: prod
+          filters:
+            branches:
+              only: /release.*/
+
+      - get-next-version:
+          name: get-next-version-prod
+          requires:
+            - decrypt-secrets-prod
+          context: prod
+          filters:
+            branches:
+              only: /release.*/
+
+      - flutter-build:
+          name: flutter-build-prod
+          requires:
+            - get-next-version-prod
+          context: prod
+          filters:
+            branches:
+              only: /release.*/
+
+      - promote-apk-to-track:
+          name: promote-apk-to-track-prod
+          requires:
+            - flutter-build-prod
+          context: prod
+          filters:
+            branches:
+              only: /release.*/
+
+      - slack-notification:
+          name: slack-notification
+          requires:
+            - promote-apk-to-track-prod
+          context: prod
+          filters:
+            branches:
+              only: /release.*/
