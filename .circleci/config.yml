@@ -22,12 +22,22 @@ references:
 
 jobs:
 
-  decrypt-secrets:
+  flutter-test:
     docker:
-      - image: farmsmart/build-agent
+      - image: cirrusci/flutter:v1.2.1
     working_directory: *working_dir
     steps:
       - checkout
+      - run: |
+          flutter test
+      - *save_workspace
+
+  decrypt-secrets:
+    docker:
+      - image: farmsmart/build-agent:1.0.0
+    working_directory: *working_dir
+    steps:
+      - *restore_workspace
       - run: |
           SECRETS_DIR=./creds
           mkdir -p ${SECRETS_DIR}
@@ -91,6 +101,8 @@ jobs:
 workflows:
   run:
     jobs:
+      - flutter-test
+
       # dev
       - decrypt-secrets:
           name: decrypt-secrets-dev
