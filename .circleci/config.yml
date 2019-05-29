@@ -27,7 +27,7 @@ jobs:
           command: flutter doctor
       - run:
           name: Install JUnitReport
-          command: pub global activate junitrepor
+          command: pub global activate junitreport
       - run:
           name: Create directory structure for test-results
           command: mkdir --parents /tmp/test-results/flutter
