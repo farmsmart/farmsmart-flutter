@@ -33,4 +33,5 @@ class Strings {
   static String myPlotDetailCompanionPlantsTitle = "Companion Plants";
   static String myPlotDetailNonCompanionPlantsTitle = "Non-Companion Plants";
   static String myPlotDetailStepByStepTitle = "Step-by-step guide";
+
 }

@@ -20,7 +20,7 @@ class _DiscoveryState extends State<HomeDiscoverPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: StoreConnector<AppState, DiscoverViewModel>(
-        onInit: (store) => store.dispatch(new FetchArticleListAction()),
+        onInit: (store) => store.dispatch(new FetchArticleDirectoryAction()),
         builder: (_, viewModel) => _buildBody(context, viewModel),
         converter: (store) => DiscoverViewModel.fromStore(store)),
     );
@@ -32,16 +32,17 @@ class _DiscoveryState extends State<HomeDiscoverPage> {
         return Container(
           child: CircularProgressIndicator(), alignment: Alignment.center);
       case LoadingStatus.SUCCESS:
-        return _buildList(context, viewModel.articlesList, viewModel.goToArticleDetail);
+        return _buildList(context, viewModel.articleDirectory.articles, viewModel.goToDetail);
       case LoadingStatus.ERROR:
         return Text(Strings.errorString);
     }
   }
 }
 
-Widget _buildList(BuildContext context, List<ArticleEntity> articleList, goToArticleDetail) {
+Widget _buildList(BuildContext context, List<ArticleEntity> articlesList, goToArticleDetail) {
   return ListView(
-    padding: const EdgeInsets.only(top: 20.0),
-    children: articleList.map((articleData) => DiscoveryListItem().buildListItem(articleData, goToArticleDetail)).toList(),
-  );
+      padding: const EdgeInsets.only(top: 20.0),
+      children: (articlesList != null) ? (articlesList.map((article) =>
+          DiscoveryListItem().buildListItem(article, goToArticleDetail))).toList() : null);
 }
+

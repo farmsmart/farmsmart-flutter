@@ -1,12 +1,13 @@
 import 'package:farmsmart_flutter/data/model/article_entity.dart';
+import 'package:farmsmart_flutter/data/model/articles_directory_entity.dart';
 
-class FetchArticleListAction {
-  FetchArticleListAction();
+class FetchArticleDirectoryAction {
+  FetchArticleDirectoryAction();
 }
 
-class UpdateArticleListAction {
-  List<ArticleEntity> articlesList;
-  UpdateArticleListAction(this.articlesList);
+class UpdateArticleDirectoryAction {
+  ArticlesDirectoryEntity articlesDirectory;
+  UpdateArticleDirectoryAction(this.articlesDirectory);
 }
 
 class GoToArticleDetailAction {

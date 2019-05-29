@@ -1,0 +1,146 @@
+{
+	"project_info": {
+		"project_number": "ENC[AES256_GCM,data:ov4ni8LzMj10iPCN,iv:gkBvd8+eVG+M7pfhfGcDlmzzhJVYDUkejCTz8Xfcyqo=,tag:WPkdoccI4XqrvyZgk1WGlw==,type:str]",
+		"firebase_url": "ENC[AES256_GCM,data:W42KHUOhJCyDT8P5md2czB2MSxXTy9ZQ1z2LIPiwkvR8yMDAtRJKJ4Y=,iv:lYVimnsOMYMoypHWL7AWAHnj/gzo6HiPRYHqdrAWJDk=,tag:rPH0/fkP3RR/0w/oEUxG8Q==,type:str]",
+		"project_id": "ENC[AES256_GCM,data:lJd6U7a87rTsezTKB2WfjEwQ,iv:R61bpUuXUFPMd8x6dG4YzO+fFiMvRCZ2xGeN+syzj/k=,tag:yvYcaRKuXqYKh5uFMwrBAA==,type:str]",
+		"storage_bucket": "ENC[AES256_GCM,data:ZNdUxF8uJFqX9TBPqq9txz0Vo8AqR18EwhBIwe1f,iv:d01ubQ9mEGfrSiGk81m2vkKid91CSlM9gYHZ13jW35s=,tag:gg2wriZPuU2XWMvhzLDtDA==,type:str]"
+	},
+	"client": [
+		{
+			"client_info": {
+				"mobilesdk_app_id": "ENC[AES256_GCM,data:7Do5CNGak69w8ApiDisbW5zTNZi83p2bo07c0Y9WEt1rcRsUKHAO,iv:y7LwhWO6NsnZkyRxohnF5AiQwnFBr2dKPiZ0S8VVvmg=,tag:mLC81PFY/PQyYCKdjnIAvA==,type:str]",
+				"android_client_info": {
+					"package_name": "ENC[AES256_GCM,data:DeOZoIK2si9Na+Y7fuKM,iv:F33HGGCISX7l47WScSxaKJ5Y2vtItyYR98pOngcD1e4=,tag:gH7YdngNsQmZi4L6rGIObw==,type:str]"
+				}
+			},
+			"oauth_client": [
+				{
+					"client_id": "ENC[AES256_GCM,data:BF4aUOjQVAg+aPDC04oWjES3wfXAlwmlvd0V2CBXTiKKv5++T3lTn2qRlydMUFWgHGsRWO2h2kYSGAISMgakIYEIJ7TJGixN,iv:rZ7Cw4Dpqbbv4qyw53sbTjVGkd+cYs0Qdl8guGqNlZ4=,tag:dMvaeDMDoVO/l4VfP+PvsA==,type:str]",
+					"client_type": "ENC[AES256_GCM,data:GQ==,iv:MAqhUjll8QtzewgE8rnKGz0mE2KzuKVNXwWFuXPBHg0=,tag:hdiVIFcfmIr2nig6DbwHaw==,type:float]"
+				}
+			],
+			"api_key": [
+				{
+					"current_key": "ENC[AES256_GCM,data:jap/YYfyKBBitJcUd8tv7ecde1IL8kOWy7J3t7qz30EPeSDfuZqT,iv:oJdZbplj6oM8srruCzlLcbZsPQ1vuCJ2rVAESkQblKY=,tag:iTx4U58gIiJqZKjWs3Puhw==,type:str]"
+				}
+			],
+			"services": {
+				"appinvite_service": {
+					"other_platform_oauth_client": [
+						{
+							"client_id": "ENC[AES256_GCM,data:5IRMFME6RcKoNOOKZ9V2kXeLJcBdPamkC4ngartANTnVPWxh7o19aRJLx8UupZuybsomq12/see2IvMlzTHWmUXen6pLC71I,iv:yKxN2Kyvy5ClOtJcwnNORpJZ7Dtgkj+nlgK2Xbn80/s=,tag:4GQLDfN+ITYo5u0jJTZMxA==,type:str]",
+							"client_type": "ENC[AES256_GCM,data:fQ==,iv:kUaHOHOC8pxWrYbJvD882YiQd6xtCXmoSCBA6cxnNUQ=,tag:uLacW0wBExp1fIzE6aTZ2Q==,type:float]"
+						},
+						{
+							"client_id": "ENC[AES256_GCM,data:invxPzafpFv0U965idd0mGXAP04assBJY7wzfAajuxaqnohZCYYghOP9PCiC7ZEjbhG+21tNqmYLTH7lYe4AA3ycvWuLGUqR,iv:xSIIHEEfHh/+ocOr8hQMUvmkFnPuxQAExas5wieuvgQ=,tag:zyU+5zlznJ/dNsPjnSzepg==,type:str]",
+							"client_type": "ENC[AES256_GCM,data:aw==,iv:kWNkTvNP9sca0gyxkY2QYzI0czSimwQjgk0MGzAWLiU=,tag:gPX08G9lcjsXpoH9D12/uQ==,type:float]",
+							"ios_info": {
+								"bundle_id": "ENC[AES256_GCM,data:s9lSKhOFjVlty8N90oWC3fX4iFpqdvEYrA==,iv:9IzKaIwtnWpIANZpjWaawJzVzXC5KraJnZOO9n+MuMI=,tag:HwHIGuhhmtChHNXSf0+YMQ==,type:str]"
+							}
+						}
+					]
+				}
+			}
+		},
+		{
+			"client_info": {
+				"mobilesdk_app_id": "ENC[AES256_GCM,data:UCZPewwkNL91s0BX9lgtF/VCelnhHCxdEggrIHY5C2SB1eVoY1ut,iv:dm9LB3PQykhp6DwEpEV0PV2jbY+8V9Z3eQdsyODOD3g=,tag:I++GUb+mFm9M4bu+PHbb7g==,type:str]",
+				"android_client_info": {
+					"package_name": "ENC[AES256_GCM,data:6vOQtGH0Z43jVGzytfci+w==,iv:TJXTw1ish6h52xwneSgovpyvodoz+Bv5R8/+WzSmy6Y=,tag:2SV4cOVuzeQncJRw9nP5JQ==,type:str]"
+				}
+			},
+			"oauth_client": [
+				{
+					"client_id": "ENC[AES256_GCM,data:/tDT/iBg6MmvQYKtfkGcbADwBloV0xuXIZ76sP+9hDtXxxrnLBr4phuuVJEho4DgkicTLc//Q4Z5kc/xZZVpSTePP//+twOQ,iv:EJ28o7UVbikrQKHlWlcScA+3HZrCXTdURHuok+BMs2Y=,tag:IwvBKaYcC/GfQ+aQNuefWg==,type:str]",
+					"client_type": "ENC[AES256_GCM,data:8w==,iv:GD6NJoRdzGlujKZDi8Bz3UqiAcvx+NBB5wFtbTHrT28=,tag:QJCE5S+D3RXGvNcub7UOHw==,type:float]"
+				}
+			],
+			"api_key": [
+				{
+					"current_key": "ENC[AES256_GCM,data:1+kC5LVyXCmiIdwAYYix2tQK+wiXBfZ2iTN9XYeHmOHT55JX5Pm2,iv:fVmNB+XG/SG2NuO21FpoqTnOVpcguK9Un1pkNDcPufU=,tag:F2tNV4X6CMya2+X5R67UVg==,type:str]"
+				}
+			],
+			"services": {
+				"appinvite_service": {
+					"other_platform_oauth_client": [
+						{
+							"client_id": "ENC[AES256_GCM,data:QvJWv5tiEz9y3xQffDAaUbvNajm7OFKIn2o5CIYA/FXAEwFzO8cYe0XCfCLW7OsnwFL86mgiBcztT3mEeW2C1nwSMPqj+rXk,iv:k5xRXyks6ZaXeJ1EWhWNtuGrOQRGIZj3adCemf1ERBY=,tag:MLxqgW3yBVYDCyxmEjU2Jw==,type:str]",
+							"client_type": "ENC[AES256_GCM,data:/Q==,iv:uIPZOsxQPsa9F04KeEf8RfJVP6X0LHzd+KbQDQqWM4Q=,tag:mhXw+nWkoYUXn47NfgrLDw==,type:float]"
+						},
+						{
+							"client_id": "ENC[AES256_GCM,data:/cXjnLl/B0cqT2TOdo25No6aB64roEdUyX7Ijl3e3RmArSTBzfxfTg4GikivFuN8awwP7p7DUkP3++gBEEnF37oIhf0zy5Gy,iv:lRd8OY7bZ83778x8vnLf1HgjidMJTQ846eusw08AX5I=,tag:ePuxKuS6lu+gQo0j0OoiBg==,type:str]",
+							"client_type": "ENC[AES256_GCM,data:7g==,iv:AesLB5CAcHcyYmxLSGnyNu3wraG+rkCx3ia3EkAlVyk=,tag:BnQHDEmxOoXhkgGvI/lMDw==,type:float]",
+							"ios_info": {
+								"bundle_id": "ENC[AES256_GCM,data:cxUiEjq2zUOVL6Z3NZuxlaGoxnbC/4F1Mw==,iv:dcbIadqeUIngOBHlHlBTDJOUUThS6QbP7C9Q3jsvw3s=,tag:+fbpgYT+sf9IGskOzEMMzA==,type:str]"
+							}
+						}
+					]
+				}
+			}
+		},
+		{
+			"client_info": {
+				"mobilesdk_app_id": "ENC[AES256_GCM,data:kjfUbNdYBuUKIdt80GCrPR9coaw+J/kW/QvP2syFubGcghSEU9Xx,iv:VhjqwUXUCo1PlNnSfLlSVJ+VZ0hc4Mu37X7aVMrx4Pk=,tag:E9BycML0faRdffhpmAD2Kg==,type:str]",
+				"android_client_info": {
+					"package_name": "ENC[AES256_GCM,data:G6R8RfoxuGEsOStZ0u4OtNib22o=,iv:OCsrunBmoMGu1O69VHwmXauvqOcjdt7vsK0lvXPQEfw=,tag:xqmES89J9plQoRd7iYB2+A==,type:str]"
+				}
+			},
+			"oauth_client": [
+				{
+					"client_id": "ENC[AES256_GCM,data:j1m57h53vdrUXki4uIHmiblOGLLgfXm6Fd94xWzrBpgl0yFyPeIbVFFD2zJMKPmce4Hrh6GHWjikh6sl67BrIPfsi33Ul48O,iv:Jwl79NSpF3bgADGSud6cTb2eUHBOMxm+6pd+3EYUZYI=,tag:xOKwglHN4NynDGFUJttaEQ==,type:str]",
+					"client_type": "ENC[AES256_GCM,data:Vg==,iv:mCx4x9OkZuWoiJ1uwEnJx//40UKP0vZla3KCuf4rs9U=,tag:hiNDMjc+8wyCwjNVQFZKLQ==,type:float]"
+				}
+			],
+			"api_key": [
+				{
+					"current_key": "ENC[AES256_GCM,data:yvaRoLtl7QRTB9MfrQi06eQ6wtnUYFFADEG4jnRCv97ae5NgBPXN,iv:tuL5vuJjXNHytp7YSBhJXapHvSdTw0+sYP1180i7Mec=,tag:2REbWs7F/feBRBFRSjRDBQ==,type:str]"
+				}
+			],
+			"services": {
+				"appinvite_service": {
+					"other_platform_oauth_client": [
+						{
+							"client_id": "ENC[AES256_GCM,data:WYZnhVm3bZiJWwsAT6SOc0YuddmiU/Zhf5IF46PAW+r+O2GIcCPvPq1wzyofhhhglrzXdiA7230PtkLNtgQhnaGXh5cdh0pg,iv:4wDnsaOP61VZmWsup58fN4xL+rb9h9gIs4oy0PtTtTw=,tag:Q/w8PJeZ4OuDZrzaJQuf6g==,type:str]",
+							"client_type": "ENC[AES256_GCM,data:cA==,iv:nmDYdjzQQG3OQOjSs6uwVazGYVQ2yA8PHHheT/V14NA=,tag:8okHaq35HPYn4YDU6OCGJQ==,type:float]"
+						},
+						{
+							"client_id": "ENC[AES256_GCM,data:fe2OzF8MmsMV5KZ7wuiwRjN2vfIfWEHpl8rNjGiYwNbU8BQwIKdTy6DxquwGV1oxFD3jyo5TfHnhrJFWhB9XIHanCAOfAMBq,iv:OhD+TnHaPnMKwNHhJA2N3doFDtGRYpafPmo2t2DcfZ8=,tag:4bmfPGAxe16XiQ7/+WIP9Q==,type:str]",
+							"client_type": "ENC[AES256_GCM,data:Lw==,iv:318mmZG8zI9kyfXLDbKktw6e0p6uJeBKYMUWpIkoq2U=,tag:WKHyWYWoeuonVIdE41gMlw==,type:float]",
+							"ios_info": {
+								"bundle_id": "ENC[AES256_GCM,data:059ZWVdE0oqeN2Pg6vyBxVZJ9nyGgNPvmg==,iv:tTB/EFPy/Y8wVTcZV9sc2I1rd//k80UbAABLEn2aVy4=,tag:hek0HaR+43JhH6hXLjCuxA==,type:str]"
+							}
+						}
+					]
+				}
+			}
+		}
+	],
+	"configuration_version": "ENC[AES256_GCM,data:lw==,iv:kHfeh6UCXToftrtMlabe8BunUnMorhBKYvZeiyWystI=,tag:lSIfyHh9Czvh3mkDNKJw0A==,type:str]",
+	"sops": {
+		"kms": null,
+		"gcp_kms": [
+			{
+				"resource_id": "projects/farmsmart-dev-archie/locations/europe-west2/keyRings/farmsmart-keyring/cryptoKeys/farmsmart-key",
+				"created_at": "2019-05-10T16:25:39Z",
+				"enc": "CiQAre1niX5rovYUG5UFINTDdO6RCYyb5KfgxrupnK5qEoMJbXUSSQBNlJ1xxpGfwkGCYD4JCM5lNjBLUcxVGp0BhL8XVVupbsbfFq8lNbwkzr8NQXv9+XSPOoB8nhH0FKNJDfrkT/COIeWazkQMZSA="
+			},
+			{
+				"resource_id": "projects/farmsmart-admin/locations/global/keyRings/farmsmart-admin/cryptoKeys/farmsmart",
+				"created_at": "2019-05-10T16:25:39Z",
+				"enc": "CiQAT6zrsDYKcNzdiaAtd7y9zWldvPXuxO2lEnRBvVc7t/62c7YSSQAgGCV4imC/N1/ITsu9f2vDJ2UHIMaAmDWjgFEEse3lMxl4gypAVZWm17LbcZ2KhTiClRf1sPixVtWdjbbccaRWxWNVQgYxlHE="
+			}
+		],
+		"azure_kv": null,
+		"lastmodified": "2019-05-10T16:25:39Z",
+		"mac": "ENC[AES256_GCM,data:3W7ch7gRjo7cUhZKKfO3JF0jaPylPX26c2TY53O5eR3XYHgsqDiVpj+F9KBydnCdiTCR4zslyDk73XsuFjbACQZojuXFCotFz3UHteAPNJ66Vjat4uIk3lNx/2r2lHITh6KLRYzAgJFa6uWZAgdYGZuYdv5v9QSY/BNfjNWraa4=,iv:8Je0F9E9MA9AKoSL5R1gRUKK/Zczw7pcJ4npFIwTJwY=,tag:Q87oKtyh9VMVHIppKzwUNA==,type:str]",
+		"pgp": [
+			{
+				"created_at": "2019-05-10T16:25:39Z",
+				"enc": "-----BEGIN PGP MESSAGE-----\n\nhQEMA/4YCHe2454xAQf/S7ZmMbjNt+4bv6VDvgFUyw2O3xrXyyPFDAi90zsRboSt\nhVA17gI4GzGJ6QM2i0sd8gqhwaA+2M8B0nDqzhJUZ51KUGjpiD0BCHXPKnwgKYWo\n1fr4JmqLpVXFofEkSPCcFbCRLCQ7Fs3+BzUYvH6AWglbPUviiTIBKqR4LT4/ZRFj\nXtOnc0bO0gz9favgS6FDbUS5z9CS/zESqlX/doRuAsE4I9aLXxZ7qT6RXAaBB0BU\nnSNg3GpXPctVGx7arOG/HPsQ4twO228r15eV7xkzjyskhZgLIlijtcRTKdfajLZM\nt3BtZzZFmkNqDxlmJKN+tdZB3KErvoit+IP9tdgiRNJeAfqf946I7ILoFGluAeMi\n2x1foONBDeB3lSIM4wUuwxPRxNxghnfUwqkK+fPQgpdHRJuoVDMprOa7Y+7crrHw\nDjuxJDjJTGmS0exJt02SfazL0z8wjnq/PYkfId03GA==\n=hQ16\n-----END PGP MESSAGE-----\n",
+				"fp": "40E098AA13DB0B7113BBDDA1242EA01A43CDFA44"
+			}
+		],
+		"unencrypted_suffix": "_unencrypted",
+		"version": "3.2.0"
+	}
+}

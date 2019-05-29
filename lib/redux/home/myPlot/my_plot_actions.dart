@@ -2,7 +2,7 @@
 // This includes adding any kind of error and clearing them also.
 
 import 'package:farmsmart_flutter/data/model/crop_entity.dart';
-import 'package:farmsmart_flutter/data/model/stage.dart';
+import 'package:farmsmart_flutter/data/model/stage_entity.dart';
 
 class FetchCropListAction {
   FetchCropListAction();
@@ -19,6 +19,6 @@ class GoToCropDetailAction {
 }
 
 class GoToStageAction {
-  Stage stage;
+  StageEntity stage;
   GoToStageAction(this.stage);
 }

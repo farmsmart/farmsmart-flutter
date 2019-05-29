@@ -1,4 +1,4 @@
-import 'package:farmsmart_flutter/data/model/stage.dart';
+import 'package:farmsmart_flutter/data/model/stage_entity.dart';
 import 'package:farmsmart_flutter/redux/app/app_state.dart';
 import 'package:farmsmart_flutter/utils/dimens.dart';
 import 'package:farmsmart_flutter/utils/styles.dart';
@@ -27,7 +27,7 @@ class _CurrentStageState extends State<MyPlotCurrentStageScreen> {
     );
   }
 
-  Widget _buildBody(BuildContext context, Stage stageData, String cropTitle) {
+  Widget _buildBody(BuildContext context, StageEntity stageData, String cropTitle) {
     return Scaffold(
         appBar: CustomAppBar.buildForDetail(cropTitle),
         body: Column(
