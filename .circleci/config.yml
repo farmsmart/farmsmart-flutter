@@ -1,11 +1,9 @@
 version: 2.1
 
 references:
-  working_dir: &working_dir
-    /tmp/workspace/farmsmart
+  working_dir: &working_dir /tmp/workspace/farmsmart
 
-  workspace: &workspace
-    /tmp/workspace
+  workspace: &workspace /tmp/workspace
 
   restore_workspace: &restore_workspace
     attach_workspace:
@@ -15,18 +13,36 @@ references:
     persist_to_workspace:
       root: *workspace
       paths:
-      - farmsmart
+        - farmsmart
 
 jobs:
-
   flutter-test:
     docker:
       - image: cirrusci/flutter:v1.2.1
     working_directory: *working_dir
     steps:
       - checkout
-      - run: |
-          flutter test
+      - run:
+          name: Check flutter status
+          command: flutter doctor
+      - run:
+          name: Install JUnitReport
+          command: pub global activate junitreport
+      - run:
+          name: Create directory structure for test-results
+          command: mkdir --parents /tmp/test-results/flutter
+      - run:
+          name: Get Flutter packages to avoid stdout in JSON
+          command: flutter packages get
+      - run:
+          name: Run Flutter tests.
+          command: flutter test --machine > /tmp/test-results/flutter/TEST-report.json
+      - run:
+          name: Convert Flutter tests to JUnit
+          command: $HOME/.pub-cache/bin/tojunit --input /tmp/test-results/flutter/TEST-report.json --output /tmp/test-results/flutter/junit.xml
+          when: always
+      - store_test_results:
+          path: /tmp/test-results
       - *save_workspace
 
   decrypt-secrets:
@@ -74,27 +90,27 @@ jobs:
       - *save_workspace
 
   promote-apk-to-track:
-      docker:
-        - image: circleci/python:3.7.3
-      working_directory: *working_dir
-      steps:
-        - *restore_workspace
-        - run: |
-            source ./env.sh
-            sudo pip3 install -r ./ci/playstore/requirements.txt
-            sudo python3 ./ci/playstore/promote_apk_to_track.py co.farmsmart.app ${TRACK} ${VERSION_NAME} ${VERSION_CODE} ./Release_notes build/app/outputs/apk/production/release/app-production-release.apk
-        - *save_workspace
+    docker:
+      - image: circleci/python:3.7.3
+    working_directory: *working_dir
+    steps:
+      - *restore_workspace
+      - run: |
+          source ./env.sh
+          sudo pip3 install -r ./ci/playstore/requirements.txt
+          sudo python3 ./ci/playstore/promote_apk_to_track.py co.farmsmart.app ${TRACK} ${VERSION_NAME} ${VERSION_CODE} ./Release_notes build/app/outputs/apk/production/release/app-production-release.apk
+      - *save_workspace
 
   slack-notification:
-      docker:
-        - image: circleci/python:3.7.3
-      working_directory: *working_dir
-      steps:
-        - *restore_workspace
-        - run: |
-            source ./env.sh
-            sudo pip3 install -r ./ci/playstore/requirements.txt
-            sudo python3 ./ci/playstore/notify.py ${SLACK_FARMSMART_TOKEN} ${TRACK} ${TRACK_URL} ${VERSION_NAME}
+    docker:
+      - image: circleci/python:3.7.3
+    working_directory: *working_dir
+    steps:
+      - *restore_workspace
+      - run: |
+          source ./env.sh
+          sudo pip3 install -r ./ci/playstore/requirements.txt
+          sudo python3 ./ci/playstore/notify.py ${SLACK_FARMSMART_TOKEN} ${TRACK} ${TRACK_URL} ${VERSION_NAME}
 
 workflows:
   run:
