@@ -37,13 +37,6 @@ current_version_code = max(current_release['versionCodes'])
 
 # Determine next version
 if track == 'internal':
-    version_name = {
-            "version_name": version_name,
-            "version_code": int(current_version_code) + 1
-        }
-    print(json.dumps(version_name))
-
-if track == 'alpha':
     current_version = VersionInfo.from_version_code(current_version_code)
     next_version = VersionInfo.from_version_name(version_name)
     next_version.build = VersionInfo.get_next_build(current_version, next_version)
