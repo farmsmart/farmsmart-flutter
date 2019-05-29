@@ -13,13 +13,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
-import 'package:farmsmart_flutter/flavors/flavor.dart';
-
 import 'app_routes.dart';
-
-void writeEnvPreference(String environment) async {
-  writeEnvironment(environment);
-}
 
 void bootstrap() async {
   // Defines app orientation

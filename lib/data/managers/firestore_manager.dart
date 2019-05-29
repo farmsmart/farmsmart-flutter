@@ -26,7 +26,7 @@ class FireStoreManager {
         .collection(FLAME_LINK_CONTENT)
         .where(FLAME_LINK_SCHEMA, isEqualTo: Schema.CROP)
         .where(FLAME_LINK_ENVIROMENT,
-            isEqualTo: await getEnvironment())
+            isEqualTo: AppSettings.get().environment)
         .where(FLAME_LINK_LOCALE, isEqualTo: Locale.EN_US)
         .where(PUBLICATION_STATUS, isEqualTo: DataStatus.PUBLISHED);
 
@@ -117,7 +117,7 @@ class FireStoreManager {
         .where(FLAME_LINK_SCHEMA, isEqualTo: Schema.ARTICLE_DIRECTORY)
         .where(FLAME_LINK_SCHEMA_TYPE, isEqualTo: SchemaType.SINGLE)
         .where(FLAME_LINK_ENVIROMENT,
-            isEqualTo: await getEnvironment())
+            isEqualTo: AppSettings.get().environment)
         .where(FLAME_LINK_LOCALE, isEqualTo: Locale.EN_US);
 
     // Returns a single directory entity or empty if the record does not exist.
