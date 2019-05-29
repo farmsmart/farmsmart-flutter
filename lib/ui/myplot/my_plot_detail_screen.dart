@@ -3,6 +3,7 @@ import 'package:farmsmart_flutter/model/crop_detail_property.dart';
 import 'package:farmsmart_flutter/utils/assets.dart';
 import 'package:farmsmart_flutter/utils/colors.dart';
 import 'package:farmsmart_flutter/utils/dimens.dart';
+import 'package:farmsmart_flutter/utils/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -11,6 +12,7 @@ import 'package:farmsmart_flutter/utils/styles.dart';
 
 import '../app_bar.dart';
 import 'my_plot_detail_properties.dart';
+import 'my_plot_detail_stages.dart';
 import 'myplot_viewmodel.dart';
 
 class CropDetailScreen extends StatefulWidget {
@@ -26,13 +28,13 @@ class _CropDetailState extends State<CropDetailScreen> {
     return Scaffold(
       body: StoreConnector<AppState, MyPlotViewModel>(
           builder: (_, viewModel) => _buildBody(context, viewModel.selectedCrop,
-              viewModel.getCropDetailProperties(viewModel.selectedCrop)),
+              viewModel.getCropDetailProperties(viewModel.selectedCrop), viewModel.goToStage),
           converter: (store) => MyPlotViewModel.fromStore(store)),
     );
   }
 
   Widget _buildBody(BuildContext context, CropEntity selectedCropData,
-      List<CropDetailProperty> cropDetailProperties) {
+      List<CropDetailProperty> cropDetailProperties, goToStageDetail) {
     return Scaffold(
         appBar: CustomAppBar.buildForDetail(selectedCropData.name),
         body: Container(
@@ -56,7 +58,11 @@ class _CropDetailState extends State<CropDetailScreen> {
                           style: Styles.descriptionTextStyle())),
                   Margins.generalListMargin(),
                   Html(data: selectedCropData.content),
-                  MyPlotDetailProperties().build(cropDetailProperties, context)
+                  MyPlotDetailProperties().build(cropDetailProperties, context),
+                  Padding(
+                      padding: Paddings.boxPadding(),
+                      child: Text(Strings.myPlotDetailStepByStepTitle, style: Styles.detailTitleTextStyle()),),
+                  MyPlotDetailStages().build(selectedCropData.stages, goToStageDetail)
                 ],
               ),
             ])));

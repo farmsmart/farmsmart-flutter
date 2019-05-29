@@ -35,6 +35,8 @@ Screenshots / external resources
 - [ ] Dimensions (ie margins padding) defined in lib/utils/dimens.dart
 - [ ] TextStyles defined in lib/utils/styles.dart
 
+Recommended Style Guide: https://github.com/flutter/flutter/wiki/Style-guide-for-Flutter-repo
+
 #### 🕵️‍♂️ How to test
 
 Notes for QA

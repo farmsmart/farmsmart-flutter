@@ -1,8 +1,7 @@
 import 'package:farmsmart_flutter/model/enums.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:farmsmart_flutter/utils/strings.dart';
-
-import '../firebase_const.dart';
+import 'package:farmsmart_flutter/data/model/entities_const.dart';
 
 class ArticleEntity {
   String content;
@@ -23,13 +22,13 @@ class ArticleEntity {
   });
 
   factory ArticleEntity.articleFromDocument(DocumentSnapshot articleDocument) => ArticleEntity(
-    content: articleDocument.data[documentFieldContent],
-    imagePathReference: articleDocument.data[documentFieldImage].first.path,
+    content: articleDocument.data[CONTENT],
+    imagePathReference: articleDocument.data[IMAGE].first.path,
     imageUrl: Strings.emptyString,
     //relatedArticles: articleDocument.data[""], //TODO [FARM-95]
-    status: statusValues.map[articleDocument.data[documentFieldStatus]],
-    summary: articleDocument.data[documentFieldSummary],
-    title: articleDocument.data[documentFileTitle]
+    status: statusValues.map[articleDocument.data[STATUS]],
+    summary: articleDocument.data[SUMMARY],
+    title: articleDocument.data[TITLE]
   );
 
   void setImageUrl(String imageUrl) {

@@ -22,13 +22,14 @@ class PrivacyPoliciesState extends State<PrivacyPoliciesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    _loadHtmlFromAssets();
+
     return Scaffold(
       appBar: CustomAppBar.buildWithTitle(Strings.appbarPopUpPolicies),
       body: WebView(
         initialUrl: '',
         onWebViewCreated: (WebViewController webViewController) {
           _controller = webViewController;
+          _loadHtmlFromAssets();
         },
       ),
     );

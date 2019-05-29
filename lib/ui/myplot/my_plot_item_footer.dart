@@ -4,7 +4,7 @@ import 'package:farmsmart_flutter/utils/styles.dart';
 import 'package:flutter/material.dart';
 
 class MyPlotItemFooter {
-  Widget build(goToDetail, cropsData) {
+  Widget build(goToDetail, goToStage, cropsData) {
     return Row(children: <Widget>[
       Padding(
           padding: Paddings.leftPaddingSmall(),
@@ -13,17 +13,30 @@ class MyPlotItemFooter {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
-              Text(Strings.myPlotCurrentStage,
-                  style: Styles.subtitleTextStyle()),
+              _buildStageCurrentText(cropsData, goToStage),
               Margins.generalHorizontalPadding(),
-              GestureDetector(
-                  onTap: () {
-                    goToDetail(cropsData);
-                  },
-                  child: Text(Strings.myPlotDetails,
-                      style: Styles.subtitleTextStyle()))
+              _buildGoToDetailText(cropsData, goToDetail)
             ],
           ))
     ]);
   }
+}
+
+_buildStageCurrentText(cropsData, goToStage) {
+  return GestureDetector(
+      onTap: () {
+        goToStage(cropsData.stages
+            .first); // TODO When tracking is added, select the proper stage
+      },
+      child:
+          Text(Strings.myPlotCurrentStage, style: Styles.subtitleTextStyle()));
+}
+
+_buildGoToDetailText(cropsData, goToDetail) {
+  return GestureDetector(
+      onTap: () {
+        goToDetail(cropsData);
+      },
+      child: Text(Strings.myPlotDetails,
+          style: Styles.subtitleTextStyle()));
 }

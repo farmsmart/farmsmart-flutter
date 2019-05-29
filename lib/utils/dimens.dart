@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -7,7 +6,6 @@ import 'colors.dart';
 // We define here generic margins for the app
 
 abstract class Margins {
-
   static SizedBox generalListBigMargin() {
     return SizedBox(height: 20);
   }
@@ -27,10 +25,9 @@ abstract class Margins {
   static SizedBox generalListSmallerMargin() {
     return SizedBox(height: 7);
   }
-
 }
-abstract class Paddings {
 
+abstract class Paddings {
   static boxBigPadding() {
     return EdgeInsets.all(20);
   }
@@ -55,7 +52,7 @@ abstract class Paddings {
     return EdgeInsets.only(left: 10);
   }
 
-  static sidesPadding(){
+  static sidesPadding() {
     return EdgeInsets.only(left: 15, right: 15);
   }
 
@@ -66,13 +63,18 @@ abstract class Paddings {
   static bottomPaddingSmall() {
     return EdgeInsets.only(bottom: 10);
   }
+
 }
 
+
 abstract class Dividers {
-  static ExpandableDivider(){
+
+  static expandableDivider() {
     return Divider(height: 4, color: Color(black));
   }
+
 }
+
 const double bottomBarIconSize = 30.0;
 const double appBarIconSize = 30.0;
 const double listImageHeight = 200.0;

@@ -31,18 +31,18 @@ class _MyPlotState extends State<HomeMyPlotPage> {
         return Container(
             child: CircularProgressIndicator(), alignment: Alignment.center);
       case LoadingStatus.SUCCESS:
-        return _buildList(context, viewModel.cropsList, viewModel.goToDetail); // Change fetch crops to go to detail
+        return _buildList(context, viewModel.cropsList, viewModel.goToDetail, viewModel.goToStage); // Change fetch crops to go to detail
       case LoadingStatus.ERROR:
         return Text("Error"); // TODO Check FARM-203
     }
   }
 }
 
-Widget _buildList(BuildContext context, List<CropEntity> cropList, goToDetail) {
+Widget _buildList(BuildContext context, List<CropEntity> cropList, goToDetail, goToStage) {
   return ListView(
     padding: const EdgeInsets.only(top: 20.0),
     children: cropList
-        .map((cropData) => MyPlotListItem().buildListItem(cropData, goToDetail))
+        .map((cropData) => MyPlotListItem().buildListItem(cropData, goToDetail, goToStage))
         .toList(),
   );
 }
