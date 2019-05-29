@@ -47,7 +47,8 @@ class FireStoreManager {
               .get()
               .then((stagesSnapshot) async {
             if (stagesSnapshot.data != null &&
-                stagesSnapshot.data[documentFieldStatus] == DataStatus.PUBLISHED) {
+                stagesSnapshot.data[documentFieldStatus] ==
+                    DataStatus.PUBLISHED) {
               crop.addStage(StageEntity.stageFromDocument(stagesSnapshot));
             }
           });
@@ -128,7 +129,8 @@ class FireStoreManager {
     return articlesDirectory;
   }
 
-  Future<List<ArticleEntity>> getFeaturedArticles(List<String> articlesDirectory) async {
+  Future<List<ArticleEntity>> getFeaturedArticles(
+      List<String> articlesDirectory) async {
     List<ArticleEntity> listOfFeaturedArticles = List();
 
     if (articlesDirectory != null) {
@@ -138,7 +140,8 @@ class FireStoreManager {
             .get()
             .then((featuredArticlesSnapshot) async {
           if (featuredArticlesSnapshot.data != null &&
-              featuredArticlesSnapshot.data[documentFieldStatus] == DataStatus.PUBLISHED) {
+              featuredArticlesSnapshot.data[documentFieldStatus] ==
+                  DataStatus.PUBLISHED) {
             listOfFeaturedArticles.add(
                 ArticleEntity.articleFromDocument(featuredArticlesSnapshot));
           }
@@ -147,4 +150,19 @@ class FireStoreManager {
     }
     return listOfFeaturedArticles;
   }
+
+  Future<ArticleEntity> getArticleById(String articlePathReference) async {
+    ArticleEntity articleEntity;
+    if (articlePathReference != null) {
+      await Firestore.instance.document(FLAME_LINK_CONTENT+"/"+articlePathReference).get().then(
+        (featuredArticlesSnapshot) async {
+          if (featuredArticlesSnapshot.data != null) {
+            articleEntity = ArticleEntity.articleFromDocument(featuredArticlesSnapshot);
+          }
+        },
+      );
+    }
+    return articleEntity;
+  }
+
 }

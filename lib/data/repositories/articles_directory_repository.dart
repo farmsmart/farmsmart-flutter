@@ -26,6 +26,10 @@ class ArticlesDirectoryRepository {
         featuredDirectoryWithoutArticles.articlesPathReference);
   }
 
+  Future<ArticleEntity> getArticleById(String artcleId) {
+    return _firestoreManager.getArticleById(artcleId);
+  }
+
   Future<List<ArticleEntity>> getListOfArticlesWithImages(
       List<ArticleEntity> articlesWithoutImages) {
     return _firestoreManager.getArticlesImagePath(articlesWithoutImages);
@@ -34,7 +38,8 @@ class ArticlesDirectoryRepository {
   Future<ArticlesDirectoryEntity> getArticlesWithImages() async {
     ArticlesDirectoryEntity directory = await getDirectory();
     List<ArticleEntity> articles = await getListOfArticles(directory);
-    List<ArticleEntity> articlesWithImage = await getListOfArticlesWithImages(articles);
+    List<ArticleEntity> articlesWithImage =
+        await getListOfArticlesWithImages(articles);
     directory.articles = articlesWithImage;
     return directory;
   }

@@ -18,8 +18,10 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'app_routes.dart';
+import 'data/managers/firestore_manager.dart';
+import 'data/model/article_entity.dart';
 
-void main() async{
+void main() async {
   // Defines app orientation
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitDown,
@@ -28,18 +30,24 @@ void main() async{
 
   debugDefaultTargetPlatformOverride = TargetPlatform.android;
   var store = await createStore();
-  runApp(new FarmsmartApp(store));
+  runApp(FarmsmartApp(store));
 }
+
+
+
 
 class FarmsmartApp extends StatefulWidget {
   final Store<AppState> store;
+
   FarmsmartApp(this.store);
 
   @override
   _AppState createState() => _AppState();
 }
 
-class _AppState extends State<FarmsmartApp> with WidgetsBindingObserver{
+
+
+class _AppState extends State<FarmsmartApp> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
@@ -54,9 +62,7 @@ class _AppState extends State<FarmsmartApp> with WidgetsBindingObserver{
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) {
       _retrieveDynamicLink();
-    }
   }
 
   @override
@@ -72,30 +78,42 @@ class _AppState extends State<FarmsmartApp> with WidgetsBindingObserver{
           ),
           home: Home(),
           navigatorKey: Keys.navKey,
-          routes:  <String, WidgetBuilder>{
+          routes: <String, WidgetBuilder>{
             // Here you need to add all the different navigation transitions you may have
-            AppRoutes.cropDetail: (BuildContext context) => CropDetailScreen(),
-            AppRoutes.cropCurrentStage: (BuildContext context) => MyPlotCurrentStageScreen(),
-            AppRoutes.articleDetail: (BuildContext context) => ArticleDetailScreen(),
-            AppRoutes.privacyPolicies: (BuildContext context) => PrivacyPoliciesScreen(),
-          }
-      ),
+            AppRoutes.cropDetail: (BuildContext context) =>
+                CropDetailScreen(),
+            AppRoutes.cropCurrentStage: (BuildContext context) =>
+                MyPlotCurrentStageScreen(),
+            AppRoutes.articleDetail: (BuildContext context) =>
+                ArticleDetailScreen(),
+            AppRoutes.privacyPolicies: (BuildContext context) =>
+                PrivacyPoliciesScreen(),
+          }),
     );
   }
 
   Future<void> _retrieveDynamicLink() async {
 
     final PendingDynamicLinkData data =
-    await FirebaseDynamicLinks.instance.retrieveDynamicLink();
+        await FirebaseDynamicLinks.instance.retrieveDynamicLink();
     final Uri deepLink = data?.link;
-
-    //This if is the dynamic form for the deepLink, but for testing if it works, we are hardcoding it for now.
-    /*
+    //This if is the dynamic form for the deepLink, but for testing if it works, we are hardcoding it for now.*
     if (deepLink != null) {
-      Navigator.pushNamed(context, deepLink.path);
-    }*/
+      FireStoreManager fireStoreManager = FireStoreManager.get();
+      String articleId = deepLink.query.substring(3, deepLink.query.length);
+      ArticleEntity articleEntity = await fireStoreManager.getArticleById(
+          articleId);
+      print(articleEntity.content);
+      widget.store.dispatch(GoToArticleDetailAction(articleEntity));
+    }
+//
+//      Navigator.pushNamed(context, AppRoutes.articleDetail);
+//    }
+
+
 
     //The link is hardcoded here, now it's going to the privacyPolicies page.
-    Keys.navKey.currentState.pushNamed(AppRoutes.privacyPolicies);
+   // Keys.navKey.currentState.pushNamed(AppRoutes.privacyPolicies);
+    //Keys.navKey.currentState.pushNamed(AppRoutes.articleDetail);
   }
 }
