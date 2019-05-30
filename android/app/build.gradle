@@ -36,7 +36,6 @@ if (keystorePropertiesFile.exists()) {
 // key.properties should be inside android/ folder
 // google-services.json should be inside android/app folder
 
-
 android {
     compileSdkVersion 28
 
@@ -78,25 +77,55 @@ android {
             useProguard true
 
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            // Flutter only generates release apks for one platform.
+            // Google play now requires 64 bit therefore, two different apks for 32 bit and 64 bit will need to be created
+            // In the flutter build, specify target-platform android-arm for 32 bit and android-arm64 for 64 bit respective.
+            // Eg. 64 bit
+            // flutter build apk --release --flavor production --target-platform android-arm64
+            ndk {
+                if (!project.hasProperty('target-platform'))
+                    abiFilters 'arm64-v8a', 'armeabi-v7a'
+                else switch (project.property('target-platform')) {
+                    case 'android-arm64': abiFilters 'arm64-v8a'; break
+                    case 'android-arm': abiFilters 'armeabi-v7a'; break
+                    case 'android-x86': abiFilters 'x86'; break
+                    case 'android-x64': abiFilters 'x86_64'; break
+                    default:
+                        throw new GradleException("Unrecognized target-platform: " + project.property('target-platform'))
+                }
+            }
         }
     }
 
     flavorDimensions "flavors"
 
     productFlavors {
+
+        development {
+            // To run  flutter run --flavor development -v lib/main.dart
+            // This apk can be installed alongside actual app
+            dimension "flavors"
+            applicationId "co.farmsmart.app.dev"
+            versionNameSuffix "-development"
+        }
         // Add particular setup into different app flavors.
         // Also, you can create a different main to define global variables.
         // Recommended read https://medium.com/flutter-community/flutter-ready-to-go-e59873f9d7de
-        development {
-            // To run  flutter run --flavor development -v lib/main.dart
+        qa {
+            // To generate apk for uploading to google play store for internal app sharing
+            // flutter build apk --release --flavor qa -t lib/main.dart
             dimension "flavors"
-            applicationId = "co.farmsmart.app.dev"
         }
+
         production {
-            // To run  flutter run --flavor production -v lib/main.dart
+            // To generate apk for uploding to google play store as a release
+            // flutter build apk --release --flavor production -t lib/main_production.dart
             dimension "flavors"
         }
+
     }
+
 }
 
 flutter {

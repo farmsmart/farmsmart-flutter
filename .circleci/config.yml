@@ -76,7 +76,7 @@ jobs:
           sudo cat ./ci/env.${ENVIRONMENT}.sh >> ./env.sh
       - *save_workspace
 
-  flutter-build:
+  flutter-build-prod:
     docker:
       - image: cirrusci/flutter:v1.2.1
     working_directory: *working_dir
@@ -86,8 +86,35 @@ jobs:
           source ./env.sh
           flutter packages get
           echo "Building flutter apk - BUILD_NAME:${VERSION_NAME}, BUILD_NUMBER=${VERSION_CODE}"
-          flutter build apk --build-name=${VERSION_NAME} --build-number=${VERSION_CODE} --release --flavor production
+          flutter build apk --build-name=${VERSION_NAME} --build-number=${VERSION_CODE} --release --flavor ${FLAVOR}
       - *save_workspace
+
+  flutter-build-dev:
+    docker:
+      - image: cirrusci/flutter:v1.2.1
+    working_directory: *working_dir
+    steps:
+      - *restore_workspace
+      - run: |
+          flutter packages get
+          echo "Building flutter apk with test data - BUILD_NAME:"${CIRCLE_SHA1}_test""
+          flutter build apk --build-name="${CIRCLE_SHA1}" --release --flavor qa -t lib/main.dart
+          echo "Building flutter apk with live data - BUILD_NAME:"${CIRCLE_SHA1}_live"
+          flutter build apk --build-name="${CIRCLE_SHA1}" --release --flavor production -t lib/main_production.dart
+      - *save_workspace
+
+  upload-to-app-sharing:
+      docker:
+        - image: circleci/python:3.7.3
+      working_directory: *working_dir
+      steps:
+        - *restore_workspace
+        - run: |
+            sudo pip3 install -r ./ci/playstore/requirements.txt
+            apk_paths=$(find ./build -name "*release.apk" | sed 'H;1h;$!d;x;y/\n/,/')
+            apks=$(sudo python3 ./ci/playstore/publish_to_internal_app_sharing.py co.farmsmart.app ${apk_paths})
+            sudo echo "export apks=${apks}" >> ./env.sh
+        - *save_workspace
 
   promote-apk-to-track:
     docker:
@@ -136,7 +163,7 @@ workflows:
             branches:
               only: /develop/
 
-      - flutter-build:
+      - flutter-build-dev:
           name: flutter-build-dev
           requires:
             - get-next-version-dev
@@ -182,8 +209,7 @@ workflows:
             branches:
               only: /release.*/
 
-      - flutter-build:
-          name: flutter-build-prod
+      - flutter-build-prod:
           requires:
             - get-next-version-prod
           context: prod
@@ -192,7 +218,6 @@ workflows:
               only: /release.*/
 
       - promote-apk-to-track:
-          name: promote-apk-to-track-prod
           requires:
             - flutter-build-prod
           context: prod
@@ -203,7 +228,7 @@ workflows:
       - slack-notification:
           name: slack-notification
           requires:
-            - promote-apk-to-track-prod
+            - promote-apk-to-track
           context: prod
           filters:
             branches:
