@@ -1,1 +1,0 @@
-export VERSION=${CIRCLE_SHA1}
