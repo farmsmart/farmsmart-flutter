@@ -8,13 +8,13 @@ import json
 # Declare command-line flags.
 argparser = argparse.ArgumentParser()
 argparser.add_argument('package_name', help='The package name. Example: com.android.sample')
-argparser.add_argument('apk_paths', help='The apks to upload seperated by a comma. Example: ./path-to-apk1,./path-to-apk2')
+argparser.add_argument('version_name', help='The version name for the release.')
+argparser.add_argument('apk_file', help='The apk to upload.')
 
 args = argparser.parse_args()
 package_name = args.package_name
-apk_paths = args.apk_paths
-
-apks = apk_paths.split(",")
+version_name = args.version_name
+apk_file = args.apk_file
 
 # Authorise the publishing API
 service_account_file_path = "secrets/google-play-service-account.json"
@@ -26,15 +26,12 @@ androidPublisher = googleapiclient.discovery.build('androidpublisher', 'v3', cre
 
 # API calls
 
-apks_info = []
+apk_upload_request = androidPublisher.internalappsharingartifacts().uploadapk(packageName=package_name, media_body=apk_file, media_mime_type=None)
+apk_upload_response = apk_upload_request.execute()
+apk = {
+        "version_name": version_name,
+        "download_url": apk_upload_response['downloadUrl'],
+        "certificate_fingerprint": apk_upload_response['certificateFingerprint']
+    }
 
-for apk in apks:
-    apk_upload_request = androidPublisher.internalappsharingartifacts().uploadapk(packageName=package_name, media_body=apk, media_mime_type=None)
-    apk_upload_response = apk_upload_request.execute()
-    apk = {
-            "version_name": apk,
-            "download_url": apk_upload_response['download_url']
-        }
-    apks_info.append(apk)
-
-print(json.dumps(apks_info))
+print(json.dumps(apk))
