@@ -217,7 +217,7 @@ workflows:
           context: dev
           filters:
             branches:
-              only: /develop/
+              only: /develop|feature.*/
 
       - flutter-build-dev:
           requires:
@@ -225,7 +225,7 @@ workflows:
           context: dev
           filters:
             branches:
-              only: /develop/
+              only: /develop|feature.*/
 
       - upload-to-app-sharing:
           requires:
@@ -233,7 +233,7 @@ workflows:
           context: dev
           filters:
             branches:
-              only: /develop/
+              only: /develop|feature.*/
 
       - slack-notification-dev:
           requires:
@@ -241,7 +241,7 @@ workflows:
           context: dev
           filters:
             branches:
-              only: /develop/
+              only: /develop|feature.*/
 
       # prod
       - decrypt-secrets:
