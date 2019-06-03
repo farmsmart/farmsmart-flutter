@@ -25,8 +25,7 @@ class ArticlesDirectoryRepository {
         featuredDirectoryWithoutArticles.articlesPathReference);
   }
 
-  Future<List<ArticleEntity>> getListOfArticlesWithImages(
-      List<ArticleEntity> articlesWithoutImages) {
+  Future<List<ArticleEntity>> getListOfArticlesWithImages(List<ArticleEntity> articlesWithoutImages) {
     return _firestoreManager.getArticlesImagePath(articlesWithoutImages);
   }
 

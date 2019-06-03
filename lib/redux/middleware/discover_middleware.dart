@@ -16,6 +16,7 @@ class DiscoverMiddleWare extends MiddlewareClass<AppState> {
 
     if (action is UpdateRelatedArticlesAction) {
       ArticleEntity articleWithRelated = await ArticlesDirectoryRepository.get().getListOfRelatedArticles(action.articleWithRelated);
+      articleWithRelated.relatedArticles = await ArticlesDirectoryRepository.get().getListOfArticlesWithImages(articleWithRelated.relatedArticles);
       store.dispatch(GoToArticleDetailAction(articleWithRelated));
     }
 
