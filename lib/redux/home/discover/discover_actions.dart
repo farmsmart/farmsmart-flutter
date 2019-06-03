@@ -14,3 +14,8 @@ class GoToArticleDetailAction {
   ArticleEntity article;
   GoToArticleDetailAction(this.article);
 }
+
+class UpdateRelatedArticlesAction {
+  ArticleEntity articleWithRelated;
+  UpdateRelatedArticlesAction(this.articleWithRelated);
+}

@@ -3,32 +3,37 @@ import 'package:farmsmart_flutter/data/model/article_entity.dart';
 import 'package:farmsmart_flutter/model/loading_status.dart';
 import 'package:meta/meta.dart';
 
-
-
 @immutable
 class DiscoverState {
   final LoadingStatus loadingStatus;
   final ArticlesDirectoryEntity articlesDirectory;
   final ArticleEntity selectedArticle;
+  final ArticleEntity selectedArticleWithRelated;
 
   DiscoverState(
       {@required this.loadingStatus,
       @required this.articlesDirectory,
-      this.selectedArticle});
+      this.selectedArticle,
+      this.selectedArticleWithRelated
+      });
 
   factory DiscoverState.initial() {
     return new DiscoverState(
         loadingStatus: LoadingStatus.LOADING, articlesDirectory: ArticlesDirectoryEntity());
   }
 
-  DiscoverState copyWith(
-      {LoadingStatus loadingStatus,
-      ArticlesDirectoryEntity articlesDirectory,
-      ArticleEntity selectedArticle}) {
+  DiscoverState copyWith({
+        LoadingStatus loadingStatus,
+        ArticlesDirectoryEntity articlesDirectory,
+        ArticleEntity selectedArticle,
+        ArticleEntity selectedArticleWithRelated,
+      }) {
     return new DiscoverState(
         loadingStatus: loadingStatus ?? this.loadingStatus,
         articlesDirectory: articlesDirectory ?? this.articlesDirectory,
-        selectedArticle: selectedArticle ?? this.selectedArticle);
+        selectedArticle: selectedArticle ?? this.selectedArticle,
+        selectedArticleWithRelated: selectedArticleWithRelated ?? this.selectedArticleWithRelated
+    );
   }
 
   @override
@@ -38,9 +43,11 @@ class DiscoverState {
           runtimeType == other.runtimeType &&
           loadingStatus == other.loadingStatus &&
           articlesDirectory == other.articlesDirectory &&
-          selectedArticle == other.selectedArticle;
+          selectedArticle == other.selectedArticle &&
+          selectedArticleWithRelated == other.selectedArticleWithRelated
+  ;
 
   @override
   int get hashCode =>
-      loadingStatus.hashCode ^ articlesDirectory.hashCode ^ selectedArticle.hashCode;
+      loadingStatus.hashCode ^ articlesDirectory.hashCode ^ selectedArticle.hashCode ^ selectedArticleWithRelated.hashCode;
 }

@@ -7,10 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:farmsmart_flutter/utils/assets.dart';
 
 class DiscoveryListItem {
-  Widget buildListItem(ArticleEntity articleData, goToArticleDetail) {
+  Widget buildListItem(ArticleEntity articleData, getRelatedArticles) {
     return GestureDetector(
         onTap: () {
-          goToArticleDetail(articleData);
+          getRelatedArticles(articleData);
         },
         child: Padding(
           key: ValueKey(articleData.title ?? Strings.noTitleString),

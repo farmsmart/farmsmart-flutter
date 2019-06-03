@@ -139,12 +139,32 @@ class FireStoreManager {
             .then((featuredArticlesSnapshot) async {
           if (featuredArticlesSnapshot.data != null &&
               featuredArticlesSnapshot.data[documentFieldStatus] == DataStatus.PUBLISHED) {
-            listOfFeaturedArticles.add(
-                ArticleEntity.articleFromDocument(featuredArticlesSnapshot));
+            listOfFeaturedArticles.add(ArticleEntity.articleFromDocument(featuredArticlesSnapshot));
           }
         });
       }
     }
     return listOfFeaturedArticles;
+  }
+
+  Future<ArticleEntity> getRelatedArticles(ArticleEntity selectedArticle) async {
+      if (selectedArticle.relatedArticlesPathReference != null) {
+          selectedArticle.relatedArticles.clear();
+          for (var relatedArticlesPathReference in selectedArticle
+              .relatedArticlesPathReference) {
+            await Firestore.instance
+                .document(relatedArticlesPathReference)
+                .get()
+                .then((relatedArticlesSnapshot) async {
+              if (relatedArticlesSnapshot.data != null &&
+                  relatedArticlesSnapshot.data[documentFieldStatus] ==
+                      DataStatus.PUBLISHED) {
+                selectedArticle.relatedArticles.add(
+                    ArticleEntity.articleFromDocument(relatedArticlesSnapshot));
+              }
+            });
+          }
+        }
+    return selectedArticle;
   }
 }

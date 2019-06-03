@@ -8,30 +8,47 @@ class ArticleEntity {
   String imagePathReference;
   String imageUrl;
   //String relatedArticles; //TODO [FARM-95]
+  List<ArticleEntity> relatedArticles;
+  List<String> relatedArticlesPathReference;
   Status status;
   String summary;
   String title;
 
-  ArticleEntity({
-      this.content,
+  ArticleEntity(
+      {this.content,
       this.imagePathReference,
       this.imageUrl,
+      this.relatedArticles,
+      this.relatedArticlesPathReference,
       this.status,
       this.summary,
-      this.title
-  });
+      this.title});
 
   factory ArticleEntity.articleFromDocument(DocumentSnapshot articleDocument) => ArticleEntity(
-    content: articleDocument.data[CONTENT],
-    imagePathReference: articleDocument.data[IMAGE].first.path,
-    imageUrl: Strings.emptyString,
-    //relatedArticles: articleDocument.data[""], //TODO [FARM-95]
-    status: statusValues.map[articleDocument.data[STATUS]],
-    summary: articleDocument.data[SUMMARY],
-    title: articleDocument.data[TITLE]
-  );
+          content: articleDocument.data[CONTENT],
+          imagePathReference: articleDocument.data[IMAGE].first.path,
+          imageUrl: Strings.emptyString,
+          //relatedArticles: articleDocument.data[""], //TODO [FARM-95]
+          relatedArticles: List(),
+          relatedArticlesPathReference:
+              extractRelatedArticlesPaths(articleDocument),
+          status: statusValues.map[articleDocument.data[STATUS]],
+          summary: articleDocument.data[SUMMARY],
+          title: articleDocument.data[TITLE]);
 
   void setImageUrl(String imageUrl) {
     this.imageUrl = imageUrl;
   }
+
+  void addRelatedArticle(ArticleEntity relatedArticle) {
+    this.relatedArticles.add(relatedArticle);
+  }
+}
+
+List<String> extractRelatedArticlesPaths(DocumentSnapshot document) {
+  if (document.data[RELATED_ARTICLES] != null) {
+    return List<String>.from(
+        document.data[RELATED_ARTICLES].map((stage) => stage[ARTICLE].path));
+  }
+  return null;
 }
