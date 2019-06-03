@@ -173,6 +173,7 @@ jobs:
       steps:
         - *restore_workspace
         - run: |
+            source ./env.sh
             sudo pip3 install -r ./ci/playstore/requirements.txt
             APK_PATHS=$(find /tmp/workspace -name "*${VERSION_NAME}*.apk" | sed 'H;1h;$!d;x;y/\n/,/')
             sudo python3 ./ci/playstore/promote_apk_to_track.py co.farmsmart.app ${TRACK} ${VERSION_NAME} ${VERSION_CODE} ./Release_notes ${APK_PATHS}
