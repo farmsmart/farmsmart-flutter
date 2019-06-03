@@ -20,6 +20,8 @@ import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'app_routes.dart';
 import 'data/managers/firestore_manager.dart';
 import 'data/model/article_entity.dart';
+import 'package:farmsmart_flutter/data/repositories/articles_directory_repository.dart';
+
 
 void main() async {
   // Defines app orientation
@@ -97,23 +99,17 @@ class _AppState extends State<FarmsmartApp> with WidgetsBindingObserver {
     final PendingDynamicLinkData data =
         await FirebaseDynamicLinks.instance.retrieveDynamicLink();
     final Uri deepLink = data?.link;
+
     //This if is the dynamic form for the deepLink, but for testing if it works, we are hardcoding it for now.*
     if (deepLink != null) {
       FireStoreManager fireStoreManager = FireStoreManager.get();
       String articleId = deepLink.query.substring(3, deepLink.query.length);
       ArticleEntity articleEntity = await fireStoreManager.getArticleById(
           articleId);
-      print(articleEntity.content);
+
+      articleEntity = await fireStoreManager.getArticleImagePath(articleEntity);
+
       widget.store.dispatch(GoToArticleDetailAction(articleEntity));
     }
-//
-//      Navigator.pushNamed(context, AppRoutes.articleDetail);
-//    }
-
-
-
-    //The link is hardcoded here, now it's going to the privacyPolicies page.
-   // Keys.navKey.currentState.pushNamed(AppRoutes.privacyPolicies);
-    //Keys.navKey.currentState.pushNamed(AppRoutes.articleDetail);
   }
 }

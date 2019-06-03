@@ -1,16 +1,11 @@
 import 'package:farmsmart_flutter/data/model/article_entity.dart';
 import 'package:farmsmart_flutter/utils/assets.dart';
-import 'package:farmsmart_flutter/utils/colors.dart';
 import 'package:farmsmart_flutter/utils/dimens.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:farmsmart_flutter/redux/app/app_state.dart';
-import 'package:farmsmart_flutter/utils/styles.dart';
 import '../app_bar.dart';
-import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
-
-
 import 'discover_viewmodel.dart';
 
 class ArticleDetailScreen extends StatefulWidget {

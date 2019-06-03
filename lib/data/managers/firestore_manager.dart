@@ -78,6 +78,21 @@ class FireStoreManager {
     return cropsEntitiesWithImagePath;
   }
 
+  Future<ArticleEntity> getArticleImagePath(ArticleEntity article) async {
+
+    await Firestore.instance
+        .document(article.imagePathReference)
+        .get()
+        .then((imageSnapshot) async {
+          var imagePath = EMPTY;
+          if (imageSnapshot.data != null) {
+            imagePath = await getImageDownloadURL(imageSnapshot);
+          }
+          article.setImageUrl(imagePath);
+    });
+    return article;
+  }
+
   Future<List<ArticleEntity>> getArticlesImagePath(
       List<ArticleEntity> articlesList) async {
     List<ArticleEntity> articlesEntitiesWithImagePath = List();

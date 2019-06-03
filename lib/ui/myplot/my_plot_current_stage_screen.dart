@@ -5,7 +5,6 @@ import 'package:farmsmart_flutter/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-
 import '../app_bar.dart';
 import 'myplot_viewmodel.dart';
 
@@ -30,7 +29,8 @@ class _CurrentStageState extends State<MyPlotCurrentStageScreen> {
   Widget _buildBody(BuildContext context, StageEntity stageData, String cropTitle) {
     return Scaffold(
         appBar: CustomAppBar.buildForDetail(cropTitle),
-        body: Column(
+        body: SingleChildScrollView(
+          child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Padding(
@@ -41,8 +41,7 @@ class _CurrentStageState extends State<MyPlotCurrentStageScreen> {
                 padding: Paddings.boxSmallPadding(),
                 child: Html(data: stageData.content)),
           ],
-        ));
+        )));
   }
 }
 
-//
