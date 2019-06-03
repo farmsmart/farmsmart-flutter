@@ -30,6 +30,15 @@ class ArticlesDirectoryRepository {
     return _firestoreManager.getArticleById(artcleId);
   }
 
+  Future<ArticleEntity> getArticleImagePath(ArticleEntity articleEntity) {
+    return _firestoreManager.getArticleImagePath(articleEntity);
+  }
+
+  Future<ArticleEntity> getArticleWithImageById(String articleId) async {
+    ArticleEntity articleEntity = await getArticleById(articleId);
+    return await getArticleImagePath(articleEntity);
+  }
+
   Future<List<ArticleEntity>> getListOfArticlesWithImages(
       List<ArticleEntity> articlesWithoutImages) {
     return _firestoreManager.getArticlesImagePath(articlesWithoutImages);
@@ -47,5 +56,4 @@ class ArticlesDirectoryRepository {
     directory.articles = articlesWithImage;
     return directory;
   }
-
 }
