@@ -52,6 +52,10 @@ class _ArticleDetailState extends State<ArticleDetailScreen> {
                 Padding(
                     padding: Paddings.boxSmallPadding(),
                     child: Html(data: selectedArticle.content)),
+                Padding(
+                    padding: Paddings.boxSmallPadding(),
+                    child: Text("Related Articles", style: Styles.titleTextStyle()),
+                ),
                 buildRelated(context, selectedArticle.relatedArticles, getRelatedArticles),
               ],
             )));
@@ -153,4 +157,5 @@ _buildDividerLine() {
     indent: 145,
   );
 }
+
 

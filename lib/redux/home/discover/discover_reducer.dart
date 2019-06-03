@@ -7,7 +7,6 @@ import 'package:redux/redux.dart';
 final discoverReducer = combineReducers<DiscoverState>([
   TypedReducer<DiscoverState, UpdateArticleDirectoryAction>(_updateArticles),
   TypedReducer<DiscoverState, GoToArticleDetailAction>(_goToArticleDetail),
-  //TypedReducer<DiscoverState, FetchRelatedArticlesAction>(_fetchRelatedArticles),
   TypedReducer<DiscoverState, UpdateRelatedArticlesAction>(_updateRelatedArticles)
 ]);
 
@@ -16,9 +15,6 @@ DiscoverState _updateArticles(DiscoverState state, UpdateArticleDirectoryAction 
 
 DiscoverState _goToArticleDetail(DiscoverState state, GoToArticleDetailAction action) =>
     state.copyWith(selectedArticle: action.article);
-/*
-DiscoverState _fetchRelatedArticles(DiscoverState state, FetchRelatedArticlesAction action) =>
-    state.copyWith(selectedArticleWithRelated: action.articleWithRelated);*/
 
 DiscoverState _updateRelatedArticles(DiscoverState state, UpdateRelatedArticlesAction action) =>
     state.copyWith(selectedArticleWithRelated: action.articleWithRelated);

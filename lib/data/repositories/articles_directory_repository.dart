@@ -37,7 +37,7 @@ class ArticlesDirectoryRepository {
     return directory;
   }
 
-  Future<ArticleEntity> getListOfRelatedArticles(ArticleEntity articleWithoutRelated) {
+  Future<ArticleEntity> getListOfRelatedArticles(ArticleEntity articleWithoutRelated) async {
     return _firestoreManager.getRelatedArticles(articleWithoutRelated);
   }
 }
