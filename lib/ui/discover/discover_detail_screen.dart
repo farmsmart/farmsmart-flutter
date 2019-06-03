@@ -117,6 +117,8 @@ _buildArticleTitle(ArticleEntity articleData) {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(articleData.title ?? Strings.noTitleString,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
             style: Styles.articleListTitleStyle()),
         Margins.generalListSmallerMargin(),
         Text(articleData.summary ?? Strings.myPlotItemDefaultTitle,
