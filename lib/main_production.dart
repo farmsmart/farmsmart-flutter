@@ -5,7 +5,7 @@ import 'package:farmsmart_flutter/data/firebase_const.dart';
 void main() async{
 
   // Write to shared preference
-  AppSettings.get().environment = (FirestoreEnvironment.DEVELOPMENT);
+  AppSettings.get().environment = FirestoreEnvironment.PRODUCTION;
 
   bootstrap();
 }
