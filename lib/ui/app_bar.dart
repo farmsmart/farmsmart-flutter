@@ -5,31 +5,25 @@ import 'package:farmsmart_flutter/utils/strings.dart';
 import 'package:farmsmart_flutter/utils/colors.dart';
 import 'package:farmsmart_flutter/utils/dimens.dart';
 import 'package:farmsmart_flutter/utils/styles.dart';
-import 'package:farmsmart_flutter/ui/discover/discover_detail_screen.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_share_me/flutter_share_me.dart';
-import 'dart:io';
-import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
-import 'package:path/path.dart';
 import 'package:package_info/package_info.dart';
-
-
-
 
 // We define here generic margins for the app
 abstract class CustomAppBar {
   static AppBar build(int currentHomeTab, Function goToPrivacyPolicy) {
     switch (currentHomeTab) {
-      case MY_PLOT_TAB:
-        return buildForHome(Strings.myPlotTab, profileAction(), popUpMenuAction(goToPrivacyPolicy), homeIcon());
+      case HomeScreen.MY_PLOT_TAB:
+        return buildForHome(Strings.myPlotTab, profileAction(),
+            popUpMenuAction(goToPrivacyPolicy), homeIcon());
         break;
-      case PROFIT_LOSS_TAB:
+      case HomeScreen.PROFIT_LOSS_TAB:
         return buildWithTitle(Strings.profitLossTab);
         break;
-      case ARTICLES_TAB:
-        return buildForHome(Strings.discoverTab, profileAction(), popUpMenuAction(goToPrivacyPolicy), homeIcon());
+      case HomeScreen.ARTICLES_TAB:
+        return buildForHome(Strings.discoverTab, profileAction(),
+            popUpMenuAction(goToPrivacyPolicy), homeIcon());
         break;
-      case COMMUNITY_TAB:
+      case HomeScreen.COMMUNITY_TAB:
         return buildWithTitle(Strings.communityTab);
         break;
     }
@@ -38,14 +32,15 @@ abstract class CustomAppBar {
 
   static AppBar buildWithTitle(String title) {
     return AppBar(
-      centerTitle: true,
-      title: Text(title, style: Styles.appBarTextStyle()));
+        centerTitle: true, title: Text(title, style: Styles.appBarTextStyle()));
   }
 
-  static AppBar buildForHome(String title, Widget profileActions, Widget privacyAction, Widget homeIcon) {
+  static AppBar buildForHome(String title, Widget profileActions,
+      Widget privacyAction, Widget homeIcon) {
     return AppBar(
       leading: homeIcon,
-      automaticallyImplyLeading: true, // adds the back button automatically
+      automaticallyImplyLeading: true,
+      // adds the back button automatically
       title: Text(title, style: Styles.appBarTextStyle()),
       actions: <Widget>[profileActions, privacyAction],
       centerTitle: true,
@@ -55,7 +50,8 @@ abstract class CustomAppBar {
   static AppBar buildForArticleDetail(String title, Widget shareActions) {
     return AppBar(
       leading: backIcon(),
-      automaticallyImplyLeading: true, // adds the back button automatically
+      automaticallyImplyLeading: true,
+      // adds the back button automatically
       title: Text(title, style: Styles.appBarDetailTextStyle()),
       actions: <Widget>[shareActions],
       centerTitle: true,
@@ -73,20 +69,20 @@ abstract class CustomAppBar {
 
   static Widget profileAction() {
     return IconButton(
-        icon: Icon(Icons.account_circle, color: Color(primaryGreen), size: appBarIconSize),
+        icon: Icon(Icons.account_circle,
+            color: Color(primaryGreen), size: appBarIconSize),
         onPressed: () {});
   }
 
   static Widget shareAction(String articleID) {
     return IconButton(
       icon: Icon(Icons.share, color: Color(primaryGreen), size: appBarIconSize),
-      onPressed: ()  async {
+      onPressed: () async {
         String deepLink = await buildArticleDeeplink(articleID);
-        var response = await FlutterShareMe().shareToSystem(
-              msg: deepLink);
-          if (response == 'success') {
-            print('navigate success');
-          }
+        var response = await FlutterShareMe().shareToSystem(msg: deepLink);
+        if (response == 'success') {
+          print('navigate success');
+        }
       },
     );
   }
@@ -99,7 +95,14 @@ abstract class CustomAppBar {
 
   static Future<String> buildArticleDeeplink(String articleID) async {
     String packageID = await getPackageInfo();
-    String dynamicUrl = deeplinkPrefix+"/?link="+linkDomain+"?id="+articleID+"&type=article&apn="+packageID+"&efr=1";
+    String dynamicUrl = deeplinkPrefix +
+        "/?link=" +
+        linkDomain +
+        "?id=" +
+        articleID +
+        "&type=article&apn=" +
+        packageID +
+        "&efr=1";
     return dynamicUrl;
   }
 
@@ -108,7 +111,8 @@ abstract class CustomAppBar {
 
   static Widget popUpMenuAction(Function goToPrivacyPolicy) {
     return IconButton(
-        icon: PopupMenuButton(onSelected: goToPrivacyPolicy,
+        icon: PopupMenuButton(
+          onSelected: goToPrivacyPolicy,
           itemBuilder: (BuildContext context) {
             return popUpMenu.map((String action) {
               return PopupMenuItem<String>(
@@ -116,13 +120,12 @@ abstract class CustomAppBar {
                 child: Text(action),
               );
             }).toList();
-          },),
+          },
+        ),
         onPressed: () {});
   }
 
-  static List<String> popUpMenu = <String>[
-    Strings.appbarPopUpPolicies
-  ];
+  static List<String> popUpMenu = <String>[Strings.appbarPopUpPolicies];
 
   static Widget homeIcon() {
     return Image.asset(Assets.APP_ICON);

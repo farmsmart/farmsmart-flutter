@@ -1,5 +1,7 @@
+import 'package:farmsmart_flutter/data/model/article_entity.dart';
 import 'package:farmsmart_flutter/model/loading_status.dart';
 import 'package:farmsmart_flutter/redux/app/app_state.dart';
+import 'package:farmsmart_flutter/redux/home/discover/discover_actions.dart';
 import 'package:farmsmart_flutter/redux/home/home_actions.dart';
 import 'package:farmsmart_flutter/redux/home/screens.dart';
 import 'package:redux/redux.dart';
@@ -7,21 +9,25 @@ import 'package:redux/redux.dart';
 class HomeViewmodel {
   LoadingStatus loadingStatus;
   final int currentTab;
+  ArticleEntity articleEntity;
 
   final Function showMyPlotChild;
   final Function showProfitLossChild;
   final Function showArticlesChild;
   final Function showCommunityChild;
+  final Function showArticleDetail;
 
   final Function goToPrivacyPolicy;
 
-  HomeViewmodel({this.loadingStatus,
-    this.currentTab,
-    this.showArticlesChild,
-    this.showCommunityChild,
-    this.showMyPlotChild,
-    this.showProfitLossChild,
-    this.goToPrivacyPolicy});
+  HomeViewmodel(
+      {this.loadingStatus,
+      this.currentTab,
+      this.showArticlesChild,
+      this.showCommunityChild,
+      this.showMyPlotChild,
+      this.showArticleDetail,
+      this.showProfitLossChild,
+      this.goToPrivacyPolicy});
 
   static HomeViewmodel fromStore(Store<AppState> store) {
     return HomeViewmodel(
@@ -35,23 +41,24 @@ class HomeViewmodel {
             store.dispatch(SwitchTabAction(HomeScreen.ARTICLES_TAB)),
         showCommunityChild: () =>
             store.dispatch(SwitchTabAction(HomeScreen.COMMUNITY_TAB)),
-      goToPrivacyPolicy:  (String value) =>
-          store.dispatch(GoToPrivacyPoliciesAction())
-    );
+        goToPrivacyPolicy: (String value) =>
+            store.dispatch(GoToPrivacyPoliciesAction()),
+        showArticleDetail: (ArticleEntity entity) =>
+            store.dispatch(GoToArticleDetailAction(entity)));
   }
 
   void changeTab(int value) {
     switch (value) {
-      case 0:
+      case HomeScreen.MY_PLOT_TAB:
         showMyPlotChild();
         break;
-      case 1:
+      case HomeScreen.PROFIT_LOSS_TAB:
         showProfitLossChild();
         break;
-      case 2:
+      case HomeScreen.ARTICLES_TAB:
         showArticlesChild();
         break;
-      case 3:
+      case HomeScreen.COMMUNITY_TAB:
         showCommunityChild();
         break;
     }
