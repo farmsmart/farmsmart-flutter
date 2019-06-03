@@ -126,6 +126,7 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
     //This if is the dynamic form for the deepLink, but for testing if it works, we are hardcoding it for now.*
     if (deepLink != null) {
       FireStoreManager fireStoreManager = FireStoreManager.get();
+      //FIXME: Find a better way to get the articleId
       String articleId = deepLink.query.substring(3, deepLink.query.length);
       ArticleEntity articleEntity =
           await fireStoreManager.getArticleById(articleId);
