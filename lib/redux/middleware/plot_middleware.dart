@@ -13,6 +13,7 @@ class MyPlotMiddleWare extends MiddlewareClass<AppState>{
   @override
   Future call(Store<AppState> store, dynamic action, NextDispatcher next) async {
     if(action is FetchCropListAction) {
+      store.dispatch(FetchArticleDirectoryAction());
       var listOfCrops = await PlotRepository.get().getListOfCrops();
       listOfCrops = await PlotRepository.get().getListOfCropStages(listOfCrops);
 
