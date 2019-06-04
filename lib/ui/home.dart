@@ -123,7 +123,6 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
     final PendingDynamicLinkData data =
         await FirebaseDynamicLinks.instance.retrieveDynamicLink();
     final Uri deepLink = data?.link;
-    //This if is the dynamic form for the deepLink, but for testing if it works, we are hardcoding it for now.*
     if (deepLink != null) {
       FireStoreManager fireStoreManager = FireStoreManager.get();
       //FIXME: Find a better way to get the articleId
