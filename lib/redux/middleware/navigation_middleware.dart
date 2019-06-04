@@ -24,10 +24,6 @@ class NavigationMiddleware extends MiddlewareClass<AppState>{
     if(action is GoToPrivacyPoliciesAction) {
       Keys.navKey.currentState.pushNamed(AppRoutes.privacyPolicies);
     }
-    if(action is GoToRelatedArticleDetail) {
-      Keys.navKey.currentState.pushNamed(AppRoutes.articleDetail);
-    }
-
     next(action);
   }
 }

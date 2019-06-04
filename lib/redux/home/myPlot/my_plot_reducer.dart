@@ -22,5 +22,5 @@ MyPlotState _goToStage(MyPlotState state, GoToStageAction action) =>
     state.copyWith(selectedStage: action.stage);
 
 MyPlotState _goToRelatedArticleDetail(MyPlotState state, GoToRelatedArticleDetail action) =>
-    state.copyWith(loadingStatus: LoadingStatus.LOADING, relatedSelectedArticle: action.article);
+    state.copyWith(loadingStatus: LoadingStatus.SUCCESS, relatedSelectedArticle: action.article);
 

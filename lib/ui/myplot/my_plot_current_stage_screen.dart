@@ -44,6 +44,10 @@ class _CurrentStageState extends State<MyPlotCurrentStageScreen> {
                 Padding(
                     padding: Paddings.boxSmallPadding(),
                     child: Html(data: stageData.content)),
+                Padding(
+                  padding: Paddings.boxSmallPadding(),
+                  child: Text("Related Articles", style: Styles.titleTextStyle()),
+                ),
                 buildRelated(context, viewModel, stageData.stageRelatedArticles)
               ],
             )));
@@ -63,7 +67,7 @@ Widget buildRelated(BuildContext context, MyPlotViewModel viewModel, List<Articl
 Widget buildListOfRelatedArticles(ArticleEntity articleData, MyPlotViewModel viewModel) {
   return GestureDetector(
       onTap: () {
-        viewModel.goToRelatedArticleDetail(viewModel.relatedSelectedArticle);
+        viewModel.goToRelatedArticleDetail(articleData);
       },
       child: Padding(
         key: ValueKey(articleData.title ?? Strings.noTitleString),
