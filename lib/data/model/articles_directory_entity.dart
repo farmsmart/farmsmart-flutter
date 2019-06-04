@@ -11,6 +11,12 @@ class ArticlesDirectoryEntity {
     this.articlesPathReference
   });
 
+  factory ArticlesDirectoryEntity.empty() =>
+      ArticlesDirectoryEntity(
+        articles: List(),
+        articlesPathReference: List<String>(),
+      );
+
   factory ArticlesDirectoryEntity.featuredArticlesFromDocument(DocumentSnapshot featuredArticlesDocument) =>
       ArticlesDirectoryEntity(
         articles: List(),
