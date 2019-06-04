@@ -79,7 +79,7 @@ abstract class CustomAppBar {
       icon: Icon(Icons.share, color: Color(primaryGreen), size: appBarIconSize),
       onPressed: () async {
         String deepLink = await buildArticleDeeplink(articleID);
-        var response = await FlutterShareMe().shareToSystem(msg: deepLink);
+        var response = await FlutterShareMe().shareToSystem(msg: Strings.shareArticleText + deepLink);
         if (response == 'success') {
           print('navigate success');
         }
