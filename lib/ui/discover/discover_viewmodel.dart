@@ -32,7 +32,7 @@ class DiscoverViewModel {
         selectedArticle: store.state.discoverState.selectedArticle,
         selectedArticleWithRelated: store.state.discoverState.selectedArticleWithRelated,
         goToDetail: (ArticleEntity article) => store.dispatch(GoToArticleDetailAction(article)),
-        getRelatedArticles: (ArticleEntity article) => store.dispatch(UpdateRelatedArticlesAction(article)),
+        getRelatedArticles: (ArticleEntity article) => store.dispatch(FetchRelatedArticlesAction(article)),
         fetchArticleDirectory: () => store.dispatch(FetchArticleDirectoryAction()));
   }
 }
