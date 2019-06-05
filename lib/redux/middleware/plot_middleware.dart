@@ -7,24 +7,24 @@ import 'package:farmsmart_flutter/model/loading_status.dart';
 import 'package:farmsmart_flutter/redux/app/app_state.dart';
 import 'package:farmsmart_flutter/redux/home/discover/discover_actions.dart';
 import 'package:farmsmart_flutter/redux/home/myPlot/my_plot_actions.dart';
+import 'package:flutter/foundation.dart';
 import 'package:redux/redux.dart';
 
 class MyPlotMiddleWare extends MiddlewareClass<AppState>{
   @override
   Future call(Store<AppState> store, dynamic action, NextDispatcher next) async {
     if(action is FetchCropListAction) {
-      store.dispatch(FetchArticleDirectoryAction());
+      Stopwatch sw = new Stopwatch();
+      sw.start();
       var listOfCrops = await PlotRepository.get().getListOfCrops();
-      listOfCrops = await PlotRepository.get().getListOfCropStages(listOfCrops);
-
-      for (var crop in listOfCrops) {
-        for(var stage in crop.stages) {
-          stage = await PlotRepository.get().getListOfStageRelatedArticles(stage);
-          stage.stageRelatedArticles= await ArticlesDirectoryRepository.get().getListOfArticlesWithImages(stage.stageRelatedArticles);
-          }
-      }
-
-      listOfCrops = await PlotRepository.get().getListOfCropsWithImages(listOfCrops);
+      debugPrint('getListOfCrops() ${sw.elapsed.inMilliseconds} ms ');
+      sw.reset();
+      Future fetchStageFuture = PlotRepository.get().getListOfCropStages(listOfCrops);
+      Future fetchImageFuture = PlotRepository.get().getListOfCropsWithImages(listOfCrops);
+      await Future.wait([fetchStageFuture, fetchImageFuture]);
+      debugPrint('getStagesAndImages() ${sw.elapsed.inMilliseconds} ms ');
+      sw.stop();
+      debugPrint('Fetch crop complete.');
       store.dispatch(UpdateCropListAction(listOfCrops));
     }
 
