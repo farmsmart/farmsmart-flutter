@@ -6,7 +6,7 @@ import 'package:farmsmart_flutter/data/model/entities_const.dart';
 class ArticleEntity {
   String content;
   String imagePathReference;
-  String imageUrl;
+  Future<String> imageUrl;
   List<ArticleEntity> relatedArticles;
   List<String> relatedArticlesPathReference;
   Status status;
@@ -26,7 +26,7 @@ class ArticleEntity {
   factory ArticleEntity.articleFromDocument(DocumentSnapshot articleDocument) => ArticleEntity(
           content: articleDocument.data[CONTENT],
           imagePathReference: articleDocument.data[IMAGE].first.path,
-          imageUrl: Strings.emptyString,
+          imageUrl: Future.value(Strings.emptyString),
           relatedArticles: List(),
           relatedArticlesPathReference:
               extractRelatedArticlesPaths(articleDocument),
@@ -34,7 +34,7 @@ class ArticleEntity {
           summary: articleDocument.data[SUMMARY],
           title: articleDocument.data[TITLE]);
 
-  void setImageUrl(String imageUrl) {
+  void setImageUrl(Future<String> imageUrl) {
     this.imageUrl = imageUrl;
   }
 

@@ -1,6 +1,7 @@
 import 'package:farmsmart_flutter/data/model/article_entity.dart';
 import 'package:farmsmart_flutter/data/model/stage_entity.dart';
 import 'package:farmsmart_flutter/redux/app/app_state.dart';
+import 'package:farmsmart_flutter/ui/common/network_image_from_future.dart';
 import 'package:farmsmart_flutter/utils/assets.dart';
 import 'package:farmsmart_flutter/utils/colors.dart';
 import 'package:farmsmart_flutter/utils/dimens.dart';
@@ -96,12 +97,12 @@ Widget buildListOfRelatedArticles(ArticleEntity articleData, MyPlotViewModel vie
 
 
 _buildListItemImage(ArticleEntity articleData) {
-  return FadeInImage.assetNetwork(
-      image: articleData.imageUrl,
-      placeholder: Assets.IMAGE_PLACE_HOLDER,
+  return NetworkImageFromFuture(
+      articleData.imageUrl,
       height: 90,
       width: 140,
-      fit: BoxFit.cover);
+      fit: BoxFit.cover
+  );
 }
 
 _buildArticleTitle(ArticleEntity articleData) {

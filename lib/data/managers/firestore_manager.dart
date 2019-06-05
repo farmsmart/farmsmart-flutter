@@ -3,6 +3,7 @@ import 'package:farmsmart_flutter/data/firebase_const.dart';
 import 'package:farmsmart_flutter/data/model/articles_directory_entity.dart';
 import 'package:farmsmart_flutter/data/model/crop_entity.dart';
 import 'package:farmsmart_flutter/data/model/stage_entity.dart';
+import 'package:farmsmart_flutter/model/enums.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:farmsmart_flutter/data/model/article_entity.dart';
 
@@ -76,23 +77,20 @@ class FireStoreManager {
     return Future.wait(imageFetchFutures);
   }
 
-  Future<List<ArticleEntity>> getArticlesImagePath(List<ArticleEntity> articlesList) async {
-    List<ArticleEntity> articlesEntitiesWithImagePath = List();
-
-    for (var article in articlesList) {
-      await Firestore.instance
-          .document(article.imagePathReference)
-          .get()
-          .then((imageSnapshot) async {
-        var imagePath = EMPTY;
-        if (imageSnapshot.data != null) {
-          imagePath = await getImageDownloadURL(imageSnapshot);
-        }
-        article.setImageUrl(imagePath);
-        articlesEntitiesWithImagePath.add(article);
-      });
-    }
-    return articlesEntitiesWithImagePath;
+  Future<dynamic> getArticlesImagePath(List<ArticleEntity> articlesList) async {
+    return Future.wait(articlesList
+        .map((ArticleEntity article) => Firestore.instance
+                .document(article.imagePathReference)
+                .get()
+                .then((imageSnapshot) {
+              Future<String> imagePath = Future.value(EMPTY);
+              if (imageSnapshot.data != null) {
+                imagePath = getImageDownloadURL(imageSnapshot);
+              }
+              article.setImageUrl(imagePath);
+              return article;
+            }))
+        .toList());
   }
 
   Future<String> getImageDownloadURL(DocumentSnapshot imageDocument) {
@@ -115,79 +113,86 @@ class FireStoreManager {
         .where(FLAME_LINK_LOCALE, isEqualTo: Locale.EN_US);
 
     // Returns a single directory entity or empty if the record does not exist.
-    ArticlesDirectoryEntity articlesDirectory = await query.getDocuments().then(
-        (snapshot) => snapshot.documents
-            .map((doc) =>
-                ArticlesDirectoryEntity.featuredArticlesFromDocument(doc))
-            .singleWhere((_) => true,
-                orElse: () => ArticlesDirectoryEntity.empty()));
-
-    return articlesDirectory;
+    return query.getDocuments().then((snapshot) => snapshot.documents
+        .map((doc) => ArticlesDirectoryEntity.featuredArticlesFromDocument(doc))
+        .singleWhere((_) => true,
+            orElse: () => ArticlesDirectoryEntity.empty()));
   }
 
-  Future<List<ArticleEntity>> getFeaturedArticles(
-      List<String> articlesDirectory) async {
-    List<ArticleEntity> listOfFeaturedArticles = List();
+  Future<List<ArticleEntity>> fetchArticles(List<String> articlesDirectory) {
+    return fetchArticlesByLimit(
+        articlesDirectory, (articlesDirectory ?? []).length);
+  }
 
-    if (articlesDirectory != null) {
-      for (var articlePathReference in articlesDirectory) {
-        await Firestore.instance
+  Future<List<ArticleEntity>> fetchArticlesByLimit(
+      List<String> articlePaths, int limit) {
+    List<Future<ArticleEntity>> articleFutures = List();
+
+    articleFutures = (articlePaths ?? [])
+        .map((String articlePathReference) => Firestore.instance
             .document(articlePathReference)
             .get()
-            .then((featuredArticlesSnapshot) async {
-          if (isPublished(featuredArticlesSnapshot)) {
-            listOfFeaturedArticles.add(ArticleEntity.articleFromDocument(featuredArticlesSnapshot));
-          }
-        });
-      }
-    }
-    return listOfFeaturedArticles;
+            .then((articleSnapshot) =>
+                ArticleEntity.articleFromDocument(articleSnapshot)))
+        .toList();
+
+    return Future.wait(articleFutures).then((articles) => articles
+        .where((each) => each.status == Status.PUBLISHED)
+        .take(limit)
+        .toList());
   }
 
-  Future<ArticleEntity> getRelatedArticles(ArticleEntity selectedArticle) async {
-    if (selectedArticle.relatedArticlesPathReference != null) {
-      selectedArticle.relatedArticles.clear();
-      var relatedLimit = 0;
-
-        for (var relatedArticlesPathReference in selectedArticle.relatedArticlesPathReference) {
-          if (relatedLimit < ListOfRelatedArticles.LIMIT) {
-            await Firestore.instance
-                .document(relatedArticlesPathReference)
-                .get()
-                .then((relatedArticlesSnapshot) async {
-              if (isPublished(relatedArticlesSnapshot)) {
-                selectedArticle.relatedArticles.add(ArticleEntity.articleFromDocument(relatedArticlesSnapshot));
-                relatedLimit++;
-              }
-            });
-        }
-      }
-    }
-    return selectedArticle;
-  }
+//  Future<ArticleEntity> getRelatedArticles(
+//      ArticleEntity selectedArticle) async {
+//    if (selectedArticle.relatedArticlesPathReference != null) {
+//      selectedArticle.relatedArticles.clear();
+//      var relatedLimit = 0;
+//
+//      for (var relatedArticlesPathReference
+//          in selectedArticle.relatedArticlesPathReference) {
+//        if (relatedLimit < ListOfRelatedArticles.LIMIT) {
+//          await Firestore.instance
+//              .document(relatedArticlesPathReference)
+//              .get()
+//              .then((relatedArticlesSnapshot) async {
+//            if (isPublished(relatedArticlesSnapshot)) {
+//              selectedArticle.relatedArticles.add(
+//                  ArticleEntity.articleFromDocument(relatedArticlesSnapshot));
+//              relatedLimit++;
+//            }
+//          });
+//        }
+//      }
+//    }
+//    return selectedArticle;
+//  }
 
   bool isPublished(DocumentSnapshot documentSnapshot) {
     return documentSnapshot.data != null &&
-        documentSnapshot.data[documentFieldStatus] == DataStatus.PUBLISHED ? true : false;
+            documentSnapshot.data[documentFieldStatus] == DataStatus.PUBLISHED
+        ? true
+        : false;
   }
-      
-  Future<StageEntity> getStageWithRelatedArticles(StageEntity selectedStage) async {
+
+  Future<StageEntity> getStageWithRelatedArticles(
+      StageEntity selectedStage) async {
     if (selectedStage.stageRelatedArticlesPathReference != null) {
       selectedStage.stageRelatedArticles.clear();
       var relatedLimit = 0;
 
-
-      for (var relatedArticlesPathReference in selectedStage.stageRelatedArticlesPathReference) {
+      for (var relatedArticlesPathReference
+          in selectedStage.stageRelatedArticlesPathReference) {
         if (relatedLimit < ListOfRelatedArticles.LIMIT) {
-        await Firestore.instance
-            .document(relatedArticlesPathReference)
-            .get()
-            .then((relatedArticlesSnapshot) async {
-          if (isPublished(relatedArticlesSnapshot)) {
-            selectedStage.stageRelatedArticles.add(ArticleEntity.articleFromDocument(relatedArticlesSnapshot));
-          }
-        });
-      }
+          await Firestore.instance
+              .document(relatedArticlesPathReference)
+              .get()
+              .then((relatedArticlesSnapshot) async {
+            if (isPublished(relatedArticlesSnapshot)) {
+              selectedStage.stageRelatedArticles.add(
+                  ArticleEntity.articleFromDocument(relatedArticlesSnapshot));
+            }
+          });
+        }
       }
     }
     return selectedStage;

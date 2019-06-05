@@ -1,6 +1,7 @@
 import 'package:farmsmart_flutter/data/model/article_entity.dart';
 import 'package:farmsmart_flutter/model/loading_status.dart';
 import 'package:farmsmart_flutter/redux/home/discover/discover_actions.dart';
+import 'package:farmsmart_flutter/ui/common/network_image_from_future.dart';
 import 'package:farmsmart_flutter/utils/assets.dart';
 import 'package:farmsmart_flutter/utils/colors.dart';
 import 'package:farmsmart_flutter/utils/dimens.dart';
@@ -55,12 +56,12 @@ class _ArticleDetailState extends State<ArticleDetailScreen> {
             child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            FadeInImage.assetNetwork(
-                image: selectedArticle.imageUrl,
+            NetworkImageFromFuture(
+              selectedArticle.imageUrl,
                 height: detailScreenImageHeight,
                 width: detailScreenImageWidth,
-                placeholder: Assets.IMAGE_PLACE_HOLDER,
-                fit: BoxFit.cover),
+                fit: BoxFit.cover
+            ),
             Padding(
                 padding: Paddings.boxSmallPadding(),
                 child: Text(selectedArticle.title,
@@ -120,12 +121,12 @@ Widget buildListOfRelatedArticles(ArticleEntity articleData, Function getRelated
 }
 
 _buildListItemImage(ArticleEntity articleData) {
-  return FadeInImage.assetNetwork(
-      image: articleData.imageUrl,
-      placeholder: Assets.IMAGE_PLACE_HOLDER,
+  return NetworkImageFromFuture(
+      articleData.imageUrl,
       height: listImageHeight,
       width: listImageWidth,
-      fit: BoxFit.cover);
+      fit: BoxFit.cover
+  );
 }
 
 _buildArticleTitle(ArticleEntity articleData) {

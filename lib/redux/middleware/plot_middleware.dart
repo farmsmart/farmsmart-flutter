@@ -30,9 +30,8 @@ class MyPlotMiddleWare extends MiddlewareClass<AppState>{
 
     if (action is GoToRelatedArticleDetail) {
       store.dispatch(GoToArticleDetailAction(null));
-      ArticleEntity articleWithRelated = await ArticlesDirectoryRepository.get().getListOfRelatedArticles(action.article);
-      articleWithRelated.relatedArticles = await ArticlesDirectoryRepository.get().getListOfArticlesWithImages(articleWithRelated.relatedArticles);
-      store.dispatch(UpdateRelatedArticlesAction(action.article));
+      ArticleEntity article = await ArticlesDirectoryRepository.get().getRelatedArticles(action.article);
+      store.dispatch(UpdateRelatedArticlesAction(article));
     }
 
     next(action);

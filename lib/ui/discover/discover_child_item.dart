@@ -1,4 +1,5 @@
 import 'package:farmsmart_flutter/data/model/article_entity.dart';
+import 'package:farmsmart_flutter/ui/common/network_image_from_future.dart';
 import 'package:farmsmart_flutter/utils/colors.dart';
 import 'package:farmsmart_flutter/utils/dimens.dart';
 import 'package:farmsmart_flutter/utils/strings.dart';
@@ -42,12 +43,12 @@ class DiscoveryListItem {
   }
 
   _buildListItemImage(ArticleEntity articleData) {
-    return FadeInImage.assetNetwork(
-        image: articleData.imageUrl,
-        placeholder: Assets.IMAGE_PLACE_HOLDER,
+    return NetworkImageFromFuture(
+      articleData.imageUrl,
         height: listImageHeight,
         width: listImageWidth,
-        fit: BoxFit.cover);
+        fit: BoxFit.cover
+    );
   }
 
   _buildArticleTitle(ArticleEntity articleData) {
