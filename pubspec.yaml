@@ -52,10 +52,9 @@ flutter:
   uses-material-design: true
   assets:
   - assets/icons/app_icon.png
-  - assets/raw/articles_mock.png
-  - assets/raw/community_mock.png
-  - assets/raw/profit_mock.png
-  - assets/raw/crop_image_mock.png
+  - assets/raw/community_mock.webp
+  - assets/raw/profit_mock.webp
+  - assets/raw/placeholder.webp
 
   - assets/icons/community_selected.png
   - assets/icons/community.png

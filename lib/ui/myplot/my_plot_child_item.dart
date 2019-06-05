@@ -1,4 +1,5 @@
 import 'package:farmsmart_flutter/data/model/crop_entity.dart';
+import 'package:farmsmart_flutter/ui/common/network_image_from_future.dart';
 import 'package:farmsmart_flutter/ui/myplot/my_plot_item_footer.dart';
 import 'package:farmsmart_flutter/utils/assets.dart';
 import 'package:farmsmart_flutter/utils/box_shadows.dart';
@@ -9,7 +10,7 @@ import 'package:farmsmart_flutter/utils/styles.dart';
 import 'package:flutter/material.dart';
 
 class MyPlotListItem {
-  Widget buildListItem(CropEntity cropsData, goToDetail, goToStage) {
+  Widget buildListItem(CropEntity cropsData, Function goToDetail, Function goToStage) {
     return Padding(
         key: ValueKey(cropsData.name ?? Strings.myPlotItemDefaultTitle),
         padding: Paddings.boxPadding(),
@@ -24,12 +25,12 @@ class MyPlotListItem {
                   topLeft: Radius.circular(8.0),
                   topRight: Radius.circular(8.0),
                 ),
-                child: FadeInImage.assetNetwork(
-                    image: cropsData.imageUrl,
-                    height: listImageHeight,
-                    width: listImageWidth,
-                    placeholder: Assets.IMAGE_PLACE_HOLDER,
-                    fit: BoxFit.fitWidth),
+                child: NetworkImageFromFuture(
+                  cropsData.imageUrl,
+                  height: detailScreenImageHeight,
+                  width: detailScreenImageWidth,
+                  fit: BoxFit.fitWidth
+                ),
               ),
               Padding(
                   padding: Paddings.boxBigPadding(),

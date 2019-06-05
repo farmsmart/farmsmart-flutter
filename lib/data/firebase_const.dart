@@ -44,3 +44,7 @@ class Locale {
   static const EN_US = 'en-US';
   static const SW_KE = 'sw-KE';
 }
+
+class ListOfRelatedArticles {
+  static const LIMIT = 5;
+}
