@@ -25,8 +25,7 @@ class FireStoreManager {
     var query = Firestore.instance
         .collection(FLAME_LINK_CONTENT)
         .where(FLAME_LINK_SCHEMA, isEqualTo: Schema.CROP)
-        .where(FLAME_LINK_ENVIROMENT,
-            isEqualTo: AppSettings.get().environment)
+        .where(FLAME_LINK_ENVIROMENT, isEqualTo: AppSettings.get().environment)
         .where(FLAME_LINK_LOCALE, isEqualTo: Locale.EN_US)
         .where(PUBLICATION_STATUS, isEqualTo: DataStatus.PUBLISHED);
 
@@ -49,7 +48,8 @@ class FireStoreManager {
               .get()
               .then((stagesSnapshot) async {
             if (stagesSnapshot.data != null &&
-                stagesSnapshot.data[documentFieldStatus] == DataStatus.PUBLISHED) {
+                stagesSnapshot.data[documentFieldStatus] ==
+                    DataStatus.PUBLISHED) {
               crop.addStage(StageEntity.stageFromDocument(stagesSnapshot));
             }
           });
@@ -110,26 +110,27 @@ class FireStoreManager {
   }
 
   Future<ArticlesDirectoryEntity> getArticlesDirectory() async {
-
     // Filters defined by product definition. - ARTICLES DIRECTORY
     var query = Firestore.instance
         .collection(FLAME_LINK_CONTENT)
         .where(FLAME_LINK_SCHEMA, isEqualTo: Schema.ARTICLE_DIRECTORY)
         .where(FLAME_LINK_SCHEMA_TYPE, isEqualTo: SchemaType.SINGLE)
-        .where(FLAME_LINK_ENVIROMENT,
-            isEqualTo: AppSettings.get().environment)
+        .where(FLAME_LINK_ENVIROMENT, isEqualTo: AppSettings.get().environment)
         .where(FLAME_LINK_LOCALE, isEqualTo: Locale.EN_US);
 
     // Returns a single directory entity or empty if the record does not exist.
-    ArticlesDirectoryEntity articlesDirectory = await query.getDocuments()
-        .then((snapshot) => snapshot.documents
-          .map((doc) => ArticlesDirectoryEntity.featuredArticlesFromDocument(doc))
-          .singleWhere((_) => true, orElse: () => ArticlesDirectoryEntity.empty()));
+    ArticlesDirectoryEntity articlesDirectory = await query.getDocuments().then(
+        (snapshot) => snapshot.documents
+            .map((doc) =>
+                ArticlesDirectoryEntity.featuredArticlesFromDocument(doc))
+            .singleWhere((_) => true,
+                orElse: () => ArticlesDirectoryEntity.empty()));
 
     return articlesDirectory;
   }
 
-  Future<List<ArticleEntity>> getFeaturedArticles(List<String> articlesDirectory) async {
+  Future<List<ArticleEntity>> getFeaturedArticles(
+      List<String> articlesDirectory) async {
     List<ArticleEntity> listOfFeaturedArticles = List();
 
     if (articlesDirectory != null) {
@@ -139,8 +140,10 @@ class FireStoreManager {
             .get()
             .then((featuredArticlesSnapshot) async {
           if (featuredArticlesSnapshot.data != null &&
-              featuredArticlesSnapshot.data[documentFieldStatus] == DataStatus.PUBLISHED) {
-            listOfFeaturedArticles.add(ArticleEntity.articleFromDocument(featuredArticlesSnapshot));
+              featuredArticlesSnapshot.data[documentFieldStatus] ==
+                  DataStatus.PUBLISHED) {
+            listOfFeaturedArticles.add(
+                ArticleEntity.articleFromDocument(featuredArticlesSnapshot));
           }
         });
       }
@@ -149,10 +152,12 @@ class FireStoreManager {
   }
 
   Future<ArticleEntity> getRelatedArticles(ArticleEntity selectedArticle) async {
-      if (selectedArticle.relatedArticlesPathReference != null) {
-          selectedArticle.relatedArticles.clear();
-          for (var relatedArticlesPathReference in selectedArticle
-              .relatedArticlesPathReference) {
+    if (selectedArticle.relatedArticlesPathReference != null) {
+      selectedArticle.relatedArticles.clear();
+      var relatedLimit = zero;
+
+        for (var relatedArticlesPathReference in selectedArticle.relatedArticlesPathReference) {
+          if (relatedLimit < ListOfRelatedArticles.LIMIT) {
             await Firestore.instance
                 .document(relatedArticlesPathReference)
                 .get()
@@ -160,12 +165,13 @@ class FireStoreManager {
               if (relatedArticlesSnapshot.data != null &&
                   relatedArticlesSnapshot.data[documentFieldStatus] ==
                       DataStatus.PUBLISHED) {
-                selectedArticle.relatedArticles.add(
-                    ArticleEntity.articleFromDocument(relatedArticlesSnapshot));
+                selectedArticle.relatedArticles.add(ArticleEntity.articleFromDocument(relatedArticlesSnapshot));
+                relatedLimit++;
               }
             });
-          }
         }
+      }
+    }
     return selectedArticle;
   }
 }

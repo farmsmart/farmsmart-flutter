@@ -64,11 +64,7 @@ class _ArticleDetailState extends State<ArticleDetailScreen> {
 
 
 Widget buildRelated(BuildContext context, List<ArticleEntity> articlesList, getRelatedArticles) {
-  if (articlesList.length > 5) {
-    articlesList.length = 5;
-  }
   return Column(
-      //padding: const EdgeInsets.only(top: 20.0),
       children: (articlesList != null) ? (articlesList.map((article) =>
           buildListOfRelatedArticles(article, getRelatedArticles)).toList()) : null);
 }

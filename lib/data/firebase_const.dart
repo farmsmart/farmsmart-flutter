@@ -19,6 +19,8 @@ const imageSizes = "sizes";
 const imagePath = "path";
 const imageFile = "file";
 
+const zero = 0;
+
 class DataStatus {
   static const DRAFT = 'DRAFT';
   static const PUBLISHED = 'PUBLISHED';
@@ -43,4 +45,8 @@ class FirestoreEnvironment {
 class Locale {
   static const EN_US = 'en-US';
   static const SW_KE = 'sw-KE';
+}
+
+class ListOfRelatedArticles {
+  static const LIMIT = 5;
 }
