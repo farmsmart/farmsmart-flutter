@@ -5,8 +5,9 @@ class NetworkImageFromFuture extends StatelessWidget {
   final Future<String> futureUrl;
   final double height;
   final double width;
+  final BoxFit fit;
 
-  NetworkImageFromFuture(this.futureUrl, {@required this.height, @required this.width});
+  NetworkImageFromFuture(this.futureUrl, {@required this.height, @required this.width, this.fit});
 
   @override
   Widget build(BuildContext context) {
@@ -19,9 +20,9 @@ class NetworkImageFromFuture extends StatelessWidget {
                 height: height,
                 width: width,
                 placeholder: Assets.IMAGE_PLACE_HOLDER,
-                fit: BoxFit.fitWidth);
+                fit: fit ?? BoxFit.fitWidth);
           } else {
-            return Container(width: width, height: height,); // placeholder
+            return Container(width: width, height: height); // placeholder
           }
         }
     );

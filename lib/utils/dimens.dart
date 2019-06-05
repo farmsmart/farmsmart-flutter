@@ -73,10 +73,24 @@ abstract class Dividers {
     return Divider(height: 4, color: Color(black));
   }
 
+  static listDividerLine() {
+    return Divider(
+      height: 1,
+      color: Color(black),
+      indent: 145,
+    );
+  }
+
 }
 
 const double bottomBarIconSize = 30.0;
 const double appBarIconSize = 30.0;
-const double listImageHeight = 200.0;
-const double listImageWidth = 400.0;
+const double detailScreenImageHeight = 200.0;
+const double detailScreenImageWidth = 400.0;
 const double arrowIconSize = 17.0;
+const double listImageHeight = 90.0;
+const double listImageWidth = 140.0;
+const double listItemHeight = 101.0;
+const int listViewFlex = 6;
+const int titleMaxLines = 1;
+const int summaryMaxLines = 4;

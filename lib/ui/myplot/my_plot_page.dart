@@ -38,7 +38,7 @@ class _MyPlotState extends State<HomeMyPlotPage> {
   }
 }
 
-Widget _buildList(BuildContext context, List<CropEntity> cropList, goToDetail, goToStage) {
+Widget _buildList(BuildContext context, List<CropEntity> cropList, Function goToDetail, Function goToStage) {
   return ListView(
     padding: const EdgeInsets.only(top: 20.0),
     children: cropList
