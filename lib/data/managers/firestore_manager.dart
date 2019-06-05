@@ -171,9 +171,9 @@ class FireStoreManager {
     ArticleEntity articleEntity;
     if (articlePathReference != null) {
       await Firestore.instance.document(FLAME_LINK_CONTENT+"/"+articlePathReference).get().then(
-        (featuredArticlesSnapshot) async {
-          if (featuredArticlesSnapshot.data != null) {
-            articleEntity = ArticleEntity.articleFromDocument(featuredArticlesSnapshot);
+        (fetchedArticlesSnapshot) async {
+          if (fetchedArticlesSnapshot.data != null) {
+            articleEntity = ArticleEntity.articleFromDocument(fetchedArticlesSnapshot);
           }
         },
       );

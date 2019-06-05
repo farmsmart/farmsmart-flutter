@@ -7,6 +7,8 @@ import 'package:farmsmart_flutter/utils/dimens.dart';
 import 'package:farmsmart_flutter/utils/styles.dart';
 import 'package:flutter_share_me/flutter_share_me.dart';
 import 'package:package_info/package_info.dart';
+import 'package:farmsmart_flutter/data/firebase_const.dart';
+
 
 // We define here generic margins for the app
 abstract class CustomAppBar {
@@ -80,9 +82,6 @@ abstract class CustomAppBar {
       onPressed: () async {
         String deepLink = await buildArticleDeeplink(articleID);
         var response = await FlutterShareMe().shareToSystem(msg: Strings.shareArticleText + deepLink);
-        if (response == 'success') {
-          print('navigate success');
-        }
       },
     );
   }
@@ -95,9 +94,9 @@ abstract class CustomAppBar {
 
   static Future<String> buildArticleDeeplink(String articleID) async {
     String packageID = await getPackageInfo();
-    String dynamicUrl = deeplinkPrefix +
+    String dynamicUrl = DeepLink.Prefix +
         "/?link=" +
-        linkDomain +
+        DeepLink.linkDomain +
         "?id=" +
         articleID +
         "&type=article&apn=" +
@@ -105,9 +104,6 @@ abstract class CustomAppBar {
         "&efr=1";
     return dynamicUrl;
   }
-
-  static const deeplinkPrefix = "https://farmsmart.page.link";
-  static const linkDomain = "https://www.farmsmart.co";
 
   static Widget popUpMenuAction(Function goToPrivacyPolicy) {
     return IconButton(
