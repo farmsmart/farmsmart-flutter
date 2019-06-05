@@ -8,6 +8,7 @@ final myPlotReducer = combineReducers<MyPlotState>([
   TypedReducer<MyPlotState, UpdateCropListAction>(_updateCrops),
   TypedReducer<MyPlotState, GoToCropDetailAction>(_goToDetail),
   TypedReducer<MyPlotState, GoToStageAction>(_goToStage),
+  TypedReducer<MyPlotState, UpdateStageAction>(_updateStage),
   TypedReducer<MyPlotState, GoToRelatedArticleDetail>(_goToRelatedArticleDetail),
   // Any other action must be added to this reducer
 ]);
@@ -19,6 +20,9 @@ MyPlotState _goToDetail(MyPlotState state, GoToCropDetailAction action) =>
     state.copyWith(selectedCrop: action.crop);
 
 MyPlotState _goToStage(MyPlotState state, GoToStageAction action) =>
+    state.copyWith(selectedStage: action.stage);
+
+MyPlotState _updateStage(MyPlotState state, UpdateStageAction action) =>
     state.copyWith(selectedStage: action.stage);
 
 MyPlotState _goToRelatedArticleDetail(MyPlotState state, GoToRelatedArticleDetail action) =>

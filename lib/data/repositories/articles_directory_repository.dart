@@ -1,3 +1,4 @@
+import 'package:farmsmart_flutter/data/firebase_const.dart';
 import 'package:farmsmart_flutter/data/managers/firestore_manager.dart';
 import 'package:farmsmart_flutter/data/model/articles_directory_entity.dart';
 import 'package:farmsmart_flutter/data/model/article_entity.dart';
@@ -30,13 +31,11 @@ class ArticlesDirectoryRepository {
     return directory;
   }
 
-  static final relatedArticleLimit = 5;
-
   Future<ArticleEntity> getRelatedArticles(ArticleEntity article) async {
     Stopwatch sw = Stopwatch();
     sw.start();
     List<ArticleEntity> relatedArticles = await _getListOfRelatedArticles(
-        article.relatedArticlesPathReference, relatedArticleLimit);
+        article.relatedArticlesPathReference, ListOfRelatedArticles.LIMIT);
     debugPrint('getRelatedArticles() ${sw.elapsed.inMilliseconds} ms ');
     sw.reset();
     await _getListOfArticlesWithImages(relatedArticles);
@@ -50,7 +49,7 @@ class ArticlesDirectoryRepository {
     Stopwatch sw = Stopwatch();
     sw.start();
     List<ArticleEntity> relatedArticles = await _getListOfRelatedArticles(
-        stage.stageRelatedArticlesPathReference, relatedArticleLimit);
+        stage.stageRelatedArticlesPathReference, ListOfRelatedArticles.LIMIT);
     debugPrint('getStageRelatedArticles() ${sw.elapsed.inMilliseconds} ms ');
     sw.reset();
     await _getListOfArticlesWithImages(relatedArticles);
