@@ -47,9 +47,7 @@ class FireStoreManager {
               .document(stagesPathReference)
               .get()
               .then((stagesSnapshot) async {
-            if (stagesSnapshot.data != null &&
-                stagesSnapshot.data[documentFieldStatus] ==
-                    DataStatus.PUBLISHED) {
+            if (isPublished(stagesSnapshot)) {
               crop.addStage(StageEntity.stageFromDocument(stagesSnapshot));
             }
           });
@@ -139,11 +137,8 @@ class FireStoreManager {
             .document(articlePathReference)
             .get()
             .then((featuredArticlesSnapshot) async {
-          if (featuredArticlesSnapshot.data != null &&
-              featuredArticlesSnapshot.data[documentFieldStatus] ==
-                  DataStatus.PUBLISHED) {
-            listOfFeaturedArticles.add(
-                ArticleEntity.articleFromDocument(featuredArticlesSnapshot));
+          if (isPublished(featuredArticlesSnapshot)) {
+            listOfFeaturedArticles.add(ArticleEntity.articleFromDocument(featuredArticlesSnapshot));
           }
         });
       }
@@ -162,9 +157,7 @@ class FireStoreManager {
                 .document(relatedArticlesPathReference)
                 .get()
                 .then((relatedArticlesSnapshot) async {
-              if (relatedArticlesSnapshot.data != null &&
-                  relatedArticlesSnapshot.data[documentFieldStatus] ==
-                      DataStatus.PUBLISHED) {
+              if (isPublished(relatedArticlesSnapshot)) {
                 selectedArticle.relatedArticles.add(ArticleEntity.articleFromDocument(relatedArticlesSnapshot));
                 relatedLimit++;
               }
@@ -174,4 +167,9 @@ class FireStoreManager {
     }
     return selectedArticle;
   }
+
+  bool isPublished(DocumentSnapshot documentSnapshot) {
+    return documentSnapshot.data != null && documentSnapshot.data[documentFieldStatus] == DataStatus.PUBLISHED ? true : false;
+  }
+
 }
