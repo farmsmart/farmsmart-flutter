@@ -1,3 +1,4 @@
+import 'package:farmsmart_flutter/data/model/article_entity.dart';
 import 'package:farmsmart_flutter/data/model/crop_entity.dart';
 import 'package:farmsmart_flutter/data/model/stage_entity.dart';
 import 'package:farmsmart_flutter/model/crop_detail_property.dart';
@@ -14,10 +15,12 @@ class MyPlotViewModel {
   final List<CropEntity> cropsList;
   final CropEntity selectedCrop;
   final StageEntity selectedStage;
+  final ArticleEntity relatedSelectedArticle;
 
   final Function fetchCrops;
   final Function(CropEntity cropData) goToDetail;
   final Function(StageEntity stageData) goToStage;
+  final Function(ArticleEntity relatedArticles) goToRelatedArticleDetail;
 
   MyPlotViewModel({this.loadingStatus,
     this.cropsList,
@@ -25,7 +28,10 @@ class MyPlotViewModel {
     this.selectedStage,
     this.fetchCrops,
     this.goToDetail,
-    this.goToStage});
+    this.goToStage,
+    this.relatedSelectedArticle,
+    this.goToRelatedArticleDetail
+  });
 
   static MyPlotViewModel fromStore(Store<AppState> store) {
     return MyPlotViewModel(
@@ -33,10 +39,11 @@ class MyPlotViewModel {
         cropsList: store.state.myPlotState.cropList,
         selectedCrop: store.state.myPlotState.selectedCrop,
         selectedStage: store.state.myPlotState.selectedStage,
+        relatedSelectedArticle: store.state.myPlotState.relatedSelectedArticle,
         goToDetail: (CropEntity crop) => store.dispatch(GoToCropDetailAction(crop)),
         goToStage: (StageEntity stage) => store.dispatch(GoToStageAction(stage)),
-        fetchCrops: () =>
-            store.dispatch(FetchCropListAction())
+        goToRelatedArticleDetail: (ArticleEntity article) => store.dispatch(GoToRelatedArticleDetail(article)),
+        fetchCrops: () => store.dispatch(FetchCropListAction())
     );
   }
 

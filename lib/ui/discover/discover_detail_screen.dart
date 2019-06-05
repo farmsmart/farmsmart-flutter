@@ -27,38 +27,55 @@ class _ArticleDetailState extends State<ArticleDetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: StoreConnector<AppState, DiscoverViewModel>(
-          builder: (_, viewModel) =>
-              _buildList(context, viewModel.selectedArticleWithRelated, viewModel.getRelatedArticles),
-          converter: (store) => DiscoverViewModel.fromStore(store)),
+        builder: (_, viewModel) => _buildBody(context, viewModel),
+        converter: (store) => DiscoverViewModel.fromStore(store),
+      ),
     );
   }
-  Widget _buildList(BuildContext context, ArticleEntity selectedArticle, getRelatedArticles) {
+
+  //Widget _buildList(BuildContext context, ArticleEntity selectedArticle, getRelatedArticles) {
+  Widget _buildBody(BuildContext context, DiscoverViewModel viewModel) {
+    switch (viewModel.loadingStatus) {
+      case LoadingStatus.LOADING:
+        return Container(
+            child: CircularProgressIndicator(), alignment: Alignment.center);
+      case LoadingStatus.SUCCESS:
+        return _buildList(context, viewModel.selectedArticleWithRelated,
+            viewModel.getRelatedArticles);
+      case LoadingStatus.ERROR:
+        return Text("Error"); // TODO Check FARM-203
+    }
+  }
+
+  Widget _buildList(
+      BuildContext context, ArticleEntity selectedArticle, getRelatedArticles) {
     return Scaffold(
         appBar: CustomAppBar.buildForDetail(selectedArticle.title),
         body: SingleChildScrollView(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                FadeInImage.assetNetwork(
-                    image: selectedArticle.imageUrl,
-                    height: listImageHeight,
-                    width: listImageWidth,
-                    placeholder: Assets.IMAGE_PLACE_HOLDER,
-                    fit: BoxFit.cover),
-                Padding(
-                    padding: Paddings.boxSmallPadding(),
-                    child: Text(selectedArticle.title,
-                        style: Styles.detailTitleTextStyle())),
-                Padding(
-                    padding: Paddings.boxSmallPadding(),
-                    child: Html(data: selectedArticle.content)),
-                Padding(
-                    padding: Paddings.boxSmallPadding(),
-                    child: Text("Related Articles", style: Styles.titleTextStyle()),
-                ),
-                buildRelated(context, selectedArticle.relatedArticles, getRelatedArticles),
-              ],
-            )));
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            FadeInImage.assetNetwork(
+                image: selectedArticle.imageUrl,
+                height: listImageHeight,
+                width: listImageWidth,
+                placeholder: Assets.IMAGE_PLACE_HOLDER,
+                fit: BoxFit.cover),
+            Padding(
+                padding: Paddings.boxSmallPadding(),
+                child: Text(selectedArticle.title,
+                    style: Styles.detailTitleTextStyle())),
+            Padding(
+                padding: Paddings.boxSmallPadding(),
+                child: Html(data: selectedArticle.content)),
+            Padding(
+              padding: Paddings.boxSmallPadding(),
+              child: Text("Related Articles", style: Styles.titleTextStyle()),
+            ),
+            buildRelated(
+                context, selectedArticle.relatedArticles, getRelatedArticles),
+          ],
+        )));
   }
 }
 
@@ -69,7 +86,8 @@ Widget buildRelated(BuildContext context, List<ArticleEntity> articlesList, getR
           buildListOfRelatedArticles(article, getRelatedArticles)).toList()) : null);
 }
 
-Widget buildListOfRelatedArticles(ArticleEntity articleData, getRelatedArticles) {
+Widget buildListOfRelatedArticles(
+    ArticleEntity articleData, getRelatedArticles) {
   return GestureDetector(
       onTap: () {
         getRelatedArticles(articleData);
@@ -102,7 +120,6 @@ Widget buildListOfRelatedArticles(ArticleEntity articleData, getRelatedArticles)
             )),
       ));
 }
-
 
 _buildListItemImage(ArticleEntity articleData) {
   return FadeInImage.assetNetwork(
@@ -156,5 +173,3 @@ _buildDividerLine() {
     indent: 145,
   );
 }
-
-

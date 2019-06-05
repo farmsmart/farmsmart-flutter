@@ -10,12 +10,17 @@ class UpdateArticleDirectoryAction {
   UpdateArticleDirectoryAction(this.articlesDirectory);
 }
 
+class UpdateRelatedArticlesAction {
+  ArticleEntity articleWithRelated;
+  UpdateRelatedArticlesAction(this.articleWithRelated);
+}
+
 class GoToArticleDetailAction {
   ArticleEntity article;
   GoToArticleDetailAction(this.article);
 }
 
-class UpdateRelatedArticlesAction {
+class FetchRelatedArticlesAction {
   ArticleEntity articleWithRelated;
-  UpdateRelatedArticlesAction(this.articleWithRelated);
+  FetchRelatedArticlesAction(this.articleWithRelated);
 }

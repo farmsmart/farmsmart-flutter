@@ -7,7 +7,8 @@ import 'package:redux/redux.dart';
 final myPlotReducer = combineReducers<MyPlotState>([
   TypedReducer<MyPlotState, UpdateCropListAction>(_updateCrops),
   TypedReducer<MyPlotState, GoToCropDetailAction>(_goToDetail),
-  TypedReducer<MyPlotState, GoToStageAction>(_goToStage)
+  TypedReducer<MyPlotState, GoToStageAction>(_goToStage),
+  TypedReducer<MyPlotState, GoToRelatedArticleDetail>(_goToRelatedArticleDetail),
   // Any other action must be added to this reducer
 ]);
 
@@ -19,4 +20,7 @@ MyPlotState _goToDetail(MyPlotState state, GoToCropDetailAction action) =>
 
 MyPlotState _goToStage(MyPlotState state, GoToStageAction action) =>
     state.copyWith(selectedStage: action.stage);
+
+MyPlotState _goToRelatedArticleDetail(MyPlotState state, GoToRelatedArticleDetail action) =>
+    state.copyWith(loadingStatus: LoadingStatus.SUCCESS, relatedSelectedArticle: action.article);
 

@@ -77,8 +77,7 @@ class FireStoreManager {
     return cropsEntitiesWithImagePath;
   }
 
-  Future<List<ArticleEntity>> getArticlesImagePath(
-      List<ArticleEntity> articlesList) async {
+  Future<List<ArticleEntity>> getArticlesImagePath(List<ArticleEntity> articlesList) async {
     List<ArticleEntity> articlesEntitiesWithImagePath = List();
 
     for (var article in articlesList) {
@@ -169,7 +168,25 @@ class FireStoreManager {
   }
 
   bool isPublished(DocumentSnapshot documentSnapshot) {
-    return documentSnapshot.data != null && documentSnapshot.data[documentFieldStatus] == DataStatus.PUBLISHED ? true : false;
+    return documentSnapshot.data != null &&
+        documentSnapshot.data[documentFieldStatus] == DataStatus.PUBLISHED ? true : false;
   }
-
+      
+  Future<StageEntity> getStageWithRelatedArticles(StageEntity selectedStage) async {
+    if (selectedStage.stageRelatedArticlesPathReference != null) {
+      selectedStage.stageRelatedArticles.clear();
+      for (var relatedArticlesPathReference in selectedStage
+          .stageRelatedArticlesPathReference) {
+        await Firestore.instance
+            .document(relatedArticlesPathReference)
+            .get()
+            .then((relatedArticlesSnapshot) async {
+          if (isPublished(relatedArticlesSnapshot)) {
+            selectedStage.stageRelatedArticles.add(ArticleEntity.articleFromDocument(relatedArticlesSnapshot));
+          }
+        });
+      }
+    }
+    return selectedStage;
+  }
 }
