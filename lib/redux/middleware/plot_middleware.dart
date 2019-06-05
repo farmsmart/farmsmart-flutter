@@ -1,6 +1,7 @@
 // Middleware in charge of act upon myPlot actions that require network data.
 
 import 'package:farmsmart_flutter/data/model/article_entity.dart';
+import 'package:farmsmart_flutter/data/model/stage_entity.dart';
 import 'package:farmsmart_flutter/data/repositories/articles_directory_repository.dart';
 import 'package:farmsmart_flutter/data/repositories/plot_repository.dart';
 import 'package:farmsmart_flutter/model/loading_status.dart';
@@ -26,6 +27,11 @@ class MyPlotMiddleWare extends MiddlewareClass<AppState>{
       sw.stop();
       debugPrint('Fetch crop complete.');
       store.dispatch(UpdateCropListAction(listOfCrops));
+    }
+
+    if (action is UpdateStageAction) {
+      StageEntity stage = await ArticlesDirectoryRepository.get().getStageRelatedArticles(action.stage);
+      store.dispatch(GoToStageAction(stage));
     }
 
     if (action is GoToRelatedArticleDetail) {

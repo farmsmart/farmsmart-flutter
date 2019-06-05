@@ -142,59 +142,34 @@ class FireStoreManager {
         .toList());
   }
 
-//  Future<ArticleEntity> getRelatedArticles(
-//      ArticleEntity selectedArticle) async {
-//    if (selectedArticle.relatedArticlesPathReference != null) {
-//      selectedArticle.relatedArticles.clear();
+//  bool isPublished(DocumentSnapshot documentSnapshot) {
+//    return documentSnapshot.data != null &&
+//            documentSnapshot.data[documentFieldStatus] == DataStatus.PUBLISHED
+//        ? true
+//        : false;
+//  }
+//
+//  Future<StageEntity> getStageWithRelatedArticles(
+//      StageEntity selectedStage) async {
+//    if (selectedStage.stageRelatedArticlesPathReference != null) {
+//      selectedStage.stageRelatedArticles.clear();
 //      var relatedLimit = 0;
 //
 //      for (var relatedArticlesPathReference
-//          in selectedArticle.relatedArticlesPathReference) {
+//          in selectedStage.stageRelatedArticlesPathReference) {
 //        if (relatedLimit < ListOfRelatedArticles.LIMIT) {
 //          await Firestore.instance
 //              .document(relatedArticlesPathReference)
 //              .get()
 //              .then((relatedArticlesSnapshot) async {
 //            if (isPublished(relatedArticlesSnapshot)) {
-//              selectedArticle.relatedArticles.add(
+//              selectedStage.stageRelatedArticles.add(
 //                  ArticleEntity.articleFromDocument(relatedArticlesSnapshot));
-//              relatedLimit++;
 //            }
 //          });
 //        }
 //      }
 //    }
-//    return selectedArticle;
+//    return selectedStage;
 //  }
-
-  bool isPublished(DocumentSnapshot documentSnapshot) {
-    return documentSnapshot.data != null &&
-            documentSnapshot.data[documentFieldStatus] == DataStatus.PUBLISHED
-        ? true
-        : false;
-  }
-
-  Future<StageEntity> getStageWithRelatedArticles(
-      StageEntity selectedStage) async {
-    if (selectedStage.stageRelatedArticlesPathReference != null) {
-      selectedStage.stageRelatedArticles.clear();
-      var relatedLimit = 0;
-
-      for (var relatedArticlesPathReference
-          in selectedStage.stageRelatedArticlesPathReference) {
-        if (relatedLimit < ListOfRelatedArticles.LIMIT) {
-          await Firestore.instance
-              .document(relatedArticlesPathReference)
-              .get()
-              .then((relatedArticlesSnapshot) async {
-            if (isPublished(relatedArticlesSnapshot)) {
-              selectedStage.stageRelatedArticles.add(
-                  ArticleEntity.articleFromDocument(relatedArticlesSnapshot));
-            }
-          });
-        }
-      }
-    }
-    return selectedStage;
-  }
 }

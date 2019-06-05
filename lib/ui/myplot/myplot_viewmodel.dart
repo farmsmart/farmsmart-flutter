@@ -41,7 +41,7 @@ class MyPlotViewModel {
         selectedStage: store.state.myPlotState.selectedStage,
         relatedSelectedArticle: store.state.myPlotState.relatedSelectedArticle,
         goToDetail: (CropEntity crop) => store.dispatch(GoToCropDetailAction(crop)),
-        goToStage: (StageEntity stage) => store.dispatch(GoToStageAction(stage)),
+        goToStage: (StageEntity stage) => store.dispatch(UpdateStageAction(stage)),
         goToRelatedArticleDetail: (ArticleEntity article) => store.dispatch(GoToRelatedArticleDetail(article)),
         fetchCrops: () => store.dispatch(FetchCropListAction())
     );

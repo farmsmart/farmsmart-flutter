@@ -19,6 +19,11 @@ class GoToCropDetailAction {
   GoToCropDetailAction(this.crop);
 }
 
+class UpdateStageAction {
+  StageEntity stage;
+  UpdateStageAction(this.stage);
+}
+
 class GoToStageAction {
   StageEntity stage;
   GoToStageAction(this.stage);
