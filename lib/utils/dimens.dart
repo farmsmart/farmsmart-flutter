@@ -73,6 +73,14 @@ abstract class Dividers {
     return Divider(height: 4, color: Color(black));
   }
 
+  static listDividerLine() {
+    return Divider(
+      height: 1,
+      color: Color(black),
+      indent: 145,
+    );
+  }
+
 }
 
 const double bottomBarIconSize = 30.0;

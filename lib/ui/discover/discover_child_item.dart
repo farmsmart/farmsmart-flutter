@@ -35,7 +35,7 @@ class DiscoveryListItem {
                   Padding(
                     padding: Paddings.bottomPaddingSmall(),
                   ),
-                  _buildDividerLine()
+                  Dividers.listDividerLine()
                 ],
               )),
         ));
@@ -83,14 +83,6 @@ class DiscoveryListItem {
           ),
         ],
       ),
-    );
-  }
-
-  _buildDividerLine() {
-    return Divider(
-      height: 1,
-      color: Color(black),
-      indent: 145,
     );
   }
 }

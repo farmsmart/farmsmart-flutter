@@ -92,7 +92,7 @@ Widget buildListOfRelatedArticles(ArticleEntity articleData, MyPlotViewModel vie
                 Padding(
                   padding: Paddings.bottomPaddingSmall(),
                 ),
-                _buildDividerLine()
+                Dividers.listDividerLine(),
               ],
             )),
       ));
@@ -143,13 +143,3 @@ _buildListIcon() {
     ),
   );
 }
-
-_buildDividerLine() {
-  return Divider(
-    height: 1,
-    color: Color(black),
-    indent: 145,
-  );
-}
-
-//
