@@ -16,7 +16,7 @@ DiscoverState _updateArticles(DiscoverState state, UpdateArticleDirectoryAction 
     state.copyWith(loadingStatus: LoadingStatus.SUCCESS, articlesDirectory: action.articlesDirectory);
 
 DiscoverState _goToArticleDetail(DiscoverState state, GoToArticleDetailAction action) =>
-    state.copyWith(loadingStatus: LoadingStatus.LOADING, selectedArticle: action.article);
+    state.copyWith(loadingStatus: LoadingStatus.LOADING, selectedArticleWithRelated: action.article);
 
 DiscoverState _fetchRelatedArticles(DiscoverState state, FetchRelatedArticlesAction action) =>
     state.copyWith(selectedArticleWithRelated: action.articleWithRelated);

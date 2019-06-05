@@ -8,20 +8,20 @@ import 'package:redux/redux.dart';
 class DiscoverViewModel {
   LoadingStatus loadingStatus;
   final ArticlesDirectoryEntity articleDirectory;
-  final ArticleEntity selectedArticle;
+  //final ArticleEntity selectedArticle;
   final ArticleEntity selectedArticleWithRelated;
 
   final Function fetchArticleDirectory;
-  final Function(ArticleEntity articleData) goToDetail;
+  //final Function(ArticleEntity articleData) goToDetail;
   final Function(ArticleEntity articleData) getRelatedArticles;
 
   DiscoverViewModel(
       {this.loadingStatus,
       this.articleDirectory,
-      this.selectedArticle,
+      //this.selectedArticle,
       this.selectedArticleWithRelated,
       this.fetchArticleDirectory,
-      this.goToDetail,
+      //this.goToDetail,
       this.getRelatedArticles
       });
 
@@ -29,9 +29,9 @@ class DiscoverViewModel {
     return DiscoverViewModel(
         loadingStatus: store.state.discoverState.loadingStatus,
         articleDirectory: store.state.discoverState.articlesDirectory,
-        selectedArticle: store.state.discoverState.selectedArticle,
+        //selectedArticle: store.state.discoverState.selectedArticle,
         selectedArticleWithRelated: store.state.discoverState.selectedArticleWithRelated,
-        goToDetail: (ArticleEntity article) => store.dispatch(GoToArticleDetailAction(article)),
+        //goToDetail: (ArticleEntity article) => store.dispatch(GoToArticleDetailAction(article)),
         getRelatedArticles: (ArticleEntity article) => store.dispatch(FetchRelatedArticlesAction(article)),
         fetchArticleDirectory: () => store.dispatch(FetchArticleDirectoryAction()));
   }

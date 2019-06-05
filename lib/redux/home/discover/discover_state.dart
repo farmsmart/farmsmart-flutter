@@ -7,13 +7,11 @@ import 'package:meta/meta.dart';
 class DiscoverState {
   final LoadingStatus loadingStatus;
   final ArticlesDirectoryEntity articlesDirectory;
-  final ArticleEntity selectedArticle;
   final ArticleEntity selectedArticleWithRelated;
 
   DiscoverState(
       {@required this.loadingStatus,
       @required this.articlesDirectory,
-      this.selectedArticle,
       this.selectedArticleWithRelated
       });
 
@@ -25,13 +23,11 @@ class DiscoverState {
   DiscoverState copyWith({
         LoadingStatus loadingStatus,
         ArticlesDirectoryEntity articlesDirectory,
-        ArticleEntity selectedArticle,
         ArticleEntity selectedArticleWithRelated,
       }) {
     return new DiscoverState(
         loadingStatus: loadingStatus ?? this.loadingStatus,
         articlesDirectory: articlesDirectory ?? this.articlesDirectory,
-        selectedArticle: selectedArticle ?? this.selectedArticle,
         selectedArticleWithRelated: selectedArticleWithRelated ?? this.selectedArticleWithRelated
     );
   }
@@ -43,11 +39,10 @@ class DiscoverState {
           runtimeType == other.runtimeType &&
           loadingStatus == other.loadingStatus &&
           articlesDirectory == other.articlesDirectory &&
-          selectedArticle == other.selectedArticle &&
           selectedArticleWithRelated == other.selectedArticleWithRelated
   ;
 
   @override
   int get hashCode =>
-      loadingStatus.hashCode ^ articlesDirectory.hashCode ^ selectedArticle.hashCode ^ selectedArticleWithRelated.hashCode;
+      loadingStatus.hashCode ^ articlesDirectory.hashCode ^ selectedArticleWithRelated.hashCode;
 }
