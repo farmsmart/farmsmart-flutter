@@ -9,7 +9,7 @@ import 'package:farmsmart_flutter/utils/styles.dart';
 import 'package:flutter/material.dart';
 
 class MyPlotListItem {
-  Widget buildListItem(CropEntity cropsData, goToDetail, goToStage) {
+  Widget buildListItem(CropEntity cropsData, Function goToDetail, Function goToStage) {
     return Padding(
         key: ValueKey(cropsData.name ?? Strings.myPlotItemDefaultTitle),
         padding: Paddings.boxPadding(),

@@ -6,12 +6,12 @@ import 'package:farmsmart_flutter/utils/styles.dart';
 import 'package:flutter/material.dart';
 
 class MyPlotDetailStages {
-  Widget build(List<StageEntity> stagesList, goToStageDetail) {
+  Widget build(List<StageEntity> stagesList, Function goToStageDetail) {
     return Column (
         children: (stagesList != null) ? (stagesList.map((stage) => buildStageItem(stage, goToStageDetail))).toList() : null);
   }
 
-  Widget buildStageItem(StageEntity stageData, goToStageDetail) {
+  Widget buildStageItem(StageEntity stageData, Function goToStageDetail) {
     return GestureDetector(
         onTap: () {
           goToStageDetail(stageData);

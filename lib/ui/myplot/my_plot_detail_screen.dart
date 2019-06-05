@@ -34,7 +34,7 @@ class _CropDetailState extends State<CropDetailScreen> {
   }
 
   Widget _buildBody(BuildContext context, CropEntity selectedCropData,
-      List<CropDetailProperty> cropDetailProperties, goToStageDetail) {
+      List<CropDetailProperty> cropDetailProperties, Function goToStageDetail) {
     return Scaffold(
         appBar: CustomAppBar.buildForDetail(selectedCropData.name),
         body: Container(

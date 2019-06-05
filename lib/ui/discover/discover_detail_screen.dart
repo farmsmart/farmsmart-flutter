@@ -48,7 +48,7 @@ class _ArticleDetailState extends State<ArticleDetailScreen> {
   }
 
   Widget _buildList(
-      BuildContext context, ArticleEntity selectedArticle, getRelatedArticles) {
+      BuildContext context, ArticleEntity selectedArticle, Function getRelatedArticles) {
     return Scaffold(
         appBar: CustomAppBar.buildForDetail(selectedArticle.title),
         body: SingleChildScrollView(
@@ -72,22 +72,20 @@ class _ArticleDetailState extends State<ArticleDetailScreen> {
               padding: Paddings.boxSmallPadding(),
               child: Text("Related Articles", style: Styles.titleTextStyle()),
             ),
-            buildRelated(
-                context, selectedArticle.relatedArticles, getRelatedArticles),
+            buildRelated(context, selectedArticle.relatedArticles, getRelatedArticles),
           ],
         )));
   }
 }
 
 
-Widget buildRelated(BuildContext context, List<ArticleEntity> articlesList, getRelatedArticles) {
+Widget buildRelated(BuildContext context, List<ArticleEntity> articlesList, Function getRelatedArticles) {
   return Column(
       children: (articlesList != null) ? (articlesList.map((article) =>
           buildListOfRelatedArticles(article, getRelatedArticles)).toList()) : null);
 }
 
-Widget buildListOfRelatedArticles(
-    ArticleEntity articleData, getRelatedArticles) {
+Widget buildListOfRelatedArticles(ArticleEntity articleData, Function getRelatedArticles) {
   return GestureDetector(
       onTap: () {
         getRelatedArticles(articleData);

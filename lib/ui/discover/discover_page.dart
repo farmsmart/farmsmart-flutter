@@ -39,7 +39,7 @@ class _DiscoveryState extends State<HomeDiscoverPage> {
   }
 }
 
-Widget _buildList(BuildContext context, List<ArticleEntity> articlesList, getRelatedArticles) {
+Widget _buildList(BuildContext context, List<ArticleEntity> articlesList, Function getRelatedArticles) {
   return ListView(
       padding: const EdgeInsets.only(top: 20.0),
       children: (articlesList != null) ? (articlesList.map((article) =>

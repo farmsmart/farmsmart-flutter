@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:farmsmart_flutter/utils/assets.dart';
 
 class DiscoveryListItem {
-  Widget buildListItem(ArticleEntity articleData, getRelatedArticles) {
+  Widget buildListItem(ArticleEntity articleData, Function getRelatedArticles) {
     return GestureDetector(
         onTap: () {
           getRelatedArticles(articleData);
