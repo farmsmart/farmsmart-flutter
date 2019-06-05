@@ -45,8 +45,8 @@ class _CropDetailState extends State<CropDetailScreen> {
             child: ListView(children: <Widget>[
               FadeInImage.assetNetwork(
                   image: selectedCropData.imageUrl,
-                  height: listImageHeight,
-                  width: listImageWidth,
+                  height: detailScreenImageHeight,
+                  width: detailScreenImageWidth,
                   placeholder: Assets.IMAGE_PLACE_HOLDER,
                   fit: BoxFit.fitWidth),
               Column(

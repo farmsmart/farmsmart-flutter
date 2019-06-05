@@ -45,24 +45,24 @@ class DiscoveryListItem {
     return FadeInImage.assetNetwork(
         image: articleData.imageUrl,
         placeholder: Assets.IMAGE_PLACE_HOLDER,
-        height: 90,
-        width: 140,
+        height: listImageHeight,
+        width: listImageWidth,
         fit: BoxFit.cover);
   }
 
   _buildArticleTitle(ArticleEntity articleData) {
     return Expanded(
-      flex: 6,
+      flex: listViewFlex,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(articleData.title ?? Strings.noTitleString,
-              maxLines: 1,
+              maxLines: titleMaxLines,
               overflow: TextOverflow.ellipsis,
               style: Styles.articleListTitleStyle()),
           Margins.generalListSmallerMargin(),
           Text(articleData.summary ?? Strings.myPlotItemDefaultTitle,
-              maxLines: 4,
+              maxLines: summaryMaxLines,
               overflow: TextOverflow.ellipsis,
               style: Styles.footerTextStyle()),
         ],

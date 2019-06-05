@@ -7,7 +7,6 @@ class ArticleEntity {
   String content;
   String imagePathReference;
   String imageUrl;
-  //String relatedArticles; //TODO [FARM-95]
   List<ArticleEntity> relatedArticles;
   List<String> relatedArticlesPathReference;
   Status status;
@@ -28,7 +27,6 @@ class ArticleEntity {
           content: articleDocument.data[CONTENT],
           imagePathReference: articleDocument.data[IMAGE].first.path,
           imageUrl: Strings.emptyString,
-          //relatedArticles: articleDocument.data[""], //TODO [FARM-95]
           relatedArticles: List(),
           relatedArticlesPathReference:
               extractRelatedArticlesPaths(articleDocument),

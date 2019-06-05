@@ -48,7 +48,7 @@ class MyPlotDetailStages {
 
   _buildArticleText(String title, String status) {
     return Expanded(
-      flex: 6,
+      flex: listViewFlex,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[

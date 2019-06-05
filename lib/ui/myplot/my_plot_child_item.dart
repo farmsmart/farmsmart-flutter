@@ -26,8 +26,8 @@ class MyPlotListItem {
                 ),
                 child: FadeInImage.assetNetwork(
                     image: cropsData.imageUrl,
-                    height: listImageHeight,
-                    width: listImageWidth,
+                    height: detailScreenImageHeight,
+                    width: detailScreenImageWidth,
                     placeholder: Assets.IMAGE_PLACE_HOLDER,
                     fit: BoxFit.fitWidth),
               ),

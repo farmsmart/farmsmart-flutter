@@ -55,11 +55,7 @@ class _CurrentStageState extends State<MyPlotCurrentStageScreen> {
 }
 
 Widget buildRelated(BuildContext context, MyPlotViewModel viewModel, List<ArticleEntity> articlesList) {
-  if (articlesList.length > 5) {
-    articlesList.length = 5;
-  }
   return Column(
-    //padding: const EdgeInsets.only(top: 20.0),
       children: (articlesList != null) ? (articlesList.map((article) =>
           buildListOfRelatedArticles(article, viewModel)).toList()) : null);
 }
@@ -73,7 +69,7 @@ Widget buildListOfRelatedArticles(ArticleEntity articleData, MyPlotViewModel vie
         key: ValueKey(articleData.title ?? Strings.noTitleString),
         padding: Paddings.listOfArticlesPadding(),
         child: Container(
-            height: 101,
+            height: listItemHeight,
             child: Column(
               children: <Widget>[
                 Row(
@@ -110,17 +106,17 @@ _buildListItemImage(ArticleEntity articleData) {
 
 _buildArticleTitle(ArticleEntity articleData) {
   return Expanded(
-    flex: 6,
+    flex: listViewFlex,
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(articleData.title ?? Strings.noTitleString,
-            maxLines: 1,
+            maxLines: titleMaxLines,
             overflow: TextOverflow.ellipsis,
             style: Styles.articleListTitleStyle()),
         Margins.generalListSmallerMargin(),
         Text(articleData.summary ?? Strings.myPlotItemDefaultTitle,
-            maxLines: 4,
+            maxLines: summaryMaxLines,
             overflow: TextOverflow.ellipsis,
             style: Styles.footerTextStyle()),
       ],

@@ -148,7 +148,7 @@ class FireStoreManager {
   Future<ArticleEntity> getRelatedArticles(ArticleEntity selectedArticle) async {
     if (selectedArticle.relatedArticlesPathReference != null) {
       selectedArticle.relatedArticles.clear();
-      var relatedLimit = zero;
+      var relatedLimit = 0;
 
         for (var relatedArticlesPathReference in selectedArticle.relatedArticlesPathReference) {
           if (relatedLimit < ListOfRelatedArticles.LIMIT) {
@@ -175,8 +175,11 @@ class FireStoreManager {
   Future<StageEntity> getStageWithRelatedArticles(StageEntity selectedStage) async {
     if (selectedStage.stageRelatedArticlesPathReference != null) {
       selectedStage.stageRelatedArticles.clear();
-      for (var relatedArticlesPathReference in selectedStage
-          .stageRelatedArticlesPathReference) {
+      var relatedLimit = 0;
+
+
+      for (var relatedArticlesPathReference in selectedStage.stageRelatedArticlesPathReference) {
+        if (relatedLimit < ListOfRelatedArticles.LIMIT) {
         await Firestore.instance
             .document(relatedArticlesPathReference)
             .get()
@@ -185,6 +188,7 @@ class FireStoreManager {
             selectedStage.stageRelatedArticles.add(ArticleEntity.articleFromDocument(relatedArticlesSnapshot));
           }
         });
+      }
       }
     }
     return selectedStage;

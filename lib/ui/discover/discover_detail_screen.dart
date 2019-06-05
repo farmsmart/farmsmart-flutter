@@ -57,8 +57,8 @@ class _ArticleDetailState extends State<ArticleDetailScreen> {
           children: <Widget>[
             FadeInImage.assetNetwork(
                 image: selectedArticle.imageUrl,
-                height: listImageHeight,
-                width: listImageWidth,
+                height: detailScreenImageHeight,
+                width: detailScreenImageWidth,
                 placeholder: Assets.IMAGE_PLACE_HOLDER,
                 fit: BoxFit.cover),
             Padding(
@@ -96,7 +96,7 @@ Widget buildListOfRelatedArticles(
         key: ValueKey(articleData.title ?? Strings.noTitleString),
         padding: Paddings.listOfArticlesPadding(),
         child: Container(
-            height: 101,
+            height: listItemHeight,
             child: Column(
               children: <Widget>[
                 Row(
@@ -125,24 +125,24 @@ _buildListItemImage(ArticleEntity articleData) {
   return FadeInImage.assetNetwork(
       image: articleData.imageUrl,
       placeholder: Assets.IMAGE_PLACE_HOLDER,
-      height: 90,
-      width: 140,
+      height: listImageHeight,
+      width: listImageWidth,
       fit: BoxFit.cover);
 }
 
 _buildArticleTitle(ArticleEntity articleData) {
   return Expanded(
-    flex: 6,
+    flex: listViewFlex,
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(articleData.title ?? Strings.noTitleString,
-            maxLines: 1,
+            maxLines: titleMaxLines,
             overflow: TextOverflow.ellipsis,
             style: Styles.articleListTitleStyle()),
         Margins.generalListSmallerMargin(),
         Text(articleData.summary ?? Strings.myPlotItemDefaultTitle,
-            maxLines: 4,
+            maxLines: summaryMaxLines,
             overflow: TextOverflow.ellipsis,
             style: Styles.footerTextStyle()),
       ],

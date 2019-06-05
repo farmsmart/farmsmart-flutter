@@ -19,8 +19,6 @@ const imageSizes = "sizes";
 const imagePath = "path";
 const imageFile = "file";
 
-const zero = 0;
-
 class DataStatus {
   static const DRAFT = 'DRAFT';
   static const PUBLISHED = 'PUBLISHED';
