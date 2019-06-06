@@ -33,31 +33,19 @@ class FireStoreManager {
         .toList());
   }
 
-  /// Adds stages to the supplied CropEntities
-  Future<dynamic> getStages(List<CropEntity> cropsList) async {
-    List<Future<dynamic>> stageFutures = List();
+  Future<dynamic> getStagesForCrop(CropEntity cropEntity) {
+    List<Future<StageEntity>> stages = (cropEntity.stagesPathReference ?? [])
+        .map((String path) => Firestore.instance.document(path).get().then(
+            (stagesSnapshot) => StageEntity.stageFromDocument(stagesSnapshot)))
+        .toList();
 
-    for (var crop in cropsList) {
-      if (crop.stagesPathReference != null) {
-        for (var stagesPathReference in crop.stagesPathReference) {
-          Future<dynamic> stageFetchFuture = Firestore.instance
-              .document(stagesPathReference)
-              .get()
-              .then((stagesSnapshot) {
-            StageEntity stage = StageEntity.stageFromDocument(stagesSnapshot);
-            if (stagesSnapshot.data != null &&
-                stagesSnapshot.data[documentFieldStatus] ==
-                    DataStatus.PUBLISHED) {
-              crop.addStage(stage);
-            }
-            return stage;
-          });
-          stageFutures.add(stageFetchFuture);
-        }
-      }
-    }
-
-    return Future.wait(stageFutures);
+    return Future.wait(stages).then((stages) {
+      List<StageEntity> stageEntities = stages
+          .where((stage) => stage != null && stage.status == Status.PUBLISHED)
+          .toList();
+      cropEntity.stages = stageEntities;
+      return cropEntity;
+    });
   }
 
   Future<dynamic> getCropsImagePath(List<CropEntity> cropsList) async {
@@ -141,5 +129,4 @@ class FireStoreManager {
         .take(limit)
         .toList());
   }
-
 }
