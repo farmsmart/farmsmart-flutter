@@ -1,3 +1,4 @@
+import 'package:farmsmart_flutter/data/firebase_const.dart';
 import 'package:farmsmart_flutter/data/managers/firestore_manager.dart';
 import 'package:farmsmart_flutter/data/model/article_entity.dart';
 import 'package:farmsmart_flutter/redux/app/app_state.dart';
@@ -122,11 +123,12 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
   Future<void> _retrieveDynamicLink() async {
     final PendingDynamicLinkData data =
         await FirebaseDynamicLinks.instance.retrieveDynamicLink();
-    final Uri deepLink = data?.link;
-    if (deepLink != null) {
+    var decodedDynamicLink = Uri.decodeComponent(data.link.toString());
+    var stringURLtoURI = Uri.parse(decodedDynamicLink);
+
+    if (stringURLtoURI != null) {
       FireStoreManager fireStoreManager = FireStoreManager.get();
-      //FIXME: Find a better way to get the articleId
-      String articleId = deepLink.query.substring(3, deepLink.query.length);
+      String articleId = stringURLtoURI.queryParameters[DeepLink.ParameterID];
       ArticleEntity articleEntity =
           await fireStoreManager.getArticleById(articleId);
       ArticleEntity articleWithImage =

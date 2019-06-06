@@ -9,7 +9,6 @@ import 'package:flutter_share_me/flutter_share_me.dart';
 import 'package:package_info/package_info.dart';
 import 'package:farmsmart_flutter/data/firebase_const.dart';
 
-
 // We define here generic margins for the app
 abstract class CustomAppBar {
   static AppBar build(int currentHomeTab, Function goToPrivacyPolicy) {
@@ -81,7 +80,8 @@ abstract class CustomAppBar {
       icon: Icon(Icons.share, color: Color(primaryGreen), size: appBarIconSize),
       onPressed: () async {
         String deepLink = await buildArticleDeeplink(articleID);
-        var response = await FlutterShareMe().shareToSystem(msg: Strings.shareArticleText + deepLink);
+        var response = await FlutterShareMe()
+            .shareToSystem(msg: Strings.shareArticleText + deepLink);
       },
     );
   }
@@ -94,15 +94,19 @@ abstract class CustomAppBar {
 
   static Future<String> buildArticleDeeplink(String articleID) async {
     String packageID = await getPackageInfo();
-    String dynamicUrl = DeepLink.Prefix +
-        "/?link=" +
-        DeepLink.linkDomain +
-        "?id=" +
-        articleID +
-        "&type=article&apn=" +
-        packageID +
-        "&efr=1";
-    return dynamicUrl;
+
+    String dynamicLinkPrefix = DeepLink.Prefix + "/?link=";
+
+    String dynamicLinkBody =
+        DeepLink.linkDomain + "?id=" + articleID + "&type=article";
+    String dynamicLinkBodyEncoded =
+        Uri.encodeComponent(dynamicLinkBody); // To encode url
+
+    String dynamicLinkSufix = "&apn=" + packageID + "&efr=1";
+
+    String fullDynamicLink =
+        dynamicLinkPrefix + dynamicLinkBodyEncoded + dynamicLinkSufix;
+    return fullDynamicLink;
   }
 
   static Widget popUpMenuAction(Function goToPrivacyPolicy) {

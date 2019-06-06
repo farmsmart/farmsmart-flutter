@@ -48,5 +48,6 @@ class Locale {
 class DeepLink {
   static const Prefix = "https://farmsmart.page.link";
   static const linkDomain = "https://www.farmsmart.co";
+  static const ParameterID = "id";
 }
 
