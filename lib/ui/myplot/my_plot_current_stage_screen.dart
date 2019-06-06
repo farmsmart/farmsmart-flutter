@@ -1,6 +1,7 @@
 import 'package:farmsmart_flutter/data/model/article_entity.dart';
 import 'package:farmsmart_flutter/data/model/stage_entity.dart';
 import 'package:farmsmart_flutter/redux/app/app_state.dart';
+import 'package:farmsmart_flutter/ui/common/content_webview.dart';
 import 'package:farmsmart_flutter/ui/common/network_image_from_future.dart';
 import 'package:farmsmart_flutter/utils/assets.dart';
 import 'package:farmsmart_flutter/utils/colors.dart';
@@ -42,9 +43,7 @@ class _CurrentStageState extends State<MyPlotCurrentStageScreen> {
                     padding: Paddings.boxSmallPadding(),
                     child: Text(stageData.name,
                         style: Styles.detailTitleTextStyle())),
-                Padding(
-                    padding: Paddings.boxSmallPadding(),
-                    child: Html(data: stageData.content)),
+                ContentWebView(htmlContent: stageData.content),
                 Padding(
                   padding: Paddings.boxSmallPadding(),
                   child: Text("Related Articles", style: Styles.titleTextStyle()),

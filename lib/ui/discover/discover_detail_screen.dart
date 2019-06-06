@@ -1,6 +1,7 @@
 import 'package:farmsmart_flutter/data/model/article_entity.dart';
 import 'package:farmsmart_flutter/model/loading_status.dart';
 import 'package:farmsmart_flutter/redux/home/discover/discover_actions.dart';
+import 'package:farmsmart_flutter/ui/common/content_webview.dart';
 import 'package:farmsmart_flutter/ui/common/network_image_from_future.dart';
 import 'package:farmsmart_flutter/utils/assets.dart';
 import 'package:farmsmart_flutter/utils/colors.dart';
@@ -52,30 +53,31 @@ class _ArticleDetailState extends State<ArticleDetailScreen> {
       BuildContext context, ArticleEntity selectedArticle, Function getRelatedArticles) {
     return Scaffold(
         appBar: CustomAppBar.buildForDetail(selectedArticle.title),
-        body: SingleChildScrollView(
-            child: Column(
+        persistentFooterButtons: <Widget>[],
+        body: ListView(
+            children: [Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            NetworkImageFromFuture(
-              selectedArticle.imageUrl,
-                height: detailScreenImageHeight,
-                width: detailScreenImageWidth,
-                fit: BoxFit.cover
-            ),
+//            NetworkImageFromFuture(
+//              selectedArticle.imageUrl,
+//                height: detailScreenImageHeight,
+//                width: detailScreenImageWidth,
+//                fit: BoxFit.cover
+//            ),
             Padding(
                 padding: Paddings.boxSmallPadding(),
                 child: Text(selectedArticle.title,
                     style: Styles.detailTitleTextStyle())),
-            Padding(
-                padding: Paddings.boxSmallPadding(),
-                child: Html(data: selectedArticle.content)),
+            ContentWebView(htmlContent : selectedArticle.content),
             Padding(
               padding: Paddings.boxSmallPadding(),
               child: Text("Related Articles", style: Styles.titleTextStyle()),
             ),
             buildRelated(context, selectedArticle.relatedArticles, getRelatedArticles),
           ],
-        )));
+        )]
+        )
+    );
   }
 }
 

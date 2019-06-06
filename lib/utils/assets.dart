@@ -8,6 +8,7 @@ class Assets {
   static const String IMAGE_PLACE_HOLDER = "assets/raw/placeholder.webp";
 
   static const String PRIVACY_POLICIES_ASSET = "assets/privacy_policy.html";
+  static const String CONTENT_TEMPLATE_ASSET = "assets/content_template.html";
 
   static const String APP_ICON = "assets/icons/app_icon.png";
   static const String BOTTOM_BAR_COMMUNITY_SELECTED = "assets/icons/community_selected.png";
