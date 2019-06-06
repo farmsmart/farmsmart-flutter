@@ -56,4 +56,10 @@ class ArticlesDirectoryRepository {
     directory.articles = articlesWithImage;
     return directory;
   }
+
+  Future<ArticleEntity> getSingleArticle(String articleID) async {
+    ArticleEntity articleEntity = await _firestoreManager.getArticleById(articleID);
+    ArticleEntity articleWithImage = await _firestoreManager.getArticleImagePath(articleEntity);
+    return articleWithImage;
+  }
 }

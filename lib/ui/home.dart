@@ -45,7 +45,7 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
-      _retrieveDynamicLink();
+      _retrieveDynamicLink(homeViewModel);
     }
   }
 
@@ -120,20 +120,17 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
     );
   }
 
-  Future<void> _retrieveDynamicLink() async {
+  Future<void> _retrieveDynamicLink(HomeViewmodel viewModel) async {
     final PendingDynamicLinkData data =
-        await FirebaseDynamicLinks.instance.retrieveDynamicLink();
+    await FirebaseDynamicLinks.instance.retrieveDynamicLink();
     var decodedDynamicLink = Uri.decodeComponent(data.link.toString());
     var stringURLtoURI = Uri.parse(decodedDynamicLink);
 
     if (stringURLtoURI != null) {
       FireStoreManager fireStoreManager = FireStoreManager.get();
       String articleId = stringURLtoURI.queryParameters[DeepLink.ParameterID];
-      ArticleEntity articleEntity =
-          await fireStoreManager.getArticleById(articleId);
-      ArticleEntity articleWithImage =
-          await fireStoreManager.getArticleImagePath(articleEntity);
-      homeViewModel.showArticleDetail(articleWithImage);
+
+      homeViewModel.getSingleArticle(articleId);
     }
   }
 }

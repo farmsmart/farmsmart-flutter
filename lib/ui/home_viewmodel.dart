@@ -15,8 +15,7 @@ class HomeViewmodel {
   final Function showProfitLossChild;
   final Function showArticlesChild;
   final Function showCommunityChild;
-  final Function showArticleDetail;
-
+  final Function getSingleArticle;
   final Function goToPrivacyPolicy;
 
   HomeViewmodel(
@@ -25,7 +24,7 @@ class HomeViewmodel {
       this.showArticlesChild,
       this.showCommunityChild,
       this.showMyPlotChild,
-      this.showArticleDetail,
+      this.getSingleArticle,
       this.showProfitLossChild,
       this.goToPrivacyPolicy});
 
@@ -43,8 +42,8 @@ class HomeViewmodel {
             store.dispatch(SwitchTabAction(HomeScreen.COMMUNITY_TAB)),
         goToPrivacyPolicy: (String value) =>
             store.dispatch(GoToPrivacyPoliciesAction()),
-        showArticleDetail: (ArticleEntity entity) =>
-            store.dispatch(GoToArticleDetailAction(entity)));
+        getSingleArticle: (String articleID) =>
+            store.dispatch(FetchSingleArticleAction(articleID)));
   }
 
   void changeTab(int value) {

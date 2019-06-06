@@ -14,3 +14,8 @@ class GoToArticleDetailAction {
   ArticleEntity article;
   GoToArticleDetailAction(this.article);
 }
+
+class FetchSingleArticleAction {
+  String articleID;
+  FetchSingleArticleAction(this.articleID);
+}

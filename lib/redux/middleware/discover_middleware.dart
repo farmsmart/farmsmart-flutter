@@ -13,6 +13,11 @@ class DiscoverMiddleWare extends MiddlewareClass<AppState> {
       ArticlesDirectoryEntity directory = await ArticlesDirectoryRepository.get().getArticlesWithImages();
       store.dispatch(UpdateArticleDirectoryAction(directory));
     }
+
+    if(action is FetchSingleArticleAction) {
+      ArticleEntity article = await ArticlesDirectoryRepository.get().getSingleArticle(action.articleID);
+      store.dispatch(GoToArticleDetailAction(article));
+    }
     next(action);
   }
 }
