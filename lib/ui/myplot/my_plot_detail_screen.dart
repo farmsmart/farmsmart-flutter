@@ -58,7 +58,7 @@ class _CropDetailState extends State<CropDetailScreen> {
                       child: Text(selectedCropData.summary,
                           style: Styles.descriptionTextStyle())),
                   Margins.generalListMargin(),
-                  Html(data: selectedCropData.content),
+                  Html(data: selectedCropData.content, useRichText: true,),
                   MyPlotDetailProperties().build(cropDetailProperties, context),
                   Padding(
                       padding: Paddings.boxPadding(),
