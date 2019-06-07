@@ -67,7 +67,7 @@ class _ArticleDetailState extends State<ArticleDetailScreen> {
                     style: Styles.detailTitleTextStyle())),
             Padding(
                 padding: Paddings.boxSmallPadding(),
-                child: Html(data: selectedArticle.content)),
+                child: Html(data: selectedArticle.content, useRichText: true,)),
             Padding(
               padding: Paddings.boxSmallPadding(),
               child: Text("Related Articles", style: Styles.titleTextStyle()),
