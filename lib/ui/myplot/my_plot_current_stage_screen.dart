@@ -44,7 +44,7 @@ class _CurrentStageState extends State<MyPlotCurrentStageScreen> {
                         style: Styles.detailTitleTextStyle())),
                 Padding(
                     padding: Paddings.boxSmallPadding(),
-                    child: Html(data: stageData.content)),
+                    child: Html(data: stageData.content, useRichText: true)),
                 Padding(
                   padding: Paddings.boxSmallPadding(),
                   child: Text("Related Articles", style: Styles.titleTextStyle()),
