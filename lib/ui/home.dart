@@ -128,9 +128,8 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
       var stringURLtoURI = Uri.parse(decodedDynamicLink);
 
       if (stringURLtoURI != null) {
-        FireStoreManager fireStoreManager = FireStoreManager.get();
         String articleId = stringURLtoURI.queryParameters[DeepLink.ParameterID];
-
+        debugPrint('Fetching id=${articleId}');
         homeViewModel.getSingleArticle(articleId);
       }
     }
