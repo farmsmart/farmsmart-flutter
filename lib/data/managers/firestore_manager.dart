@@ -33,6 +33,7 @@ class FireStoreManager {
         .toList());
   }
 
+
   Future<dynamic> getStagesForCrop(CropEntity cropEntity) {
     List<Future<StageEntity>> stages = (cropEntity.stagesPathReference ?? [])
         .map((String path) => Firestore.instance.document(path).get().then(
@@ -64,6 +65,7 @@ class FireStoreManager {
 
     return Future.wait(imageFetchFutures);
   }
+
 
   Future<dynamic> getArticlesImagePath(List<ArticleEntity> articlesList) async {
     return Future.wait(articlesList
@@ -112,10 +114,10 @@ class FireStoreManager {
         articlesDirectory, (articlesDirectory ?? []).length);
   }
 
+
   Future<List<ArticleEntity>> fetchArticlesByLimit(
       List<String> articlePaths, int limit) {
     List<Future<ArticleEntity>> articleFutures = List();
-
     articleFutures = (articlePaths ?? [])
         .map((String articlePathReference) => Firestore.instance
             .document(articlePathReference)
@@ -129,4 +131,19 @@ class FireStoreManager {
         .take(limit)
         .toList());
   }
+
+  Future<ArticleEntity> getArticleById(String articlePathReference) {
+    if (articlePathReference != null) {
+      return Firestore.instance
+          .document(FLAME_LINK_CONTENT + "/" + articlePathReference)
+          .get()
+          .then((fetchedArticlesSnapshot) =>
+      (fetchedArticlesSnapshot.data != null)
+          ? ArticleEntity.articleFromDocument(fetchedArticlesSnapshot)
+          : null);
+    } else {
+      return Future.value(null);
+    }
+  }
+
 }

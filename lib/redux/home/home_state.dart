@@ -20,7 +20,7 @@ class HomeState {
   // We set all the states initial values
   factory HomeState.initial() {
     return HomeState(
-        loadingStatus: LoadingStatus.LOADING, currentHomeTab: MY_PLOT_TAB);
+        loadingStatus: LoadingStatus.LOADING, currentHomeTab: HomeScreen.MY_PLOT_TAB);
   }
 
   // Copies the states of the app or replaces for new ones if needed.

@@ -20,6 +20,11 @@ class GoToArticleDetailAction {
   GoToArticleDetailAction(this.article);
 }
 
+class FetchSingleArticleAction {
+  String articleID;
+  FetchSingleArticleAction(this.articleID);
+}
+
 class FetchRelatedArticlesAction {
   ArticleEntity articleWithRelated;
   FetchRelatedArticlesAction(this.articleWithRelated);
