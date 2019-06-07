@@ -1,12 +1,13 @@
 // Maybe we can separate ui and data model with this class.
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:farmsmart_flutter/data/model/related_articles.dart';
 import 'package:farmsmart_flutter/model/enums.dart';
 import 'package:farmsmart_flutter/data/model/entities_const.dart';
 
 import 'article_entity.dart';
 
-class StageEntity {
+class StageEntity implements IsRelatedArticlesEntity {
   String name;
   String crop;
   Status status;
@@ -35,6 +36,11 @@ class StageEntity {
 
   void addStageRelatedArticle(ArticleEntity relatedArticle) {
     this.stageRelatedArticles.add(relatedArticle);
+  }
+
+  @override
+  List<ArticleEntity> getRelatedArticles() {
+    return stageRelatedArticles;
   }
 }
 

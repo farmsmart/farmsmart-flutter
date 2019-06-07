@@ -7,6 +7,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+///
+/// Limitation of WebView
+///
+/// - Cannot be placed under a scrollable parent together with other widgets unless height is set or fixed.
+/// - If height is set, gestures must be enabled for webview.
+///
+/// - To have free-flowing scroll, it must be the only widget in the composition.
+///   Work around for related articles is to use bottom sheets.
+///
 class ContentWebView extends StatefulWidget {
   final String htmlContent;
 
@@ -20,24 +29,21 @@ class ContentWebView extends StatefulWidget {
 }
 
 class _ContentWebViewState extends State<ContentWebView> {
-  GlobalKey<State<WebView>> webviewKey = GlobalKey<State<WebView>>();
 
   @override
   Widget build(BuildContext context) {
-    return Container(height: 300,
-      child: _buildWebView(),
-    );
+    return _buildWebView();
   }
 
   WebView _buildWebView() {
     return WebView(
-      key: webviewKey,
       initialUrl: "",
       onWebViewCreated: (WebViewController webViewController) {
         _loadContent(webViewController);
       },
-      gestureRecognizers: Set()
-        ..add(Factory<VerticalDragGestureRecognizer>(() => VerticalDragGestureRecognizer())),
+      // Gestures are needed if height is set
+//      gestureRecognizers: Set()
+//        ..add(Factory<VerticalDragGestureRecognizer>(() => VerticalDragGestureRecognizer())),
       javascriptMode: JavascriptMode.unrestricted,
       navigationDelegate: (NavigationRequest request) {
         // prevent all navigation for URLs
@@ -45,9 +51,6 @@ class _ContentWebViewState extends State<ContentWebView> {
           print('blocking navigation to $request}');
           return NavigationDecision.prevent;
         }
-      },
-      onPageFinished: (url) {
-        print('Size of webview is: ${webviewKey.currentContext.size}');
       },
     );
   }

@@ -1,9 +1,10 @@
+import 'package:farmsmart_flutter/data/model/related_articles.dart';
 import 'package:farmsmart_flutter/model/enums.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:farmsmart_flutter/utils/strings.dart';
 import 'package:farmsmart_flutter/data/model/entities_const.dart';
 
-class ArticleEntity {
+class ArticleEntity implements IsRelatedArticlesEntity {
   String content;
   String imagePathReference;
   Future<String> imageUrl;
@@ -40,6 +41,11 @@ class ArticleEntity {
 
   void addRelatedArticle(ArticleEntity relatedArticle) {
     this.relatedArticles.add(relatedArticle);
+  }
+
+  @override
+  List<ArticleEntity> getRelatedArticles() {
+    return this.relatedArticles;
   }
 }
 
