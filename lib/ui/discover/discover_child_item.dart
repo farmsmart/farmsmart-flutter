@@ -1,4 +1,5 @@
 import 'package:farmsmart_flutter/data/model/article_entity.dart';
+import 'package:farmsmart_flutter/ui/common/network_image_from_future.dart';
 import 'package:farmsmart_flutter/utils/colors.dart';
 import 'package:farmsmart_flutter/utils/dimens.dart';
 import 'package:farmsmart_flutter/utils/strings.dart';
@@ -7,10 +8,10 @@ import 'package:flutter/material.dart';
 import 'package:farmsmart_flutter/utils/assets.dart';
 
 class DiscoveryListItem {
-  Widget buildListItem(ArticleEntity articleData, goToArticleDetail) {
+  Widget buildListItem(ArticleEntity articleData, Function getRelatedArticles) {
     return GestureDetector(
         onTap: () {
-          goToArticleDetail(articleData);
+          getRelatedArticles(articleData);
         },
         child: Padding(
           key: ValueKey(articleData.title ?? Strings.noTitleString),
@@ -35,32 +36,34 @@ class DiscoveryListItem {
                   Padding(
                     padding: Paddings.bottomPaddingSmall(),
                   ),
-                  _buildDividerLine()
+                  Dividers.listDividerLine()
                 ],
               )),
         ));
   }
 
   _buildListItemImage(ArticleEntity articleData) {
-    return FadeInImage.assetNetwork(
-        image: articleData.imageUrl,
-        placeholder: Assets.IMAGE_PLACE_HOLDER,
-        height: 90,
-        width: 140,
-        fit: BoxFit.cover);
+    return NetworkImageFromFuture(
+      articleData.imageUrl,
+        height: listImageHeight,
+        width: listImageWidth,
+        fit: BoxFit.cover
+    );
   }
 
   _buildArticleTitle(ArticleEntity articleData) {
     return Expanded(
-      flex: 6,
+      flex: listViewFlex,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(articleData.title ?? Strings.noTitleString,
+              maxLines: titleMaxLines,
+              overflow: TextOverflow.ellipsis,
               style: Styles.articleListTitleStyle()),
           Margins.generalListSmallerMargin(),
           Text(articleData.summary ?? Strings.myPlotItemDefaultTitle,
-              maxLines: 4,
+              maxLines: summaryMaxLines,
               overflow: TextOverflow.ellipsis,
               style: Styles.footerTextStyle()),
         ],
@@ -81,14 +84,6 @@ class DiscoveryListItem {
           ),
         ],
       ),
-    );
-  }
-
-  _buildDividerLine() {
-    return Divider(
-      height: 1,
-      color: Color(black),
-      indent: 145,
     );
   }
 }

@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:farmsmart_flutter/redux/home/home_state.dart';
 import 'package:farmsmart_flutter/redux/home/home_reducer.dart';

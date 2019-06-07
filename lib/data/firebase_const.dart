@@ -51,3 +51,6 @@ class DeepLink {
   static const ParameterID = "id";
 }
 
+class ListOfRelatedArticles {
+  static const LIMIT = 5;
+}

@@ -5,10 +5,9 @@
 import 'package:flutter/material.dart';
 
 class Assets {
-  static const String ARTICLE_MOCK_BACKGROUND = "assets/raw/articles_mock.png";
-  static const String COMMUNITY_MOCK_BACKGROUND = "assets/raw/community_mock.png";
-  static const String PROFIT_MOCK_BACKGROUND = "assets/raw/profit_mock.png";
-  static const String IMAGE_PLACE_HOLDER = "assets/raw/crop_image_mock.png";
+  static const String COMMUNITY_MOCK_BACKGROUND = "assets/raw/community_mock.webp";
+  static const String PROFIT_MOCK_BACKGROUND = "assets/raw/profit_mock.webp";
+  static const String IMAGE_PLACE_HOLDER = "assets/raw/placeholder.webp";
 
   static const String PRIVACY_POLICIES_ASSET = "assets/privacy_policy.html";
 
