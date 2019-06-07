@@ -43,6 +43,6 @@ Widget _buildList(BuildContext context, List<ArticleEntity> articlesList, Functi
   return ListView(
       padding: const EdgeInsets.only(top: 20.0),
       children: (articlesList != null) ? (articlesList.map((article) =>
-          DiscoveryListItem().buildListItem(article, getRelatedArticles))).toList() : null);
+          DiscoveryListItem().buildListItem(article, getRelatedArticles))).toList() : Container());
 }
 
