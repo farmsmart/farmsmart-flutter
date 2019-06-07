@@ -18,7 +18,7 @@ references:
 jobs:
   flutter-test:
     docker:
-      - image: cirrusci/flutter:v1.2.1
+      - image: cirrusci/flutter:v1.5.8
     working_directory: *working_dir
     steps:
       - checkout
