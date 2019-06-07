@@ -27,7 +27,7 @@ dependencies:
   redux: ^3.0.0
   shared_preferences: ^0.4.3
   redux_logging: ^0.3.0
-  flutter_html: ^0.9.9
+  flutter_html: ^0.10.0
   flutter_launcher_icons: ^0.7.0
 
   firebase_storage: ^2.1.1+1
