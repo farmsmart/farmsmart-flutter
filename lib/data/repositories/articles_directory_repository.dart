@@ -74,6 +74,7 @@ class ArticlesDirectoryRepository {
         .fetchArticles(featuredDirectoryWithoutArticles.articlesPathReference);
   }
 
+
   /// Attaches images to supplied articles
   Future<dynamic> _getListOfArticlesWithImages(
       List<ArticleEntity> articlesWithoutImages) {
@@ -83,5 +84,11 @@ class ArticlesDirectoryRepository {
   Future<List<ArticleEntity>> _getListOfRelatedArticles(
       List<String> articleReferences, int limit) async {
     return _firestoreManager.fetchArticlesByLimit(articleReferences, limit);
+  }
+
+  Future<ArticleEntity> getSingleArticle(String articleID) async {
+    ArticleEntity articleEntity = await _firestoreManager.getArticleById(articleID);
+    await _getListOfArticlesWithImages([articleEntity]);
+    return articleEntity;
   }
 }

@@ -18,7 +18,7 @@ references:
 jobs:
   flutter-test:
     docker:
-      - image: cirrusci/flutter:v1.2.1
+      - image: cirrusci/flutter:v1.5.4-hotfix.2
     working_directory: *working_dir
     steps:
       - checkout
@@ -77,7 +77,7 @@ jobs:
 
   flutter-build-dev:
     docker:
-      - image: cirrusci/flutter:v1.2.1
+      - image: cirrusci/flutter:v1.5.4-hotfix.2
     working_directory: *working_dir
     steps:
       - *restore_workspace
@@ -93,7 +93,7 @@ jobs:
 
   flutter-build-prod:
     docker:
-      - image: cirrusci/flutter:v1.2.1
+      - image: cirrusci/flutter:v1.5.4-hotfix.2
     working_directory: *working_dir
     steps:
       - *restore_workspace
@@ -113,7 +113,7 @@ jobs:
 
   flutter-build-32:
     docker:
-      - image: cirrusci/flutter:v1.2.1
+      - image: cirrusci/flutter:v1.5.4-hotfix.2
     working_directory: *working_dir
     steps:
       - *restore_workspace
@@ -134,7 +134,7 @@ jobs:
 
   flutter-build-64:
     docker:
-      - image: cirrusci/flutter:v1.2.1
+      - image: cirrusci/flutter:v1.5.4-hotfix.2
     working_directory: *working_dir
     steps:
       - *restore_workspace

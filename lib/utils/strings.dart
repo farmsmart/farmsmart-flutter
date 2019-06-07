@@ -2,6 +2,8 @@
 
 class Strings {
 
+  static String shareArticleText = "Check out this article from the FarmSmart mobile app \n ";
+
   static String emptyString = "";
   static String errorString = "Error";
   static String appTitle = "Farmsmart" ;

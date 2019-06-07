@@ -1,14 +1,7 @@
-
 // We add here all the screens a certain group of tasks conceal.
-enum HomeScreen{
-  MY_PLOT_TAB,
-  PROFIT_LOSS_TAB,
-  ARTICLES_TAB,
-  COMMUNITY_TAB
+class HomeScreen {
+  static const MY_PLOT_TAB = 0;
+  static const PROFIT_LOSS_TAB = 1;
+  static const ARTICLES_TAB = 2;
+  static const COMMUNITY_TAB = 3;
 }
-
-// To access the actual child's positions in the views.
-const MY_PLOT_TAB = 0;
-const PROFIT_LOSS_TAB = 1;
-const ARTICLES_TAB = 2;
-const COMMUNITY_TAB = 3;

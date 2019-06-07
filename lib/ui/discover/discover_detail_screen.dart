@@ -6,13 +6,12 @@ import 'package:farmsmart_flutter/utils/assets.dart';
 import 'package:farmsmart_flutter/utils/colors.dart';
 import 'package:farmsmart_flutter/utils/dimens.dart';
 import 'package:farmsmart_flutter/utils/strings.dart';
+import 'package:farmsmart_flutter/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:farmsmart_flutter/redux/app/app_state.dart';
-import 'package:farmsmart_flutter/utils/styles.dart';
 import '../app_bar.dart';
-
 import 'discover_child_item.dart';
 import 'discover_viewmodel.dart';
 
@@ -51,7 +50,7 @@ class _ArticleDetailState extends State<ArticleDetailScreen> {
   Widget _buildList(
       BuildContext context, ArticleEntity selectedArticle, Function getRelatedArticles) {
     return Scaffold(
-        appBar: CustomAppBar.buildForDetail(selectedArticle.title),
+        appBar: CustomAppBar.buildForArticleDetail(selectedArticle.title, CustomAppBar.shareAction(selectedArticle.id)),
         body: SingleChildScrollView(
             child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

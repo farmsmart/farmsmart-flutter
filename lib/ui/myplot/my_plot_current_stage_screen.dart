@@ -10,7 +10,6 @@ import 'package:farmsmart_flutter/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-
 import '../app_bar.dart';
 import 'myplot_viewmodel.dart';
 
@@ -140,3 +139,4 @@ _buildListIcon() {
     ),
   );
 }
+

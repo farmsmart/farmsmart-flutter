@@ -1,6 +1,7 @@
 import 'package:farmsmart_flutter/redux/app/app_state.dart';
 import 'package:farmsmart_flutter/redux/home/home_actions.dart';
 import 'package:farmsmart_flutter/redux/home/myPlot/my_plot_actions.dart';
+import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';
 import 'package:farmsmart_flutter/redux/home/discover/discover_actions.dart';
 
@@ -20,6 +21,9 @@ class NavigationMiddleware extends MiddlewareClass<AppState>{
     }
     if(action is GoToArticleDetailAction) {
       Keys.navKey.currentState.pushNamed(AppRoutes.articleDetail);
+    }
+    if (action is FetchSingleArticleAction) {
+      Keys.navKey.currentState.popUntil((route) => route.isFirst);
     }
     if(action is GoToPrivacyPoliciesAction) {
       Keys.navKey.currentState.pushNamed(AppRoutes.privacyPolicies);
