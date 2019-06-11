@@ -12,7 +12,7 @@ class Strings {
 
   static String appbarPopUpPolicies = "Privacy Policies";
 
-  static String myPlotTab = "My Plot";
+  static String myPlotTab = "Your Plot";
   static String profitLossTab = "Profit/Loss";
   static String discoverTab = "Discover";
   static String communityTab = "Community";

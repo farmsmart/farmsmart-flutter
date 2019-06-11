@@ -7,7 +7,7 @@ import 'box_shadows.dart';
 abstract class Styles {
 
   static TextStyle titleTextStyle() {
-    return TextStyle(fontSize: 27, fontWeight: FontWeight.normal, color: Color(black));
+    return TextStyle(fontSize: 27, fontWeight: FontWeight.bold, color: Color(black));
   }
 
   static TextStyle subtitleTextStyle() {

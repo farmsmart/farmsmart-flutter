@@ -64,6 +64,15 @@ abstract class Paddings {
     return EdgeInsets.only(bottom: 10);
   }
 
+  //New Paddings for UI
+  static title(){
+    return EdgeInsets.only(left: 25, top: 30, right: 5, bottom: 20);
+  }
+
+  static titleBetweenElements(){
+    return EdgeInsets.only(right: 60);
+  }
+
 }
 
 

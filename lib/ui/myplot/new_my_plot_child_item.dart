@@ -9,8 +9,21 @@ import 'package:farmsmart_flutter/ui/common/network_image_from_future.dart';
 
 class MyNewPlotListItem {
   Widget buildListItem() {
-    return Text(
-      "Testing"
+    return Padding(
+      padding: Paddings.title(),
+      child: Row(
+        children: <Widget>[
+        Padding(
+          padding: Paddings.rightPaddingSmall(),
+        ),
+        Column(
+          children: <Widget>[
+            Text(
+              "BUtton"
+            )
+          ],
+        )],
+      ),
     );
   }
 }
