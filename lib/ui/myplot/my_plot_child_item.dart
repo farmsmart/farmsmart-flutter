@@ -12,7 +12,6 @@ import 'package:flutter/material.dart';
 class MyPlotListItem {
   Widget buildListItem(CropEntity cropsData, Function goToDetail, Function goToStage) {
     return Padding(
-        key: ValueKey(cropsData.name ?? Strings.myPlotItemDefaultTitle),
         padding: Paddings.boxPadding(),
         child: Container(
             decoration: BoxDecoration(
@@ -37,7 +36,7 @@ class MyPlotListItem {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text(cropsData.name ?? Strings.myPlotItemDefaultTitle,
+                      Text("TESTING" ?? Strings.myPlotItemDefaultTitle,
                           style: Styles.titleTextStyle()),
                       Margins.generalListSmallMargin(),
                       Text(Strings.myPlotCurrentStagesMOCK),

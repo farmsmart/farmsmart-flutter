@@ -7,6 +7,8 @@ import 'package:farmsmart_flutter/ui/myplot/myplot_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
+import 'new_my_plot_child_item.dart';
+
 class HomeMyPlotPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -31,7 +33,8 @@ class _MyPlotState extends State<HomeMyPlotPage> {
         return Container(
             child: CircularProgressIndicator(), alignment: Alignment.center);
       case LoadingStatus.SUCCESS:
-        return _buildList(context, viewModel.cropsList, viewModel.goToDetail, viewModel.goToStage); // Change fetch crops to go to detail
+        //return _buildList(context, viewModel.cropsList, viewModel.goToDetail, viewModel.goToStage); // Change fetch crops to go to detail
+        return _buildTest(context, viewModel.cropsList);
       case LoadingStatus.ERROR:
         return Text("Error"); // TODO Check FARM-203
     }
@@ -44,6 +47,16 @@ Widget _buildList(BuildContext context, List<CropEntity> cropList, Function goTo
     children: cropList
         .map((cropData) => MyPlotListItem().buildListItem(cropData, goToDetail, goToStage))
         .toList(),
+  );
+}
+
+Widget _buildTest(BuildContext context, List<CropEntity> cropList){
+  return ListView.builder(
+    padding: const EdgeInsets.only(top: 20.0),
+    itemCount: cropList.length,
+    itemBuilder: (BuildContext context, int index) {
+      return MyNewPlotListItem().buildListItem();
+    },
   );
 }
 
