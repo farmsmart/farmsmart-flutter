@@ -40,9 +40,12 @@ class _DiscoveryState extends State<HomeDiscoverPage> {
 }
 
 Widget _buildList(BuildContext context, List<ArticleEntity> articlesList, Function getRelatedArticles) {
-  return ListView(
+  return ListView.builder(
       padding: const EdgeInsets.only(top: 20.0),
-      children: (articlesList != null) ? (articlesList.map((article) =>
-          DiscoveryListItem().buildListItem(article, getRelatedArticles))).toList() : [Container()]);
+      itemCount: articlesList.length,
+      itemBuilder: (BuildContext context, int index){
+          return DiscoveryListItem().buildListItem(articlesList[index], getRelatedArticles);
+      }
+    );
 }
 
