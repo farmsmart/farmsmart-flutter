@@ -58,13 +58,18 @@ Widget _buildTest(BuildContext context, List<CropEntity> cropList){
     padding: const EdgeInsets.only(top: 20.0),
     itemCount: cropList.length,
     itemBuilder: (BuildContext context, int index) {
-      return MyNewPlotListItem().buildListItem();
+      return MyNewPlotListItem().buildListItem(cropList[index]);
     },
   );
 }
 
 Widget _buildPage(BuildContext context, List<CropEntity> cropList){
-  return _buildTittle();
+  return Column(
+    children: <Widget>[
+      _buildTittle(),
+      Expanded(child: _buildTest(context, cropList))
+    ],
+  );
 }
 
 Widget _buildTittle(){
