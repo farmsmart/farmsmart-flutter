@@ -25,6 +25,10 @@ abstract class Margins {
   static SizedBox generalListSmallerMargin() {
     return SizedBox(height: 7);
   }
+
+  static SizedBox spaceBetweenTextAndPicture() {
+    return SizedBox(width: 30.5);
+  }
 }
 
 abstract class Paddings {
@@ -77,10 +81,10 @@ abstract class Dividers {
   }
 
   static listDividerLine() {
-    return Divider(
-      height: 1.5,
-      color: Color(primaryGrey),
-      indent: 30,
+    return Container(
+      height: 2,
+      color: Color(separatorGrey),
+      margin: EdgeInsets.only(left: 32.0)
     );
   }
 

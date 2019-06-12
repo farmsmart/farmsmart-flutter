@@ -6,7 +6,9 @@ const primaryGreen = 0xFF9CBD3A; // App's classic green
 const white = 0xFFFFFFFF;
 const black = 0xFF000000;
 const primaryGrey = 0xFF757575;
-const darkBlue = 0xFF170a45;// Used on top bar
+const darkBlue = 0xFF1a1b46;// Used on top bar
+const textGrey = 0xFF767690;
+const separatorGrey = 0xFFf5f8fa;
 const primaryGreyLight = 0xFFDFDFDF;
 const primaryGreyDark = 0xFF444444; // Used on title text
 

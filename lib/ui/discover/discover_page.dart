@@ -42,76 +42,52 @@ class _DiscoveryState extends State<HomeDiscoverPage> {
         return Text(Strings.errorString);
     }
   }
+}
 
-  Widget _buildDiscoverPage(BuildContext context,
-      List<ArticleEntity> articlesList, Function getRelatedArticles) {
+  Widget _buildDiscoverPage(BuildContext context, List<ArticleEntity> articlesList, Function getRelatedArticles) {
     return ListView(
       children: <Widget>[
-        _buildTitle(),
-        _buildHeadArticle(articlesList.first),
-        _buildList(articlesList, getRelatedArticles)
+        _buildScreenTitle(),
+        _buildHeaderArticle(articlesList.first),
+        _buildArticlesList(articlesList, getRelatedArticles)
       ],
     );
   }
 
-  Widget _buildTitle() {
+  Widget _buildScreenTitle() {
     return Container(
-      padding: EdgeInsets.all(30.0),
+      padding: EdgeInsets.only(left: 34.0, right: 34.0, top: 35.0, bottom: 30.0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(
-            Strings.discoverTab,
-            style: Styles.titleTextStyle(),
-          )
+          Text(Strings.discoverTab, style: Styles.titleTextStyle())
         ],
       ),
     );
   }
 
-  Widget _buildHeadArticle(ArticleEntity firstArticle) {
-    return Container(
-        child: Column(
+  Widget _buildHeaderArticle(ArticleEntity firstArticle) {
+    return Column(
           children: <Widget>[
             Container(
-              padding: EdgeInsets.only(left: 30.0, right: 30.0, bottom: 20),
+              padding: EdgeInsets.only(left: 32.0, right: 32.0, bottom: 28),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      Expanded(child: buildListItemImage(firstArticle)),
-                    ],
-                  ),
+                  buildHeaderArticleImage(firstArticle),
                   Padding(padding: EdgeInsets.only(bottom: 18.0)),
-                  Row(
-                    children: <Widget>[
-                      Expanded(
-                          child: Text(
-                              firstArticle.title,
-                              style: Styles.articleListTitleStyle())
-                      ),
-                    ],
-                  ),
+                  Text(firstArticle.title, maxLines: 1, style: Styles.articleListTitleStyle()),
                   Padding(padding: EdgeInsets.only(bottom: 10.0)),
-                  Row(
-                    children: <Widget>[
-                      Expanded(
-                          child: Text(
-                              firstArticle.summary,
-                              maxLines: 3,
-                              style: Styles.articleSummaryTextStyle()))
-                    ],
-                  ),
+                  Text(firstArticle.summary, maxLines: 3, style: Styles.articleSummaryTextStyle())
                 ],
               ),
             ),
             Dividers.listDividerLine()
           ],
-        ));
+        );
   }
 
-  Widget _buildList(
-      List<ArticleEntity> articlesList, Function getRelatedArticles) {
+  Widget _buildArticlesList(List<ArticleEntity> articlesList, Function getRelatedArticles) {
     return ListView.builder(
         shrinkWrap: true,
         physics: ScrollPhysics(),
@@ -122,10 +98,9 @@ class _DiscoveryState extends State<HomeDiscoverPage> {
         });
   }
 
-  buildListItemImage(ArticleEntity articleData) {
+  Widget buildHeaderArticleImage(ArticleEntity articleData) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(15.0),
       child: NetworkImageFromFuture(articleData.imageUrl, fit: BoxFit.fitWidth),
     );
   }
-}
