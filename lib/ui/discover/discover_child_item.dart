@@ -7,56 +7,58 @@ import 'package:farmsmart_flutter/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:farmsmart_flutter/utils/assets.dart';
 
+import 'discover_page.dart';
+
 class DiscoveryListItem {
-  Widget buildListItem(ArticleEntity articleData, Function getRelatedArticles) {
+  Widget buildListItem(ArticleEntity articleData, Function getRelatedArticles, HomeDiscoverPageStyle discoverStyle) {
     return GestureDetector(
       onTap: () => getRelatedArticles(articleData),
       child: Container(
         child: Column(
           children: <Widget>[
             Container(
-              padding: EdgeInsets.only(left: 32.0, right: 32.0, top: 23, bottom: 23),
+              padding: discoverStyle.itemListPadding,
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: discoverStyle.centerAlignmentVertical,
                 children: <Widget>[
-                  _buildArticleInformation(articleData),
-                  Margins.spaceBetweenTextAndPicture(),
-                  _buildListItemImage(articleData),
+                  _buildArticleInformation(articleData, discoverStyle),
+                  SizedBox(width: discoverStyle.spaceBetweenItemTextAndImage),
+                  _buildListItemImage(articleData, discoverStyle),
                 ],
               ),
             ),
-            Dividers.listDividerLine()
+            buildListSeparator(discoverStyle)
           ],
         ),
       ),
     );
   }
 
-  _buildListItemImage(ArticleEntity articleData) {
+  _buildListItemImage(ArticleEntity articleData, HomeDiscoverPageStyle discoverStyle) {
     return ClipRRect(
-        borderRadius: BorderRadius.circular(10.0),
+        borderRadius: BorderRadius.circular(discoverStyle.itemImageBorderRadius),
         child: NetworkImageFromFuture(
             articleData.imageUrl,
-            height: 80,
-            width: 80,
+            height: discoverStyle.itemImageSize,
+            width: discoverStyle.itemImageSize,
             fit: BoxFit.cover)
     );
   }
 
-  _buildArticleInformation(ArticleEntity articleData) {
+  _buildArticleInformation(ArticleEntity articleData, HomeDiscoverPageStyle discoverStyle) {
     return Expanded(
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: discoverStyle.leftAlignmentHorizontal,
         children: <Widget>[
           Text(articleData.title ?? Strings.noTitleString,
-              maxLines: 2,
+              maxLines: discoverStyle.maxLinesPerTitle,
               overflow: TextOverflow.ellipsis,
-              style: Styles.articleListTitleStyle()),
-          Margins.generalListSmallerMargin(),
+              style: discoverStyle.titleArticleStyle),
+          SizedBox(height: discoverStyle.spaceBetweenTitleAndSummary),
           Text(articleData.summary ?? Strings.myPlotItemDefaultTitle,
-              maxLines: 2,
+              maxLines: discoverStyle.maxLinesPerSummary,
               overflow: TextOverflow.ellipsis,
-              style: Styles.articleSummaryTextStyle()),
+              style: discoverStyle.summaryArticleStyle),
         ],
       ),
     );
