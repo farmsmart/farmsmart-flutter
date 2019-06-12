@@ -45,7 +45,7 @@ abstract class Paddings {
   }
 
   static listOfArticlesPadding() {
-    return EdgeInsets.only(left: 16, top: 8, bottom: 0);
+    return EdgeInsets.only(left: 25.0, top: 8, bottom: 0, right: 25.0);
   }
 
   static leftPaddingSmall() {
@@ -64,6 +64,9 @@ abstract class Paddings {
     return EdgeInsets.only(bottom: 10);
   }
 
+  static title(){
+    return EdgeInsets.only(left: 25, top: 30, right: 5, bottom: 20);
+  }
 }
 
 
@@ -75,9 +78,9 @@ abstract class Dividers {
 
   static listDividerLine() {
     return Divider(
-      height: 1,
-      color: Color(black),
-      indent: 145,
+      height: 1.5,
+      color: Color(primaryGrey),
+      indent: 30,
     );
   }
 

@@ -10,6 +10,29 @@ import 'package:farmsmart_flutter/utils/assets.dart';
 class DiscoveryListItem {
   Widget buildListItem(ArticleEntity articleData, Function getRelatedArticles) {
     return GestureDetector(
+      onTap: () => getRelatedArticles(articleData),
+      child: Container(
+        child: Column(
+          children: <Widget>[
+            Container(
+              padding: EdgeInsets.only(left: 30.0, right: 30.0, top: 23, bottom: 23),
+              child: Row(
+                children: <Widget>[
+                  _buildArticleTitle(articleData),
+                  Padding(padding: EdgeInsets.all(8.0)),
+                  _buildListItemImage(articleData),
+                ],
+              ),
+            ),
+            Dividers.listDividerLine()
+          ],
+        ),
+      ),
+    );
+  }
+
+  /*Widget buildListItem(ArticleEntity articleData, Function getRelatedArticles) {
+    return GestureDetector(
         onTap: () {
           getRelatedArticles(articleData);
         },
@@ -40,48 +63,34 @@ class DiscoveryListItem {
                 ],
               )),
         ));
-  }
+  } */
+
 
   _buildListItemImage(ArticleEntity articleData) {
-    return NetworkImageFromFuture(
-      articleData.imageUrl,
-        height: listImageHeight,
-        width: listImageWidth,
-        fit: BoxFit.cover
+    return ClipRRect(
+        borderRadius: BorderRadius.circular(10.0),
+        child: NetworkImageFromFuture(
+            articleData.imageUrl,
+            height: 85,
+            width: 85,
+            fit: BoxFit.cover)
     );
   }
 
   _buildArticleTitle(ArticleEntity articleData) {
     return Expanded(
-      flex: listViewFlex,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(articleData.title ?? Strings.noTitleString,
-              maxLines: titleMaxLines,
+              maxLines: 2,
               overflow: TextOverflow.ellipsis,
               style: Styles.articleListTitleStyle()),
           Margins.generalListSmallerMargin(),
           Text(articleData.summary ?? Strings.myPlotItemDefaultTitle,
-              maxLines: summaryMaxLines,
+              maxLines: 2,
               overflow: TextOverflow.ellipsis,
-              style: Styles.footerTextStyle()),
-        ],
-      ),
-    );
-  }
-
-  _buildListIcon() {
-    return Expanded(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: <Widget>[
-          Icon(
-            Icons.arrow_forward_ios,
-            size: arrowIconSize,
-            color: Color(primaryGrey),
-          ),
+              style: Styles.articleSummaryTextStyle()),
         ],
       ),
     );

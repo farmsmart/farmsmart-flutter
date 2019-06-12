@@ -7,7 +7,7 @@ import 'box_shadows.dart';
 abstract class Styles {
 
   static TextStyle titleTextStyle() {
-    return TextStyle(fontSize: 27, fontWeight: FontWeight.normal, color: Color(black));
+    return TextStyle(fontSize: 27, fontWeight: FontWeight.bold, color: Color(black));
   }
 
   static TextStyle subtitleTextStyle() {
@@ -39,7 +39,11 @@ abstract class Styles {
   }
 
   static TextStyle articleListTitleStyle() {
-    return TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Color(black), decorationColor: Color(primaryGreen));
+    return TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(darkBlue));
+  }
+
+  static TextStyle articleSummaryTextStyle() {
+    return TextStyle(fontSize: 13, fontWeight: FontWeight.w500, color: Color(primaryGrey));
   }
 
   static BoxDecoration stageGreenBoxDecoration() {

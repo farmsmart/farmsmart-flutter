@@ -75,8 +75,7 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
   Widget content(HomeViewmodel viewModel) {
     homeViewModel = viewModel;
     return Scaffold(
-      appBar:
-          CustomAppBar.build(viewModel.currentTab, viewModel.goToPrivacyPolicy),
+      //appBar: CustomAppBar.build(viewModel.currentTab, viewModel.goToPrivacyPolicy),
       // We could share a list of pre defined actions for the app bar.
       body: _children[viewModel.currentTab],
       bottomNavigationBar: Theme(
