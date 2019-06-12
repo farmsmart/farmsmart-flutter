@@ -68,13 +68,11 @@ abstract class Paddings {
   static title(){
     return EdgeInsets.only(left: 25, top: 30, right: 5, bottom: 20);
   }
-
-  static titleBetweenElements(){
-    return EdgeInsets.only(right: 60);
+  
+  static roundedTextPadding(){
+    return EdgeInsets.only(left: 12, top: 8, right: 12, bottom: 5);
   }
-
 }
-
 
 abstract class Dividers {
 
@@ -84,12 +82,11 @@ abstract class Dividers {
 
   static listDividerLine() {
     return Divider(
-      height: 1,
-      color: Color(black),
-      indent: 145,
+      height: 2,
+      color: Color(whiteDivider),
+      indent: 25,
     );
   }
-
 }
 
 const double bottomBarIconSize = 30.0;

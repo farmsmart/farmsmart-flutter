@@ -20,6 +20,7 @@ class Strings {
   static String myPlotCurrentStagesMOCK = "Stages 1 of 6";
   static String myPlotCurrentStage = "CURRENT STAGE";
   static String myPlotDetails = "DETAILS";
+  static String defaultCropNameText = "Crop name";
 
   static String myPlotItemDefaultTitle = "My Crop";
 
@@ -35,5 +36,4 @@ class Strings {
   static String myPlotDetailCompanionPlantsTitle = "Companion Plants";
   static String myPlotDetailNonCompanionPlantsTitle = "Non-Companion Plants";
   static String myPlotDetailStepByStepTitle = "Step-by-step guide";
-
 }

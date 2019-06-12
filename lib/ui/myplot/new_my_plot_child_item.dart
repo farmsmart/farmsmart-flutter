@@ -1,60 +1,102 @@
 import 'package:farmsmart_flutter/data/model/crop_entity.dart';
 import 'package:farmsmart_flutter/utils/colors.dart';
 import 'package:farmsmart_flutter/utils/dimens.dart';
+import 'package:farmsmart_flutter/utils/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:farmsmart_flutter/ui/common/network_image_from_future.dart';
+import 'my_plot_page.dart';
 
 class MyNewPlotListItem {
-  Widget buildListItem(CropEntity cropsData) {
+  Widget buildListItem(CropEntity cropsData, HomeMyPlotPageStyle myPlotStyle) {
 
-    const ListCropNameStyle = TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(black));
-    const ListStatusStyle = TextStyle(fontSize: 15, fontWeight: FontWeight.normal, color: Color(black));
-    const ListDayStyle = TextStyle(fontSize: 12, fontWeight: FontWeight.normal, color: Color(primaryGreen));
+    //FIXME: This variables should be with the cropData, but for the moment are hardcored coz of the CMS Data.
+    const DayText = "Day 6";
+    const currentStage = "Planting";
 
     return Column(
       children: <Widget>[
         Container(
-          padding: EdgeInsets.only(left: 30.0, top: 25.0, right: 30.0, bottom: 25.0),
+          padding: myPlotStyle.listPadding,
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: myPlotStyle.mainAxisAlignmentSpaceBeetwen,
             children: <Widget>[
               Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: myPlotStyle.crossAxisAlignmentStart,
                 children: <Widget>[
                   Row(
                     children: <Widget>[
-                      Text(cropsData.name, style: ListCropNameStyle)
+                      Text(
+                          cropsData.name ?? Strings.defaultCropNameText,
+                          style: myPlotStyle.cropNameTextStyle),
+                      Padding(
+                        padding: myPlotStyle.paddingBetweenElements,
+                      )
                     ],
                   ),
-                  Row(children: <Widget>[
-                    Text("Planting", style: ListStatusStyle)
+                  Row(
+                    children: <Widget>[
+                    Text(currentStage, style: myPlotStyle.cropStatusTextStyle),
+                    Padding(
+                      padding: myPlotStyle.paddingBeforeCropDayCount,
+                    )
                   ],
                   ),
-                  Row(children: <Widget>[
-                    Text("Day 6", style: ListDayStyle)
+                  Row(
+                    children: <Widget>[
+                    Container(
+                      padding: myPlotStyle.paddingForDayCount,
+                      decoration: BoxDecoration(
+                        color: myPlotStyle.primaryGreen.withOpacity(myPlotStyle.oppacityForDayCount),
+                        borderRadius: myPlotStyle.ovalRadiousForDayCount),
+                      child: Row(
+                        mainAxisSize: myPlotStyle.mainAxisSizeMin,
+                       children: <Widget>[
+                         Flexible(
+                           child: Container(
+                             child: Text(
+                              DayText,
+                              style: myPlotStyle.cropDayTextStyle,
+                           ),
+                         )
+                         )],
+                      ),
+                    )
                   ],
                   ),
                 ],
               ),
               Column(
                 children: <Widget>[
-                  ClipOval(
-                    child: NetworkImageFromFuture(
-                        cropsData.imageUrl,
-                        height: 80.0,
-                        width: 80.0,
-                        fit: BoxFit.cover
-                    ),
-                  ),
+                  _buildClipOval(cropsData, myPlotStyle),
                 ],
               )
             ],
           ),
         ),
-        Container(child:
-        Dividers.listDividerLine()
+        Container(
+            child: buildListSeparator(myPlotStyle)
         ),
       ],
     );
   }
+
+  ClipOval _buildClipOval(CropEntity cropsData, HomeMyPlotPageStyle myPlotStyle) {
+    return ClipOval(
+                  child: NetworkImageFromFuture(
+                      cropsData.imageUrl,
+                      height: myPlotStyle.sizeForDayCountShape,
+                      width: myPlotStyle.sizeForDayCountShape,
+                      fit: BoxFit.cover
+                  ),
+                );
+  }
+
+  Widget buildListSeparator(HomeMyPlotPageStyle myPlotStyle) {
+    return Container(
+        height: myPlotStyle.separatorHeight,
+        color: myPlotStyle.separatorWhite,
+        margin: myPlotStyle.separatorIndent
+    );
+  }
+
 }
