@@ -19,6 +19,7 @@ abstract class ArticleItemStyle {
   final double itemSpaceBetweenTitleAndSummary;
   final double itemImageBorderRadius;
   final double itemImageSize;
+  final double itemCardElevation;
 
   final int maxLinesPerTitle;
   final int maxLinesPerSummary;
@@ -26,7 +27,8 @@ abstract class ArticleItemStyle {
   ArticleItemStyle(this.itemTitleStyle, this.itemSummaryStyle,
       this.itemListPadding, this.itemSpaceBetweenTextAndImage,
       this.itemSpaceBetweenTitleAndSummary, this.itemImageBorderRadius,
-      this.itemImageSize, this.maxLinesPerTitle, this.maxLinesPerSummary);
+      this.itemImageSize, this.itemCardElevation, this.maxLinesPerTitle,
+      this.maxLinesPerSummary);
 }
 
 class _DefaultArticleItemStyle implements ArticleItemStyle {
@@ -42,7 +44,7 @@ class _DefaultArticleItemStyle implements ArticleItemStyle {
   final double itemImageBorderRadius = 10.0;
   final double itemImageSize = 80;
   final double itemSpaceBetweenTitleAndSummary = 9.5;
-
+  final double itemCardElevation = 0;
 
   final int maxLinesPerTitle = 2;
   final int maxLinesPerSummary = 2;
@@ -54,22 +56,25 @@ class ArticleListItem {
   Widget standardListItemBuilder(ArticleEntity articleData, Function getRelatedArticles, {ArticleItemStyle itemStyle = const _DefaultArticleItemStyle()}) {
     return GestureDetector(
       onTap: () => getRelatedArticles(articleData),
-      child: Container(
-        child: Column(
-          children: <Widget>[
-            Container(
-              padding: itemStyle.itemListPadding,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  _buildArticleInformation(articleData, itemStyle),
-                  SizedBox(width: itemStyle.itemSpaceBetweenTextAndImage),
-                  _buildListItemImage(articleData, itemStyle),
-                ],
+      child: Card(
+        elevation: itemStyle.itemCardElevation,
+        child: Container(
+          child: Column(
+            children: <Widget>[
+              Container(
+                padding: itemStyle.itemListPadding,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    _buildArticleInformation(articleData, itemStyle),
+                    SizedBox(width: itemStyle.itemSpaceBetweenTextAndImage),
+                    _buildListItemImage(articleData, itemStyle),
+                  ],
+                ),
               ),
-            ),
-            buildListSeparator()
-          ],
+              buildListDivider()
+            ],
+          ),
         ),
       ),
     );
