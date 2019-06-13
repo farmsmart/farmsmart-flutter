@@ -50,7 +50,7 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
   }
 
   final List<Widget> _children = [
-    HomeMyPlotPage(),
+    PlotList(),
     HomeProfitLossChild(),
     HomeDiscoverPage(),
     HomeCommunityChild()

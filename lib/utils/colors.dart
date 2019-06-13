@@ -12,7 +12,6 @@ const primaryGreyDark = 0xFF444444; // Used on title text
 const primaryWhite = 0xFFFFFFFF;
 const backgroundColor = 0xFFFFFFFF; // White
 const transparent = 0x00000000; // White
-const FosforescentGreen = 0xff25df0c;
 
 const whiteDivider = 0xfff5f8fa;
 

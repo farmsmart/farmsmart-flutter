@@ -9,6 +9,7 @@ import 'package:farmsmart_flutter/utils/strings.dart';
 import 'package:farmsmart_flutter/utils/styles.dart';
 import 'package:flutter/material.dart';
 
+//FIXME: this file is not used anymore since the new UI is up, it will be deleted when all Myplot funcionalities are done in the new file.
 class MyPlotListItem {
   Widget buildListItem(CropEntity cropsData, Function goToDetail, Function goToStage) {
     return Padding(

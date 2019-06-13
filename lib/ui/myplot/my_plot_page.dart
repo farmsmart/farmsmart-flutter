@@ -2,110 +2,78 @@ import 'package:farmsmart_flutter/data/model/crop_entity.dart';
 import 'package:farmsmart_flutter/model/loading_status.dart';
 import 'package:farmsmart_flutter/redux/app/app_state.dart';
 import 'package:farmsmart_flutter/redux/home/myPlot/my_plot_actions.dart';
-import 'package:farmsmart_flutter/ui/myplot/myplot_viewmodel.dart';
 import 'package:farmsmart_flutter/utils/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'new_my_plot_child_item.dart';
+import 'myplot_viewmodel.dart';
+import 'my_plot_list.dart';
 
-abstract class HomeMyPlotPageStyle {
+abstract class PlotListStyle {
 
-  final Color iconButtonColor;
-  final Color primaryGreen;
-  final Color separatorWhite;
+  final Color primaryWhiteColor;
+  final Color primaryGreenColor;
 
   final EdgeInsets edgeInsetsTop;
   final EdgeInsets edgeInsetsTitle;
-  final EdgeInsets listPadding;
-  final EdgeInsets paddingBetweenElements;
-  final EdgeInsets paddingBeforeCropDayCount;
-  final EdgeInsets paddingForDayCount;
-  final EdgeInsets separatorIndent;
+  final EdgeInsets addCropBottomButtonMargins;
 
-  final BorderRadius ovalRadiousForDayCount;
+  final BorderRadius roundedBorderRadius;
 
   final Alignment circularProgressIndicatorAligmentCenter;
 
   final MainAxisAlignment mainAxisAlignmentSpaceBeetwen;
   final MainAxisAlignment mainAxisAlignmentSpaceStart;
-  final MainAxisSize mainAxisSizeMin;
-
-  final CrossAxisAlignment crossAxisAlignmentStart;
-
 
   final TextStyle titleTextStyle;
-  final TextStyle cropNameTextStyle;
-  final TextStyle cropStatusTextStyle;
-  final TextStyle cropDayTextStyle;
+  final TextStyle addCropButtonTextStyle;
 
-  final double buttonShapeRadious;
+  final double addCropTopButtonSize;
   final double buttonIconSize;
-  final double oppacityForDayCount;
-  final double separatorHeight;
-  final double sizeForDayCountShape;
+  final double addCropBottomButtonHeight;
 
-  HomeMyPlotPageStyle(this.iconButtonColor, this.primaryGreen,
-      this.separatorWhite,
-      this.edgeInsetsTop, this.edgeInsetsTitle, this.listPadding,
-      this.paddingBetweenElements,this.paddingBeforeCropDayCount,
-      this.paddingForDayCount,
-      this.ovalRadiousForDayCount,
+  PlotListStyle(this.primaryWhiteColor, this.primaryGreenColor,
+      this.edgeInsetsTop, this.edgeInsetsTitle, this.roundedBorderRadius,
       this.circularProgressIndicatorAligmentCenter,
       this.mainAxisAlignmentSpaceBeetwen, this.mainAxisAlignmentSpaceStart,
-      this.mainAxisSizeMin,
-      this.crossAxisAlignmentStart, this.titleTextStyle, this.cropNameTextStyle,
-      this.cropStatusTextStyle, this.cropDayTextStyle, this.buttonShapeRadious,
-      this.buttonIconSize, this.oppacityForDayCount, this.separatorHeight, this.separatorIndent,
-      this.sizeForDayCountShape);
+      this.titleTextStyle, this.addCropButtonTextStyle,this.addCropTopButtonSize,
+      this.buttonIconSize, this.addCropBottomButtonMargins, this.addCropBottomButtonHeight);
 }
 
-class _DefaultStyle implements HomeMyPlotPageStyle {
+class _DefaultStyle implements PlotListStyle {
 
-  final Color iconButtonColor =  const Color(0xFFFFFFFF);
-  final Color primaryGreen =  const Color(0xff25df0c);
-  final Color separatorWhite = const Color(0xfff5f8fa);
+  final Color primaryWhiteColor =  const Color(0xFFFFFFFF);
+  final Color primaryGreenColor =  const Color(0xff25df0c);
 
   final EdgeInsets edgeInsetsTop = const EdgeInsets.only(top: 20.0) ;
   final EdgeInsets edgeInsetsTitle = const EdgeInsets.only(left: 25, top: 30, right: 5, bottom: 20);
-  final EdgeInsets listPadding = const EdgeInsets.only(left: 25.0, top: 25.0, right: 30.0, bottom: 25.0);
-  final EdgeInsets paddingBetweenElements = const EdgeInsets.only(bottom: 30);
+  final EdgeInsets addCropBottomButtonMargins = const EdgeInsets.only(left: 32.0, right: 32.0, bottom: 32.0, top: 31.0);
 
-  final EdgeInsets paddingBeforeCropDayCount = const EdgeInsets.only(bottom: 23);
-  final EdgeInsets paddingForDayCount = const EdgeInsets.only(left: 12, top: 8, right: 12, bottom: 5);
-  final EdgeInsets separatorIndent = const EdgeInsets.only(left: 25.0);
-
-  final BorderRadius ovalRadiousForDayCount = const BorderRadius.all(Radius.circular(20.0));
+  final BorderRadius roundedBorderRadius = const BorderRadius.all(Radius.circular(20.0));
 
   final Alignment circularProgressIndicatorAligmentCenter = Alignment.center;
   final MainAxisAlignment mainAxisAlignmentSpaceBeetwen = MainAxisAlignment.spaceBetween;
   final MainAxisAlignment mainAxisAlignmentSpaceStart = MainAxisAlignment.start;
-  final CrossAxisAlignment crossAxisAlignmentStart =   CrossAxisAlignment.start;
-  final MainAxisSize mainAxisSizeMin = MainAxisSize.min;
 
   final TextStyle titleTextStyle = const TextStyle(fontSize: 27, fontWeight: FontWeight.bold, color: Color(0xFF000000));
-  final TextStyle cropNameTextStyle = const TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: Color(0xff1a1b46));
-  final TextStyle cropStatusTextStyle = const TextStyle(fontSize: 15, fontWeight: FontWeight.normal, color: Color(0xff767690));
-  final TextStyle cropDayTextStyle = const TextStyle(fontSize: 11, fontWeight: FontWeight.normal, color: Color(0xff25df0c));
+  final TextStyle addCropButtonTextStyle = const TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: Color(0xffffffff));
 
-  final double buttonShapeRadious = 25.0;
+  final double addCropTopButtonSize = 25.0;
   final double buttonIconSize = 15.0;
-  final double oppacityForDayCount = 0.08;
-  final double separatorHeight = 2;
-  final double sizeForDayCountShape = 80.0;
+  final double addCropBottomButtonHeight = 56.0;
 
   const _DefaultStyle();
 }
 
-class HomeMyPlotPage extends StatefulWidget {
+class PlotList extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     return _MyPlotState();
   }
 }
 
-class _MyPlotState extends State<HomeMyPlotPage> {
+class _MyPlotState extends State<PlotList> {
   @override
-  Widget build(BuildContext context, {HomeMyPlotPageStyle myPlotStyle = const _DefaultStyle()}) {
+  Widget build(BuildContext context, {PlotListStyle myPlotStyle = const _DefaultStyle()}) {
     return Scaffold(
       body: StoreConnector<AppState, MyPlotViewModel>(
           onInit: (store) => store.dispatch(FetchCropListAction()),
@@ -114,7 +82,7 @@ class _MyPlotState extends State<HomeMyPlotPage> {
     );
   }
 
-  Widget _buildBody(BuildContext context, MyPlotViewModel viewModel, HomeMyPlotPageStyle myPlotStyle) {
+  Widget _buildBody(BuildContext context, MyPlotViewModel viewModel, PlotListStyle myPlotStyle) {
     switch (viewModel.loadingStatus) {
       case LoadingStatus.LOADING:
         return Container(
@@ -122,35 +90,36 @@ class _MyPlotState extends State<HomeMyPlotPage> {
             CircularProgressIndicator(),
             alignment: myPlotStyle.circularProgressIndicatorAligmentCenter);
       case LoadingStatus.SUCCESS:
-        return _buildPage(context, viewModel.cropsList, myPlotStyle);
+        return _buildPage(context, viewModel.cropsList, myPlotStyle, viewModel.goToDetail);
       case LoadingStatus.ERROR:
         return Text("Error"); // TODO Check FARM-203
     }
   }
 }
 
-Widget _buildCropList(BuildContext context, List<CropEntity> cropList, HomeMyPlotPageStyle myPlotStyle){
+Widget _buildCropList(BuildContext context, List<CropEntity> cropList, PlotListStyle myPlotStyle, Function goToDetail){
   return ListView.builder(
     padding: myPlotStyle.edgeInsetsTop,
     itemCount: cropList.length,
     shrinkWrap: true,
     physics: ScrollPhysics(),
     itemBuilder: (BuildContext context, int index) {
-      return MyNewPlotListItem().buildListItem(cropList[index], myPlotStyle);
+      return PlotListItem().buildListItem(cropList[index], goToDetail);
     },
   );
 }
 
-Widget _buildPage(BuildContext context, List<CropEntity> cropList, HomeMyPlotPageStyle myPlotStyle){
+Widget _buildPage(BuildContext context, List<CropEntity> cropList, PlotListStyle myPlotStyle, Function goToDetail){
   return ListView(
     children: <Widget>[
-      _buildTittle(myPlotStyle),
-      _buildCropList(context, cropList, myPlotStyle)
+      _buildTitle(myPlotStyle),
+      _buildCropList(context, cropList, myPlotStyle, goToDetail),
+      _buildAddCropBottomButton(myPlotStyle)
     ],
   );
 }
 
-Widget _buildTittle(HomeMyPlotPageStyle myPlotStyle){
+Widget _buildTitle(PlotListStyle myPlotStyle){
   return Container(
     padding: myPlotStyle.edgeInsetsTitle,
     child: Row(
@@ -167,26 +136,45 @@ Widget _buildTittle(HomeMyPlotPageStyle myPlotStyle){
           ),
           Column(
             children: <Widget>[
-              _addButton(myPlotStyle)
+              _buildAddCropTopButton(myPlotStyle)
             ],
           )],
       ),
   );
 }
 
-Widget _addButton(HomeMyPlotPageStyle myPlotStyle){
-
+Widget _buildAddCropTopButton(PlotListStyle myPlotStyle){
   return ButtonTheme(
-    height: myPlotStyle.buttonShapeRadious,
+    height: myPlotStyle.addCropTopButtonSize,
     child: FlatButton(
       onPressed: () {},
       child: Icon(
         Icons.add,
         size: myPlotStyle.buttonIconSize,
-        color: myPlotStyle.iconButtonColor,
+        color: myPlotStyle.primaryWhiteColor,
       ),
       shape: CircleBorder(),
-      color: myPlotStyle.primaryGreen,
+      color: myPlotStyle.primaryGreenColor,
     ),
   );
 }
+
+Widget _buildAddCropBottomButton(PlotListStyle myPlotStyle){
+    return Container(
+      height: myPlotStyle.addCropBottomButtonHeight,
+      margin: myPlotStyle.addCropBottomButtonMargins,
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: myPlotStyle.primaryGreenColor,
+        borderRadius: myPlotStyle.roundedBorderRadius,
+      ),
+      child: FlatButton(
+        child: Text(
+          Strings.addCropButtonText,
+          style: myPlotStyle.addCropButtonTextStyle
+          )
+        ),
+        //FIXME: Add oPressed when CropAddList available
+        //onPressed: callback,
+      );
+  }
