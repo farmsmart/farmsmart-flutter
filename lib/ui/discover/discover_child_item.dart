@@ -9,56 +9,97 @@ import 'package:farmsmart_flutter/utils/assets.dart';
 
 import 'discover_page.dart';
 
-class DiscoveryListItem {
-  Widget buildListItem(ArticleEntity articleData, Function getRelatedArticles, HomeDiscoverPageStyle discoverStyle) {
+abstract class ArticleItemStyle {
+  final TextStyle itemTitleStyle;
+  final TextStyle itemSummaryStyle;
+
+  final EdgeInsets itemListPadding;
+
+  final double itemSpaceBetweenTextAndImage;
+  final double itemSpaceBetweenTitleAndSummary;
+  final double itemImageBorderRadius;
+  final double itemImageSize;
+
+  final int maxLinesPerTitle;
+  final int maxLinesPerSummary;
+
+  ArticleItemStyle(this.itemTitleStyle, this.itemSummaryStyle,
+      this.itemListPadding, this.itemSpaceBetweenTextAndImage,
+      this.itemSpaceBetweenTitleAndSummary, this.itemImageBorderRadius,
+      this.itemImageSize, this.maxLinesPerTitle, this.maxLinesPerSummary);
+}
+
+class _DefaultArticleItemStyle implements ArticleItemStyle {
+  static const Color titlesColor = Color(0xFF1a1b46);
+  static const Color bodyColor = Color(0xFF767690);
+
+  final TextStyle itemTitleStyle = const TextStyle(fontSize: 17, fontWeight: FontWeight.w700, color: titlesColor);
+  final TextStyle itemSummaryStyle = const TextStyle(fontSize: 15, fontWeight: FontWeight.w400, color: bodyColor);
+
+  final EdgeInsets itemListPadding = const EdgeInsets.only(left: 32.0, right: 32.0, top: 23, bottom: 23);
+
+  final double itemSpaceBetweenTextAndImage = 30.5;
+  final double itemImageBorderRadius = 10.0;
+  final double itemImageSize = 80;
+  final double itemSpaceBetweenTitleAndSummary = 9.5;
+
+
+  final int maxLinesPerTitle = 2;
+  final int maxLinesPerSummary = 2;
+
+  const _DefaultArticleItemStyle();
+}
+
+class ArticleListItem {
+  Widget standardListItemBuilder(ArticleEntity articleData, Function getRelatedArticles, {ArticleItemStyle itemStyle = const _DefaultArticleItemStyle()}) {
     return GestureDetector(
       onTap: () => getRelatedArticles(articleData),
       child: Container(
         child: Column(
           children: <Widget>[
             Container(
-              padding: discoverStyle.itemListPadding,
+              padding: itemStyle.itemListPadding,
               child: Row(
-                mainAxisAlignment: discoverStyle.centerAlignmentVertical,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  _buildArticleInformation(articleData, discoverStyle),
-                  SizedBox(width: discoverStyle.spaceBetweenItemTextAndImage),
-                  _buildListItemImage(articleData, discoverStyle),
+                  _buildArticleInformation(articleData, itemStyle),
+                  SizedBox(width: itemStyle.itemSpaceBetweenTextAndImage),
+                  _buildListItemImage(articleData, itemStyle),
                 ],
               ),
             ),
-            buildListSeparator(discoverStyle)
+            buildListSeparator()
           ],
         ),
       ),
     );
   }
 
-  _buildListItemImage(ArticleEntity articleData, HomeDiscoverPageStyle discoverStyle) {
+  _buildListItemImage(ArticleEntity articleData, ArticleItemStyle itemStyle) {
     return ClipRRect(
-        borderRadius: BorderRadius.circular(discoverStyle.itemImageBorderRadius),
+        borderRadius: BorderRadius.circular(itemStyle.itemImageBorderRadius),
         child: NetworkImageFromFuture(
             articleData.imageUrl,
-            height: discoverStyle.itemImageSize,
-            width: discoverStyle.itemImageSize,
+            height: itemStyle.itemImageSize,
+            width: itemStyle.itemImageSize,
             fit: BoxFit.cover)
     );
   }
 
-  _buildArticleInformation(ArticleEntity articleData, HomeDiscoverPageStyle discoverStyle) {
+  _buildArticleInformation(ArticleEntity articleData, ArticleItemStyle itemStyle) {
     return Expanded(
       child: Column(
-        crossAxisAlignment: discoverStyle.leftAlignmentHorizontal,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(articleData.title ?? Strings.noTitleString,
-              maxLines: discoverStyle.maxLinesPerTitle,
+              maxLines: itemStyle.maxLinesPerTitle,
               overflow: TextOverflow.ellipsis,
-              style: discoverStyle.titleArticleStyle),
-          SizedBox(height: discoverStyle.spaceBetweenTitleAndSummary),
+              style: itemStyle.itemTitleStyle),
+          SizedBox(height: itemStyle.itemSpaceBetweenTitleAndSummary),
           Text(articleData.summary ?? Strings.myPlotItemDefaultTitle,
-              maxLines: discoverStyle.maxLinesPerSummary,
+              maxLines: itemStyle.maxLinesPerSummary,
               overflow: TextOverflow.ellipsis,
-              style: discoverStyle.summaryArticleStyle),
+              style: itemStyle.itemSummaryStyle),
         ],
       ),
     );

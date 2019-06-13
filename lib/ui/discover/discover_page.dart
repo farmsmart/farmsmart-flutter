@@ -12,185 +12,173 @@ import 'package:farmsmart_flutter/ui/discover/discover_child_item.dart';
 import 'package:farmsmart_flutter/ui/discover/discover_viewmodel.dart';
 import 'package:farmsmart_flutter/redux/home/discover/discover_actions.dart';
 
-abstract class HomeDiscoverPageStyle {
+abstract class ArticleListStyle {
   final Color separatorColor;
 
   final TextStyle titlePageStyle;
-  final TextStyle titleArticleStyle;
-  final TextStyle summaryArticleStyle;
+  final TextStyle headerArticleTitleStyle;
+  final TextStyle headerArticleSummaryStyle;
 
-  final EdgeInsets titlePadding;
+  final EdgeInsets titlePagePadding;
   final EdgeInsets headerArticlePadding;
-  final EdgeInsets itemListPadding;
   final EdgeInsets separatorIndentation;
 
   final double separatorHeight;
   final double headerImageBorderRadius;
-  final double itemImageBorderRadius;
-  final double itemImageSize;
   final double spaceBetweenHeaderImageAndText;
   final double spaceBetweenTitleAndSummary;
-  final double spaceBetweenItemTextAndImage;
 
-  final int maxLinesPerTitle;
-  final int maxLinesPerSummary;
   final int headerTitleMaxLines;
   final int headerSummaryMaxLines;
 
   final CrossAxisAlignment leftAlignmentHorizontal;
   final MainAxisAlignment centerAlignmentVertical;
 
-  HomeDiscoverPageStyle(this.separatorColor, this.titlePageStyle,
-      this.titleArticleStyle, this.summaryArticleStyle, this.titlePadding,
-      this.headerArticlePadding, this.itemListPadding,
+  ArticleListStyle(this.separatorColor, this.titlePageStyle,
+      this.headerArticleTitleStyle, this.headerArticleSummaryStyle, this.titlePagePadding,
+      this.headerArticlePadding,
       this.separatorIndentation, this.separatorHeight,
-      this.headerImageBorderRadius, this.itemImageBorderRadius,
-      this.itemImageSize, this.spaceBetweenHeaderImageAndText,
-      this.spaceBetweenTitleAndSummary, this.spaceBetweenItemTextAndImage,
-      this.maxLinesPerTitle, this.maxLinesPerSummary, this.headerTitleMaxLines,
+      this.headerImageBorderRadius, this.spaceBetweenHeaderImageAndText,
+      this.spaceBetweenTitleAndSummary, this.headerTitleMaxLines,
       this.headerSummaryMaxLines, this.leftAlignmentHorizontal,
       this.centerAlignmentVertical);
 }
 
-class _DiscoverDefaultStyle implements HomeDiscoverPageStyle {
+class _ArticleListDefaultStyle implements ArticleListStyle {
   static const Color titlesColor = Color(0xFF1a1b46);
   static const Color bodyColor = Color(0xFF767690);
   final Color separatorColor = const Color(0xFFf5f8fa);
 
   final TextStyle titlePageStyle = const TextStyle(fontSize: 27, fontWeight: FontWeight.bold, color: titlesColor);
-  final TextStyle titleArticleStyle = const TextStyle(fontSize: 17, fontWeight: FontWeight.w700, color: titlesColor);
-  final TextStyle summaryArticleStyle = const TextStyle(fontSize: 15, fontWeight: FontWeight.w400, color: bodyColor);
+  final TextStyle headerArticleTitleStyle = const TextStyle(fontSize: 17, fontWeight: FontWeight.w700, color: titlesColor);
+  final TextStyle headerArticleSummaryStyle = const TextStyle(fontSize: 15, fontWeight: FontWeight.w400, color: bodyColor);
 
-  final EdgeInsets titlePadding = const EdgeInsets.only(left: 34.0, right: 34.0, top: 35.0, bottom: 30.0);
+  final EdgeInsets titlePagePadding = const EdgeInsets.only(left: 34.0, right: 34.0, top: 35.0, bottom: 30.0);
   final EdgeInsets headerArticlePadding = const EdgeInsets.only(left: 32.0, right: 32.0, bottom: 28);
-  final EdgeInsets itemListPadding = const EdgeInsets.only(left: 32.0, right: 32.0, top: 23, bottom: 23);
   final EdgeInsets separatorIndentation = const EdgeInsets.only(left: 32.0);
 
   final double separatorHeight = 2.0;
   final double headerImageBorderRadius = 14.0;
-  final double itemImageBorderRadius = 10.0;
-  final double itemImageSize = 80;
+
   final double spaceBetweenHeaderImageAndText = 22.0;
   final double spaceBetweenTitleAndSummary = 9.5;
-  final double spaceBetweenItemTextAndImage = 30.5;
 
-  final int maxLinesPerTitle = 2;
-  final int maxLinesPerSummary = 2;
   final int headerTitleMaxLines = 1;
   final int headerSummaryMaxLines = 3;
-
 
   final CrossAxisAlignment leftAlignmentHorizontal = CrossAxisAlignment.start;
   final MainAxisAlignment centerAlignmentVertical = MainAxisAlignment.center;
 
-  const _DiscoverDefaultStyle();
+  const _ArticleListDefaultStyle();
 }
 
 
-class HomeDiscoverPage extends StatefulWidget {
+class ArticleList extends StatefulWidget {
   State<StatefulWidget> createState() {
     return _DiscoveryState();
   }
 }
 
-class _DiscoveryState extends State<HomeDiscoverPage> {
+class _DiscoveryState extends State<ArticleList> {
 
   @override
-  Widget build(BuildContext context, {HomeDiscoverPageStyle discoverStyle = const _DiscoverDefaultStyle()}) {
+  Widget build(BuildContext context) {
     return Scaffold(
       body: StoreConnector<AppState, DiscoverViewModel>(
           onInit: (store) => store.dispatch(new FetchArticleDirectoryAction()),
-          builder: (_, viewModel) => _buildBody(context, viewModel, discoverStyle),
+          builder: (_, viewModel) => _buildBody(context, viewModel),
           converter: (store) => DiscoverViewModel.fromStore(store)),
     );
   }
 
-  Widget _buildBody(BuildContext context, DiscoverViewModel viewModel, HomeDiscoverPageStyle discoverStyle) {
+  Widget _buildBody(BuildContext context, DiscoverViewModel viewModel) {
     switch (viewModel.loadingStatus) {
       case LoadingStatus.LOADING:
         return Container(
             child: CircularProgressIndicator(), alignment: Alignment.center);
       case LoadingStatus.SUCCESS:
-        return _buildDiscoverPage(context, viewModel.articleDirectory.articles,
-            viewModel.getRelatedArticles, discoverStyle);
+        return _buildDiscoverPage(context, viewModel.articleDirectory.articles, viewModel.getRelatedArticles);
       case LoadingStatus.ERROR:
         return Text(Strings.errorString);
     }
   }
 }
 
-  Widget _buildDiscoverPage(BuildContext context, List<ArticleEntity> articlesList, Function getRelatedArticles, HomeDiscoverPageStyle discoverStyle) {
+  Widget _buildDiscoverPage(BuildContext context, List<ArticleEntity> articlesList, Function getRelatedArticles, {ArticleListStyle articleListStyle = const _ArticleListDefaultStyle()}) {
     return ListView(
       children: <Widget>[
-        _buildScreenTitle(discoverStyle),
-        _buildHeaderArticle(articlesList.first, discoverStyle),
-        _buildArticlesList(articlesList, getRelatedArticles, discoverStyle)
+        _buildScreenTitle(articleListStyle),
+        _buildArticlesList(articlesList, getRelatedArticles, articleListStyle)
       ],
     );
   }
 
-  Widget _buildScreenTitle(HomeDiscoverPageStyle discoverStyle) {
+  Widget _buildScreenTitle(ArticleListStyle articleListStyle) {
     return Container(
-      padding: discoverStyle.titlePadding,
+      padding: articleListStyle.titlePagePadding,
       child: Row(
-        crossAxisAlignment: discoverStyle.leftAlignmentHorizontal,
+        crossAxisAlignment: articleListStyle.leftAlignmentHorizontal,
         children: <Widget>[
-          Text(Strings.discoverTab, style: discoverStyle.titlePageStyle)
+          Text(Strings.discoverTab, style: articleListStyle.titlePageStyle)
         ],
       ),
     );
   }
 
-  Widget _buildHeaderArticle(ArticleEntity firstArticle, HomeDiscoverPageStyle discoverStyle) {
+  Widget _heroListItemBuilder(ArticleEntity firstArticle, ArticleListStyle articleListStyle) {
     return Column(
           children: <Widget>[
             Container(
-              padding: discoverStyle.headerArticlePadding,
+              padding: articleListStyle.headerArticlePadding,
               child: Column(
-                crossAxisAlignment: discoverStyle.leftAlignmentHorizontal,
+                crossAxisAlignment: articleListStyle.leftAlignmentHorizontal,
                 children: <Widget>[
-                  _buildHeaderArticleImage(firstArticle, discoverStyle),
-                  SizedBox(height: discoverStyle.spaceBetweenHeaderImageAndText),
+                  _buildHeaderArticleImage(firstArticle, articleListStyle),
+                  SizedBox(height: articleListStyle.spaceBetweenHeaderImageAndText),
                   Text(
                       firstArticle.title,
-                      maxLines: discoverStyle.headerTitleMaxLines,
-                      style: discoverStyle.titleArticleStyle
+                      maxLines: articleListStyle.headerTitleMaxLines,
+                      style: articleListStyle.headerArticleTitleStyle
                   ),
-                  SizedBox(height: discoverStyle.spaceBetweenTitleAndSummary),
+                  SizedBox(height: articleListStyle.spaceBetweenTitleAndSummary),
                   Text(
                       firstArticle.summary,
-                      maxLines: discoverStyle.headerSummaryMaxLines,
-                      style: discoverStyle.summaryArticleStyle
+                      maxLines: articleListStyle.headerSummaryMaxLines,
+                      style: articleListStyle.headerArticleSummaryStyle
                   )
                 ],
               ),
             ),
-            buildListSeparator(discoverStyle)
+            buildListSeparator()
           ],
         );
   }
 
-  Widget buildListSeparator(HomeDiscoverPageStyle discoverStyle) {
+  Widget buildListSeparator({ArticleListStyle articleListStyle = const _ArticleListDefaultStyle()}) {
     return Container(
-        height: discoverStyle.separatorHeight,
-        color: discoverStyle.separatorColor,
-        margin: discoverStyle.separatorIndentation
+        height: articleListStyle.separatorHeight,
+        color: articleListStyle.separatorColor,
+        margin: articleListStyle.separatorIndentation
     );
   }
 
-  Widget _buildArticlesList(List<ArticleEntity> articlesList, Function getRelatedArticles, HomeDiscoverPageStyle discoverStyle) {
+  Widget _buildArticlesList(List<ArticleEntity> articlesList, Function getRelatedArticles, ArticleListStyle articleListStyle) {
     return ListView.builder(
         shrinkWrap: true,
         physics: ScrollPhysics(),
-        itemCount: articlesList.length-1,
+        itemCount: articlesList.length,
         itemBuilder: (BuildContext context, int index) {
-          return DiscoveryListItem().buildListItem(articlesList[index+1], getRelatedArticles, discoverStyle);
+          if (index == 0) {
+            return _heroListItemBuilder(articlesList[index], articleListStyle);
+          } else {
+            return ArticleListItem().standardListItemBuilder(articlesList[index], getRelatedArticles);
+          }
         });
   }
 
-  Widget _buildHeaderArticleImage(ArticleEntity articleData, HomeDiscoverPageStyle discoverStyle) {
+  Widget _buildHeaderArticleImage(ArticleEntity articleData, ArticleListStyle articleListStyle) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(discoverStyle.headerImageBorderRadius),
+      borderRadius: BorderRadius.circular(articleListStyle.headerImageBorderRadius),
       child: NetworkImageFromFuture(articleData.imageUrl, fit: BoxFit.fitWidth),
     );
   }
