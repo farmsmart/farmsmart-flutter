@@ -120,11 +120,6 @@
 		"kms": null,
 		"gcp_kms": [
 			{
-				"resource_id": "projects/farmsmart-dev-archie/locations/europe-west2/keyRings/farmsmart-keyring/cryptoKeys/farmsmart-key",
-				"created_at": "2019-05-10T16:25:39Z",
-				"enc": "CiQAre1niX5rovYUG5UFINTDdO6RCYyb5KfgxrupnK5qEoMJbXUSSQBNlJ1xxpGfwkGCYD4JCM5lNjBLUcxVGp0BhL8XVVupbsbfFq8lNbwkzr8NQXv9+XSPOoB8nhH0FKNJDfrkT/COIeWazkQMZSA="
-			},
-			{
 				"resource_id": "projects/farmsmart-admin/locations/global/keyRings/farmsmart-admin/cryptoKeys/farmsmart",
 				"created_at": "2019-05-10T16:25:39Z",
 				"enc": "CiQAT6zrsDYKcNzdiaAtd7y9zWldvPXuxO2lEnRBvVc7t/62c7YSSQAgGCV4imC/N1/ITsu9f2vDJ2UHIMaAmDWjgFEEse3lMxl4gypAVZWm17LbcZ2KhTiClRf1sPixVtWdjbbccaRWxWNVQgYxlHE="
@@ -133,13 +128,6 @@
 		"azure_kv": null,
 		"lastmodified": "2019-05-10T16:25:39Z",
 		"mac": "ENC[AES256_GCM,data:3W7ch7gRjo7cUhZKKfO3JF0jaPylPX26c2TY53O5eR3XYHgsqDiVpj+F9KBydnCdiTCR4zslyDk73XsuFjbACQZojuXFCotFz3UHteAPNJ66Vjat4uIk3lNx/2r2lHITh6KLRYzAgJFa6uWZAgdYGZuYdv5v9QSY/BNfjNWraa4=,iv:8Je0F9E9MA9AKoSL5R1gRUKK/Zczw7pcJ4npFIwTJwY=,tag:Q87oKtyh9VMVHIppKzwUNA==,type:str]",
-		"pgp": [
-			{
-				"created_at": "2019-05-10T16:25:39Z",
-				"enc": "-----BEGIN PGP MESSAGE-----\n\nhQEMA/4YCHe2454xAQf/S7ZmMbjNt+4bv6VDvgFUyw2O3xrXyyPFDAi90zsRboSt\nhVA17gI4GzGJ6QM2i0sd8gqhwaA+2M8B0nDqzhJUZ51KUGjpiD0BCHXPKnwgKYWo\n1fr4JmqLpVXFofEkSPCcFbCRLCQ7Fs3+BzUYvH6AWglbPUviiTIBKqR4LT4/ZRFj\nXtOnc0bO0gz9favgS6FDbUS5z9CS/zESqlX/doRuAsE4I9aLXxZ7qT6RXAaBB0BU\nnSNg3GpXPctVGx7arOG/HPsQ4twO228r15eV7xkzjyskhZgLIlijtcRTKdfajLZM\nt3BtZzZFmkNqDxlmJKN+tdZB3KErvoit+IP9tdgiRNJeAfqf946I7ILoFGluAeMi\n2x1foONBDeB3lSIM4wUuwxPRxNxghnfUwqkK+fPQgpdHRJuoVDMprOa7Y+7crrHw\nDjuxJDjJTGmS0exJt02SfazL0z8wjnq/PYkfId03GA==\n=hQ16\n-----END PGP MESSAGE-----\n",
-				"fp": "40E098AA13DB0B7113BBDDA1242EA01A43CDFA44"
-			}
-		],
 		"unencrypted_suffix": "_unencrypted",
 		"version": "3.2.0"
 	}
