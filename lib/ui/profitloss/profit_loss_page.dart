@@ -5,6 +5,9 @@ import 'package:farmsmart_flutter/utils/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
+
+
+
 class ProfitLossPage extends StatefulWidget {
   State<StatefulWidget> createState() {
     return _ProfitLossState();
@@ -27,7 +30,6 @@ class _ProfitLossState extends State<ProfitLossPage> {
         return Container(
             child: CircularProgressIndicator(), alignment: Alignment.center);
       case LoadingStatus.SUCCESS:
-      //return _buildList(context, viewModel, viewModel.);
         return _buildPage(context, viewModel);
       case LoadingStatus.ERROR:
         return Text(Strings.errorString);
@@ -35,8 +37,17 @@ class _ProfitLossState extends State<ProfitLossPage> {
   }
 
   Widget _buildPage(BuildContext context, ProfitLossViewModel viewModel) {
-    return Text("TESTING SCREEN");
-
+    return ListView(
+      children: <Widget>[
+        _buildTitle(),
+      ],
+    );
   }
+
+  Widget _buildTitle() {
+  }
+
+
+
 
   }
