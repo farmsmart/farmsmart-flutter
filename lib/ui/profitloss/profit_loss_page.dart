@@ -7,11 +7,22 @@ import 'package:flutter_redux/flutter_redux.dart';
 
 
 abstract class ProfitLossStyle {
+  final Color floatingButtonBackgroundColor;
 
+  final double floatingButtonSize;
+  final double floatingButtonElevation;
+  final double floatingButtonIconSize;
 
+  ProfitLossStyle(this.floatingButtonBackgroundColor, this.floatingButtonSize,
+      this.floatingButtonElevation, this.floatingButtonIconSize);
 }
 
 class _DefaultProfitLossStyle implements ProfitLossStyle{
+  final Color floatingButtonBackgroundColor = const Color(0xFF25df0c);
+
+  final double floatingButtonSize = 48.0;
+  final double floatingButtonElevation = 0;
+  final double floatingButtonIconSize = 20.0;
 
 
   const _DefaultProfitLossStyle();
@@ -41,7 +52,7 @@ class _ProfitLossState extends State<ProfitLossPage>  {
         return Container(
             child: CircularProgressIndicator(), alignment: Alignment.center);
       case LoadingStatus.SUCCESS:
-        return _buildPage(context, viewModel, profitStyle);
+        return _buildPageWithFloatingButton(context, viewModel, profitStyle);
       case LoadingStatus.ERROR:
         return Text(Strings.errorString);
     }
@@ -74,4 +85,20 @@ class _ProfitLossState extends State<ProfitLossPage>  {
         ])
       );
     }
+
+  Widget _buildPageWithFloatingButton(BuildContext context, ProfitLossViewModel viewModel, ProfitLossStyle profitStyle) {
+    return Scaffold(
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        body: _buildPage(context, viewModel, profitStyle),
+        floatingActionButton: Container(
+          height: profitStyle.floatingButtonSize,
+          width: profitStyle.floatingButtonSize,
+          child: FloatingActionButton(
+            onPressed: () {},
+            child: Icon(Icons.add, size: profitStyle.floatingButtonIconSize),
+            backgroundColor: profitStyle.floatingButtonBackgroundColor,
+            elevation: profitStyle.floatingButtonElevation,
+          ),
+        ));
   }
+}
