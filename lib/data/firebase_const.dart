@@ -44,3 +44,13 @@ class Locale {
   static const EN_US = 'en-US';
   static const SW_KE = 'sw-KE';
 }
+
+class DeepLink {
+  static const Prefix = "https://farmsmart.page.link";
+  static const linkDomain = "https://www.farmsmart.co";
+  static const ParameterID = "id";
+}
+
+class ListOfRelatedArticles {
+  static const LIMIT = 5;
+}

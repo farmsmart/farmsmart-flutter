@@ -12,7 +12,7 @@ class CropEntity {
   List<String> cropsInRotation;
   CropType cropType;
   String imagePathReference;
-  String imageUrl;
+  Future<String> imageUrl;
   String name;
   List<String> nonCompanionPlants;
   LoHi profitability;
@@ -52,7 +52,7 @@ class CropEntity {
         cropsInRotation: extractListOfString(cropDocument, CROP_ROTATION),
         cropType: cropTypeValues.map[cropDocument.data[CROP_TYPE]],
         imagePathReference: cropDocument.data[IMAGE].first.path,
-        imageUrl: "",
+        imageUrl: Future.value(null),
         name: cropDocument.data[NAME],
         nonCompanionPlants:
             extractListOfString(cropDocument, NONCOMPANION_PLANTS),
@@ -69,7 +69,7 @@ class CropEntity {
   /*
    ## Image url is referenced from Firebase Storage, thus, needs to be deducted from firestore's Document, asynchronously and then saved.
    */
-  void setImageUrl(String imageUrl) {
+  void setImageUrl(Future<String> imageUrl) {
     this.imageUrl = imageUrl;
   }
 
@@ -77,7 +77,6 @@ class CropEntity {
     this.stages.add(stage);
   }
 }
-
 
 List<String> extractListOfString(
     DocumentSnapshot document, String valueToBeExtracted) {

@@ -4,7 +4,7 @@ import 'package:farmsmart_flutter/utils/styles.dart';
 import 'package:flutter/material.dart';
 
 class MyPlotItemFooter {
-  Widget build(goToDetail, goToStage, cropsData) {
+  Widget build(Function goToDetail, Function goToStage, cropsData) {
     return Row(children: <Widget>[
       Padding(
           padding: Paddings.leftPaddingSmall(),
@@ -22,7 +22,7 @@ class MyPlotItemFooter {
   }
 }
 
-_buildStageCurrentText(cropsData, goToStage) {
+_buildStageCurrentText(cropsData, Function goToStage) {
   return GestureDetector(
       onTap: () {
         goToStage(cropsData.stages
@@ -32,7 +32,7 @@ _buildStageCurrentText(cropsData, goToStage) {
           Text(Strings.myPlotCurrentStage, style: Styles.subtitleTextStyle()));
 }
 
-_buildGoToDetailText(cropsData, goToDetail) {
+_buildGoToDetailText(cropsData, Function goToDetail) {
   return GestureDetector(
       onTap: () {
         goToDetail(cropsData);

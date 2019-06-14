@@ -4,34 +4,53 @@ import 'package:farmsmart_flutter/utils/strings.dart';
 import 'package:farmsmart_flutter/data/model/entities_const.dart';
 
 class ArticleEntity {
+  String id;
   String content;
   String imagePathReference;
-  String imageUrl;
-  //String relatedArticles; //TODO [FARM-95]
+  Future<String> imageUrl;
+  List<ArticleEntity> relatedArticles;
+  List<String> relatedArticlesPathReference;
   Status status;
   String summary;
   String title;
 
-  ArticleEntity({
+  ArticleEntity(
+      {this.id,
       this.content,
       this.imagePathReference,
       this.imageUrl,
+      this.relatedArticles,
+      this.relatedArticlesPathReference,
       this.status,
       this.summary,
-      this.title
-  });
+      this.title});
 
-  factory ArticleEntity.articleFromDocument(DocumentSnapshot articleDocument) => ArticleEntity(
-    content: articleDocument.data[CONTENT],
-    imagePathReference: articleDocument.data[IMAGE].first.path,
-    imageUrl: Strings.emptyString,
-    //relatedArticles: articleDocument.data[""], //TODO [FARM-95]
-    status: statusValues.map[articleDocument.data[STATUS]],
-    summary: articleDocument.data[SUMMARY],
-    title: articleDocument.data[TITLE]
-  );
+  factory ArticleEntity.articleFromDocument(DocumentSnapshot articleDocument) =>
+      ArticleEntity(
+          id: articleDocument.data[ID],
+          content: articleDocument.data[CONTENT],
+          imagePathReference: articleDocument.data[IMAGE].first.path,
+          imageUrl: Future.value(Strings.emptyString),
+          relatedArticles: List(),
+          relatedArticlesPathReference:
+              extractRelatedArticlesPaths(articleDocument),
+          status: statusValues.map[articleDocument.data[STATUS]],
+          summary: articleDocument.data[SUMMARY],
+          title: articleDocument.data[TITLE]);
 
-  void setImageUrl(String imageUrl) {
+  void setImageUrl(Future<String> imageUrl) {
     this.imageUrl = imageUrl;
   }
+
+  void addRelatedArticle(ArticleEntity relatedArticle) {
+    this.relatedArticles.add(relatedArticle);
+  }
+}
+
+List<String> extractRelatedArticlesPaths(DocumentSnapshot document) {
+  if (document.data[RELATED_ARTICLES] != null) {
+    return List<String>.from(
+        document.data[RELATED_ARTICLES].map((stage) => stage[ARTICLE].path));
+  }
+  return null;
 }

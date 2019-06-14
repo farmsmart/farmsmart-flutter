@@ -3,6 +3,7 @@ import 'package:farmsmart_flutter/data/firebase_const.dart';
 import 'package:farmsmart_flutter/data/model/articles_directory_entity.dart';
 import 'package:farmsmart_flutter/data/model/crop_entity.dart';
 import 'package:farmsmart_flutter/data/model/stage_entity.dart';
+import 'package:farmsmart_flutter/model/enums.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:farmsmart_flutter/data/model/article_entity.dart';
 
@@ -19,133 +20,130 @@ class FireStoreManager {
   FireStoreManager._internal();
 
   Future<List<CropEntity>> getCrops() async {
-    List<CropEntity> cropsEntities;
-
     // Filters defined by product definition. - CROPS
     var query = Firestore.instance
         .collection(FLAME_LINK_CONTENT)
         .where(FLAME_LINK_SCHEMA, isEqualTo: Schema.CROP)
-        .where(FLAME_LINK_ENVIROMENT,
-            isEqualTo: AppSettings.get().environment)
+        .where(FLAME_LINK_ENVIROMENT, isEqualTo: AppSettings.get().environment)
         .where(FLAME_LINK_LOCALE, isEqualTo: Locale.EN_US)
         .where(PUBLICATION_STATUS, isEqualTo: DataStatus.PUBLISHED);
 
-    await query.getDocuments().then((snapshot) {
-      cropsEntities = snapshot.documents.map((cropDocument) {
-        return CropEntity.cropFromDocument(cropDocument);
-      }).toList();
+    return query.getDocuments().then((snapshot) => snapshot.documents
+        .map((cropDocument) => CropEntity.cropFromDocument(cropDocument))
+        .toList());
+  }
+
+
+  Future<dynamic> getStagesForCrop(CropEntity cropEntity) {
+    List<Future<StageEntity>> stages = (cropEntity.stagesPathReference ?? [])
+        .map((String path) => Firestore.instance.document(path).get().then(
+            (stagesSnapshot) => StageEntity.stageFromDocument(stagesSnapshot)))
+        .toList();
+
+    return Future.wait(stages).then((stages) {
+      List<StageEntity> stageEntities = stages
+          .where((stage) => stage != null && stage.status == Status.PUBLISHED)
+          .toList();
+      cropEntity.stages = stageEntities;
+      return cropEntity;
     });
-    return cropsEntities;
   }
 
-  Future<List<CropEntity>> getStages(List<CropEntity> cropsList) async {
-    List<CropEntity> cropsWithStages = List();
+  Future<dynamic> getCropsImagePath(List<CropEntity> cropsList) async {
+    List<Future<dynamic>> imageFetchFutures = List();
 
-    for (var crop in cropsList) {
-      if (crop.stagesPathReference != null) {
-        for (var stagesPathReference in crop.stagesPathReference) {
-          await Firestore.instance
-              .document(stagesPathReference)
-              .get()
-              .then((stagesSnapshot) async {
-            if (stagesSnapshot.data != null &&
-                stagesSnapshot.data[documentFieldStatus] == DataStatus.PUBLISHED) {
-              crop.addStage(StageEntity.stageFromDocument(stagesSnapshot));
-            }
-          });
-        }
-      }
-      cropsWithStages.add(crop);
-    }
-    return cropsWithStages;
+    imageFetchFutures = cropsList
+        .map((CropEntity crop) => Firestore.instance
+                .document(crop.imagePathReference)
+                .get()
+                .then((DocumentSnapshot snapshot) {
+              Future<String> path = getImageDownloadURL(snapshot);
+              crop.setImageUrl(path);
+              return crop;
+            }))
+        .toList();
+
+    return Future.wait(imageFetchFutures);
   }
 
-  Future<List<CropEntity>> getCropsImagePath(List<CropEntity> cropsList) async {
-    List<CropEntity> cropsEntitiesWithImagePath = List();
 
-    for (var crop in cropsList) {
-      await Firestore.instance
-          .document(crop.imagePathReference)
-          .get()
-          .then((imageSnapshot) async {
-        var imagePath = EMPTY;
-        if (imageSnapshot.data != null) {
-          imagePath = await getImageDownloadURL(imageSnapshot);
-        }
-        crop.setImageUrl(imagePath);
-        cropsEntitiesWithImagePath.add(crop);
-      });
-    }
-    return cropsEntitiesWithImagePath;
+  Future<dynamic> getArticlesImagePath(List<ArticleEntity> articlesList) async {
+    return Future.wait(articlesList
+        .map((ArticleEntity article) => Firestore.instance
+                .document(article.imagePathReference)
+                .get()
+                .then((imageSnapshot) {
+              Future<String> imagePath = Future.value(EMPTY);
+              if (imageSnapshot.data != null) {
+                imagePath = getImageDownloadURL(imageSnapshot);
+              }
+              article.setImageUrl(imagePath);
+              return article;
+            }))
+        .toList());
   }
 
-  Future<List<ArticleEntity>> getArticlesImagePath(
-      List<ArticleEntity> articlesList) async {
-    List<ArticleEntity> articlesEntitiesWithImagePath = List();
-
-    for (var article in articlesList) {
-      await Firestore.instance
-          .document(article.imagePathReference)
-          .get()
-          .then((imageSnapshot) async {
-        var imagePath = EMPTY;
-        if (imageSnapshot.data != null) {
-          imagePath = await getImageDownloadURL(imageSnapshot);
-        }
-        article.setImageUrl(imagePath);
-        articlesEntitiesWithImagePath.add(article);
-      });
-    }
-    return articlesEntitiesWithImagePath;
-  }
-
-  Future<String> getImageDownloadURL(DocumentSnapshot imageDocument) async {
+  Future<String> getImageDownloadURL(DocumentSnapshot imageDocument) {
     final sizePath = imageDocument.data[imageSizes].first[imagePath];
     final imageFileNamePath = imageDocument.data[imageFile];
     final flamelinkPath =
         IMAGE_BASE_PATH + '/' + sizePath + '/' + imageFileNamePath;
     final storageReference =
         FirebaseStorage.instance.ref().child(flamelinkPath);
-    return await storageReference.getDownloadURL();
+    return storageReference.getDownloadURL().then((value) => value.toString());
   }
 
   Future<ArticlesDirectoryEntity> getArticlesDirectory() async {
-
     // Filters defined by product definition. - ARTICLES DIRECTORY
     var query = Firestore.instance
         .collection(FLAME_LINK_CONTENT)
         .where(FLAME_LINK_SCHEMA, isEqualTo: Schema.ARTICLE_DIRECTORY)
         .where(FLAME_LINK_SCHEMA_TYPE, isEqualTo: SchemaType.SINGLE)
-        .where(FLAME_LINK_ENVIROMENT,
-            isEqualTo: AppSettings.get().environment)
+        .where(FLAME_LINK_ENVIROMENT, isEqualTo: AppSettings.get().environment)
         .where(FLAME_LINK_LOCALE, isEqualTo: Locale.EN_US);
 
     // Returns a single directory entity or empty if the record does not exist.
-    ArticlesDirectoryEntity articlesDirectory = await query.getDocuments()
-        .then((snapshot) => snapshot.documents
-          .map((doc) => ArticlesDirectoryEntity.featuredArticlesFromDocument(doc))
-          .singleWhere((_) => true, orElse: () => ArticlesDirectoryEntity.empty()));
-
-    return articlesDirectory;
+    return query.getDocuments().then((snapshot) => snapshot.documents
+        .map((doc) => ArticlesDirectoryEntity.featuredArticlesFromDocument(doc))
+        .singleWhere((_) => true,
+            orElse: () => ArticlesDirectoryEntity.empty()));
   }
 
-  Future<List<ArticleEntity>> getFeaturedArticles(List<String> articlesDirectory) async {
-    List<ArticleEntity> listOfFeaturedArticles = List();
+  Future<List<ArticleEntity>> fetchArticles(List<String> articlesDirectory) {
+    return fetchArticlesByLimit(
+        articlesDirectory, (articlesDirectory ?? []).length);
+  }
 
-    if (articlesDirectory != null) {
-      for (var articlePathReference in articlesDirectory) {
-        await Firestore.instance
+
+  Future<List<ArticleEntity>> fetchArticlesByLimit(
+      List<String> articlePaths, int limit) {
+    List<Future<ArticleEntity>> articleFutures = List();
+    articleFutures = (articlePaths ?? [])
+        .map((String articlePathReference) => Firestore.instance
             .document(articlePathReference)
             .get()
-            .then((featuredArticlesSnapshot) async {
-          if (featuredArticlesSnapshot.data != null &&
-              featuredArticlesSnapshot.data[documentFieldStatus] == DataStatus.PUBLISHED) {
-            listOfFeaturedArticles.add(
-                ArticleEntity.articleFromDocument(featuredArticlesSnapshot));
-          }
-        });
-      }
-    }
-    return listOfFeaturedArticles;
+            .then((articleSnapshot) =>
+                ArticleEntity.articleFromDocument(articleSnapshot)))
+        .toList();
+
+    return Future.wait(articleFutures).then((articles) => articles
+        .where((each) => each.status == Status.PUBLISHED)
+        .take(limit)
+        .toList());
   }
+
+  Future<ArticleEntity> getArticleById(String articlePathReference) {
+    if (articlePathReference != null) {
+      return Firestore.instance
+          .document(FLAME_LINK_CONTENT + "/" + articlePathReference)
+          .get()
+          .then((fetchedArticlesSnapshot) =>
+      (fetchedArticlesSnapshot.data != null)
+          ? ArticleEntity.articleFromDocument(fetchedArticlesSnapshot)
+          : null);
+    } else {
+      return Future.value(null);
+    }
+  }
+
 }

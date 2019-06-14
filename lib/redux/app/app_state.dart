@@ -2,6 +2,8 @@ import 'package:farmsmart_flutter/redux/home/home_state.dart';
 import 'package:farmsmart_flutter/redux/home/myPlot/my_plot_state.dart';
 import 'package:meta/meta.dart';
 import 'package:farmsmart_flutter/redux/home/discover/discover_state.dart';
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
+
 
 // Class that controls the global state of the app
 // For architecture purposes we sub-divide it in smaller appstates.
@@ -18,7 +20,7 @@ class AppState{
   AppState({
     @required this.homeState,
     @required this.myPlotState,
-    @required this.discoverState
+    @required this.discoverState,
   });
 
 
@@ -27,7 +29,7 @@ class AppState{
     return AppState(
         homeState: HomeState.initial(),
         myPlotState: MyPlotState.initial(),
-        discoverState: DiscoverState.initial()
+        discoverState: DiscoverState.initial(),
     );
   }
 
