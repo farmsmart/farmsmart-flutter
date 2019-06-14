@@ -1,8 +1,10 @@
 #!/usr/bin/python
 from google.oauth2 import service_account
 import googleapiclient.discovery
+from googleapiclient.errors import HttpError
 import argparse
 import json
+import time
 
 
 # Declare command-line flags.
@@ -26,12 +28,32 @@ androidPublisher = googleapiclient.discovery.build('androidpublisher', 'v3', cre
 
 # API calls
 
-apk_upload_request = androidPublisher.internalappsharingartifacts().uploadapk(packageName=package_name, media_body=apk_file, media_mime_type=None)
-apk_upload_response = apk_upload_request.execute()
-apk = {
+def upload_apk(package_name, apk_file):
+
+    apk_upload_request = androidPublisher.internalappsharingartifacts().uploadapk(packageName=package_name, media_body=apk_file, media_mime_type=None)
+    apk_upload_response = apk_upload_request.execute()
+    apk = {
         "version_name": version_name,
         "download_url": apk_upload_response['downloadUrl'],
         "certificate_fingerprint": apk_upload_response['certificateFingerprint']
     }
+    return apk
 
+def upload_apk_with_retry(package_name, apk_file, retry_count):
+
+    for i in range(0, retry_count - 2):
+        while True:
+            try:
+                apk = upload_apk(package_name, apk_file)
+                return apk
+            except HttpError as err:
+                if err.resp.status in [403, 500, 503]:
+                    time.sleep(5)
+                else: raise
+                continue
+            break
+        apk = upload_apk(package_name, apk_file)
+        return apk
+
+apk = upload_apk_with_retry(package_name, apk_file, 3)
 print(json.dumps(apk))

@@ -91,26 +91,6 @@ jobs:
           echo "export VERSION_NAME=${VERSION_NAME}" >> ./env.sh
       - *save_workspace
 
-  flutter-build-prod:
-    docker:
-      - image: cirrusci/flutter:v1.5.4-hotfix.2
-    working_directory: *working_dir
-    steps:
-      - *restore_workspace
-      - run: |
-          source ./env.sh
-          flutter packages get
-          BUILD_PATH=$(find ./build -name '*-release.apk')
-          # 32bit
-          echo "Building flutter apk  32 bit - BUILD_NAME:${VERSION_NAME}, BUILD_NUMBER=${VERSION_CODE}"
-          flutter build apk --build-name=${VERSION_NAME} --build-number=${VERSION_CODE} --release --flavor production -t lib/main_production.dart
-          mv $BUILD_PATH $(echo $BUILD_PATH | sed 's/^\(.*-release\)\(.*\)/\1_32\2/')
-          # 64bit
-          echo "Building flutter apk  64 bit - BUILD_NAME:${VERSION_NAME}, BUILD_NUMBER=${VERSION_CODE}"
-          flutter build apk --build-name=${VERSION_NAME} --build-number=$[${VERSION_CODE}+1] --release --flavor production --target-platform android-arm64 -t lib/main_production.dart
-          mv $BUILD_PATH $(echo $BUILD_PATH | sed 's/^\(.*-release\)\(.*\)/\1_64\2/'
-      - *save_workspace
-
   flutter-build-32:
     docker:
       - image: cirrusci/flutter:v1.5.4-hotfix.2
