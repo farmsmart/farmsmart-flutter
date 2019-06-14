@@ -150,6 +150,7 @@ Widget _buildArticleImage(ArticleEntity selectedArticle) {
           fit: BoxFit.cover, height: 192.0));
 }
 
+//TODO: Investigate how to add style to Html elements
 Widget _buildArticleBody(ArticleEntity selectedArticle, ArticlePageStyle articleStyle) {
   return Container(
       padding: articleStyle.bodyPadding,
