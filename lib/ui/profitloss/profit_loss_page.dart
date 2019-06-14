@@ -6,6 +6,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
 
+abstract class ProfitLossStyle {
+
+
+}
+
+class _DefaultProfitLossStyle implements ProfitLossStyle{
+
+
+  const _DefaultProfitLossStyle();
+}
+
 
 
 class ProfitLossPage extends StatefulWidget {
@@ -14,7 +25,7 @@ class ProfitLossPage extends StatefulWidget {
   }
 }
 
-class _ProfitLossState extends State<ProfitLossPage> {
+class _ProfitLossState extends State<ProfitLossPage>  {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,19 +35,19 @@ class _ProfitLossState extends State<ProfitLossPage> {
     );
   }
 
-  Widget _buildBody(BuildContext context, ProfitLossViewModel viewModel) {
+  Widget _buildBody(BuildContext context, ProfitLossViewModel viewModel,{ProfitLossStyle profitStyle = const _DefaultProfitLossStyle()}) {
     switch (viewModel.loadingStatus) {
       case LoadingStatus.LOADING:
         return Container(
             child: CircularProgressIndicator(), alignment: Alignment.center);
       case LoadingStatus.SUCCESS:
-        return _buildPage(context, viewModel);
+        return _buildPage(context, viewModel, profitStyle);
       case LoadingStatus.ERROR:
         return Text(Strings.errorString);
     }
   }
 
-  Widget _buildPage(BuildContext context, ProfitLossViewModel viewModel) {
+  Widget _buildPage(BuildContext context, ProfitLossViewModel viewModel, ProfitLossStyle profitStyle) {
     return ListView(
       children: <Widget>[
         _buildTitle(),
@@ -45,6 +56,9 @@ class _ProfitLossState extends State<ProfitLossPage> {
   }
 
   Widget _buildTitle() {
+    return Text(
+      "Testing Screen"
+    );
   }
 
 
