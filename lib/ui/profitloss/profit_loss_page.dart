@@ -56,12 +56,22 @@ class _ProfitLossState extends State<ProfitLossPage>  {
   }
 
   Widget _buildTitle() {
-    return Text(
-      "Testing Screen"
-    );
-  }
-
-
-
-
+    return Container(
+      margin: EdgeInsets.only(left: 33, top: 36.5, bottom: 12.5),
+      child: Row(
+        children: <Widget>[
+          Text(
+              "2,150",
+              style: TextStyle(fontSize: 47, fontWeight: FontWeight.bold, color: Color(0xFF1a1b46),
+              )),
+          SizedBox(
+            width: 12.5,
+          ),
+          Text(
+            "KSh",
+            style: TextStyle(fontSize: 15, fontWeight: FontWeight.normal, color: Color(0xFF767690),
+          ))
+        ])
+      );
+    }
   }
