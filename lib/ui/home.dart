@@ -1,14 +1,10 @@
 import 'package:farmsmart_flutter/data/firebase_const.dart';
-import 'package:farmsmart_flutter/data/managers/firestore_manager.dart';
-import 'package:farmsmart_flutter/data/model/article_entity.dart';
 import 'package:farmsmart_flutter/redux/app/app_state.dart';
-import 'package:farmsmart_flutter/redux/home/discover/discover_actions.dart';
 import 'package:farmsmart_flutter/ui/app_bar.dart';
 import 'package:farmsmart_flutter/ui/community/community_child.dart';
 import 'package:farmsmart_flutter/ui/discover/discover_page.dart';
 import 'package:farmsmart_flutter/ui/home_viewmodel.dart';
 import 'package:farmsmart_flutter/ui/myplot/my_plot_page.dart';
-import 'package:farmsmart_flutter/ui/profitloss/profit_loss_child.dart';
 import 'package:farmsmart_flutter/utils/assets.dart';
 import 'package:farmsmart_flutter/utils/colors.dart';
 import 'package:farmsmart_flutter/utils/dimens.dart';
@@ -16,6 +12,7 @@ import 'package:farmsmart_flutter/utils/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
+import 'profitloss/profit_loss_page.dart';
 
 /// Home "screen" route. Scaffold has all the app subcomponents available inside,
 /// like bottom bar or action bar.
@@ -51,7 +48,7 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
 
   final List<Widget> _children = [
     HomeMyPlotPage(),
-    HomeProfitLossChild(),
+    ProfitLossPage(),
     HomeDiscoverPage(),
     HomeCommunityChild()
   ];
@@ -75,8 +72,6 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
   Widget content(HomeViewmodel viewModel) {
     homeViewModel = viewModel;
     return Scaffold(
-      appBar:
-          CustomAppBar.build(viewModel.currentTab, viewModel.goToPrivacyPolicy),
       // We could share a list of pre defined actions for the app bar.
       body: _children[viewModel.currentTab],
       bottomNavigationBar: Theme(
