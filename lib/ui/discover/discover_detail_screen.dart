@@ -16,83 +16,51 @@ import 'discover_child_item.dart';
 import 'discover_viewmodel.dart';
 
 abstract class ArticlePageStyle {
-  final Color separatorColor;
+  final String RELATED_ARTICLES;
 
   final TextStyle titlePageStyle;
   final TextStyle dateStyle;
   final TextStyle bodyStyle;
 
-  final EdgeInsets titlePadding;
-  final EdgeInsets headerArticlePadding;
-  final EdgeInsets itemListPadding;
+  final EdgeInsets titlePagePadding;
   final EdgeInsets leftRightPadding;
-  final EdgeInsets separatorIndentation;
   final EdgeInsets bodyPadding;
 
-  final double separatorHeight;
-  final double headerImageBorderRadius;
-  final double itemImageBorderRadius;
-  final double itemImageSize;
-  final double spaceBetweenHeaderImageAndText;
-  final double spaceBetweenTitleAndSummary;
-  final double spaceBetweenItemTextAndImage;
+  final double spaceBetweenDataAndImage;
+  final double spaceBetweenElements;
 
   final int maxLinesPerTitle;
-  final int maxLinesPerSummary;
-  final int headerTitleMaxLines;
-  final int headerSummaryMaxLines;
 
-  final CrossAxisAlignment leftAlignmentHorizontal;
-  final MainAxisAlignment centerAlignmentVertical;
-
-  ArticlePageStyle(this.separatorColor, this.titlePageStyle, this.dateStyle,
-      this.bodyStyle, this.titlePadding, this.headerArticlePadding,
-      this.itemListPadding, this.leftRightPadding, this.separatorIndentation,
-      this.bodyPadding, this.separatorHeight, this.headerImageBorderRadius,
-      this.itemImageBorderRadius, this.itemImageSize,
-      this.spaceBetweenHeaderImageAndText, this.spaceBetweenTitleAndSummary,
-      this.spaceBetweenItemTextAndImage, this.maxLinesPerTitle,
-      this.maxLinesPerSummary, this.headerTitleMaxLines,
-      this.headerSummaryMaxLines, this.leftAlignmentHorizontal,
-      this.centerAlignmentVertical);
-
+  ArticlePageStyle(this.RELATED_ARTICLES, this.titlePageStyle, this.dateStyle,
+      this.bodyStyle, this.titlePagePadding, this.leftRightPadding,
+      this.bodyPadding, this.spaceBetweenDataAndImage,
+      this.spaceBetweenElements,
+      this.maxLinesPerTitle);
 }
 
 class _ArticleDefaultStyle implements ArticlePageStyle {
+  final String RELATED_ARTICLES = "Related Articles";
+
   static const Color titlesColor = Color(0xFF1a1b46);
   static const Color footColor = Color(0xFF767690);
   static const Color bodyColor = Color(0xFF4c4e6e);
-  final Color separatorColor = const Color(0xFFf5f8fa);
 
   final TextStyle titlePageStyle = const TextStyle(fontSize: 27, fontWeight: FontWeight.bold, color: titlesColor);
   final TextStyle dateStyle = const TextStyle(fontSize: 15, fontWeight: FontWeight.normal, color: footColor);
   final TextStyle bodyStyle = const TextStyle(fontSize: 17, fontWeight: FontWeight.w500, color: bodyColor);
 
-  final EdgeInsets titlePadding = const EdgeInsets.only(left: 34.0, right: 34.0, top: 35.0, bottom: 20.0);
-  final EdgeInsets headerArticlePadding = const EdgeInsets.only(left: 32.0, right: 32.0, bottom: 28);
-  final EdgeInsets itemListPadding = const EdgeInsets.only(left: 32.0, right: 32.0, top: 23, bottom: 23);
+  final EdgeInsets titlePagePadding = const EdgeInsets.only(left: 34.0, right: 34.0, top: 35.0, bottom: 20.0);
   final EdgeInsets leftRightPadding = const EdgeInsets.only(left: 32.0, right: 32.0);
-  final EdgeInsets separatorIndentation = const EdgeInsets.only(left: 32.0);
   final EdgeInsets bodyPadding = const EdgeInsets.only(left: 32.5, right: 45.0);
 
-  final double separatorHeight = 2.0;
-  final double headerImageBorderRadius = 14.0;
-  final double itemImageBorderRadius = 10.0;
-  final double itemImageSize = 80;
-  final double spaceBetweenHeaderImageAndText = 22.0;
-  final double spaceBetweenTitleAndSummary = 9.5;
-  final double spaceBetweenItemTextAndImage = 30.5;
+  final double spaceBetweenDataAndImage = 36;
+  final double spaceBetweenElements = 41;
 
   final int maxLinesPerTitle = 2;
-  final int maxLinesPerSummary = 2;
-  final int headerTitleMaxLines = 1;
-  final int headerSummaryMaxLines = 3;
-
-  final CrossAxisAlignment leftAlignmentHorizontal = CrossAxisAlignment.start;
-  final MainAxisAlignment centerAlignmentVertical = MainAxisAlignment.center;
 
   const _ArticleDefaultStyle();
 }
+
 
 class ArticleDetailScreen extends StatefulWidget {
   @override
@@ -103,50 +71,51 @@ class ArticleDetailScreen extends StatefulWidget {
 
 class _ArticleDetailState extends State<ArticleDetailScreen> {
   @override
-  Widget build(BuildContext context, {ArticlePageStyle articleStyle = const _ArticleDefaultStyle()}) {
+  Widget build(BuildContext context) {
     return Scaffold(
       body: StoreConnector<AppState, DiscoverViewModel>(
-        builder: (_, viewModel) => _buildBody(context, viewModel, articleStyle),
+        builder: (_, viewModel) => _buildBody(context, viewModel),
         converter: (store) => DiscoverViewModel.fromStore(store),
       ),
     );
   }
 
-  Widget _buildBody(BuildContext context, DiscoverViewModel viewModel, ArticlePageStyle articleStyle) {
+  Widget _buildBody(BuildContext context, DiscoverViewModel viewModel) {
     switch (viewModel.loadingStatus) {
       case LoadingStatus.LOADING:
         return Container(
             child: CircularProgressIndicator(), alignment: Alignment.center);
       case LoadingStatus.SUCCESS:
-        return _buildArticlePage(context, viewModel.selectedArticleWithRelated, viewModel.getRelatedArticles, articleStyle);
+        return _buildArticlePage(context, viewModel.selectedArticleWithRelated, viewModel.getRelatedArticles);
       case LoadingStatus.ERROR:
         return Text("Error"); // TODO Check FARM-203
     }
   }
 }
 
-Widget _buildArticlePage(BuildContext context, ArticleEntity selectedArticle, Function getRelatedArticles, ArticlePageStyle articleStyle) {
+Widget _buildArticlePage(BuildContext context, ArticleEntity selectedArticle, Function getRelatedArticles, {ArticlePageStyle articleStyle = const _ArticleDefaultStyle()}) {
   return Scaffold(
       appBar: CustomAppBar.buildForArticleDetail(selectedArticle.title, CustomAppBar.shareAction(selectedArticle.id)),
       body: ListView(
         children: <Widget>[
           _buildScreenTitle(selectedArticle.title, articleStyle),
           _buildArticlePublishingDate(selectedArticle, articleStyle),
-          SizedBox(height: 36),
-          _buildArticleImage(selectedArticle, articleStyle),
-          SizedBox(height: 41.5),
+          SizedBox(height: articleStyle.spaceBetweenDataAndImage),
+          _buildArticleImage(selectedArticle),
+          SizedBox(height: articleStyle.spaceBetweenElements),
           _buildArticleBody(selectedArticle, articleStyle),
-          SizedBox(height: 41.0),
+          SizedBox(height: articleStyle.spaceBetweenElements),
           _buildRelatedArticlesList(selectedArticle.relatedArticles, getRelatedArticles, articleStyle),
         ],
       ));
 }
 
+// FIXME: Reuse the _buildScreenTitle from discover page (don't need to redefine here)
 Widget _buildScreenTitle(String selectedArticleTitle, ArticlePageStyle articleStyle) {
   return Container(
-      padding: articleStyle.titlePadding,
+      padding: articleStyle.titlePagePadding,
       child: Row(
-        crossAxisAlignment: articleStyle.leftAlignmentHorizontal,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Expanded(
             child: Text(
@@ -163,7 +132,7 @@ Widget _buildArticlePublishingDate(ArticleEntity selectedArticle, ArticlePageSty
   return Container(
       padding: articleStyle.leftRightPadding,
       child: Row(
-        crossAxisAlignment: articleStyle.leftAlignmentHorizontal,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Expanded(
             child: Text(
@@ -175,7 +144,7 @@ Widget _buildArticlePublishingDate(ArticleEntity selectedArticle, ArticlePageSty
       ));
 }
 
-Widget _buildArticleImage(ArticleEntity selectedArticle, ArticlePageStyle articleStyle) {
+Widget _buildArticleImage(ArticleEntity selectedArticle) {
   return Container(
       child: NetworkImageFromFuture(selectedArticle.imageUrl,
           fit: BoxFit.cover, height: 192.0));
@@ -188,12 +157,10 @@ Widget _buildArticleBody(ArticleEntity selectedArticle, ArticlePageStyle article
 }
 
 Widget _buildRelatedArticlesList(List<ArticleEntity> relatedArticles, Function getRelatedArticles, ArticlePageStyle articleStyle) {
-  const String titleRelatedArticles = "Related Articles";
-
   if (!relatedArticles.isEmpty) {
     return Column(
       children: <Widget>[
-        _buildScreenTitle(titleRelatedArticles, articleStyle),
+        _buildScreenTitle(articleStyle.RELATED_ARTICLES, articleStyle),
         ListView.builder(
             shrinkWrap: true,
             physics: ScrollPhysics(),
