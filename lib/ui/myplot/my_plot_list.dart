@@ -5,13 +5,13 @@ import 'package:farmsmart_flutter/ui/common/network_image_from_future.dart';
 
 abstract class PlotItemStyle {
 
-  final Color primaryGreenColor;
+  final Color primaryColor;
   final Color separatorColor;
 
   final EdgeInsets listPadding;
   final EdgeInsets paddingBetweenElements;
-  final EdgeInsets paddingBeforeCropDayCount;
-  final EdgeInsets paddingForDayCount;
+  final EdgeInsets detailTextPadding;
+  final EdgeInsets roundedShapeSize;
 
   final EdgeInsets separatorIndent;
 
@@ -21,39 +21,39 @@ abstract class PlotItemStyle {
 
   final BorderRadius roundedBorderRadius;
 
-  final TextStyle cropDayTextStyle;
-  final TextStyle cropNameTextStyle;
-  final TextStyle cropStatusTextStyle;
+  final TextStyle detailTextStyle;
+  final TextStyle titleTextStyle;
+  final TextStyle subTitleTextStyle;
 
   final double deleteElevation;
-  final double oppacityForDayCount;
+  final double oppacityOnDetail;
   final double separatorHeight;
-  final double sizeForDayCountShape;
+  final double imageSize;
 
-  PlotItemStyle(this.primaryGreenColor, this.separatorColor, this.listPadding,
-      this.paddingBetweenElements, this.paddingBeforeCropDayCount,
-      this.paddingForDayCount, this.separatorIndent,
+  PlotItemStyle(this.primaryColor, this.separatorColor, this.listPadding,
+      this.paddingBetweenElements, this.detailTextPadding,
+      this.roundedShapeSize, this.separatorIndent,
       this.mainAxisAlignmentSpaceBeetwen, this.crossAxisAlignmentStart,
-      this.mainAxisSizeMin, this.roundedBorderRadius, this.cropDayTextStyle,
-      this.cropNameTextStyle, this.cropStatusTextStyle, this.deleteElevation,
-      this.oppacityForDayCount, this.separatorHeight,
-      this.sizeForDayCountShape);
+      this.mainAxisSizeMin, this.roundedBorderRadius, this.detailTextStyle,
+      this.titleTextStyle, this.subTitleTextStyle, this.deleteElevation,
+      this.oppacityOnDetail, this.separatorHeight,
+      this.imageSize);
 }
 
 class DefaultItemStyle implements PlotItemStyle{
 
-  final Color primaryGreenColor =  const Color(0xff25df0c);
+  final Color primaryColor =  const Color(0xff25df0c);
   final Color separatorColor = const Color(0xfff5f8fa);
 
-  final EdgeInsets paddingForDayCount = const EdgeInsets.only(left: 12, top: 8, right: 12, bottom: 5);
-  final EdgeInsets paddingBeforeCropDayCount = const EdgeInsets.only(bottom: 23);
+  final EdgeInsets roundedShapeSize = const EdgeInsets.only(left: 12, top: 8, right: 12, bottom: 5);
+  final EdgeInsets detailTextPadding = const EdgeInsets.only(bottom: 23);
   final EdgeInsets separatorIndent = const EdgeInsets.only(left: 25.0);
   final EdgeInsets paddingBetweenElements = const EdgeInsets.only(bottom: 30);
   final EdgeInsets listPadding = const EdgeInsets.only(left: 25.0, top: 25.0, right: 30.0, bottom: 25.0);
 
-  final TextStyle cropStatusTextStyle = const TextStyle(fontSize: 15, fontWeight: FontWeight.normal, color: Color(0xff767690));
-  final TextStyle cropDayTextStyle = const TextStyle(fontSize: 11, fontWeight: FontWeight.normal, color: Color(0xff25df0c));
-  final TextStyle cropNameTextStyle = const TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: Color(0xff1a1b46));
+  final TextStyle subTitleTextStyle = const TextStyle(fontSize: 15, fontWeight: FontWeight.normal, color: Color(0xff767690));
+  final TextStyle detailTextStyle = const TextStyle(fontSize: 11, fontWeight: FontWeight.normal, color: Color(0xff25df0c));
+  final TextStyle titleTextStyle = const TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: Color(0xff1a1b46));
 
   final MainAxisSize mainAxisSizeMin = MainAxisSize.min;
   final BorderRadius roundedBorderRadius = const BorderRadius.all(Radius.circular(20.0));
@@ -61,10 +61,10 @@ class DefaultItemStyle implements PlotItemStyle{
   final CrossAxisAlignment crossAxisAlignmentStart =   CrossAxisAlignment.start;
   final MainAxisAlignment mainAxisAlignmentSpaceBeetwen = MainAxisAlignment.spaceBetween;
 
-  final double oppacityForDayCount = 0.08;
+  final double oppacityOnDetail = 0.08;
   final double deleteElevation = 0.0;
   final double separatorHeight = 2;
-  final double sizeForDayCountShape = 80.0;
+  final double imageSize = 80.0;
 
   const DefaultItemStyle();
 }
@@ -94,7 +94,7 @@ class PlotListItem {
                       Row(
                         children: <Widget>[
                           Text(cropsData.name ?? Strings.defaultCropNameText,
-                              style: itemStyle.cropNameTextStyle),
+                              style: itemStyle.titleTextStyle),
                           Padding(
                             padding: itemStyle.paddingBetweenElements,
                           )
@@ -103,9 +103,9 @@ class PlotListItem {
                       Row(
                         children: <Widget>[
                           Text(currentStage,
-                              style: itemStyle.cropStatusTextStyle),
+                              style: itemStyle.subTitleTextStyle),
                           Padding(
-                            padding: itemStyle.paddingBeforeCropDayCount,
+                            padding: itemStyle.detailTextPadding,
                           )
                         ],
                       ),
@@ -134,9 +134,9 @@ class PlotListItem {
 
   Container _buildDayCountView(PlotItemStyle itemStyle, String DayText) {
     return Container(
-                      padding: itemStyle.paddingForDayCount,
+                      padding: itemStyle.roundedShapeSize,
                       decoration: BoxDecoration(
-                          color: itemStyle.primaryGreenColor.withOpacity(itemStyle.oppacityForDayCount),
+                          color: itemStyle.primaryColor.withOpacity(itemStyle.oppacityOnDetail),
                           borderRadius: itemStyle.roundedBorderRadius),
                       child: Row(
                         mainAxisSize: itemStyle.mainAxisSizeMin,
@@ -145,7 +145,7 @@ class PlotListItem {
                               child: Container(
                             child: Text(
                               DayText,
-                              style: itemStyle.cropDayTextStyle,
+                              style: itemStyle.detailTextStyle,
                             ),
                           ))
                         ],
@@ -157,8 +157,8 @@ class PlotListItem {
       CropEntity cropsData, PlotItemStyle itemStyle) {
     return ClipOval(
       child: NetworkImageFromFuture(cropsData.imageUrl,
-          height: itemStyle.sizeForDayCountShape,
-          width: itemStyle.sizeForDayCountShape,
+          height: itemStyle.imageSize,
+          width: itemStyle.imageSize,
           fit: BoxFit.cover),
     );
   }

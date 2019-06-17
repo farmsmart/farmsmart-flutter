@@ -10,6 +10,7 @@ import 'my_plot_list.dart';
 
 abstract class PlotListStyle {
 
+  final Text errorText;
   final Color primaryIconButtonColor;
   final Color primaryColor;
 
@@ -36,10 +37,11 @@ abstract class PlotListStyle {
       this.circularProgressIndicatorAligmentCenter,
       this.mainAxisAlignmentSpaceBeetwen, this.mainAxisAlignmentSpaceStart,
       this.titleTextStyle, this.buttonTextStyle,this.reoundedButtonSize,
-      this.buttonIconSize, this.addCropBottomButtonMargins, this.buttonHeight);
+      this.buttonIconSize, this.addCropBottomButtonMargins, this.buttonHeight, this.errorText);
 }
 
 class _DefaultStyle implements PlotListStyle {
+
 
   final Color primaryIconButtonColor =  const Color(0xFFFFFFFF);
   final Color primaryColor =  const Color(0xff25df0c);
@@ -56,6 +58,9 @@ class _DefaultStyle implements PlotListStyle {
 
   final TextStyle titleTextStyle = const TextStyle(fontSize: 27, fontWeight: FontWeight.bold, color: Color(0xFF000000));
   final TextStyle buttonTextStyle = const TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: Color(0xffffffff));
+
+  //FIXME: Change this for ViewModel property
+  final Text errorText = const Text("Error");
 
   final double reoundedButtonSize = 25.0;
   final double buttonIconSize = 15.0;
@@ -92,7 +97,7 @@ class _MyPlotState extends State<PlotList> {
       case LoadingStatus.SUCCESS:
         return _buildPage(context, viewModel.cropsList, myPlotStyle, viewModel.goToDetail);
       case LoadingStatus.ERROR:
-        return Text("Error"); // TODO Check FARM-203
+        return myPlotStyle.errorText; // TODO Check FARM-203
     }
   }
 }
