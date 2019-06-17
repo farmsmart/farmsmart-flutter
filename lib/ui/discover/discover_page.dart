@@ -14,11 +14,11 @@ import 'package:farmsmart_flutter/redux/home/discover/discover_actions.dart';
 
 abstract class ArticleListStyle {
   final TextStyle titlePageStyle;
-  final TextStyle heroArticleTitleStyle;
-  final TextStyle heroArticleSummaryStyle;
+  final TextStyle heroTitleTextStyle;
+  final TextStyle heroSummaryTextStyle;
 
   final EdgeInsets titlePagePadding;
-  final EdgeInsets heroArticlePadding;
+  final EdgeInsets heroPadding;
 
   final double heroImageBorderRadius;
   final double spaceBetweenHeaderImageAndText;
@@ -31,24 +31,24 @@ abstract class ArticleListStyle {
   final CrossAxisAlignment leftAlignmentHorizontal;
   final MainAxisAlignment centerAlignmentVertical;
 
-  ArticleListStyle(this.titlePageStyle, this.heroArticleTitleStyle,
-      this.heroArticleSummaryStyle, this.titlePagePadding,
-      this.heroArticlePadding, this.heroImageBorderRadius,
+  ArticleListStyle(this.titlePageStyle, this.heroTitleTextStyle,
+      this.heroSummaryTextStyle, this.titlePagePadding,
+      this.heroPadding, this.heroImageBorderRadius,
       this.spaceBetweenHeaderImageAndText, this.spaceBetweenTitleAndSummary,
       this.heroCardElevation, this.heroTitleMaxLines, this.heroSummaryMaxLines,
       this.leftAlignmentHorizontal, this.centerAlignmentVertical);
 }
 
 class _ArticleListDefaultStyle implements ArticleListStyle {
-  static const Color titlesColor = Color(0xFF1a1b46);
+  static const Color titleColor = Color(0xFF1a1b46);
   static const Color bodyColor = Color(0xFF767690);
 
-  final TextStyle titlePageStyle = const TextStyle(fontSize: 27, fontWeight: FontWeight.bold, color: titlesColor);
-  final TextStyle heroArticleTitleStyle = const TextStyle(fontSize: 17, fontWeight: FontWeight.w700, color: titlesColor);
-  final TextStyle heroArticleSummaryStyle = const TextStyle(fontSize: 15, fontWeight: FontWeight.w400, color: bodyColor);
+  final TextStyle titlePageStyle = const TextStyle(fontSize: 27, fontWeight: FontWeight.bold, color: titleColor);
+  final TextStyle heroTitleTextStyle = const TextStyle(fontSize: 17, fontWeight: FontWeight.w700, color: titleColor);
+  final TextStyle heroSummaryTextStyle = const TextStyle(fontSize: 15, fontWeight: FontWeight.w400, color: bodyColor);
 
   final EdgeInsets titlePagePadding = const EdgeInsets.only(left: 34.0, right: 34.0, top: 35.0, bottom: 30.0);
-  final EdgeInsets heroArticlePadding = const EdgeInsets.only(left: 32.0, right: 32.0, bottom: 28);
+  final EdgeInsets heroPadding = const EdgeInsets.only(left: 32.0, right: 32.0, bottom: 28);
 
   final double heroImageBorderRadius = 14.0;
   final double spaceBetweenHeaderImageAndText = 22.0;
@@ -95,8 +95,7 @@ class _DiscoveryState extends State<ArticleList> {
 }
 
 Widget _buildDiscoverPage(BuildContext context,
-    List<ArticleEntity> articlesList, Function getRelatedArticles,
-    {ArticleListStyle articleListStyle = const _ArticleListDefaultStyle()}) {
+    List<ArticleEntity> articlesList, Function getRelatedArticles, {ArticleListStyle articleListStyle = const _ArticleListDefaultStyle()}) {
   return ListView(
     children: <Widget>[
       _buildScreenTitle(articleListStyle),
@@ -125,7 +124,7 @@ Widget _heroListItemBuilder(ArticleEntity firstArticle, ArticleListStyle article
         Card(
           elevation: articleListStyle.heroCardElevation,
           child: Container(
-            padding: articleListStyle.heroArticlePadding,
+            padding: articleListStyle.heroPadding,
             child: Column(
               crossAxisAlignment: articleListStyle.leftAlignmentHorizontal,
               children: <Widget>[
@@ -133,11 +132,11 @@ Widget _heroListItemBuilder(ArticleEntity firstArticle, ArticleListStyle article
                 SizedBox(height: articleListStyle.spaceBetweenHeaderImageAndText),
                 Text(firstArticle.title,
                     maxLines: articleListStyle.heroTitleMaxLines,
-                    style: articleListStyle.heroArticleTitleStyle),
+                    style: articleListStyle.heroTitleTextStyle),
                 SizedBox(height: articleListStyle.spaceBetweenTitleAndSummary),
                 Text(firstArticle.summary,
                     maxLines: articleListStyle.heroSummaryMaxLines,
-                    style: articleListStyle.heroArticleSummaryStyle)
+                    style: articleListStyle.heroSummaryTextStyle)
               ],
             ),
           ),
@@ -170,24 +169,24 @@ Widget _buildHeroArticleImage(ArticleEntity articleData, ArticleListStyle articl
 }
 
 abstract class SeparatorStyle {
-  final Color separatorColor;
-  final EdgeInsets separatorIndentation;
-  final double separatorHeight;
+  final Color color;
+  final EdgeInsets indentation;
+  final double height;
 
-  SeparatorStyle(this.separatorColor, this.separatorIndentation, this.separatorHeight);
+  SeparatorStyle(this.color, this.indentation, this.height);
 }
 
 class DefaultSeparatorStyle implements SeparatorStyle {
-  final Color separatorColor = const Color(0xFFf5f8fa);
-  final EdgeInsets separatorIndentation = const EdgeInsets.only(left: 32.0);
-  final double separatorHeight = 2.0;
+  final Color color = const Color(0xFFf5f8fa);
+  final EdgeInsets indentation = const EdgeInsets.only(left: 32.0);
+  final double height = 2.0;
 
   const DefaultSeparatorStyle();
 }
 
 Widget buildListDivider({SeparatorStyle separatorStyle = const DefaultSeparatorStyle()}) {
   return Container(
-      height: separatorStyle.separatorHeight,
-      color: separatorStyle.separatorColor,
-      margin: separatorStyle.separatorIndentation);
+      height: separatorStyle.height,
+      color: separatorStyle.color,
+      margin: separatorStyle.indentation);
 }
