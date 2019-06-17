@@ -10,8 +10,8 @@ import 'my_plot_list.dart';
 
 abstract class PlotListStyle {
 
-  final Color primaryWhiteColor;
-  final Color primaryGreenColor;
+  final Color primaryIconButtonColor;
+  final Color primaryColor;
 
   final EdgeInsets edgeInsetsTop;
   final EdgeInsets edgeInsetsTitle;
@@ -25,24 +25,24 @@ abstract class PlotListStyle {
   final MainAxisAlignment mainAxisAlignmentSpaceStart;
 
   final TextStyle titleTextStyle;
-  final TextStyle addCropButtonTextStyle;
+  final TextStyle buttonTextStyle;
 
-  final double addCropTopButtonSize;
+  final double reoundedButtonSize;
   final double buttonIconSize;
-  final double addCropBottomButtonHeight;
+  final double buttonHeight;
 
-  PlotListStyle(this.primaryWhiteColor, this.primaryGreenColor,
+  PlotListStyle(this.primaryIconButtonColor, this.primaryColor,
       this.edgeInsetsTop, this.edgeInsetsTitle, this.roundedBorderRadius,
       this.circularProgressIndicatorAligmentCenter,
       this.mainAxisAlignmentSpaceBeetwen, this.mainAxisAlignmentSpaceStart,
-      this.titleTextStyle, this.addCropButtonTextStyle,this.addCropTopButtonSize,
-      this.buttonIconSize, this.addCropBottomButtonMargins, this.addCropBottomButtonHeight);
+      this.titleTextStyle, this.buttonTextStyle,this.reoundedButtonSize,
+      this.buttonIconSize, this.addCropBottomButtonMargins, this.buttonHeight);
 }
 
 class _DefaultStyle implements PlotListStyle {
 
-  final Color primaryWhiteColor =  const Color(0xFFFFFFFF);
-  final Color primaryGreenColor =  const Color(0xff25df0c);
+  final Color primaryIconButtonColor =  const Color(0xFFFFFFFF);
+  final Color primaryColor =  const Color(0xff25df0c);
 
   final EdgeInsets edgeInsetsTop = const EdgeInsets.only(top: 20.0) ;
   final EdgeInsets edgeInsetsTitle = const EdgeInsets.only(left: 25, top: 30, right: 5, bottom: 20);
@@ -55,11 +55,11 @@ class _DefaultStyle implements PlotListStyle {
   final MainAxisAlignment mainAxisAlignmentSpaceStart = MainAxisAlignment.start;
 
   final TextStyle titleTextStyle = const TextStyle(fontSize: 27, fontWeight: FontWeight.bold, color: Color(0xFF000000));
-  final TextStyle addCropButtonTextStyle = const TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: Color(0xffffffff));
+  final TextStyle buttonTextStyle = const TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: Color(0xffffffff));
 
-  final double addCropTopButtonSize = 25.0;
+  final double reoundedButtonSize = 25.0;
   final double buttonIconSize = 15.0;
-  final double addCropBottomButtonHeight = 56.0;
+  final double buttonHeight = 56.0;
 
   const _DefaultStyle();
 }
@@ -145,36 +145,37 @@ Widget _buildTitle(PlotListStyle myPlotStyle){
 
 Widget _buildAddCropTopButton(PlotListStyle myPlotStyle){
   return ButtonTheme(
-    height: myPlotStyle.addCropTopButtonSize,
+    height: myPlotStyle.reoundedButtonSize,
     child: FlatButton(
       onPressed: () {},
       child: Icon(
         Icons.add,
         size: myPlotStyle.buttonIconSize,
-        color: myPlotStyle.primaryWhiteColor,
+        color: myPlotStyle.primaryIconButtonColor,
       ),
       shape: CircleBorder(),
-      color: myPlotStyle.primaryGreenColor,
+      color: myPlotStyle.primaryColor,
     ),
   );
 }
 
 Widget _buildAddCropBottomButton(PlotListStyle myPlotStyle){
     return Container(
-      height: myPlotStyle.addCropBottomButtonHeight,
+      height: myPlotStyle.buttonHeight,
       margin: myPlotStyle.addCropBottomButtonMargins,
       width: double.infinity,
       decoration: BoxDecoration(
-        color: myPlotStyle.primaryGreenColor,
+        color: myPlotStyle.primaryColor,
         borderRadius: myPlotStyle.roundedBorderRadius,
       ),
       child: FlatButton(
         child: Text(
           Strings.addCropButtonText,
-          style: myPlotStyle.addCropButtonTextStyle
-          )
+          style: myPlotStyle.buttonTextStyle
+          ),
+          onPressed: () {
+          //FIXME: Add oPressed when CropAddList available
+          }
         ),
-        //FIXME: Add oPressed when CropAddList available
-        //onPressed: callback,
       );
   }
