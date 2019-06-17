@@ -2,6 +2,7 @@ import 'package:farmsmart_flutter/data/model/article_entity.dart';
 import 'package:farmsmart_flutter/model/loading_status.dart';
 import 'package:farmsmart_flutter/redux/home/discover/discover_actions.dart';
 import 'package:farmsmart_flutter/ui/common/network_image_from_future.dart';
+import 'package:farmsmart_flutter/ui/discover/discover_page.dart';
 import 'package:farmsmart_flutter/utils/assets.dart';
 import 'package:farmsmart_flutter/utils/colors.dart';
 import 'package:farmsmart_flutter/utils/dimens.dart';
@@ -14,6 +15,20 @@ import 'package:farmsmart_flutter/redux/app/app_state.dart';
 import '../app_bar.dart';
 import 'discover_child_item.dart';
 import 'discover_viewmodel.dart';
+
+/*
+class ArticleViewModel {
+  final String title;
+  final String subtitle;
+  final Future<String> imageUrl;
+  final String body;
+  final List<ArticlesListViewModel> relatedArticles;
+  
+}
+
+ArticleViewModel fromArticleEntityToViewModel(ArticleEntity currentArticle) {
+  return ArticleViewModel(currentArticle.title, currentArticle.summary, currentArticle.imageUrl);
+} */
 
 class ArticleDetailScreen extends StatefulWidget {
   @override

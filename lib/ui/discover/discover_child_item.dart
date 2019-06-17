@@ -53,7 +53,7 @@ class _DefaultArticleItemStyle implements ArticleItemStyle {
 }
 
 class ArticleListItem {
-  Widget standardListItemBuilder(ArticleEntity articleData, Function getRelatedArticles, {ArticleItemStyle itemStyle = const _DefaultArticleItemStyle()}) {
+  Widget standardListItemBuilder(ArticlesListViewModel articleData, Function getRelatedArticles, {ArticleItemStyle itemStyle = const _DefaultArticleItemStyle()}) {
     return GestureDetector(
       onTap: () => getRelatedArticles(articleData),
       child: Card(
@@ -80,7 +80,7 @@ class ArticleListItem {
     );
   }
 
-  _buildListItemImage(ArticleEntity articleData, ArticleItemStyle itemStyle) {
+  _buildListItemImage(ArticlesListViewModel articleData, ArticleItemStyle itemStyle) {
     return ClipRRect(
         borderRadius: BorderRadius.circular(itemStyle.imageBorderRadius),
         child: NetworkImageFromFuture(
@@ -91,7 +91,7 @@ class ArticleListItem {
     );
   }
 
-  _buildArticleInformation(ArticleEntity articleData, ArticleItemStyle itemStyle) {
+  _buildArticleInformation(ArticlesListViewModel articleData, ArticleItemStyle itemStyle) {
     return Expanded(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

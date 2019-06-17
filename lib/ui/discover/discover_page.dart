@@ -12,6 +12,18 @@ import 'package:farmsmart_flutter/ui/discover/discover_child_item.dart';
 import 'package:farmsmart_flutter/ui/discover/discover_viewmodel.dart';
 import 'package:farmsmart_flutter/redux/home/discover/discover_actions.dart';
 
+class ArticlesListViewModel {
+  final String title;
+  final String summary;
+  final Future<String> imageUrl;
+
+  ArticlesListViewModel(this.title, this.summary, this.imageUrl);
+}
+
+ArticlesListViewModel fromArticleEntityToViewModel(ArticleEntity currentArticle) {
+  return ArticlesListViewModel(currentArticle.title, currentArticle.summary, currentArticle.imageUrl);
+}
+
 abstract class ArticleListStyle {
   final TextStyle titlePageStyle;
   final TextStyle heroTitleTextStyle;
@@ -94,8 +106,7 @@ class _DiscoveryState extends State<ArticleList> {
   }
 }
 
-Widget _buildDiscoverPage(BuildContext context,
-    List<ArticleEntity> articlesList, Function getRelatedArticles, {ArticleListStyle articleListStyle = const _ArticleListDefaultStyle()}) {
+Widget _buildDiscoverPage(BuildContext context, List<ArticleEntity> articlesList, Function getRelatedArticles, {ArticleListStyle articleListStyle = const _ArticleListDefaultStyle()}) {
   return ListView(
     children: <Widget>[
       _buildScreenTitle(articleListStyle),
@@ -156,7 +167,7 @@ Widget _buildArticlesList(List<ArticleEntity> articlesList, Function getRelatedA
         if (index == 0) {
           return _heroListItemBuilder(articlesList[index], articleListStyle, getRelatedArticles);
         } else {
-          return ArticleListItem().standardListItemBuilder(articlesList[index], getRelatedArticles);
+          return ArticleListItem().standardListItemBuilder(fromArticleEntityToViewModel(articlesList[index]), getRelatedArticles);
         }
       });
 }
