@@ -55,8 +55,7 @@ class _ArticleDetailState extends State<ArticleDetailScreen> {
         return Container(
             child: CircularProgressIndicator(), alignment: Alignment.center);
       case LoadingStatus.SUCCESS:
-        return _buildList(context, viewModel.selectedArticleWithRelated,
-            viewModel.getRelatedArticles);
+        return _buildList(context, viewModel.selectedArticleWithRelated, viewModel.getRelatedArticles);
       case LoadingStatus.ERROR:
         return Text("Error"); // TODO Check FARM-203
     }

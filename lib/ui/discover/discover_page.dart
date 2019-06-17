@@ -12,16 +12,22 @@ import 'package:farmsmart_flutter/ui/discover/discover_child_item.dart';
 import 'package:farmsmart_flutter/ui/discover/discover_viewmodel.dart';
 import 'package:farmsmart_flutter/redux/home/discover/discover_actions.dart';
 
+typedef MyFirstCallback = void Function();
+
 class ArticlesListViewModel {
   final String title;
   final String summary;
   final Future<String> imageUrl;
 
-  ArticlesListViewModel(this.title, this.summary, this.imageUrl);
+  MyFirstCallback onTap;
+
+  ArticlesListViewModel(this.title, this.summary, this.imageUrl, {MyFirstCallback onTap});
+
 }
 
-ArticlesListViewModel fromArticleEntityToViewModel(ArticleEntity currentArticle) {
-  return ArticlesListViewModel(currentArticle.title, currentArticle.summary, currentArticle.imageUrl);
+
+ArticlesListViewModel fromArticleEntityToViewModel(ArticleEntity article, Function getRelatedArticles) {
+  return ArticlesListViewModel(article.title, article.summary, article.imageUrl, onTap: () => getRelatedArticles(article));
 }
 
 abstract class ArticleListStyle {
@@ -167,7 +173,7 @@ Widget _buildArticlesList(List<ArticleEntity> articlesList, Function getRelatedA
         if (index == 0) {
           return _heroListItemBuilder(articlesList[index], articleListStyle, getRelatedArticles);
         } else {
-          return ArticleListItem().standardListItemBuilder(fromArticleEntityToViewModel(articlesList[index]), getRelatedArticles);
+          return ArticleListItem().standardListItemBuilder(fromArticleEntityToViewModel(articlesList[index], getRelatedArticles));
         }
       });
 }

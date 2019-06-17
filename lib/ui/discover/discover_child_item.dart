@@ -9,6 +9,7 @@ import 'package:farmsmart_flutter/utils/assets.dart';
 
 import 'discover_page.dart';
 
+
 abstract class ArticleItemStyle {
   final TextStyle titleTextStyle;
   final TextStyle summaryTextStyle;
@@ -53,9 +54,9 @@ class _DefaultArticleItemStyle implements ArticleItemStyle {
 }
 
 class ArticleListItem {
-  Widget standardListItemBuilder(ArticlesListViewModel articleData, Function getRelatedArticles, {ArticleItemStyle itemStyle = const _DefaultArticleItemStyle()}) {
+  Widget standardListItemBuilder(ArticlesListViewModel viewModel, {ArticleItemStyle itemStyle = const _DefaultArticleItemStyle()}) {
     return GestureDetector(
-      onTap: () => getRelatedArticles(articleData),
+      onTap: () => viewModel.onTap,
       child: Card(
         elevation: itemStyle.cardElevation,
         child: Container(
@@ -66,9 +67,9 @@ class ArticleListItem {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    _buildArticleInformation(articleData, itemStyle),
+                    _buildArticleInformation(viewModel, itemStyle),
                     SizedBox(width: itemStyle.spaceBetweenTextAndImage),
-                    _buildListItemImage(articleData, itemStyle),
+                    _buildListItemImage(viewModel, itemStyle),
                   ],
                 ),
               ),
