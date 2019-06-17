@@ -25,6 +25,11 @@ enum Complexity {
     advanced 
 }
 ```
+
+## No global scope constants
+
+We should avoid having global scope constants, all the constants should stay in the scope of the Widget that are being used.
+
 ## Using Trailing commas
 
 Flutter code often involves building fairly deep tree-shaped data structures, for example in a build method. To get good automatic formatting, we recommend you adopt the optional trailing commas. The guideline for adding a trailing comma is simple: Always add a trailing comma at the end of a parameter list in functions, methods, and constructors where you care about keeping the formatting you crafted. This helps the automatic formatter to insert an appropriate amount of line breaks for Flutter-style code.
@@ -54,58 +59,60 @@ We should group inside a class all the constants that referes to a same concept.
 
 We should avoid:
 ```
-const documentTitle = ""
-const documentDescription = ""
-const documentLink = ""
+const documentTitle = ''
+const documentDescription = ''
+const documentLink = ''
 ```
 We should do:
 ```
 class DocumentConstants {
-    const title = ""
-    const description = ""
-    const link = ""
+    const title = ''
+    const description = ''
+    const link = ''
 }
 ```
 ## Strings
 
 The same that we said with Constants applies with Strings.
 
-In order to keep our resources clean and organized, we would separate the Strings by their use.
+In order to keep our resources clean and organized, we would need to have the Strings in the scope of where they would be used.
 
-Let's see an example:
+Let's see an example, if we have a global scope Strings file, like:
 
 ```
 class Strings {
-    String homeTab = ""
-    String profileTab = ""
-    String newsTab = ""
-    String moreTab = ""
+    String homeTab = ''
+    String profileTab = ''
+    String newsTab = ''
+    String moreTab = ''
 
-    String myProfileTitle = ""
-    String myProfileName = ""
-    String myProfileDescription = ""
-    String myProfileDate = ""
-    String myProfileSkills = ""
+    String myProfileTitle = ''
+    String myProfileName = ''
+    String myProfileDescription = ''
+    String myProfileDate = ''
+    String myProfileSkills = ''
 }
 ```
-We should refactor that an have:
+We should refactor that an have private classes inside the different Widgets where we would use these Strings.
 
+Bottom Bar Widget:
 ```
-class Strings {
-    class BottomBarTabs {
-        String home = ""
-        String profile = ""
-        String news = ""
-        String more = ""
-    }
+class _Strings {
+  static const String home = '';
+  static const String profile = '';
+  static const String news = '';
+  static const String more = '';
+}
+```
 
-    class MyProfile{ 
-        String title = ""
-        String name = ""
-        String description = ""
-        String date = ""
-        String skills = ""
-    }
+My Profile Widget:
+```
+class _Strings {
+  static const String title = '';
+  static const String name = '';
+  static const String description = '';
+  static const String date = '';
+  static const String skills = '';
 }
 ```
 
@@ -121,6 +128,8 @@ When building a Widget in Flutter, we should use [Trailing commas](https://flutt
 
 Another practices we should follow:
 - We should extract in methods the Widgets instead of embedding them one inside another in a hierarchical view.
+- Smaller Widgets will help us to reuse them in different parts of the code.
+- A Widget would have the resources that it needs, and this one would be the only who can access to the resources it is using (constants, colors, strings, ...).
 
 ## Assets / Images separation
 
@@ -136,7 +145,7 @@ class XYZ {
     void example() {
         runMethod1('current position');
         for(int i=0; i<3; i++) {
-            runMethod1("current position $i");
+            runMethod1('current position $i');
         }
     }
 
@@ -155,7 +164,7 @@ class XYZ {
         const numberOfPositions = 3;
         runMethod1(currentPosition);
         for(int i=0; i<numberOfPositions; i++) {
-            runMethod1("$currentPosition $i");
+            runMethod1('$currentPosition $i');
         }
     }
 
