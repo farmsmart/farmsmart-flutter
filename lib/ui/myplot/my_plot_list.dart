@@ -7,6 +7,7 @@ abstract class PlotItemStyle {
 
   final Color primaryColor;
   final Color separatorColor;
+  final Color primaryColorWithLowOppacity;
 
   final EdgeInsets listPadding;
   final EdgeInsets paddingBetweenElements;
@@ -37,13 +38,15 @@ abstract class PlotItemStyle {
       this.mainAxisSizeMin, this.roundedBorderRadius, this.detailTextStyle,
       this.titleTextStyle, this.subTitleTextStyle, this.deleteElevation,
       this.oppacityOnDetail, this.separatorHeight,
-      this.imageSize);
+      this.imageSize, this.primaryColorWithLowOppacity);
 }
 
 class DefaultItemStyle implements PlotItemStyle{
 
   final Color primaryColor =  const Color(0xff25df0c);
   final Color separatorColor = const Color(0xfff5f8fa);
+  final Color primaryColorWithLowOppacity = const Color(0x1425df0c);
+
 
   final EdgeInsets roundedShapeSize = const EdgeInsets.only(left: 12, top: 8, right: 12, bottom: 5);
   final EdgeInsets detailTextPadding = const EdgeInsets.only(bottom: 23);
@@ -136,7 +139,7 @@ class PlotListItem {
     return Container(
                       padding: itemStyle.roundedShapeSize,
                       decoration: BoxDecoration(
-                          color: itemStyle.primaryColor.withOpacity(itemStyle.oppacityOnDetail),
+                          color: itemStyle.primaryColorWithLowOppacity,
                           borderRadius: itemStyle.roundedBorderRadius),
                       child: Row(
                         mainAxisSize: itemStyle.mainAxisSizeMin,

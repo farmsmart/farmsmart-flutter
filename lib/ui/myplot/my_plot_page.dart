@@ -8,6 +8,10 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'myplot_viewmodel.dart';
 import 'my_plot_list.dart';
 
+
+
+
+
 abstract class PlotListStyle {
 
   final Text errorText;
