@@ -29,6 +29,8 @@ abstract class PlotItemStyle {
   final double elevation;
   final double dividerHeight;
   final double imageSize;
+  final double headingSpaceLine;
+  final double detailSpaceLine;
 
   PlotItemStyle(this.primaryColor, this.dividerColor, this.edgePadding,
       this.detailTextEdgePadding, this.dividerEdgePadding,
@@ -36,7 +38,7 @@ abstract class PlotItemStyle {
       this.mainAxisSize, this.detailTextBorderRadius, this.detailTextStyle,
       this.titleTextStyle, this.subTitleTextStyle, this.elevation,
       this.dividerHeight,
-      this.imageSize, this.detailTextBackgroundColor);
+      this.imageSize, this.detailTextBackgroundColor,this.detailSpaceLine, this.headingSpaceLine);
 }
 
 class DefaultItemStyle implements PlotItemStyle{
@@ -64,6 +66,8 @@ class DefaultItemStyle implements PlotItemStyle{
   final double elevation = 0.0;
   final double dividerHeight = 2;
   final double imageSize = 80.0;
+  final double headingSpaceLine = 12.5;
+  final double detailSpaceLine = 15;
 
   const DefaultItemStyle();
 }
@@ -87,12 +91,12 @@ class PlotListItem {
                     children: <Widget>[
                       Row(
                         children: <Widget>[
-                          Text(viewModel.title ?? Strings.defaultCropNameText,
+                          Text(viewModel.title,
                               style: itemStyle.titleTextStyle)
                         ]
                       ),
                       SizedBox(
-                        height: 12.5,
+                        height: itemStyle.headingSpaceLine,
                       ),
                       Row(
                         children: <Widget>[
@@ -101,7 +105,7 @@ class PlotListItem {
                         ]
                       ),
                       SizedBox(
-                        height: 15,
+                        height: itemStyle.detailSpaceLine,
                       ),
                       Row(
                         children: <Widget>[

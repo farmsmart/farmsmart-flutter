@@ -4,21 +4,21 @@ abstract class RoundedButtonStyle {
 
   final Color primaryIconButtonColor;
   final Color primaryColor;
+  final double roundedButtonSize;
+
 
   final BorderRadius roundedBorderRadius;
 
   final EdgeInsets actionButtonLargeEdgePadding;
   final TextStyle buttonTextStyle;
 
-  final double roundedButtonSize;
   final double buttonIconSize;
 
-  RoundedButtonStyle(this.roundedButtonSize, this.buttonIconSize,
+  RoundedButtonStyle(this.roundedButtonSize,
       this.primaryIconButtonColor, this.primaryColor,
-      this.roundedBorderRadius, this.actionButtonLargeEdgePadding,
-      this.buttonTextStyle);
+  {this.roundedBorderRadius, this.actionButtonLargeEdgePadding,
+      this.buttonTextStyle, this.buttonIconSize});
 }
-
 
 class _smallRoundedButtonStyle implements RoundedButtonStyle {
 

@@ -19,12 +19,12 @@ class CropListViewModel {
 
   final Future<String> imageUrl;
 
-  CropListViewModel(this.title, this.subTitle, this.detail, this.imageUrl, this.onTap, this.buttonTitle);
+  CropListViewModel(this.title , this.subTitle, this.detail, this.imageUrl, this.onTap, this.buttonTitle);
 }
 
 CropListViewModel fromCropEntityToViewModel(CropEntity currentCrop, Function goToDetail) {
   //FIXME: Change the mocked data "planting" and "Day 6" with the correct FirebaseData when available
-  return CropListViewModel(currentCrop.name, "Planting", "Day 6", currentCrop.imageUrl, () => goToDetail(currentCrop), "Add Another Crop");
+  return CropListViewModel(currentCrop.name ?? Strings.defaultCropNameText, "Planting", "Day 6", currentCrop.imageUrl, () => goToDetail(currentCrop), "Add Another Crop");
 }
 
 abstract class PlotListStyle {
