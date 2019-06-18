@@ -18,16 +18,14 @@ class ArticlesListViewModel {
   final String title;
   final String summary;
   final Future<String> imageUrl;
-
   MyFirstCallback onTap;
 
-  ArticlesListViewModel(this.title, this.summary, this.imageUrl, {MyFirstCallback onTap});
+  ArticlesListViewModel(this.title, this.summary, this.imageUrl, this.onTap);
 
 }
 
-
 ArticlesListViewModel fromArticleEntityToViewModel(ArticleEntity article, Function getRelatedArticles) {
-  return ArticlesListViewModel(article.title, article.summary, article.imageUrl, onTap: () => getRelatedArticles(article));
+  return ArticlesListViewModel(article.title, article.summary, article.imageUrl, () => getRelatedArticles(article));
 }
 
 abstract class ArticleListStyle {

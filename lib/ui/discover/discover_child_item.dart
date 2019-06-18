@@ -56,7 +56,7 @@ class _DefaultArticleItemStyle implements ArticleItemStyle {
 class ArticleListItem {
   Widget standardListItemBuilder(ArticlesListViewModel viewModel, {ArticleItemStyle itemStyle = const _DefaultArticleItemStyle()}) {
     return GestureDetector(
-      onTap: () => viewModel.onTap,
+      onTap: viewModel.onTap,
       child: Card(
         elevation: itemStyle.cardElevation,
         child: Container(
