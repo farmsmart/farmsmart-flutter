@@ -15,6 +15,24 @@ import '../app_bar.dart';
 import 'discover_child_item.dart';
 import 'discover_viewmodel.dart';
 
+typedef MyFirstCallback = void Function();
+
+class ArticleViewModel {
+  final String id;
+  final String title;
+  final String subtitle;
+  final Future<String> imageUrl;
+  final String body;
+  MyFirstCallback onTap;
+
+  ArticleViewModel(this.id, this.title, this.subtitle, this.imageUrl, this.body,
+      this.onTap);
+}
+
+ArticleViewModel fromArticleEntityToViewModel(ArticleEntity article, Function getRelatedArticles) {
+  return ArticleViewModel(article.id, article.title, article.summary, article.imageUrl, article.content, () => getRelatedArticles(article));
+}
+
 abstract class ArticlePageStyle {
   final String RELATED_ARTICLES;
 
@@ -49,7 +67,7 @@ class _ArticleDefaultStyle implements ArticlePageStyle {
   final TextStyle dateStyle = const TextStyle(fontSize: 15, fontWeight: FontWeight.normal, color: footColor);
   final TextStyle bodyStyle = const TextStyle(fontSize: 17, fontWeight: FontWeight.w500, color: bodyColor);
 
-  final EdgeInsets titlePagePadding = const EdgeInsets.only(left: 34.0, right: 34.0, top: 35.0, bottom: 20.0);
+  final EdgeInsets titlePagePadding = const EdgeInsets.only(left: 34.0, right: 34.0, top: 15.0, bottom: 20.0);
   final EdgeInsets leftRightPadding = const EdgeInsets.only(left: 32.0, right: 32.0);
   final EdgeInsets bodyPadding = const EdgeInsets.only(left: 32.5, right: 45.0);
 
@@ -86,14 +104,15 @@ class _ArticleDetailState extends State<ArticleDetailScreen> {
         return Container(
             child: CircularProgressIndicator(), alignment: Alignment.center);
       case LoadingStatus.SUCCESS:
-        return _buildArticlePage(context, viewModel.selectedArticleWithRelated, viewModel.getRelatedArticles);
+        return _buildArticlePage(context, fromArticleEntityToViewModel(viewModel.selectedArticleWithRelated, viewModel.getRelatedArticles));
       case LoadingStatus.ERROR:
         return Text("Error"); // TODO Check FARM-203
     }
   }
+
 }
 
-Widget _buildArticlePage(BuildContext context, ArticleEntity selectedArticle, Function getRelatedArticles, {ArticlePageStyle articleStyle = const _ArticleDefaultStyle()}) {
+Widget _buildArticlePage(BuildContext context, ArticleViewModel selectedArticle, {ArticlePageStyle articleStyle = const _ArticleDefaultStyle()}) {
   return Scaffold(
       appBar: CustomAppBar.buildForArticleDetail(selectedArticle.title, CustomAppBar.shareAction(selectedArticle.id)),
       body: ListView(
@@ -105,7 +124,8 @@ Widget _buildArticlePage(BuildContext context, ArticleEntity selectedArticle, Fu
           SizedBox(height: articleStyle.spaceBetweenElements),
           _buildArticleBody(selectedArticle, articleStyle),
           SizedBox(height: articleStyle.spaceBetweenElements),
-          _buildRelatedArticlesList(selectedArticle.relatedArticles, getRelatedArticles, articleStyle),
+          //FIXME: Add related articles when UI-Update-Discover is merged (ArticleListViewModel is needed)
+          //_buildRelatedArticlesList(selectedArticle.relatedArticles, getRelatedArticles, articleStyle),
         ],
       ));
 }
@@ -128,7 +148,7 @@ Widget _buildScreenTitle(String selectedArticleTitle, ArticlePageStyle articleSt
       ));
 }
 
-Widget _buildArticlePublishingDate(ArticleEntity selectedArticle, ArticlePageStyle articleStyle) {
+Widget _buildArticlePublishingDate(ArticleViewModel selectedArticle, ArticlePageStyle articleStyle) {
   return Container(
       padding: articleStyle.leftRightPadding,
       child: Row(
@@ -144,19 +164,20 @@ Widget _buildArticlePublishingDate(ArticleEntity selectedArticle, ArticlePageSty
       ));
 }
 
-Widget _buildArticleImage(ArticleEntity selectedArticle) {
+Widget _buildArticleImage(ArticleViewModel selectedArticle) {
   return Container(
       child: NetworkImageFromFuture(selectedArticle.imageUrl,
           fit: BoxFit.cover, height: 192.0));
 }
 
 //TODO: Investigate how to add style to Html elements
-Widget _buildArticleBody(ArticleEntity selectedArticle, ArticlePageStyle articleStyle) {
+Widget _buildArticleBody(ArticleViewModel selectedArticle, ArticlePageStyle articleStyle) {
   return Container(
       padding: articleStyle.bodyPadding,
-      child: Html(data: selectedArticle.content, useRichText: true));
+      child: Html(data: selectedArticle.body, useRichText: true));
 }
 
+// FIXME: once we have the ArticleListViewModel and the ArticleViewModel, review this function
 Widget _buildRelatedArticlesList(List<ArticleEntity> relatedArticles, Function getRelatedArticles, ArticlePageStyle articleStyle) {
   if (!relatedArticles.isEmpty) {
     return Column(
