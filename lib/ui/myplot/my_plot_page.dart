@@ -7,83 +7,60 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'myplot_viewmodel.dart';
 import 'my_plot_list.dart';
-
-typedef MyFirstCallback = void Function();
+import 'roundedButtonWidget.dart';
 
 class CropListViewModel {
   final String title;
   final String subTitle;
   final String detail;
+  final String buttonTitle;
 
-  MyFirstCallback onTap;
+  Function onTap;
 
   final Future<String> imageUrl;
 
-  CropListViewModel(this.title, this.subTitle, this.detail, this.imageUrl, this.onTap);
+  CropListViewModel(this.title, this.subTitle, this.detail, this.imageUrl, this.onTap, this.buttonTitle);
 }
 
 CropListViewModel fromCropEntityToViewModel(CropEntity currentCrop, Function goToDetail) {
   //FIXME: Change the mocked data "planting" and "Day 6" with the correct FirebaseData when available
-  return CropListViewModel(currentCrop.name, "Planting", "Day 6", currentCrop.imageUrl, () => goToDetail(currentCrop));
+  return CropListViewModel(currentCrop.name, "Planting", "Day 6", currentCrop.imageUrl, () => goToDetail(currentCrop), "Add Another Crop");
 }
 
 abstract class PlotListStyle {
 
-  final Text errorText;
-  final Color primaryIconButtonColor;
   final Color primaryColor;
+  final Text errorText;
 
-  final EdgeInsets edgeInsetsTop;
-  final EdgeInsets edgeInsetsTitle;
-  final EdgeInsets roundedBorderButtonMargins;
-
-  final BorderRadius roundedBorderRadius;
+  final EdgeInsets edgePadding;
+  final EdgeInsets titleEdgePadding;
 
   final Alignment circularProgressIndicatorAligmentCenter;
-
-  final MainAxisAlignment mainAxisAlignmentSpaceBetween;
-  final MainAxisAlignment mainAxisAlignmentSpaceStart;
+  final String buttonText;
 
   final TextStyle titleTextStyle;
-  final TextStyle buttonTextStyle;
 
-  final double roundedButtonSize;
-  final double buttonIconSize;
-  final double buttonHeight;
-
-  PlotListStyle(this.primaryIconButtonColor, this.primaryColor,
-      this.edgeInsetsTop, this.edgeInsetsTitle, this.roundedBorderRadius,
+  PlotListStyle(this.primaryColor, this.edgePadding, this.titleEdgePadding,
       this.circularProgressIndicatorAligmentCenter,
-      this.mainAxisAlignmentSpaceBetween, this.mainAxisAlignmentSpaceStart,
-      this.titleTextStyle, this.buttonTextStyle,this.roundedButtonSize,
-      this.buttonIconSize, this.roundedBorderButtonMargins, this.buttonHeight, this.errorText);
+      this.titleTextStyle, this.errorText, this.buttonText);
 }
 
 class _DefaultStyle implements PlotListStyle {
 
-
-  final Color primaryIconButtonColor =  const Color(0xFFFFFFFF);
   final Color primaryColor =  const Color(0xff25df0c);
 
-  final EdgeInsets edgeInsetsTop = const EdgeInsets.only(top: 20.0) ;
-  final EdgeInsets edgeInsetsTitle = const EdgeInsets.only(left: 25, top: 30, right: 5, bottom: 20);
-  final EdgeInsets roundedBorderButtonMargins = const EdgeInsets.only(left: 32.0, right: 32.0, bottom: 32.0, top: 31.0);
-
-  final BorderRadius roundedBorderRadius = const BorderRadius.all(Radius.circular(20.0));
+  final EdgeInsets edgePadding = const EdgeInsets.only(top: 20.0) ;
+  final EdgeInsets titleEdgePadding = const EdgeInsets.only(left: 25, top: 30, right: 5, bottom: 20);
 
   final Alignment circularProgressIndicatorAligmentCenter = Alignment.center;
   final MainAxisAlignment mainAxisAlignmentSpaceBetween = MainAxisAlignment.spaceBetween;
   final MainAxisAlignment mainAxisAlignmentSpaceStart = MainAxisAlignment.start;
 
   final TextStyle titleTextStyle = const TextStyle(fontSize: 27, fontWeight: FontWeight.bold, color: Color(0xFF000000));
-  final TextStyle buttonTextStyle = const TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: Color(0xffffffff));
 
-  //FIXME: Change this for ViewModel property
   final Text errorText = const Text("Error");
+  final String buttonText = "Add Another Crop";
 
-  final double roundedButtonSize = 25.0;
-  final double buttonIconSize = 15.0;
-  final double buttonHeight = 56.0;
 
   const _DefaultStyle();
 }
@@ -123,7 +100,7 @@ class _MyPlotState extends State<PlotList> {
 
 Widget _buildCropList(BuildContext context, List<CropEntity> cropList, PlotListStyle myPlotStyle, Function goToDetail){
   return ListView.builder(
-    padding: myPlotStyle.edgeInsetsTop,
+    padding: myPlotStyle.edgePadding,
     itemCount: cropList.length,
     shrinkWrap: true,
     physics: ScrollPhysics(),
@@ -138,19 +115,19 @@ Widget _buildPage(BuildContext context, List<CropEntity> cropList, PlotListStyle
     children: <Widget>[
       _buildTitle(myPlotStyle),
       _buildCropList(context, cropList, myPlotStyle, goToDetail),
-      _buildAddCropBottomButton(myPlotStyle)
+      buildAddCropBottomButton(myPlotStyle.buttonText)
     ],
   );
 }
 
 Widget _buildTitle(PlotListStyle myPlotStyle){
   return Container(
-    padding: myPlotStyle.edgeInsetsTitle,
+    padding: myPlotStyle.titleEdgePadding,
     child: Row(
-      mainAxisAlignment: myPlotStyle.mainAxisAlignmentSpaceBetween,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Column(
-            mainAxisAlignment: myPlotStyle.mainAxisAlignmentSpaceStart,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               Text(
                 Strings.myPlotTab,
@@ -160,46 +137,9 @@ Widget _buildTitle(PlotListStyle myPlotStyle){
           ),
           Column(
             children: <Widget>[
-              _buildAddCropTopButton(myPlotStyle)
+              buildAddCropTopButton()
             ],
           )],
       ),
   );
 }
-
-Widget _buildAddCropTopButton(PlotListStyle myPlotStyle){
-  return ButtonTheme(
-    height: myPlotStyle.roundedButtonSize,
-    child: FlatButton(
-      onPressed: () {},
-      child: Icon(
-        Icons.add,
-        size: myPlotStyle.buttonIconSize,
-        color: myPlotStyle.primaryIconButtonColor,
-      ),
-      shape: CircleBorder(),
-      color: myPlotStyle.primaryColor,
-    ),
-  );
-}
-
-Widget _buildAddCropBottomButton(PlotListStyle myPlotStyle){
-    return Container(
-      height: myPlotStyle.buttonHeight,
-      margin: myPlotStyle.roundedBorderButtonMargins,
-      width: double.infinity,
-      decoration: BoxDecoration(
-        color: myPlotStyle.primaryColor,
-        borderRadius: myPlotStyle.roundedBorderRadius,
-      ),
-      child: FlatButton(
-        child: Text(
-          Strings.addCropButtonText,
-          style: myPlotStyle.buttonTextStyle
-          ),
-          onPressed: () {
-          //FIXME: Add oPressed when CropAddList available
-          }
-        ),
-      );
-  }

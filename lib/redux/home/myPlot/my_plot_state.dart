@@ -43,8 +43,7 @@ class MyPlotState {
         cropList: cropList ?? this.cropList,
         selectedCrop: selectedCrop ?? this.selectedCrop,
         selectedStage: selectedStage ?? this.selectedStage,
-        relatedSelectedArticle: relatedSelectedArticle ?? this.relatedSelectedArticle)
-    ;
+        relatedSelectedArticle: relatedSelectedArticle ?? this.relatedSelectedArticle);
   }
 
   @override
