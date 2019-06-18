@@ -180,3 +180,78 @@ Here are some resources that helped to define the code style for this project:
 - [Effective Dart](https://dart.dev/guides/language/effective-dart/style)
 - [Style Guide for Flutter](https://github.com/flutter/flutter/wiki/Style-guide-for-Flutter-repo)
 - [Type System](https://dart.dev/guides/language/sound-dart)
+
+# Pull Request Template
+
+*When we create a new Pull Request (PR) in develop we should follow the next template:*
+
+
+[FARM-XXX - Please use Spring JIRA ticket and not subtasks]
+
+#### 📲 What
+
+A description of the change.
+
+#### 🤔 Why
+		
+Why it's needed, background context.
+		
+#### 🛠 How
+		
+More in-depth discussion of the change or implementation.
+
+#### 👀 See
+		
+Screenshots / external resources
+		 
+#### ✅ Acceptance criteria
+
+- [ ] Design Review for UI with BA completed. 
+- [ ] Manually tested and verified on Android device/emulator (min. Lollipop 5.1)
+- [ ] Showcase video / automation test
+- [ ] Passing all tests
+- [ ] Rebased/merged with latest changes from development and re-tested
+- [ ] Removed unsed comments. TODOs must have JIRA for future work.
+
+#### Coding Standards Checklist
+- [ ] unit tests 80% coverage on testable code (functions, methods, class)
+- [ ] (Architecture) redux state, reducers, actions, middleware defined under lib/redux
+- [ ] ui elements defined under lib/ui. 
+- [ ] Strings ready for localisation (e.g. defined in lib/utils/strings.dart)
+- [ ] Assets (images/icons path) defined in lib/utils/assets.dart
+- [ ] Colors defined in lib/utils/colors.dart
+- [ ] Dimensions (ie margins padding) defined in lib/utils/dimens.dart
+- [ ] TextStyles defined in lib/utils/styles.dart
+
+Recommended Style Guide: https://github.com/flutter/flutter/wiki/Style-guide-for-Flutter-repo
+
+#### 🕵️‍♂️ How to test
+
+Notes for QA
+
+#### Reviewers
+
+@farmsmart/amido @farmsmart/wamf
+
+
+# Pull Request Release Candidate Template:
+
+*When we create a new Pull Request (PR) for a Release Candidate we should follow the next template:*
+
+# Farmsmart Release
+```
+Version: M.N
+Is the release production ready?
+```
+
+# What's in this release?
+
+### New features
+
+```
+List newly added functionality
+```
+### Quality of life improvements
+```
+Describe improvements that may not have UI components.
+```
