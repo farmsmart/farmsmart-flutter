@@ -8,9 +8,24 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'myplot_viewmodel.dart';
 import 'my_plot_list.dart';
 
+typedef MyFirstCallback = void Function();
 
+class CropListViewModel {
+  final String title;
+  final String subTitle;
+  final String detail;
 
+  MyFirstCallback onTap;
 
+  final Future<String> imageUrl;
+
+  CropListViewModel(this.title, this.subTitle, this.detail, this.imageUrl, this.onTap);
+}
+
+CropListViewModel fromCropEntityToViewModel(CropEntity currentCrop, Function goToDetail) {
+  //FIXME: Change the mocked data "planting" and "Day 6" with the correct FirebaseData when available
+  return CropListViewModel(currentCrop.name, "Planting", "Day 6", currentCrop.imageUrl, () => goToDetail(currentCrop));
+}
 
 abstract class PlotListStyle {
 
@@ -113,7 +128,7 @@ Widget _buildCropList(BuildContext context, List<CropEntity> cropList, PlotListS
     shrinkWrap: true,
     physics: ScrollPhysics(),
     itemBuilder: (BuildContext context, int index) {
-      return PlotListItem().buildListItem(cropList[index], goToDetail);
+      return PlotListItem().buildListItem(fromCropEntityToViewModel(cropList[index], goToDetail));
     },
   );
 }

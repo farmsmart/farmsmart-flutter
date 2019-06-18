@@ -3,6 +3,8 @@ import 'package:farmsmart_flutter/utils/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:farmsmart_flutter/ui/common/network_image_from_future.dart';
 
+import 'my_plot_page.dart';
+
 abstract class PlotItemStyle {
 
   final Color primaryColor;
@@ -74,13 +76,9 @@ class DefaultItemStyle implements PlotItemStyle{
 
 
 class PlotListItem {
-  Widget buildListItem(CropEntity cropsData, Function goToDetail, {PlotItemStyle itemStyle = const DefaultItemStyle()}) {
-    //FIXME: This variables should be with the cropData, but for the moment are hardcored coz of the CMS Data.
-    const DayText = "Day 6";
-    const currentStage = "Planting";
-
+  Widget buildListItem(CropListViewModel viewModel, {PlotItemStyle itemStyle = const DefaultItemStyle()}) {
     return GestureDetector(
-      onTap: () => goToDetail(cropsData),
+      onTap: viewModel.onTap,
       child: Card(
         //FIXME: Retrieve this MagicNumber
         elevation: itemStyle.deleteElevation,
@@ -96,7 +94,7 @@ class PlotListItem {
                     children: <Widget>[
                       Row(
                         children: <Widget>[
-                          Text(cropsData.name ?? Strings.defaultCropNameText,
+                          Text(viewModel.title ?? Strings.defaultCropNameText,
                               style: itemStyle.titleTextStyle),
                           Padding(
                             padding: itemStyle.paddingBetweenElements,
@@ -105,7 +103,7 @@ class PlotListItem {
                       ),
                       Row(
                         children: <Widget>[
-                          Text(currentStage,
+                          Text(viewModel.subTitle,
                               style: itemStyle.subTitleTextStyle),
                           Padding(
                             padding: itemStyle.detailTextPadding,
@@ -114,14 +112,14 @@ class PlotListItem {
                       ),
                       Row(
                         children: <Widget>[
-                          _buildDayCountView(itemStyle, DayText)
+                          _buildDayCountView(itemStyle, viewModel.detail)
                         ],
                       ),
                     ],
                   ),
                   Column(
                     children: <Widget>[
-                      _buildCropImage(cropsData, itemStyle),
+                      _buildCropImage(viewModel.imageUrl, itemStyle),
                     ],
                   )
                 ],
@@ -157,9 +155,9 @@ class PlotListItem {
   }
 
   ClipOval _buildCropImage(
-      CropEntity cropsData, PlotItemStyle itemStyle) {
+      Future<String> imageUrl, PlotItemStyle itemStyle) {
     return ClipOval(
-      child: NetworkImageFromFuture(cropsData.imageUrl,
+      child: NetworkImageFromFuture(imageUrl,
           height: itemStyle.imageSize,
           width: itemStyle.imageSize,
           fit: BoxFit.cover),
