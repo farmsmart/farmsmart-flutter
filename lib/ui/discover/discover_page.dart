@@ -131,9 +131,9 @@ Widget _buildScreenTitle(ArticleListStyle articleListStyle) {
   );
 }
 
-Widget _heroListItemBuilder(ArticleEntity firstArticle, ArticleListStyle articleListStyle, Function getRelatedArticles) {
+Widget _heroListItemBuilder(ArticlesListViewModel firstArticle, ArticleListStyle articleListStyle) {
   return GestureDetector(
-    onTap: () => getRelatedArticles(firstArticle),
+    onTap: firstArticle.onTap,
     child: Column(
       children: <Widget>[
         Card(
@@ -169,14 +169,14 @@ Widget _buildArticlesList(List<ArticleEntity> articlesList, Function getRelatedA
       itemCount: articlesList.length,
       itemBuilder: (BuildContext context, int index) {
         if (index == 0) {
-          return _heroListItemBuilder(articlesList[index], articleListStyle, getRelatedArticles);
+          return _heroListItemBuilder(fromArticleEntityToViewModel(articlesList[index], getRelatedArticles), articleListStyle);
         } else {
           return ArticleListItem().standardListItemBuilder(fromArticleEntityToViewModel(articlesList[index], getRelatedArticles));
         }
       });
 }
 
-Widget _buildHeroArticleImage(ArticleEntity articleData, ArticleListStyle articleListStyle) {
+Widget _buildHeroArticleImage(ArticlesListViewModel articleData, ArticleListStyle articleListStyle) {
   return ClipRRect(
     borderRadius: BorderRadius.circular(articleListStyle.heroImageBorderRadius),
     child: NetworkImageFromFuture(articleData.imageUrl, fit: BoxFit.fitWidth),
