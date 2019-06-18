@@ -1,10 +1,7 @@
 import 'package:farmsmart_flutter/model/loading_status.dart';
 import 'package:farmsmart_flutter/redux/app/app_state.dart';
 import 'package:farmsmart_flutter/ui/common/network_image_from_future.dart';
-import 'package:farmsmart_flutter/utils/colors.dart';
-import 'package:farmsmart_flutter/utils/dimens.dart';
 import 'package:farmsmart_flutter/utils/strings.dart';
-import 'package:farmsmart_flutter/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:farmsmart_flutter/data/model/article_entity.dart';
@@ -12,70 +9,66 @@ import 'package:farmsmart_flutter/ui/discover/discover_child_item.dart';
 import 'package:farmsmart_flutter/ui/discover/discover_viewmodel.dart';
 import 'package:farmsmart_flutter/redux/home/discover/discover_actions.dart';
 
-typedef MyFirstCallback = void Function();
-
 class ArticlesListViewModel {
   final String title;
   final String summary;
   final Future<String> imageUrl;
-  MyFirstCallback onTap;
+  Function onTap;
 
   ArticlesListViewModel(this.title, this.summary, this.imageUrl, this.onTap);
-
 }
 
 ArticlesListViewModel fromArticleEntityToViewModel(ArticleEntity article, Function getRelatedArticles) {
-  return ArticlesListViewModel(article.title, article.summary, article.imageUrl, () => getRelatedArticles(article));
+  return ArticlesListViewModel(
+      article.title ?? Strings.noTitleString,
+      article.summary ?? Strings.noTitleString,
+      article.imageUrl,
+      () => getRelatedArticles(article));
 }
 
 abstract class ArticleListStyle {
-  final TextStyle titlePageStyle;
+  final TextStyle titlePageTextStyle;
   final TextStyle heroTitleTextStyle;
   final TextStyle heroSummaryTextStyle;
 
-  final EdgeInsets titlePagePadding;
-  final EdgeInsets heroPadding;
+  final EdgeInsets titlePageEdgePadding;
+  final EdgeInsets heroEdgePadding;
 
-  final double heroImageBorderRadius;
-  final double spaceBetweenHeaderImageAndText;
-  final double spaceBetweenTitleAndSummary;
-  final double heroCardElevation;
+  final BorderRadius roundedBorderRadius;
+
+  final double heroImageSpaceLine;
+  final double titleSpaceLine;
+  final double elevation;
 
   final int heroTitleMaxLines;
   final int heroSummaryMaxLines;
 
-  final CrossAxisAlignment leftAlignmentHorizontal;
-  final MainAxisAlignment centerAlignmentVertical;
-
-  ArticleListStyle(this.titlePageStyle, this.heroTitleTextStyle,
-      this.heroSummaryTextStyle, this.titlePagePadding,
-      this.heroPadding, this.heroImageBorderRadius,
-      this.spaceBetweenHeaderImageAndText, this.spaceBetweenTitleAndSummary,
-      this.heroCardElevation, this.heroTitleMaxLines, this.heroSummaryMaxLines,
-      this.leftAlignmentHorizontal, this.centerAlignmentVertical);
+  ArticleListStyle(this.titlePageTextStyle, this.heroTitleTextStyle,
+      this.heroSummaryTextStyle, this.titlePageEdgePadding, this.heroEdgePadding,
+      this.roundedBorderRadius,
+      this.heroImageSpaceLine, this.titleSpaceLine, this.elevation,
+      this.heroTitleMaxLines, this.heroSummaryMaxLines);
 }
 
 class _ArticleListDefaultStyle implements ArticleListStyle {
   static const Color titleColor = Color(0xFF1a1b46);
   static const Color bodyColor = Color(0xFF767690);
 
-  final TextStyle titlePageStyle = const TextStyle(fontSize: 27, fontWeight: FontWeight.bold, color: titleColor);
+  final TextStyle titlePageTextStyle = const TextStyle(fontSize: 27, fontWeight: FontWeight.bold, color: titleColor);
   final TextStyle heroTitleTextStyle = const TextStyle(fontSize: 17, fontWeight: FontWeight.w700, color: titleColor);
   final TextStyle heroSummaryTextStyle = const TextStyle(fontSize: 15, fontWeight: FontWeight.w400, color: bodyColor);
 
-  final EdgeInsets titlePagePadding = const EdgeInsets.only(left: 34.0, right: 34.0, top: 35.0, bottom: 30.0);
-  final EdgeInsets heroPadding = const EdgeInsets.only(left: 32.0, right: 32.0, bottom: 28);
+  final EdgeInsets titlePageEdgePadding = const EdgeInsets.only(left: 34.0, right: 34.0, top: 35.0, bottom: 30.0);
+  final EdgeInsets heroEdgePadding = const EdgeInsets.only(left: 32.0, right: 32.0, bottom: 28);
 
-  final double heroImageBorderRadius = 14.0;
-  final double spaceBetweenHeaderImageAndText = 22.0;
-  final double spaceBetweenTitleAndSummary = 9.5;
-  final double heroCardElevation = 0;
+  final BorderRadius roundedBorderRadius = const BorderRadius.all(Radius.circular(14.0));
+
+  final double heroImageSpaceLine = 22.0;
+  final double titleSpaceLine = 9.5;
+  final double elevation = 0;
 
   final int heroTitleMaxLines = 1;
   final int heroSummaryMaxLines = 3;
-
-  final CrossAxisAlignment leftAlignmentHorizontal = CrossAxisAlignment.start;
-  final MainAxisAlignment centerAlignmentVertical = MainAxisAlignment.center;
 
   const _ArticleListDefaultStyle();
 }
@@ -121,11 +114,11 @@ Widget _buildDiscoverPage(BuildContext context, List<ArticleEntity> articlesList
 
 Widget _buildScreenTitle(ArticleListStyle articleListStyle) {
   return Container(
-    padding: articleListStyle.titlePagePadding,
+    padding: articleListStyle.titlePageEdgePadding,
     child: Row(
-      crossAxisAlignment: articleListStyle.leftAlignmentHorizontal,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text(Strings.discoverTab, style: articleListStyle.titlePageStyle)
+        Text(Strings.discoverTab, style: articleListStyle.titlePageTextStyle)
       ],
     ),
   );
@@ -137,18 +130,18 @@ Widget _heroListItemBuilder(ArticlesListViewModel firstArticle, ArticleListStyle
     child: Column(
       children: <Widget>[
         Card(
-          elevation: articleListStyle.heroCardElevation,
+          elevation: articleListStyle.elevation,
           child: Container(
-            padding: articleListStyle.heroPadding,
+            padding: articleListStyle.heroEdgePadding,
             child: Column(
-              crossAxisAlignment: articleListStyle.leftAlignmentHorizontal,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 _buildHeroArticleImage(firstArticle, articleListStyle),
-                SizedBox(height: articleListStyle.spaceBetweenHeaderImageAndText),
+                SizedBox(height: articleListStyle.heroImageSpaceLine),
                 Text(firstArticle.title,
                     maxLines: articleListStyle.heroTitleMaxLines,
                     style: articleListStyle.heroTitleTextStyle),
-                SizedBox(height: articleListStyle.spaceBetweenTitleAndSummary),
+                SizedBox(height: articleListStyle.titleSpaceLine),
                 Text(firstArticle.summary,
                     maxLines: articleListStyle.heroSummaryMaxLines,
                     style: articleListStyle.heroSummaryTextStyle)
@@ -178,11 +171,13 @@ Widget _buildArticlesList(List<ArticleEntity> articlesList, Function getRelatedA
 
 Widget _buildHeroArticleImage(ArticlesListViewModel articleData, ArticleListStyle articleListStyle) {
   return ClipRRect(
-    borderRadius: BorderRadius.circular(articleListStyle.heroImageBorderRadius),
+    borderRadius: articleListStyle.roundedBorderRadius,
     child: NetworkImageFromFuture(articleData.imageUrl, fit: BoxFit.fitWidth),
   );
 }
 
+
+// TODO: Maybe we have to externalice this widget in other file
 abstract class SeparatorStyle {
   final Color color;
   final EdgeInsets indentation;
