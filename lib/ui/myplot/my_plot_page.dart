@@ -35,28 +35,28 @@ abstract class PlotListStyle {
 
   final EdgeInsets edgeInsetsTop;
   final EdgeInsets edgeInsetsTitle;
-  final EdgeInsets addCropBottomButtonMargins;
+  final EdgeInsets roundedBorderButtonMargins;
 
   final BorderRadius roundedBorderRadius;
 
   final Alignment circularProgressIndicatorAligmentCenter;
 
-  final MainAxisAlignment mainAxisAlignmentSpaceBeetwen;
+  final MainAxisAlignment mainAxisAlignmentSpaceBetween;
   final MainAxisAlignment mainAxisAlignmentSpaceStart;
 
   final TextStyle titleTextStyle;
   final TextStyle buttonTextStyle;
 
-  final double reoundedButtonSize;
+  final double roundedButtonSize;
   final double buttonIconSize;
   final double buttonHeight;
 
   PlotListStyle(this.primaryIconButtonColor, this.primaryColor,
       this.edgeInsetsTop, this.edgeInsetsTitle, this.roundedBorderRadius,
       this.circularProgressIndicatorAligmentCenter,
-      this.mainAxisAlignmentSpaceBeetwen, this.mainAxisAlignmentSpaceStart,
-      this.titleTextStyle, this.buttonTextStyle,this.reoundedButtonSize,
-      this.buttonIconSize, this.addCropBottomButtonMargins, this.buttonHeight, this.errorText);
+      this.mainAxisAlignmentSpaceBetween, this.mainAxisAlignmentSpaceStart,
+      this.titleTextStyle, this.buttonTextStyle,this.roundedButtonSize,
+      this.buttonIconSize, this.roundedBorderButtonMargins, this.buttonHeight, this.errorText);
 }
 
 class _DefaultStyle implements PlotListStyle {
@@ -67,12 +67,12 @@ class _DefaultStyle implements PlotListStyle {
 
   final EdgeInsets edgeInsetsTop = const EdgeInsets.only(top: 20.0) ;
   final EdgeInsets edgeInsetsTitle = const EdgeInsets.only(left: 25, top: 30, right: 5, bottom: 20);
-  final EdgeInsets addCropBottomButtonMargins = const EdgeInsets.only(left: 32.0, right: 32.0, bottom: 32.0, top: 31.0);
+  final EdgeInsets roundedBorderButtonMargins = const EdgeInsets.only(left: 32.0, right: 32.0, bottom: 32.0, top: 31.0);
 
   final BorderRadius roundedBorderRadius = const BorderRadius.all(Radius.circular(20.0));
 
   final Alignment circularProgressIndicatorAligmentCenter = Alignment.center;
-  final MainAxisAlignment mainAxisAlignmentSpaceBeetwen = MainAxisAlignment.spaceBetween;
+  final MainAxisAlignment mainAxisAlignmentSpaceBetween = MainAxisAlignment.spaceBetween;
   final MainAxisAlignment mainAxisAlignmentSpaceStart = MainAxisAlignment.start;
 
   final TextStyle titleTextStyle = const TextStyle(fontSize: 27, fontWeight: FontWeight.bold, color: Color(0xFF000000));
@@ -81,7 +81,7 @@ class _DefaultStyle implements PlotListStyle {
   //FIXME: Change this for ViewModel property
   final Text errorText = const Text("Error");
 
-  final double reoundedButtonSize = 25.0;
+  final double roundedButtonSize = 25.0;
   final double buttonIconSize = 15.0;
   final double buttonHeight = 56.0;
 
@@ -147,7 +147,7 @@ Widget _buildTitle(PlotListStyle myPlotStyle){
   return Container(
     padding: myPlotStyle.edgeInsetsTitle,
     child: Row(
-      mainAxisAlignment: myPlotStyle.mainAxisAlignmentSpaceBeetwen,
+      mainAxisAlignment: myPlotStyle.mainAxisAlignmentSpaceBetween,
         children: <Widget>[
           Column(
             mainAxisAlignment: myPlotStyle.mainAxisAlignmentSpaceStart,
@@ -169,7 +169,7 @@ Widget _buildTitle(PlotListStyle myPlotStyle){
 
 Widget _buildAddCropTopButton(PlotListStyle myPlotStyle){
   return ButtonTheme(
-    height: myPlotStyle.reoundedButtonSize,
+    height: myPlotStyle.roundedButtonSize,
     child: FlatButton(
       onPressed: () {},
       child: Icon(
@@ -186,7 +186,7 @@ Widget _buildAddCropTopButton(PlotListStyle myPlotStyle){
 Widget _buildAddCropBottomButton(PlotListStyle myPlotStyle){
     return Container(
       height: myPlotStyle.buttonHeight,
-      margin: myPlotStyle.addCropBottomButtonMargins,
+      margin: myPlotStyle.roundedBorderButtonMargins,
       width: double.infinity,
       decoration: BoxDecoration(
         color: myPlotStyle.primaryColor,

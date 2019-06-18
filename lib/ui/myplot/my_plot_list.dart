@@ -9,7 +9,7 @@ abstract class PlotItemStyle {
 
   final Color primaryColor;
   final Color separatorColor;
-  final Color primaryColorWithLowOppacity;
+  final Color primaryColorWithLowOpacity;
 
   final EdgeInsets listPadding;
   final EdgeInsets paddingBetweenElements;
@@ -18,7 +18,7 @@ abstract class PlotItemStyle {
 
   final EdgeInsets separatorIndent;
 
-  final MainAxisAlignment mainAxisAlignmentSpaceBeetwen;
+  final MainAxisAlignment mainAxisAlignmentSpaceBetween;
   final CrossAxisAlignment crossAxisAlignmentStart;
   final MainAxisSize mainAxisSizeMin;
 
@@ -29,25 +29,25 @@ abstract class PlotItemStyle {
   final TextStyle subTitleTextStyle;
 
   final double deleteElevation;
-  final double oppacityOnDetail;
+  final double opacityOnDetail;
   final double separatorHeight;
   final double imageSize;
 
   PlotItemStyle(this.primaryColor, this.separatorColor, this.listPadding,
       this.paddingBetweenElements, this.detailTextPadding,
       this.roundedShapeSize, this.separatorIndent,
-      this.mainAxisAlignmentSpaceBeetwen, this.crossAxisAlignmentStart,
+      this.mainAxisAlignmentSpaceBetween, this.crossAxisAlignmentStart,
       this.mainAxisSizeMin, this.roundedBorderRadius, this.detailTextStyle,
       this.titleTextStyle, this.subTitleTextStyle, this.deleteElevation,
-      this.oppacityOnDetail, this.separatorHeight,
-      this.imageSize, this.primaryColorWithLowOppacity);
+      this.opacityOnDetail, this.separatorHeight,
+      this.imageSize, this.primaryColorWithLowOpacity);
 }
 
 class DefaultItemStyle implements PlotItemStyle{
 
   final Color primaryColor =  const Color(0xff25df0c);
   final Color separatorColor = const Color(0xfff5f8fa);
-  final Color primaryColorWithLowOppacity = const Color(0x1425df0c);
+  final Color primaryColorWithLowOpacity = const Color(0x1425df0c);
 
 
   final EdgeInsets roundedShapeSize = const EdgeInsets.only(left: 12, top: 8, right: 12, bottom: 5);
@@ -64,9 +64,9 @@ class DefaultItemStyle implements PlotItemStyle{
   final BorderRadius roundedBorderRadius = const BorderRadius.all(Radius.circular(20.0));
 
   final CrossAxisAlignment crossAxisAlignmentStart =   CrossAxisAlignment.start;
-  final MainAxisAlignment mainAxisAlignmentSpaceBeetwen = MainAxisAlignment.spaceBetween;
+  final MainAxisAlignment mainAxisAlignmentSpaceBetween = MainAxisAlignment.spaceBetween;
 
-  final double oppacityOnDetail = 0.08;
+  final double opacityOnDetail = 0.08;
   final double deleteElevation = 0.0;
   final double separatorHeight = 2;
   final double imageSize = 80.0;
@@ -80,14 +80,13 @@ class PlotListItem {
     return GestureDetector(
       onTap: viewModel.onTap,
       child: Card(
-        //FIXME: Retrieve this MagicNumber
         elevation: itemStyle.deleteElevation,
         child: Column(
           children: <Widget>[
             Container(
               padding: itemStyle.listPadding,
               child: Row(
-                mainAxisAlignment: itemStyle.mainAxisAlignmentSpaceBeetwen,
+                mainAxisAlignment: itemStyle.mainAxisAlignmentSpaceBetween,
                 children: <Widget>[
                   Column(
                     crossAxisAlignment: itemStyle.crossAxisAlignmentStart,
@@ -95,41 +94,41 @@ class PlotListItem {
                       Row(
                         children: <Widget>[
                           Text(viewModel.title ?? Strings.defaultCropNameText,
-                              style: itemStyle.titleTextStyle),
-                          Padding(
-                            padding: itemStyle.paddingBetweenElements,
-                          )
-                        ],
+                              style: itemStyle.titleTextStyle)
+                        ]
+                      ),
+                      SizedBox(
+                        height: 12.5,
                       ),
                       Row(
                         children: <Widget>[
                           Text(viewModel.subTitle,
                               style: itemStyle.subTitleTextStyle),
-                          Padding(
-                            padding: itemStyle.detailTextPadding,
-                          )
-                        ],
+                        ]
+                      ),
+                      SizedBox(
+                        height: 12.5,
                       ),
                       Row(
                         children: <Widget>[
                           _buildDayCountView(itemStyle, viewModel.detail)
-                        ],
-                      ),
-                    ],
+                        ]
+                      )
+                    ]
                   ),
                   Column(
                     children: <Widget>[
                       _buildCropImage(viewModel.imageUrl, itemStyle),
                     ],
                   )
-                ],
-              ),
+                ]
+              )
             ),
             Container(
                 child: _buildListSeparator(itemStyle)),
-          ],
-        ),
-      ),
+          ]
+        )
+      )
     );
   }
 
@@ -137,7 +136,7 @@ class PlotListItem {
     return Container(
                       padding: itemStyle.roundedShapeSize,
                       decoration: BoxDecoration(
-                          color: itemStyle.primaryColorWithLowOppacity,
+                          color: itemStyle.primaryColorWithLowOpacity,
                           borderRadius: itemStyle.roundedBorderRadius),
                       child: Row(
                         mainAxisSize: itemStyle.mainAxisSizeMin,

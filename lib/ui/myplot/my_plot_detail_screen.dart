@@ -17,9 +17,6 @@ import 'my_plot_detail_stages.dart';
 import 'my_plot_page.dart';
 import 'myplot_viewmodel.dart';
 
-
-
-
 class CropDetailScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
