@@ -66,7 +66,7 @@ Widget buildAddCropTopButton({RoundedButtonStyle buttonStyle = const _smallRound
   );
 }
 
-Widget buildAddCropBottomButton(String title, {RoundedButtonStyle buttonStyle = const _largeRoundedButtonStyle()} ){
+Widget buildAddCropBottomButton(String title, {RoundedButtonStyle buttonStyle = const _largeRoundedButtonStyle(), Function onTap}){
   return Container(
     height: buttonStyle.roundedButtonSize,
     margin: buttonStyle.actionButtonLargeEdgePadding,
@@ -81,7 +81,7 @@ Widget buildAddCropBottomButton(String title, {RoundedButtonStyle buttonStyle = 
             style: buttonStyle.buttonTextStyle
         ),
         onPressed: () {
-          //FIXME: Add oPressed when CropAddList available
+          onTap();
         }
     ),
   );

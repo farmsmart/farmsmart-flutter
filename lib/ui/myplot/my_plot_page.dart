@@ -30,19 +30,18 @@ CropListViewModel fromCropEntityToViewModel(CropEntity currentCrop, Function goT
 abstract class PlotListStyle {
 
   final Color primaryColor;
-  final Text errorText;
 
   final EdgeInsets edgePadding;
   final EdgeInsets titleEdgePadding;
 
-  final Alignment circularProgressIndicatorAligmentCenter;
   final String buttonText;
+  final String errorButtonText;
+  final String errorText;
 
   final TextStyle titleTextStyle;
 
   PlotListStyle(this.primaryColor, this.edgePadding, this.titleEdgePadding,
-      this.circularProgressIndicatorAligmentCenter,
-      this.titleTextStyle, this.errorText, this.buttonText);
+      this.titleTextStyle, this.errorText, this.buttonText, this.errorButtonText);
 }
 
 class _DefaultStyle implements PlotListStyle {
@@ -52,15 +51,11 @@ class _DefaultStyle implements PlotListStyle {
   final EdgeInsets edgePadding = const EdgeInsets.only(top: 20.0) ;
   final EdgeInsets titleEdgePadding = const EdgeInsets.only(left: 25, top: 30, right: 5, bottom: 20);
 
-  final Alignment circularProgressIndicatorAligmentCenter = Alignment.center;
-  final MainAxisAlignment mainAxisAlignmentSpaceBetween = MainAxisAlignment.spaceBetween;
-  final MainAxisAlignment mainAxisAlignmentSpaceStart = MainAxisAlignment.start;
-
   final TextStyle titleTextStyle = const TextStyle(fontSize: 27, fontWeight: FontWeight.bold, color: Color(0xFF000000));
 
-  final Text errorText = const Text("Error");
+  final String errorText = "Something went wrong while loading data";
   final String buttonText = "Add Another Crop";
-
+  final String errorButtonText = "Retry";
 
   const _DefaultStyle();
 }
@@ -89,11 +84,11 @@ class _MyPlotState extends State<PlotList> {
         return Container(
             child:
             CircularProgressIndicator(),
-            alignment: myPlotStyle.circularProgressIndicatorAligmentCenter);
+            alignment: Alignment.center);
       case LoadingStatus.SUCCESS:
         return _buildPage(context, viewModel.cropsList, myPlotStyle, viewModel.goToDetail);
       case LoadingStatus.ERROR:
-        return myPlotStyle.errorText; // TODO Check FARM-203
+        return _buildErorPage(viewModel, myPlotStyle); // TODO Check FARM-203
     }
   }
 }
@@ -143,3 +138,22 @@ Widget _buildTitle(PlotListStyle myPlotStyle){
       ),
   );
 }
+
+Widget _buildErorPage(MyPlotViewModel viewModel, PlotListStyle plotStyle){
+  return Container(
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        Text(
+          plotStyle.errorText
+        ),
+        buildAddCropBottomButton(plotStyle.errorButtonText, onTap: viewModel.fetchCrops)
+      ],
+    ),
+  );
+
+
+}
+
+
