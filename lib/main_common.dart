@@ -43,10 +43,7 @@ class _AppState extends State<FarmsmartApp> {
 
     List<Locale> supportedLocales = [
       const Locale('en'),
-      const Locale.fromSubtags(languageCode: 'en', countryCode: 'US'),
       const Locale('sw'),
-      const Locale('es'),
-      const Locale('ja')
     ];
 
     return StoreProvider<AppState>(
