@@ -10,14 +10,14 @@ import 'package:farmsmart_flutter/utils/assets.dart';
 import 'discover_page.dart';
 
 
-abstract class ArticleItemStyle {
+abstract class ArticleListItemStyle {
   final TextStyle titleTextStyle;
   final TextStyle summaryTextStyle;
 
-  final EdgeInsets listPadding;
+  final EdgeInsets listEdgePadding;
 
-  final double spaceBetweenTextAndImage;
-  final double spaceBetweenTitleAndSummary;
+  final double imageLineSpace;
+  final double textLineSpace;
   final double imageBorderRadius;
   final double imageSize;
   final double cardElevation;
@@ -25,36 +25,36 @@ abstract class ArticleItemStyle {
   final int maxLinesPerTitle;
   final int maxLinesPerSummary;
 
-  ArticleItemStyle(this.titleTextStyle, this.summaryTextStyle,
-      this.listPadding, this.spaceBetweenTextAndImage,
-      this.spaceBetweenTitleAndSummary, this.imageBorderRadius,
+  ArticleListItemStyle(this.titleTextStyle, this.summaryTextStyle,
+      this.listEdgePadding, this.imageLineSpace,
+      this.textLineSpace, this.imageBorderRadius,
       this.imageSize, this.cardElevation, this.maxLinesPerTitle,
       this.maxLinesPerSummary);
 }
 
-class _DefaultArticleItemStyle implements ArticleItemStyle {
+class _DefaultArticleListItemStyle implements ArticleListItemStyle {
   static const Color titleColor = Color(0xFF1a1b46);
   static const Color bodyColor = Color(0xFF767690);
 
   final TextStyle titleTextStyle = const TextStyle(fontSize: 17, fontWeight: FontWeight.w700, color: titleColor);
   final TextStyle summaryTextStyle = const TextStyle(fontSize: 15, fontWeight: FontWeight.w400, color: bodyColor);
 
-  final EdgeInsets listPadding = const EdgeInsets.only(left: 32.0, right: 32.0, top: 23, bottom: 23);
+  final EdgeInsets listEdgePadding = const EdgeInsets.only(left: 32.0, right: 32.0, top: 23, bottom: 23);
 
-  final double spaceBetweenTextAndImage = 30.5;
+  final double imageLineSpace = 30.5;
   final double imageBorderRadius = 10.0;
   final double imageSize = 80;
-  final double spaceBetweenTitleAndSummary = 9.5;
+  final double textLineSpace = 9.5;
   final double cardElevation = 0;
 
   final int maxLinesPerTitle = 2;
   final int maxLinesPerSummary = 2;
 
-  const _DefaultArticleItemStyle();
+  const _DefaultArticleListItemStyle();
 }
 
 class ArticleListItem {
-  Widget standardListItemBuilder(ArticlesListViewModel viewModel, {ArticleItemStyle itemStyle = const _DefaultArticleItemStyle()}) {
+  Widget standardListItemBuilder(ArticlesItemListViewModel viewModel, {ArticleListItemStyle itemStyle = const _DefaultArticleListItemStyle()}) {
     return GestureDetector(
       onTap: viewModel.onTap,
       child: Card(
@@ -63,12 +63,12 @@ class ArticleListItem {
           child: Column(
             children: <Widget>[
               Container(
-                padding: itemStyle.listPadding,
+                padding: itemStyle.listEdgePadding,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     _buildArticleInformation(viewModel, itemStyle),
-                    SizedBox(width: itemStyle.spaceBetweenTextAndImage),
+                    SizedBox(width: itemStyle.imageLineSpace),
                     _buildListItemImage(viewModel, itemStyle),
                   ],
                 ),
@@ -81,7 +81,7 @@ class ArticleListItem {
     );
   }
 
-  _buildListItemImage(ArticlesListViewModel articleData, ArticleItemStyle itemStyle) {
+  _buildListItemImage(ArticlesItemListViewModel articleData, ArticleListItemStyle itemStyle) {
     return ClipRRect(
         borderRadius: BorderRadius.circular(itemStyle.imageBorderRadius),
         child: NetworkImageFromFuture(
@@ -92,7 +92,7 @@ class ArticleListItem {
     );
   }
 
-  _buildArticleInformation(ArticlesListViewModel articleData, ArticleItemStyle itemStyle) {
+  _buildArticleInformation(ArticlesItemListViewModel articleData, ArticleListItemStyle itemStyle) {
     return Expanded(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -101,7 +101,7 @@ class ArticleListItem {
               maxLines: itemStyle.maxLinesPerTitle,
               overflow: TextOverflow.ellipsis,
               style: itemStyle.titleTextStyle),
-          SizedBox(height: itemStyle.spaceBetweenTitleAndSummary),
+          SizedBox(height: itemStyle.textLineSpace),
           Text(articleData.summary ?? Strings.myPlotItemDefaultTitle,
               maxLines: itemStyle.maxLinesPerSummary,
               overflow: TextOverflow.ellipsis,
