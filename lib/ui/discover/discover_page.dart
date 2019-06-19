@@ -10,17 +10,17 @@ import 'package:farmsmart_flutter/ui/discover/StandardListItem.dart';
 import 'package:farmsmart_flutter/ui/discover/discover_viewmodel.dart';
 import 'package:farmsmart_flutter/redux/home/discover/discover_actions.dart';
 
-class ArticlesItemListViewModel {
+class ArticleListItemViewModel {
   final String title;
   final String summary;
   final Future<String> imageUrl;
   Function onTap;
 
-  ArticlesItemListViewModel(this.title, this.summary, this.imageUrl, this.onTap);
+  ArticleListItemViewModel(this.title, this.summary, this.imageUrl, this.onTap);
 }
 
-ArticlesItemListViewModel fromArticleEntityToViewModel(ArticleEntity article, Function getRelatedArticles) {
-  return ArticlesItemListViewModel(
+ArticleListItemViewModel fromArticleEntityToViewModel(ArticleEntity article, Function getRelatedArticles) {
+  return ArticleListItemViewModel(
       article.title ?? Strings.noTitleString,
       article.summary ?? Strings.noTitleString,
       article.imageUrl,
