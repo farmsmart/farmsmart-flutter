@@ -1,11 +1,12 @@
 import 'package:farmsmart_flutter/model/loading_status.dart';
 import 'package:farmsmart_flutter/redux/app/app_state.dart';
 import 'package:farmsmart_flutter/ui/common/network_image_from_future.dart';
+import 'package:farmsmart_flutter/ui/discover/HeroListItem.dart';
 import 'package:farmsmart_flutter/utils/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:farmsmart_flutter/data/model/article_entity.dart';
-import 'package:farmsmart_flutter/ui/discover/discover_child_item.dart';
+import 'package:farmsmart_flutter/ui/discover/StandardListItem.dart';
 import 'package:farmsmart_flutter/ui/discover/discover_viewmodel.dart';
 import 'package:farmsmart_flutter/redux/home/discover/discover_actions.dart';
 
@@ -28,25 +29,9 @@ ArticlesItemListViewModel fromArticleEntityToViewModel(ArticleEntity article, Fu
 
 abstract class ArticleListStyle {
   final TextStyle titleTextStyle;
-  final TextStyle heroTitleTextStyle;
-  final TextStyle heroSummaryTextStyle;
-
   final EdgeInsets titleEdgePadding;
-  final EdgeInsets heroEdgePadding;
 
-  final BorderRadius roundedBorderRadius;
-
-  final double heroImageLineSpace;
-  final double titleLineSpace;
-  final double elevation;
-
-  final int heroTitleMaxLines;
-  final int heroSummaryMaxLines;
-
-  ArticleListStyle(this.titleTextStyle, this.heroTitleTextStyle,
-      this.heroSummaryTextStyle, this.titleEdgePadding, this.heroEdgePadding,
-      this.roundedBorderRadius, this.heroImageLineSpace, this.titleLineSpace, this.elevation,
-      this.heroTitleMaxLines, this.heroSummaryMaxLines);
+  ArticleListStyle(this.titleTextStyle, this.titleEdgePadding);
 }
 
 class _ArticleListDefaultStyle implements ArticleListStyle {
@@ -54,20 +39,7 @@ class _ArticleListDefaultStyle implements ArticleListStyle {
   static const Color textColor = Color(0xFF767690);
 
   final TextStyle titleTextStyle = const TextStyle(fontSize: 27, fontWeight: FontWeight.bold, color: titleColor);
-  final TextStyle heroTitleTextStyle = const TextStyle(fontSize: 17, fontWeight: FontWeight.w700, color: titleColor);
-  final TextStyle heroSummaryTextStyle = const TextStyle(fontSize: 15, fontWeight: FontWeight.w400, color: textColor);
-
   final EdgeInsets titleEdgePadding = const EdgeInsets.only(left: 34.0, right: 34.0, top: 35.0, bottom: 30.0);
-  final EdgeInsets heroEdgePadding = const EdgeInsets.only(left: 32.0, right: 32.0, bottom: 28);
-
-  final BorderRadius roundedBorderRadius = const BorderRadius.all(Radius.circular(14.0));
-
-  final double heroImageLineSpace = 22.0;
-  final double titleLineSpace = 9.5;
-  final double elevation = 0;
-
-  final int heroTitleMaxLines = 1;
-  final int heroSummaryMaxLines = 3;
 
   const _ArticleListDefaultStyle();
 }
@@ -122,36 +94,6 @@ Widget _buildScreenTitle(ArticleListStyle articleListStyle) {
   );
 }
 
-Widget _heroListItemBuilder(ArticlesItemListViewModel viewModel, ArticleListStyle articleListStyle) {
-  return GestureDetector(
-    onTap: viewModel.onTap,
-    child: Column(
-      children: <Widget>[
-        Card(
-          elevation: articleListStyle.elevation,
-          child: Container(
-            padding: articleListStyle.heroEdgePadding,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                _buildHeroArticleImage(viewModel, articleListStyle),
-                SizedBox(height: articleListStyle.heroImageLineSpace),
-                Text(viewModel.title,
-                    maxLines: articleListStyle.heroTitleMaxLines,
-                    style: articleListStyle.heroTitleTextStyle),
-                SizedBox(height: articleListStyle.titleLineSpace),
-                Text(viewModel.summary,
-                    maxLines: articleListStyle.heroSummaryMaxLines,
-                    style: articleListStyle.heroSummaryTextStyle)
-              ],
-            ),
-          ),
-        ),
-        buildListDivider()
-      ],
-    ),
-  );
-}
 
 Widget _buildArticlesList(List<ArticleEntity> articlesList, Function getRelatedArticles, ArticleListStyle articleListStyle) {
   return ListView.builder(
@@ -160,19 +102,13 @@ Widget _buildArticlesList(List<ArticleEntity> articlesList, Function getRelatedA
       itemCount: articlesList.length,
       itemBuilder: (BuildContext context, int index) {
         if (index == 0) {
-          return _heroListItemBuilder(fromArticleEntityToViewModel(articlesList[index], getRelatedArticles), articleListStyle);
+          return HeroListItem().builder(fromArticleEntityToViewModel(articlesList[index], getRelatedArticles));
         } else {
-          return ArticleListItem().standardListItemBuilder(fromArticleEntityToViewModel(articlesList[index], getRelatedArticles));
+          return StandardListItem().builder(fromArticleEntityToViewModel(articlesList[index], getRelatedArticles));
         }
       });
 }
 
-Widget _buildHeroArticleImage(ArticlesItemListViewModel articleData, ArticleListStyle articleListStyle) {
-  return ClipRRect(
-    borderRadius: articleListStyle.roundedBorderRadius,
-    child: NetworkImageFromFuture(articleData.imageUrl, fit: BoxFit.fitWidth),
-  );
-}
 
 
 // TODO: Maybe we have to externalice this widget in other file
