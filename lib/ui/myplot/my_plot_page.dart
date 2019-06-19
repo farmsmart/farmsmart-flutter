@@ -133,7 +133,8 @@ Widget _buildTitle(PlotListStyle myPlotStyle){
           ),
           Column(
             children: <Widget>[
-              buildAddCropTopButton()
+              buildAddCropTopButton(),
+
             ],
           )],
       ),

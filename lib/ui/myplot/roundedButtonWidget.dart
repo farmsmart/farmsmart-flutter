@@ -25,7 +25,7 @@ class _smallRoundedButtonStyle implements RoundedButtonStyle {
   final Color primaryIconButtonColor =  const Color(0xFFFFFFFF);
   final Color primaryColor =  const Color(0xff25df0c);
 
-  final double roundedButtonSize = 25.0;
+  final double roundedButtonSize = 24.0;
   final double buttonIconSize = 15.0;
 
   final BorderRadius roundedBorderRadius = null;
@@ -41,48 +41,47 @@ class _largeRoundedButtonStyle implements RoundedButtonStyle {
   final Color primaryColor =  const Color(0xff25df0c);
 
   final BorderRadius roundedBorderRadius = const BorderRadius.all(Radius.circular(20.0));
-  final EdgeInsets actionButtonLargeEdgePadding = const EdgeInsets.only(left: 32.0, right: 32.0, bottom: 32.0, top: 31.0);
+  final EdgeInsets actionButtonLargeEdgePadding = const EdgeInsets.all(32);
   final TextStyle buttonTextStyle = const TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: Color(0xffffffff));
 
-  final double roundedButtonSize = 56.0;
+  final double roundedButtonSize = 60.0;
   final double buttonIconSize = null;
 
   const _largeRoundedButtonStyle();
 }
 
 Widget buildAddCropTopButton({RoundedButtonStyle buttonStyle = const _smallRoundedButtonStyle()}){
-  return ButtonTheme(
+  return SizedBox(
     height: buttonStyle.roundedButtonSize,
     child: FlatButton(
-      onPressed: () {},
       child: Icon(
         Icons.add,
         size: buttonStyle.buttonIconSize,
         color: buttonStyle.primaryIconButtonColor,
       ),
-      shape: CircleBorder(),
-      color: buttonStyle.primaryColor,
-    ),
+        color: buttonStyle.primaryColor,
+        onPressed: () {},
+        shape: CircleBorder(
+        )
+    )
   );
 }
 
 Widget buildAddCropBottomButton(String title, {RoundedButtonStyle buttonStyle = const _largeRoundedButtonStyle(), Function onTap}){
-  return Container(
-    height: buttonStyle.roundedButtonSize,
-    margin: buttonStyle.actionButtonLargeEdgePadding,
-    width: double.infinity,
-    decoration: BoxDecoration(
-      color: buttonStyle.primaryColor,
-      borderRadius: buttonStyle.roundedBorderRadius,
-    ),
-    child: FlatButton(
-        child: Text(
-            title,
-            style: buttonStyle.buttonTextStyle
-        ),
-        onPressed: () {
-          onTap();
-        }
+  return Padding(
+    padding: buttonStyle.actionButtonLargeEdgePadding,
+    child: SizedBox(
+      height: buttonStyle.roundedButtonSize,
+      child: FlatButton(
+          textColor: buttonStyle.primaryIconButtonColor,
+          color: buttonStyle.primaryColor,
+          child: Text(
+              title,
+              style: buttonStyle.buttonTextStyle),
+          onPressed: () {},
+          shape: RoundedRectangleBorder(
+              borderRadius: buttonStyle.roundedBorderRadius)
+      ),
     ),
   );
 }
