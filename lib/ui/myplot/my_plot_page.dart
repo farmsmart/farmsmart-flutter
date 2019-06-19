@@ -88,7 +88,7 @@ class _MyPlotState extends State<PlotList> {
       case LoadingStatus.SUCCESS:
         return _buildPage(context, viewModel.cropsList, myPlotStyle, viewModel.goToDetail);
       case LoadingStatus.ERROR:
-        return _buildErorPage(viewModel, myPlotStyle); // TODO Check FARM-203
+        return _buildErrorPage(viewModel, myPlotStyle); // TODO Check FARM-203
     }
   }
 }
@@ -111,6 +111,7 @@ Widget _buildPage(BuildContext context, List<CropEntity> cropList, PlotListStyle
       _buildTitle(myPlotStyle),
       _buildCropList(context, cropList, myPlotStyle, goToDetail),
       buildAddCropBottomButton(myPlotStyle.buttonText)
+
     ],
   );
 }
@@ -139,7 +140,7 @@ Widget _buildTitle(PlotListStyle myPlotStyle){
   );
 }
 
-Widget _buildErorPage(MyPlotViewModel viewModel, PlotListStyle plotStyle){
+Widget _buildErrorPage(MyPlotViewModel viewModel, PlotListStyle plotStyle){
   return Container(
     child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
