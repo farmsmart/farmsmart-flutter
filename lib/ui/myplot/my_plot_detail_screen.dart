@@ -1,4 +1,5 @@
 import 'package:farmsmart_flutter/data/model/crop_entity.dart';
+import 'package:farmsmart_flutter/farmsmart_localizations.dart';
 import 'package:farmsmart_flutter/model/crop_detail_property.dart';
 import 'package:farmsmart_flutter/ui/common/network_image_from_future.dart';
 import 'package:farmsmart_flutter/utils/assets.dart';
@@ -36,6 +37,7 @@ class _CropDetailState extends State<CropDetailScreen> {
 
   Widget _buildBody(BuildContext context, CropEntity selectedCropData,
       List<CropDetailProperty> cropDetailProperties, Function goToStageDetail) {
+    FarmsmartLocalizations localizations = FarmsmartLocalizations.of(context);
     return Scaffold(
         appBar: CustomAppBar.buildForDetail(selectedCropData.name),
         body: Container(
@@ -62,7 +64,7 @@ class _CropDetailState extends State<CropDetailScreen> {
                   MyPlotDetailProperties().build(cropDetailProperties, context),
                   Padding(
                       padding: Paddings.boxPadding(),
-                      child: Text(Strings.myPlotDetailStepByStepTitle, style: Styles.detailTitleTextStyle()),),
+                      child: Text(localizations.myPlotDetailStepByStepTitle, style: Styles.detailTitleTextStyle()),),
                   MyPlotDetailStages().build(selectedCropData.stages, goToStageDetail)
                 ],
               ),

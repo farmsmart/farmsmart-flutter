@@ -1,6 +1,7 @@
 import 'package:farmsmart_flutter/data/firebase_const.dart';
 import 'package:farmsmart_flutter/data/managers/firestore_manager.dart';
 import 'package:farmsmart_flutter/data/model/article_entity.dart';
+import 'package:farmsmart_flutter/farmsmart_localizations.dart';
 import 'package:farmsmart_flutter/redux/app/app_state.dart';
 import 'package:farmsmart_flutter/redux/home/discover/discover_actions.dart';
 import 'package:farmsmart_flutter/ui/app_bar.dart';
@@ -64,7 +65,7 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
               child: Container(
                 color: Color(black),
                 child: StoreConnector<AppState, HomeViewmodel>(
-                    builder: (_, viewModel) => content(viewModel),
+                    builder: (_, viewModel) => content(context, viewModel),
                     converter: (store) => HomeViewmodel.fromStore(store)),
               ),
             ),
@@ -72,11 +73,12 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
     );
   }
 
-  Widget content(HomeViewmodel viewModel) {
+  Widget content(BuildContext context, HomeViewmodel viewModel) {
     homeViewModel = viewModel;
+    FarmsmartLocalizations localizations = FarmsmartLocalizations.of(context);
     return Scaffold(
       appBar:
-          CustomAppBar.build(viewModel.currentTab, viewModel.goToPrivacyPolicy),
+          CustomAppBar.build(context, viewModel.currentTab, viewModel.goToPrivacyPolicy),
       // We could share a list of pre defined actions for the app bar.
       body: _children[viewModel.currentTab],
       bottomNavigationBar: Theme(
@@ -91,28 +93,28 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
                   height: bottomBarIconSize),
               icon: Image.asset(Assets.BOTTOM_BAR_MY_PLOT_UNSELECTED,
                   height: bottomBarIconSize),
-              title: Text(Strings.myPlotTab),
+              title: Text(localizations.myPlotTab),
             ),
             BottomNavigationBarItem(
               activeIcon: Image.asset(Assets.BOTTOM_BAR_PROFIT_LOSS_SELECTED,
                   height: bottomBarIconSize),
               icon: Image.asset(Assets.BOTTOM_BAR_PROFIT_LOSS_UNSELECTED,
                   height: bottomBarIconSize),
-              title: Text(Strings.profitLossTab),
+              title: Text(localizations.profitLossTab),
             ),
             BottomNavigationBarItem(
               activeIcon: Image.asset(Assets.BOTTOM_BAR_DISCOVER_SELECTED,
                   height: bottomBarIconSize),
               icon: Image.asset(Assets.BOTTOM_BAR_DISCOVER_UNSELECTED,
                   height: bottomBarIconSize),
-              title: Text(Strings.discoverTab),
+              title: Text(localizations.discoverTab),
             ),
             BottomNavigationBarItem(
               activeIcon: Image.asset(Assets.BOTTOM_BAR_COMMUNITY_SELECTED,
                   height: bottomBarIconSize),
               icon: Image.asset(Assets.BOTTOM_BAR_COMMUNITY_UNSELECTED,
                   height: bottomBarIconSize),
-              title: Text(Strings.communityTab),
+              title: Text(localizations.communityTab),
             ),
           ],
         ),

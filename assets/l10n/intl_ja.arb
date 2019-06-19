@@ -1,0 +1,127 @@
+{
+  "Farmsmart": "ファームスマート",
+  "@Farmsmart": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "Check out this article from the FarmSmart mobile app \n ": "FarmSmartモバイルアプリからこの記事をチェックしてください。",
+  "@Check out this article from the FarmSmart mobile app \n ": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "Error": "エラー",
+  "@Error": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "No Title": "無題",
+  "@No Title": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "Farmsmart Flutter App": "Farmsmart Flutterアプリ",
+  "@Farmsmart Flutter App": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "Privacy Policies": "プライバシーポリシー",
+  "@Privacy Policies": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "My Plot": "私のプロット",
+  "@My Plot": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "Profit/Loss": "利益損失",
+  "@Profit/Loss": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "Discover": "発見",
+  "@Discover": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "Community": "コミュニティ",
+  "@Community": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "CURRENT STAGE": "現在のステージ",
+  "@CURRENT STAGE": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "DETAILS": "詳細",
+  "@DETAILS": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "My Crop": "私の作物",
+  "@My Crop": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "Crop Details": "作物の詳細",
+  "@Crop Details": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "Complexity": "複雑",
+  "@Complexity": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "Best soil types": "最高の土壌タイプ",
+  "@Best soil types": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "Time until maturity": "成熟するまでの時間",
+  "@Time until maturity": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "Crops in rotation": "輪作",
+  "@Crops in rotation": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "Crop type": "作物タイプ",
+  "@Crop type": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "Water requirement": "水の必要量",
+  "@Water requirement": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "Setup Cost": "セットアップ費用",
+  "@Setup Cost": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "Profitability": "収益性",
+  "@Profitability": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "Companion Plants": "コンパニオンプラント",
+  "@Companion Plants": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "Non-Companion Plants": "非コンパニオン植物",
+  "@Non-Companion Plants": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "Step-by-step guide": "ステップバイステップガイド",
+  "@Step-by-step guide": {
+    "type": "text",
+    "placeholders": {}
+  }
+}
