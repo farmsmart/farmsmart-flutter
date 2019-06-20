@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'myplot_viewmodel.dart';
 import 'my_plot_list.dart';
-import 'roundedButtonWidget.dart';
+import 'roundedButton.dart';
 
 class PlotListViewModel {
   final String title;
@@ -60,6 +60,39 @@ class _DefaultStyle implements PlotListStyle {
   const _DefaultStyle();
 }
 
+class _DefaultLargeRoundedButtonStyle implements RoundedButtonStyle {
+
+  final Color IconButtonColor =  const Color(0xFFFFFFFF);
+  final Color backgroundColor =  const Color(0xff25df0c);
+  final ShapeBorder buttonShape = const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20.0)));
+
+  final EdgeInsets edgePadding = const EdgeInsets.all(32);
+  final TextStyle buttonTextStyle = const TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: Color(0xffffffff));
+
+  final double iconEdgePadding = 5;
+  final double height = 60.0;
+  final double buttonIconSize = null;
+
+  const _DefaultLargeRoundedButtonStyle();
+}
+
+class _DefaultSmallRoundedButtonStyle implements RoundedButtonStyle {
+
+  final Color IconButtonColor =  const Color(0xFFFFFFFF);
+  final Color backgroundColor =  const Color(0xff25df0c);
+
+  final double height = 24.0;
+  final double buttonIconSize = 15.0;
+
+  final ShapeBorder buttonShape = const CircleBorder();
+
+  final double iconEdgePadding = 0;
+  final EdgeInsets edgePadding = const EdgeInsets.all(0);
+  final TextStyle buttonTextStyle = null;
+
+  const _DefaultSmallRoundedButtonStyle();
+}
+
 class PlotList extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -69,11 +102,11 @@ class PlotList extends StatefulWidget {
 
 class _MyPlotState extends State<PlotList> {
   @override
-  Widget build(BuildContext context, {PlotListStyle myPlotStyle = const _DefaultStyle()}) {
+  Widget build(BuildContext context, {PlotListStyle plotStyle = const _DefaultStyle()}) {
     return Scaffold(
       body: StoreConnector<AppState, MyPlotViewModel>(
           onInit: (store) => store.dispatch(FetchCropListAction()),
-          builder: (_, viewModel) => _buildBody(context, viewModel, myPlotStyle),
+          builder: (_, viewModel) => _buildBody(context, viewModel, plotStyle),
           converter: (store) => MyPlotViewModel.fromStore(store)),
     );
   }
@@ -93,9 +126,9 @@ class _MyPlotState extends State<PlotList> {
   }
 }
 
-Widget _buildCropList(BuildContext context, List<CropEntity> cropList, PlotListStyle myPlotStyle, Function goToDetail){
+Widget _buildCropList(BuildContext context, List<CropEntity> cropList, PlotListStyle plotStyle, Function goToDetail){
   return ListView.builder(
-    padding: myPlotStyle.edgePadding,
+    padding: plotStyle.edgePadding,
     itemCount: cropList.length,
     shrinkWrap: true,
     physics: ScrollPhysics(),
@@ -105,19 +138,19 @@ Widget _buildCropList(BuildContext context, List<CropEntity> cropList, PlotListS
   );
 }
 
-Widget _buildPage(BuildContext context, List<CropEntity> cropList, PlotListStyle plotStyle, Function goToDetail, {RoundedButtonStyle buttonStyle = const defaultLargeRoundedButtonStyle()}){
+Widget _buildPage(BuildContext context, List<CropEntity> cropList, PlotListStyle plotStyle, Function goToDetail){
   return ListView(
     children: <Widget>[
       _buildTitle(plotStyle),
       _buildCropList(context, cropList, plotStyle, goToDetail),
 
       //FIXME: We should pass the onTap for everyButton when needed
-      buildRoundedButton(defaultLargeRoundedButtonStyle(), title: plotStyle.buttonText)
+      buildRoundedButton(_DefaultLargeRoundedButtonStyle(), title: plotStyle.buttonText)
     ],
   );
 }
 
-Widget _buildTitle(PlotListStyle myPlotStyle, {RoundedButtonStyle buttonStyle = const defaultSmallRoundedButtonStyle()}){
+Widget _buildTitle(PlotListStyle myPlotStyle){
   return Container(
     padding: myPlotStyle.titleEdgePadding,
     child: Row(
@@ -135,7 +168,7 @@ Widget _buildTitle(PlotListStyle myPlotStyle, {RoundedButtonStyle buttonStyle = 
           Column(
             children: <Widget>[
               //FIXME: We should pass the onTap for everyButton when needed
-              buildRoundedButton(defaultSmallRoundedButtonStyle(), icon: Icons.add)
+              buildRoundedButton(_DefaultSmallRoundedButtonStyle(), icon: Icons.add)
             ]
           )]
       )
@@ -151,8 +184,6 @@ Widget _buildErrorPage(MyPlotViewModel viewModel, PlotListStyle plotStyle){
         Text(
           plotStyle.errorText
         ),
-        //FIXME:NEEDS TO BE FIXED
-        //buildButton(plotStyle.errorButtonText, onTap: viewModel.fetchCrops)
       ]
     )
   );

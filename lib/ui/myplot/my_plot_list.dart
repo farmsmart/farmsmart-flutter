@@ -33,7 +33,7 @@ abstract class PlotListItemStyle {
       this.imageSize, this.detailTextBackgroundColor,this.detailLineSpace, this.headingLineSpace);
 }
 
-class DefaultPlotListItemStyle implements PlotListItemStyle{
+class _defaultStyle implements PlotListItemStyle{
 
   final Color primaryColor =  const Color(0xff25df0c);
   final Color dividerColor = const Color(0xfff5f8fa);
@@ -56,11 +56,11 @@ class DefaultPlotListItemStyle implements PlotListItemStyle{
   final double headingLineSpace = 12.5;
   final double detailLineSpace = 15;
 
-  const DefaultPlotListItemStyle();
+  const _defaultStyle();
 }
 
 class PlotListItem {
-  Widget buildListItem(PlotListViewModel viewModel, {PlotListItemStyle itemStyle = const DefaultPlotListItemStyle()}) {
+  Widget buildListItem(PlotListViewModel viewModel, {PlotListItemStyle itemStyle = const _defaultStyle()}) {
     return GestureDetector(
       onTap: viewModel.onTap,
       child: Card(
