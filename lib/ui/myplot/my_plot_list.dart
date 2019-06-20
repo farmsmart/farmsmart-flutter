@@ -8,6 +8,9 @@ abstract class PlotListItemStyle {
   final Color dividerColor;
   final Color detailTextBackgroundColor;
 
+  //FIXME: temporally color added to the blend
+  final Color overlayColor;
+
   final EdgeInsets edgePadding;
   final EdgeInsets detailTextEdgePadding;
 
@@ -30,7 +33,7 @@ abstract class PlotListItemStyle {
       this.detailTextBorderRadius, this.detailTextStyle,
       this.titleTextStyle, this.subTitleTextStyle, this.elevation,
       this.dividerHeight,this.cardEdgePadding,
-      this.imageSize, this.detailTextBackgroundColor,this.detailLineSpace, this.headingLineSpace);
+      this.imageSize, this.detailTextBackgroundColor,this.detailLineSpace, this.headingLineSpace, this.overlayColor);
 }
 
 class _defaultStyle implements PlotListItemStyle{
@@ -38,6 +41,7 @@ class _defaultStyle implements PlotListItemStyle{
   final Color primaryColor =  const Color(0xff25df0c);
   final Color dividerColor = const Color(0xfff5f8fa);
   final Color detailTextBackgroundColor = const Color(0x1425df0c);
+  final Color overlayColor = const Color(0x1425df0c);
 
   final EdgeInsets detailTextEdgePadding = const EdgeInsets.only(left: 12, top: 8, right: 12, bottom: 5);
   final EdgeInsets dividerEdgePadding = const EdgeInsets.only(left: 25.0);
@@ -141,10 +145,19 @@ class PlotListItem {
   ClipOval _buildPlotImage(
       Future<String> imageUrl, PlotListItemStyle itemStyle) {
     return ClipOval(
-      child: NetworkImageFromFuture(imageUrl,
-          height: itemStyle.imageSize,
-          width: itemStyle.imageSize,
-          fit: BoxFit.cover),
+      child: Stack(
+        children: <Widget>[
+          NetworkImageFromFuture(imageUrl,
+              height: itemStyle.imageSize,
+              width: itemStyle.imageSize,
+              fit: BoxFit.cover),
+          Positioned.fill(
+            child: Container(
+              color: itemStyle.overlayColor,
+            )
+          )
+        ]
+      )
     );
   }
 

@@ -121,7 +121,7 @@ class _MyPlotState extends State<PlotList> {
       case LoadingStatus.SUCCESS:
         return _buildPage(context, viewModel.cropsList, myPlotStyle, viewModel.goToDetail);
       case LoadingStatus.ERROR:
-        return _buildErrorPage(viewModel, myPlotStyle); // TODO Check FARM-203
+        return _buildErrorPage(context, viewModel, myPlotStyle); // TODO Check FARM-203
     }
   }
 }
@@ -141,16 +141,16 @@ Widget _buildCropList(BuildContext context, List<CropEntity> cropList, PlotListS
 Widget _buildPage(BuildContext context, List<CropEntity> cropList, PlotListStyle plotStyle, Function goToDetail){
   return ListView(
     children: <Widget>[
-      _buildTitle(plotStyle),
+      _buildTitle(plotStyle, context: context),
       _buildCropList(context, cropList, plotStyle, goToDetail),
 
       //FIXME: We should pass the onTap for everyButton when needed
-      buildRoundedButton(_DefaultLargeRoundedButtonStyle(), title: plotStyle.buttonText)
+      buildRoundedButton(_DefaultLargeRoundedButtonStyle(), title: plotStyle.buttonText, context: context)
     ],
   );
 }
 
-Widget _buildTitle(PlotListStyle myPlotStyle){
+Widget _buildTitle(PlotListStyle myPlotStyle, {BuildContext context}){
   return Container(
     padding: myPlotStyle.titleEdgePadding,
     child: Row(
@@ -168,25 +168,33 @@ Widget _buildTitle(PlotListStyle myPlotStyle){
           Column(
             children: <Widget>[
               //FIXME: We should pass the onTap for everyButton when needed
-              buildRoundedButton(_DefaultSmallRoundedButtonStyle(), icon: Icons.add)
+              buildRoundedButton(_DefaultSmallRoundedButtonStyle(), icon: Icons.add, context: context)
             ]
           )]
       )
   );
 }
 
-Widget _buildErrorPage(MyPlotViewModel viewModel, PlotListStyle plotStyle){
+Widget _buildErrorPage(BuildContext context, MyPlotViewModel viewModel, PlotListStyle plotStyle){
+  final String retryButton = "Retry";
   return Container(
     child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-        Text(
-          plotStyle.errorText
-        ),
-      ]
-    )
+        AlertDialog(
+          title: Text(
+            plotStyle.errorText),
+          actions: <Widget>[
+            FlatButton(
+              child: Text(
+                  retryButton),
+              onPressed: () {
+                //FIXME: Needs to implement the retry functionality
+              }
+            )
+          ])
+      ],
+    ),
   );
 }
-
-

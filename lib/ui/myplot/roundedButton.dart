@@ -20,7 +20,7 @@ abstract class RoundedButtonStyle {
       this.buttonTextStyle, this.buttonIconSize});
 }
 
-Widget buildRoundedButton(RoundedButtonStyle buttonStyle, {String title, IconData icon, Function onTap}) {
+Widget buildRoundedButton(RoundedButtonStyle buttonStyle, {String title, IconData icon, Function onTap, BuildContext context}) {
 
   List<Widget> _buildButtonContent(){
     List<Widget> listBuilder = [];
@@ -55,11 +55,25 @@ Widget buildRoundedButton(RoundedButtonStyle buttonStyle, {String title, IconDat
                 direction: Axis.horizontal,
                 children: _buildButtonContent(),
               ),
-              onPressed: () {},
+              onPressed: () => _showToast(context),
               shape: buttonStyle.buttonShape
           )
       )
   );
 }
 
+//FIXME: Only is built for show that this buttons are not functional yet
+void _showToast(BuildContext context) {
+  final String toastText = "Not Implemented Yet";
+  final String toastButtonText = "BACK";
+  final scaffold = Scaffold.of(context);
+  scaffold.showSnackBar(
+      SnackBar(
+        content: Text(
+            toastText
+            ),
+        action: SnackBarAction(label: toastButtonText, onPressed: scaffold.hideCurrentSnackBar),
+      )
+  );
+}
 
