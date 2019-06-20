@@ -1,11 +1,8 @@
-import 'package:farmsmart_flutter/data/model/crop_entity.dart';
-import 'package:farmsmart_flutter/utils/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:farmsmart_flutter/ui/common/network_image_from_future.dart';
-
 import 'my_plot_page.dart';
 
-abstract class PlotItemStyle {
+abstract class PlotListItemStyle {
 
   final Color primaryColor;
   final Color dividerColor;
@@ -16,10 +13,6 @@ abstract class PlotItemStyle {
 
   final EdgeInsets dividerEdgePadding;
 
-  final MainAxisAlignment mainAxisAlignment;
-  final CrossAxisAlignment crossAxisAlignment;
-  final MainAxisSize mainAxisSize;
-
   final BorderRadius detailTextBorderRadius;
 
   final TextStyle detailTextStyle;
@@ -29,24 +22,22 @@ abstract class PlotItemStyle {
   final double elevation;
   final double dividerHeight;
   final double imageSize;
-  final double headingSpaceLine;
-  final double detailSpaceLine;
+  final double headingLineSpace;
+  final double detailLineSpace;
 
-  PlotItemStyle(this.primaryColor, this.dividerColor, this.edgePadding,
+  PlotListItemStyle(this.primaryColor, this.dividerColor, this.edgePadding,
       this.detailTextEdgePadding, this.dividerEdgePadding,
-      this.mainAxisAlignment, this.crossAxisAlignment,
-      this.mainAxisSize, this.detailTextBorderRadius, this.detailTextStyle,
+      this.detailTextBorderRadius, this.detailTextStyle,
       this.titleTextStyle, this.subTitleTextStyle, this.elevation,
       this.dividerHeight,
-      this.imageSize, this.detailTextBackgroundColor,this.detailSpaceLine, this.headingSpaceLine);
+      this.imageSize, this.detailTextBackgroundColor,this.detailLineSpace, this.headingLineSpace);
 }
 
-class DefaultItemStyle implements PlotItemStyle{
+class DefaultPlotListItemStyle implements PlotListItemStyle{
 
   final Color primaryColor =  const Color(0xff25df0c);
   final Color dividerColor = const Color(0xfff5f8fa);
   final Color detailTextBackgroundColor = const Color(0x1425df0c);
-
 
   final EdgeInsets detailTextEdgePadding = const EdgeInsets.only(left: 12, top: 8, right: 12, bottom: 5);
   final EdgeInsets dividerEdgePadding = const EdgeInsets.only(left: 25.0);
@@ -56,25 +47,19 @@ class DefaultItemStyle implements PlotItemStyle{
   final TextStyle detailTextStyle = const TextStyle(fontSize: 11, fontWeight: FontWeight.normal, color: Color(0xff25df0c));
   final TextStyle titleTextStyle = const TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: Color(0xff1a1b46));
 
-  final MainAxisSize mainAxisSize = MainAxisSize.min;
   final BorderRadius detailTextBorderRadius = const BorderRadius.all(Radius.circular(20.0));
-
-  //FIXME: Maybe we should remove that from style
-  final CrossAxisAlignment crossAxisAlignment =   CrossAxisAlignment.start;
-  final MainAxisAlignment mainAxisAlignment = MainAxisAlignment.spaceBetween;
 
   final double elevation = 0.0;
   final double dividerHeight = 2;
   final double imageSize = 80.0;
-  final double headingSpaceLine = 12.5;
-  final double detailSpaceLine = 15;
+  final double headingLineSpace = 12.5;
+  final double detailLineSpace = 15;
 
-  const DefaultItemStyle();
+  const DefaultPlotListItemStyle();
 }
 
-
 class PlotListItem {
-  Widget buildListItem(CropListViewModel viewModel, {PlotItemStyle itemStyle = const DefaultItemStyle()}) {
+  Widget buildListItem(PlotListViewModel viewModel, {PlotListItemStyle itemStyle = const DefaultPlotListItemStyle()}) {
     return GestureDetector(
       onTap: viewModel.onTap,
       child: Card(
@@ -84,10 +69,10 @@ class PlotListItem {
             Container(
               padding: itemStyle.edgePadding,
               child: Row(
-                mainAxisAlignment: itemStyle.mainAxisAlignment,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Column(
-                    crossAxisAlignment: itemStyle.crossAxisAlignment,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Row(
                         children: <Widget>[
@@ -96,7 +81,7 @@ class PlotListItem {
                         ]
                       ),
                       SizedBox(
-                        height: itemStyle.headingSpaceLine,
+                        height: itemStyle.headingLineSpace,
                       ),
                       Row(
                         children: <Widget>[
@@ -105,18 +90,18 @@ class PlotListItem {
                         ]
                       ),
                       SizedBox(
-                        height: itemStyle.detailSpaceLine,
+                        height: itemStyle.detailLineSpace,
                       ),
                       Row(
                         children: <Widget>[
-                          _buildDayCountView(itemStyle, viewModel.detail)
+                          _buildDetailTextView(itemStyle, viewModel.detail)
                         ]
                       )
                     ]
                   ),
                   Column(
                     children: <Widget>[
-                      _buildCropImage(viewModel.imageUrl, itemStyle),
+                      _buildPlotImage(viewModel.imageUrl, itemStyle),
                     ],
                   )
                 ]
@@ -130,19 +115,19 @@ class PlotListItem {
     );
   }
 
-  Container _buildDayCountView(PlotItemStyle itemStyle, String DayText) {
+  Container _buildDetailTextView(PlotListItemStyle itemStyle, String text) {
     return Container(
                       padding: itemStyle.detailTextEdgePadding,
                       decoration: BoxDecoration(
                           color: itemStyle.detailTextBackgroundColor,
                           borderRadius: itemStyle.detailTextBorderRadius),
                       child: Row(
-                        mainAxisSize: itemStyle.mainAxisSize,
+                        mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
                           Flexible(
                               child: Container(
                             child: Text(
-                              DayText,
+                              text,
                               style: itemStyle.detailTextStyle,
                             ),
                           ))
@@ -151,8 +136,8 @@ class PlotListItem {
                     );
   }
 
-  ClipOval _buildCropImage(
-      Future<String> imageUrl, PlotItemStyle itemStyle) {
+  ClipOval _buildPlotImage(
+      Future<String> imageUrl, PlotListItemStyle itemStyle) {
     return ClipOval(
       child: NetworkImageFromFuture(imageUrl,
           height: itemStyle.imageSize,
@@ -161,7 +146,7 @@ class PlotListItem {
     );
   }
 
-  Widget _buildListSeparator(PlotItemStyle itemStyle) {
+  Widget _buildListSeparator(PlotListItemStyle itemStyle) {
     return Container(
         height: itemStyle.dividerHeight,
         color: itemStyle.dividerColor,

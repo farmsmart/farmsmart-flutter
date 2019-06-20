@@ -9,7 +9,7 @@ import 'myplot_viewmodel.dart';
 import 'my_plot_list.dart';
 import 'roundedButtonWidget.dart';
 
-class CropListViewModel {
+class PlotListViewModel {
   final String title;
   final String subTitle;
   final String detail;
@@ -19,12 +19,12 @@ class CropListViewModel {
 
   final Future<String> imageUrl;
 
-  CropListViewModel(this.title , this.subTitle, this.detail, this.imageUrl, this.onTap, this.buttonTitle);
+  PlotListViewModel(this.title , this.subTitle, this.detail, this.imageUrl, this.onTap, this.buttonTitle);
 }
 
-CropListViewModel fromCropEntityToViewModel(CropEntity currentCrop, Function goToDetail) {
+PlotListViewModel fromCropEntityToViewModel(CropEntity currentCrop, Function goToDetail) {
   //FIXME: Change the mocked data "planting" and "Day 6" with the correct FirebaseData when available
-  return CropListViewModel(currentCrop.name ?? Strings.defaultCropNameText, "Planting", "Day 6", currentCrop.imageUrl, () => goToDetail(currentCrop), "Add Another Crop");
+  return PlotListViewModel(currentCrop.name ?? Strings.defaultCropNameText, "Planting", "Day 6", currentCrop.imageUrl, () => goToDetail(currentCrop), "Add Another Crop");
 }
 
 abstract class PlotListStyle {
@@ -105,18 +105,19 @@ Widget _buildCropList(BuildContext context, List<CropEntity> cropList, PlotListS
   );
 }
 
-Widget _buildPage(BuildContext context, List<CropEntity> cropList, PlotListStyle myPlotStyle, Function goToDetail){
+Widget _buildPage(BuildContext context, List<CropEntity> cropList, PlotListStyle plotStyle, Function goToDetail, {RoundedButtonStyle buttonStyle = const defaultLargeRoundedButtonStyle()}){
   return ListView(
     children: <Widget>[
-      _buildTitle(myPlotStyle),
-      _buildCropList(context, cropList, myPlotStyle, goToDetail),
-      buildAddCropBottomButton(myPlotStyle.buttonText)
+      _buildTitle(plotStyle),
+      _buildCropList(context, cropList, plotStyle, goToDetail),
 
+      //FIXME: We should pass the onTap for everyButton when needed
+      buildRoundedButton(defaultLargeRoundedButtonStyle(), title: plotStyle.buttonText)
     ],
   );
 }
 
-Widget _buildTitle(PlotListStyle myPlotStyle){
+Widget _buildTitle(PlotListStyle myPlotStyle, {RoundedButtonStyle buttonStyle = const defaultSmallRoundedButtonStyle()}){
   return Container(
     padding: myPlotStyle.titleEdgePadding,
     child: Row(
@@ -129,15 +130,15 @@ Widget _buildTitle(PlotListStyle myPlotStyle){
                 Strings.myPlotTab,
                 style: myPlotStyle.titleTextStyle,
               )
-            ],
+            ]
           ),
           Column(
             children: <Widget>[
-              buildAddCropTopButton(),
-
-            ],
-          )],
-      ),
+              //FIXME: We should pass the onTap for everyButton when needed
+              buildRoundedButton(defaultSmallRoundedButtonStyle(), icon: Icons.add)
+            ]
+          )]
+      )
   );
 }
 
@@ -150,12 +151,11 @@ Widget _buildErrorPage(MyPlotViewModel viewModel, PlotListStyle plotStyle){
         Text(
           plotStyle.errorText
         ),
-        buildAddCropBottomButton(plotStyle.errorButtonText, onTap: viewModel.fetchCrops)
-      ],
-    ),
+        //FIXME:NEEDS TO BE FIXED
+        //buildButton(plotStyle.errorButtonText, onTap: viewModel.fetchCrops)
+      ]
+    )
   );
-
-
 }
 
 
