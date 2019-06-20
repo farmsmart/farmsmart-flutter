@@ -1,31 +1,9 @@
+import 'package:farmsmart_flutter/ui/common/listDivider.dart';
 import 'package:farmsmart_flutter/ui/common/network_image_from_future.dart';
 import 'package:farmsmart_flutter/utils/strings.dart';
 import 'package:flutter/material.dart';
+import 'ArticleListItemStyle.dart';
 import 'discover_page.dart';
-
-abstract class ArticleListItemStyle {
-  final TextStyle titleTextStyle;
-  final TextStyle summaryTextStyle;
-
-  final EdgeInsets listEdgePadding;
-  final EdgeInsets cardMargin;
-
-  final double imageLineSpace;
-  final double textLineSpace;
-  final double imageSize;
-  final double cardElevation;
-
-  final BorderRadius imageBorderRadius;
-
-  final int maxLinesPerTitle;
-  final int maxLinesPerSummary;
-
-  ArticleListItemStyle(this.titleTextStyle, this.summaryTextStyle,
-      this.listEdgePadding, this.cardMargin, this.imageLineSpace,
-      this.textLineSpace, this.imageSize, this.cardElevation,
-      this.imageBorderRadius, this.maxLinesPerTitle, this.maxLinesPerSummary);
-
-}
 
 class _DefaultStyle implements ArticleListItemStyle {
   static const Color titleColor = Color(0xFF1a1b46);
@@ -38,7 +16,7 @@ class _DefaultStyle implements ArticleListItemStyle {
   final EdgeInsets cardMargin = const EdgeInsets.all(0);
 
   final double imageLineSpace = 30.5;
-  final double imageSize = 80;
+  final double imageHeight = 80;
   final double textLineSpace = 9.5;
   final double cardElevation = 0;
 
@@ -71,7 +49,7 @@ class StandardListItem {
                 ],
               ),
             ),
-            buildListDivider()
+            ListDivider.build(),
           ],
         ),
       ),
@@ -83,8 +61,8 @@ class StandardListItem {
         borderRadius: itemStyle.imageBorderRadius,
         child: NetworkImageFromFuture(
             viewModel.imageUrl,
-            height: itemStyle.imageSize,
-            width: itemStyle.imageSize,
+            height: itemStyle.imageHeight,
+            width: itemStyle.imageHeight,
             fit: BoxFit.cover)
     );
   }
