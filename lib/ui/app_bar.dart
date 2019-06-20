@@ -1,3 +1,4 @@
+import 'package:farmsmart_flutter/farmsmart_localizations.dart';
 import 'package:farmsmart_flutter/redux/home/screens.dart';
 import 'package:farmsmart_flutter/utils/assets.dart';
 import 'package:flutter/material.dart';
@@ -11,21 +12,22 @@ import 'package:farmsmart_flutter/data/firebase_const.dart';
 
 // We define here generic margins for the app
 abstract class CustomAppBar {
-  static AppBar build(int currentHomeTab, Function goToPrivacyPolicy) {
+  static AppBar build(BuildContext context, int currentHomeTab, Function goToPrivacyPolicy) {
+    FarmsmartLocalizations localizations = FarmsmartLocalizations.of(context);
     switch (currentHomeTab) {
       case HomeScreen.MY_PLOT_TAB:
-        return buildForHome(Strings.myPlotTab, profileAction(),
+        return buildForHome(localizations.myPlotTab, profileAction(),
             popUpMenuAction(goToPrivacyPolicy), homeIcon());
         break;
       case HomeScreen.PROFIT_LOSS_TAB:
-        return buildWithTitle(Strings.profitLossTab);
+        return buildWithTitle(localizations.profitLossTab);
         break;
       case HomeScreen.ARTICLES_TAB:
-        return buildForHome(Strings.discoverTab, profileAction(),
+        return buildForHome(localizations.discoverTab, profileAction(),
             popUpMenuAction(goToPrivacyPolicy), homeIcon());
         break;
       case HomeScreen.COMMUNITY_TAB:
-        return buildWithTitle(Strings.communityTab);
+        return buildWithTitle(localizations.communityTab);
         break;
     }
     return AppBar();
