@@ -49,7 +49,7 @@ class _DefaultStyle implements PlotListStyle {
   final Color primaryColor =  const Color(0xff25df0c);
 
   final EdgeInsets edgePadding = const EdgeInsets.only(top: 20.0) ;
-  final EdgeInsets titleEdgePadding = const EdgeInsets.only(left: 25, top: 30, right: 5, bottom: 20);
+  final EdgeInsets titleEdgePadding = const EdgeInsets.only(left: 25, top: 30, right: 5, bottom: 10);
 
   final TextStyle titleTextStyle = const TextStyle(fontSize: 27, fontWeight: FontWeight.bold, color: Color(0xFF000000));
 

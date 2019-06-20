@@ -12,7 +12,7 @@ abstract class PlotListItemStyle {
   final EdgeInsets detailTextEdgePadding;
 
   final EdgeInsets dividerEdgePadding;
-
+  final EdgeInsets cardEdgePadding;
   final BorderRadius detailTextBorderRadius;
 
   final TextStyle detailTextStyle;
@@ -29,7 +29,7 @@ abstract class PlotListItemStyle {
       this.detailTextEdgePadding, this.dividerEdgePadding,
       this.detailTextBorderRadius, this.detailTextStyle,
       this.titleTextStyle, this.subTitleTextStyle, this.elevation,
-      this.dividerHeight,
+      this.dividerHeight,this.cardEdgePadding,
       this.imageSize, this.detailTextBackgroundColor,this.detailLineSpace, this.headingLineSpace);
 }
 
@@ -41,6 +41,7 @@ class DefaultPlotListItemStyle implements PlotListItemStyle{
 
   final EdgeInsets detailTextEdgePadding = const EdgeInsets.only(left: 12, top: 8, right: 12, bottom: 5);
   final EdgeInsets dividerEdgePadding = const EdgeInsets.only(left: 25.0);
+  final EdgeInsets cardEdgePadding = const EdgeInsets.all(0);
   final EdgeInsets edgePadding = const EdgeInsets.only(left: 25.0, top: 25.0, right: 30.0, bottom: 25.0);
 
   final TextStyle subTitleTextStyle = const TextStyle(fontSize: 15, fontWeight: FontWeight.normal, color: Color(0xff767690));
@@ -63,6 +64,7 @@ class PlotListItem {
     return GestureDetector(
       onTap: viewModel.onTap,
       child: Card(
+        margin: itemStyle.cardEdgePadding,
         elevation: itemStyle.elevation,
         child: Column(
           children: <Widget>[
