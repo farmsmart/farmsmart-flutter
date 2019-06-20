@@ -1,12 +1,11 @@
 import 'package:farmsmart_flutter/model/loading_status.dart';
 import 'package:farmsmart_flutter/redux/app/app_state.dart';
-import 'package:farmsmart_flutter/ui/common/network_image_from_future.dart';
 import 'package:farmsmart_flutter/ui/discover/HeroListItem.dart';
+import 'package:farmsmart_flutter/ui/discover/StandardListItem.dart';
 import 'package:farmsmart_flutter/utils/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:farmsmart_flutter/data/model/article_entity.dart';
-import 'package:farmsmart_flutter/ui/discover/StandardListItem.dart';
 import 'package:farmsmart_flutter/ui/discover/discover_viewmodel.dart';
 import 'package:farmsmart_flutter/redux/home/discover/discover_actions.dart';
 
@@ -76,13 +75,13 @@ class _DiscoveryState extends State<ArticleList> {
 Widget _buildDiscoverPage(BuildContext context, List<ArticleEntity> articlesList, Function getRelatedArticles, {ArticleListStyle articleListStyle = const _ArticleListDefaultStyle()}) {
   return ListView(
     children: <Widget>[
-      _buildScreenTitle(articleListStyle),
-      _buildArticlesList(articlesList, getRelatedArticles, articleListStyle)
+      _buildHeader(articleListStyle),
+      _buildList(articlesList, getRelatedArticles, articleListStyle)
     ],
   );
 }
 
-Widget _buildScreenTitle(ArticleListStyle articleListStyle) {
+Widget _buildHeader(ArticleListStyle articleListStyle) {
   return Container(
     padding: articleListStyle.titleEdgePadding,
     child: Row(
@@ -95,7 +94,7 @@ Widget _buildScreenTitle(ArticleListStyle articleListStyle) {
 }
 
 
-Widget _buildArticlesList(List<ArticleEntity> articlesList, Function getRelatedArticles, ArticleListStyle articleListStyle) {
+Widget _buildList(List<ArticleEntity> articlesList, Function getRelatedArticles, ArticleListStyle articleListStyle) {
   return ListView.builder(
       shrinkWrap: true,
       physics: ScrollPhysics(),
@@ -109,20 +108,18 @@ Widget _buildArticlesList(List<ArticleEntity> articlesList, Function getRelatedA
       });
 }
 
-
-
 // TODO: Maybe we have to externalice this widget in other file
 abstract class DividerStyle {
   final Color color;
-  final EdgeInsets indentation;
+  final EdgeInsets edgePadding;
   final double height;
 
-  DividerStyle(this.color, this.indentation, this.height);
+  DividerStyle(this.color, this.edgePadding, this.height);
 }
 
 class DefaultDividerStyle implements DividerStyle {
   final Color color = const Color(0xFFf5f8fa);
-  final EdgeInsets indentation = const EdgeInsets.only(left: 32.0);
+  final EdgeInsets edgePadding = const EdgeInsets.only(left: 32.0);
   final double height = 2.0;
 
   const DefaultDividerStyle();
@@ -132,5 +129,5 @@ Widget buildListDivider({DividerStyle dividerStyle = const DefaultDividerStyle()
   return Container(
       height: dividerStyle.height,
       color: dividerStyle.color,
-      margin: dividerStyle.indentation);
+      margin: dividerStyle.edgePadding);
 }
