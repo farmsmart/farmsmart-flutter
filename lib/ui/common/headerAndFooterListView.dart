@@ -9,6 +9,8 @@ class HeaderAndFooterListView {
   static Widget builder(
       {@required int itemCount,
       @required IndexedWidgetBuilder itemBuilder,
+      ScrollPhysics physics,
+      bool shrinkWrap = false,
       Widget header,
       Widget footer}) {
     final headerPresent = (header != null);
@@ -19,6 +21,8 @@ class HeaderAndFooterListView {
     return _builder(
         itemCount: itemCount,
         itemBuilder: itemBuilder,
+        physics: physics,
+        shrinkWrap: shrinkWrap,
         headers: headers,
         footers: footers);
   }
@@ -30,10 +34,14 @@ class HeaderAndFooterListView {
   static Widget _builder(
       { @required int itemCount,
       @required IndexedWidgetBuilder itemBuilder,
+      ScrollPhysics physics,
+      bool shrinkWrap = false,
       List<Widget> headers = const <Widget>[],
       List<Widget> footers = const <Widget>[]}) {
     final int totalItemCount = headers.length + itemCount + footers.length;
     return ListView.builder(
+      physics: physics,
+      shrinkWrap: shrinkWrap,
       itemCount: totalItemCount,
       itemBuilder: (context, index) {
         int itemIndex = index - headers.length; // index in terms of items
