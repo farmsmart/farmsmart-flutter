@@ -25,6 +25,10 @@ abstract class Margins {
   static SizedBox generalListSmallerMargin() {
     return SizedBox(height: 7);
   }
+
+  static SizedBox spaceBetweenTextAndPicture() {
+    return SizedBox(width: 30.5);
+  }
 }
 
 abstract class Paddings {
@@ -45,7 +49,7 @@ abstract class Paddings {
   }
 
   static listOfArticlesPadding() {
-    return EdgeInsets.only(left: 16, top: 8, bottom: 0);
+    return EdgeInsets.only(left: 25.0, top: 8, bottom: 0, right: 25.0);
   }
 
   static leftPaddingSmall() {
@@ -64,15 +68,11 @@ abstract class Paddings {
     return EdgeInsets.only(bottom: 10);
   }
 
-  //New Paddings for UI
   static title(){
     return EdgeInsets.only(left: 25, top: 30, right: 5, bottom: 20);
   }
-  
-  static roundedTextPadding(){
-    return EdgeInsets.only(left: 12, top: 8, right: 12, bottom: 5);
-  }
 }
+
 
 abstract class Dividers {
 
@@ -81,12 +81,13 @@ abstract class Dividers {
   }
 
   static listDividerLine() {
-    return Divider(
+    return Container(
       height: 2,
-      color: Color(whiteDivider),
-      indent: 25,
+      color: Color(separatorGrey),
+      margin: EdgeInsets.only(left: 32.0)
     );
   }
+
 }
 
 const double bottomBarIconSize = 30.0;

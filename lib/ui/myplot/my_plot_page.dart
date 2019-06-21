@@ -2,29 +2,24 @@ import 'package:farmsmart_flutter/data/model/crop_entity.dart';
 import 'package:farmsmart_flutter/model/loading_status.dart';
 import 'package:farmsmart_flutter/redux/app/app_state.dart';
 import 'package:farmsmart_flutter/redux/home/myPlot/my_plot_actions.dart';
+import 'package:farmsmart_flutter/ui/common/headerAndFooterListView.dart';
 import 'package:farmsmart_flutter/utils/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'myplot_viewmodel.dart';
 import 'my_plot_list.dart';
-import 'roundedButton.dart';
+import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
 
 class PlotListViewModel {
   final String title;
-  final String subTitle;
-  final String detail;
+
   final String buttonTitle;
 
-  Function onTap;
-
-  final Future<String> imageUrl;
-
-  PlotListViewModel(this.title , this.subTitle, this.detail, this.imageUrl, this.onTap, this.buttonTitle);
+  PlotListViewModel(this.title, this.buttonTitle);
 }
 
-PlotListViewModel fromCropEntityToViewModel(CropEntity currentCrop, Function goToDetail) {
-  //FIXME: Change the mocked data "planting" and "Day 6" with the correct FirebaseData when available
-  return PlotListViewModel(currentCrop.name ?? Strings.defaultCropNameText, "Planting", "Day 6", currentCrop.imageUrl, () => goToDetail(currentCrop), "Add Another Crop");
+PlotListViewModel buildPlotListViewModel() {
+  return PlotListViewModel(Strings.myPlotTab, "Add Another Crop");
 }
 
 abstract class PlotListStyle {
@@ -60,39 +55,6 @@ class _DefaultStyle implements PlotListStyle {
   const _DefaultStyle();
 }
 
-class _DefaultLargeRoundedButtonStyle implements RoundedButtonStyle {
-
-  final Color IconButtonColor =  const Color(0xFFFFFFFF);
-  final Color backgroundColor =  const Color(0xff25df0c);
-  final ShapeBorder buttonShape = const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20.0)));
-
-  final EdgeInsets edgePadding = const EdgeInsets.all(32);
-  final TextStyle buttonTextStyle = const TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: Color(0xffffffff));
-
-  final double iconEdgePadding = 5;
-  final double height = 60.0;
-  final double buttonIconSize = null;
-
-  const _DefaultLargeRoundedButtonStyle();
-}
-
-class _DefaultSmallRoundedButtonStyle implements RoundedButtonStyle {
-
-  final Color IconButtonColor =  const Color(0xFFFFFFFF);
-  final Color backgroundColor =  const Color(0xff25df0c);
-
-  final double height = 24.0;
-  final double buttonIconSize = 15.0;
-
-  final ShapeBorder buttonShape = const CircleBorder();
-
-  final double iconEdgePadding = 0;
-  final EdgeInsets edgePadding = const EdgeInsets.all(0);
-  final TextStyle buttonTextStyle = null;
-
-  const _DefaultSmallRoundedButtonStyle();
-}
-
 class PlotList extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -126,31 +88,22 @@ class _MyPlotState extends State<PlotList> {
   }
 }
 
-Widget _buildCropList(BuildContext context, List<CropEntity> cropList, PlotListStyle plotStyle, Function goToDetail){
-  return ListView.builder(
-    padding: plotStyle.edgePadding,
-    itemCount: cropList.length,
-    shrinkWrap: true,
-    physics: ScrollPhysics(),
-    itemBuilder: (BuildContext context, int index) {
-      return PlotListItem().buildListItem(fromCropEntityToViewModel(cropList[index], goToDetail));
-    },
-  );
+Widget _buildPage(BuildContext context, List<CropEntity> cropList,
+    PlotListStyle plotStyle, Function goToDetail){
+  final viewModel = buildPlotListViewModel();
+  return HeaderAndFooterListView.builder(
+      itemCount: cropList.length,
+      itemBuilder: (BuildContext context, int index) {
+        final itemViewModel = fromCropEntityToViewModel(cropList[index], goToDetail);
+        return PlotListItem().buildListItem(itemViewModel);
+  },
+  physics: ScrollPhysics(),
+  shrinkWrap: true,
+  header: _buildTitle(viewModel, plotStyle, context: context),
+  footer: RoundedButton.buildLarge(context: context, title: viewModel.buttonTitle));
 }
 
-Widget _buildPage(BuildContext context, List<CropEntity> cropList, PlotListStyle plotStyle, Function goToDetail){
-  return ListView(
-    children: <Widget>[
-      _buildTitle(plotStyle, context: context),
-      _buildCropList(context, cropList, plotStyle, goToDetail),
-
-      //FIXME: We should pass the onTap for everyButton when needed
-      buildRoundedButton(_DefaultLargeRoundedButtonStyle(), title: plotStyle.buttonText, context: context)
-    ],
-  );
-}
-
-Widget _buildTitle(PlotListStyle myPlotStyle, {BuildContext context}){
+Widget _buildTitle(PlotListViewModel viewModel, PlotListStyle myPlotStyle, {BuildContext context}){
   return Container(
     padding: myPlotStyle.titleEdgePadding,
     child: Row(
@@ -160,7 +113,7 @@ Widget _buildTitle(PlotListStyle myPlotStyle, {BuildContext context}){
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               Text(
-                Strings.myPlotTab,
+                viewModel.title,
                 style: myPlotStyle.titleTextStyle,
               )
             ]
@@ -168,7 +121,7 @@ Widget _buildTitle(PlotListStyle myPlotStyle, {BuildContext context}){
           Column(
             children: <Widget>[
               //FIXME: We should pass the onTap for everyButton when needed
-              buildRoundedButton(_DefaultSmallRoundedButtonStyle(), icon: Icons.add, context: context)
+              RoundedButton.buildSmall(context: context, icon: Icons.add)
             ]
           )]
       )

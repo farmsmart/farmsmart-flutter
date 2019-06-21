@@ -1,0 +1,128 @@
+{
+  "@@last_modified": "2019-06-19T15:22:42.610720",
+  "Farmsmart": "Farmsmart",
+  "@Farmsmart": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "Check out this article from the FarmSmart mobile app \n ": "Check out this article from the FarmSmart mobile app \n ",
+  "@Check out this article from the FarmSmart mobile app \n ": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "Error": "Error",
+  "@Error": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "No Title": "No Title",
+  "@No Title": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "Farmsmart Flutter App": "Farmsmart Flutter App",
+  "@Farmsmart Flutter App": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "Privacy Policies": "Privacy Policies",
+  "@Privacy Policies": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "My Plot": "My Plot",
+  "@My Plot": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "Profit/Loss": "Profit/Loss",
+  "@Profit/Loss": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "Discover": "Discover",
+  "@Discover": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "Community": "Community",
+  "@Community": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "CURRENT STAGE": "CURRENT STAGE",
+  "@CURRENT STAGE": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "DETAILS": "DETAILS",
+  "@DETAILS": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "My Crop": "My Crop",
+  "@My Crop": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "Crop Details": "Crop Details",
+  "@Crop Details": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "Complexity": "Complexity",
+  "@Complexity": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "Best soil types": "Best soil types",
+  "@Best soil types": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "Time until maturity": "Time until maturity",
+  "@Time until maturity": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "Crops in rotation": "Crops in rotation",
+  "@Crops in rotation": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "Crop type": "Crop type",
+  "@Crop type": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "Water requirement": "Water requirement",
+  "@Water requirement": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "Setup Cost": "Setup Cost",
+  "@Setup Cost": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "Profitability": "Profitability",
+  "@Profitability": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "Companion Plants": "Companion Plants",
+  "@Companion Plants": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "Non-Companion Plants": "Non-Companion Plants",
+  "@Non-Companion Plants": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "Step-by-step guide": "Step-by-step guide",
+  "@Step-by-step guide": {
+    "type": "text",
+    "placeholders": {}
+  }
+}

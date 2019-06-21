@@ -1,6 +1,26 @@
+import 'package:farmsmart_flutter/data/model/crop_entity.dart';
+import 'package:farmsmart_flutter/utils/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:farmsmart_flutter/ui/common/network_image_from_future.dart';
-import 'my_plot_page.dart';
+import 'package:farmsmart_flutter/ui/common/listDivider.dart';
+
+class PlotListItemViewModel {
+  final String title;
+  final String subTitle;
+  final String detail;
+
+  Function onTap;
+
+  final Future<String> imageUrl;
+
+  PlotListItemViewModel(this.title , this.subTitle, this.detail, this.imageUrl, this.onTap);
+}
+
+PlotListItemViewModel fromCropEntityToViewModel(CropEntity currentCrop, Function goToDetail) {
+  //FIXME: Change the mocked data "planting" and "Day 6" with the correct FirebaseData when available
+  return PlotListItemViewModel(currentCrop.name ?? Strings.defaultCropNameText, "Planting", "Day 6", currentCrop.imageUrl, () => goToDetail(currentCrop));
+}
+
 
 abstract class PlotListItemStyle {
 
@@ -55,6 +75,7 @@ class _defaultStyle implements PlotListItemStyle{
   final BorderRadius detailTextBorderRadius = const BorderRadius.all(Radius.circular(20.0));
 
   final double elevation = 0.0;
+  //FIXME: retrieve divider properties
   final double dividerHeight = 2;
   final double imageSize = 80.0;
   final double headingLineSpace = 12.5;
@@ -64,7 +85,7 @@ class _defaultStyle implements PlotListItemStyle{
 }
 
 class PlotListItem {
-  Widget buildListItem(PlotListViewModel viewModel, {PlotListItemStyle itemStyle = const _defaultStyle()}) {
+  Widget buildListItem(PlotListItemViewModel viewModel, {PlotListItemStyle itemStyle = const _defaultStyle()}) {
     return GestureDetector(
       onTap: viewModel.onTap,
       child: Card(
@@ -114,7 +135,7 @@ class PlotListItem {
               )
             ),
             Container(
-                child: _buildListSeparator(itemStyle)),
+                child: ListDivider.build())
           ]
         )
       )
@@ -161,6 +182,7 @@ class PlotListItem {
     );
   }
 
+//FIXME: retieve when not used
   Widget _buildListSeparator(PlotListItemStyle itemStyle) {
     return Container(
         height: itemStyle.dividerHeight,

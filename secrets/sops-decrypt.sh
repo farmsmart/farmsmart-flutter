@@ -9,7 +9,7 @@ set -o errexit
 # Use the error status of the first failure, rather than that of the last item in a pipeline.
 set -o pipefail
 
-gcp_kms='projects/farmsmart-dev-archie/locations/europe-west2/keyRings/farmsmart-keyring/cryptoKeys/farmsmart-key,projects/farmsmart-admin/locations/global/keyRings/farmsmart-admin/cryptoKeys/farmsmart'
+gcp_kms='projects/farmsmart-admin/locations/global/keyRings/farmsmart-admin/cryptoKeys/farmsmart'
 
 files=$(find . -name "*.enc*")
 
