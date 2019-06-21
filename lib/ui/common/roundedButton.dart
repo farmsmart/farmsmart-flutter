@@ -6,7 +6,11 @@ class RoundedButtonViewModel {
   Function onTap;
   BuildContext context;
 
-  RoundedButtonViewModel(this.title, this.icon, this.onTap, this.context);
+  RoundedButtonViewModel(this.context, {this.title, this.icon, this.onTap});
+}
+
+RoundedButtonViewModel buildButtonViewModel(BuildContext context, {String title, IconData icon, Function onTap}) {
+  return RoundedButtonViewModel(context, title: title, icon : icon, onTap: () => onTap(context));
 }
 
 abstract class _RoundedButtonStyle {
@@ -79,25 +83,26 @@ class RoundedButton {
   }
 }
 
-//FIXME: Make a class for button and should be in the common file, create viewModel.
 Widget buildRoundedButton(_RoundedButtonStyle buttonStyle, BuildContext context, {String title, IconData icon,
   Function onTap}) {
 
+  RoundedButtonViewModel viewModel = buildButtonViewModel(context, title: title, icon: icon, onTap: onTap);
+
   List<Widget> _buildButtonContent(){
     List<Widget> listBuilder = [];
-    if (icon != null) {
+    if (viewModel.icon != null) {
       listBuilder.add(
           Icon(
-            icon,
+            viewModel.icon,
             size: buttonStyle.buttonIconSize,
             color: buttonStyle.iconButtonColor,
           )
       );
     }
-      if (title != null) {
+      if (viewModel.title != null) {
       listBuilder.add(
           Text(
-            title,
+              viewModel.title,
             style: buttonStyle.buttonTextStyle
           ));
       }
@@ -116,7 +121,7 @@ Widget buildRoundedButton(_RoundedButtonStyle buttonStyle, BuildContext context,
                 direction: Axis.horizontal,
                 children: _buildButtonContent(),
               ),
-              onPressed: () => _showToast(context),
+              onPressed: () => _showToast(viewModel.context),
               shape: buttonStyle.buttonShape
           )
       )

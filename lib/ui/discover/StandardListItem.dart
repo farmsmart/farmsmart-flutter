@@ -15,7 +15,7 @@ class _DefaultStyle implements ArticleListItemStyle {
   final EdgeInsets listEdgePadding = const EdgeInsets.only(left: 32.0, right: 32.0, top: 23, bottom: 23);
   final EdgeInsets cardMargin = const EdgeInsets.all(0);
 
-  final double imageLineSpace = 30.5;
+  final double imageLineSpace = 22;
   final double imageHeight = 80;
   final double textLineSpace = 9.5;
   final double cardElevation = 0;
@@ -44,8 +44,7 @@ class StandardListItem {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   _buildArticleInformation(viewModel, itemStyle),
-                  //FIXME: use correct property
-                  SizedBox(width: 22),
+                  SizedBox(width: itemStyle.imageLineSpace),
                   _buildListItemImage(viewModel, itemStyle),
                 ],
               ),
