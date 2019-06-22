@@ -1,3 +1,4 @@
+import 'package:farmsmart_flutter/ui/common/ActionSheet.dart';
 import 'package:farmsmart_flutter/ui/common/listDivider.dart';
 import 'package:farmsmart_flutter/ui/common/network_image_from_future.dart';
 import 'package:flutter/material.dart';
@@ -32,10 +33,10 @@ class _DefaultStyle implements ArticleListItemStyle {
 }
 
 class HeroListItem {
-  Widget builder(ArticleListItemViewModel viewModel,
-      {ArticleListItemStyle itemStyle = const _DefaultStyle()}) {
+  Widget builder(BuildContext context, ArticleListItemViewModel viewModel, {ArticleListItemStyle itemStyle = const _DefaultStyle()}) {
     return GestureDetector(
-      onTap: viewModel.onTap,
+      //onTap: viewModel.onTap,
+      onTap: () => _onMenuPressed(context),
       child: Column(
         children: <Widget>[
           Card(
@@ -69,6 +70,13 @@ class HeroListItem {
     return ClipRRect(
       borderRadius: articleListStyle.imageBorderRadius,
       child: NetworkImageFromFuture(articleData.imageUrl, fit: BoxFit.fitWidth),
+    );
+  }
+
+  Future _onMenuPressed(BuildContext context) async {
+    showModalBottomSheet(
+        context: context,
+        builder: (widgetBuilder) => ActionSheet.build()
     );
   }
 }
