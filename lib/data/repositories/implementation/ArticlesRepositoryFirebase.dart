@@ -16,7 +16,7 @@ class ArticleEntityCollectionFlamelink implements ArticleEntityCollection {
   final Query _query;
   final List<String> _paths;
 
-  ArticleEntityCollectionFlamelink({FlameLink cms, Query query}) : _cms = cms, _query = query, _paths = null;
+  ArticleEntityCollectionFlamelink({FlameLink cms, Query query}) : _cms = cms, _query = query, _paths = [];
 
   ArticleEntityCollectionFlamelink.list( {FlameLink cms, List<String> paths}) : _cms = cms, _paths = paths, _query = null; 
 

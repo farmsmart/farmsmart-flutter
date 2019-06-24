@@ -58,7 +58,7 @@ class _DiscoveryState extends State<ArticleList> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: StoreConnector<AppState, DiscoverViewModel>(
-          onInit: (store) => store.dispatch(new FetchArticleDirectoryAction()),
+          onInit: (store) => store.dispatch(FetchArticlesAction()),
           builder: (_, viewModel) => _buildBody(context, viewModel),
           converter: (store) => DiscoverViewModel.fromStore(store)),
     );
@@ -70,20 +70,18 @@ class _DiscoveryState extends State<ArticleList> {
         return Container(
             child: CircularProgressIndicator(), alignment: Alignment.center);
       case LoadingStatus.SUCCESS:
-        return _buildList(context, viewModel.articleDirectory.articles,
-            viewModel.getRelatedArticles);
+        return _buildList(context, viewModel.articleItems);
       case LoadingStatus.ERROR:
         return Text(Strings.errorString);
     }
   }
 
   Widget _buildList(BuildContext context, List<ArticleEntity> articlesList,
-      Function getRelatedArticles,
       {ArticleListStyle articleListStyle = const _ArticleListDefaultStyle()}) {
     return HeaderAndFooterListView.builder(
         itemCount: articlesList.length,
         itemBuilder: (BuildContext context, int index) {
-          final viewModel = fromArticleEntityToViewModel(articlesList[index], getRelatedArticles);
+          final viewModel = fromArticleEntityToViewModel(articlesList[index], null);
           if (index == 0) {
             return HeroListItem().builder(viewModel);
           } else {

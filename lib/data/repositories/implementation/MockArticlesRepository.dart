@@ -15,14 +15,17 @@ class MockString {
     if ( _library.isEmpty){
       return errorString;
     }
-    final index = _rand.nextInt(max(0,_library.length-1));
+    final index = _rand.nextInt(max(1,_library.length));
     final string = _library[index];
     return string.isNotEmpty ? string : errorString; 
   }
   
   String random({int length = 0}) {
     final libraryString = _getLibraryString(); 
-    final maxLength = (length > 0) ? min(length, libraryString.length) : libraryString.length;
+    if (length <= 0) {
+      return libraryString;
+    }
+    final maxLength = libraryString.length;
     final lastIndex = max(0,_rand.nextInt(maxLength)-1);
     return libraryString.substring(0,lastIndex);
   }
@@ -32,7 +35,7 @@ class MockString {
   }
 
   String identifier() {
-    int maxSupported = 1<<32;
+    int maxSupported = 1 << 32;
     return _rand.nextInt(maxSupported).toString();
   }
   
@@ -59,10 +62,10 @@ class MockArticlesRepository implements ArticleRepositoryInterface {
   final _delay = Duration(seconds: 1);
   final _streamEventCount = 50;
 
-  MockArticlesRepository({int articleCount = 50}) : _articles = _generateArticles(count: articleCount);
+  MockArticlesRepository({int articleCount = 1000}) : _articles = _generateArticles(count: articleCount);
 
-  static List<ArticleEntity> _generateArticles({int count = 50}) {
-    var articles = [];
+  static List<ArticleEntity> _generateArticles({int count = 1000}) {
+    var articles = <ArticleEntity>[];
     for (var i = 0; i < count; i++) {
       articles.add(MockArticle.build());
     }

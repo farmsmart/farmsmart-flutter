@@ -42,8 +42,8 @@ class HomeViewmodel {
             store.dispatch(SwitchTabAction(HomeScreen.COMMUNITY_TAB)),
         goToPrivacyPolicy: (String value) =>
             store.dispatch(GoToPrivacyPoliciesAction()),
-        getSingleArticle: (String articleID) =>
-            store.dispatch(FetchSingleArticleAction(articleID)));
+        /*getSingleArticle: (String articleID) =>
+            store.dispatch(FetchSingleArticleAction(articleID))*/);
   }
 
   void changeTab(int value) {

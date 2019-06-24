@@ -23,12 +23,6 @@ class MyPlotMiddleWare extends MiddlewareClass<AppState>{
       store.dispatch(GoToStageAction(stage));
     }
 
-    if (action is GoToRelatedArticleDetail) {
-      store.dispatch(GoToArticleDetailAction(null));
-      ArticleEntity article = await ArticlesDirectoryRepository.get().getRelatedArticles(action.article);
-      store.dispatch(UpdateRelatedArticlesAction(article));
-    }
-
     next(action);
   }
 }

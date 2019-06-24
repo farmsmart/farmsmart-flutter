@@ -19,12 +19,6 @@ class NavigationMiddleware extends MiddlewareClass<AppState>{
     if(action is GoToStageAction){
       Keys.navKey.currentState.pushNamed(AppRoutes.cropCurrentStage);
     }
-    if(action is GoToArticleDetailAction) {
-      Keys.navKey.currentState.pushNamed(AppRoutes.articleDetail);
-    }
-    if (action is FetchSingleArticleAction) {
-      Keys.navKey.currentState.popUntil((route) => route.isFirst);
-    }
     if(action is GoToPrivacyPoliciesAction) {
       Keys.navKey.currentState.pushNamed(AppRoutes.privacyPolicies);
     }

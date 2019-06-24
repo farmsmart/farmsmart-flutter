@@ -1,4 +1,5 @@
 import 'package:farmsmart_flutter/data/model/article_entity.dart';
+import 'package:farmsmart_flutter/data/repositories/implementation/MockArticlesRepository.dart';
 import 'package:farmsmart_flutter/model/loading_status.dart';
 import 'package:farmsmart_flutter/ui/common/network_image_from_future.dart';
 import 'package:farmsmart_flutter/utils/colors.dart';
@@ -37,7 +38,7 @@ class _ArticleDetailState extends State<ArticleDetailScreen> {
         return Container(
             child: CircularProgressIndicator(), alignment: Alignment.center);
       case LoadingStatus.SUCCESS:
-        return _buildList(context, viewModel.selectedArticleWithRelated, viewModel.getRelatedArticles);
+        return _buildList(context, MockArticle.build(), null);
       case LoadingStatus.ERROR:
         return Text("Error"); // TODO Check FARM-203
     }
