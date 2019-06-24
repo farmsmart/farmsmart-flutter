@@ -3,6 +3,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:farmsmart_flutter/utils/strings.dart';
 import 'package:farmsmart_flutter/data/model/entities_const.dart';
 
+abstract class ArticleEntityCollection {
+  Future<List<ArticleEntity>> getEntities({int limit = 0});
+} 
+
 class ArticleEntity {
   String id;
   String content;
@@ -10,6 +14,7 @@ class ArticleEntity {
   Future<String> imageUrl;
   List<ArticleEntity> relatedArticles;
   List<String> relatedArticlesPathReference;
+  ArticleEntityCollection related;
   Status status;
   String summary;
   String title;
