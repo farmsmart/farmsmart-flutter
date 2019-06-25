@@ -58,7 +58,7 @@ abstract class PlotListItemStyle {
 }
 
 class _defaultStyle implements PlotListItemStyle {
-  final Color primaryColor = const Color(0xff25df0c);
+  final Color primaryColor = const Color(0xff24d900);
   final Color dividerColor = const Color(0xfff5f8fa);
   final Color detailTextBackgroundColor = const Color(0x1425df0c);
   final Color overlayColor = const Color(0x1425df0c);

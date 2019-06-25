@@ -44,7 +44,7 @@ abstract class PlotListStyle {
 
 class _DefaultStyle implements PlotListStyle {
 
-  final Color primaryColor =  const Color(0xff25df0c);
+  final Color primaryColor =  const Color(0xff24d900);
 
   final EdgeInsets edgePadding = const EdgeInsets.only(top: 20.0) ;
   final EdgeInsets titleEdgePadding = const EdgeInsets.only(left: 32, top: 30, right: 32, bottom: 0);

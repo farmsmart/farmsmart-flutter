@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class CompactRoundedButtonStyle implements RoundedButtonStyle {
 
   final Color iconButtonColor =  const Color(0xFFFFFFFF);
-  final Color backgroundColor =  const Color(0xff25df0c);
+  final Color backgroundColor =  const Color(0xff24d900);
 
   final double size = 24.0;
   final double buttonIconSize = 15.0;

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class LargeRoundedButtonStyle implements RoundedButtonStyle {
 
   final Color iconButtonColor =  const Color(0xFFFFFFFF);
-  final Color backgroundColor =  const Color(0xff25df0c);
+  final Color backgroundColor =  const Color(0xff24d900);
 
   final BoxShape buttonShape = BoxShape.rectangle;
   final BorderRadius borderRadius = const BorderRadius.all(Radius.circular(16));
