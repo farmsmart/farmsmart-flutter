@@ -33,11 +33,7 @@ class FlameLink {
   }
 
   Query documentsQuery({String schema = "", int limit = 0}) {
-    var query = content()
-        .where(FlameLinkDocumentFields.type, isEqualTo: FlameLinkSchemaType.single);
-    if (schema.isNotEmpty) {
-      query = query.where(FlameLinkDocumentFields.schema, isEqualTo: schema);
-    }
+    var query = content().where(FlameLinkDocumentFields.schema, isEqualTo: schema);
     if (limit > 0) {
       query = query.limit(limit);
     }
