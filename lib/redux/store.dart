@@ -17,16 +17,18 @@ import 'package:redux_logging/redux_logging.dart';
 Future<Store<AppState>> createStore() async {
 //  var prefs = await SharedPreferences.getInstance();
   final mockArticleRepo = MockArticlesRepository();
+  final  cms = FlameLink(Firestore.instance);
+  final articleRepo = ArticlesRepositoryFlameLink(cms);
   return Store(
     appReducer,
     initialState: AppState.initial(),
-
+    
     // Add here all the middlewares to be used in the app. The order DOES matter.
     middleware: [
       LoggingMiddleware.printer(),
       NavigationMiddleware(),
       MyPlotMiddleWare(),
-      DiscoverMiddleWare(mockArticleRepo)
+      DiscoverMiddleWare(articleRepo)
     ],
   );
 }
