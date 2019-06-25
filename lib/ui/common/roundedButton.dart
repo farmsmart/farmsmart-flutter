@@ -19,7 +19,7 @@ abstract class RoundedButtonStyle {
   final Color backgroundColor;
 
   final BoxShape buttonShape;
-  final BorderRadius borderShape;
+  final BorderRadius borderRadius;
 
   final EdgeInsets edgePadding;
   final TextStyle buttonTextStyle;
@@ -30,7 +30,7 @@ abstract class RoundedButtonStyle {
 
   RoundedButtonStyle(this.size,
       this.iconButtonColor, this.backgroundColor, this.iconEdgePadding,
-      {this.buttonShape, this.borderShape, this.edgePadding,
+      {this.buttonShape, this.borderRadius, this.edgePadding,
         this.buttonTextStyle, this.buttonIconSize});
 }
 
@@ -40,7 +40,7 @@ class _DefaultStyle implements RoundedButtonStyle {
   final Color backgroundColor =  const Color(0xff25df0c);
 
   final BoxShape buttonShape = BoxShape.rectangle;
-  final BorderRadius borderShape = const BorderRadius.all(Radius.circular(20));
+  final BorderRadius borderRadius = const BorderRadius.all(Radius.circular(20));
 
   final EdgeInsets edgePadding = const EdgeInsets.only(left: 32, top: 31, right: 32, bottom: 32);
   final TextStyle buttonTextStyle = const TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: Color(0xffffffff));
@@ -98,7 +98,7 @@ class RoundedButton {
           decoration: BoxDecoration(
               color: buttonStyle.backgroundColor,
               shape: buttonStyle.buttonShape,
-              borderRadius: buttonStyle.borderShape
+              borderRadius: buttonStyle.borderRadius
           ),
           child: Wrap(
             direction: Axis.horizontal,
