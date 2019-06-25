@@ -45,13 +45,16 @@ abstract class PlotListItemStyle {
   final double imageSize;
   final double headingLineSpace;
   final double detailLineSpace;
+  final double imageLineSpace;
+
 
   PlotListItemStyle(this.primaryColor, this.dividerColor, this.edgePadding,
       this.detailTextEdgePadding, this.dividerEdgePadding,
       this.detailTextBorderRadius, this.detailTextStyle,
       this.titleTextStyle, this.subTitleTextStyle, this.elevation,
       this.cardEdgePadding,
-      this.imageSize, this.detailTextBackgroundColor,this.detailLineSpace, this.headingLineSpace, this.overlayColor);
+      this.imageSize, this.detailTextBackgroundColor,this.detailLineSpace, this.headingLineSpace,
+      this.overlayColor, this.imageLineSpace);
 }
 
 class _defaultStyle implements PlotListItemStyle {
@@ -60,10 +63,10 @@ class _defaultStyle implements PlotListItemStyle {
   final Color detailTextBackgroundColor = const Color(0x1425df0c);
   final Color overlayColor = const Color(0x1425df0c);
 
-  final EdgeInsets detailTextEdgePadding = const EdgeInsets.only(left: 12, top: 8, right: 12, bottom: 5);
+  final EdgeInsets detailTextEdgePadding = const EdgeInsets.only(left: 13, top: 6, right: 13, bottom: 6);
   final EdgeInsets dividerEdgePadding = const EdgeInsets.only(left: 25.0);
   final EdgeInsets cardEdgePadding = const EdgeInsets.all(0);
-  final EdgeInsets edgePadding = const EdgeInsets.only(left: 25.0, top: 27.0, right: 30.0, bottom: 27.0);
+  final EdgeInsets edgePadding = const EdgeInsets.only(left: 32.0, top: 27.0, right: 32.0, bottom: 27.0);
 
   final TextStyle subTitleTextStyle = const TextStyle(fontSize: 15, fontWeight: FontWeight.normal, color: Color(0xff767690));
   final TextStyle detailTextStyle = const TextStyle(fontSize: 11, fontWeight: FontWeight.normal, color: Color(0xff25df0c));
@@ -75,7 +78,8 @@ class _defaultStyle implements PlotListItemStyle {
   //FIXME: retrieve divider properties
   final double imageSize = 80.0;
   final double headingLineSpace = 12.5;
-  final double detailLineSpace = 15;
+  final double detailLineSpace = 12;
+  final double imageLineSpace = 20;
 
   const _defaultStyle();
 }
@@ -94,7 +98,7 @@ class PlotListItem {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         _buildMainTextView(viewModel, itemStyle),
-                        SizedBox(width: 20),
+                        SizedBox(width: itemStyle.imageLineSpace),
                         _buildPlotImage(viewModel.imageUrl, itemStyle)
                       ])),
               ListDivider.build(),

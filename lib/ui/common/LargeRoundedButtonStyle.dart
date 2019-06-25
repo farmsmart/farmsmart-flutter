@@ -5,13 +5,15 @@ class LargeRoundedButtonStyle implements RoundedButtonStyle {
 
   final Color iconButtonColor =  const Color(0xFFFFFFFF);
   final Color backgroundColor =  const Color(0xff25df0c);
-  final ShapeBorder buttonShape = const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20.0)));
 
-  final EdgeInsets edgePadding = const EdgeInsets.all(32);
+  final BoxShape buttonShape = BoxShape.rectangle;
+  final BorderRadius borderShape = const BorderRadius.all(Radius.circular(16));
+
+  final EdgeInsets edgePadding = const EdgeInsets.only(left: 32, top: 31, right: 32, bottom: 32);
   final TextStyle buttonTextStyle = const TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: Color(0xffffffff));
 
   final double iconEdgePadding = 5;
-  final double height = 60.0;
+  final double size = 56.0;
   final double buttonIconSize = null;
 
   const LargeRoundedButtonStyle();

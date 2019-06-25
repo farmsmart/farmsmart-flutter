@@ -6,10 +6,11 @@ class CompactRoundedButtonStyle implements RoundedButtonStyle {
   final Color iconButtonColor =  const Color(0xFFFFFFFF);
   final Color backgroundColor =  const Color(0xff25df0c);
 
-  final double height = 24.0;
+  final double size = 24.0;
   final double buttonIconSize = 15.0;
 
-  final ShapeBorder buttonShape = const CircleBorder();
+  final BoxShape buttonShape = BoxShape.rectangle;
+  final BorderRadius borderShape = const BorderRadius.all(Radius.circular(20));
 
   final double iconEdgePadding = 0;
   final EdgeInsets edgePadding = const EdgeInsets.all(0);

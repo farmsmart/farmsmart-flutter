@@ -18,32 +18,35 @@ abstract class RoundedButtonStyle {
   final Color iconButtonColor;
   final Color backgroundColor;
 
-  final ShapeBorder buttonShape;
+  final BoxShape buttonShape;
+  final BorderRadius borderShape;
 
   final EdgeInsets edgePadding;
   final TextStyle buttonTextStyle;
 
-  final double height;
+  final double size;
   final double iconEdgePadding;
   final double buttonIconSize;
 
-  RoundedButtonStyle(this.height,
+  RoundedButtonStyle(this.size,
       this.iconButtonColor, this.backgroundColor, this.iconEdgePadding,
-  {this.buttonShape, this.edgePadding,
-      this.buttonTextStyle, this.buttonIconSize});
+      {this.buttonShape, this.borderShape, this.edgePadding,
+        this.buttonTextStyle, this.buttonIconSize});
 }
 
 class _DefaultStyle implements RoundedButtonStyle {
 
   final Color iconButtonColor =  const Color(0xFFFFFFFF);
   final Color backgroundColor =  const Color(0xff25df0c);
-  final ShapeBorder buttonShape = const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20.0)));
 
-  final EdgeInsets edgePadding = const EdgeInsets.all(32);
+  final BoxShape buttonShape = BoxShape.rectangle;
+  final BorderRadius borderShape = const BorderRadius.all(Radius.circular(20));
+
+  final EdgeInsets edgePadding = const EdgeInsets.only(left: 32, top: 31, right: 32, bottom: 32);
   final TextStyle buttonTextStyle = const TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: Color(0xffffffff));
 
   final double iconEdgePadding = 5;
-  final double height = 60.0;
+  final double size = 56.0;
   final double buttonIconSize = null;
 
   const _DefaultStyle();
@@ -84,22 +87,25 @@ class RoundedButton {
       return listBuilder;
     }
 
-    return Padding(
+    return GestureDetector(
+      onTap: () => _showToast(viewModel.context),
+      child: Padding(
         padding: buttonStyle.edgePadding,
-        child: SizedBox(
-            height: buttonStyle.height,
-            child: FlatButton(
-                textColor: buttonStyle.iconButtonColor,
-                color: buttonStyle.backgroundColor,
-                child: Wrap(
-                  spacing: buttonStyle.iconEdgePadding,
-                  direction: Axis.horizontal,
-                  children: _buildButtonContent(),
-                ),
-                onPressed: () => _showToast(viewModel.context),
-                shape: buttonStyle.buttonShape
-            )
-        )
+        child: Container(
+          alignment: Alignment.center,
+          height: buttonStyle.size,
+          width: buttonStyle.size,
+          decoration: BoxDecoration(
+              color: buttonStyle.backgroundColor,
+              shape: buttonStyle.buttonShape,
+              borderRadius: buttonStyle.borderShape
+          ),
+          child: Wrap(
+            direction: Axis.horizontal,
+            children: _buildButtonContent(),
+          ),
+        ),
+      ),
     );
   }
 
@@ -118,6 +124,3 @@ class RoundedButton {
     );
   }
 }
-
-
-

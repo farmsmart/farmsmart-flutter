@@ -47,7 +47,7 @@ class _DefaultStyle implements PlotListStyle {
   final Color primaryColor =  const Color(0xff25df0c);
 
   final EdgeInsets edgePadding = const EdgeInsets.only(top: 20.0) ;
-  final EdgeInsets titleEdgePadding = const EdgeInsets.only(left: 25, top: 30, right: 5, bottom: 10);
+  final EdgeInsets titleEdgePadding = const EdgeInsets.only(left: 32, top: 30, right: 32, bottom: 0);
 
   final TextStyle titleTextStyle = const TextStyle(fontSize: 27, fontWeight: FontWeight.bold, color: Color(0xFF000000));
 
@@ -121,12 +121,7 @@ Widget _buildTitle(PlotListViewModel viewModel, PlotListStyle myPlotStyle, {Buil
               )
             ]
           ),
-          Column(
-            children: <Widget>[
-              RoundedButton.build(style: CompactRoundedButtonStyle(),context: context, icon: Icons.add)
-              //FIXME: We should pass the onTap for everyButton when needed
-            ]
-          )]
+          RoundedButton.build(style: CompactRoundedButtonStyle(),context: context, icon: Icons.add)]
       )
   );
 }
