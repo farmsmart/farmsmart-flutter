@@ -19,9 +19,7 @@ track = args.track
 # Authorise the publishing API
 service_account_file_path = "secrets/google-play-service-account.json"
 SCOPES = ['https://www.googleapis.com/auth/androidpublisher']
-
 credentials = service_account.Credentials.from_service_account_file(service_account_file_path, scopes=SCOPES)
-
 androidPublisher = googleapiclient.discovery.build('androidpublisher', 'v3', credentials=credentials)
 
 # API calls
@@ -32,12 +30,12 @@ edit_id = edit_response['id']
 tracks_req = androidPublisher.edits().tracks().get(packageName=package_name, editId=edit_id, track=track)
 tracks_res = tracks_req.execute()
 
-current_release = tracks_res['releases'][0]
+releases = tracks_res['releases']
+current_release = next(r for r in releases if r['status'] == 'completed')
 current_version_code = max(current_release['versionCodes'])
 
 # Determine next version
-if track == 'internal':
-    current_version = VersionInfo.from_version_code(current_version_code)
-    next_version = VersionInfo.from_version_name(version_name)
-    next_version.build = VersionInfo.get_next_build(current_version, next_version)
-    print(next_version.as_json())
+current_version = VersionInfo.from_version_code(current_version_code)
+next_version = VersionInfo.from_version_name(version_name)
+next_version.build = VersionInfo.get_next_build(current_version, next_version)
+print(next_version.as_json())
