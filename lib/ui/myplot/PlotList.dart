@@ -7,8 +7,11 @@ import 'package:farmsmart_flutter/utils/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'myplot_viewmodel.dart';
-import 'my_plot_list.dart';
+import 'PlotListItem.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
+import 'package:farmsmart_flutter/ui/common/CompactRoundedButtonStyle.dart';
+import 'package:farmsmart_flutter/ui/common/LargeRoundedButtonStyle.dart';
+
 
 class PlotListViewModel {
   final String title;
@@ -100,7 +103,7 @@ Widget _buildPage(BuildContext context, List<CropEntity> cropList,
   physics: ScrollPhysics(),
   shrinkWrap: true,
   header: _buildTitle(viewModel, plotStyle, context: context),
-  footer: RoundedButton.buildLarge(context: context, title: viewModel.buttonTitle));
+  footer: RoundedButton.build(style: LargeRoundedButtonStyle() ,context: context, title: viewModel.buttonTitle));
 }
 
 Widget _buildTitle(PlotListViewModel viewModel, PlotListStyle myPlotStyle, {BuildContext context}){
@@ -120,8 +123,8 @@ Widget _buildTitle(PlotListViewModel viewModel, PlotListStyle myPlotStyle, {Buil
           ),
           Column(
             children: <Widget>[
+              RoundedButton.build(style: CompactRoundedButtonStyle(),context: context, icon: Icons.add)
               //FIXME: We should pass the onTap for everyButton when needed
-              RoundedButton.buildSmall(context: context, icon: Icons.add)
             ]
           )]
       )

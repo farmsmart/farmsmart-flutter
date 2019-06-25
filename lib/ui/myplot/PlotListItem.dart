@@ -43,7 +43,6 @@ abstract class PlotListItemStyle {
   final TextStyle subTitleTextStyle;
 
   final double elevation;
-  final double dividerHeight;
   final double imageSize;
   final double headingLineSpace;
   final double detailLineSpace;
@@ -52,7 +51,7 @@ abstract class PlotListItemStyle {
       this.detailTextEdgePadding, this.dividerEdgePadding,
       this.detailTextBorderRadius, this.detailTextStyle,
       this.titleTextStyle, this.subTitleTextStyle, this.elevation,
-      this.dividerHeight,this.cardEdgePadding,
+      this.cardEdgePadding,
       this.imageSize, this.detailTextBackgroundColor,this.detailLineSpace, this.headingLineSpace, this.overlayColor);
 }
 
@@ -66,7 +65,7 @@ class _defaultStyle implements PlotListItemStyle{
   final EdgeInsets detailTextEdgePadding = const EdgeInsets.only(left: 12, top: 8, right: 12, bottom: 5);
   final EdgeInsets dividerEdgePadding = const EdgeInsets.only(left: 25.0);
   final EdgeInsets cardEdgePadding = const EdgeInsets.all(0);
-  final EdgeInsets edgePadding = const EdgeInsets.only(left: 25.0, top: 25.0, right: 30.0, bottom: 25.0);
+  final EdgeInsets edgePadding = const EdgeInsets.only(left: 25.0, top: 27.0, right: 30.0, bottom: 27.0);
 
   final TextStyle subTitleTextStyle = const TextStyle(fontSize: 15, fontWeight: FontWeight.normal, color: Color(0xff767690));
   final TextStyle detailTextStyle = const TextStyle(fontSize: 11, fontWeight: FontWeight.normal, color: Color(0xff25df0c));
@@ -76,7 +75,6 @@ class _defaultStyle implements PlotListItemStyle{
 
   final double elevation = 0.0;
   //FIXME: retrieve divider properties
-  final double dividerHeight = 2;
   final double imageSize = 80.0;
   final double headingLineSpace = 12.5;
   final double detailLineSpace = 15;
@@ -180,13 +178,5 @@ class PlotListItem {
         ]
       )
     );
-  }
-
-//FIXME: retieve when not used
-  Widget _buildListSeparator(PlotListItemStyle itemStyle) {
-    return Container(
-        height: itemStyle.dividerHeight,
-        color: itemStyle.dividerColor,
-        margin: itemStyle.dividerEdgePadding);
   }
 }
