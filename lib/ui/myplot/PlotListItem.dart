@@ -77,7 +77,6 @@ class _defaultStyle implements PlotListItemStyle {
   final BorderRadius detailTextBorderRadius = const BorderRadius.all(Radius.circular(20.0));
 
   final double elevation = 0.0;
-  //FIXME: retrieve divider properties
   final double imageSize = 80.0;
   final double headingLineSpace = 12.5;
   final double detailLineSpace = 12;
