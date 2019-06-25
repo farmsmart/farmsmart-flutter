@@ -2,6 +2,7 @@
 
 class Strings {
 
+  static String addCropButtonText = "Add Another Crop";
   static String shareArticleText = "Check out this article from the FarmSmart mobile app \n ";
 
   static String emptyString = "";
@@ -12,7 +13,7 @@ class Strings {
 
   static String appbarPopUpPolicies = "Privacy Policies";
 
-  static String myPlotTab = "My Plot";
+  static String myPlotTab = "Your Plot";
   static String profitLossTab = "Profit/Loss";
   static String discoverTab = "Discover";
   static String communityTab = "Community";
@@ -20,6 +21,7 @@ class Strings {
   static String myPlotCurrentStagesMOCK = "Stages 1 of 6";
   static String myPlotCurrentStage = "CURRENT STAGE";
   static String myPlotDetails = "DETAILS";
+  static String defaultCropNameText = "Crop name";
 
   static String myPlotItemDefaultTitle = "My Crop";
 
@@ -35,5 +37,4 @@ class Strings {
   static String myPlotDetailCompanionPlantsTitle = "Companion Plants";
   static String myPlotDetailNonCompanionPlantsTitle = "Non-Companion Plants";
   static String myPlotDetailStepByStepTitle = "Step-by-step guide";
-
 }
