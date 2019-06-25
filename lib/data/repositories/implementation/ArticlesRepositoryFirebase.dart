@@ -21,7 +21,7 @@ class ArticleEntityCollectionFlamelink implements ArticleEntityCollection {
   ArticleEntityCollectionFlamelink.list( {FlameLink cms, List<String> paths}) : _cms = cms, _paths = paths, _query = null; 
 
   @override
-  Future<List<ArticleEntity>> getEntities({int limit = 0}) async {
+  Future<List<ArticleEntity>> getEntities({int limit = 0}) {
     if (_paths.isNotEmpty) {
       return _cms.get(_paths).then((snapshots) {
         return snapshots.map((document) => _transform(_cms, document)).toList();
