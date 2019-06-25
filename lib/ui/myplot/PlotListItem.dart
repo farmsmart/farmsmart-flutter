@@ -46,6 +46,8 @@ abstract class PlotListItemStyle {
   final double headingLineSpace;
   final double detailLineSpace;
   final double imageLineSpace;
+  final int maxLineText;
+
 
 
   PlotListItemStyle(this.primaryColor, this.dividerColor, this.edgePadding,
@@ -54,7 +56,7 @@ abstract class PlotListItemStyle {
       this.titleTextStyle, this.subTitleTextStyle, this.elevation,
       this.cardEdgePadding,
       this.imageSize, this.detailTextBackgroundColor,this.detailLineSpace, this.headingLineSpace,
-      this.overlayColor, this.imageLineSpace);
+      this.overlayColor, this.imageLineSpace, this.maxLineText);
 }
 
 class _defaultStyle implements PlotListItemStyle {
@@ -80,6 +82,7 @@ class _defaultStyle implements PlotListItemStyle {
   final double headingLineSpace = 12.5;
   final double detailLineSpace = 12;
   final double imageLineSpace = 20;
+  final int maxLineText = 1;
 
   const _defaultStyle();
 }
@@ -116,13 +119,13 @@ class PlotListItem {
         children: <Widget>[
           Text(
             viewModel.title,
-            maxLines: 1,
+            maxLines: itemStyle.maxLineText,
             overflow: TextOverflow.ellipsis,
             style: itemStyle.titleTextStyle,
           ),
           SizedBox(height: itemStyle.headingLineSpace),
           Text(viewModel.subTitle,
-              maxLines: 1,
+              maxLines: itemStyle.maxLineText,
               overflow: TextOverflow.ellipsis,
               style: itemStyle.subTitleTextStyle),
           SizedBox(height: itemStyle.detailLineSpace),
@@ -147,7 +150,7 @@ class PlotListItem {
               text,
               style: itemStyle.detailTextStyle,
               overflow: TextOverflow.ellipsis,
-              maxLines: 1,
+              maxLines: itemStyle.maxLineText,
             ),
           ))
         ],
