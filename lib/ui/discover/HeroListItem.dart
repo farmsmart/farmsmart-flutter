@@ -76,7 +76,7 @@ class HeroListItem {
   Future _onMenuPressed(BuildContext context) async {
     showModalBottomSheet(
         context: context,
-        builder: (widgetBuilder) => ActionSheet.build()
+        builder: (widgetBuilder) => ActionSheet.build(context)
     );
   }
 }
