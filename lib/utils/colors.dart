@@ -16,3 +16,7 @@ const primaryWhite = 0xFFFFFFFF;
 const backgroundColor = 0xFFFFFFFF; // White
 const transparent = 0x00000000; // White
 
+const whiteDivider = 0xfff5f8fa;
+
+const cropName = 0xff1a1b46;
+const cropStatusColor = 0xff767690;
