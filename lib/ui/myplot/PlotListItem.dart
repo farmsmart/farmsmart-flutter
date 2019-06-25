@@ -13,7 +13,8 @@ class PlotListItemViewModel {
 
   final Future<String> imageUrl;
 
-  PlotListItemViewModel(this.title , this.subTitle, this.detail, this.imageUrl, this.onTap);
+  PlotListItemViewModel(
+      this.title, this.subTitle, this.detail, this.imageUrl, this.onTap);
 }
 
 PlotListItemViewModel fromCropEntityToViewModel(CropEntity currentCrop, Function goToDetail) {
@@ -21,9 +22,7 @@ PlotListItemViewModel fromCropEntityToViewModel(CropEntity currentCrop, Function
   return PlotListItemViewModel(currentCrop.name ?? Strings.defaultCropNameText, "Planting", "Day 6", currentCrop.imageUrl, () => goToDetail(currentCrop));
 }
 
-
 abstract class PlotListItemStyle {
-
   final Color primaryColor;
   final Color dividerColor;
   final Color detailTextBackgroundColor;
@@ -55,9 +54,8 @@ abstract class PlotListItemStyle {
       this.imageSize, this.detailTextBackgroundColor,this.detailLineSpace, this.headingLineSpace, this.overlayColor);
 }
 
-class _defaultStyle implements PlotListItemStyle{
-
-  final Color primaryColor =  const Color(0xff25df0c);
+class _defaultStyle implements PlotListItemStyle {
+  final Color primaryColor = const Color(0xff25df0c);
   final Color dividerColor = const Color(0xfff5f8fa);
   final Color detailTextBackgroundColor = const Color(0x1425df0c);
   final Color overlayColor = const Color(0x1425df0c);
@@ -85,98 +83,85 @@ class _defaultStyle implements PlotListItemStyle{
 class PlotListItem {
   Widget buildListItem(PlotListItemViewModel viewModel, {PlotListItemStyle itemStyle = const _defaultStyle()}) {
     return GestureDetector(
-      onTap: viewModel.onTap,
-      child: Card(
-        margin: itemStyle.cardEdgePadding,
-        elevation: itemStyle.elevation,
-        child: Column(
-          children: <Widget>[
-            Container(
-              padding: itemStyle.edgePadding,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Row(
-                        children: <Widget>[
-                          Text(viewModel.title,
-                              style: itemStyle.titleTextStyle)
-                        ]
-                      ),
-                      SizedBox(
-                        height: itemStyle.headingLineSpace,
-                      ),
-                      Row(
-                        children: <Widget>[
-                          Text(viewModel.subTitle,
-                              style: itemStyle.subTitleTextStyle),
-                        ]
-                      ),
-                      SizedBox(
-                        height: itemStyle.detailLineSpace,
-                      ),
-                      Row(
-                        children: <Widget>[
-                          _buildDetailTextView(itemStyle, viewModel.detail)
-                        ]
-                      )
-                    ]
-                  ),
-                  Column(
-                    children: <Widget>[
-                      _buildPlotImage(viewModel.imageUrl, itemStyle),
-                    ],
-                  )
-                ]
-              )
-            ),
-            Container(
-                child: ListDivider.build())
-          ]
+        onTap: viewModel.onTap,
+        child: Card(
+            margin: itemStyle.cardEdgePadding,
+            elevation: itemStyle.elevation,
+            child: Column(children: <Widget>[
+              Container(
+                  padding: itemStyle.edgePadding,
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        _buildMainTextView(viewModel, itemStyle),
+                        SizedBox(width: 20),
+                        _buildPlotImage(viewModel.imageUrl, itemStyle)
+                      ])),
+              ListDivider.build(),
+            ]
+            )
         )
-      )
+    );
+  }
+
+  _buildMainTextView(PlotListItemViewModel viewModel, PlotListItemStyle itemStyle) {
+    return Expanded(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Text(
+            viewModel.title,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: itemStyle.titleTextStyle,
+          ),
+          SizedBox(height: itemStyle.headingLineSpace),
+          Text(viewModel.subTitle,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: itemStyle.subTitleTextStyle),
+          SizedBox(height: itemStyle.detailLineSpace),
+          _buildDetailTextView(itemStyle, viewModel.detail)
+        ],
+      ),
     );
   }
 
   Container _buildDetailTextView(PlotListItemStyle itemStyle, String text) {
     return Container(
-                      padding: itemStyle.detailTextEdgePadding,
-                      decoration: BoxDecoration(
-                          color: itemStyle.detailTextBackgroundColor,
-                          borderRadius: itemStyle.detailTextBorderRadius),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          Flexible(
-                              child: Container(
-                            child: Text(
-                              text,
-                              style: itemStyle.detailTextStyle,
-                            ),
-                          ))
-                        ],
-                      ),
-                    );
+      padding: itemStyle.detailTextEdgePadding,
+      decoration: BoxDecoration(
+          color: itemStyle.detailTextBackgroundColor,
+          borderRadius: itemStyle.detailTextBorderRadius),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Flexible(
+              child: Container(
+            child: Text(
+              text,
+              style: itemStyle.detailTextStyle,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
+            ),
+          ))
+        ],
+      ),
+    );
   }
 
-  ClipOval _buildPlotImage(
-      Future<String> imageUrl, PlotListItemStyle itemStyle) {
+  ClipOval _buildPlotImage(Future<String> imageUrl, PlotListItemStyle itemStyle) {
     return ClipOval(
-      child: Stack(
-        children: <Widget>[
-          NetworkImageFromFuture(imageUrl,
-              height: itemStyle.imageSize,
-              width: itemStyle.imageSize,
-              fit: BoxFit.cover),
-          Positioned.fill(
-            child: Container(
-              color: itemStyle.overlayColor,
-            )
-          )
-        ]
-      )
-    );
+        child: Stack(children: <Widget>[
+      NetworkImageFromFuture(imageUrl,
+          height: itemStyle.imageSize,
+          width: itemStyle.imageSize,
+          fit: BoxFit.cover),
+      Positioned.fill(
+          child: Container(
+        color: itemStyle.overlayColor,
+      ))
+    ]));
   }
 }
