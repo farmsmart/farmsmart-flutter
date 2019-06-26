@@ -82,7 +82,7 @@ class ActionSheet {
   static Widget build(BuildContext context, {ActionSheetStyle actionStyle = const DefaultStyle()}) {
 
     CustomSheetAction recordSale = CustomSheetAction("Record a new Sale", null, false, icon: "assets/icons/detail_icon_cost.png");
-    CustomSheetAction recordCost = CustomSheetAction("Record a new Cost", null, false, icon: "assets/icons/flag_kenya.png", selection: "assets/icons/flag_kenya.png");
+    CustomSheetAction recordCost = CustomSheetAction("Record a new Cost", null, false, icon: "assets/icons/flag_kenya.png", selection: "assets/icons/radio_button_active.png");
     CustomSheetAction testing = CustomSheetAction("Record a test", null, true);
 
 
@@ -158,7 +158,7 @@ class ActionSheet {
           SizedBox(width: actionStyle.iconLineSpace),
           Text(action.text, style: action.isHighlighted ? actionStyle.highlightTextStyle : actionStyle.mainTextStyle)
         ],
-      ));radio_button_active.png
+      ));
 
     } else if (action.selection != null) {
       listBuilder.add(
