@@ -1,18 +1,21 @@
 import 'package:farmsmart_flutter/ui/common/LargeRoundedButtonStyle.dart';
+import 'package:farmsmart_flutter/ui/common/headerAndFooterListView.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
 import 'package:flutter/material.dart';
 import 'listDivider.dart';
 
-class CustomAction {
+class CustomSheetAction {
   String text;
   IconData icon;
+  IconData selection;
+  bool isHighlighted;
   Function action;
 
-  CustomAction(this.text, this.action, {this.icon});
+  CustomSheetAction(this.text, this.action, this.isHighlighted, {this.icon, this.selection});
 }
 
 class ActionSheetViewModel {
-    List<CustomAction> actions;
+    List<CustomSheetAction> actions;
     String buttonTitle;
 
     ActionSheetViewModel(this.actions, this.buttonTitle);
@@ -21,23 +24,55 @@ class ActionSheetViewModel {
 abstract class ActionSheetStyle {
   final Color cornerColor;
   final Color backgroundColor;
-  final TextStyle titleTextStyle;
+  final Color dropLineColor;
 
-  final EdgeInsets lineEdge;
+  final TextStyle mainTextStyle;
+  final TextStyle highlightTextStyle;
+
+  final EdgeInsets cardPadding;
+  final EdgeInsets dropLineEdge;
+
   final Radius borderRadius;
+  final Radius dropLineRadius;
 
-  ActionSheetStyle(this.cornerColor, this.backgroundColor, this.titleTextStyle, this.lineEdge, this.borderRadius);
+  final double dropLineHeight;
+  final double cardHeight;
+  final double iconLineSpace;
+  final double cardElevation;
+
+  final int maxLines;
+
+  ActionSheetStyle(this.cornerColor, this.backgroundColor, this.dropLineColor,
+      this.mainTextStyle, this.highlightTextStyle, this.cardPadding,
+      this.dropLineEdge, this.borderRadius, this.dropLineRadius,
+      this.dropLineHeight, this.cardHeight, this.iconLineSpace, this.cardElevation, this.maxLines);
+
+
 }
 
 class DefaultStyle implements ActionSheetStyle {
   static const Color titleColor = Color(0xFF1a1b46);
+  static const Color highlightColor = Color(0xFFff6060);
 
   final Color cornerColor = const Color(0xFF737373);
   final Color backgroundColor = const Color(0xFFffffff);
-  final TextStyle titleTextStyle = const TextStyle(fontSize: 17, fontWeight: FontWeight.normal, color: titleColor);
+  final Color dropLineColor = const Color(0xFFe0e1ee);
 
-  final EdgeInsets lineEdge = const EdgeInsets.only(top: 8);
+  final TextStyle mainTextStyle = const TextStyle(fontSize: 17, fontWeight: FontWeight.normal, color: titleColor);
+  final TextStyle highlightTextStyle = const TextStyle(fontSize: 17, fontWeight: FontWeight.normal, color: highlightColor);
+
+  final EdgeInsets cardPadding = const EdgeInsets.only(left: 32, right: 32);
+  final EdgeInsets dropLineEdge = const EdgeInsets.only(top: 8);
+  
   final Radius borderRadius = const Radius.circular(40);
+  final Radius dropLineRadius = const Radius.circular(2.5);
+
+  final double dropLineHeight = 5;
+  final double cardHeight = 70;
+  final double iconLineSpace = 21.5;
+  final double cardElevation = 0;
+
+  final int maxLines = 1;
 
   const DefaultStyle();
 }
@@ -45,24 +80,15 @@ class DefaultStyle implements ActionSheetStyle {
 class ActionSheet {
   static Widget build(BuildContext context, {ActionSheetStyle actionStyle = const DefaultStyle()}) {
 
-    CustomAction recordSale = CustomAction("Record a new Sale", null);
-    CustomAction recordCost = CustomAction("Record a new Cost", null);
-    ActionSheetViewModel viewModel = ActionSheetViewModel([recordSale, recordCost], "Cancel");
-
-    List<Widget> _buildActions() {
-      List<Widget> listBuilder = [];
-
-      for (var action in viewModel.actions){
-        listBuilder.add(buildActionCell(actionStyle, action));
-        listBuilder.add(ListDivider.build());
-      }
-      return listBuilder;
-    }
+    CustomSheetAction recordSale = CustomSheetAction("Record a new Sale", null, false, icon: Icons.clear);
+    CustomSheetAction recordCost = CustomSheetAction("Record a new Cost", null, true, selection:  Icons.style);
+    CustomSheetAction testing = CustomSheetAction("Record a test", null, false);
+    ActionSheetViewModel viewModel = ActionSheetViewModel([recordSale, recordCost, testing], "Cancel");
 
     return Container(
       color: actionStyle.cornerColor, // This line set the transparent background
       child: Container(
-        padding: actionStyle.lineEdge,
+        padding: actionStyle.dropLineEdge,
           decoration: BoxDecoration(
               color: actionStyle.backgroundColor,
               borderRadius: BorderRadius.only(
@@ -70,51 +96,62 @@ class ActionSheet {
                   topRight: actionStyle.borderRadius
               )
           ),
-          child: Wrap(
-            alignment: WrapAlignment.center,
-            children: <Widget>[
-              buildDropLine(),
-              SizedBox(height: 32),
-              Wrap(
-                children: _buildActions(),
-              ),
-              RoundedButton.build(style: LargeRoundedButtonStyle() ,context: context, title: viewModel.buttonTitle)
-            ],
+          child: HeaderAndFooterListView.builder(
+              physics: NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: viewModel.actions.length,
+              itemBuilder: (BuildContext context, int index) =>
+            buildActionCell(actionStyle, viewModel.actions[index]),
+            header: buildDropLine(actionStyle),
+            footer: RoundedButton.build(style: LargeRoundedButtonStyle() ,context: context, title: viewModel.buttonTitle)
           )
     ));
   }
 
-  static Widget buildDropLine() {
+  static Widget buildDropLine(ActionSheetStyle actionStyle) {
     return Container(
-      height: 5,
-      width: 40,
+      height: actionStyle.dropLineHeight,
+      margin: EdgeInsets.only(left: 160, right: 160, top: 8, bottom: 50),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(2.5),
-        color: Color(0xFFe0e1ee),
+        borderRadius: BorderRadius.all(actionStyle.dropLineRadius),
+        color: actionStyle.dropLineColor,
       ),
     );
   }
 
-  static Widget buildActionCell(ActionSheetStyle actionStyle, CustomAction action) {
+  static Widget buildActionCell(ActionSheetStyle actionStyle, CustomSheetAction action) {
     return Card(
-      elevation: 0,
+      elevation: actionStyle.cardElevation,
       color: Colors.transparent,
       child: InkWell(
         onTap: () => print("dsfsdfdsf"),
         child: Container(
-          padding: EdgeInsets.only(left: 32, right: 32.0),
+          padding: actionStyle.cardPadding,
           alignment: Alignment.center,
-          height: 70,
+          height: actionStyle.cardHeight,
           child: Row(
-            children: <Widget>[
-            Icon(Icons.exit_to_app),
-            SizedBox(width: 21.5),
-            Text(action.text, style: actionStyle.titleTextStyle)
-          ],
+            children: _buildActionContent(actionStyle, action),
           ),
         ),
       ),
     );
   }
+
+  static List<Widget> _buildActionContent(ActionSheetStyle actionStyle, CustomSheetAction action) {
+    List<Widget> listBuilder = [];
+    if (action.icon != null) {
+      listBuilder.add(Icon(action.icon));
+      listBuilder.add(SizedBox(width: 21.5));
+      listBuilder.add(Text(action.text, style: action.isHighlighted ? actionStyle.mainTextStyle : actionStyle.highlightTextStyle));
+    } else if (action.selection != null) {
+      listBuilder.add(Text(action.text, style: action.isHighlighted ? actionStyle.mainTextStyle : actionStyle.highlightTextStyle));
+      listBuilder.add(SizedBox(width: 21.5));
+      listBuilder.add(Icon(action.selection));
+    } else {
+      listBuilder.add(Text(action.text, style: action.isHighlighted ? actionStyle.mainTextStyle : actionStyle.highlightTextStyle));
+    }
+    return listBuilder;
+  }
+
 }
 
