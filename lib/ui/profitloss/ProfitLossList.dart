@@ -27,7 +27,6 @@ abstract class ProfitLossStyle {
 
   final Color floatingButtonBackgroundColor;
   final EdgeInsets generalMargins;
-  final EdgeInsets subTitleEdgePadding;
 
   final double titleDetailEdgePadding;
 
@@ -37,7 +36,7 @@ abstract class ProfitLossStyle {
 
   ProfitLossStyle(this.floatingButtonBackgroundColor, this.floatingButtonSize,
       this.floatingButtonElevation, this.floatingButtonIconSize, this.generalMargins,
-      this.titleTextStyle, this.titleDetailEdgePadding, this.titleDetailTextStyle, this.subTitleEdgePadding,
+      this.titleTextStyle, this.titleDetailEdgePadding, this.titleDetailTextStyle,
       this.subTitleTextStyle);
 }
 
@@ -48,7 +47,6 @@ class _DefaultProfitLossStyle implements ProfitLossStyle{
   final TextStyle subTitleTextStyle = const TextStyle(fontSize: 17, fontWeight: FontWeight.normal, color: Color(0xFF25df0c));
 
   final EdgeInsets generalMargins = const EdgeInsets.only(left: 33, top: 36.5, bottom: 12.5);
-  final EdgeInsets subTitleEdgePadding = const EdgeInsets.only(bottom: 17.5);
 
   final double titleDetailEdgePadding = 10;
 
@@ -136,7 +134,6 @@ class _ProfitLossState extends State<ProfitLossPage>  {
 
     Widget _buildSubTitle(ProfitLossViewModel viewModel, ProfitLossStyle profitStyle) {
     return Container(
-      margin: profitStyle.subTitleEdgePadding,
       child: GestureDetector(
         child: Text(
           viewModel.subTitle,

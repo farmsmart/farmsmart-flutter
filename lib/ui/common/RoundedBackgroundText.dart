@@ -4,7 +4,6 @@ class RoundedBackgroundTextViewModel {
   String title;
   IconData icon;
 
-
   RoundedBackgroundTextViewModel({this.title, this.icon});
 }
 
