@@ -1,13 +1,15 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:farmsmart_flutter/data/model/article_entity.dart';
+import 'package:farmsmart_flutter/data/model/entities_const.dart';
 import 'FlameLink.dart';
 import '../../firebase_const.dart';
 import '../ArticleRepositoryInterface.dart';
 
 ArticleEntity _transform(FlameLink cms, DocumentSnapshot snapshot) {
   var article = ArticleEntity.articleFromDocument(snapshot);
-  article.related = ArticleEntityCollectionFlamelink.list(cms: cms, paths: article.relatedArticlesPathReference);
+  article.related = ArticleEntityCollectionFlamelink.list(
+      cms: cms, paths: article.relatedArticlesPathReference);
   return article;
 }
 
@@ -16,28 +18,37 @@ class ArticleEntityCollectionFlamelink implements ArticleEntityCollection {
   final Query _query;
   final List<String> _paths;
 
-  ArticleEntityCollectionFlamelink({FlameLink cms, Query query}) : _cms = cms, _query = query, _paths = [];
+  ArticleEntityCollectionFlamelink({FlameLink cms, Query query})
+      : _cms = cms,
+        _query = query,
+        _paths = [];
 
-  ArticleEntityCollectionFlamelink.list( {FlameLink cms, List<String> paths}) : _cms = cms, _paths = paths, _query = null; 
+  ArticleEntityCollectionFlamelink.list({FlameLink cms, List<String> paths})
+      : _cms = cms,
+        _paths = paths,
+        _query = null;
 
   @override
   Future<List<ArticleEntity>> getEntities({int limit = 0}) {
     if (_paths.isNotEmpty) {
       return _cms.get(_paths).then((snapshots) {
         return snapshots.map((document) => _transform(_cms, document)).toList();
-    });
+      });
+    } else if (_query != null) {
+      return _query.getDocuments().then((snapshot) {
+        return snapshot.documents
+            .map((document) => _transform(_cms, document))
+            .toList();
+      });
     }
-    return _query.getDocuments().then((snapshot) {
-      return snapshot.documents
-          .map((document) => _transform(_cms, document))
-          .toList();
-    });
+    return Future.value([]);
   }
 }
 
 class ArticlesRepositoryFlameLink implements ArticleRepositoryInterface {
   final FlameLink _cms;
   static final _articleSchema = "article";
+  static final _articleDirectoryName = "articleDirectory";
 
   ArticlesRepositoryFlameLink(FlameLink cms) : _cms = cms;
 
@@ -77,12 +88,29 @@ class ArticlesRepositoryFlameLink implements ArticleRepositoryInterface {
       {ArticleCollectionGroup group = ArticleCollectionGroup.all,
       int limit = 0}) {
     //NB: for now there is only one  group (all articles)
-    final publishedDocuments = _cms.documentsQuery(schema: _articleSchema, limit: limit).where(PUBLICATION_STATUS, isEqualTo: DataStatus.PUBLISHED);
-    var collection;
+
     switch (group) {
+      case ArticleCollectionGroup.discovery:
+        return getDirectory(directoryName: _articleDirectoryName);
+        break;
       default:
-        collection = ArticleEntityCollectionFlamelink(cms: _cms, query: publishedDocuments);
+        final publishedDocuments = _cms
+            .documentsQuery(schema: _articleSchema, limit: limit)
+            .where(PUBLICATION_STATUS, isEqualTo: DataStatus.PUBLISHED);
+        return ArticleEntityCollectionFlamelink(
+                cms: _cms, query: publishedDocuments)
+            .getEntities();
     }
-    return collection.getEntities();
+  }
+
+  Future<List<ArticleEntity>> getDirectory({String directoryName}) {
+    return _cms.getSingle(schema: directoryName).then((snapshot) {
+      final refs = snapshot.data[ARTICLES]
+          .map((article) => article[ARTICLE].path.toString())
+          .toList();
+      final paths = List<String>.from(refs);
+      return ArticleEntityCollectionFlamelink.list(cms: _cms, paths: paths)
+          .getEntities();
+    });
   }
 }

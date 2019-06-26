@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:farmsmart_flutter/data/model/articles_directory_entity.dart';
 
 class FlameLinkSchemaType {
   static String single = "single";
@@ -23,13 +24,21 @@ class FlameLink {
     return _store.collection(_contentCollectionName);
   }
 
-  Future<List<DocumentSnapshot>> get(List<String> paths) async {
-    var fetchRequests;
-    final baseCollection = content();
-    for (var path in paths) {
-        fetchRequests.add(baseCollection.document(path).get());
-    }
+  Future<DocumentSnapshot> getSingle({String schema}) {
+    return documentQuery(schema: schema).getDocuments().then((snapshot) { 
+      return snapshot.documents.singleWhere((_) => true, orElse: null);
+    });
+  }
+
+  Future<List<DocumentSnapshot>> get(List<String> paths) {
+    final fetchRequests = paths.map((path) => _store.document(path).get());
     return Future.wait(fetchRequests);
+  }
+
+  Query documentQuery({String schema = ""}) {
+     Query query = content().where(FlameLinkDocumentFields.schema, isEqualTo: schema)
+      .where(FlameLinkDocumentFields.type, isEqualTo: FlameLinkSchemaType.single).limit(1);
+      return query;
   }
 
   Query documentsQuery({String schema = "", int limit = 0}) {

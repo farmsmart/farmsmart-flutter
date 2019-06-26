@@ -2,7 +2,7 @@ import 'package:farmsmart_flutter/data/model/article_entity.dart';
 
 enum ArticleCollectionGroup {
   all,
-  featured
+  discovery
 }
 
 abstract class ArticleRepositoryInterface {
