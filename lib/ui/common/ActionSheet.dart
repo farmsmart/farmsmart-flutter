@@ -6,8 +6,8 @@ import 'ListDivider.dart';
 
 class CustomSheetAction {
   String text;
-  IconData icon;
-  IconData selection;
+  String icon;
+  String selection;
   bool isHighlighted;
   Function action;
 
@@ -81,9 +81,11 @@ class DefaultStyle implements ActionSheetStyle {
 class ActionSheet {
   static Widget build(BuildContext context, {ActionSheetStyle actionStyle = const DefaultStyle()}) {
 
-    CustomSheetAction recordSale = CustomSheetAction("Record a new Sale", null, false, icon: Icons.clear);
-    CustomSheetAction recordCost = CustomSheetAction("Record a new Cost", null, false, selection:  Icons.style);
+    CustomSheetAction recordSale = CustomSheetAction("Record a new Sale", null, false, icon: "assets/icons/detail_icon_cost.png");
+    CustomSheetAction recordCost = CustomSheetAction("Record a new Cost", null, false, icon: "assets/icons/flag_kenya.png", selection: "assets/icons/flag_kenya.png");
     CustomSheetAction testing = CustomSheetAction("Record a test", null, true);
+
+
     ActionSheetViewModel viewModel = ActionSheetViewModel([recordSale, recordCost, testing], "Cancel");
 
     return Container(
@@ -132,29 +134,53 @@ class ActionSheet {
               padding: actionStyle.cardEdge,
               alignment: Alignment.center,
               height: actionStyle.cardHeight,
-              child: Row(
+              child: Wrap(
+                direction: Axis.horizontal,
+                crossAxisAlignment: WrapCrossAlignment.start,
                 children: _buildActionContent(actionStyle, action),
               ),
             ),
           ),
         ),
-        currentAction == numberOfActions-1 ?  Row() : ListDivider.build(),
+        currentAction == numberOfActions-1 ?  Wrap() : ListDivider.build(),
       ],
     );
   }
 
   static List<Widget> _buildActionContent(ActionSheetStyle actionStyle, CustomSheetAction action) {
     List<Widget> listBuilder = [];
-    if (action.icon != null) {
-      listBuilder.add(Icon(action.icon));
-      listBuilder.add(SizedBox(width: actionStyle.iconLineSpace));
-      listBuilder.add(Text(action.text, style: action.isHighlighted ? actionStyle.highlightTextStyle : actionStyle.mainTextStyle));
+    if (action.icon != null && action.selection == null) {
+      listBuilder.add(
+      Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          Image.asset(action.icon, height: 16.5),
+          SizedBox(width: actionStyle.iconLineSpace),
+          Text(action.text, style: action.isHighlighted ? actionStyle.highlightTextStyle : actionStyle.mainTextStyle)
+        ],
+      ));radio_button_active.png
+
     } else if (action.selection != null) {
-      listBuilder.add(Text(action.text, style: action.isHighlighted ? actionStyle.highlightTextStyle : actionStyle.mainTextStyle));
-      listBuilder.add(SizedBox(width: actionStyle.iconLineSpace));
-      listBuilder.add(Icon(action.selection));
+      listBuilder.add(
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Row(children: <Widget>[
+            Image.asset(action.icon, height: 24),
+            SizedBox(width: actionStyle.iconLineSpace),
+            Text(action.text, style: action.isHighlighted ? actionStyle.highlightTextStyle : actionStyle.mainTextStyle),
+          ]),
+          Image.asset(action.selection, width: 24, height: 24)
+        ],
+      ));
+
     } else {
-      listBuilder.add(Text(action.text, style: action.isHighlighted ? actionStyle.highlightTextStyle : actionStyle.mainTextStyle));
+      listBuilder.add(Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          Text(action.text, style: action.isHighlighted ? actionStyle.highlightTextStyle : actionStyle.mainTextStyle),
+        ],
+      ));
     }
     return listBuilder;
   }
