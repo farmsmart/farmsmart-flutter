@@ -2,7 +2,7 @@ import 'package:farmsmart_flutter/data/model/crop_entity.dart';
 import 'package:farmsmart_flutter/utils/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:farmsmart_flutter/ui/common/network_image_from_future.dart';
-import 'package:farmsmart_flutter/ui/common/listDivider.dart';
+import 'package:farmsmart_flutter/ui/common/ListDivider.dart';
 
 class PlotListItemViewModel {
   final String title;

@@ -2,7 +2,7 @@ import 'package:farmsmart_flutter/ui/common/LargeRoundedButtonStyle.dart';
 import 'package:farmsmart_flutter/ui/common/headerAndFooterListView.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
 import 'package:flutter/material.dart';
-import 'listDivider.dart';
+import 'ListDivider.dart';
 
 class CustomSheetAction {
   String text;
@@ -43,12 +43,11 @@ abstract class ActionSheetStyle {
 
   final int maxLines;
 
-  ActionSheetStyle(this.cornerColor, this.backgroundColor, this.dropLineColor, this.transparentColor,
-      this.mainTextStyle, this.highlightTextStyle, this.cardEdge,
-      this.dropLineEdge, this.borderRadius, this.dropLineRadius,
-      this.dropLineHeight, this.cardHeight, this.iconLineSpace, this.cardElevation, this.maxLines);
-
-
+  ActionSheetStyle(this.cornerColor, this.backgroundColor, this.dropLineColor,
+      this.transparentColor, this.mainTextStyle,
+      this.highlightTextStyle, this.cardEdge, this.dropLineEdge,
+      this.borderRadius, this.dropLineRadius, this.dropLineHeight,
+      this.cardHeight, this.iconLineSpace, this.cardElevation, this.maxLines);
 }
 
 class DefaultStyle implements ActionSheetStyle {
@@ -105,7 +104,7 @@ class ActionSheet {
               itemBuilder: (BuildContext context, int index) =>
             buildActionCell(actionStyle, viewModel.actions[index], viewModel.actions.length, index),
             header: buildDropLine(actionStyle),
-            footer: RoundedButton.build(style: LargeRoundedButtonStyle() ,context: context, title: viewModel.buttonTitle)
+            footer: RoundedButton.build(style: ActionSheetLargeRoundedButtonStyle(), context: context, title: viewModel.buttonTitle)
           )
     ));
   }

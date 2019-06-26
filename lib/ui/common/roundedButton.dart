@@ -5,12 +5,13 @@ class RoundedButtonViewModel {
   IconData icon;
   Function onTap;
   BuildContext context;
+  Color backgroundColor;
 
-  RoundedButtonViewModel(this.context, {this.title, this.icon, this.onTap});
+  RoundedButtonViewModel(this.context, {this.title, this.icon, this.onTap, this.backgroundColor});
 }
 
-RoundedButtonViewModel buildButtonViewModel(BuildContext context, {String title, IconData icon, Function onTap}) {
-  return RoundedButtonViewModel(context, title: title, icon : icon, onTap: () => onTap(context));
+RoundedButtonViewModel buildButtonViewModel(BuildContext context, {String title, IconData icon, Function onTap, Color backgroundColor}) {
+  return RoundedButtonViewModel(context, title: title, icon : icon, onTap: () => onTap(context), backgroundColor: backgroundColor);
 }
 
 abstract class RoundedButtonStyle {
@@ -57,14 +58,14 @@ class RoundedButton {
       {RoundedButtonStyle style = const _DefaultStyle(),
         @required  BuildContext context,
         String title, IconData icon,
-        Function onTap}) {
-    return _buildRoundedButton(style, context , title: title, icon: icon, onTap: onTap);
+        Function onTap, Color backgroundColor}) {
+    return _buildRoundedButton(style, context , title: title, icon: icon, onTap: onTap, backgroundColor: backgroundColor);
   }
 
   static Widget _buildRoundedButton(RoundedButtonStyle buttonStyle, BuildContext context, {String title, IconData icon,
-    Function onTap}) {
+    Function onTap, Color backgroundColor}) {
 
-    RoundedButtonViewModel viewModel = buildButtonViewModel(context, title: title, icon: icon, onTap: onTap);
+    RoundedButtonViewModel viewModel = buildButtonViewModel(context, title: title, icon: icon, onTap: onTap, backgroundColor: backgroundColor);
 
     List<Widget> _buildButtonContent(){
       List<Widget> listBuilder = [];
@@ -96,7 +97,7 @@ class RoundedButton {
           height: buttonStyle.size,
           width: buttonStyle.size,
           decoration: BoxDecoration(
-              color: buttonStyle.backgroundColor,
+              color: viewModel.backgroundColor != null ? viewModel.backgroundColor : buttonStyle.backgroundColor,
               shape: buttonStyle.buttonShape,
               borderRadius: buttonStyle.borderRadius
           ),
