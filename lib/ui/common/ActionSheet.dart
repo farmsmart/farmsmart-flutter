@@ -42,16 +42,22 @@ class DefaultStyle implements ActionSheetStyle {
   const DefaultStyle();
 }
 
-enum ActionSheetType {
-  simple, withIcon, selection
-}
-
 class ActionSheet {
   static Widget build(BuildContext context, {ActionSheetStyle actionStyle = const DefaultStyle()}) {
 
-    CustomAction renameCrop = CustomAction("dfg", null);
-    CustomAction deleteCrop = CustomAction("DeleteCrop", null);
-    ActionSheetViewModel viewModel = ActionSheetViewModel([renameCrop, deleteCrop], "Cancel");
+    CustomAction recordSale = CustomAction("Record a new Sale", null);
+    CustomAction recordCost = CustomAction("Record a new Cost", null);
+    ActionSheetViewModel viewModel = ActionSheetViewModel([recordSale, recordCost], "Cancel");
+
+    List<Widget> _buildActions() {
+      List<Widget> listBuilder = [];
+
+      for (var action in viewModel.actions){
+        listBuilder.add(buildActionCell(actionStyle, action));
+        listBuilder.add(ListDivider.build());
+      }
+      return listBuilder;
+    }
 
     return Container(
       color: actionStyle.cornerColor, // This line set the transparent background
@@ -69,8 +75,9 @@ class ActionSheet {
             children: <Widget>[
               buildDropLine(),
               SizedBox(height: 32),
-              buildActionCell(actionStyle),
-              ListDivider.build(),
+              Wrap(
+                children: _buildActions(),
+              ),
               RoundedButton.build(style: LargeRoundedButtonStyle() ,context: context, title: viewModel.buttonTitle)
             ],
           )
@@ -88,7 +95,7 @@ class ActionSheet {
     );
   }
 
-  static Widget buildActionCell(ActionSheetStyle actionStyle) {
+  static Widget buildActionCell(ActionSheetStyle actionStyle, CustomAction action) {
     return Card(
       elevation: 0,
       color: Colors.transparent,
@@ -98,10 +105,11 @@ class ActionSheet {
           padding: EdgeInsets.only(left: 32, right: 32.0),
           alignment: Alignment.center,
           height: 70,
-          child: Row(children: <Widget>[
+          child: Row(
+            children: <Widget>[
             Icon(Icons.exit_to_app),
             SizedBox(width: 21.5),
-            Text("Record a new Sale", style: actionStyle.titleTextStyle)
+            Text(action.text, style: actionStyle.titleTextStyle)
           ],
           ),
         ),
