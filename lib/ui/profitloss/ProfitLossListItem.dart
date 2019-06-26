@@ -1,35 +1,74 @@
 import 'package:farmsmart_flutter/ui/common/listDivider.dart';
+import 'package:farmsmart_flutter/ui/myplot/PlotListItem.dart';
 import 'package:farmsmart_flutter/utils/assets.dart';
 import 'package:flutter/material.dart';
+import 'package:farmsmart_flutter/ui/common/RoundedBackgroundText.dart';
+import 'package:farmsmart_flutter/ui/common/CompactRoundedBackgroundTextStyle.dart';
 
 
 class ProfitLossItemViewModel {
   final String title;
   final String subTitle;
-  final String detail;
+  final double detail;
 
   ProfitLossItemViewModel(this.title, this.subTitle, this.detail);
 }
 
 ProfitLossItemViewModel buildProfitLossItemViewModel() {
-  return ProfitLossItemViewModel("Title", "SubTitle", "Detail");
+  return ProfitLossItemViewModel("14 May - Crop Rotational", "New equipment for my crop, and new material for a new tomato crop", -250);
+}
+
+abstract class ProfitLossItemStyle {
+
+  final TextStyle titleStyle;
+  final TextStyle subTitleStyle;
+
+
+  final EdgeInsets edgePadding;
+
+  final double elevation;
+  final double detailLineSpace;
+  final double titleLineSpace;
+  final int maxLines;
+
+
+  ProfitLossItemStyle(this.elevation, this.edgePadding, this.detailLineSpace, this.titleStyle, this.maxLines,
+      this.titleLineSpace, this.subTitleStyle);
+
+}
+
+class _DefaultStyle implements ProfitLossItemStyle {
+
+  final TextStyle titleStyle = const TextStyle(fontSize: 12, fontWeight: FontWeight.normal, color: Color(0xff767690));
+  final TextStyle subTitleStyle = const TextStyle(fontSize: 17, fontWeight: FontWeight.normal, color: Color(0xff1a1b46));
+
+  final EdgeInsets edgePadding = const EdgeInsets.only(left: 32.0, top: 26.0, right: 32.0, bottom: 23.5);
+
+  final double elevation = 0.0;
+  final double detailLineSpace = 20.5;
+  final int maxLines = 1;
+  final double titleLineSpace = 7;
+
+  const _DefaultStyle();
 }
 
 class HomeProfitLossChild {
-  Widget buildListItem(ProfitLossItemViewModel viewModel) {
+  Widget buildListItem(ProfitLossItemViewModel viewModel, {ProfitLossItemStyle itemStyle = const _DefaultStyle()}) {
     return GestureDetector(
         //onTap: viewModel.onTap,
         child: Card(
-            margin: const EdgeInsets.all(0),
-            elevation: 0,
+            elevation: itemStyle.elevation,
             child: Column(children: <Widget>[
               Container(
-                  padding: EdgeInsets.only(left: 32.0, top: 27.0, right: 32.0, bottom: 27.0),
+                  padding: itemStyle.edgePadding,
                   child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        _buildMainTextView(viewModel),
-                        SizedBox(width: 23),
+                        _buildMainTextView(viewModel, itemStyle),
+                        SizedBox(width: itemStyle.detailLineSpace),
+                        RoundedBackgroundText.build(
+                            style: viewModel.detail >= 0 ? PositiveCompactRoundedBackgroundTextStyle():
+                            NegativeCompactBackgroundTextStyle(), title: viewModel.detail.toString())
                       ])),
               ListDivider.build(),
             ]
@@ -39,30 +78,24 @@ class HomeProfitLossChild {
   }
 }
 
-_buildMainTextView(ProfitLossItemViewModel viewModel) {
+_buildMainTextView(ProfitLossItemViewModel viewModel, ProfitLossItemStyle itemStyle) {
   return Expanded(
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Text(viewModel.title,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis),
-          SizedBox(height: 5),
-          Text(viewModel.subTitle,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis)
-        ],
-      ),
-      Text(
-        "TESTING",
-        textAlign: TextAlign.end,
-      )
-    ],
+        Text(viewModel.title,
+            style: itemStyle.titleStyle,
+            maxLines: itemStyle.maxLines,
+            overflow: TextOverflow.ellipsis),
+        SizedBox(height: itemStyle.titleLineSpace),
+        Text(viewModel.subTitle,
+            style: itemStyle.subTitleStyle,
+            maxLines: itemStyle.maxLines,
+            overflow: TextOverflow.ellipsis)
+      ],
     ),
   );
 }
+
+
 
