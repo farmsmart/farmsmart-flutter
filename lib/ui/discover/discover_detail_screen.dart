@@ -11,7 +11,7 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:farmsmart_flutter/redux/app/app_state.dart';
 import '../app_bar.dart';
-import 'discover_viewmodel.dart';
+import 'ArticleListViewModel.dart';
 
 
 class ArticleDetailScreen extends StatefulWidget {
@@ -25,14 +25,14 @@ class _ArticleDetailState extends State<ArticleDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: StoreConnector<AppState, DiscoverViewModel>(
+      body: StoreConnector<AppState, ArticleListViewModel>(
         builder: (_, viewModel) => _buildBody(context, viewModel),
-        converter: (store) => DiscoverViewModel.fromStore(store),
+        converter: (store) => ArticleListViewModel.fromStore(store),
       ),
     );
   }
 
-  Widget _buildBody(BuildContext context, DiscoverViewModel viewModel) {
+  Widget _buildBody(BuildContext context, ArticleListViewModel viewModel) {
     switch (viewModel.loadingStatus) {
       case LoadingStatus.LOADING:
         return Container(

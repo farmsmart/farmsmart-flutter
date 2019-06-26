@@ -6,27 +6,8 @@ import 'package:farmsmart_flutter/ui/discover/StandardListItem.dart';
 import 'package:farmsmart_flutter/utils/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:farmsmart_flutter/data/model/article_entity.dart';
-import 'package:farmsmart_flutter/ui/discover/discover_viewmodel.dart';
+import 'package:farmsmart_flutter/ui/discover/ArticleListViewModel.dart';
 import 'package:farmsmart_flutter/redux/home/discover/discover_actions.dart';
-
-class ArticleListItemViewModel {
-  final String title;
-  final String summary;
-  final Future<String> imageUrl;
-  Function onTap;
-
-  ArticleListItemViewModel(this.title, this.summary, this.imageUrl, this.onTap);
-}
-
-ArticleListItemViewModel fromArticleEntityToViewModel(
-    ArticleEntity article, Function getRelatedArticles) {
-  return ArticleListItemViewModel(
-      article.title ?? Strings.noTitleString,
-      article.summary ?? Strings.noTitleString,
-      article.imageUrl,
-      () => getRelatedArticles(article));
-}
 
 abstract class ArticleListStyle {
   final TextStyle titleTextStyle;
@@ -49,39 +30,39 @@ class _ArticleListDefaultStyle implements ArticleListStyle {
 
 class ArticleList extends StatefulWidget {
   State<StatefulWidget> createState() {
-    return _DiscoveryState();
+    return _State();
   }
 }
 
-class _DiscoveryState extends State<ArticleList> {
+class _State extends State<ArticleList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: StoreConnector<AppState, DiscoverViewModel>(
+      body: StoreConnector<AppState, ArticleListViewModel>(
           onInit: (store) => store.dispatch(FetchArticlesAction()),
           builder: (_, viewModel) => _buildBody(context, viewModel),
-          converter: (store) => DiscoverViewModel.fromStore(store)),
+          converter: (store) => ArticleListViewModel.fromStore(store)),
     );
   }
 
-  Widget _buildBody(BuildContext context, DiscoverViewModel viewModel) {
+  Widget _buildBody(BuildContext context, ArticleListViewModel viewModel) {
     switch (viewModel.loadingStatus) {
       case LoadingStatus.LOADING:
         return Container(
             child: CircularProgressIndicator(), alignment: Alignment.center);
       case LoadingStatus.SUCCESS:
-        return _buildList(context, viewModel.articleItems);
+        return _buildList(context, viewModel.articleListItemViewModels);
       case LoadingStatus.ERROR:
         return Text(Strings.errorString);
     }
   }
 
-  Widget _buildList(BuildContext context, List<ArticleEntity> articlesList,
+  Widget _buildList(BuildContext context, List<ArticleListItemViewModel> viewModels,
       {ArticleListStyle articleListStyle = const _ArticleListDefaultStyle()}) {
     return HeaderAndFooterListView.builder(
-        itemCount: articlesList.length,
+        itemCount: viewModels.length,
         itemBuilder: (BuildContext context, int index) {
-          final viewModel = fromArticleEntityToViewModel(articlesList[index], null);
+          final viewModel = viewModels[index];
           if (index == 0) {
             return HeroListItem().builder(viewModel);
           } else {

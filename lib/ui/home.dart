@@ -2,7 +2,7 @@ import 'package:farmsmart_flutter/data/firebase_const.dart';
 import 'package:farmsmart_flutter/farmsmart_localizations.dart';
 import 'package:farmsmart_flutter/redux/app/app_state.dart';
 import 'package:farmsmart_flutter/ui/community/community_child.dart';
-import 'package:farmsmart_flutter/ui/discover/discover_page.dart';
+import 'package:farmsmart_flutter/ui/discover/ArticleList.dart';
 import 'package:farmsmart_flutter/ui/home_viewmodel.dart';
 import 'package:farmsmart_flutter/ui/myplot/my_plot_page.dart';
 import 'package:farmsmart_flutter/ui/profitloss/profit_loss_child.dart';

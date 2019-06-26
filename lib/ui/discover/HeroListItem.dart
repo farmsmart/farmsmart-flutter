@@ -2,7 +2,7 @@ import 'package:farmsmart_flutter/ui/common/listDivider.dart';
 import 'package:farmsmart_flutter/ui/common/network_image_from_future.dart';
 import 'package:flutter/material.dart';
 import 'ArticleListItemStyle.dart';
-import 'discover_page.dart';
+import 'ArticleListViewModel.dart';
 
 class _DefaultStyle implements ArticleListItemStyle {
   static const Color titleColor = Color(0xFF1a1b46);
