@@ -40,14 +40,18 @@ abstract class ActionSheetStyle {
   final double cardHeight;
   final double iconLineSpace;
   final double cardElevation;
+  final double bigIconHeight;
+  final double smallIconHeight;
 
   final int maxLines;
 
   ActionSheetStyle(this.cornerColor, this.backgroundColor, this.dropLineColor,
-      this.transparentColor, this.mainTextStyle,
-      this.highlightTextStyle, this.cardEdge, this.dropLineEdge,
-      this.borderRadius, this.dropLineRadius, this.dropLineHeight,
-      this.cardHeight, this.iconLineSpace, this.cardElevation, this.maxLines);
+      this.transparentColor, this.mainTextStyle, this.highlightTextStyle,
+      this.cardEdge, this.dropLineEdge, this.borderRadius, this.dropLineRadius,
+      this.dropLineHeight, this.cardHeight, this.iconLineSpace,
+      this.cardElevation, this.bigIconHeight, this.smallIconHeight,
+      this.maxLines);
+
 }
 
 class DefaultStyle implements ActionSheetStyle {
@@ -72,6 +76,8 @@ class DefaultStyle implements ActionSheetStyle {
   final double cardHeight = 70;
   final double iconLineSpace = 21.5;
   final double cardElevation = 0;
+  final double bigIconHeight = 24;
+  final double smallIconHeight = 16.5;
 
   final int maxLines = 1;
 
@@ -154,7 +160,7 @@ class ActionSheet {
       Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          Image.asset(action.icon, height: 16.5),
+          Image.asset(action.icon, height: actionStyle.smallIconHeight),
           SizedBox(width: actionStyle.iconLineSpace),
           Text(action.text, style: action.isHighlighted ? actionStyle.highlightTextStyle : actionStyle.mainTextStyle)
         ],
@@ -166,11 +172,11 @@ class ActionSheet {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Row(children: <Widget>[
-            Image.asset(action.icon, height: 24),
+            Image.asset(action.icon, height: actionStyle.bigIconHeight),
             SizedBox(width: actionStyle.iconLineSpace),
             Text(action.text, style: action.isHighlighted ? actionStyle.highlightTextStyle : actionStyle.mainTextStyle),
           ]),
-          Image.asset(action.selection, width: 24, height: 24)
+          Image.asset(action.selection, height: actionStyle.bigIconHeight)
         ],
       ));
 
