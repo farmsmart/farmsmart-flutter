@@ -6,13 +6,17 @@ import 'package:farmsmart_flutter/utils/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:farmsmart_flutter/ui/common/headerAndFooterListView.dart';
+import 'package:farmsmart_flutter/ui/common/CompactRoundedButtonStyle.dart';
+import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
+
+
 
 class ProfitLossViewModel {
   final String title;
-  final String titleDetail;
-  final String subTitle;
+  final String detailText;
+  final String subtitle;
 
-  ProfitLossViewModel(this.title, this.titleDetail, this.subTitle);
+  ProfitLossViewModel(this.title, this.detailText, this.subtitle);
 }
 
 ProfitLossViewModel buildProfitLossViewModel() {
@@ -22,40 +26,40 @@ ProfitLossViewModel buildProfitLossViewModel() {
 abstract class ProfitLossStyle {
 
   final TextStyle titleTextStyle;
-  final TextStyle titleDetailTextStyle;
-  final TextStyle subTitleTextStyle;
+  final TextStyle detailTextStyle;
+  final TextStyle subtitleTextStyle;
 
-  final Color floatingButtonBackgroundColor;
+  final Color actionButtonBackgroundColour;
   final EdgeInsets generalMargins;
 
-  final double titleDetailEdgePadding;
+  final double destailTextEdgePadding;
 
-  final double floatingButtonSize;
-  final double floatingButtonElevation;
-  final double floatingButtonIconSize;
+  final double actionButtonSize;
+  final double actionButtonElevation;
+  final double actionButtonIconSize;
 
-  ProfitLossStyle(this.floatingButtonBackgroundColor, this.floatingButtonSize,
-      this.floatingButtonElevation, this.floatingButtonIconSize, this.generalMargins,
-      this.titleTextStyle, this.titleDetailEdgePadding, this.titleDetailTextStyle,
-      this.subTitleTextStyle);
+  ProfitLossStyle(this.actionButtonBackgroundColour, this.actionButtonSize,
+      this.actionButtonElevation, this.actionButtonIconSize, this.generalMargins,
+      this.titleTextStyle, this.destailTextEdgePadding, this.detailTextStyle,
+      this.subtitleTextStyle);
 }
 
-class _DefaultProfitLossStyle implements ProfitLossStyle{
+class _DefaultStyle implements ProfitLossStyle{
 
   final TextStyle titleTextStyle = const TextStyle(fontSize: 47, fontWeight: FontWeight.bold, color: Color(0xFF1a1b46));
-  final TextStyle titleDetailTextStyle = const TextStyle(fontSize: 15, fontWeight: FontWeight.normal, color: Color(0xFF767690));
-  final TextStyle subTitleTextStyle = const TextStyle(fontSize: 17, fontWeight: FontWeight.normal, color: Color(0xFF25df0c));
+  final TextStyle detailTextStyle = const TextStyle(fontSize: 15, fontWeight: FontWeight.normal, color: Color(0xFF767690));
+  final TextStyle subtitleTextStyle = const TextStyle(fontSize: 17, fontWeight: FontWeight.normal, color: Color(0xFF25df0c));
 
   final EdgeInsets generalMargins = const EdgeInsets.only(left: 33, top: 36.5, bottom: 12.5);
 
-  final double titleDetailEdgePadding = 10;
+  final double destailTextEdgePadding = 10;
 
-  final Color floatingButtonBackgroundColor = const Color(0xFF25df0c);
-  final double floatingButtonSize = 48.0;
-  final double floatingButtonElevation = 0;
-  final double floatingButtonIconSize = 20.0;
+  final Color actionButtonBackgroundColour = const Color(0xFF25df0c);
+  final double actionButtonSize = 48.0;
+  final double actionButtonElevation = 0;
+  final double actionButtonIconSize = 20.0;
 
-  const _DefaultProfitLossStyle();
+  const _DefaultStyle();
 }
 
 class ProfitLossPage extends StatefulWidget {
@@ -74,7 +78,7 @@ class _ProfitLossState extends State<ProfitLossPage>  {
     );
   }
 
-  Widget _buildBody(BuildContext context, MyProfitLossViewModel viewModel, ProfitLossViewModel profitLossViewModel, {ProfitLossStyle profitStyle = const _DefaultProfitLossStyle()}) {
+  Widget _buildBody(BuildContext context, MyProfitLossViewModel viewModel, ProfitLossViewModel profitLossViewModel, {ProfitLossStyle profitStyle = const _DefaultStyle()}) {
     switch (viewModel.loadingStatus) {
       case LoadingStatus.LOADING:
         return Container(
@@ -88,16 +92,18 @@ class _ProfitLossState extends State<ProfitLossPage>  {
 
   Widget _buildPage(BuildContext context, MyProfitLossViewModel viewModel, ProfitLossViewModel profitLossViewModel, ProfitLossStyle profitStyle) {
     final viewModel = buildProfitLossViewModel();
+
     return HeaderAndFooterListView.builder(
       //FIXME: itemCount is now hardcoded
         itemCount: 10,
         itemBuilder: (BuildContext context, int index) {
          final itemViewModel = buildProfitLossItemViewModel();
-         return HomeProfitLossChild().buildListItem(itemViewModel);
+         return ProfitLossListItem().buildListItem(itemViewModel);
         },
     physics: ScrollPhysics(),
     shrinkWrap: true,
       header: _buildTitle(profitStyle, profitLossViewModel),
+      footer: SizedBox(height: 51,)
     );
   }
 
@@ -115,11 +121,11 @@ class _ProfitLossState extends State<ProfitLossPage>  {
                   style: profitStyle.titleTextStyle
               ),
               SizedBox(
-                width: profitStyle.titleDetailEdgePadding,
+                width: profitStyle.destailTextEdgePadding,
               ),
               Text(
-                viewModel.titleDetail,
-                style: profitStyle.titleDetailTextStyle,
+                viewModel.detailText,
+                style: profitStyle.detailTextStyle,
               )
             ],
           ),
@@ -136,8 +142,8 @@ class _ProfitLossState extends State<ProfitLossPage>  {
     return Container(
       child: GestureDetector(
         child: Text(
-          viewModel.subTitle,
-          style: profitStyle.subTitleTextStyle
+          viewModel.subtitle,
+          style: profitStyle.subtitleTextStyle
     ),
         onTap: () {
           //FIXME: Add navigation to the next screen when finished
@@ -149,16 +155,8 @@ class _ProfitLossState extends State<ProfitLossPage>  {
     return Scaffold(
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         body: _buildPage(context, viewModel,profitLossViewModel, profitStyle),
-        floatingActionButton: Container(
-          height: profitStyle.floatingButtonSize,
-          width: profitStyle.floatingButtonSize,
-          child: FloatingActionButton(
-            onPressed: () {},
-            child: Icon(Icons.add, size: profitStyle.floatingButtonIconSize),
-            backgroundColor: profitStyle.floatingButtonBackgroundColor,
-            elevation: profitStyle.floatingButtonElevation,
-          ),
-        ));
+        floatingActionButton: RoundedButton.build(style: CompactBigRoundedButtonStyle(),context: context, icon: Icons.add)
+    );
   }
 }
 

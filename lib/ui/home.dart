@@ -48,11 +48,9 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
     }
   }
 
-
-  //TODO: Put the correct order once finished
   final List<Widget> _children = [
-    ProfitLossPage(),
     PlotList(),
+    ProfitLossPage(),
     ArticleList(),
     HomeCommunityChild()
   ];

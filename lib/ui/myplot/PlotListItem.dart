@@ -3,10 +3,12 @@ import 'package:farmsmart_flutter/utils/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:farmsmart_flutter/ui/common/network_image_from_future.dart';
 import 'package:farmsmart_flutter/ui/common/listDivider.dart';
+import 'package:farmsmart_flutter/ui/common/Dogtag.dart';
+import 'package:farmsmart_flutter/ui/common/DogTagStyle.dart';
 
 class PlotListItemViewModel {
   final String title;
-  final String subTitle;
+  final String subtitle;
   final String detail;
 
   Function onTap;
@@ -14,7 +16,7 @@ class PlotListItemViewModel {
   final Future<String> imageUrl;
 
   PlotListItemViewModel(
-      this.title, this.subTitle, this.detail, this.imageUrl, this.onTap);
+      this.title, this.subtitle, this.detail, this.imageUrl, this.onTap);
 }
 
 PlotListItemViewModel fromCropEntityToViewModel(CropEntity currentCrop, Function goToDetail) {
@@ -39,7 +41,7 @@ abstract class PlotListItemStyle {
 
   final TextStyle detailTextStyle;
   final TextStyle titleTextStyle;
-  final TextStyle subTitleTextStyle;
+  final TextStyle subtitleTextStyle;
 
   final double elevation;
   final double imageSize;
@@ -53,7 +55,7 @@ abstract class PlotListItemStyle {
   PlotListItemStyle(this.primaryColor, this.dividerColor, this.edgePadding,
       this.detailTextEdgePadding, this.dividerEdgePadding,
       this.detailTextBorderRadius, this.detailTextStyle,
-      this.titleTextStyle, this.subTitleTextStyle, this.elevation,
+      this.titleTextStyle, this.subtitleTextStyle, this.elevation,
       this.cardEdgePadding,
       this.imageSize, this.detailTextBackgroundColor,this.detailLineSpace, this.headingLineSpace,
       this.overlayColor, this.imageLineSpace, this.maxLineText);
@@ -65,12 +67,12 @@ class _defaultStyle implements PlotListItemStyle {
   final Color detailTextBackgroundColor = const Color(0x1425df0c);
   final Color overlayColor = const Color(0x1425df0c);
 
-  final EdgeInsets detailTextEdgePadding = const EdgeInsets.only(left: 13, top: 6, right: 13, bottom: 6);
+  final EdgeInsets detailTextEdgePadding = const EdgeInsets.only(left: 12, top: 5.5, right: 12, bottom: 5.5);
   final EdgeInsets dividerEdgePadding = const EdgeInsets.only(left: 25.0);
   final EdgeInsets cardEdgePadding = const EdgeInsets.all(0);
   final EdgeInsets edgePadding = const EdgeInsets.only(left: 32.0, top: 27.0, right: 32.0, bottom: 27.0);
 
-  final TextStyle subTitleTextStyle = const TextStyle(fontSize: 15, fontWeight: FontWeight.normal, color: Color(0xff767690));
+  final TextStyle subtitleTextStyle = const TextStyle(fontSize: 15, fontWeight: FontWeight.normal, color: Color(0xff767690));
   final TextStyle detailTextStyle = const TextStyle(fontSize: 11, fontWeight: FontWeight.normal, color: Color(0xff25df0c));
   final TextStyle titleTextStyle = const TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: Color(0xff1a1b46));
 
@@ -124,35 +126,14 @@ class PlotListItem {
             style: itemStyle.titleTextStyle,
           ),
           SizedBox(height: itemStyle.headingLineSpace),
-          Text(viewModel.subTitle,
+          Text(viewModel.subtitle,
               maxLines: itemStyle.maxLineText,
               overflow: TextOverflow.ellipsis,
-              style: itemStyle.subTitleTextStyle),
+              style: itemStyle.subtitleTextStyle),
           SizedBox(height: itemStyle.detailLineSpace),
-          _buildDetailTextView(itemStyle, viewModel.detail)
-        ],
-      ),
-    );
-  }
-
-  Container _buildDetailTextView(PlotListItemStyle itemStyle, String text) {
-    return Container(
-      padding: itemStyle.detailTextEdgePadding,
-      decoration: BoxDecoration(
-          color: itemStyle.detailTextBackgroundColor,
-          borderRadius: itemStyle.detailTextBorderRadius),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          Flexible(
-              child: Container(
-            child: Text(
-              text,
-              style: itemStyle.detailTextStyle,
-              overflow: TextOverflow.ellipsis,
-              maxLines: itemStyle.maxLineText,
-            ),
-          ))
+          DogTag.build(
+            style: CompactDogTag(), title: viewModel.detail
+          )
         ],
       ),
     );
