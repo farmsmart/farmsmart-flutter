@@ -1,7 +1,6 @@
 import 'package:farmsmart_flutter/model/loading_status.dart';
 import 'package:farmsmart_flutter/redux/app/app_state.dart';
 import 'package:farmsmart_flutter/ui/profitloss/ProfitLossListItem.dart';
-import 'package:farmsmart_flutter/ui/profitloss/profit_loss_viewmodel.dart';
 import 'package:farmsmart_flutter/utils/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -9,25 +8,25 @@ import 'package:farmsmart_flutter/ui/common/headerAndFooterListView.dart';
 import 'package:farmsmart_flutter/ui/common/CompactRoundedButtonStyle.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
 import 'package:redux/redux.dart';
+import 'mockRepositoryTryout/MockTransactionRepository.dart';
 
 
-
-class ProfitLossViewModel {
+class ProfitLossListViewModel {
   LoadingStatus loadingStatus;
   final String title;
   final String detailText;
   final String subtitle;
+  final List<ProfitLossItemViewModel> transactions;
 
-  ProfitLossViewModel({this.title, this.detailText, this.subtitle, this.loadingStatus});
+  ProfitLossListViewModel({this.title, this.detailText, this.subtitle, this.loadingStatus, this.transactions});
 
-  static ProfitLossViewModel fromStore(Store<AppState> store) {
-    return ProfitLossViewModel(loadingStatus: LoadingStatus.SUCCESS);
+  static ProfitLossListViewModel fromStore(Store<AppState> store) {
+    final mockViewModel = MockTransaction.build();
+
+    return mockViewModel;
   }
 }
 
-ProfitLossViewModel buildProfitLossViewModel() {
-  return ProfitLossViewModel(title: "2,150", detailText: "KSh", subtitle: "▲ 498 (17.4%)", loadingStatus: LoadingStatus.SUCCESS);
-}
 
 abstract class ProfitLossStyle {
 
@@ -78,13 +77,13 @@ class _ProfitLossState extends State<ProfitLossPage>  {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: StoreConnector<AppState, ProfitLossViewModel>(
+      body: StoreConnector<AppState, ProfitLossListViewModel>(
           builder: (_, viewModel) => _buildBody(context, viewModel),
-          converter: (store) => ProfitLossViewModel.fromStore(store)),
+          converter: (store) => ProfitLossListViewModel.fromStore(store)),
     );
   }
 
-  Widget _buildBody(BuildContext context, ProfitLossViewModel viewModel, {ProfitLossStyle profitStyle = const _DefaultStyle()}) {
+  Widget _buildBody(BuildContext context, ProfitLossListViewModel viewModel, {ProfitLossStyle profitStyle = const _DefaultStyle()}) {
     switch (viewModel.loadingStatus) {
       case LoadingStatus.LOADING:
         return Container(
@@ -96,15 +95,15 @@ class _ProfitLossState extends State<ProfitLossPage>  {
     }
   }
 
-  Widget _buildPage(BuildContext context, ProfitLossViewModel viewModel, ProfitLossStyle profitStyle) {
-    final viewModel = buildProfitLossViewModel();
+  Widget _buildPage(BuildContext context, ProfitLossListViewModel viewModel, ProfitLossStyle profitStyle) {
+    //final viewModel = buildProfitLossViewModel();
 
     return HeaderAndFooterListView.builder(
       //FIXME: itemCount is now hardcoded
-        itemCount: 10,
+        itemCount: viewModel.transactions.length,
         itemBuilder: (BuildContext context, int index) {
-         final itemViewModel = buildProfitLossItemViewModel();
-         return ProfitLossListItem().buildListItem(itemViewModel);
+         //final itemViewModel = buildProfitLossItemViewModel();
+         return ProfitLossListItem().buildListItem(viewModel.transactions[index]);
         },
     physics: ScrollPhysics(),
     shrinkWrap: true,
@@ -113,7 +112,7 @@ class _ProfitLossState extends State<ProfitLossPage>  {
     );
   }
 
-  Widget _buildTitle(ProfitLossStyle profitStyle, ProfitLossViewModel viewModel) {
+  Widget _buildTitle(ProfitLossStyle profitStyle, ProfitLossListViewModel viewModel) {
     return Container(
       margin: profitStyle.titleEdgePadding,
       child: Column(
@@ -144,7 +143,7 @@ class _ProfitLossState extends State<ProfitLossPage>  {
       );
     }
 
-    Widget _buildSubTitle(ProfitLossViewModel viewModel, ProfitLossStyle profitStyle) {
+    Widget _buildSubTitle(ProfitLossListViewModel viewModel, ProfitLossStyle profitStyle) {
     return Container(
       child: GestureDetector(
         child: Text(
@@ -157,7 +156,7 @@ class _ProfitLossState extends State<ProfitLossPage>  {
       ));
   }
 
-  Widget _buildPageWithFloatingButton(BuildContext context, ProfitLossViewModel viewModel, ProfitLossStyle profitStyle) {
+  Widget _buildPageWithFloatingButton(BuildContext context, ProfitLossListViewModel viewModel, ProfitLossStyle profitStyle) {
     return Scaffold(
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         body: _buildPage(context, viewModel, profitStyle),

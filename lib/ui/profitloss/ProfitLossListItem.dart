@@ -16,9 +16,6 @@ class ProfitLossItemViewModel {
   ProfitLossItemViewModel(this.title, this.subtitle, this.detail);
 }
 
-ProfitLossItemViewModel buildProfitLossItemViewModel() {
-  return ProfitLossItemViewModel("14 May - Crop Rotational", "New equipment for my crop, and new material for a new tomato crop", 250);
-}
 
 abstract class ProfitLossItemStyle {
 
