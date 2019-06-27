@@ -78,6 +78,13 @@ flutter:
 
   - assets/privacy_policy.html
 
+  fonts:
+  - family: GT-America-Standard
+    fonts:
+      - asset: assets/fonts/GT-America-Standard-Bold.ttf
+      - asset: assets/fonts/GT-America-Standard-Medium.ttf
+      - asset: assets/fonts/GT-America-Standard-Regular.ttf
+
 flutter_icons:
   android: "launcher_icon"
   ios: true
