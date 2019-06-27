@@ -36,7 +36,7 @@ class HeroListItem {
   Widget builder(BuildContext context, ArticleListItemViewModel viewModel, {ArticleListItemStyle itemStyle = const _DefaultStyle()}) {
     return GestureDetector(
       //onTap: viewModel.onTap,
-      onTap: () => _onMenuPressed(context),
+      onTap: () => _onMenuPressed(context), //FIXME: Temporal for test ActionBottomSheet
       child: Column(
         children: <Widget>[
           Card(
@@ -73,6 +73,7 @@ class HeroListItem {
     );
   }
 
+  //FIXME: Temporal for test ActionBottomSheet
   Future _onMenuPressed(BuildContext context) async {
     showModalBottomSheet(
         context: context,

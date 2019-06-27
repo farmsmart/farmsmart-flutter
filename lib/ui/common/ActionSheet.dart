@@ -93,6 +93,17 @@ class ActionSheet {
     CustomAction testing = CustomAction("Record a test", null, true);
     ActionSheetViewModel viewModel = ActionSheetViewModel([recordSale, recordCost, testing], "Cancel");
 
+
+    /* FIXME: To make the modal bottom sheet autoresizable (without limit) needs to modify native file bottom_sheet
+        @override
+        BoxConstraints getConstraintsForChild(BoxConstraints constraints) {
+          return BoxConstraints(
+            minWidth: constraints.maxWidth,
+            maxWidth: constraints.maxWidth,
+            minHeight: 0.0,
+            maxHeight: constraints.maxHeight,
+          );
+  }*/
     return Container(
       color: actionStyle.backgroundCornerColor, // This line set the transparent background
         child: Container(
@@ -188,6 +199,5 @@ class ActionSheet {
     }
     return listBuilder;
   }
-
 }
 
