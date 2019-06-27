@@ -17,12 +17,10 @@ class MyPlotMiddleWare extends MiddlewareClass<AppState>{
       List<CropEntity> listOfCrops = await PlotRepository.get().getArticles();
       store.dispatch(UpdateCropListAction(listOfCrops));
     }
-
     if (action is UpdateStageAction) {
       StageEntity stage = await ArticlesDirectoryRepository.get().getStageRelatedArticles(action.stage);
       store.dispatch(GoToStageAction(stage));
     }
-
     next(action);
   }
 }

@@ -29,7 +29,7 @@ class _DefaultStyle implements ArticleListItemStyle {
 }
 
 class StandardListItem {
-  Widget builder(ArticleListItemViewModel viewModel, {ArticleListItemStyle itemStyle = const _DefaultStyle()}) {
+  Widget build(ArticleListItemViewModel viewModel, {ArticleListItemStyle itemStyle = const _DefaultStyle()}) {
     return GestureDetector(
       onTap: viewModel.onTap,
       child: Card(

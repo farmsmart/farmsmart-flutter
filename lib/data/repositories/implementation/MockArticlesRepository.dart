@@ -10,8 +10,6 @@ class MockArticle {
       content: _mockRichText.random(),
       imagePathReference: "",
       imageUrl: Future.value(""),
-      relatedArticles: [],
-      relatedArticlesPathReference: [],
       status: Status.PUBLISHED,
       summary: _mockPlainText.random(),
       title: _mockTitleText.random(),

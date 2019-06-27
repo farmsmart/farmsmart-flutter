@@ -8,8 +8,14 @@ import '../ArticleRepositoryInterface.dart';
 
 ArticleEntity _transform(FlameLink cms, DocumentSnapshot snapshot) {
   var article = ArticleEntity.articleFromDocument(snapshot);
+  var refs = [];
+  if (snapshot.data[RELATED_ARTICLES] != null) {
+     refs = List<String>.from(
+        snapshot.data[RELATED_ARTICLES].map((article) => article[ARTICLE].path)).toList();
+  }
+  final relatedPaths = List<String>.from(refs);
   article.related = ArticleEntityCollectionFlamelink.list(
-      cms: cms, paths: article.relatedArticlesPathReference);
+      cms: cms, paths: relatedPaths);
   return article;
 }
 

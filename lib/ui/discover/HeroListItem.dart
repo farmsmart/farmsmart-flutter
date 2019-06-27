@@ -29,10 +29,12 @@ class _DefaultStyle implements ArticleListItemStyle {
   final int maxLinesPerSummary = 3;
 
   const _DefaultStyle();
+
 }
 
 class HeroListItem {
-  Widget builder(ArticleListItemViewModel viewModel,
+   
+  Widget build(ArticleListItemViewModel viewModel,
       {ArticleListItemStyle itemStyle = const _DefaultStyle()}) {
     return GestureDetector(
       onTap: viewModel.onTap,

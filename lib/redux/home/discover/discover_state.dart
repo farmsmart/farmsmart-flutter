@@ -11,7 +11,7 @@ class DiscoverState {
   DiscoverState({this.articles, this.loadingStatus});
 
   factory DiscoverState.initial() {
-    return new DiscoverState(
+    return DiscoverState(
         loadingStatus: LoadingStatus.LOADING, articles: []);
   }
 

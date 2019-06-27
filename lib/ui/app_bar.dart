@@ -55,9 +55,8 @@ abstract class CustomAppBar {
       leading: backIcon(),
       automaticallyImplyLeading: true,
       // adds the back button automatically
-      title: Text(title, style: Styles.appBarDetailTextStyle()),
       actions: <Widget>[shareActions],
-      centerTitle: true,
+      elevation: 0,
     );
   }
 
@@ -77,14 +76,15 @@ abstract class CustomAppBar {
         onPressed: () {});
   }
 
-  static Widget shareAction(String articleID) {
-    return IconButton(
-      icon: Icon(Icons.share, color: Color(primaryGreen), size: appBarIconSize),
-      onPressed: () async {
-        String deepLink = await buildArticleDeeplink(articleID);
-        var response = await FlutterShareMe()
-            .shareToSystem(msg: Strings.shareArticleText + deepLink);
-      },
+  static Widget shareAction(Function action) {
+    final Color appBarButtonsColor = const Color(0xFF1a1b46);
+
+    return Container(
+      margin: EdgeInsets.only(right: 22.0),
+      child: IconButton(
+        icon: Icon(Icons.share, color: appBarButtonsColor, size: 22.0),
+        onPressed: action(),
+      ),
     );
   }
 
@@ -134,6 +134,12 @@ abstract class CustomAppBar {
   }
 
   static Widget backIcon() {
-    return BackButton(color: Color(primaryGreen));
+    final Color appBarButtonsColor = const Color(0xFF1a1b46);
+    return Container(
+      margin: EdgeInsets.only(left: 25),
+      child: BackButton(
+          color: appBarButtonsColor,
+      ),
+    );
   }
 }

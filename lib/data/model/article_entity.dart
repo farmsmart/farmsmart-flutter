@@ -12,8 +12,6 @@ class ArticleEntity {
   String content;
   String imagePathReference;
   Future<String> imageUrl;
-  List<ArticleEntity> relatedArticles;
-  List<String> relatedArticlesPathReference;
   ArticleEntityCollection related;
   Status status;
   String summary;
@@ -24,8 +22,6 @@ class ArticleEntity {
       this.content,
       this.imagePathReference,
       this.imageUrl,
-      this.relatedArticles,
-      this.relatedArticlesPathReference,
       this.status,
       this.summary,
       this.title});
@@ -36,9 +32,6 @@ class ArticleEntity {
           content: articleDocument.data[CONTENT],
           imagePathReference: articleDocument.data[IMAGE].first.path,
           imageUrl: Future.value(Strings.emptyString),
-          relatedArticles: List(),
-          relatedArticlesPathReference:
-              extractRelatedArticlesPaths(articleDocument),
           status: statusValues.map[articleDocument.data[STATUS]],
           summary: articleDocument.data[SUMMARY],
           title: articleDocument.data[TITLE]);
@@ -46,16 +39,4 @@ class ArticleEntity {
   void setImageUrl(Future<String> imageUrl) {
     this.imageUrl = imageUrl;
   }
-
-  void addRelatedArticle(ArticleEntity relatedArticle) {
-    this.relatedArticles.add(relatedArticle);
-  }
-}
-
-List<String> extractRelatedArticlesPaths(DocumentSnapshot document) {
-  if (document.data[RELATED_ARTICLES] != null) {
-    return List<String>.from(
-        document.data[RELATED_ARTICLES].map((stage) => stage[ARTICLE].path));
-  }
-  return null;
 }

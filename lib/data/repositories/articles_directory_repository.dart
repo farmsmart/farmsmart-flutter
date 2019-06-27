@@ -5,6 +5,8 @@ import 'package:farmsmart_flutter/data/model/article_entity.dart';
 import 'package:farmsmart_flutter/data/model/stage_entity.dart';
 import 'package:flutter/foundation.dart';
 
+// LH this file is deprecated !!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 class ArticlesDirectoryRepository {
   static final ArticlesDirectoryRepository _articlesDir =
       ArticlesDirectoryRepository._internal();
@@ -32,17 +34,7 @@ class ArticlesDirectoryRepository {
   }
 
   Future<ArticleEntity> getRelatedArticles(ArticleEntity article) async {
-    Stopwatch sw = Stopwatch();
-    sw.start();
-    List<ArticleEntity> relatedArticles = await _getListOfRelatedArticles(
-        article.relatedArticlesPathReference, ListOfRelatedArticles.LIMIT);
-    debugPrint('getRelatedArticles() ${sw.elapsed.inMilliseconds} ms ');
-    sw.reset();
-    await _getListOfArticlesWithImages(relatedArticles);
-    article.relatedArticles = relatedArticles;
-    debugPrint('getRelatedArticleImages() ${sw.elapsed.inMilliseconds} ms ');
-    sw.stop();
-    return article;
+    return Future.value(null); // LH this file is deprecated
   }
 
   Future<StageEntity> getStageRelatedArticles(StageEntity stage) async {

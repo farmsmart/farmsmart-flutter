@@ -30,11 +30,11 @@ class ArticleListViewModel {
   }
 
   static ArticleListItemViewModel fromArticleEntityToViewModel(
-      ArticleEntity article, Function getRelatedArticles) {
+      ArticleEntity article, Function viewArticle) {
     return ArticleListItemViewModel(
         article.title ?? Strings.noTitleString,
         article.summary ?? Strings.noTitleString,
         article.imageUrl,
-        () => getRelatedArticles(article));
+        () => viewArticle(article));
   }
 }
