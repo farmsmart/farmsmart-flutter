@@ -59,7 +59,7 @@ class RoundedButton {
         @required  BuildContext context,
         String title, IconData icon,
         Function onTap, Color backgroundColor}) {
-    return _buildRoundedButton(style, context , title: title, icon: icon, onTap: onTap, backgroundColor: backgroundColor);
+    return _buildRoundedButton(style, context , title: title, icon: icon, backgroundColor: backgroundColor, onTap: onTap);
   }
 
   static Widget _buildRoundedButton(RoundedButtonStyle buttonStyle, BuildContext context, {String title, IconData icon,
