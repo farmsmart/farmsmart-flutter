@@ -182,7 +182,7 @@ jobs:
           sudo python3 /farmsmart/utilities/notify.py ${SLACK_FARMSMART_TOKEN} "${MESSAGE}" ${SLACK_CHANNEL}
 
 workflows:
-  run:
+  android-apk:
     jobs:
       - prepare:
           context: gcp-kms
