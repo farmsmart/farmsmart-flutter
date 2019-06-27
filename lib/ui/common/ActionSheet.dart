@@ -4,25 +4,25 @@ import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
 import 'package:flutter/material.dart';
 import 'ListDivider.dart';
 
-class CustomAction {
+class CustomSheetAction {
   String text;
-  String primaryIcon;
-  String selectionIcon;
+  String icon;
+  String selection;
   bool isHighlighted;
   Function action;
 
-  CustomAction(this.text, this.action, this.isHighlighted, {this.primaryIcon, this.selectionIcon});
+  CustomSheetAction(this.text, this.action, this.isHighlighted, {this.icon, this.selection});
 }
 
 class ActionSheetViewModel {
-    List<CustomAction> listOfActions;
+    List<CustomSheetAction> actions;
     String buttonTitle;
 
-    ActionSheetViewModel(this.listOfActions, this.buttonTitle);
+    ActionSheetViewModel(this.actions, this.buttonTitle);
 }
 
 abstract class ActionSheetStyle {
-  final Color backgroundCornerColor;
+  final Color cornerColor;
   final Color backgroundColor;
   final Color dropLineColor;
   final Color transparentColor;
@@ -45,19 +45,20 @@ abstract class ActionSheetStyle {
 
   final int maxLines;
 
-  ActionSheetStyle(this.backgroundCornerColor, this.backgroundColor, this.dropLineColor,
+  ActionSheetStyle(this.cornerColor, this.backgroundColor, this.dropLineColor,
       this.transparentColor, this.mainTextStyle, this.highlightTextStyle,
       this.cardEdge, this.dropLineEdge, this.borderRadius, this.dropLineRadius,
       this.dropLineHeight, this.cardHeight, this.iconLineSpace,
       this.cardElevation, this.bigIconHeight, this.smallIconHeight,
       this.maxLines);
+
 }
 
 class DefaultStyle implements ActionSheetStyle {
   static const Color titleColor = Color(0xFF1a1b46);
   static const Color highlightColor = Color(0xFFff6060);
 
-  final Color backgroundCornerColor = const Color(0xFF737373);
+  final Color cornerColor = const Color(0xFF737373);
   final Color backgroundColor = const Color(0xFFffffff);
   final Color dropLineColor = const Color(0xFFe0e1ee);
   final Color transparentColor = const Color(0x00000000);
@@ -66,7 +67,7 @@ class DefaultStyle implements ActionSheetStyle {
   final TextStyle highlightTextStyle = const TextStyle(fontSize: 17, fontWeight: FontWeight.normal, color: highlightColor);
 
   final EdgeInsets cardEdge = const EdgeInsets.only(left: 32, right: 32);
-  final EdgeInsets dropLineEdge = const EdgeInsets.only(left: 160, right: 160, top: 8, bottom: 50);
+  final EdgeInsets dropLineEdge = const EdgeInsets.only(top: 8);
   
   final Radius borderRadius = const Radius.circular(40);
   final Radius dropLineRadius = const Radius.circular(2.5);
@@ -86,14 +87,15 @@ class DefaultStyle implements ActionSheetStyle {
 class ActionSheet {
   static Widget build(BuildContext context, {ActionSheetStyle actionStyle = const DefaultStyle()}) {
 
-    // FIXME: This would be injected in the call function. Every screen which need an ActionSheet has to have this CustomActions defined in its view model
-    CustomAction recordSale = CustomAction("Record a new Sale", null, false, primaryIcon: "assets/icons/detail_icon_cost.png");
-    CustomAction recordCost = CustomAction("Record a new Cost", null, false, primaryIcon: "assets/icons/flag_kenya.png", selectionIcon: "assets/icons/radio_button_active.png");
-    CustomAction testing = CustomAction("Record a test", null, true);
+    CustomSheetAction recordSale = CustomSheetAction("Record a new Sale", null, false, icon: "assets/icons/detail_icon_cost.png");
+    CustomSheetAction recordCost = CustomSheetAction("Record a new Cost", null, false, icon: "assets/icons/flag_kenya.png", selection: "assets/icons/radio_button_active.png");
+    CustomSheetAction testing = CustomSheetAction("Record a test", null, true);
+
+
     ActionSheetViewModel viewModel = ActionSheetViewModel([recordSale, recordCost, testing], "Cancel");
 
     return Container(
-      color: actionStyle.backgroundCornerColor, // This line set the transparent background
+      color: actionStyle.cornerColor, // This line set the transparent background
         child: Container(
           padding: actionStyle.dropLineEdge,
           decoration: BoxDecoration(
@@ -106,9 +108,9 @@ class ActionSheet {
           child: HeaderAndFooterListView.builder(
               physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,
-              itemCount: viewModel.listOfActions.length,
+              itemCount: viewModel.actions.length,
               itemBuilder: (BuildContext context, int index) =>
-            buildActionCell(actionStyle, viewModel.listOfActions[index], viewModel.listOfActions.length, index),
+            buildActionCell(actionStyle, viewModel.actions[index], viewModel.actions.length, index),
             header: buildDropLine(actionStyle),
             footer: RoundedButton.build(style: ActionSheetLargeRoundedButtonStyle(), context: context, title: viewModel.buttonTitle)
           )
@@ -118,7 +120,6 @@ class ActionSheet {
   static Widget buildDropLine(ActionSheetStyle actionStyle) {
     return Container(
       height: actionStyle.dropLineHeight,
-      //FIXME: when margin property is setted as actionStyle.dropLineEdge is crashing
       margin: EdgeInsets.only(left: 160, right: 160, top: 8, bottom: 50),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(actionStyle.dropLineRadius),
@@ -127,7 +128,7 @@ class ActionSheet {
     );
   }
 
-  static Widget buildActionCell(ActionSheetStyle actionStyle, CustomAction action, int numberOfActions, int currentAction) {
+  static Widget buildActionCell(ActionSheetStyle actionStyle, CustomSheetAction action, int numberOfActions, int currentAction) {
     return Column(
       children: <Widget>[
         Card(
@@ -152,30 +153,30 @@ class ActionSheet {
     );
   }
 
-  static List<Widget> _buildActionContent(ActionSheetStyle actionStyle, CustomAction action) {
+  static List<Widget> _buildActionContent(ActionSheetStyle actionStyle, CustomSheetAction action) {
     List<Widget> listBuilder = [];
-    if (action.primaryIcon != null && action.selectionIcon == null) {
+    if (action.icon != null && action.selection == null) {
       listBuilder.add(
       Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          Image.asset(action.primaryIcon, height: actionStyle.smallIconHeight),
+          Image.asset(action.icon, height: actionStyle.smallIconHeight),
           SizedBox(width: actionStyle.iconLineSpace),
           Text(action.text, style: action.isHighlighted ? actionStyle.highlightTextStyle : actionStyle.mainTextStyle)
         ],
       ));
 
-    } else if (action.selectionIcon != null) {
+    } else if (action.selection != null) {
       listBuilder.add(
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Row(children: <Widget>[
-            Image.asset(action.primaryIcon, height: actionStyle.bigIconHeight),
+            Image.asset(action.icon, height: actionStyle.bigIconHeight),
             SizedBox(width: actionStyle.iconLineSpace),
             Text(action.text, style: action.isHighlighted ? actionStyle.highlightTextStyle : actionStyle.mainTextStyle),
           ]),
-          Image.asset(action.selectionIcon, height: actionStyle.bigIconHeight)
+          Image.asset(action.selection, height: actionStyle.bigIconHeight)
         ],
       ));
 
@@ -189,5 +190,6 @@ class ActionSheet {
     }
     return listBuilder;
   }
+
 }
 
