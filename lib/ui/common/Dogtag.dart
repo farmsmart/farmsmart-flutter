@@ -7,6 +7,7 @@ class DogTagViewModel {
   //TODO: can be a decimal number or only Integers numbers?
   int number;
   IconData icon;
+
   DogTagViewModel({this.title, this.icon, this.number});
 }
 

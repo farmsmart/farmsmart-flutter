@@ -8,19 +8,25 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:farmsmart_flutter/ui/common/headerAndFooterListView.dart';
 import 'package:farmsmart_flutter/ui/common/CompactRoundedButtonStyle.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
+import 'package:redux/redux.dart';
 
 
 
 class ProfitLossViewModel {
+  LoadingStatus loadingStatus;
   final String title;
   final String detailText;
   final String subtitle;
 
-  ProfitLossViewModel(this.title, this.detailText, this.subtitle);
+  ProfitLossViewModel({this.title, this.detailText, this.subtitle, this.loadingStatus});
+
+  static ProfitLossViewModel fromStore(Store<AppState> store) {
+    return ProfitLossViewModel(loadingStatus: LoadingStatus.SUCCESS);
+  }
 }
 
 ProfitLossViewModel buildProfitLossViewModel() {
-  return ProfitLossViewModel("2,150", "KSh", "▲ 498 (17.4%)");
+  return ProfitLossViewModel(title: "2,150", detailText: "KSh", subtitle: "▲ 498 (17.4%)", loadingStatus: LoadingStatus.SUCCESS);
 }
 
 abstract class ProfitLossStyle {
@@ -30,17 +36,17 @@ abstract class ProfitLossStyle {
   final TextStyle subtitleTextStyle;
 
   final Color actionButtonBackgroundColour;
-  final EdgeInsets generalMargins;
+  final EdgeInsets titleEdgePadding;
 
-  final double destailTextEdgePadding;
+  final double detailTextEdgePadding;
 
   final double actionButtonSize;
   final double actionButtonElevation;
   final double actionButtonIconSize;
 
   ProfitLossStyle(this.actionButtonBackgroundColour, this.actionButtonSize,
-      this.actionButtonElevation, this.actionButtonIconSize, this.generalMargins,
-      this.titleTextStyle, this.destailTextEdgePadding, this.detailTextStyle,
+      this.actionButtonElevation, this.actionButtonIconSize, this.titleEdgePadding,
+      this.titleTextStyle, this.detailTextEdgePadding, this.detailTextStyle,
       this.subtitleTextStyle);
 }
 
@@ -50,9 +56,9 @@ class _DefaultStyle implements ProfitLossStyle{
   final TextStyle detailTextStyle = const TextStyle(fontSize: 15, fontWeight: FontWeight.normal, color: Color(0xFF767690));
   final TextStyle subtitleTextStyle = const TextStyle(fontSize: 17, fontWeight: FontWeight.normal, color: Color(0xFF25df0c));
 
-  final EdgeInsets generalMargins = const EdgeInsets.only(left: 33, top: 36.5, bottom: 12.5);
+  final EdgeInsets titleEdgePadding = const EdgeInsets.only(left: 33, top: 36.5, bottom: 12.5);
 
-  final double destailTextEdgePadding = 10;
+  final double detailTextEdgePadding = 10;
 
   final Color actionButtonBackgroundColour = const Color(0xFF25df0c);
   final double actionButtonSize = 48.0;
@@ -72,25 +78,25 @@ class _ProfitLossState extends State<ProfitLossPage>  {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: StoreConnector<AppState, MyProfitLossViewModel>(
-          builder: (_, viewModel) => _buildBody(context, viewModel, buildProfitLossViewModel()),
-          converter: (store) => MyProfitLossViewModel.fromStore(store)),
+      body: StoreConnector<AppState, ProfitLossViewModel>(
+          builder: (_, viewModel) => _buildBody(context, viewModel),
+          converter: (store) => ProfitLossViewModel.fromStore(store)),
     );
   }
 
-  Widget _buildBody(BuildContext context, MyProfitLossViewModel viewModel, ProfitLossViewModel profitLossViewModel, {ProfitLossStyle profitStyle = const _DefaultStyle()}) {
+  Widget _buildBody(BuildContext context, ProfitLossViewModel viewModel, {ProfitLossStyle profitStyle = const _DefaultStyle()}) {
     switch (viewModel.loadingStatus) {
       case LoadingStatus.LOADING:
         return Container(
             child: CircularProgressIndicator(), alignment: Alignment.center);
       case LoadingStatus.SUCCESS:
-        return _buildPageWithFloatingButton(context, viewModel, profitLossViewModel, profitStyle);
+        return _buildPageWithFloatingButton(context, viewModel, profitStyle);
       case LoadingStatus.ERROR:
         return Text(Strings.errorString);
     }
   }
 
-  Widget _buildPage(BuildContext context, MyProfitLossViewModel viewModel, ProfitLossViewModel profitLossViewModel, ProfitLossStyle profitStyle) {
+  Widget _buildPage(BuildContext context, ProfitLossViewModel viewModel, ProfitLossStyle profitStyle) {
     final viewModel = buildProfitLossViewModel();
 
     return HeaderAndFooterListView.builder(
@@ -102,14 +108,14 @@ class _ProfitLossState extends State<ProfitLossPage>  {
         },
     physics: ScrollPhysics(),
     shrinkWrap: true,
-      header: _buildTitle(profitStyle, profitLossViewModel),
+      header: _buildTitle(profitStyle, viewModel),
       footer: SizedBox(height: 51,)
     );
   }
 
   Widget _buildTitle(ProfitLossStyle profitStyle, ProfitLossViewModel viewModel) {
     return Container(
-      margin: profitStyle.generalMargins,
+      margin: profitStyle.titleEdgePadding,
       child: Column(
         children: <Widget>[
           Row(
@@ -121,7 +127,7 @@ class _ProfitLossState extends State<ProfitLossPage>  {
                   style: profitStyle.titleTextStyle
               ),
               SizedBox(
-                width: profitStyle.destailTextEdgePadding,
+                width: profitStyle.detailTextEdgePadding,
               ),
               Text(
                 viewModel.detailText,
@@ -151,10 +157,10 @@ class _ProfitLossState extends State<ProfitLossPage>  {
       ));
   }
 
-  Widget _buildPageWithFloatingButton(BuildContext context, MyProfitLossViewModel viewModel, ProfitLossViewModel profitLossViewModel, ProfitLossStyle profitStyle) {
+  Widget _buildPageWithFloatingButton(BuildContext context, ProfitLossViewModel viewModel, ProfitLossStyle profitStyle) {
     return Scaffold(
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        body: _buildPage(context, viewModel,profitLossViewModel, profitStyle),
+        body: _buildPage(context, viewModel, profitStyle),
         floatingActionButton: RoundedButton.build(style: CompactBigRoundedButtonStyle(),context: context, icon: Icons.add)
     );
   }
