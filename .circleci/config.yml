@@ -144,8 +144,8 @@ jobs:
       - run: |
           set -euo pipefail
           source ./env.sh
-          APK_INFO=$(sudo python3 ./ci/playstore/publish_to_internal_app_sharing.py co.farmsmart.app ${VERSION_NAME} ${APK_BUILD_PATH})
-          sudo echo "export APK_INFO='${APK_INFO}'" >> ./env.sh
+          APK_INFO=$(python3 ./ci/playstore/publish_to_internal_app_sharing.py co.farmsmart.app ${VERSION_NAME} ${APK_BUILD_PATH})
+          echo "export APK_INFO='${APK_INFO}'" >> ./env.sh
       - *save_workspace
 
   promote-apk-to-track:
@@ -156,7 +156,7 @@ jobs:
           set -euo pipefail
           source ./env.sh
           APK_PATHS=$(find /tmp/workspace -name "*${VERSION_NAME}*.apk" | sed 'H;1h;$!d;x;y/\n/,/')
-          sudo python3 ./ci/playstore/promote_apk_to_track.py co.farmsmart.app ${TRACK} ${VERSION_NAME} ${VERSION_CODE} ./Release_notes ${APK_PATHS}
+          python3 ./ci/playstore/promote_apk_to_track.py co.farmsmart.app ${TRACK} ${VERSION_NAME} ${VERSION_CODE} ./Release_notes ${APK_PATHS}
       - *save_workspace
 
   slack-notification-prod:
@@ -167,7 +167,7 @@ jobs:
           set -euo pipefail
           source ./env.sh
           MESSAGE="Release version v${VERSION_NAME} is now available on the ${TRACK} track! - ${TRACK_URL}"
-          sudo python3 /farmsmart/utilities/notify.py ${SLACK_FARMSMART_TOKEN} "${MESSAGE}" ${SLACK_CHANNEL}
+          python3 /farmsmart/utilities/notify.py ${SLACK_FARMSMART_TOKEN} "${MESSAGE}" ${SLACK_CHANNEL}
 
   slack-notification-dev:
     executor: utilities
@@ -179,7 +179,7 @@ jobs:
           VERSION_NAME=$(echo ${APK_INFO} | jq '.version_name')
           DOWNLOAD_URL=$(echo ${APK_INFO} | jq '.download_url')
           MESSAGE="Test version ${VERSION_NAME} has been uploaded to internal app sharing - ${DOWNLOAD_URL}"
-          sudo python3 /farmsmart/utilities/notify.py ${SLACK_FARMSMART_TOKEN} "${MESSAGE}" ${SLACK_CHANNEL}
+          python3 /farmsmart/utilities/notify.py ${SLACK_FARMSMART_TOKEN} "${MESSAGE}" ${SLACK_CHANNEL}
 
 workflows:
   android-apk:
