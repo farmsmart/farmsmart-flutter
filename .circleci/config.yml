@@ -31,7 +31,7 @@ executors:
 
 jobs:
   prepare:
-    executor: farmsmart/gcp-firebase
+    executor: gcp-firebase
     steps:
       - checkout
       - run:
