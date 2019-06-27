@@ -78,11 +78,11 @@ jobs:
       - *restore_workspace
       - run: |
           VERSION=$(echo $CIRCLE_BRANCH | sed 's/.*\/v\(.*\)/\1/')
-          VERSION_INFO=$(sudo python3 ./ci/playstore/get_next_version.py co.farmsmart.app ${VERSION} ${TRACK})
+          VERSION_INFO=$(python3 ./ci/playstore/get_next_version.py co.farmsmart.app ${VERSION} ${TRACK})
           VERSION_NAME=$(echo ${VERSION_INFO} | jq '.version_name')
           VERSION_CODE=$(echo ${VERSION_INFO} | jq '.version_code')
-          sudo echo "export VERSION_NAME=${VERSION_NAME}" >> ./env.sh
-          sudo echo "export VERSION_CODE=${VERSION_CODE}" >> ./env.sh
+          echo "export VERSION_NAME=${VERSION_NAME}" >> ./env.sh
+          echo "export VERSION_CODE=${VERSION_CODE}" >> ./env.sh
       - *save_workspace
 
   flutter-build-dev:
