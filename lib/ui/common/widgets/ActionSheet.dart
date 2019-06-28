@@ -7,12 +7,11 @@ import 'package:flutter/material.dart';
 class ActionListItemViewModel {
   String title;
   String icon;
-  String selectionIcon;
+  String checkBoxIcon;
   bool isHighlighted;
   Function action;
 
-  ActionListItemViewModel(this.title, this.action, this.isHighlighted,
-      {this.icon, this.selectionIcon});
+  ActionListItemViewModel(this.title, this.action, this.isHighlighted, {this.icon, this.checkBoxIcon});
 }
 
 class ActionSheetViewModel {
@@ -86,7 +85,7 @@ class ActionSheet {
   static Widget build(BuildContext context, {ActionSheetStyle style = const DefaultStyle()}) {
     // FIXME: This would be injected in the call function. Every screen which need an ActionSheet has to have this CustomActions defined in its view model
     ActionListItemViewModel recordSale = ActionListItemViewModel("Record a new Sale", null, false, icon: "assets/icons/detail_icon_cost.png");
-    ActionListItemViewModel recordCost = ActionListItemViewModel("Record a new Cost", null, false, icon: "assets/icons/flag_kenya.png", selectionIcon: "assets/icons/radio_button_active.png");
+    ActionListItemViewModel recordCost = ActionListItemViewModel("Record a new Cost", null, false, icon: "assets/icons/flag_kenya.png", checkBoxIcon: "assets/icons/radio_button_active.png");
     ActionListItemViewModel testing = ActionListItemViewModel("Record a test", null, true);
     ActionSheetViewModel viewModel = ActionSheetViewModel([recordSale, recordCost, testing], "Cancel");
 
@@ -179,12 +178,12 @@ class ActionSheet {
               ? style.highlightTextStyle
               : style.mainTextStyle));
 
-    } if (viewModel.selectionIcon != null) {
+    } if (viewModel.checkBoxIcon != null) {
       listBuilder.add(Expanded(
           child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
-          Image.asset(viewModel.selectionIcon, height: style.iconHeight)
+          Image.asset(viewModel.checkBoxIcon, height: style.iconHeight)
         ],
       )));
     }
