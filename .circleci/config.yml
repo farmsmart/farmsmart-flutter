@@ -15,13 +15,40 @@ references:
       paths:
         - farmsmart
 
-jobs:
-  flutter-test:
+executors:
+  gcp-firebase:
+    docker:
+      - image: farmsmart/gcp-firebase
+    working_directory: *working_dir
+  flutter:
     docker:
       - image: cirrusci/flutter:v1.5.4-hotfix.2
     working_directory: *working_dir
+  utilities:
+    docker:
+      - image: farmsmart/utilities
+    working_directory: *working_dir
+
+jobs:
+  prepare:
+    executor: gcp-firebase
     steps:
       - checkout
+      - run:
+          name: "Decrypt sensitive files"
+          command: | 
+            set -euo pipefail
+            SECRETS_DIR=./creds
+            mkdir -p ${SECRETS_DIR}
+            echo ${KMS_ACCOUNT} | base64 -di | tee ${SECRETS_DIR}/service-account.json | gcloud auth activate-service-account --key-file=-
+            export GOOGLE_APPLICATION_CREDENTIALS=${SECRETS_DIR}/service-account.json
+            /farmsmart/sops/sops-decrypt.sh
+      - *save_workspace
+
+  test:
+    executor: flutter
+    steps:
+      - *restore_workspace
       - run:
           name: Check flutter status
           command: flutter doctor
@@ -45,40 +72,21 @@ jobs:
           path: /tmp/test-results
       - *save_workspace
 
-  decrypt-secrets:
-    docker:
-      - image: farmsmart/build-agent:1.0.0
-    working_directory: *working_dir
-    steps:
-      - *restore_workspace
-      - run: |
-          SECRETS_DIR=./creds
-          mkdir -p ${SECRETS_DIR}
-          echo ${GOOGLE_SERVICE_ACCOUNT} | base64 -di | tee ${SECRETS_DIR}/service-account.json | gcloud auth activate-service-account --key-file=-
-          export GOOGLE_APPLICATION_CREDENTIALS=${SECRETS_DIR}/service-account.json
-          ./secrets/sops-decrypt.sh
-      - *save_workspace
-
   get-next-version:
-    docker:
-      - image: circleci/python:3.7.3
-    working_directory: *working_dir
+    executor: utilities
     steps:
       - *restore_workspace
       - run: |
           VERSION=$(echo $CIRCLE_BRANCH | sed 's/.*\/v\(.*\)/\1/')
-          sudo pip3 install -r ./ci/playstore/requirements.txt
-          VERSION_INFO=$(sudo python3 ./ci/playstore/get_next_version.py co.farmsmart.app ${VERSION} ${TRACK})
+          VERSION_INFO=$(python3 ./ci/playstore/get_next_version.py co.farmsmart.app ${VERSION} ${TRACK})
           VERSION_NAME=$(echo ${VERSION_INFO} | jq '.version_name')
           VERSION_CODE=$(echo ${VERSION_INFO} | jq '.version_code')
-          sudo echo "export VERSION_NAME=${VERSION_NAME}" >> ./env.sh
-          sudo echo "export VERSION_CODE=${VERSION_CODE}" >> ./env.sh
+          echo "export VERSION_NAME=${VERSION_NAME}" >> ./env.sh
+          echo "export VERSION_CODE=${VERSION_CODE}" >> ./env.sh
       - *save_workspace
 
   flutter-build-dev:
-    docker:
-      - image: cirrusci/flutter:v1.5.4-hotfix.2
-    working_directory: *working_dir
+    executor: flutter
     steps:
       - *restore_workspace
       - run: |
@@ -92,9 +100,7 @@ jobs:
       - *save_workspace
 
   flutter-build-32:
-    docker:
-      - image: cirrusci/flutter:v1.5.4-hotfix.2
-    working_directory: *working_dir
+    executor: flutter
     steps:
       - *restore_workspace
       - run: |
@@ -113,9 +119,7 @@ jobs:
           path: /tmp/workspace/build_32
 
   flutter-build-64:
-    docker:
-      - image: cirrusci/flutter:v1.5.4-hotfix.2
-    working_directory: *working_dir
+    executor: flutter
     steps:
       - *restore_workspace
       - run: |
@@ -134,75 +138,62 @@ jobs:
           path: /tmp/workspace/build_64
 
   upload-to-app-sharing:
-      docker:
-        - image: circleci/python:3.7.3
-      working_directory: *working_dir
-      steps:
-        - *restore_workspace
-        - run: |
-            source ./env.sh
-            sudo pip3 install -r ./ci/playstore/requirements.txt
-            APK_INFO=$(sudo python3 ./ci/playstore/publish_to_internal_app_sharing.py co.farmsmart.app ${VERSION_NAME} ${APK_BUILD_PATH})
-            sudo echo "export APK_INFO='${APK_INFO}'" >> ./env.sh
-        - *save_workspace
+    executor: utilities
+    steps:
+      - *restore_workspace
+      - run: |
+          set -euo pipefail
+          source ./env.sh
+          APK_INFO=$(python3 ./ci/playstore/publish_to_internal_app_sharing.py co.farmsmart.app ${VERSION_NAME} ${APK_BUILD_PATH})
+          echo "export APK_INFO='${APK_INFO}'" >> ./env.sh
+      - *save_workspace
 
   promote-apk-to-track:
-      docker:
-        - image: circleci/python:3.7.3
-      working_directory: *working_dir
-      steps:
-        - *restore_workspace
-        - run: |
-            source ./env.sh
-            sudo pip3 install -r ./ci/playstore/requirements.txt
-            APK_PATHS=$(find /tmp/workspace -name "*${VERSION_NAME}*.apk" | sed 'H;1h;$!d;x;y/\n/,/')
-            sudo python3 ./ci/playstore/promote_apk_to_track.py co.farmsmart.app ${TRACK} ${VERSION_NAME} ${VERSION_CODE} ./Release_notes ${APK_PATHS}
-        - *save_workspace
+    executor: utilities
+    steps:
+      - *restore_workspace
+      - run: |
+          set -euo pipefail
+          source ./env.sh
+          APK_PATHS=$(find /tmp/workspace -name "*${VERSION_NAME}*.apk" | sed 'H;1h;$!d;x;y/\n/,/')
+          python3 ./ci/playstore/promote_apk_to_track.py co.farmsmart.app ${TRACK} ${VERSION_NAME} ${VERSION_CODE} ./Release_notes ${APK_PATHS}
+      - *save_workspace
 
   slack-notification-prod:
-      docker:
-        - image: circleci/python:3.7.3
-      working_directory: *working_dir
-      steps:
-        - *restore_workspace
-        - run: |
-            source ./env.sh
-            sudo pip3 install -r ./ci/playstore/requirements.txt
-            MESSAGE="Release version v${VERSION_NAME} is now available on the ${TRACK} track! - ${TRACK_URL}"
-            sudo python3 ./ci/playstore/notify.py ${SLACK_FARMSMART_TOKEN} "${MESSAGE}"
+    executor: utilities
+    steps:
+      - *restore_workspace
+      - run: |
+          set -euo pipefail
+          source ./env.sh
+          MESSAGE="Release version v${VERSION_NAME} is now available on the ${TRACK} track! - ${TRACK_URL}"
+          python3 /farmsmart/utilities/notify.py ${SLACK_FARMSMART_TOKEN} "${MESSAGE}" ${SLACK_CHANNEL}
 
   slack-notification-dev:
-      docker:
-        - image: circleci/python:3.7.3
-      working_directory: *working_dir
-      steps:
-        - *restore_workspace
-        - run: |
-            source ./env.sh
-            sudo pip3 install -r ./ci/playstore/requirements.txt
-            VERSION_NAME=$(echo ${APK_INFO} | jq '.version_name')
-            DOWNLOAD_URL=$(echo ${APK_INFO} | jq '.download_url')
-            MESSAGE="Test version ${VERSION_NAME} has been uploaded to internal app sharing - ${DOWNLOAD_URL}"
-            sudo python3 ./ci/playstore/notify.py ${SLACK_FARMSMART_TOKEN} "${MESSAGE}"
+    executor: utilities
+    steps:
+      - *restore_workspace
+      - run: |
+          set -euo pipefail
+          source ./env.sh
+          VERSION_NAME=$(echo ${APK_INFO} | jq '.version_name')
+          DOWNLOAD_URL=$(echo ${APK_INFO} | jq '.download_url')
+          MESSAGE="Test version ${VERSION_NAME} has been uploaded to internal app sharing - ${DOWNLOAD_URL}"
+          python3 /farmsmart/utilities/notify.py ${SLACK_FARMSMART_TOKEN} "${MESSAGE}" ${SLACK_CHANNEL}
 
 workflows:
-  run:
+  android-apk:
     jobs:
-      - flutter-test
+      - prepare:
+          context: gcp-kms
 
-      # dev
-      - decrypt-secrets:
-          name: decrypt-secrets-dev
+      - test:
           requires:
-            - flutter-test
-          context: dev
-          filters:
-            branches:
-              only: /develop|feature.*/
+            - prepare
 
       - flutter-build-dev:
           requires:
-            - decrypt-secrets-dev
+            - test
           context: dev
           filters:
             branches:
@@ -225,18 +216,9 @@ workflows:
               only: /develop|feature.*/
 
       # prod
-      - decrypt-secrets:
-          name: decrypt-secrets-prod
-          requires:
-            - flutter-test
-          context: prod
-          filters:
-            branches:
-              only: /release.*/
-
       - get-next-version:
           requires:
-            - decrypt-secrets-prod
+            - test
           context: prod
           filters:
             branches:
