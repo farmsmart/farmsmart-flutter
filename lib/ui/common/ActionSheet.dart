@@ -11,14 +11,15 @@ class ActionListItemViewModel {
   bool isHighlighted;
   Function action;
 
-  ActionListItemViewModel(this.title, this.action, this.isHighlighted, {this.icon, this.selectionIcon});
+  ActionListItemViewModel(this.title, this.action, this.isHighlighted,
+      {this.icon, this.selectionIcon});
 }
 
 class ActionSheetViewModel {
-    List<ActionListItemViewModel> actions;
-    String buttonTitle;
+  List<ActionListItemViewModel> actions;
+  String buttonTitle;
 
-    ActionSheetViewModel(this.actions, this.buttonTitle);
+  ActionSheetViewModel(this.actions, this.buttonTitle);
 }
 
 abstract class ActionSheetStyle {
@@ -45,12 +46,11 @@ abstract class ActionSheetStyle {
 
   final int maxLines;
 
-  ActionSheetStyle(this.cornersColor, this.backgroundColor, this.dropLineColor,
+  ActionSheetStyle( this.cornersColor, this.backgroundColor, this.dropLineColor,
       this.cardBackgroundColor, this.mainTextStyle, this.highlightTextStyle,
       this.cardEdge, this.dropLineEdge, this.borderRadius, this.dropLineRadius,
-      this.dropLineHeight, this.cardHeight, this.iconLineSpace,
-      this.cardElevation, this.bigIconHeight, this.smallIconHeight,
-      this.maxLines);
+      this.dropLineHeight, this.cardHeight, this.iconLineSpace, this.cardElevation,
+      this.bigIconHeight, this.smallIconHeight, this.maxLines);
 }
 
 class DefaultStyle implements ActionSheetStyle {
@@ -62,12 +62,15 @@ class DefaultStyle implements ActionSheetStyle {
   final Color dropLineColor = const Color(0xFFe0e1ee);
   final Color cardBackgroundColor = const Color(0x00000000);
 
-  final TextStyle mainTextStyle = const TextStyle(fontSize: 17, fontWeight: FontWeight.normal, color: titleColor);
-  final TextStyle highlightTextStyle = const TextStyle(fontSize: 17, fontWeight: FontWeight.normal, color: highlightColor);
+  final TextStyle mainTextStyle = const TextStyle(
+      fontSize: 17, fontWeight: FontWeight.normal, color: titleColor);
+  final TextStyle highlightTextStyle = const TextStyle(
+      fontSize: 17, fontWeight: FontWeight.normal, color: highlightColor);
 
   final EdgeInsets cardEdge = const EdgeInsets.only(left: 32, right: 32);
-  final EdgeInsets dropLineEdge = const EdgeInsets.only(left: 160, right: 160, top: 8, bottom: 50);
-  
+  final EdgeInsets dropLineEdge =
+      const EdgeInsets.only(left: 160, right: 160, top: 8, bottom: 50);
+
   final Radius borderRadius = const Radius.circular(40);
   final Radius dropLineRadius = const Radius.circular(2.5);
 
@@ -84,13 +87,20 @@ class DefaultStyle implements ActionSheetStyle {
 }
 
 class ActionSheet {
-  static Widget build(BuildContext context, {ActionSheetStyle style = const DefaultStyle()}) {
-
+  static Widget build(BuildContext context,
+      {ActionSheetStyle style = const DefaultStyle()}) {
     // FIXME: This would be injected in the call function. Every screen which need an ActionSheet has to have this CustomActions defined in its view model
-    ActionListItemViewModel recordSale = ActionListItemViewModel("Record a new Sale", null, false, icon: "assets/icons/detail_icon_cost.png");
-    ActionListItemViewModel recordCost = ActionListItemViewModel("Record a new Cost", null, false, icon: "assets/icons/flag_kenya.png", selectionIcon: "assets/icons/radio_button_active.png");
-    ActionListItemViewModel testing = ActionListItemViewModel("Record a test", null, true);
-    ActionSheetViewModel viewModel = ActionSheetViewModel([recordSale, recordCost, testing], "Cancel");
+    ActionListItemViewModel recordSale = ActionListItemViewModel(
+        "Record a new Sale", null, false,
+        icon: "assets/icons/detail_icon_cost.png");
+    ActionListItemViewModel recordCost = ActionListItemViewModel(
+        "Record a new Cost", null, false,
+        icon: "assets/icons/flag_kenya.png",
+        selectionIcon: "assets/icons/radio_button_active.png");
+    ActionListItemViewModel testing =
+        ActionListItemViewModel("Record a test", null, true);
+    ActionSheetViewModel viewModel =
+        ActionSheetViewModel([recordSale, recordCost, testing], "Cancel");
 
     /* FIXME: To make the modal bottom sheet autoresizable (without limit) needs to modify native file bottom_sheet
         @override
@@ -104,25 +114,24 @@ class ActionSheet {
   }*/
 
     return Container(
-      color: style.cornersColor, // This line set the transparent background
+        color: style.cornersColor, // This line set the transparent background
         child: Container(
-          decoration: BoxDecoration(
-              color: style.backgroundColor,
-              borderRadius: BorderRadius.only(
-                  topLeft: style.borderRadius,
-                  topRight: style.borderRadius
-              )
-          ),
-          child: HeaderAndFooterListView.builder(
-              physics: NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: viewModel.actions.length,
-              itemBuilder: (BuildContext context, int index) =>
-            buildActionCell(style, viewModel.actions[index], viewModel.actions.length, index),
-            header: buildDropLine(style),
-            footer: RoundedButton.build(style: ActionSheetLargeRoundedButtonStyle(), context: context, title: viewModel.buttonTitle)
-          )
-    ));
+            decoration: BoxDecoration(
+                color: style.backgroundColor,
+                borderRadius: BorderRadius.only(
+                    topLeft: style.borderRadius, topRight: style.borderRadius)),
+            child: HeaderAndFooterListView.builder(
+                physics: NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: viewModel.actions.length,
+                itemBuilder: (BuildContext context, int index) =>
+                    buildActionCell(style, viewModel.actions[index],
+                        viewModel.actions.length, index),
+                header: buildDropLine(style),
+                footer: RoundedButton.build(
+                    style: ActionSheetLargeRoundedButtonStyle(),
+                    context: context,
+                    title: viewModel.buttonTitle))));
   }
 
   static Widget buildDropLine(ActionSheetStyle style) {
@@ -136,7 +145,11 @@ class ActionSheet {
     );
   }
 
-  static Widget buildActionCell(ActionSheetStyle style, ActionListItemViewModel viewModel, int numberOfActions, int currentAction) {
+  static Widget buildActionCell(
+      ActionSheetStyle style,
+      ActionListItemViewModel viewModel,
+      int numberOfActions,
+      int currentAction) {
     return Column(
       children: <Widget>[
         Card(
@@ -149,55 +162,45 @@ class ActionSheet {
               alignment: Alignment.center,
               height: style.cardHeight,
               child: Wrap(
-                direction: Axis.horizontal,
-                crossAxisAlignment: WrapCrossAlignment.start,
-                children: _buildActionContent(style, viewModel),
-              ),
+                  direction: Axis.horizontal,
+                  crossAxisAlignment: WrapCrossAlignment.start,
+                  children: <Widget>[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: _buildActionContent(style, viewModel),
+                    ),
+                  ]),
             ),
           ),
         ),
-        currentAction == numberOfActions-1 ?  Wrap() : ListDivider.build(),
+        currentAction == numberOfActions - 1 ? Wrap() : ListDivider.build(),
       ],
     );
   }
 
   static List<Widget> _buildActionContent(ActionSheetStyle style, ActionListItemViewModel viewModel) {
     List<Widget> listBuilder = [];
-    if (viewModel.icon != null && viewModel.selectionIcon == null) {
-      listBuilder.add(
-      Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          Image.asset(viewModel.icon, height: style.smallIconHeight),
-          SizedBox(width: style.iconLineSpace),
-          Text(viewModel.title, style: viewModel.isHighlighted ? style.highlightTextStyle : style.mainTextStyle)
-        ],
-      ));
 
-    } else if (viewModel.selectionIcon != null) {
-      listBuilder.add(
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    if (viewModel.icon != null) {
+      listBuilder.add(Image.asset(viewModel.icon, height: style.smallIconHeight));
+      listBuilder.add(SizedBox(width: style.iconLineSpace));
+
+    } if (viewModel.title != null) {
+      listBuilder.add(Text(viewModel.title,
+          style: viewModel.isHighlighted
+              ? style.highlightTextStyle
+              : style.mainTextStyle));
+
+    } if (viewModel.selectionIcon != null) {
+      listBuilder.add(Expanded(
+          child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
-          Row(children: <Widget>[
-            Image.asset(viewModel.icon, height: style.bigIconHeight),
-            SizedBox(width: style.iconLineSpace),
-            Text(viewModel.title, style: viewModel.isHighlighted ? style.highlightTextStyle : style.mainTextStyle),
-          ]),
           Image.asset(viewModel.selectionIcon, height: style.bigIconHeight)
         ],
-      ));
-
-    } else {
-      listBuilder.add(Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          Text(viewModel.title, style: viewModel.isHighlighted ? style.highlightTextStyle : style.mainTextStyle),
-        ],
-      ));
+      )));
     }
+
     return listBuilder;
   }
 }
-
-
