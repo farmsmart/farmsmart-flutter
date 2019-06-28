@@ -27,7 +27,6 @@ class ProfitLossListViewModel {
   }
 }
 
-
 abstract class ProfitLossStyle {
 
   final TextStyle titleTextStyle;
@@ -42,11 +41,13 @@ abstract class ProfitLossStyle {
   final double actionButtonSize;
   final double actionButtonElevation;
   final double actionButtonIconSize;
+  final int maxLines;
+  final double bottomEdgePadding;
 
   ProfitLossStyle(this.actionButtonBackgroundColour, this.actionButtonSize,
       this.actionButtonElevation, this.actionButtonIconSize, this.titleEdgePadding,
       this.titleTextStyle, this.detailTextEdgePadding, this.detailTextStyle,
-      this.subtitleTextStyle);
+      this.subtitleTextStyle, this.maxLines, this.bottomEdgePadding);
 }
 
 class _DefaultStyle implements ProfitLossStyle{
@@ -63,6 +64,8 @@ class _DefaultStyle implements ProfitLossStyle{
   final double actionButtonSize = 48.0;
   final double actionButtonElevation = 0;
   final double actionButtonIconSize = 20.0;
+  final int maxLines = 1;
+  final double bottomEdgePadding = 51;
 
   const _DefaultStyle();
 }
@@ -96,19 +99,16 @@ class _ProfitLossState extends State<ProfitLossPage>  {
   }
 
   Widget _buildPage(BuildContext context, ProfitLossListViewModel viewModel, ProfitLossStyle profitStyle) {
-    //final viewModel = buildProfitLossViewModel();
 
     return HeaderAndFooterListView.builder(
-      //FIXME: itemCount is now hardcoded
         itemCount: viewModel.transactions.length,
         itemBuilder: (BuildContext context, int index) {
-         //final itemViewModel = buildProfitLossItemViewModel();
          return ProfitLossListItem().buildListItem(viewModel.transactions[index]);
         },
     physics: ScrollPhysics(),
     shrinkWrap: true,
       header: _buildTitle(profitStyle, viewModel),
-      footer: SizedBox(height: 51,)
+      footer: SizedBox(height: profitStyle.bottomEdgePadding,)
     );
   }
 
@@ -123,7 +123,9 @@ class _ProfitLossState extends State<ProfitLossPage>  {
             children: <Widget>[
               Text(
                   viewModel.title,
-                  style: profitStyle.titleTextStyle
+                  style: profitStyle.titleTextStyle,
+                  maxLines: profitStyle.maxLines,
+                  overflow: TextOverflow.ellipsis
               ),
               SizedBox(
                 width: profitStyle.detailTextEdgePadding,
@@ -131,6 +133,8 @@ class _ProfitLossState extends State<ProfitLossPage>  {
               Text(
                 viewModel.detailText,
                 style: profitStyle.detailTextStyle,
+                  maxLines: profitStyle.maxLines,
+                  overflow: TextOverflow.ellipsis
               )
             ],
           ),
@@ -139,8 +143,8 @@ class _ProfitLossState extends State<ProfitLossPage>  {
               _buildSubTitle(viewModel, profitStyle),
             ],
           )
-        ])
-      );
+        ]),
+    );
     }
 
     Widget _buildSubTitle(ProfitLossListViewModel viewModel, ProfitLossStyle profitStyle) {

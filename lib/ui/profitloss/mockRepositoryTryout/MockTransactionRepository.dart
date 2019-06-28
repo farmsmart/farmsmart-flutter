@@ -2,11 +2,9 @@ import 'dart:math';
 
 import 'package:farmsmart_flutter/model/loading_status.dart';
 import 'package:farmsmart_flutter/ui/profitloss/ProfitLossListItem.dart';
-import 'package:farmsmart_flutter/ui/profitloss/mockRepositoryTryout/TransactionEntity.dart';
 
 import '../ProfitLossList.dart';
 import 'MockString.dart';
-import 'TransactionRepositoryInterface.dart';
 
 class MockTransaction {
   static ProfitLossListViewModel build() {
@@ -18,7 +16,7 @@ class MockTransaction {
     return ProfitLossListViewModel(
      loadingStatus: LoadingStatus.SUCCESS,
       title: _mockDetailText.random(),
-      detailText: _mockTitleText.random(),
+      detailText: _mockDetailText.random(),
       subtitle: _mockDetailText.random(),
       transactions: list
 
@@ -27,11 +25,11 @@ class MockTransaction {
 }
 
 MockString _mockTitleText = MockString(library: ["Title example",
-"Longer title example", "A Bit longer title example"]);
+"Longer title example ", "A Bit longer title example more longer example"]);
 
 MockString _mockPlainText = MockString(library: ["Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."]);
 
-MockString _mockDetailText = MockString(library: ["123",
+MockString _mockDetailText = MockString(library: ["EUR, DOLLAR, Khz, AUS, ZENY, RUPIE",
 "102.00",
 "9734,65",
 "Completed",
@@ -41,11 +39,16 @@ MockString _mockDetailText = MockString(library: ["123",
 ]);
 
 class MockTransactionItem {
+
   static ProfitLossItemViewModel build() {
+    final _random = Random();
+    final minRange = 2000;
+    final maxRange = 2000;
+
     return ProfitLossItemViewModel(
-      _mockTitleText.random(),
-      _mockTitleText.random(),
-      Random().nextInt(2000),
+        _mockTitleText.random(),
+        _mockTitleText.random(),
+        _random.nextInt(maxRange + minRange) - minRange
     );
   }
 }
