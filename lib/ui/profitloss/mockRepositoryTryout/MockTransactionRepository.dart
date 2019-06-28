@@ -42,13 +42,12 @@ class MockTransactionItem {
 
   static ProfitLossItemViewModel build() {
     final _random = Random();
-    final minRange = 2000;
-    final maxRange = 2000;
+    final minRange = 0.5;
 
     return ProfitLossItemViewModel(
         _mockTitleText.random(),
         _mockTitleText.random(),
-        _random.nextInt(maxRange + minRange) - minRange
+        _random.nextDouble() - minRange
     );
   }
 }

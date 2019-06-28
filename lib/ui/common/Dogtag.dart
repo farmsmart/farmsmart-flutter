@@ -5,13 +5,13 @@ class DogTagViewModel {
   String title;
 
   //TODO: can be a decimal number or only Integers numbers?
-  int number;
+  double number;
   IconData icon;
 
   DogTagViewModel({this.title, this.icon, this.number});
 }
 
-DogTagViewModel buildDogTagViewModel({String title, IconData icon, int number}) {
+DogTagViewModel buildDogTagViewModel({String title, IconData icon, double number}) {
   return DogTagViewModel(title: title, icon: icon, number: number);
 }
 
@@ -46,17 +46,13 @@ class _DefaultStyle implements DogTagStyle {
 }
 
 class DogTag {
-  static build(
-  {DogTagStyle style = const _DefaultStyle(),
-  String title, IconData icon, int number}) {
-    return _buildDogTag(style, title: title, icon: icon, number: number);
+  static build({DogTagStyle style = const _DefaultStyle(), DogTagViewModel viewModel}) {
+    return _buildDogTag(style, viewModel);
   }
 
-  static Widget _buildDogTag(DogTagStyle style, {String title, icon, int number}) {
-    String plusSign = "+";
-    String minusSign = "-";
-
-    DogTagViewModel viewModel = buildDogTagViewModel(title: title, icon: icon, number: number);
+  static Widget _buildDogTag(DogTagStyle style, DogTagViewModel viewModel) {
+    String _plusSign = "+";
+    int _decimalNumbers = 2;
 
     List<Widget> _buildButtonContent(){
       List<Widget> listBuilder = [];
@@ -72,8 +68,8 @@ class DogTag {
       } if (viewModel.number != null) {
           listBuilder.add(
               Text(
-                viewModel.number >= 0 ? plusSign + viewModel.number.toString():
-                minusSign + viewModel.number.toString(),
+                viewModel.number >= 0 ? _plusSign + viewModel.number.toStringAsFixed(_decimalNumbers):
+                 viewModel.number.toStringAsFixed(_decimalNumbers),
                 style: style.titleTextStyle,
                 overflow: TextOverflow.ellipsis,
                 maxLines: style.maxLines,

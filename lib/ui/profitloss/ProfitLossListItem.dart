@@ -1,6 +1,4 @@
 import 'package:farmsmart_flutter/ui/common/listDivider.dart';
-import 'package:farmsmart_flutter/ui/myplot/PlotListItem.dart';
-import 'package:farmsmart_flutter/utils/assets.dart';
 import 'package:flutter/material.dart';
 import 'package:farmsmart_flutter/ui/common/Dogtag.dart';
 import 'package:farmsmart_flutter/ui/common/DogTagStyle.dart';
@@ -10,12 +8,10 @@ class ProfitLossItemViewModel {
   final String title;
   final String subtitle;
 
-  //TODO:ask for double or Int in transaction number
-  final int detail;
+  final double detail;
 
   ProfitLossItemViewModel(this.title, this.subtitle, this.detail);
 }
-
 
 abstract class ProfitLossItemStyle {
 
@@ -67,7 +63,7 @@ class ProfitLossListItem {
                         SizedBox(width: itemStyle.detailLineSpace),
                         DogTag.build(
                             style: viewModel.detail >= 0 ? PositiveDogTagStyle():
-                            NegativeDogTagStyle(), title: viewModel.detail.toString())
+                            NegativeDogTagStyle(), viewModel: DogTagViewModel(number: viewModel.detail))
                       ])),
               ListDivider.build(),
             ]

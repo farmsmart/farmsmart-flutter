@@ -132,9 +132,9 @@ class PlotListItem {
               style: itemStyle.subtitleTextStyle),
           SizedBox(height: itemStyle.detailLineSpace),
           DogTag.build(
-            style: CompactDogTag(), title: viewModel.detail
-          )
-        ],
+            style: CompactDogTag(),
+            viewModel: DogTagViewModel(title: viewModel.detail)
+          )],
       ),
     );
   }
