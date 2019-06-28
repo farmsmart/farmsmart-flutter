@@ -54,18 +54,14 @@ class _DefaultStyle implements RoundedButtonStyle {
 }
 
 class RoundedButton {
-  static build(
-      {RoundedButtonStyle style = const _DefaultStyle(),
-        @required  BuildContext context,
-        String title, IconData icon,
-        Function onTap, Color backgroundColor}) {
-    return _buildRoundedButton(style, context , title: title, icon: icon, backgroundColor: backgroundColor, onTap: onTap);
+  static build(RoundedButtonViewModel viewModel, {RoundedButtonStyle style = const _DefaultStyle()}) {
+  //String title, IconData icon, Function onTap, Color backgroundColor
+    return _buildRoundedButton(viewModel, style);
   }
 
-  static Widget _buildRoundedButton(RoundedButtonStyle buttonStyle, BuildContext context, {String title, IconData icon,
-    Function onTap, Color backgroundColor}) {
+  static Widget _buildRoundedButton(RoundedButtonViewModel viewModel, RoundedButtonStyle buttonStyle) {
 
-    RoundedButtonViewModel viewModel = buildButtonViewModel(context, title: title, icon: icon, onTap: onTap, backgroundColor: backgroundColor);
+    //RoundedButtonViewModel viewModel = buildButtonViewModel(context, title: title, icon: icon, onTap: onTap, backgroundColor: backgroundColor);
 
     List<Widget> _buildButtonContent(){
       List<Widget> listBuilder = [];

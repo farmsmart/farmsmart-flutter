@@ -9,6 +9,7 @@ class SelectableActionSheetStyle implements ActionSheetStyle {
   final Color backgroundColor = const Color(0xFFffffff);
   final Color dropLineColor = const Color(0xFFe0e1ee);
   final Color cardBackgroundColor = const Color(0x00000000);
+  final Color buttonBackgroundColor = const Color(0xFFe9eaf2);
 
   final TextStyle mainTextStyle = const TextStyle(fontSize: 17, fontWeight: FontWeight.normal, color: titleColor);
   final TextStyle highlightTextStyle = const TextStyle(fontSize: 17, fontWeight: FontWeight.normal, color: highlightColor);

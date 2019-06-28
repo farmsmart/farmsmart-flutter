@@ -103,7 +103,7 @@ Widget _buildPage(BuildContext context, List<CropEntity> cropList,
   physics: ScrollPhysics(),
   shrinkWrap: true,
   header: _buildTitle(viewModel, plotStyle, context: context),
-  footer: RoundedButton.build(style: LargeRoundedButtonStyle() ,context: context, title: viewModel.buttonTitle));
+  footer: RoundedButton.build(RoundedButtonViewModel(context, title: viewModel.buttonTitle), style: LargeRoundedButtonStyle()));
 }
 
 Widget _buildTitle(PlotListViewModel viewModel, PlotListStyle myPlotStyle, {BuildContext context}){
@@ -121,7 +121,7 @@ Widget _buildTitle(PlotListViewModel viewModel, PlotListStyle myPlotStyle, {Buil
               )
             ]
           ),
-          RoundedButton.build(style: CompactRoundedButtonStyle(),context: context, icon: Icons.add)]
+          RoundedButton.build(RoundedButtonViewModel(context, icon: Icons.add), style: CompactRoundedButtonStyle())]
       )
   );
 }

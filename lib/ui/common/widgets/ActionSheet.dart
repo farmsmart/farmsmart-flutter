@@ -26,6 +26,7 @@ abstract class ActionSheetStyle {
   final Color backgroundColor;
   final Color dropLineColor;
   final Color cardBackgroundColor;
+  final Color buttonBackgroundColor;
 
   final TextStyle mainTextStyle;
   final TextStyle highlightTextStyle;
@@ -45,7 +46,7 @@ abstract class ActionSheetStyle {
   final int maxLines;
 
   ActionSheetStyle( this.cornersColor, this.backgroundColor, this.dropLineColor,
-      this.cardBackgroundColor, this.mainTextStyle, this.highlightTextStyle,
+      this.cardBackgroundColor, this.buttonBackgroundColor, this.mainTextStyle, this.highlightTextStyle,
       this.cardEdge, this.dropLineEdge, this.borderRadius, this.dropLineRadius,
       this.dropLineHeight, this.cardHeight, this.iconLineSpace, this.cardElevation,
       this.iconHeight, this.maxLines);
@@ -59,6 +60,7 @@ class DefaultStyle implements ActionSheetStyle {
   final Color backgroundColor = const Color(0xFFffffff);
   final Color dropLineColor = const Color(0xFFe0e1ee);
   final Color cardBackgroundColor = const Color(0x00000000);
+  final Color buttonBackgroundColor = const Color(0xFFe9eaf2);
 
   final TextStyle mainTextStyle = const TextStyle(fontSize: 17, fontWeight: FontWeight.normal, color: titleColor);
   final TextStyle highlightTextStyle = const TextStyle(fontSize: 17, fontWeight: FontWeight.normal, color: highlightColor);
@@ -82,12 +84,7 @@ class DefaultStyle implements ActionSheetStyle {
 }
 
 class ActionSheet {
-  static Widget build(BuildContext context, {ActionSheetStyle style = const DefaultStyle()}) {
-    // FIXME: This would be injected in the call function. Every screen which need an ActionSheet has to have this CustomActions defined in its view model
-    ActionListItemViewModel recordSale = ActionListItemViewModel("Record a new Sale", null, false, icon: "assets/icons/detail_icon_cost.png");
-    ActionListItemViewModel recordCost = ActionListItemViewModel("Record a new Cost", null, false, icon: "assets/icons/flag_kenya.png", checkBoxIcon: "assets/icons/radio_button_active.png");
-    ActionListItemViewModel testing = ActionListItemViewModel("Record a test", null, true);
-    ActionSheetViewModel viewModel = ActionSheetViewModel([recordSale, recordCost, testing], "Cancel");
+  static Widget build(BuildContext context, ActionSheetViewModel viewModel, {ActionSheetStyle style = const DefaultStyle()}) {
 
     /* FIXME: To make the modal bottom sheet autoresizable (without limit) needs to modify native file bottom_sheet
         @override
@@ -99,7 +96,6 @@ class ActionSheet {
             maxHeight: constraints.maxHeight,
           );
   }*/
-
     return Container(
         color: style.cornersColor, // This line set the transparent background
         child: Container(
@@ -115,10 +111,7 @@ class ActionSheet {
                     buildActionCell(style, viewModel.actions[index],
                         viewModel.actions.length, index),
                 header: buildDropLine(style),
-                footer: RoundedButton.build(
-                    style: ActionSheetLargeRoundedButtonStyle(),
-                    context: context,
-                    title: viewModel.buttonTitle))));
+                footer: RoundedButton.build(RoundedButtonViewModel(context, title: viewModel.buttonTitle), style: ActionSheetLargeRoundedButtonStyle()))));
   }
 
   static Widget buildDropLine(ActionSheetStyle style) {

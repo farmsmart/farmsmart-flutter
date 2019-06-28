@@ -75,9 +75,18 @@ class HeroListItem {
 
   //FIXME: Temporal for test ActionBottomSheet
   Future _onMenuPressed(BuildContext context) async {
+
+    // FIXME: This would be injected in the call function. Every screen which need an ActionSheet has to have this CustomActions defined in its view model
+    ActionListItemViewModel recordSale = ActionListItemViewModel("Record a new Sale", null, false, icon: "assets/icons/detail_icon_cost.png");
+    ActionListItemViewModel recordCost = ActionListItemViewModel("Record a new Cost", null, false, icon: "assets/icons/flag_kenya.png", checkBoxIcon: "assets/icons/radio_button_active.png");
+    ActionListItemViewModel testing = ActionListItemViewModel("Record a test", null, true);
+
     showModalBottomSheet(
         context: context,
-        builder: (widgetBuilder) => ActionSheet.build(context)
+        builder: (widgetBuilder) => ActionSheet.build(context, ActionSheetViewModel([recordSale, recordCost, testing], "Cancel"))
     );
   }
 }
+
+
+//ActionSheetViewModel viewModel = ActionSheetViewModel([recordSale, recordCost, testing], "Cancel");
