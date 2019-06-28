@@ -19,10 +19,10 @@ class PlaygroundView extends StatefulWidget {
 
   PlaygroundView(
       {Key key,
-        this.widgetList,
-        this.appBarColor = const Color(0xFF00CD9F),
-        this.appBarTitle = _defaultAppBarTitle,
-        this.allWidgetsText = _defaultAllWidgetsTitle});
+      @required this.widgetList,
+      this.appBarColor = const Color(0xFF00CD9F),
+      this.appBarTitle = _defaultAppBarTitle,
+      this.allWidgetsText = _defaultAllWidgetsTitle});
 
   @override
   _PlaygroundViewState createState() => _PlaygroundViewState();
@@ -43,26 +43,24 @@ class _PlaygroundViewState extends State<PlaygroundView> {
   }
 
   @override
+  void dispose() {
+    items = null;
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          backgroundColor: widget.appBarColor,
-          title: widget.appBarTitle,
-        ),
-        body: Container(
-          child: Column(
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: _inputTextField(),
-              ),
-              Expanded(
-                child: _listView(),
-              ),
-            ],
+    return Container(
+      child: Column(
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: _inputTextField(),
           ),
-        ),
+          Expanded(
+            child: _listView(),
+          ),
+        ],
       ),
     );
   }
@@ -71,7 +69,7 @@ class _PlaygroundViewState extends State<PlaygroundView> {
     if (query.isNotEmpty) {
       var filteredItems = items
           .where((widget) =>
-          widget.toString().toLowerCase().contains(query.toLowerCase()))
+              widget.toString().toLowerCase().contains(query.toLowerCase()))
           .toList();
       setState(() {
         items.clear();
@@ -97,8 +95,7 @@ class _PlaygroundViewState extends State<PlaygroundView> {
           if (index == _firstIndex) {
             return _playgroundAllListItem(index, context);
           } else {
-            return _playgroundListItem(
-                index - _hardcodedItemSize, context);
+            return _playgroundListItem(index - _hardcodedItemSize, context);
           }
         });
   }
@@ -140,26 +137,24 @@ class _PlaygroundViewState extends State<PlaygroundView> {
   }
 
   void _navigateToWidgetDetail(BuildContext context, int index) {
-    Navigator.push(
-      context,
+    Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => _PlaygroundDetail(
-          child: items[index],
-          appBarColor: widget.appBarColor,
-        ),
+              child: items[index],
+              appBarColor: widget.appBarColor,
+            ),
       ),
     );
   }
 
   void _navigateToAllWidgets(BuildContext context, int index) {
-    Navigator.push(
-      context,
+    Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => _PlaygroundAllWidgets(
-          widgetList: widget.widgetList,
-          appBarColor: widget.appBarColor,
-          allWidgetsText: widget.allWidgetsText,
-        ),
+              widgetList: widget.widgetList,
+              appBarColor: widget.appBarColor,
+              allWidgetsText: widget.allWidgetsText,
+            ),
       ),
     );
   }
@@ -212,9 +207,9 @@ class _PlaygroundAllWidgets extends StatelessWidget {
 
   _PlaygroundAllWidgets(
       {Key key,
-        @required this.widgetList,
-        this.appBarColor = _defaultAppBarColor,
-        this.allWidgetsText})
+      @required this.widgetList,
+      this.appBarColor = _defaultAppBarColor,
+      this.allWidgetsText})
       : super(key: key);
 
   @override

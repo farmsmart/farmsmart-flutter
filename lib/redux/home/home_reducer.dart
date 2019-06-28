@@ -23,6 +23,9 @@ HomeState _switchTab(HomeState state, SwitchTabAction action) {
     case HomeScreen.COMMUNITY_TAB:
       return state.copyWith(currentHomeTab: HomeScreen.COMMUNITY_TAB);
       break;
+    case HomeScreen.DEBUG_TAB:
+      return state.copyWith(currentHomeTab: HomeScreen.DEBUG_TAB);
+      break;
   }
   return state;
 }
