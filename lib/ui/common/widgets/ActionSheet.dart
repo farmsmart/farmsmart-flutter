@@ -1,8 +1,8 @@
 import 'package:farmsmart_flutter/ui/common/ActionSheetLargeRoundedButtonStyle.dart';
+import 'package:farmsmart_flutter/ui/common/ListDivider.dart';
 import 'package:farmsmart_flutter/ui/common/headerAndFooterListView.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
 import 'package:flutter/material.dart';
-import 'ListDivider.dart';
 
 class ActionListItemViewModel {
   String title;
@@ -41,8 +41,7 @@ abstract class ActionSheetStyle {
   final double cardHeight;
   final double iconLineSpace;
   final double cardElevation;
-  final double bigIconHeight;
-  final double smallIconHeight;
+  final double iconHeight;
 
   final int maxLines;
 
@@ -50,7 +49,7 @@ abstract class ActionSheetStyle {
       this.cardBackgroundColor, this.mainTextStyle, this.highlightTextStyle,
       this.cardEdge, this.dropLineEdge, this.borderRadius, this.dropLineRadius,
       this.dropLineHeight, this.cardHeight, this.iconLineSpace, this.cardElevation,
-      this.bigIconHeight, this.smallIconHeight, this.maxLines);
+      this.iconHeight, this.maxLines);
 }
 
 class DefaultStyle implements ActionSheetStyle {
@@ -62,10 +61,8 @@ class DefaultStyle implements ActionSheetStyle {
   final Color dropLineColor = const Color(0xFFe0e1ee);
   final Color cardBackgroundColor = const Color(0x00000000);
 
-  final TextStyle mainTextStyle = const TextStyle(
-      fontSize: 17, fontWeight: FontWeight.normal, color: titleColor);
-  final TextStyle highlightTextStyle = const TextStyle(
-      fontSize: 17, fontWeight: FontWeight.normal, color: highlightColor);
+  final TextStyle mainTextStyle = const TextStyle(fontSize: 17, fontWeight: FontWeight.normal, color: titleColor);
+  final TextStyle highlightTextStyle = const TextStyle(fontSize: 17, fontWeight: FontWeight.normal, color: highlightColor);
 
   final EdgeInsets cardEdge = const EdgeInsets.only(left: 32, right: 32);
   final EdgeInsets dropLineEdge =
@@ -78,8 +75,7 @@ class DefaultStyle implements ActionSheetStyle {
   final double cardHeight = 70;
   final double iconLineSpace = 21.5;
   final double cardElevation = 0;
-  final double bigIconHeight = 24;
-  final double smallIconHeight = 16.5;
+  final double iconHeight = 16.5;
 
   final int maxLines = 1;
 
@@ -87,20 +83,12 @@ class DefaultStyle implements ActionSheetStyle {
 }
 
 class ActionSheet {
-  static Widget build(BuildContext context,
-      {ActionSheetStyle style = const DefaultStyle()}) {
+  static Widget build(BuildContext context, {ActionSheetStyle style = const DefaultStyle()}) {
     // FIXME: This would be injected in the call function. Every screen which need an ActionSheet has to have this CustomActions defined in its view model
-    ActionListItemViewModel recordSale = ActionListItemViewModel(
-        "Record a new Sale", null, false,
-        icon: "assets/icons/detail_icon_cost.png");
-    ActionListItemViewModel recordCost = ActionListItemViewModel(
-        "Record a new Cost", null, false,
-        icon: "assets/icons/flag_kenya.png",
-        selectionIcon: "assets/icons/radio_button_active.png");
-    ActionListItemViewModel testing =
-        ActionListItemViewModel("Record a test", null, true);
-    ActionSheetViewModel viewModel =
-        ActionSheetViewModel([recordSale, recordCost, testing], "Cancel");
+    ActionListItemViewModel recordSale = ActionListItemViewModel("Record a new Sale", null, false, icon: "assets/icons/detail_icon_cost.png");
+    ActionListItemViewModel recordCost = ActionListItemViewModel("Record a new Cost", null, false, icon: "assets/icons/flag_kenya.png", selectionIcon: "assets/icons/radio_button_active.png");
+    ActionListItemViewModel testing = ActionListItemViewModel("Record a test", null, true);
+    ActionSheetViewModel viewModel = ActionSheetViewModel([recordSale, recordCost, testing], "Cancel");
 
     /* FIXME: To make the modal bottom sheet autoresizable (without limit) needs to modify native file bottom_sheet
         @override
@@ -182,7 +170,7 @@ class ActionSheet {
     List<Widget> listBuilder = [];
 
     if (viewModel.icon != null) {
-      listBuilder.add(Image.asset(viewModel.icon, height: style.smallIconHeight));
+      listBuilder.add(Image.asset(viewModel.icon, height: style.iconHeight));
       listBuilder.add(SizedBox(width: style.iconLineSpace));
 
     } if (viewModel.title != null) {
@@ -196,7 +184,7 @@ class ActionSheet {
           child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
-          Image.asset(viewModel.selectionIcon, height: style.bigIconHeight)
+          Image.asset(viewModel.selectionIcon, height: style.iconHeight)
         ],
       )));
     }
