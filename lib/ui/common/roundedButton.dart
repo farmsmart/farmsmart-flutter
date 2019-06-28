@@ -10,10 +10,6 @@ class RoundedButtonViewModel {
   RoundedButtonViewModel(this.context, {this.title, this.icon, this.onTap, this.backgroundColor});
 }
 
-RoundedButtonViewModel buildButtonViewModel(BuildContext context, {String title, IconData icon, Function onTap, Color backgroundColor}) {
-  return RoundedButtonViewModel(context, title: title, icon : icon, onTap: () => onTap(context), backgroundColor: backgroundColor);
-}
-
 abstract class RoundedButtonStyle {
 
   final Color iconButtonColor;
@@ -55,13 +51,10 @@ class _DefaultStyle implements RoundedButtonStyle {
 
 class RoundedButton {
   static build(RoundedButtonViewModel viewModel, {RoundedButtonStyle style = const _DefaultStyle()}) {
-  //String title, IconData icon, Function onTap, Color backgroundColor
     return _buildRoundedButton(viewModel, style);
   }
 
   static Widget _buildRoundedButton(RoundedButtonViewModel viewModel, RoundedButtonStyle buttonStyle) {
-
-    //RoundedButtonViewModel viewModel = buildButtonViewModel(context, title: title, icon: icon, onTap: onTap, backgroundColor: backgroundColor);
 
     List<Widget> _buildButtonContent(){
       List<Widget> listBuilder = [];
