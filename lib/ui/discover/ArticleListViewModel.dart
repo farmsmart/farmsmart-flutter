@@ -15,18 +15,6 @@ class ArticleListItemViewModel {
   ArticleListItemViewModel(this.title, this.summary, this.image, this.onTap);
 }
 
-class ArticleImageProvider implements ImageEntityURLProvider {
-  final ArticleEntity _article;
-  ArticleImageProvider(ArticleEntity article) : _article = article;
-  @override
-  Future<String> urlToFit({double width, double height}) {
-    return _article.images.getEntities().then((imageEntities) {
-      // NB: we assume the first image is the hero
-      return imageEntities.first.urlProvider.urlToFit(width: width,height: height);
-    });
-  }
-}
-
 class ArticleListViewModel {
   final LoadingStatus loadingStatus;
   final List<ArticleListItemViewModel> articleListItemViewModels;
