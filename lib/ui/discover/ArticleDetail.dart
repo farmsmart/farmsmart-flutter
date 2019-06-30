@@ -1,33 +1,36 @@
+import 'package:farmsmart_flutter/data/model/ImageEntity.dart';
+import 'package:farmsmart_flutter/data/model/article_entity.dart';
 import 'package:farmsmart_flutter/model/loading_status.dart';
 import 'package:farmsmart_flutter/ui/common/headerAndFooterListView.dart';
 import 'package:farmsmart_flutter/ui/common/network_image_from_future.dart';
 import 'package:farmsmart_flutter/ui/discover/StandardListItem.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:farmsmart_flutter/redux/app/app_state.dart';
-import 'package:redux/redux.dart';
-import '../app_bar.dart';
 import 'ArticleListViewModel.dart';
 
-abstract class ArticleDetailViewModel {
+class ArticleDetailViewModel {
   final LoadingStatus loadingStatus;
   final String title;
   final String subtitle;
-  final Future<String> imageUrl;
+  final ImageEntityURLProvider image;
   final String body;
   Function shareAction;
-  Future<List<ArticleListItemViewModel>> getRelated();
+  Future<List<ArticleListItemViewModel>> related;
   /*
           String deepLink = await buildArticleDeeplink(articleID);
           var response = await FlutterShareMe().shareToSystem(msg: Strings.shareArticleText + deepLink);
   */
-  static ArticleDetailViewModel fromStore(Store<AppState> store) {
-    return null;
-  }
 
-  ArticleDetailViewModel(this.loadingStatus, this.title, this.subtitle, this.imageUrl,
-      this.body, this.shareAction);
+  ArticleDetailViewModel(this.loadingStatus, this.title, this.subtitle, this.image, this.body, this.shareAction);
+
+  static ArticleDetailViewModel fromArticleEntityToViewModel(
+      ArticleEntity article) {
+    ArticleDetailViewModel viewModel = ArticleDetailViewModel(LoadingStatus.SUCCESS, article.title, article.summary, ArticleImageProvider(article), article.content, null);
+    viewModel.related = article.related.getEntities().then((articles) {
+      return ArticleListViewModel(articleItems: articles, onTap: null).articleListItemViewModels; 
+    });
+    return viewModel;
+  }
   
 }
 
@@ -84,26 +87,27 @@ class _DefaultStyle implements ArticleDetailStyle {
 }
 
 class ArticleDetail extends StatefulWidget {
+  final ArticleDetailViewModel _viewModel;
+
+  const ArticleDetail({Key key, ArticleDetailViewModel viewModel}) : this._viewModel = viewModel, super(key: key);
   @override
   State<StatefulWidget> createState() {
-    return _ArticleDetailState();
+    return _ArticleDetailState(_viewModel);
   }
 }
 
 class _ArticleDetailState extends State<ArticleDetail> {
+  final ArticleDetailViewModel _viewModel;
+
+  _ArticleDetailState(ArticleDetailViewModel viewModel) : this._viewModel = viewModel;
+  
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: StoreConnector<AppState, ArticleDetailViewModel>(
-        builder: (_, viewModel) => _build(context, viewModel),
-        converter: (store) => ArticleDetailViewModel.fromStore(store),
-      ),
-    );
+    return _build(context, _viewModel);
   }
 
   Widget _buildHeader(BuildContext context, ArticleDetailViewModel viewModel, ArticleDetailStyle style) {
-    return ListView(
-        children: <Widget>[
+    return Column(children: <Widget>[
           _buildTitle(viewModel.title, style),
           _buildArticlePublishingDate(viewModel, style),
           SizedBox(height: style.spaceBetweenDataAndImage),
@@ -111,30 +115,36 @@ class _ArticleDetailState extends State<ArticleDetail> {
           SizedBox(height: style.spaceBetweenElements),
           _buildBody(viewModel, style),
           SizedBox(height: style.spaceBetweenElements),
-                  ],
-      );
+                  ],);
+    
   }
 
   Widget _build(BuildContext context, ArticleDetailViewModel viewModel,
       {ArticleDetailStyle style = const _DefaultStyle()}) {
-        final releatedViewModels = [];
+        var releatedViewModels = [];
         final loadingWidget = Container(
             child: CircularProgressIndicator(), alignment: Alignment.center);
-        final footer = (viewModel.loadingStatus == LoadingStatus.LOADING) ? loadingWidget : null; 
-    return Scaffold(
-        appBar: CustomAppBar.buildForArticleDetail(
-            viewModel.title, CustomAppBar.shareAction(viewModel.shareAction)),
-        body: HeaderAndFooterListView.builder(
-        itemCount: releatedViewModels.length,
-        itemBuilder: (BuildContext context, int index) {
-          final viewModel = releatedViewModels[index];
-            return StandardListItem().build(viewModel);
-        },
-        physics: ScrollPhysics(),
-        shrinkWrap: true,
-        header: _buildHeader(context, viewModel, style),
-        footer: footer
-        ));
+        
+    return FutureBuilder(future: viewModel.related, builder: (BuildContext context, AsyncSnapshot<List<ArticleListItemViewModel>> relatedArticles) {
+      if (relatedArticles.hasData) {
+          releatedViewModels = relatedArticles.data; 
+      }
+      final footer = (viewModel.loadingStatus == LoadingStatus.LOADING) ? loadingWidget : null; 
+       return HeaderAndFooterListView.builder(
+          itemCount: releatedViewModels.length,
+          itemBuilder: (BuildContext context, int index) {
+            final viewModel = releatedViewModels[index];
+              return StandardListItem().build(viewModel);
+          },
+          physics: ScrollPhysics(),
+          shrinkWrap: true,
+          header: _buildHeader(context, viewModel, style),
+          footer: footer
+          ); 
+    },);
+    
+    
+   
   }
 
 // FIXME: Reuse the _buildScreenTitle from discover page (don't need to redefine here)
@@ -173,9 +183,9 @@ class _ArticleDetailState extends State<ArticleDetail> {
         ));
   }
 
-  Widget _buildImage(ArticleDetailViewModel selectedArticle) {
+  Widget _buildImage(ArticleDetailViewModel viewModel) {
     return Container(
-        child: NetworkImageFromFuture(selectedArticle.imageUrl,
+        child: NetworkImageFromFuture(viewModel.image.urlToFit(height: 192.0),
             fit: BoxFit.cover, height: 192.0));
   }
 

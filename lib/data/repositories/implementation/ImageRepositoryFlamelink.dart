@@ -34,7 +34,7 @@ ImageEntity _transform(FlameLink cms, DocumentSnapshot snapshot) {
     return FlamelinkImageEntity(cms ,0, 0, imageFileNamePath, alternateSizes);
 }
 
-class FlameLinkImageProvider implements ImageProvider {
+class FlameLinkImageProvider implements ImageEntityURLProvider {
   final FlameLink _cms;
   final ImageEntity _entity;
   FlameLinkImageProvider(FlameLink cms, ImageEntity entity) : _cms = cms, _entity = entity;

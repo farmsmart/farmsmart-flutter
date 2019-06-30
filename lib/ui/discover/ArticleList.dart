@@ -1,6 +1,7 @@
 import 'package:farmsmart_flutter/model/loading_status.dart';
 import 'package:farmsmart_flutter/redux/app/app_state.dart';
 import 'package:farmsmart_flutter/ui/common/headerAndFooterListView.dart';
+import 'package:farmsmart_flutter/ui/discover/ArticleDetail.dart';
 import 'package:farmsmart_flutter/ui/discover/HeroListItem.dart';
 import 'package:farmsmart_flutter/ui/discover/StandardListItem.dart';
 import 'package:farmsmart_flutter/utils/strings.dart';
@@ -41,8 +42,16 @@ class _State extends State<ArticleList> {
       body: StoreConnector<AppState, ArticleListViewModel>(
           onInit: (store) => store.dispatch(FetchArticlesAction()),
           builder: (_, viewModel) => _buildBody(context, viewModel),
-          converter: (store) => ArticleListViewModel.fromStore(store)),
+          converter: (store) => ArticleListViewModel.fromStore(store, _tappedListItem)),
     );
+  }
+
+  void _tappedListItem(ArticleDetailViewModel viewModel){
+     Navigator.of(context).push(
+	      MaterialPageRoute(
+	        builder: (context) => ArticleDetail(viewModel: viewModel),
+	      ),
+	    );
   }
 
   Widget _buildBody(BuildContext context, ArticleListViewModel viewModel) {
