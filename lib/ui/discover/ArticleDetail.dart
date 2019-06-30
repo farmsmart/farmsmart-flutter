@@ -1,5 +1,3 @@
-import 'package:farmsmart_flutter/data/model/article_entity.dart';
-import 'package:farmsmart_flutter/data/repositories/implementation/MockArticlesRepository.dart';
 import 'package:farmsmart_flutter/model/loading_status.dart';
 import 'package:farmsmart_flutter/ui/common/headerAndFooterListView.dart';
 import 'package:farmsmart_flutter/ui/common/network_image_from_future.dart';
@@ -12,14 +10,14 @@ import 'package:redux/redux.dart';
 import '../app_bar.dart';
 import 'ArticleListViewModel.dart';
 
-class ArticleDetailViewModel {
+abstract class ArticleDetailViewModel {
   final LoadingStatus loadingStatus;
   final String title;
   final String subtitle;
   final Future<String> imageUrl;
   final String body;
-  Future<List<ArticleListItemViewModel>> relatedArticles;
   Function shareAction;
+  Future<List<ArticleListItemViewModel>> getRelated();
   /*
           String deepLink = await buildArticleDeeplink(articleID);
           var response = await FlutterShareMe().shareToSystem(msg: Strings.shareArticleText + deepLink);
@@ -103,17 +101,15 @@ class _ArticleDetailState extends State<ArticleDetail> {
     );
   }
 
- 
-
   Widget _buildHeader(BuildContext context, ArticleDetailViewModel viewModel, ArticleDetailStyle style) {
     return ListView(
         children: <Widget>[
-          _buildScreenTitle(viewModel.title, style),
+          _buildTitle(viewModel.title, style),
           _buildArticlePublishingDate(viewModel, style),
           SizedBox(height: style.spaceBetweenDataAndImage),
-          _buildArticleImage(viewModel),
+          _buildImage(viewModel),
           SizedBox(height: style.spaceBetweenElements),
-          _buildArticleBody(viewModel, style),
+          _buildBody(viewModel, style),
           SizedBox(height: style.spaceBetweenElements),
                   ],
       );
@@ -142,7 +138,7 @@ class _ArticleDetailState extends State<ArticleDetail> {
   }
 
 // FIXME: Reuse the _buildScreenTitle from discover page (don't need to redefine here)
-  Widget _buildScreenTitle(
+  Widget _buildTitle(
       String selectedArticleTitle, ArticleDetailStyle articleStyle) {
     return Container(
         padding: articleStyle.titlePagePadding,
@@ -177,14 +173,14 @@ class _ArticleDetailState extends State<ArticleDetail> {
         ));
   }
 
-  Widget _buildArticleImage(ArticleDetailViewModel selectedArticle) {
+  Widget _buildImage(ArticleDetailViewModel selectedArticle) {
     return Container(
         child: NetworkImageFromFuture(selectedArticle.imageUrl,
             fit: BoxFit.cover, height: 192.0));
   }
 
 //TODO: Investigate how to add style to Html elements
-  Widget _buildArticleBody(
+  Widget _buildBody(
       ArticleDetailViewModel selectedArticle, ArticleDetailStyle articleStyle) {
     return Container(
         padding: articleStyle.bodyPadding,

@@ -70,7 +70,7 @@ class HeroListItem {
       ArticleListItemStyle articleListStyle) {
     return ClipRRect(
       borderRadius: articleListStyle.imageBorderRadius,
-      child: NetworkImageFromFuture(articleData.imageUrl, fit: BoxFit.fitWidth),
+      child: NetworkImageFromFuture(articleData.image.urlToFit(), fit: BoxFit.fitWidth),
     );
   }
 }

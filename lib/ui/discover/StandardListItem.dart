@@ -60,7 +60,7 @@ class StandardListItem {
     return ClipRRect(
         borderRadius: itemStyle.imageBorderRadius,
         child: NetworkImageFromFuture(
-            viewModel.imageUrl,
+            viewModel.image.urlToFit(width: itemStyle.imageHeight, height: itemStyle.imageHeight),
             height: itemStyle.imageHeight,
             width: itemStyle.imageHeight,
             fit: BoxFit.cover)

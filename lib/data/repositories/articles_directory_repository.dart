@@ -70,7 +70,7 @@ class ArticlesDirectoryRepository {
   /// Attaches images to supplied articles
   Future<dynamic> _getListOfArticlesWithImages(
       List<ArticleEntity> articlesWithoutImages) {
-    return _firestoreManager.getArticlesImagePath(articlesWithoutImages);
+    return Future.value([]);// _firestoreManager.getArticlesImagePath(articlesWithoutImages);
   }
 
   Future<List<ArticleEntity>> _getListOfRelatedArticles(

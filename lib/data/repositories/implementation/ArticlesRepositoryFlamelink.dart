@@ -1,53 +1,46 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:farmsmart_flutter/data/model/EntityCollectionInterface.dart';
 import 'package:farmsmart_flutter/data/model/article_entity.dart';
 import 'package:farmsmart_flutter/data/model/entities_const.dart';
+import 'package:farmsmart_flutter/data/repositories/implementation/ImageRepositoryFlamelink.dart';
 import 'FlameLink.dart';
 import '../../firebase_const.dart';
 import '../ArticleRepositoryInterface.dart';
 
 ArticleEntity _transform(FlameLink cms, DocumentSnapshot snapshot) {
   var article = ArticleEntity.articleFromDocument(snapshot);
-  var refs = [];
+  var relatedRefs = [];
+  var imageRefs = [];
   if (snapshot.data[RELATED_ARTICLES] != null) {
-     refs = List<String>.from(
+     relatedRefs = List<String>.from(
         snapshot.data[RELATED_ARTICLES].map((article) => article[ARTICLE].path)).toList();
   }
-  final relatedPaths = List<String>.from(refs);
-  article.related = ArticleEntityCollectionFlamelink.list(
-      cms: cms, paths: relatedPaths);
+  if (snapshot.data[IMAGE] != null) {
+     imageRefs = List<String>.from(
+        snapshot.data[IMAGE].map((image) => image.path)).toList();
+  }
+  final relatedPaths = List<String>.from(relatedRefs);
+  final imagePaths = List<String>.from(imageRefs);
+
+  final articleCollection = FlamelinkDocumentCollection.list(cms: cms, paths: relatedPaths);
+  final imageCollection = FlamelinkDocumentCollection.list(cms: cms, paths: imagePaths);
+  article.related = ArticleEntityCollectionFlamelink(collection: articleCollection);
+  article.images = ImageEntityCollectionFlamelink(collection: imageCollection);
   return article;
 }
 
-class ArticleEntityCollectionFlamelink implements ArticleEntityCollection {
-  final FlameLink _cms;
-  final Query _query;
-  final List<String> _paths;
+class ArticleEntityCollectionFlamelink implements EntityCollection<ArticleEntity> {
+  final FlamelinkDocumentCollection _collection;
 
-  ArticleEntityCollectionFlamelink({FlameLink cms, Query query})
-      : _cms = cms,
-        _query = query,
-        _paths = [];
-
-  ArticleEntityCollectionFlamelink.list({FlameLink cms, List<String> paths})
-      : _cms = cms,
-        _paths = paths,
-        _query = null;
+  ArticleEntityCollectionFlamelink({FlamelinkDocumentCollection collection})
+      :_collection = collection;
 
   @override
   Future<List<ArticleEntity>> getEntities({int limit = 0}) {
-    if (_paths.isNotEmpty) {
-      return _cms.get(_paths).then((snapshots) {
-        return snapshots.map((document) => _transform(_cms, document)).toList();
+    return _collection.getDocuments().then((documents) { 
+      return documents.map((document) => _transform(_collection.cms, document)).toList(); 
       });
-    } else if (_query != null) {
-      return _query.getDocuments().then((snapshot) {
-        return snapshot.documents
-            .map((document) => _transform(_cms, document))
-            .toList();
-      });
-    }
-    return Future.value([]);
   }
 }
 
@@ -85,7 +78,7 @@ class ArticlesRepositoryFlameLink implements ArticleRepositoryInterface {
   }
 
   @override
-  Future<List<ArticleEntity>> getArticles(ArticleEntityCollection collection) {
+  Future<List<ArticleEntity>> getArticles(EntityCollection<ArticleEntity> collection) {
     return collection.getEntities();
   }
 
@@ -103,8 +96,8 @@ class ArticlesRepositoryFlameLink implements ArticleRepositoryInterface {
         final publishedDocuments = _cms
             .documentsQuery(schema: _articleSchema, limit: limit)
             .where(PUBLICATION_STATUS, isEqualTo: DataStatus.PUBLISHED);
-        return ArticleEntityCollectionFlamelink(
-                cms: _cms, query: publishedDocuments)
+        final collection = FlamelinkDocumentCollection(cms: _cms, query: publishedDocuments);
+        return ArticleEntityCollectionFlamelink(collection: collection)
             .getEntities();
     }
   }
@@ -115,8 +108,8 @@ class ArticlesRepositoryFlameLink implements ArticleRepositoryInterface {
           .map((article) => article[ARTICLE].path.toString())
           .toList();
       final paths = List<String>.from(refs);
-      return ArticleEntityCollectionFlamelink.list(cms: _cms, paths: paths)
-          .getEntities();
+      final collection = FlamelinkDocumentCollection.list(cms: _cms, paths: paths);
+      return ArticleEntityCollectionFlamelink(collection: collection).getEntities();
     });
   }
 }

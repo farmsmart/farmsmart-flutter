@@ -1,3 +1,4 @@
+import 'package:farmsmart_flutter/data/model/EntityCollectionInterface.dart';
 import 'package:farmsmart_flutter/data/model/article_entity.dart';
 import 'package:farmsmart_flutter/data/repositories/ArticleRepositoryInterface.dart';
 import 'package:farmsmart_flutter/model/enums.dart';
@@ -8,8 +9,6 @@ class MockArticle {
     return ArticleEntity(
       id: _mockPlainText.identifier(),
       content: _mockRichText.random(),
-      imagePathReference: "",
-      imageUrl: Future.value(""),
       status: Status.PUBLISHED,
       summary: _mockPlainText.random(),
       title: _mockTitleText.random(),
@@ -46,7 +45,7 @@ class MockArticlesRepository implements ArticleRepositoryInterface {
   }
 
   @override
-  Future<List<ArticleEntity>> getArticles(ArticleEntityCollection collection) {
+  Future<List<ArticleEntity>> getArticles(EntityCollection<ArticleEntity> collection) {
     return collection.getEntities();
   }
 
