@@ -5,7 +5,7 @@ class RoundedButtonViewModel {
   IconData icon;
   Function onTap;
   BuildContext context;
-  Color backgroundColor;
+  Color backgroundColor; // shouldn't be here
 
   RoundedButtonViewModel(this.context, {this.title, this.icon, this.onTap, this.backgroundColor});
 }

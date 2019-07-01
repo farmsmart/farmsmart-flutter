@@ -1,4 +1,4 @@
-import 'package:farmsmart_flutter/ui/common/widgets/ActionSheet.dart';
+import 'package:farmsmart_flutter/ui/common/ActionSheet.dart';
 import 'package:farmsmart_flutter/ui/common/ListDivider.dart';
 import 'package:farmsmart_flutter/ui/common/network_image_from_future.dart';
 import 'package:flutter/material.dart';
@@ -83,10 +83,7 @@ class HeroListItem {
 
     showModalBottomSheet(
         context: context,
-        builder: (widgetBuilder) => ActionSheet.build(context, ActionSheetViewModel([recordSale, recordCost, testing], "Cancel"))
+        builder: (widgetBuilder) => ActionSheet.build(context, ActionSheetViewModel([recordSale, recordCost, testing], "Cancel"), ActionSheetStyle.selectableStyle())
     );
   }
 }
-
-
-//ActionSheetViewModel viewModel = ActionSheetViewModel([recordSale, recordCost, testing], "Cancel");
