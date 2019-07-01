@@ -194,6 +194,7 @@ class ActionSheet extends StatelessWidget{
     } if (viewModel.title != null) {
       listBuilder.add(Expanded(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(viewModel.title,
                 style: viewModel.isDestructive
