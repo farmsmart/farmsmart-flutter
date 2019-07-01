@@ -4,4 +4,5 @@ class HomeScreen {
   static const PROFIT_LOSS_TAB = 1;
   static const ARTICLES_TAB = 2;
   static const COMMUNITY_TAB = 3;
+  static const DEBUG_TAB = 4;
 }
