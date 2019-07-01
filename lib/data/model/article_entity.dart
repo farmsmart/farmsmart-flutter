@@ -38,6 +38,10 @@ class ArticleImageProvider implements ImageEntityURLProvider {
   ArticleImageProvider(ArticleEntity article) : _article = article;
   @override
   Future<String> urlToFit({double width, double height}) {
+    if ( _article.images == null)
+    {
+      return Future.value(null);
+    }
     return _article.images.getEntities(limit: 1).then((imageEntities) {
       // NB: we assume the first image is the hero
       return imageEntities.first.urlProvider.urlToFit(width: width,height: height);

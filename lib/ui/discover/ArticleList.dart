@@ -73,9 +73,9 @@ class _State extends State<ArticleList> {
         itemBuilder: (BuildContext context, int index) {
           final viewModel = viewModels[index];
           if (index == 0) {
-            return HeroListItem().build(viewModel);
+            return HeroListItem(viewModel: viewModel);
           } else {
-            return StandardListItem().build(viewModel);
+            return StandardListItem(viewModel: viewModel);
           }
         },
         physics: ScrollPhysics(),

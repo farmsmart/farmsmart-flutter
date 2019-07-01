@@ -1,8 +1,12 @@
 import 'package:farmsmart_flutter/data/firebase_const.dart';
+import 'package:farmsmart_flutter/data/repositories/implementation/MockArticlesRepository.dart';
 import 'package:farmsmart_flutter/farmsmart_localizations.dart';
 import 'package:farmsmart_flutter/redux/app/app_state.dart';
 import 'package:farmsmart_flutter/ui/community/community_child.dart';
 import 'package:farmsmart_flutter/ui/discover/ArticleList.dart';
+import 'package:farmsmart_flutter/ui/discover/ArticleListViewModel.dart';
+import 'package:farmsmart_flutter/ui/discover/HeroListItem.dart';
+import 'package:farmsmart_flutter/ui/discover/StandardListItem.dart';
 import 'package:farmsmart_flutter/ui/home_viewmodel.dart';
 import 'package:farmsmart_flutter/ui/myplot/PlotList.dart';
 import 'package:farmsmart_flutter/ui/profitloss/profit_loss_child.dart';
@@ -52,7 +56,10 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
     HomeProfitLossChild(),
     ArticleList(),
     HomeCommunityChild(),
-    PlaygroundView(widgetList: [], appBarColor: Color(0xFF9CBD3A),),
+    PlaygroundView(widgetList: [
+      StandardListItem(viewModel:ArticleListItemViewModel.fromArticleEntityToViewModel(article: MockArticle.build(), onTap: null)),
+      HeroListItem(viewModel:ArticleListItemViewModel.fromArticleEntityToViewModel(article: MockArticle.build(), onTap: null)),
+    ], appBarColor: Color(0xFF9CBD3A),),
   ];
 
   @override

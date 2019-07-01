@@ -28,8 +28,18 @@ class _DefaultStyle implements ArticleListItemStyle {
   const _DefaultStyle();
 }
 
-class StandardListItem {
-  Widget build(ArticleListItemViewModel viewModel, {ArticleListItemStyle itemStyle = const _DefaultStyle()}) {
+class StandardListItem extends StatelessWidget {
+
+  final ArticleListItemViewModel _viewModel;
+
+  const StandardListItem({Key key, ArticleListItemViewModel viewModel}) : this._viewModel = viewModel, super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return _build(_viewModel);
+  }
+  
+  Widget _build(ArticleListItemViewModel viewModel, {ArticleListItemStyle itemStyle = const _DefaultStyle()}) {
     return GestureDetector(
       onTap: viewModel.onTap,
       child: Card(
@@ -86,4 +96,5 @@ class StandardListItem {
       ),
     );
   }
+
 }

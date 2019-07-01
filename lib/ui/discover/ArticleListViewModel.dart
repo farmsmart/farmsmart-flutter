@@ -13,6 +13,14 @@ class ArticleListItemViewModel {
   Function onTap;
 
   ArticleListItemViewModel(this.title, this.summary, this.image, this.onTap);
+
+   static ArticleListItemViewModel fromArticleEntityToViewModel(
+      {ArticleEntity article, Function onTap}) {
+    return ArticleListItemViewModel(
+        article.title ?? Strings.noTitleString,
+        article.summary ?? Strings.noTitleString,
+        ArticleImageProvider(article), onTap);
+  }
 }
 
 class ArticleListViewModel {
@@ -23,7 +31,7 @@ class ArticleListViewModel {
       {List<ArticleEntity> articleItems, LoadingStatus loadingStatus, Function onTap})
       : this.loadingStatus = loadingStatus,
         this.articleListItemViewModels = articleItems
-            .map((entity) => fromArticleEntityToViewModel(entity, () => onTap(ArticleDetailViewModel.fromArticleEntityToViewModel(entity)))).toList();
+            .map((entity) => ArticleListItemViewModel.fromArticleEntityToViewModel(article: entity, onTap: () => onTap(ArticleDetailViewModel.fromArticleEntityToViewModel(entity)))).toList();
 
   static ArticleListViewModel fromStore(Store<AppState> store, Function onTap) {
     return ArticleListViewModel(
@@ -31,11 +39,5 @@ class ArticleListViewModel {
         articleItems: store.state.discoverState.articles, onTap: onTap);
   }
 
-  static ArticleListItemViewModel fromArticleEntityToViewModel(
-      ArticleEntity article, Function onTap) {
-    return ArticleListItemViewModel(
-        article.title ?? Strings.noTitleString,
-        article.summary ?? Strings.noTitleString,
-        ArticleImageProvider(article), onTap);
-  }
+ 
 }

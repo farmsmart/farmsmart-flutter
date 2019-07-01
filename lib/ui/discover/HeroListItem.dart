@@ -32,12 +32,20 @@ class _DefaultStyle implements ArticleListItemStyle {
 
 }
 
-class HeroListItem {
-   
-  Widget build(ArticleListItemViewModel viewModel,
+class HeroListItem extends StatelessWidget {
+  final ArticleListItemViewModel _viewModel;
+
+  const HeroListItem({Key key, ArticleListItemViewModel viewModel}) : this._viewModel = viewModel, super(key: key);
+  
+  @override
+  Widget build(BuildContext context) {
+    return _build(_viewModel);
+  }
+  
+  Widget _build(ArticleListItemViewModel viewModel,
       {ArticleListItemStyle itemStyle = const _DefaultStyle()}) {
     return GestureDetector(
-      onTap: viewModel.onTap,
+      onTap: _viewModel.onTap,
       child: Column(
         children: <Widget>[
           Card(
@@ -73,4 +81,5 @@ class HeroListItem {
       child: NetworkImageFromFuture(articleData.image.urlToFit(), fit: BoxFit.fitWidth),
     );
   }
+
 }
