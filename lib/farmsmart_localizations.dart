@@ -37,6 +37,8 @@ class FarmsmartLocalizations {
 
   String get communityTab => Intl.message("Community");
 
+  String get playgroundTab => Intl.message("Debug");
+
   String get myPlotCurrentStage => Intl.message("CURRENT STAGE");
 
   String get myPlotDetails => Intl.message("DETAILS");
