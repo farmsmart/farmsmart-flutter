@@ -6,11 +6,11 @@ import 'package:farmsmart_flutter/ui/profitloss/ProfitLossListItem.dart';
 import '../ProfitLossList.dart';
 import 'MockString.dart';
 
-class MockTransaction {
+class MockProfitLossListViewModel {
   static ProfitLossListViewModel build() {
-    List<ProfitLossItemViewModel> list = [];
+    List<ProfitLossListItemViewModel> list = [];
     for(var i = 0; i <= 100; i++) {
-        list.add(MockTransactionItem.build());
+        list.add(MockProfitLossListItemViewModel.build());
     }
 
     return ProfitLossListViewModel(
@@ -19,7 +19,6 @@ class MockTransaction {
       detailText: _mockDetailText.random(),
       subtitle: _mockDetailText.random(),
       transactions: list
-
     );
   }
 }
@@ -36,13 +35,13 @@ MockString _mockDetailText = MockString(library: ["EUR, DOLLAR, Khz, AUS, ZENY, 
 "A Bit Longer"
 ]);
 
-class MockTransactionItem {
+class MockProfitLossListItemViewModel {
 
-  static ProfitLossItemViewModel build() {
+  static ProfitLossListItemViewModel build() {
     final _random = Random();
     final minRange = 0.5;
 
-    return ProfitLossItemViewModel(
+    return ProfitLossListItemViewModel(
         _mockTitleText.random(),
         _mockTitleText.random(),
         _random.nextDouble() - minRange

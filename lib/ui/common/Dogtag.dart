@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 class DogTagViewModel {
 
   String title;
-
-  //TODO: can be a decimal number or only Integers numbers?
   double number;
   IconData icon;
 

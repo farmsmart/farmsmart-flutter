@@ -14,14 +14,15 @@ import 'mockRepositoryTryout/MockTransactionRepository.dart';
 class ProfitLossListViewModel {
   LoadingStatus loadingStatus;
   final String title;
-  final String detailText;
   final String subtitle;
-  final List<ProfitLossItemViewModel> transactions;
+  final String detailText;
+
+  final List<ProfitLossListItemViewModel> transactions;
 
   ProfitLossListViewModel({this.title, this.detailText, this.subtitle, this.loadingStatus, this.transactions});
 
   static ProfitLossListViewModel fromStore(Store<AppState> store) {
-    final mockViewModel = MockTransaction.build();
+    final mockViewModel = MockProfitLossListViewModel.build();
 
     return mockViewModel;
   }
@@ -36,7 +37,7 @@ abstract class ProfitLossStyle {
   final Color actionButtonBackgroundColour;
   final EdgeInsets titleEdgePadding;
 
-  final double detailTextEdgePadding;
+  final double detailTextSpacing;
 
   final double actionButtonSize;
   final double actionButtonElevation;
@@ -46,7 +47,7 @@ abstract class ProfitLossStyle {
 
   ProfitLossStyle(this.actionButtonBackgroundColour, this.actionButtonSize,
       this.actionButtonElevation, this.actionButtonIconSize, this.titleEdgePadding,
-      this.titleTextStyle, this.detailTextEdgePadding, this.detailTextStyle,
+      this.titleTextStyle, this.detailTextSpacing, this.detailTextStyle,
       this.subtitleTextStyle, this.maxLines, this.bottomEdgePadding);
 }
 
@@ -58,7 +59,7 @@ class _DefaultStyle implements ProfitLossStyle{
 
   final EdgeInsets titleEdgePadding = const EdgeInsets.only(left: 33, top: 36.5, bottom: 12.5);
 
-  final double detailTextEdgePadding = 10;
+  final double detailTextSpacing = 10;
 
   final Color actionButtonBackgroundColour = const Color(0xFF25df0c);
   final double actionButtonSize = 48.0;
@@ -128,7 +129,7 @@ class _ProfitLossState extends State<ProfitLossPage>  {
                   overflow: TextOverflow.ellipsis
               ),
               SizedBox(
-                width: profitStyle.detailTextEdgePadding,
+                width: profitStyle.detailTextSpacing,
               ),
               Text(
                 viewModel.detailText,

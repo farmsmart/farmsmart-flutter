@@ -4,13 +4,13 @@ import 'package:farmsmart_flutter/ui/common/Dogtag.dart';
 import 'package:farmsmart_flutter/ui/common/DogTagStyle.dart';
 
 
-class ProfitLossItemViewModel {
+class ProfitLossListItemViewModel {
   final String title;
   final String subtitle;
 
   final double detail;
 
-  ProfitLossItemViewModel(this.title, this.subtitle, this.detail);
+  ProfitLossListItemViewModel(this.title, this.subtitle, this.detail);
 }
 
 abstract class ProfitLossItemStyle {
@@ -48,7 +48,7 @@ class _DefaultStyle implements ProfitLossItemStyle {
 }
 
 class ProfitLossListItem {
-  Widget buildListItem(ProfitLossItemViewModel viewModel, {ProfitLossItemStyle itemStyle = const _DefaultStyle()}) {
+  Widget buildListItem(ProfitLossListItemViewModel viewModel, {ProfitLossItemStyle itemStyle = const _DefaultStyle()}) {
     return GestureDetector(
         //onTap: viewModel.onTap,
         child: Card(
@@ -73,7 +73,7 @@ class ProfitLossListItem {
   }
 }
 
-_buildMainTextView(ProfitLossItemViewModel viewModel, ProfitLossItemStyle itemStyle) {
+_buildMainTextView(ProfitLossListItemViewModel viewModel, ProfitLossItemStyle itemStyle) {
   return Expanded(
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
