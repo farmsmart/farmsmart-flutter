@@ -30,8 +30,10 @@ class PlaygroundView extends StatefulWidget {
 
 class _PlaygroundViewState extends State<PlaygroundView> {
   static const int _firstIndex = 0;
-  static const int _hardcodedItemSize = 1;
+  static const int _hardcodedItemCount = 1;
   static const String _searchText = 'Search';
+  static const double _searchBorderRadius = 10;
+  static const double _searchEdgePadding = 16.0;
 
   List<Widget> items = [];
   TextEditingController editingController = TextEditingController();
@@ -54,7 +56,7 @@ class _PlaygroundViewState extends State<PlaygroundView> {
       child: Column(
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(_searchEdgePadding),
             child: _inputTextField(),
           ),
           Expanded(
@@ -90,12 +92,12 @@ class _PlaygroundViewState extends State<PlaygroundView> {
   ListView _listView() {
     return ListView.builder(
         shrinkWrap: true,
-        itemCount: items.length + _hardcodedItemSize,
+        itemCount: items.length + _hardcodedItemCount,
         itemBuilder: (BuildContext context, int index) {
           if (index == _firstIndex) {
             return _playgroundAllListItem(index, context);
           } else {
-            return _playgroundListItem(index - _hardcodedItemSize, context);
+            return _playgroundListItem(index - _hardcodedItemCount, context);
           }
         });
   }
@@ -113,7 +115,7 @@ class _PlaygroundViewState extends State<PlaygroundView> {
         prefixIcon: Icon(Icons.search, color: widget.appBarColor),
         border: OutlineInputBorder(
             borderSide: BorderSide(color: Colors.red),
-            borderRadius: BorderRadius.all(Radius.circular(10.0))),
+            borderRadius: BorderRadius.all(Radius.circular(_searchBorderRadius))),
       ),
     );
   }

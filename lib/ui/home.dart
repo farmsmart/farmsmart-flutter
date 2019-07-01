@@ -27,7 +27,6 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> with WidgetsBindingObserver {
   HomeViewmodel homeViewModel;
-  static const _debugString = 'Debug';
 
   @override
   void initState() {
@@ -118,7 +117,7 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
                   height: bottomBarIconSize),
               icon: Image.asset(Assets.BOTTOM_BAR_COMMUNITY_UNSELECTED,
                   height: bottomBarIconSize),
-              title: Text(_debugString),
+              title: Text(localizations.playgroundTab),
             ),
           ],
         ),
