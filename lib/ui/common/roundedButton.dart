@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class RoundedButtonViewModel {
   String title;
-  IconData icon;
+  String icon;
   Function onTap;
   BuildContext context;
   Color backgroundColor; // shouldn't be here
@@ -60,11 +60,7 @@ class RoundedButton {
       List<Widget> listBuilder = [];
       if (viewModel.icon != null) {
         listBuilder.add(
-            Icon(
-              viewModel.icon,
-              size: buttonStyle.buttonIconSize,
-              color: buttonStyle.iconButtonColor,
-            )
+            Image.asset(viewModel.icon, height: buttonStyle.buttonIconSize)
         );
       }
       if (viewModel.title != null) {
@@ -78,7 +74,7 @@ class RoundedButton {
     }
 
     return GestureDetector(
-      onTap: () => _showToast(viewModel.context),
+      onTap: () => viewModel.onTap(viewModel.context),
       child: Padding(
         padding: buttonStyle.edgePadding,
         child: Container(
@@ -99,18 +95,5 @@ class RoundedButton {
     );
   }
 
-//FIXME: Only is built for show that this buttons are not functional yet
-  static void _showToast(BuildContext context) {
-    final String toastText = "Not Implemented Yet";
-    final String toastButtonText = "BACK";
-    final scaffold = Scaffold.of(context);
-    scaffold.showSnackBar(
-        SnackBar(
-          content: Text(
-              toastText
-          ),
-          action: SnackBarAction(label: toastButtonText, onPressed: scaffold.hideCurrentSnackBar),
-        )
-    );
-  }
+
 }
