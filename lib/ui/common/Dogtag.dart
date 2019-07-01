@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 class DogTagViewModel {
 
   String title;
-  double number;
+  String number;
   IconData icon;
 
   DogTagViewModel({this.title, this.icon, this.number});
 }
 
-DogTagViewModel buildDogTagViewModel({String title, IconData icon, double number}) {
+DogTagViewModel buildDogTagViewModel({String title, IconData icon, String number}) {
   return DogTagViewModel(title: title, icon: icon, number: number);
 }
 
@@ -49,8 +49,6 @@ class DogTag {
   }
 
   static Widget _buildDogTag(DogTagStyle style, DogTagViewModel viewModel) {
-    String _plusSign = "+";
-    int _decimalNumbers = 2;
 
     List<Widget> _buildButtonContent(){
       List<Widget> listBuilder = [];
@@ -66,8 +64,7 @@ class DogTag {
       } if (viewModel.number != null) {
           listBuilder.add(
               Text(
-                viewModel.number >= 0 ? _plusSign + viewModel.number.toStringAsFixed(_decimalNumbers):
-                 viewModel.number.toStringAsFixed(_decimalNumbers),
+                viewModel.number,
                 style: style.titleTextStyle,
                 overflow: TextOverflow.ellipsis,
                 maxLines: style.maxLines,

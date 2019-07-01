@@ -7,10 +7,10 @@ import 'package:farmsmart_flutter/ui/common/DogTagStyle.dart';
 class ProfitLossListItemViewModel {
   final String title;
   final String subtitle;
+  final String detail;
 
-  final double detail;
-
-  ProfitLossListItemViewModel(this.title, this.subtitle, this.detail);
+  ProfitLossListItemViewModel({this.title, this.subtitle, this.detail}) {
+  }
 }
 
 abstract class ProfitLossItemStyle {
@@ -62,8 +62,8 @@ class ProfitLossListItem {
                         _buildMainTextView(viewModel, itemStyle),
                         SizedBox(width: itemStyle.detailLineSpace),
                         DogTag.build(
-                            style: viewModel.detail >= 0 ? PositiveDogTagStyle():
-                            NegativeDogTagStyle(), viewModel: DogTagViewModel(number: viewModel.detail))
+                            style: PositiveDogTagStyle(),
+                            viewModel: DogTagViewModel(number: viewModel.detail))
                       ])),
               ListDivider.build(),
             ]

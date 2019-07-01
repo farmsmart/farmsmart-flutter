@@ -35,6 +35,8 @@ MockString _mockDetailText = MockString(library: ["EUR, DOLLAR, Khz, AUS, ZENY, 
 "A Bit Longer"
 ]);
 
+MockString _mockCurrencyText = MockString(library: ["255", "0", "-2", "300", "-450", "-25"]);
+
 class MockProfitLossListItemViewModel {
 
   static ProfitLossListItemViewModel build() {
@@ -42,9 +44,9 @@ class MockProfitLossListItemViewModel {
     final minRange = 0.5;
 
     return ProfitLossListItemViewModel(
-        _mockTitleText.random(),
-        _mockTitleText.random(),
-        _random.nextDouble() - minRange
+        title: _mockTitleText.random(),
+        subtitle: _mockTitleText.random(),
+        detail: _mockCurrencyText.random()
     );
   }
 }
