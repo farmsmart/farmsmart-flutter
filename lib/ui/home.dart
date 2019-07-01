@@ -56,10 +56,7 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
     ArticleList(),
     HomeCommunityChild(),
     PlaygroundView(widgetList: [
-      //FIXME: add viewmodel and style (mock data)
       ActionSheet(viewModel: MockProfitLossListViewModel.build(), style: ActionSheetStyle.defaultStyle())
-      //ActionSheetViewModel([recordSale, recordCost, testing], "Cancel"), style: ActionSheetStyle.selectableStyle())
-
     ], appBarColor: Color(0xFF9CBD3A),),
   ];
 

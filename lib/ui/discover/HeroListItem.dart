@@ -1,4 +1,3 @@
-import 'package:farmsmart_flutter/ui/common/ActionSheet.dart';
 import 'package:farmsmart_flutter/ui/common/ListDivider.dart';
 import 'package:farmsmart_flutter/ui/common/network_image_from_future.dart';
 import 'package:flutter/material.dart';
@@ -35,8 +34,7 @@ class _DefaultStyle implements ArticleListItemStyle {
 class HeroListItem {
   Widget builder(BuildContext context, ArticleListItemViewModel viewModel, {ArticleListItemStyle itemStyle = const _DefaultStyle()}) {
     return GestureDetector(
-      //onTap: viewModel.onTap,
-      onTap: () => _onMenuPressed(context), //FIXME: Temporal for test ActionBottomSheet
+      onTap: viewModel.onTap,
       child: Column(
         children: <Widget>[
           Card(
@@ -70,20 +68,6 @@ class HeroListItem {
     return ClipRRect(
       borderRadius: articleListStyle.imageBorderRadius,
       child: NetworkImageFromFuture(articleData.imageUrl, fit: BoxFit.fitWidth),
-    );
-  }
-
-  //FIXME: Temporal for test ActionBottomSheet
-  Future _onMenuPressed(BuildContext context) async {
-
-    // FIXME: This would be injected in the call function. Every screen which need an ActionSheet has to have this CustomActions defined in its view model
-    ActionListItemViewModel recordSale = ActionListItemViewModel("Record a new Sale", null, false, icon: "assets/icons/detail_icon_cost.png");
-    ActionListItemViewModel recordCost = ActionListItemViewModel("Record a new Cost", null, false, icon: "assets/icons/flag_kenya.png", checkBoxIcon: "assets/icons/radio_button_active.png");
-    ActionListItemViewModel testing = ActionListItemViewModel("Record a test", null, true);
-
-    showModalBottomSheet(
-        context: context,
-        builder: (widgetBuilder) => ActionSheet(viewModel: ActionSheetViewModel([recordSale, recordCost, testing], "Cancel"), style: ActionSheetStyle.selectableStyle())
     );
   }
 }

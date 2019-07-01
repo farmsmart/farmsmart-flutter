@@ -2,6 +2,7 @@ import 'package:farmsmart_flutter/ui/common/ActionSheetLargeRoundedButtonStyle.d
 import 'package:farmsmart_flutter/ui/common/ListDivider.dart';
 import 'package:farmsmart_flutter/ui/common/headerAndFooterListView.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
+import 'package:farmsmart_flutter/ui/mockData/MockActionSheetViewModel.dart';
 import 'package:flutter/material.dart';
 
 class ActionListItemViewModel {
@@ -221,5 +222,13 @@ class ActionSheet extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return _build(context, _viewModel, _style);
+  }
+
+  //FIXME: Temporal for test ActionBottomSheet
+  Future _onMenuPressed(BuildContext context) async {
+    showModalBottomSheet(
+        context: context,
+        builder: (widgetBuilder) =>  ActionSheet(viewModel: MockProfitLossListViewModel.build(), style: ActionSheetStyle.defaultStyle())
+    );
   }
 }
