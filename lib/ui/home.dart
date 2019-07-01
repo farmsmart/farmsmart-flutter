@@ -15,6 +15,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'profitloss/ProfitLossList.dart';
+import 'package:farmsmart_flutter/ui/playground/playground_view.dart';
+import 'package:farmsmart_flutter/flavors/flavor.dart';
 
 /// Home "screen" route. Scaffold has all the app subcomponents available inside,
 /// like bottom bar or action bar.
@@ -52,7 +54,8 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
     PlotList(),
     ProfitLossPage(),
     ArticleList(),
-    HomeCommunityChild()
+    HomeCommunityChild(),
+    PlaygroundView(widgetList: [], appBarColor: Color(0xFF9CBD3A),),
   ];
 
   @override
@@ -111,6 +114,13 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
               icon: Image.asset(Assets.BOTTOM_BAR_COMMUNITY_UNSELECTED,
                   height: bottomBarIconSize),
               title: Text(localizations.communityTab),
+            ),
+            BottomNavigationBarItem(
+              activeIcon: Image.asset(Assets.BOTTOM_BAR_COMMUNITY_SELECTED,
+                  height: bottomBarIconSize),
+              icon: Image.asset(Assets.BOTTOM_BAR_COMMUNITY_UNSELECTED,
+                  height: bottomBarIconSize),
+              title: Text(localizations.playgroundTab),
             ),
           ],
         ),

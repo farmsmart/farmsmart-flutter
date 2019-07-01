@@ -17,6 +17,7 @@ class HomeViewmodel {
   final Function showCommunityChild;
   final Function getSingleArticle;
   final Function goToPrivacyPolicy;
+  final Function showDebugMenu;
 
   HomeViewmodel(
       {this.loadingStatus,
@@ -26,7 +27,8 @@ class HomeViewmodel {
       this.showMyPlotChild,
       this.getSingleArticle,
       this.showProfitLossChild,
-      this.goToPrivacyPolicy});
+      this.goToPrivacyPolicy,
+      this.showDebugMenu});
 
   static HomeViewmodel fromStore(Store<AppState> store) {
     return HomeViewmodel(
@@ -39,11 +41,13 @@ class HomeViewmodel {
         showArticlesChild: () =>
             store.dispatch(SwitchTabAction(HomeScreen.ARTICLES_TAB)),
         showCommunityChild: () =>
-            store.dispatch(SwitchTabAction(HomeScreen.COMMUNITY_TAB)),
+          store.dispatch(SwitchTabAction(HomeScreen.COMMUNITY_TAB)),
         goToPrivacyPolicy: (String value) =>
             store.dispatch(GoToPrivacyPoliciesAction()),
         getSingleArticle: (String articleID) =>
-            store.dispatch(FetchSingleArticleAction(articleID)));
+            store.dispatch(FetchSingleArticleAction(articleID)),
+        showDebugMenu: () =>
+            store.dispatch(SwitchTabAction(HomeScreen.DEBUG_TAB)),);
   }
 
   void changeTab(int value) {
@@ -59,6 +63,9 @@ class HomeViewmodel {
         break;
       case HomeScreen.COMMUNITY_TAB:
         showCommunityChild();
+        break;
+      case HomeScreen.DEBUG_TAB:
+        showDebugMenu();
         break;
     }
   }

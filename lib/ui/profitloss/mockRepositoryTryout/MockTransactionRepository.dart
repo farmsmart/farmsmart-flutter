@@ -15,7 +15,7 @@ class MockProfitLossListViewModel {
 
     return ProfitLossListViewModel(
      loadingStatus: LoadingStatus.SUCCESS,
-      title: _mockDetailText.random(),
+      title: _mockTotalCurrency.random(),
       detailText: _mockDetailText.random(),
       subtitle: _mockDetailText.random(),
       transactions: list
@@ -23,26 +23,26 @@ class MockProfitLossListViewModel {
   }
 }
 
-MockString _mockTitleText = MockString(library: ["Title example",
-"Longer title example ", "A Bit longer title example more longer example"]);
+MockString _mockTitleText = MockString(library: [
+  "Title example",
+"Longer title example ",
+  "A Bit longer title example more longer example"]);
 
-MockString _mockDetailText = MockString(library: ["EUR, DOLLAR, Khz, AUS, ZENY, RUPIE",
-"102.00",
-"9734,65",
-"Completed",
-"Planting",
+MockString _mockDetailText = MockString(library: [
+"Day 490",
+"Week 300",
+"Day 500000",
 "Day 1",
-"A Bit Longer"
+"Day 1",
+"A Bit Longer day 9000"
 ]);
 
 MockString _mockCurrencyText = MockString(library: ["255", "0", "-2", "300", "-450", "-25"]);
+MockString _mockTotalCurrency = MockString(library: ["99944,999", "99,99", "00000", "254,360", "92" ]);
 
 class MockProfitLossListItemViewModel {
 
   static ProfitLossListItemViewModel build() {
-    final _random = Random();
-    final minRange = 0.5;
-
     return ProfitLossListItemViewModel(
         title: _mockTitleText.random(),
         subtitle: _mockTitleText.random(),
