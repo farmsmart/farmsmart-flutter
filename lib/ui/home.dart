@@ -5,6 +5,7 @@ import 'package:farmsmart_flutter/ui/common/ActionSheet.dart';
 import 'package:farmsmart_flutter/ui/community/community_child.dart';
 import 'package:farmsmart_flutter/ui/discover/discover_page.dart';
 import 'package:farmsmart_flutter/ui/home_viewmodel.dart';
+import 'package:farmsmart_flutter/ui/mockData/MockActionSheetViewModel.dart';
 import 'package:farmsmart_flutter/ui/myplot/PlotList.dart';
 import 'package:farmsmart_flutter/ui/profitloss/profit_loss_child.dart';
 import 'package:farmsmart_flutter/utils/assets.dart';
@@ -56,7 +57,8 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
     HomeCommunityChild(),
     PlaygroundView(widgetList: [
       //FIXME: add viewmodel and style (mock data)
-      //ActionSheet(viewModel: ActionSheetViewModel([recordSale, recordCost, testing], "Cancel"), style: ActionSheetStyle.selectableStyle())
+      ActionSheet(viewModel: MockProfitLossListViewModel.build(), style: ActionSheetStyle.defaultStyle())
+      //ActionSheetViewModel([recordSale, recordCost, testing], "Cancel"), style: ActionSheetStyle.selectableStyle())
 
     ], appBarColor: Color(0xFF9CBD3A),),
   ];

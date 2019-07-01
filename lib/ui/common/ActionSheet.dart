@@ -154,11 +154,8 @@ class ActionSheet extends StatelessWidget{
     );
   }
 
-  static Widget _buildActionCell(
-      ActionSheetStyle style,
-      ActionListItemViewModel viewModel,
-      int numberOfActions,
-      int currentAction) {
+  static Widget _buildActionCell(ActionSheetStyle style, ActionListItemViewModel viewModel,
+      int numberOfActions, int currentAction) {
     return Column(
       children: <Widget>[
         Card(
@@ -176,7 +173,7 @@ class ActionSheet extends StatelessWidget{
                   children: <Widget>[
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
-                      children: _buildActionContent(style, viewModel),
+                        children: _buildActionContent(style, viewModel)
                     ),
                   ]),
             ),
@@ -195,21 +192,28 @@ class ActionSheet extends StatelessWidget{
       listBuilder.add(SizedBox(width: style.iconLineSpace));
 
     } if (viewModel.title != null) {
-      listBuilder.add(Text(viewModel.title,
-          style: viewModel.isDestructive
-              ? style.destructiveTextStyle
-              : style.actionTextStyle));
+      listBuilder.add(Expanded(
+        child: Column(
+          children: <Widget>[
+            Text(viewModel.title,
+                style: viewModel.isDestructive
+                    ? style.destructiveTextStyle
+                    : style.actionTextStyle,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1),
+          ],
+        ),
+      ));
 
     } if (viewModel.checkBoxIcon != null) {
-      listBuilder.add(Expanded(
-          child: Row(
+      listBuilder.add(SizedBox(width: style.iconLineSpace));
+      listBuilder.add(Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
-          Image.asset(viewModel.checkBoxIcon, height: style.iconHeight)
+      Image.asset(viewModel.checkBoxIcon, height: style.iconHeight)
         ],
-      )));
+      ));
     }
-
     return listBuilder;
   }
 
