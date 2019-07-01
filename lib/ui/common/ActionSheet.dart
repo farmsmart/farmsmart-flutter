@@ -224,7 +224,7 @@ class ActionSheet extends StatelessWidget{
     return _build(context, _viewModel, _style);
   }
 
-  //FIXME: Temporal for test ActionBottomSheet
+  //FIXME: To show ActionBottomSheet (need to implement)
   Future _onMenuPressed(BuildContext context) async {
     showModalBottomSheet(
         context: context,
