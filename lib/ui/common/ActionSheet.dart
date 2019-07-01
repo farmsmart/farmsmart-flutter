@@ -92,7 +92,7 @@ class ActionSheetStyle {
     double indicatorLineThickness, double actionItemHeight, double iconLineSpace,
     double actionItemElevation, double iconHeight, int maxLines}) {
 
-    return new ActionSheetStyle(
+    return ActionSheetStyle(
         backgroundColor: backgroundColor ?? this.backgroundColor,
         indicatorLineColor: indicatorLineColor ?? this.indicatorLineColor,
         actionItemBackgroundColor: actionItemBackgroundColor ?? this.actionItemBackgroundColor,
@@ -114,17 +114,13 @@ class ActionSheetStyle {
   }
 }
 
-// FIXME: pending for refactor
-/*
-class ActionSheet extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container();
-  }
-}*/
+class ActionSheet extends StatelessWidget{
+  final ActionSheetViewModel _viewModel;
+  final ActionSheetStyle _style;
 
-class ActionSheet {
-  static Widget build(BuildContext context, ActionSheetViewModel viewModel, ActionSheetStyle style) {
+  const ActionSheet({Key key, ActionSheetViewModel viewModel, ActionSheetStyle style}) : this._viewModel = viewModel, this._style = style, super(key: key);
+
+  static Widget _build(BuildContext context, ActionSheetViewModel viewModel, ActionSheetStyle style) {
     return Container(
         color: style.cornersColor,
         child: Container(
@@ -140,7 +136,7 @@ class ActionSheet {
                     _buildActionCell(style, viewModel.actions[index],
                         viewModel.actions.length, index),
                 header: _buildIndicatorLine(style),
-                footer: RoundedButton.build(RoundedButtonViewModel(context, title: viewModel.confirmButtonTitle),
+                footer: RoundedButton.build(RoundedButtonViewModel(title: viewModel.confirmButtonTitle),
                     style: ActionSheetLargeRoundedButtonStyle()))));
   }
 
@@ -215,5 +211,10 @@ class ActionSheet {
     }
 
     return listBuilder;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return _build(context, _viewModel, _style);
   }
 }

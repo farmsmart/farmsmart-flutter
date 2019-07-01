@@ -4,10 +4,9 @@ class RoundedButtonViewModel {
   String title;
   String icon;
   Function onTap;
-  BuildContext context;
   Color backgroundColor; // shouldn't be here
 
-  RoundedButtonViewModel(this.context, {this.title, this.icon, this.onTap, this.backgroundColor});
+  RoundedButtonViewModel({this.title, this.icon, this.onTap, this.backgroundColor});
 }
 
 abstract class RoundedButtonStyle {
@@ -74,7 +73,7 @@ class RoundedButton {
     }
 
     return GestureDetector(
-      onTap: () => viewModel.onTap(viewModel.context),
+      onTap: () => viewModel.onTap(),
       child: Padding(
         padding: buttonStyle.edgePadding,
         child: Container(

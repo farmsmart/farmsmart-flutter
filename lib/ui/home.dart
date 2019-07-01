@@ -1,6 +1,7 @@
 import 'package:farmsmart_flutter/data/firebase_const.dart';
 import 'package:farmsmart_flutter/farmsmart_localizations.dart';
 import 'package:farmsmart_flutter/redux/app/app_state.dart';
+import 'package:farmsmart_flutter/ui/common/ActionSheet.dart';
 import 'package:farmsmart_flutter/ui/community/community_child.dart';
 import 'package:farmsmart_flutter/ui/discover/discover_page.dart';
 import 'package:farmsmart_flutter/ui/home_viewmodel.dart';
@@ -47,12 +48,17 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
     }
   }
 
+
   final List<Widget> _children = [
     PlotList(),
     HomeProfitLossChild(),
     ArticleList(),
     HomeCommunityChild(),
-    PlaygroundView(widgetList: [], appBarColor: Color(0xFF9CBD3A),),
+    PlaygroundView(widgetList: [
+      //FIXME: add viewmodel and style (mock data)
+      //ActionSheet(viewModel: ActionSheetViewModel([recordSale, recordCost, testing], "Cancel"), style: ActionSheetStyle.selectableStyle())
+
+    ], appBarColor: Color(0xFF9CBD3A),),
   ];
 
   @override
