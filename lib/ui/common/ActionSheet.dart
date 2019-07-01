@@ -23,8 +23,7 @@ class ActionSheetViewModel {
 }
 
 class ActionSheetStyle {
-  // FIXME: hide corners color, add cancel and confirm bottom
-  final Color cornersColor;
+  final Color cornersColor = const Color(0xFF737373);
   final Color backgroundColor;
   final Color indicatorLineColor;
   final Color actionItemBackgroundColor;
@@ -48,7 +47,7 @@ class ActionSheetStyle {
 
   final int maxLines;
 
-  ActionSheetStyle({this.cornersColor, this.backgroundColor, this.indicatorLineColor,
+  ActionSheetStyle({this.backgroundColor, this.indicatorLineColor,
       this.actionItemBackgroundColor, this.confirmButtonBackgroundColor,
       this.cancelButtonBackgroundColor, this.actionTextStyle,
       this.destructiveTextStyle, this.actionItemEdgePadding,
@@ -58,7 +57,6 @@ class ActionSheetStyle {
 
   factory ActionSheetStyle.defaultStyle() {
     return ActionSheetStyle(
-      cornersColor: const Color(0xFF737373),
       backgroundColor: const Color(0xFFffffff),
       indicatorLineColor: const Color(0xFFe0e1ee),
       actionItemBackgroundColor: const Color(0x00000000),
@@ -87,7 +85,7 @@ class ActionSheetStyle {
     return ActionSheetStyle.defaultStyle().copyWith(iconHeight: 24);
   }
 
-  ActionSheetStyle copyWith({Color cornersColor, Color backgroundColor, Color indicatorLineColor,
+  ActionSheetStyle copyWith({Color backgroundColor, Color indicatorLineColor,
     Color actionItemBackgroundColor, Color confirmButtonBackgroundColor, Color cancelButtonBackgroundColor,
     TextStyle actionTextStyle, TextStyle destructiveTextStyle, EdgeInsets actionItemEdgePadding,
     EdgeInsets indicatorLineEdgePadding, Radius cornerRadius, Radius indicatorLineRadius,
@@ -95,7 +93,6 @@ class ActionSheetStyle {
     double actionItemElevation, double iconHeight, int maxLines}) {
 
     return new ActionSheetStyle(
-        cornersColor: this.cornersColor,
         backgroundColor: backgroundColor ?? this.backgroundColor,
         indicatorLineColor: indicatorLineColor ?? this.indicatorLineColor,
         actionItemBackgroundColor: actionItemBackgroundColor ?? this.actionItemBackgroundColor,

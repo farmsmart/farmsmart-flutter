@@ -83,7 +83,7 @@ class HeroListItem {
 
     showModalBottomSheet(
         context: context,
-        builder: (widgetBuilder) => ActionSheet.build(context, ActionSheetViewModel([recordSale, recordCost, testing], "Cancel"), ActionSheetStyle.selectableStyle())
+        builder: (widgetBuilder) => ActionSheet.build(context, ActionSheetViewModel([recordSale, recordCost, testing], "Cancel"), ActionSheetStyle.defaultStyle())
     );
   }
 }
