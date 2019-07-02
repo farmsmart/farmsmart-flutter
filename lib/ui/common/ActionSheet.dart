@@ -137,9 +137,12 @@ class ActionSheet extends StatelessWidget{
                     _buildActionCell(style, viewModel.actions[index],
                         viewModel.actions.length, index),
                 header: _buildIndicatorLine(style),
-                footer: RoundedButton.build(RoundedButtonViewModel(title: viewModel.confirmButtonTitle),
-                    style: ActionSheetLargeRoundedButtonStyle()))));
+                footer: RoundedButton(viewModel: RoundedButtonViewModel(title: viewModel.confirmButtonTitle),
+                    style: RoundedButtonStyle.actionSheetLargeRoundedButton()))
+        ));
   }
+
+
 
   static Widget _buildIndicatorLine(ActionSheetStyle style) {
     return Center(

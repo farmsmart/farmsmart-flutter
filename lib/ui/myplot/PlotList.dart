@@ -108,8 +108,8 @@ class _MyPlotState extends State<PlotList> {
         physics: ScrollPhysics(),
         shrinkWrap: true,
         header: _buildTitle(viewModel, plotStyle, context: context),
-        footer: RoundedButton.build(RoundedButtonViewModel(title: viewModel.buttonTitle, onTap: () => _showToast(context)),
-            style: LargeRoundedButtonStyle()));
+        footer: RoundedButton(viewModel: RoundedButtonViewModel(title: viewModel.buttonTitle, onTap: () => _showToast(context)),
+            style: RoundedButtonStyle.largeRoundedButtonStyle()));
   }
 
   Widget _buildTitle(PlotListViewModel viewModel, PlotListStyle myPlotStyle,
@@ -128,9 +128,9 @@ class _MyPlotState extends State<PlotList> {
                     )
                   ]
               ),
-              RoundedButton.build(
+              RoundedButton(viewModel:
                   RoundedButtonViewModel(icon: "assets/icons/profit_add.png", onTap: () => _showToast(context)),
-                  style: CompactRoundedButtonStyle())
+                  style: RoundedButtonStyle.compactRoundedButton())
             ]
         )
     );

@@ -165,7 +165,7 @@ class _ProfitLossState extends State<ProfitLossPage>  {
     return Scaffold(
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         body: _buildPage(context, viewModel, profitStyle),
-        floatingActionButton: RoundedButton.build(RoundedButtonViewModel(icon: "assets/icons/profit_add.png", onTap: () => _showToast(context)), style: CompactBigRoundedButtonStyle())
+        floatingActionButton: RoundedButton(viewModel: RoundedButtonViewModel(icon: "assets/icons/profit_add.png", onTap: () => _showToast(context)), style: RoundedButtonStyle.compactBigRoundedButton())
     );
   }
 

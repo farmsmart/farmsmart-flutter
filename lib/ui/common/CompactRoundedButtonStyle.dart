@@ -1,6 +1,8 @@
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
 import 'package:flutter/material.dart';
 
+
+/*
 class CompactRoundedButtonStyle implements RoundedButtonStyle {
 
   final Color iconButtonColor =  const Color(0xFFFFFFFF);
@@ -36,3 +38,4 @@ class CompactBigRoundedButtonStyle implements RoundedButtonStyle {
 
   const CompactBigRoundedButtonStyle();
 }
+*/
