@@ -31,8 +31,9 @@ class _DefaultStyle implements ArticleListItemStyle {
 class StandardListItem extends StatelessWidget {
 
   final ArticleListItemViewModel _viewModel;
+  final Function _onTap;
 
-  const StandardListItem({Key key, ArticleListItemViewModel viewModel}) : this._viewModel = viewModel, super(key: key);
+  const StandardListItem({Key key, ArticleListItemViewModel viewModel, Function onTap}) : this._viewModel = viewModel, this._onTap = onTap, super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +42,7 @@ class StandardListItem extends StatelessWidget {
   
   Widget _build(ArticleListItemViewModel viewModel, {ArticleListItemStyle itemStyle = const _DefaultStyle()}) {
     return GestureDetector(
-      onTap: viewModel.onTap,
+      onTap: _onTap,
       child: Card(
         margin: itemStyle.cardMargin,
         elevation: itemStyle.cardElevation,

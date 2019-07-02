@@ -1,4 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:farmsmart_flutter/data/firebase_const.dart';
+import 'package:farmsmart_flutter/data/repositories/ArticleRepositoryInterface.dart';
+import 'package:farmsmart_flutter/data/repositories/implementation/ArticlesRepositoryFlamelink.dart';
+import 'package:farmsmart_flutter/data/repositories/implementation/FlameLink.dart';
 import 'package:farmsmart_flutter/data/repositories/implementation/MockArticlesRepository.dart';
 import 'package:farmsmart_flutter/farmsmart_localizations.dart';
 import 'package:farmsmart_flutter/redux/app/app_state.dart';
@@ -19,8 +23,14 @@ import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:farmsmart_flutter/ui/playground/playground_view.dart';
 import 'package:farmsmart_flutter/flavors/flavor.dart';
 
+import 'discover/ArticleListProvider.dart';
+
 /// Home "screen" route. Scaffold has all the app subcomponents available inside,
 /// like bottom bar or action bar.
+/// 
+
+final  cms = FlameLink(store: Firestore.instance);
+final articleRepo = ArticlesRepositoryFlameLink(cms);
 
 class Home extends StatefulWidget {
   @override
@@ -54,11 +64,12 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
   final List<Widget> _children = [
     PlotList(),
     HomeProfitLossChild(),
-    ArticleList(),
+    ArticleList(viewModelProvider: ArticleListProvider(repository: articleRepo, group: ArticleCollectionGroup.discovery)),
     HomeCommunityChild(),
     PlaygroundView(widgetList: [
-      StandardListItem(viewModel:ArticleListItemViewModel.fromArticleEntityToViewModel(article: MockArticle.build(), onTap: null)),
-      HeroListItem(viewModel:ArticleListItemViewModel.fromArticleEntityToViewModel(article: MockArticle.build(), onTap: null)),
+      StandardListItem(viewModel:ArticleListItemViewModel.fromArticleEntityToViewModel(article: MockArticle.build())),
+      HeroListItem(viewModel:ArticleListItemViewModel.fromArticleEntityToViewModel(article: MockArticle.build())),
+      ArticleList(viewModelProvider: ArticleListProvider(repository: MockArticlesRepository(articleCount: 2000)))
     ], appBarColor: Color(0xFF9CBD3A),),
   ];
 

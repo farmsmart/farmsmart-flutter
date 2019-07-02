@@ -14,6 +14,13 @@ class MockArticle {
       title: _mockTitleText.random(),
     );
   }
+  static List<ArticleEntity> list({int count = 50}) {
+    List<ArticleEntity> articles = [];
+    for (var i = 0; i < count; i++) {
+      articles.add(build());
+    }
+    return articles;
+  }
 }
 
 class MockArticlesRepository implements ArticleRepositoryInterface {

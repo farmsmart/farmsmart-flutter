@@ -1,43 +1,42 @@
+import 'dart:async';
+
 import 'package:farmsmart_flutter/data/model/ImageEntity.dart';
 import 'package:farmsmart_flutter/data/model/article_entity.dart';
 import 'package:farmsmart_flutter/model/loading_status.dart';
-import 'package:farmsmart_flutter/redux/app/app_state.dart';
 import 'package:farmsmart_flutter/ui/discover/ArticleDetail.dart';
 import 'package:farmsmart_flutter/utils/strings.dart';
-import 'package:redux/redux.dart';
 
 class ArticleListItemViewModel {
   final String title;
   final String summary;
   final ImageEntityURLProvider image;
-  Function onTap;
+  final ArticleDetailViewModel detailViewModel;
 
-  ArticleListItemViewModel(this.title, this.summary, this.image, this.onTap);
+  ArticleListItemViewModel(this.title, this.summary, this.image, this.detailViewModel);
 
    static ArticleListItemViewModel fromArticleEntityToViewModel(
-      {ArticleEntity article, Function onTap}) {
+      {ArticleEntity article}) {
     return ArticleListItemViewModel(
         article.title ?? Strings.noTitleString,
         article.summary ?? Strings.noTitleString,
-        ArticleImageProvider(article), onTap);
+        ArticleImageProvider(article), ArticleDetailViewModel.fromArticleEntityToViewModel(article));
   }
+}
+
+abstract class ArticleListViewModelProvider {
+   StreamController<ArticleListViewModel> provide();
 }
 
 class ArticleListViewModel {
   final LoadingStatus loadingStatus;
   final List<ArticleListItemViewModel> articleListItemViewModels;
+  Function update;
 
   ArticleListViewModel(
-      {List<ArticleEntity> articleItems, LoadingStatus loadingStatus, Function onTap})
+      {List<ArticleEntity> articleItems = const [], LoadingStatus loadingStatus = LoadingStatus.LOADING, Function update, Function onTap})
       : this.loadingStatus = loadingStatus,
+        this.update = update,
         this.articleListItemViewModels = articleItems
-            .map((entity) => ArticleListItemViewModel.fromArticleEntityToViewModel(article: entity, onTap: () => onTap(ArticleDetailViewModel.fromArticleEntityToViewModel(entity)))).toList();
+            .map((entity) => ArticleListItemViewModel.fromArticleEntityToViewModel(article: entity)).toList();
 
-  static ArticleListViewModel fromStore(Store<AppState> store, Function onTap) {
-    return ArticleListViewModel(
-        loadingStatus: store.state.discoverState.loadingStatus,
-        articleItems: store.state.discoverState.articles, onTap: onTap);
-  }
-
- 
 }

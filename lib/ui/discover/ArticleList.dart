@@ -1,61 +1,80 @@
 import 'package:farmsmart_flutter/model/loading_status.dart';
-import 'package:farmsmart_flutter/redux/app/app_state.dart';
 import 'package:farmsmart_flutter/ui/common/headerAndFooterListView.dart';
 import 'package:farmsmart_flutter/ui/discover/ArticleDetail.dart';
 import 'package:farmsmart_flutter/ui/discover/HeroListItem.dart';
 import 'package:farmsmart_flutter/ui/discover/StandardListItem.dart';
 import 'package:farmsmart_flutter/utils/strings.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
 import 'package:farmsmart_flutter/ui/discover/ArticleListViewModel.dart';
-import 'package:farmsmart_flutter/redux/home/discover/discover_actions.dart';
 
 abstract class ArticleListStyle {
   final TextStyle titleTextStyle;
   final EdgeInsets titleEdgePadding;
 
   ArticleListStyle(this.titleTextStyle, this.titleEdgePadding);
+  ArticleListStyle copyWith(
+      {TextStyle titleTextStyle, EdgeInsets titleEdgePadding});
 }
 
-class _ArticleListDefaultStyle implements ArticleListStyle {
-  static const Color titleColor = Color(0xFF1a1b46);
-  static const Color textColor = Color(0xFF767690);
+class _DefaultStyle implements ArticleListStyle {
+  final TextStyle titleTextStyle;
+  final EdgeInsets titleEdgePadding;
 
-  final TextStyle titleTextStyle = const TextStyle(
-      fontSize: 27, fontWeight: FontWeight.bold, color: titleColor);
-  final EdgeInsets titleEdgePadding =
-      const EdgeInsets.only(left: 34.0, right: 34.0, top: 35.0, bottom: 30.0);
+  const _DefaultStyle({TextStyle titleTextStyle, EdgeInsets titleEdgePadding})
+      : this.titleTextStyle = titleTextStyle ??
+            const TextStyle(
+                fontSize: 27,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF1a1b46)),
+        this.titleEdgePadding = titleEdgePadding ??
+            const EdgeInsets.only(
+                left: 34.0, right: 34.0, top: 35.0, bottom: 30.0);
 
-  const _ArticleListDefaultStyle();
-}
-
-class ArticleList extends StatefulWidget {
-  State<StatefulWidget> createState() {
-    return _State();
+  @override
+  ArticleListStyle copyWith(
+      {TextStyle titleTextStyle, EdgeInsets titleEdgePadding}) {
+    return _DefaultStyle(
+        titleTextStyle: titleTextStyle ?? this.titleTextStyle,
+        titleEdgePadding: titleEdgePadding ?? this.titleEdgePadding);
   }
 }
 
-class _State extends State<ArticleList> {
-  @override
+const ArticleListStyle _defaultStyle = const _DefaultStyle();
+
+class ArticleList extends StatelessWidget {
+  static ArticleListStyle defaultStyle = _defaultStyle;
+  final ArticleListViewModelProvider _viewModelProvider;
+  final ArticleListStyle _style;
+
+  ArticleList(
+      {Key key,
+      ArticleListViewModelProvider viewModelProvider,
+      ArticleListStyle style = _defaultStyle})
+      : this._style = style, this._viewModelProvider = viewModelProvider,
+        super(key: key);
+
+ @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: StoreConnector<AppState, ArticleListViewModel>(
-          onInit: (store) => store.dispatch(FetchArticlesAction()),
-          builder: (_, viewModel) => _buildBody(context, viewModel),
-          converter: (store) => ArticleListViewModel.fromStore(store, _tappedListItem)),
+    final controller = _viewModelProvider.provide();
+    return StreamBuilder<ArticleListViewModel>(
+        stream: controller.stream,
+        builder: (BuildContext context,
+            AsyncSnapshot<ArticleListViewModel> snapshot) {
+          return _buildBody(context, snapshot.data);
+        });
+  }
+
+  void _tappedListItem({BuildContext context, ArticleDetailViewModel viewModel}) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => ArticleDetail(viewModel: viewModel),
+      ),
     );
   }
 
-  void _tappedListItem(ArticleDetailViewModel viewModel){
-     Navigator.of(context).push(
-	      MaterialPageRoute(
-	        builder: (context) => ArticleDetail(viewModel: viewModel),
-	      ),
-	    );
-  }
-
   Widget _buildBody(BuildContext context, ArticleListViewModel viewModel) {
-    switch (viewModel.loadingStatus) {
+    final status = (viewModel == null) ? LoadingStatus.LOADING : viewModel.loadingStatus;
+    switch (status) {
       case LoadingStatus.LOADING:
         return Container(
             child: CircularProgressIndicator(), alignment: Alignment.center);
@@ -66,30 +85,31 @@ class _State extends State<ArticleList> {
     }
   }
 
-  Widget _buildList(BuildContext context, List<ArticleListItemViewModel> viewModels,
-      {ArticleListStyle articleListStyle = const _ArticleListDefaultStyle()}) {
+  Widget _buildList(
+      BuildContext context, List<ArticleListItemViewModel> viewModels) {
     return HeaderAndFooterListView.builder(
         itemCount: viewModels.length,
         itemBuilder: (BuildContext context, int index) {
           final viewModel = viewModels[index];
+          final tapFunction = () => _tappedListItem(context: context, viewModel:viewModel.detailViewModel);
           if (index == 0) {
-            return HeroListItem(viewModel: viewModel);
+            return HeroListItem(viewModel: viewModel, onTap: tapFunction,);
           } else {
-            return StandardListItem(viewModel: viewModel);
+            return StandardListItem(viewModel: viewModel, onTap: tapFunction,);
           }
         },
         physics: ScrollPhysics(),
         shrinkWrap: true,
-        header: _buildHeader(articleListStyle));
+        header: _buildHeader());
   }
 
-  Widget _buildHeader(ArticleListStyle articleListStyle) {
+  Widget _buildHeader() {
     return Container(
-      padding: articleListStyle.titleEdgePadding,
+      padding: _style.titleEdgePadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(Strings.discoverTab, style: articleListStyle.titleTextStyle)
+          Text(Strings.discoverTab, style: _style.titleTextStyle)
         ],
       ),
     );

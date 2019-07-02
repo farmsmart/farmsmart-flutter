@@ -21,17 +21,30 @@ class ArticleDetailViewModel {
           var response = await FlutterShareMe().shareToSystem(msg: Strings.shareArticleText + deepLink);
   */
 
-  ArticleDetailViewModel(this.loadingStatus, this.title, this.subtitle, this.image, this.body, this.shareAction);
+  ArticleDetailViewModel(this.loadingStatus, this.title, this.subtitle,
+      this.image, this.body, this.shareAction);
 
   static ArticleDetailViewModel fromArticleEntityToViewModel(
       ArticleEntity article) {
-    ArticleDetailViewModel viewModel = ArticleDetailViewModel(LoadingStatus.SUCCESS, article.title, article.summary, ArticleImageProvider(article), article.content, null);
-    viewModel.related = article.related.getEntities().then((articles) {
-      return ArticleListViewModel(articleItems: articles, onTap: null).articleListItemViewModels; 
-    });
+    ArticleDetailViewModel viewModel = ArticleDetailViewModel(
+        LoadingStatus.SUCCESS,
+        article.title,
+        article.summary,
+        ArticleImageProvider(article),
+        article.content,
+        null);
+   /* if (article.related != null) {
+      viewModel.related = article.related.getEntities().then((articles) {
+        return articles.map((article) {
+          return ArticleListItemViewModel.fromArticleEntityToViewModel(article: article);
+        }).toList();
+      });
+    }
+    else {*/
+       viewModel.related = Future.value([]);
+    //}
     return viewModel;
   }
-  
 }
 
 abstract class ArticleDetailStyle {
@@ -89,7 +102,9 @@ class _DefaultStyle implements ArticleDetailStyle {
 class ArticleDetail extends StatefulWidget {
   final ArticleDetailViewModel _viewModel;
 
-  const ArticleDetail({Key key, ArticleDetailViewModel viewModel}) : this._viewModel = viewModel, super(key: key);
+  const ArticleDetail({Key key, ArticleDetailViewModel viewModel})
+      : this._viewModel = viewModel,
+        super(key: key);
   @override
   State<StatefulWidget> createState() {
     return _ArticleDetailState(_viewModel);
@@ -99,52 +114,64 @@ class ArticleDetail extends StatefulWidget {
 class _ArticleDetailState extends State<ArticleDetail> {
   final ArticleDetailViewModel _viewModel;
 
-  _ArticleDetailState(ArticleDetailViewModel viewModel) : this._viewModel = viewModel;
-  
+  _ArticleDetailState(ArticleDetailViewModel viewModel)
+      : this._viewModel = viewModel;
+
   @override
   Widget build(BuildContext context) {
     return _build(context, _viewModel);
   }
 
-  Widget _buildHeader(BuildContext context, ArticleDetailViewModel viewModel, ArticleDetailStyle style) {
-    return Column(children: <Widget>[
-          _buildTitle(viewModel.title, style),
-          _buildArticlePublishingDate(viewModel, style),
-          SizedBox(height: style.spaceBetweenDataAndImage),
-          _buildImage(viewModel),
-          SizedBox(height: style.spaceBetweenElements),
-          _buildBody(viewModel, style),
-          SizedBox(height: style.spaceBetweenElements),
-                  ],);
-    
+  Widget _buildHeader(BuildContext context, ArticleDetailViewModel viewModel,
+      ArticleDetailStyle style) {
+    return Column(
+      children: <Widget>[
+        _buildTitle(viewModel.title, style),
+        _buildArticlePublishingDate(viewModel, style),
+        SizedBox(height: style.spaceBetweenDataAndImage),
+        _buildImage(viewModel),
+        SizedBox(height: style.spaceBetweenElements),
+        _buildBody(viewModel, style),
+        SizedBox(height: style.spaceBetweenElements),
+      ],
+    );
   }
 
   Widget _build(BuildContext context, ArticleDetailViewModel viewModel,
       {ArticleDetailStyle style = const _DefaultStyle()}) {
-        var releatedViewModels = [];
-        final loadingWidget = Container(
-            child: CircularProgressIndicator(), alignment: Alignment.center);
-        
-    return FutureBuilder(future: viewModel.related, builder: (BuildContext context, AsyncSnapshot<List<ArticleListItemViewModel>> relatedArticles) {
-      if (relatedArticles.hasData) {
-          releatedViewModels = relatedArticles.data; 
-      }
-      final footer = (viewModel.loadingStatus == LoadingStatus.LOADING) ? loadingWidget : null; 
-       return HeaderAndFooterListView.builder(
-          itemCount: releatedViewModels.length,
-          itemBuilder: (BuildContext context, int index) {
-            final viewModel = releatedViewModels[index];
+    var releatedViewModels = [];
+    final loadingWidget = Container(
+        child: CircularProgressIndicator(), alignment: Alignment.center);
+
+    return FutureBuilder(
+      future: viewModel.related,
+      builder: (BuildContext context,
+          AsyncSnapshot<List<ArticleListItemViewModel>> relatedArticles) {
+        if (relatedArticles.hasData) {
+          releatedViewModels = relatedArticles.data;
+        }
+        final footer = (viewModel.loadingStatus == LoadingStatus.LOADING)
+            ? loadingWidget
+            : null;
+        return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Color(0xFFFFFFFF),
+      ),
+      body: Container(
+        child: HeaderAndFooterListView.builder(
+            itemCount: releatedViewModels.length,
+            itemBuilder: (BuildContext context, int index) {
+              final viewModel = releatedViewModels[index];
               return StandardListItem().build(viewModel);
-          },
-          physics: ScrollPhysics(),
-          shrinkWrap: true,
-          header: _buildHeader(context, viewModel, style),
-          footer: footer
-          ); 
-    },);
-    
-    
-   
+            },
+            physics: ScrollPhysics(),
+            shrinkWrap: true,
+            header: _buildHeader(context, viewModel, style),
+            footer: footer),
+      ),
+    );;
+      },
+    );
   }
 
 // FIXME: Reuse the _buildScreenTitle from discover page (don't need to redefine here)
@@ -196,5 +223,4 @@ class _ArticleDetailState extends State<ArticleDetail> {
         padding: articleStyle.bodyPadding,
         child: Html(data: selectedArticle.body, useRichText: true));
   }
-
 }
