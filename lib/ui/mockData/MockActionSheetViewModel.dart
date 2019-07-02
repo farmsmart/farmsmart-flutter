@@ -1,13 +1,14 @@
 import 'dart:math';
 import 'package:farmsmart_flutter/ui/common/ActionSheet.dart';
+import 'package:farmsmart_flutter/ui/common/ActionSheetListItem.dart';
 import 'package:farmsmart_flutter/ui/common/MockString.dart';
 
 
 class MockActionSheetViewModel {
   static ActionSheetViewModel buildStandard() {
-    List<ActionListItemViewModel> list = [];
+    List<ActionSheetListItemViewModel> list = [];
     for(var i = 0; i < 2; i++) {
-      list.add(ActionListItemViewModel(_mockItemTitleStandard[i], null, _mockItemDestructive[i+1]));
+      list.add(MockActionSheetListItemViewModel.buildStandard(i));
     }
 
     return ActionSheetViewModel(
@@ -18,9 +19,9 @@ class MockActionSheetViewModel {
   }
 
   static ActionSheetViewModel buildStandardBigger() {
-    List<ActionListItemViewModel> list = [];
+    List<ActionSheetListItemViewModel> list = [];
     for(var i = 0; i < 3; i++) {
-      list.add(ActionListItemViewModel(_mockItemTitleStandardBigger[i], null, _mockItemDestructive[i]));
+      list.add(MockActionSheetListItemViewModel.buildStandardBigger(i));
     }
 
     return ActionSheetViewModel(
@@ -31,9 +32,9 @@ class MockActionSheetViewModel {
   }
 
   static ActionSheetViewModel buildWithIcon() {
-    List<ActionListItemViewModel> list = [];
+    List<ActionSheetListItemViewModel> list = [];
     for(var i = 0; i < 2; i++) {
-      list.add(ActionListItemViewModel(_mockItemTitleWithIcon[i], null, false, icon: _mockIcon[i]));
+      list.add(MockActionSheetListItemViewModel.buildWithIcon(i));
     }
 
     return ActionSheetViewModel(
@@ -44,15 +45,52 @@ class MockActionSheetViewModel {
   }
 
   static ActionSheetViewModel buildWithCheckBox() {
-    List<ActionListItemViewModel> list = [];
+    List<ActionSheetListItemViewModel> list = [];
     for(var i = 0; i < 2; i++) {
-      list.add(ActionListItemViewModel(_mockItemTitleSelectable[i], null, false, icon: _mockFlagIcon[i], checkBoxIcon: _mockCheckBoxIcon[i]));
+      list.add(MockActionSheetListItemViewModel.buildWithCheckbox(i));
     }
 
     return ActionSheetViewModel(
       list,
       _mockButtonTitle.random(),
       cancelButtonTitle: _mockButtonTitle.random(),
+    );
+  }
+}
+
+class MockActionSheetListItemViewModel {
+  static ActionSheetListItemViewModel buildStandard(index) {
+    return ActionSheetListItemViewModel(
+      _mockItemTitleStandard[index],
+      null,
+      _mockItemDestructive[index],
+    );
+  }
+
+  static ActionSheetListItemViewModel buildStandardBigger(index) {
+    return ActionSheetListItemViewModel(
+      _mockItemTitleStandardBigger[index],
+      null,
+      _mockItemDestructive[index],
+    );
+  }
+
+  static ActionSheetListItemViewModel buildWithIcon(index) {
+    return ActionSheetListItemViewModel(
+      _mockItemTitleWithIcon[index],
+      null,
+      _mockItemDestructive[index],
+      icon: _mockIcon[index]
+    );
+  }
+
+  static ActionSheetListItemViewModel buildWithCheckbox(index) {
+    return ActionSheetListItemViewModel(
+        _mockItemTitleSelectable[index],
+      null,
+      _mockItemDestructive[index],
+      icon: _mockFlagIcon[index],
+      checkBoxIcon: _mockCheckBoxIcon[index]
     );
   }
 }
