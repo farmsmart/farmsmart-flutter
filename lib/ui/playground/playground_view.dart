@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:farmsmart_flutter/ui/playground/task_widget.dart';
 
 class PlaygroundView extends StatefulWidget {
   static const double _defaultFontSize = 40;
   static const String _defaultTitle = 'Playground';
-  static const String _defaultAllWidgetsTitle = 'All widgets';
+  static const String _defaultAllWidgetsTitle = 'All atoms';
   static const _defaultAppBarTitle = Text(
     _defaultTitle,
     style: TextStyle(
@@ -130,19 +131,29 @@ class _PlaygroundViewState extends State<PlaygroundView> {
   }
 
   ListTile _playgroundListItem(int index, BuildContext context) {
-    return ListTile(
-      title: Text(items[index].toString()),
-      onTap: () {
-        _navigateToWidgetDetail(context, index);
-      },
-    );
+
+    if(items[index] is TaskWidget){
+      return ListTile(
+        title: Text((items[index] as TaskWidget).title),
+        onTap: () {
+          _navigateToWidgetDetail(context, (items[index] as TaskWidget).child);
+        },
+      );
+    }else{
+      return ListTile(
+        title: Text(items[index].toString()),
+        onTap: () {
+          _navigateToWidgetDetail(context, items[index]);
+        },
+      );
+    }
   }
 
-  void _navigateToWidgetDetail(BuildContext context, int index) {
+  void _navigateToWidgetDetail(BuildContext context, Widget childWidget) {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => _PlaygroundDetail(
-              child: items[index],
+              child: childWidget,
               appBarColor: widget.appBarColor,
             ),
       ),
