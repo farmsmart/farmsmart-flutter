@@ -4,40 +4,69 @@ import 'package:farmsmart_flutter/ui/common/MockString.dart';
 
 
 class MockActionSheetViewModel {
-  static ActionSheetViewModel build() {
+  static ActionSheetViewModel buildStandard() {
     List<ActionListItemViewModel> list = [];
-    for(var i = 0; i < 3; i++) {
-      list.add(MockActionListItemViewModel.build());
+    for(var i = 0; i < 2; i++) {
+      list.add(ActionListItemViewModel(_mockItemTitleStandard[i], null, _mockItemDestructive[i+1]));
     }
 
     return ActionSheetViewModel(
         list,
-        _mockTitleText.random(),
-        cancelButtonTitle: _mockTitleText.random(),
+        _mockButtonTitle.random(),
+        cancelButtonTitle: _mockButtonTitle.random(),
+    );
+  }
+
+  static ActionSheetViewModel buildStandardBigger() {
+    List<ActionListItemViewModel> list = [];
+    for(var i = 0; i < 3; i++) {
+      list.add(ActionListItemViewModel(_mockItemTitleStandardBigger[i], null, _mockItemDestructive[i]));
+    }
+
+    return ActionSheetViewModel(
+      list,
+      _mockButtonTitle.random(),
+      cancelButtonTitle: _mockButtonTitle.random(),
+    );
+  }
+
+  static ActionSheetViewModel buildWithIcon() {
+    List<ActionListItemViewModel> list = [];
+    for(var i = 0; i < 2; i++) {
+      list.add(ActionListItemViewModel(_mockItemTitleWithIcon[i], null, false, icon: _mockIcon[i]));
+    }
+
+    return ActionSheetViewModel(
+      list,
+      _mockButtonTitle.random(),
+      cancelButtonTitle: _mockButtonTitle.random(),
+    );
+  }
+
+  static ActionSheetViewModel buildWithCheckBox() {
+    List<ActionListItemViewModel> list = [];
+    for(var i = 0; i < 2; i++) {
+      list.add(ActionListItemViewModel(_mockItemTitleSelectable[i], null, false, icon: _mockFlagIcon[i], checkBoxIcon: _mockCheckBoxIcon[i]));
+    }
+
+    return ActionSheetViewModel(
+      list,
+      _mockButtonTitle.random(),
+      cancelButtonTitle: _mockButtonTitle.random(),
     );
   }
 }
 
-class MockActionListItemViewModel {
-  static var randomBoolean = Random();
+List _mockItemTitleStandard = ["Rename Crop", "Delete Crop"];
+List _mockItemDestructive = [false, false, true];
+List _mockItemTitleStandardBigger = ["Take New Photo", "Choose from LIbrary", "Remove Current Photo"];
+List _mockItemTitleWithIcon = ["Record a New Sale", "Record a new Cost"];
+List _mockItemTitleSelectable = ["English", "Swahili"];
+List _mockIcon = ["assets/icons/detail_icon_cost.png", "assets/icons/detail_icon_sale.png"];
+List _mockFlagIcon = ["assets/icons/flag_kenya.png", "assets/icons/flag_usa.png"];
+List _mockCheckBoxIcon = ["assets/icons/radio_button_active.png", "assets/icons/radio_button_default.png"];
 
-  static ActionListItemViewModel build() {
-    return ActionListItemViewModel(
-        _mockTitleText.random(),
-       null,
-       randomBoolean.nextBool(),
-       icon: _mockIcon.random(),
-       checkBoxIcon: _mockIcon.random(),
-    );
-  }
-}
+MockString _mockButtonTitle = MockString(library: [
+  "Cancel"]);
 
-
-MockString _mockTitleText = MockString(library: [
-  "Title example",
-  "Longer title example",
-  "This is a middle lenght title",
-  "A Bit longer title example more longer example"]);
-
-MockString _mockIcon = MockString(library: ["assets/icons/detail_icon_cost.png", "assets/icons/flag_kenya.png", "assets/icons/radio_button_active.png", "assets/icons/flag_usa.png", "assets/icons/detail_icon_sale.png"]);
 

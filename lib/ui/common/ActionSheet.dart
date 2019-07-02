@@ -231,7 +231,7 @@ class ActionSheet extends StatelessWidget{
   Future _onMenuPressed(BuildContext context) async {
     showModalBottomSheet(
         context: context,
-        builder: (widgetBuilder) =>  ActionSheet(viewModel: MockActionSheetViewModel.build(), style: ActionSheetStyle.defaultStyle())
+        builder: (widgetBuilder) =>  ActionSheet(viewModel: MockActionSheetViewModel.buildStandard(), style: ActionSheetStyle.defaultStyle())
     );
   }
 }
