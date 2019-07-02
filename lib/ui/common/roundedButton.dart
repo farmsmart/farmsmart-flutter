@@ -47,7 +47,7 @@ class RoundedButtonStyle {
     return RoundedButtonStyle.defaultStyle().copyWith(
         borderRadius: BorderRadius.all(Radius.circular(40)),
         size: 48.0,
-        buttonIconSize: 17.0
+        buttonIconSize: 14.0
     );
   }
 
