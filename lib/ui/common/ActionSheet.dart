@@ -40,6 +40,7 @@ class ActionSheetStyle {
   final Radius indicatorLineRadius;
 
   final double indicatorLineThickness;
+  final double indicatorLineWidth;
   final double actionItemHeight;
   final double iconLineSpace;
   final double actionItemElevation;
@@ -52,7 +53,7 @@ class ActionSheetStyle {
       this.cancelButtonBackgroundColor, this.actionTextStyle,
       this.destructiveTextStyle, this.actionItemEdgePadding,
       this.indicatorLineEdgePadding, this.cornerRadius, this.indicatorLineRadius,
-      this.indicatorLineThickness, this.actionItemHeight, this.iconLineSpace,
+      this.indicatorLineThickness, this.indicatorLineWidth, this.actionItemHeight, this.iconLineSpace,
       this.actionItemElevation, this.iconHeight, this.maxLines});
 
   factory ActionSheetStyle.defaultStyle() {
@@ -73,6 +74,7 @@ class ActionSheetStyle {
       cornerRadius: const Radius.circular(40),
       indicatorLineRadius: const Radius.circular(2.5),
       indicatorLineThickness: 5,
+      indicatorLineWidth: 40,
       actionItemHeight: 70,
       iconLineSpace: 21.5,
       actionItemElevation: 0,
@@ -89,7 +91,7 @@ class ActionSheetStyle {
     Color actionItemBackgroundColor, Color confirmButtonBackgroundColor, Color cancelButtonBackgroundColor,
     TextStyle actionTextStyle, TextStyle destructiveTextStyle, EdgeInsets actionItemEdgePadding,
     EdgeInsets indicatorLineEdgePadding, Radius cornerRadius, Radius indicatorLineRadius,
-    double indicatorLineThickness, double actionItemHeight, double iconLineSpace,
+    double indicatorLineThickness, double indicatorLineWidth, double actionItemHeight, double iconLineSpace,
     double actionItemElevation, double iconHeight, int maxLines}) {
 
     return ActionSheetStyle(
@@ -105,6 +107,7 @@ class ActionSheetStyle {
         cornerRadius: cornerRadius ?? this.cornerRadius,
         indicatorLineRadius: indicatorLineRadius ?? this.indicatorLineRadius,
         indicatorLineThickness: indicatorLineThickness ?? this.indicatorLineThickness,
+        indicatorLineWidth: indicatorLineWidth ?? this.indicatorLineWidth,
         actionItemHeight: actionItemHeight ?? this.actionItemHeight,
         iconLineSpace: iconLineSpace ?? this.iconLineSpace,
         actionItemElevation: actionItemElevation ?? this.actionItemElevation,
@@ -133,8 +136,7 @@ class ActionSheet extends StatelessWidget{
                 shrinkWrap: true,
                 itemCount: viewModel.actions.length,
                 itemBuilder: (BuildContext context, int index) =>
-                    _buildActionCell(style, viewModel.actions[index],
-                        viewModel.actions.length, index),
+                    _buildActionCell(style, viewModel.actions[index]),
                 header: _buildIndicatorLine(style),
                 footer: RoundedButton(viewModel: RoundedButtonViewModel(title: viewModel.confirmButtonTitle),
                     style: RoundedButtonStyle.actionSheetLargeRoundedButton()))
@@ -147,7 +149,7 @@ class ActionSheet extends StatelessWidget{
     return Center(
       child: Container(
         margin: style.indicatorLineEdgePadding,
-        width: 100,
+        width: style.indicatorLineWidth,
         height: style.indicatorLineThickness,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(style.indicatorLineRadius),
@@ -157,15 +159,14 @@ class ActionSheet extends StatelessWidget{
     );
   }
 
-  static Widget _buildActionCell(ActionSheetStyle style, ActionListItemViewModel viewModel,
-      int numberOfActions, int currentAction) {
+  static Widget _buildActionCell(ActionSheetStyle style, ActionListItemViewModel viewModel) {
     return Column(
       children: <Widget>[
         Card(
           elevation: style.actionItemElevation,
           color: style.actionItemBackgroundColor,
           child: InkWell(
-            onTap: () => print(viewModel.title), //No mock here -> View Model
+            onTap: () => viewModel.action,
             child: Container(
               padding: style.actionItemEdgePadding,
               alignment: Alignment.center,
@@ -182,7 +183,7 @@ class ActionSheet extends StatelessWidget{
             ),
           ),
         ),
-        currentAction == numberOfActions - 1 ? Wrap() : ListDivider.build(),
+        ListDivider.build(),
       ],
     );
   }
@@ -230,7 +231,7 @@ class ActionSheet extends StatelessWidget{
   Future _onMenuPressed(BuildContext context) async {
     showModalBottomSheet(
         context: context,
-        builder: (widgetBuilder) =>  ActionSheet(viewModel: MockProfitLossListViewModel.build(), style: ActionSheetStyle.defaultStyle())
+        builder: (widgetBuilder) =>  ActionSheet(viewModel: MockActionSheetViewModel.build(), style: ActionSheetStyle.defaultStyle())
     );
   }
 }
