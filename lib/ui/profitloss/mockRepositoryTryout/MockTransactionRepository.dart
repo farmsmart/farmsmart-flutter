@@ -37,7 +37,7 @@ MockString _mockDetailText = MockString(library: [
 "A Bit Longer day 9000"
 ]);
 
-MockString _mockCurrencyText = MockString(library: ["255", "0", "-2", "300", "-450", "-25"]);
+MockString _mockCurrencyText = MockString(library: ["255", "0", "2", "300", "450", "25"]);
 MockString _mockTotalCurrency = MockString(library: ["99944,999", "99,99", "00000", "254,360", "92" ]);
 
 class MockProfitLossListItemViewModel {

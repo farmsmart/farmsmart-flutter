@@ -9,8 +9,7 @@ class ProfitLossListItemViewModel {
   final String subtitle;
   final String detail;
 
-  ProfitLossListItemViewModel({this.title, this.subtitle, this.detail}) {
-  }
+  ProfitLossListItemViewModel({this.title, this.subtitle, this.detail});
 }
 
 abstract class ProfitLossItemStyle {

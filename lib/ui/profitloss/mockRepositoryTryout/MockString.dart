@@ -38,7 +38,6 @@ class MockString {
 
 class MockInt {
   final rng = new Random();
-
   MockInt(rng);
 }
 
