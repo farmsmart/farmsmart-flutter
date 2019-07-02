@@ -136,7 +136,7 @@ class ActionSheet extends StatelessWidget{
                 shrinkWrap: true,
                 itemCount: viewModel.actions.length,
                 itemBuilder: (BuildContext context, int index) =>
-                    _buildActionCell(style, viewModel.actions[index]),
+                    _buildActionCell(style, viewModel.actions[index], viewModel.actions.length, index),
                 header: _buildIndicatorLine(style),
                 footer: RoundedButton(viewModel: RoundedButtonViewModel(title: viewModel.confirmButtonTitle),
                     style: RoundedButtonStyle.actionSheetLargeRoundedButton()))
@@ -159,7 +159,7 @@ class ActionSheet extends StatelessWidget{
     );
   }
 
-  static Widget _buildActionCell(ActionSheetStyle style, ActionListItemViewModel viewModel) {
+  static Widget _buildActionCell(ActionSheetStyle style, ActionListItemViewModel viewModel, int numberOfActions, int currentAction) {
     return Column(
       children: <Widget>[
         Card(
@@ -183,7 +183,7 @@ class ActionSheet extends StatelessWidget{
             ),
           ),
         ),
-        ListDivider.build(),
+        currentAction == numberOfActions - 1 ? Wrap() : ListDivider.build(), // FIXME: temporal solution for divider
       ],
     );
   }
