@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'ArticleListViewModel.dart';
 
+typedef GetList<T> = Future<List<T>> Function();
+
 class ArticleDetailViewModel {
   final LoadingStatus loadingStatus;
   final String title;
@@ -15,7 +17,7 @@ class ArticleDetailViewModel {
   final ImageEntityURLProvider image;
   final String body;
   Function shareAction;
-  Future<List<ArticleListItemViewModel>> related;
+  GetList<ArticleListItemViewModel> getRelated;
   /*
           String deepLink = await buildArticleDeeplink(articleID);
           var response = await FlutterShareMe().shareToSystem(msg: Strings.shareArticleText + deepLink);
@@ -33,16 +35,19 @@ class ArticleDetailViewModel {
         ArticleImageProvider(article),
         article.content,
         null);
-   /* if (article.related != null) {
-      viewModel.related = article.related.getEntities().then((articles) {
-        return articles.map((article) {
-          return ArticleListItemViewModel.fromArticleEntityToViewModel(article: article);
-        }).toList();
-      });
+    if (article.related != null) {
+      viewModel.getRelated = () {
+        if (article.related == null) {
+          return Future.value([]);
+        }
+        return article.related.getEntities().then((articles) {
+          return articles.map((article) {
+            return ArticleListItemViewModel.fromArticleEntityToViewModel(
+                article: article);
+          }).toList();
+        });
+      };
     }
-    else {*/
-       viewModel.related = Future.value([]);
-    //}
     return viewModel;
   }
 }
@@ -137,6 +142,14 @@ class _ArticleDetailState extends State<ArticleDetail> {
     );
   }
 
+  void _tappedListItem({BuildContext context, ArticleDetailViewModel viewModel}) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => ArticleDetail(viewModel: viewModel),
+      ),
+    );
+  }
+
   Widget _build(BuildContext context, ArticleDetailViewModel viewModel,
       {ArticleDetailStyle style = const _DefaultStyle()}) {
     var releatedViewModels = [];
@@ -144,7 +157,7 @@ class _ArticleDetailState extends State<ArticleDetail> {
         child: CircularProgressIndicator(), alignment: Alignment.center);
 
     return FutureBuilder(
-      future: viewModel.related,
+      future: viewModel.getRelated(),
       builder: (BuildContext context,
           AsyncSnapshot<List<ArticleListItemViewModel>> relatedArticles) {
         if (relatedArticles.hasData) {
@@ -154,22 +167,23 @@ class _ArticleDetailState extends State<ArticleDetail> {
             ? loadingWidget
             : null;
         return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color(0xFFFFFFFF),
-      ),
-      body: Container(
-        child: HeaderAndFooterListView.builder(
-            itemCount: releatedViewModels.length,
-            itemBuilder: (BuildContext context, int index) {
-              final viewModel = releatedViewModels[index];
-              return StandardListItem().build(viewModel);
-            },
-            physics: ScrollPhysics(),
-            shrinkWrap: true,
-            header: _buildHeader(context, viewModel, style),
-            footer: footer),
-      ),
-    );;
+          appBar: AppBar(
+            backgroundColor: Color(0xFFFFFFFF),
+          ),
+          body: Container(
+            child: HeaderAndFooterListView.builder(
+                itemCount: releatedViewModels.length,
+                itemBuilder: (BuildContext context, int index) {
+                  final viewModel = releatedViewModels[index];
+                  return StandardListItem(viewModel: viewModel, onTap: () => _tappedListItem(context: context, viewModel: viewModel.detailViewModel),).build(context);
+                },
+                physics: ScrollPhysics(),
+                shrinkWrap: true,
+                header: _buildHeader(context, viewModel, style),
+                footer: footer),
+          ),
+        );
+        ;
       },
     );
   }
