@@ -16,11 +16,12 @@ class RoundedButtonStyle {
   final BorderRadius borderRadius;
   final EdgeInsets edgePadding;
   final TextStyle buttonTextStyle;
-  final double size;
+  final double height;
+  final double width;
   final double iconEdgePadding;
   final double buttonIconSize;
 
-  RoundedButtonStyle({this.size,
+  RoundedButtonStyle({this.height, this.width,
     this.iconButtonColor, this.backgroundColor, this.iconEdgePadding,
     this.buttonShape, this.borderRadius, this.edgePadding,
     this.buttonTextStyle, this.buttonIconSize});
@@ -33,7 +34,8 @@ class RoundedButtonStyle {
         borderRadius: BorderRadius.all(Radius.circular(20)),
         edgePadding: EdgeInsets.all(0),
         buttonTextStyle: null,
-        size: 24.0,
+        height: 24.0,
+        width: 24.0,
         iconEdgePadding: 0,
         buttonIconSize: 9.0
     );
@@ -46,7 +48,8 @@ class RoundedButtonStyle {
   factory RoundedButtonStyle.compactBigRoundedButton() {
     return RoundedButtonStyle.defaultStyle().copyWith(
         borderRadius: BorderRadius.all(Radius.circular(40)),
-        size: 48.0,
+        height: 48.0,
+        width: 48.0,
         buttonIconSize: 14.0
     );
   }
@@ -57,22 +60,24 @@ class RoundedButtonStyle {
       edgePadding: EdgeInsets.only(left: 32, top: 31, right: 32, bottom: 32),
       buttonTextStyle: TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: Color(0xffffffff)),
       iconEdgePadding: 5,
-      size: 56,
+      height: 56,
+      width: double.infinity,
       buttonIconSize: null,
+
 
     );
   }
 
   factory RoundedButtonStyle.actionSheetLargeRoundedButton(){
     return RoundedButtonStyle.largeRoundedButtonStyle().copyWith(
-        backgroundColor: Color(0xFFe9eaf2),
-        buttonTextStyle: TextStyle(fontSize: 15, fontWeight: FontWeight.w500, color: Color(0xFF4c4e6e)),
+      backgroundColor: Color(0xFFe9eaf2),
+      buttonTextStyle: TextStyle(fontSize: 15, fontWeight: FontWeight.w500, color: Color(0xFF4c4e6e)),
     );
   }
 
   RoundedButtonStyle copyWith({Color iconButtonColor, Color backgroundColor,
     BoxShape buttonShape, BorderRadius borderRadius, EdgeInsets edgePadding,
-    TextStyle buttonTextStyle, double size, double iconEdgePadding,
+    TextStyle buttonTextStyle, double height, double width, double iconEdgePadding,
     double buttonIconSize}) {
 
     return RoundedButtonStyle (
@@ -82,7 +87,9 @@ class RoundedButtonStyle {
         borderRadius: borderRadius ?? this.borderRadius,
         edgePadding: edgePadding ?? this.edgePadding,
         buttonTextStyle: buttonTextStyle ?? this.buttonTextStyle,
-        size: size ?? this.size, iconEdgePadding: iconEdgePadding ?? this.iconEdgePadding,
+        height: height ?? this.height,
+        iconEdgePadding: iconEdgePadding ?? this.iconEdgePadding,
+        width: width ?? this.width,
         buttonIconSize: buttonIconSize ?? this.buttonIconSize
     );
   }
@@ -116,22 +123,27 @@ class RoundedButton  extends StatelessWidget {
 
     return GestureDetector(
       onTap: () => viewModel.onTap(),
-      child: Padding(
-        padding: style.edgePadding,
-        child: Container(
-          alignment: Alignment.center,
-          height: style.size,
-          width: style.size,
-          decoration: BoxDecoration(
-              color: viewModel.backgroundColor != null ? viewModel.backgroundColor : style.backgroundColor,
-              shape: style.buttonShape,
-              borderRadius: style.borderRadius
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: <Widget>[
+          Padding(
+            padding: style.edgePadding,
+            child: Container(
+              alignment: Alignment.center,
+              height: style.height,
+              width: style.width,
+              decoration: BoxDecoration(
+                  color: viewModel.backgroundColor != null ? viewModel.backgroundColor : style.backgroundColor,
+                  shape: style.buttonShape,
+                  borderRadius: style.borderRadius
+              ),
+              child: Wrap(
+                direction: Axis.horizontal,
+                children: _buildButtonContent(),
+              ),
+            ),
           ),
-          child: Wrap(
-            direction: Axis.horizontal,
-            children: _buildButtonContent(),
-          ),
-        ),
+        ],
       ),
     );
   }

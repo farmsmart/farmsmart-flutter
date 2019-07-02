@@ -5,7 +5,6 @@ import 'package:farmsmart_flutter/utils/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:farmsmart_flutter/ui/common/headerAndFooterListView.dart';
-import 'package:farmsmart_flutter/ui/common/CompactRoundedButtonStyle.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
 import 'package:redux/redux.dart';
 import 'mockRepositoryTryout/MockTransactionRepository.dart';
@@ -133,6 +132,7 @@ class _ProfitLossState extends State<ProfitLossPage>  {
               ),
               Expanded(
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
                       viewModel.detailText,

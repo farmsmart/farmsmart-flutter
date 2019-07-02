@@ -1,8 +1,6 @@
 import 'package:farmsmart_flutter/ui/common/listDivider.dart';
 import 'package:flutter/material.dart';
 import 'package:farmsmart_flutter/ui/common/Dogtag.dart';
-import 'package:farmsmart_flutter/ui/common/DogTagStyle.dart';
-
 
 class ProfitLossListItemViewModel {
   final String title;
@@ -60,9 +58,9 @@ class ProfitLossListItem {
                       children: <Widget>[
                         _buildMainTextView(viewModel, itemStyle),
                         SizedBox(width: itemStyle.detailLineSpace),
-                        DogTag.build(
-                            style: PositiveDogTagStyle(),
-                            viewModel: DogTagViewModel(number: viewModel.detail))
+                        DogTag(viewModel: DogTagViewModel(number: viewModel.detail),
+                            style: DogTagStyle.positiveStyle(),
+                            )
                       ])),
               ListDivider.build(),
             ]

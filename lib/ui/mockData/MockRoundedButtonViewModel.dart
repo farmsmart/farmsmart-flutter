@@ -15,7 +15,6 @@ class MockRoundedButtonViewModel {
   }
 }
 
-
 MockString _mockTitleText = MockString(library: [
   "Add another crop",
   "short title",

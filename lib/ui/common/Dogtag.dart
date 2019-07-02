@@ -13,42 +13,73 @@ DogTagViewModel buildDogTagViewModel({String title, IconData icon, String number
   return DogTagViewModel(title: title, icon: icon, number: number);
 }
 
-abstract class DogTagStyle {
+class DogTagStyle {
   final Color backgroundColor;
-
   final BorderRadius borderRadius;
-
   final EdgeInsets edgePadding;
   final TextStyle titleTextStyle;
-
   final int maxLines;
   final double iconSize;
   final double spacing;
 
-  DogTagStyle(this.backgroundColor, this.borderRadius,
-      this.edgePadding, this.titleTextStyle, this.maxLines, this.iconSize, this.spacing);
+  DogTagStyle({this.backgroundColor, this.borderRadius,
+      this.edgePadding, this.titleTextStyle, this.maxLines,
+      this.iconSize, this.spacing});
 
-}
-class _DefaultStyle implements DogTagStyle {
-
-  final BorderRadius borderRadius = const BorderRadius.all(Radius.circular(20.0));
-  final Color backgroundColor = const Color(0x1425df0c);
-  final EdgeInsets edgePadding = const EdgeInsets.only(top: 8.5, right: 12, left: 12, bottom: 8);
-  final TextStyle titleTextStyle = const TextStyle(fontSize: 15, fontWeight: FontWeight.normal, color: Color(0xff25df0c));
-
-  final int maxLines = 1;
-  final double iconSize = 8;
-  final double spacing = 5.5;
-
-  const _DefaultStyle();
-}
-
-class DogTag {
-  static build({DogTagStyle style = const _DefaultStyle(), DogTagViewModel viewModel}) {
-    return _buildDogTag(style, viewModel);
+  factory DogTagStyle.defaultStyle() {
+    return DogTagStyle(
+      backgroundColor: Color(0x1425df0c),
+      borderRadius: BorderRadius.all(Radius.circular(20.0)),
+      edgePadding: EdgeInsets.only(top: 8.5, right: 12, left: 12, bottom: 8),
+      titleTextStyle: TextStyle(fontSize: 15, fontWeight: FontWeight.normal, color: Color(0xff25df0c)),
+      maxLines: 1,
+      iconSize: 8,
+      spacing: 5.5
+    );
   }
 
-  static Widget _buildDogTag(DogTagStyle style, DogTagViewModel viewModel) {
+  factory DogTagStyle.positiveStyle() {
+    return DogTagStyle.defaultStyle().copyWith();
+  }
+
+  factory DogTagStyle.negativeStyle() {
+    return DogTagStyle.positiveStyle().copyWith(
+      backgroundColor: Color(0x14ff8d4f),
+      titleTextStyle: TextStyle(fontSize: 15, fontWeight: FontWeight.normal, color: Color(0xffff8d4f))
+    );
+  }
+
+  factory DogTagStyle.compactStyle() {
+    return DogTagStyle.defaultStyle().copyWith(
+      edgePadding: EdgeInsets.only(left: 12, top: 5.5, right: 12, bottom: 5.5),
+      titleTextStyle: TextStyle(fontSize: 11, fontWeight: FontWeight.normal, color: Color(0xff25df0c))
+    );
+  }
+
+
+  DogTagStyle copyWith({Color backgroundColor, BorderRadius borderRadius,
+    EdgeInsets edgePadding, TextStyle titleTextStyle, int maxLines, double iconSize,
+    double spacing}) {
+
+    return DogTagStyle(
+      backgroundColor: backgroundColor ?? this.backgroundColor,
+      borderRadius: borderRadius ?? this.borderRadius,
+      edgePadding: edgePadding ?? this.edgePadding,
+      titleTextStyle: titleTextStyle ?? this. titleTextStyle,
+      maxLines: maxLines ?? this.maxLines,
+      iconSize: iconSize ?? this.iconSize,
+      spacing: spacing ?? this.spacing
+    );
+  }
+}
+
+class DogTag extends StatelessWidget {
+  final DogTagViewModel _viewModel;
+  final DogTagStyle _style;
+
+  const DogTag({Key key, DogTagViewModel viewModel, DogTagStyle style }) : this._viewModel = viewModel, this._style = style, super(key:key);
+
+  static Widget _build(DogTagViewModel viewModel, DogTagStyle style) {
 
     List<Widget> _buildButtonContent(){
       List<Widget> listBuilder = [];
@@ -103,4 +134,9 @@ class DogTag {
         ),
       );
     }
+
+  @override
+  Widget build(BuildContext context) {
+    return _build(_viewModel, _style);
+  }
   }

@@ -3,7 +3,6 @@ import 'package:farmsmart_flutter/utils/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:farmsmart_flutter/ui/common/network_image_from_future.dart';
 import 'package:farmsmart_flutter/ui/common/Dogtag.dart';
-import 'package:farmsmart_flutter/ui/common/DogTagStyle.dart';
 import 'package:farmsmart_flutter/ui/common/ListDivider.dart';
 
 class PlotListItemViewModel {
@@ -129,9 +128,8 @@ class PlotListItem {
               overflow: TextOverflow.ellipsis,
               style: itemStyle.subtitleTextStyle),
           SizedBox(height: itemStyle.detailLineSpace),
-          DogTag.build(
-            style: CompactDogTag(),
-            viewModel: DogTagViewModel(title: viewModel.detail)
+          DogTag(viewModel: DogTagViewModel(title: viewModel.detail),
+            style: DogTagStyle.compactStyle()
           )],
       ),
     );

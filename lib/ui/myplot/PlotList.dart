@@ -9,8 +9,6 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'myplot_viewmodel.dart';
 import 'PlotListItem.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
-import 'package:farmsmart_flutter/ui/common/CompactRoundedButtonStyle.dart';
-import 'package:farmsmart_flutter/ui/common/LargeRoundedButtonStyle.dart';
 
 
 class PlotListViewModel {
