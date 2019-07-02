@@ -17,6 +17,8 @@ abstract class ArticleListItemStyle {
   final int maxLinesPerTitle;
   final int maxLinesPerSummary;
 
+
+
   ArticleListItemStyle(
       this.titleTextStyle,
       this.summaryTextStyle,

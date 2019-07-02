@@ -67,7 +67,8 @@ class PlotList extends StatefulWidget {
 
 class _MyPlotState extends State<PlotList> {
   @override
-  Widget build(BuildContext context, {PlotListStyle plotStyle = const _DefaultStyle()}) {
+  Widget build(BuildContext context,
+      {PlotListStyle plotStyle = const _DefaultStyle()}) {
     return Scaffold(
       body: StoreConnector<AppState, MyPlotViewModel>(
           onInit: (store) => store.dispatch(FetchCropListAction()),
@@ -76,7 +77,8 @@ class _MyPlotState extends State<PlotList> {
     );
   }
 
-  Widget _buildBody(BuildContext context, MyPlotViewModel viewModel, PlotListStyle myPlotStyle) {
+  Widget _buildBody(BuildContext context, MyPlotViewModel viewModel,
+      PlotListStyle myPlotStyle) {
     switch (viewModel.loadingStatus) {
       case LoadingStatus.LOADING:
         return Container(
@@ -84,68 +86,94 @@ class _MyPlotState extends State<PlotList> {
             CircularProgressIndicator(),
             alignment: Alignment.center);
       case LoadingStatus.SUCCESS:
-        return _buildPage(context, viewModel.cropsList, myPlotStyle, viewModel.goToDetail);
+        return _buildPage(
+            context, viewModel.cropsList, myPlotStyle, viewModel.goToDetail);
       case LoadingStatus.ERROR:
-        return _buildErrorPage(context, viewModel, myPlotStyle); // TODO Check FARM-203
+        return _buildErrorPage(
+            context, viewModel, myPlotStyle); // TODO Check FARM-203
     }
   }
-}
 
-Widget _buildPage(BuildContext context, List<CropEntity> cropList,
-    PlotListStyle plotStyle, Function goToDetail){
-  final viewModel = buildPlotListViewModel();
-  return HeaderAndFooterListView.builder(
-      itemCount: cropList.length,
-      itemBuilder: (BuildContext context, int index) {
-        final itemViewModel = fromCropEntityToViewModel(cropList[index], goToDetail);
-        return PlotListItem().buildListItem(itemViewModel);
-  },
-  physics: ScrollPhysics(),
-  shrinkWrap: true,
-  header: _buildTitle(viewModel, plotStyle, context: context),
-  footer: RoundedButton.build(style: LargeRoundedButtonStyle() ,context: context, title: viewModel.buttonTitle));
-}
 
-Widget _buildTitle(PlotListViewModel viewModel, PlotListStyle myPlotStyle, {BuildContext context}){
-  return Container(
-    padding: myPlotStyle.titleEdgePadding,
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
+  Widget _buildPage(BuildContext context, List<CropEntity> cropList,
+      PlotListStyle plotStyle, Function goToDetail) {
+    final viewModel = buildPlotListViewModel();
+    return HeaderAndFooterListView.builder(
+        itemCount: cropList.length,
+        itemBuilder: (BuildContext context, int index) {
+          final itemViewModel = fromCropEntityToViewModel(
+              cropList[index], goToDetail);
+          return PlotListItem().buildListItem(itemViewModel);
+        },
+        physics: ScrollPhysics(),
+        shrinkWrap: true,
+        header: _buildTitle(viewModel, plotStyle, context: context),
+        footer: RoundedButton.build(RoundedButtonViewModel(title: viewModel.buttonTitle, onTap: () => _showToast(context)),
+            style: LargeRoundedButtonStyle()));
+  }
+
+  Widget _buildTitle(PlotListViewModel viewModel, PlotListStyle myPlotStyle,
+      {BuildContext context}) {
+    return Container(
+        padding: myPlotStyle.titleEdgePadding,
+        child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Text(
-                viewModel.title,
-                style: myPlotStyle.titleTextStyle,
-              )
+              Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      viewModel.title,
+                      style: myPlotStyle.titleTextStyle,
+                    )
+                  ]
+              ),
+              RoundedButton.build(
+                  RoundedButtonViewModel(icon: "assets/icons/profit_add.png", onTap: () => _showToast(context)),
+                  style: CompactRoundedButtonStyle())
             ]
-          ),
-          RoundedButton.build(style: CompactRoundedButtonStyle(),context: context, icon: Icons.add)]
-      )
-  );
-}
+        )
+    );
+  }
 
-Widget _buildErrorPage(BuildContext context, MyPlotViewModel viewModel, PlotListStyle plotStyle){
-  final String retryButton = "Retry";
-  return Container(
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        AlertDialog(
-          title: Text(
-            plotStyle.errorText),
-          actions: <Widget>[
-            FlatButton(
-              child: Text(
-                  retryButton),
-              onPressed: () {
-                //FIXME: Needs to implement the retry functionality
-              }
-            )
-          ])
-      ],
-    ),
-  );
+  Widget _buildErrorPage(BuildContext context, MyPlotViewModel viewModel,
+      PlotListStyle plotStyle) {
+    final String retryButton = "Retry";
+    return Container(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          AlertDialog(
+              title: Text(
+                  plotStyle.errorText),
+              actions: <Widget>[
+                FlatButton(
+                    child: Text(
+                        retryButton),
+                    onPressed: () {
+                      //FIXME: Needs to implement the retry functionality
+                    }
+                )
+              ])
+        ],
+      ),
+    );
+  }
+
+  //FIXME: Only is built for show that this buttons are not functional yet
+  static void _showToast(BuildContext context) {
+    final String toastText = "Not Implemented Yet";
+    final String toastButtonText = "BACK";
+    final scaffold = Scaffold.of(context);
+    scaffold.showSnackBar(
+        SnackBar(
+          content: Text(
+              toastText
+          ),
+          action: SnackBarAction(label: toastButtonText, onPressed: scaffold.hideCurrentSnackBar),
+        )
+    );
+  }
+
 }

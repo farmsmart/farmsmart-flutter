@@ -3,9 +3,11 @@ import 'package:farmsmart_flutter/redux/app/app_state.dart';
 import 'package:farmsmart_flutter/ui/app_bar.dart';
 import 'package:farmsmart_flutter/farmsmart_localizations.dart';
 import 'package:farmsmart_flutter/redux/app/app_state.dart';
+import 'package:farmsmart_flutter/ui/common/ActionSheet.dart';
 import 'package:farmsmart_flutter/ui/community/community_child.dart';
 import 'package:farmsmart_flutter/ui/discover/discover_page.dart';
 import 'package:farmsmart_flutter/ui/home_viewmodel.dart';
+import 'package:farmsmart_flutter/ui/mockData/MockActionSheetViewModel.dart';
 import 'package:farmsmart_flutter/ui/myplot/PlotList.dart';
 import 'package:farmsmart_flutter/ui/profitloss/ProfitLossListItem.dart';
 import 'package:farmsmart_flutter/utils/assets.dart';
@@ -50,12 +52,15 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
     }
   }
 
+
   final List<Widget> _children = [
     PlotList(),
     ProfitLossPage(),
     ArticleList(),
     HomeCommunityChild(),
-    PlaygroundView(widgetList: [], appBarColor: Color(0xFF9CBD3A),),
+    PlaygroundView(widgetList: [
+      ActionSheet(viewModel: MockProfitLossListViewModel.build(), style: ActionSheetStyle.defaultStyle())
+    ], appBarColor: Color(0xFF9CBD3A),),
   ];
 
   @override

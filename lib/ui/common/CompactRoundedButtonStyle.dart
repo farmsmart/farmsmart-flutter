@@ -7,7 +7,7 @@ class CompactRoundedButtonStyle implements RoundedButtonStyle {
   final Color backgroundColor =  const Color(0xff24d900);
 
   final double size = 24.0;
-  final double buttonIconSize = 15.0;
+  final double buttonIconSize = 9.0;
 
   final BoxShape buttonShape = BoxShape.rectangle;
   final BorderRadius borderRadius = const BorderRadius.all(Radius.circular(20));
@@ -25,7 +25,7 @@ class CompactBigRoundedButtonStyle implements RoundedButtonStyle {
   final Color backgroundColor =  const Color(0xff24d900);
 
   final double size = 48.0;
-  final double buttonIconSize = 17.0;
+  final double buttonIconSize = 14.0;
 
   final BoxShape buttonShape = BoxShape.rectangle;
   final BorderRadius borderRadius = const BorderRadius.all(Radius.circular(40));

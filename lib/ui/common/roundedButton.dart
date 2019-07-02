@@ -2,15 +2,11 @@ import 'package:flutter/material.dart';
 
 class RoundedButtonViewModel {
   String title;
-  IconData icon;
+  String icon;
   Function onTap;
-  BuildContext context;
+  Color backgroundColor; // shouldn't be here
 
-  RoundedButtonViewModel(this.context, {this.title, this.icon, this.onTap});
-}
-
-RoundedButtonViewModel buildButtonViewModel(BuildContext context, {String title, IconData icon, Function onTap}) {
-  return RoundedButtonViewModel(context, title: title, icon : icon, onTap: () => onTap(context));
+  RoundedButtonViewModel({this.title, this.icon, this.onTap, this.backgroundColor});
 }
 
 abstract class RoundedButtonStyle {
@@ -53,28 +49,17 @@ class _DefaultStyle implements RoundedButtonStyle {
 }
 
 class RoundedButton {
-  static build(
-      {RoundedButtonStyle style = const _DefaultStyle(),
-        @required  BuildContext context,
-        String title, IconData icon,
-        Function onTap}) {
-    return _buildRoundedButton(style, context , title: title, icon: icon, onTap: onTap);
+  static build(RoundedButtonViewModel viewModel, {RoundedButtonStyle style = const _DefaultStyle()}) {
+    return _buildRoundedButton(viewModel, style);
   }
 
-  static Widget _buildRoundedButton(RoundedButtonStyle buttonStyle, BuildContext context, {String title, IconData icon,
-    Function onTap}) {
-
-    RoundedButtonViewModel viewModel = buildButtonViewModel(context, title: title, icon: icon, onTap: onTap);
+  static Widget _buildRoundedButton(RoundedButtonViewModel viewModel, RoundedButtonStyle buttonStyle) {
 
     List<Widget> _buildButtonContent(){
       List<Widget> listBuilder = [];
       if (viewModel.icon != null) {
         listBuilder.add(
-            Icon(
-              viewModel.icon,
-              size: buttonStyle.buttonIconSize,
-              color: buttonStyle.iconButtonColor,
-            )
+            Image.asset(viewModel.icon, height: buttonStyle.buttonIconSize)
         );
       }
       if (viewModel.title != null) {
@@ -88,7 +73,7 @@ class RoundedButton {
     }
 
     return GestureDetector(
-      onTap: () => _showToast(viewModel.context),
+      onTap: () => viewModel.onTap(),
       child: Padding(
         padding: buttonStyle.edgePadding,
         child: Container(
@@ -96,7 +81,7 @@ class RoundedButton {
           height: buttonStyle.size,
           width: buttonStyle.size,
           decoration: BoxDecoration(
-              color: buttonStyle.backgroundColor,
+              color: viewModel.backgroundColor != null ? viewModel.backgroundColor : buttonStyle.backgroundColor,
               shape: buttonStyle.buttonShape,
               borderRadius: buttonStyle.borderRadius
           ),
@@ -109,18 +94,5 @@ class RoundedButton {
     );
   }
 
-//FIXME: Only is built for show that this buttons are not functional yet
-  static void _showToast(BuildContext context) {
-    final String toastText = "Not Implemented Yet";
-    final String toastButtonText = "BACK";
-    final scaffold = Scaffold.of(context);
-    scaffold.showSnackBar(
-        SnackBar(
-          content: Text(
-              toastText
-          ),
-          action: SnackBarAction(label: toastButtonText, onPressed: scaffold.hideCurrentSnackBar),
-        )
-    );
-  }
+
 }

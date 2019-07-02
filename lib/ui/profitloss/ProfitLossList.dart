@@ -165,8 +165,25 @@ class _ProfitLossState extends State<ProfitLossPage>  {
     return Scaffold(
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         body: _buildPage(context, viewModel, profitStyle),
-        floatingActionButton: RoundedButton.build(style: CompactBigRoundedButtonStyle(),context: context, icon: Icons.add)
+        floatingActionButton: RoundedButton.build(RoundedButtonViewModel(icon: "assets/icons/profit_add.png", onTap: () => _showToast(context)), style: CompactBigRoundedButtonStyle())
+    );
+  }
+
+  //FIXME: Only is built for show that this buttons are not functional yet
+  static void _showToast(BuildContext context) {
+    final String toastText = "Not Implemented Yet";
+    final String toastButtonText = "BACK";
+    final scaffold = Scaffold.of(context);
+    scaffold.showSnackBar(
+        SnackBar(
+          content: Text(
+              toastText
+          ),
+          action: SnackBarAction(label: toastButtonText, onPressed: scaffold.hideCurrentSnackBar),
+        )
     );
   }
 }
+
+
 
