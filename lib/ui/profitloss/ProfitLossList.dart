@@ -131,11 +131,17 @@ class _ProfitLossState extends State<ProfitLossPage>  {
               SizedBox(
                 width: profitStyle.detailTextSpacing,
               ),
-              Text(
-                viewModel.detailText,
-                style: profitStyle.detailTextStyle,
-                  maxLines: profitStyle.maxLines,
-                  overflow: TextOverflow.ellipsis
+              Expanded(
+                child: Column(
+                  children: <Widget>[
+                    Text(
+                      viewModel.detailText,
+                      style: profitStyle.detailTextStyle,
+                        maxLines: profitStyle.maxLines,
+                        overflow: TextOverflow.ellipsis
+                    ),
+                  ],
+                ),
               )
             ],
           ),
