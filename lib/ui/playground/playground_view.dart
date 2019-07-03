@@ -1,5 +1,5 @@
+import 'package:farmsmart_flutter/ui/playground/playground_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:farmsmart_flutter/ui/playground/task_widget.dart';
 
 class PlaygroundView extends StatefulWidget {
   static const double _defaultFontSize = 40;
@@ -17,21 +17,21 @@ class PlaygroundView extends StatefulWidget {
   final Color appBarColor;
   final Widget appBarTitle;
   final String allWidgetsText;
+  final bool showAtoms;
 
   PlaygroundView(
       {Key key,
       @required this.widgetList,
-      this.appBarColor = const Color(0xFF00CD9F),
+      this.appBarColor = const Color(0xFF9CBD3A),
       this.appBarTitle = _defaultAppBarTitle,
-      this.allWidgetsText = _defaultAllWidgetsTitle});
+      this.allWidgetsText = _defaultAllWidgetsTitle,
+      this.showAtoms = true});
 
   @override
   _PlaygroundViewState createState() => _PlaygroundViewState();
 }
 
 class _PlaygroundViewState extends State<PlaygroundView> {
-  static const int _firstIndex = 0;
-  static const int _hardcodedItemCount = 1;
   static const String _searchText = 'Search';
   static const double _searchBorderRadius = 10;
   static const double _searchEdgePadding = 16.0;
@@ -41,7 +41,7 @@ class _PlaygroundViewState extends State<PlaygroundView> {
 
   @override
   void initState() {
-    items.addAll(widget.widgetList);
+    _initWidgetList();
     super.initState();
   }
 
@@ -53,26 +53,36 @@ class _PlaygroundViewState extends State<PlaygroundView> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(_searchEdgePadding),
-            child: _inputTextField(),
+    return SafeArea(
+      child: Scaffold(
+        body: Container(
+          child: Column(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(_searchEdgePadding),
+                child: _inputTextField(),
+              ),
+              Expanded(
+                child: _listView(),
+              ),
+            ],
           ),
-          Expanded(
-            child: _listView(),
-          ),
-        ],
+        ),
       ),
     );
+  }
+
+  void _initWidgetList() {
+    items.addAll(widget.widgetList);
   }
 
   void _filterSearchResults(String query) {
     if (query.isNotEmpty) {
       var filteredItems = items
           .where((widget) =>
-              widget.toString().toLowerCase().contains(query.toLowerCase()))
+              widget.toString().toLowerCase().contains(query.toLowerCase()) ||
+              ((widget is PlaygroundWidget) &&
+                  widget.title.toLowerCase().contains(query.toLowerCase())))
           .toList();
       setState(() {
         items.clear();
@@ -86,20 +96,16 @@ class _PlaygroundViewState extends State<PlaygroundView> {
   void _resetList() {
     setState(() {
       items.clear();
-      items.addAll(widget.widgetList);
+      _initWidgetList();
     });
   }
 
   ListView _listView() {
     return ListView.builder(
         shrinkWrap: true,
-        itemCount: items.length + _hardcodedItemCount,
+        itemCount: items.length,
         itemBuilder: (BuildContext context, int index) {
-          if (index == _firstIndex) {
-            return _playgroundAllListItem(index, context);
-          } else {
-            return _playgroundListItem(index - _hardcodedItemCount, context);
-          }
+            return _playgroundListItem(index, context);
         });
   }
 
@@ -116,7 +122,8 @@ class _PlaygroundViewState extends State<PlaygroundView> {
         prefixIcon: Icon(Icons.search, color: widget.appBarColor),
         border: OutlineInputBorder(
             borderSide: BorderSide(color: Colors.red),
-            borderRadius: BorderRadius.all(Radius.circular(_searchBorderRadius))),
+            borderRadius:
+                BorderRadius.all(Radius.circular(_searchBorderRadius))),
       ),
     );
   }
@@ -125,22 +132,25 @@ class _PlaygroundViewState extends State<PlaygroundView> {
     return ListTile(
       title: Text(widget.allWidgetsText),
       onTap: () {
-        _navigateToAllWidgets(context, index);
+        _navigateToNextPlayground(context, index);
       },
     );
   }
 
   ListTile _playgroundListItem(int index, BuildContext context) {
-
-    if(items[index] is TaskWidget){
+    if (items[index] is PlaygroundWidget) {
       return ListTile(
-        title: Text((items[index] as TaskWidget).title),
+        leading: Icon(Icons.view_compact),
+        title: Text((items[index] as PlaygroundWidget).title),
         onTap: () {
-          _navigateToWidgetDetail(context, (items[index] as TaskWidget).child);
+          var widgetItem = (items[index] as PlaygroundWidget);
+          _navigateToWidgetDetail(context, widgetItem.child,
+              customTitle: widgetItem.title);
         },
       );
-    }else{
+    } else {
       return ListTile(
+        leading: Icon(Icons.widgets),
         title: Text(items[index].toString()),
         onTap: () {
           _navigateToWidgetDetail(context, items[index]);
@@ -149,24 +159,26 @@ class _PlaygroundViewState extends State<PlaygroundView> {
     }
   }
 
-  void _navigateToWidgetDetail(BuildContext context, Widget childWidget) {
+  void _navigateToWidgetDetail(BuildContext context, Widget childWidget,
+      {String customTitle}) {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => _PlaygroundDetail(
               child: childWidget,
               appBarColor: widget.appBarColor,
+              customTitle: customTitle,
             ),
       ),
     );
   }
 
-  void _navigateToAllWidgets(BuildContext context, int index) {
+  void _navigateToNextPlayground(BuildContext context, int index) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => _PlaygroundAllWidgets(
+        builder: (context) => PlaygroundView(
               widgetList: widget.widgetList,
               appBarColor: widget.appBarColor,
-              allWidgetsText: widget.allWidgetsText,
+              showAtoms: true,
             ),
       ),
     );
@@ -178,22 +190,25 @@ class _PlaygroundViewState extends State<PlaygroundView> {
  */
 
 class _PlaygroundDetail extends StatelessWidget {
-  static const Color _defaultAppBarColor = Color(0xFF00CD9F);
+  static const Color _defaultAppBarColor = Color(0xFF9CBD3A);
+
   final Widget child;
   final Color appBarColor;
+  final String customTitle;
 
-  _PlaygroundDetail({
-    Key key,
-    @required this.child,
-    this.appBarColor = _defaultAppBarColor,
-  }) : super(key: key);
+  _PlaygroundDetail(
+      {Key key,
+      @required this.child,
+      this.appBarColor = _defaultAppBarColor,
+      this.customTitle})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: appBarColor,
-        title: Text(child.toString()),
+        title: Text(customTitle ?? child.toString()),
       ),
       body: Container(
         child: child,
@@ -209,7 +224,7 @@ class _PlaygroundDetail extends StatelessWidget {
 class _PlaygroundAllWidgets extends StatelessWidget {
   static const double _fontSize = 30.0;
   static const double _verticalPaddingWidgetTitle = 30.0;
-  static const Color _defaultAppBarColor = Color(0xFF00CD9F);
+  static const Color _defaultAppBarColor = Color(0xFF9CBD3A);
   static const EdgeInsets _defaultTextPadding = EdgeInsets.symmetric(
     vertical: _verticalPaddingWidgetTitle,
   );
