@@ -1,28 +1,25 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:farmsmart_flutter/data/bloc/article/ArticleListProvider.dart';
-import 'package:farmsmart_flutter/data/bloc/article/ArticleDetailTransformer.dart';
-import 'package:farmsmart_flutter/data/bloc/article/ArticleListItemViewModelTransformer.dart';
 import 'package:farmsmart_flutter/data/firebase_const.dart';
 import 'package:farmsmart_flutter/data/repositories/ArticleRepositoryInterface.dart';
 import 'package:farmsmart_flutter/data/repositories/implementation/ArticlesRepositoryFlamelink.dart';
 import 'package:farmsmart_flutter/data/repositories/implementation/FlameLink.dart';
-import 'package:farmsmart_flutter/data/repositories/implementation/MockArticlesRepository.dart';
 import 'package:farmsmart_flutter/farmsmart_localizations.dart';
 import 'package:farmsmart_flutter/redux/app/app_state.dart';
 import 'package:farmsmart_flutter/ui/community/community_child.dart';
 import 'package:farmsmart_flutter/ui/discover/ArticleList.dart';
-import 'package:farmsmart_flutter/ui/discover/HeroListItem.dart';
-import 'package:farmsmart_flutter/ui/discover/StandardListItem.dart';
 import 'package:farmsmart_flutter/ui/home_viewmodel.dart';
 import 'package:farmsmart_flutter/ui/myplot/PlotList.dart';
+import 'package:farmsmart_flutter/ui/playground/playground_view.dart';
 import 'package:farmsmart_flutter/ui/profitloss/profit_loss_child.dart';
 import 'package:farmsmart_flutter/utils/assets.dart';
 import 'package:farmsmart_flutter/utils/colors.dart';
 import 'package:farmsmart_flutter/utils/dimens.dart';
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
-import 'package:farmsmart_flutter/ui/playground/playground_view.dart';
+import 'package:farmsmart_flutter/ui/playground/data/playground_datasource_impl.dart';
+
 
 /// Home "screen" route. Scaffold has all the app subcomponents available inside,
 /// like bottom bar or action bar.
@@ -97,26 +94,7 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
       discoverTab,
       HomeCommunityChild(),
       PlaygroundView(
-        widgetList: [
-          StandardListItem(
-              viewModel: ArticleListViewModelItemTransformer(
-                      detailTransformer:
-                          ArticleDetailViewModelTransformer(
-                              listItemTransformer:
-                                  ArticleListViewModelItemTransformer()))
-                  .transform(from: MockArticle.build())),
-          HeroListItem(
-              viewModel: ArticleListViewModelItemTransformer(
-                      detailTransformer:
-                          ArticleDetailViewModelTransformer(
-                              listItemTransformer:
-                                  ArticleListViewModelItemTransformer()))
-                  .transform(from: MockArticle.build())),
-          ArticleList(
-              viewModelProvider: ArticleListProvider( title: "Test",
-                  repository: MockArticlesRepository(articleCount: 2000)))
-        ],
-        appBarColor: Color(0xFF9CBD3A),
+        widgetList: PlaygroundDataSourceImpl().getList(),
       ),
     ];
     return Scaffold(
