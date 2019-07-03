@@ -12,6 +12,8 @@ import 'package:farmsmart_flutter/ui/mockData/MockActionSheetViewModel.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockRoundedButtonViewModel.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
 import 'package:farmsmart_flutter/ui/myplot/PlotList.dart';
+import 'package:farmsmart_flutter/ui/profitloss/ProfitLossHeader.dart';
+import 'package:farmsmart_flutter/ui/profitloss/mockRepositoryTryout/MockTransactionRepository.dart';
 import 'package:farmsmart_flutter/utils/assets.dart';
 import 'package:farmsmart_flutter/utils/colors.dart';
 import 'package:farmsmart_flutter/utils/dimens.dart';
@@ -60,10 +62,12 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
     ArticleList(),
     HomeCommunityChild(),
     PlaygroundView(widgetList: [
-      ActionSheet(viewModel: MockProfitLossListViewModel.build(), style: ActionSheetStyle.defaultStyle()),
+      //ActionSheet(viewModel: MockProfitLossListViewModel.build(), style: ActionSheetStyle.defaultStyle()),
       RoundedButton(viewModel: MockRoundedButtonViewModel.buildLarge(), style: RoundedButtonStyle.largeRoundedButtonStyle()),
       RoundedButton(viewModel: MockRoundedButtonViewModel.buildCompact(), style: RoundedButtonStyle.compactRoundedButton()),
       RoundedButton(viewModel: MockRoundedButtonViewModel.buildCompact(), style: RoundedButtonStyle.compactBigRoundedButton()),
+      ProfitLossHeader(viewModel: MockProfitLossHeaderViewModel.build(), style: ProfitLossHeaderStyle.defaultStyle()),
+
     ], appBarColor: Color(0xFF9CBD3A)),
   ];
 
@@ -72,13 +76,13 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
     return Scaffold(
       body: LayoutBuilder(
         builder: (context, constraints) => SafeArea(
-              child: Container(
-                color: Color(black),
-                child: StoreConnector<AppState, HomeViewmodel>(
-                    builder: (_, viewModel) => content(context, viewModel),
-                    converter: (store) => HomeViewmodel.fromStore(store)),
-              ),
-            ),
+          child: Container(
+            color: Color(black),
+            child: StoreConnector<AppState, HomeViewmodel>(
+                builder: (_, viewModel) => content(context, viewModel),
+                converter: (store) => HomeViewmodel.fromStore(store)),
+          ),
+        ),
       ),
     );
   }
@@ -92,6 +96,7 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
       bottomNavigationBar: Theme(
         data: Theme.of(context).copyWith(primaryColor: Color(primaryGreen)),
         child: BottomNavigationBar(
+
           type: BottomNavigationBarType.fixed,
           onTap: viewModel.changeTab,
           currentIndex: viewModel.currentTab,

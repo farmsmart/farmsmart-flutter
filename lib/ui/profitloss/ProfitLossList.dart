@@ -8,7 +8,7 @@ import 'package:farmsmart_flutter/ui/common/headerAndFooterListView.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
 import 'package:redux/redux.dart';
 import 'mockRepositoryTryout/MockTransactionRepository.dart';
-
+import 'package:farmsmart_flutter/ui/profitloss/ProfitLossHeader.dart';
 
 class ProfitLossListViewModel {
   LoadingStatus loadingStatus;
@@ -28,43 +28,22 @@ class ProfitLossListViewModel {
 }
 
 abstract class ProfitLossStyle {
-
-  final TextStyle titleTextStyle;
-  final TextStyle detailTextStyle;
-  final TextStyle subtitleTextStyle;
-
   final Color actionButtonBackgroundColour;
-  final EdgeInsets titleEdgePadding;
-
-  final double detailTextSpacing;
 
   final double actionButtonSize;
   final double actionButtonElevation;
   final double actionButtonIconSize;
-  final int maxLines;
   final double bottomEdgePadding;
 
   ProfitLossStyle(this.actionButtonBackgroundColour, this.actionButtonSize,
-      this.actionButtonElevation, this.actionButtonIconSize, this.titleEdgePadding,
-      this.titleTextStyle, this.detailTextSpacing, this.detailTextStyle,
-      this.subtitleTextStyle, this.maxLines, this.bottomEdgePadding);
+      this.actionButtonElevation, this.actionButtonIconSize, this.bottomEdgePadding);
 }
 
 class _DefaultStyle implements ProfitLossStyle{
-
-  final TextStyle titleTextStyle = const TextStyle(fontSize: 47, fontWeight: FontWeight.bold, color: Color(0xFF1a1b46));
-  final TextStyle detailTextStyle = const TextStyle(fontSize: 15, fontWeight: FontWeight.normal, color: Color(0xFF767690));
-  final TextStyle subtitleTextStyle = const TextStyle(fontSize: 17, fontWeight: FontWeight.normal, color: Color(0xFF25df0c));
-
-  final EdgeInsets titleEdgePadding = const EdgeInsets.only(left: 33, top: 36.5, bottom: 12.5, right: 33);
-
-  final double detailTextSpacing = 10;
-
   final Color actionButtonBackgroundColour = const Color(0xFF25df0c);
   final double actionButtonSize = 48.0;
   final double actionButtonElevation = 0;
   final double actionButtonIconSize = 20.0;
-  final int maxLines = 1;
   final double bottomEdgePadding = 51;
 
   const _DefaultStyle();
@@ -99,73 +78,18 @@ class _ProfitLossState extends State<ProfitLossPage>  {
   }
 
   Widget _buildPage(BuildContext context, ProfitLossListViewModel viewModel, ProfitLossStyle profitStyle) {
-
     return HeaderAndFooterListView.builder(
         itemCount: viewModel.transactions.length,
         itemBuilder: (BuildContext context, int index) {
-         return ProfitLossListItem().buildListItem(viewModel.transactions[index]);
+          return ProfitLossListItem().buildListItem(viewModel.transactions[index]);
         },
-    physics: ScrollPhysics(),
-    shrinkWrap: true,
-      header: _buildTitle(profitStyle, viewModel),
-      footer: SizedBox(height: profitStyle.bottomEdgePadding,)
+        physics: ScrollPhysics(),
+        shrinkWrap: true,
+        header: ProfitLossHeader(viewModel: ProfitLossHeaderViewModel(viewModel.title, viewModel.subtitle, viewModel.detailText), style: ProfitLossHeaderStyle.defaultStyle()),
+        footer: SizedBox(height: profitStyle.bottomEdgePadding,)
     );
   }
 
-  Widget _buildTitle(ProfitLossStyle profitStyle, ProfitLossListViewModel viewModel) {
-    return Container(
-      margin: profitStyle.titleEdgePadding,
-      child: Column(
-        children: <Widget>[
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.baseline,
-            textBaseline: TextBaseline.alphabetic,
-            children: <Widget>[
-              Text(
-                  viewModel.title,
-                  style: profitStyle.titleTextStyle,
-                  maxLines: profitStyle.maxLines,
-                  overflow: TextOverflow.ellipsis
-              ),
-              SizedBox(
-                width: profitStyle.detailTextSpacing,
-              ),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      viewModel.detailText,
-                      style: profitStyle.detailTextStyle,
-                        maxLines: profitStyle.maxLines,
-                        overflow: TextOverflow.ellipsis
-                    ),
-                  ],
-                ),
-              )
-            ],
-          ),
-          Row(
-            children: <Widget>[
-              _buildSubTitle(viewModel, profitStyle),
-            ],
-          )
-        ]),
-    );
-    }
-
-    Widget _buildSubTitle(ProfitLossListViewModel viewModel, ProfitLossStyle profitStyle) {
-    return Container(
-      child: GestureDetector(
-        child: Text(
-          viewModel.subtitle,
-          style: profitStyle.subtitleTextStyle
-    ),
-        onTap: () {
-          //FIXME: Add navigation to the next screen when finished
-        },
-      ));
-  }
 
   Widget _buildPageWithFloatingButton(BuildContext context, ProfitLossListViewModel viewModel, ProfitLossStyle profitStyle) {
     return Scaffold(
@@ -177,6 +101,7 @@ class _ProfitLossState extends State<ProfitLossPage>  {
 
   //FIXME: Only is built for show that this buttons are not functional yet
   static void _showToast(BuildContext context) {
+
     final String toastText = "Not Implemented Yet";
     final String toastButtonText = "BACK";
     final scaffold = Scaffold.of(context);
@@ -190,6 +115,3 @@ class _ProfitLossState extends State<ProfitLossPage>  {
     );
   }
 }
-
-
-
