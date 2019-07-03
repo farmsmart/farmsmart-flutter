@@ -1,5 +1,4 @@
-
-import 'package:farmsmart_flutter/ui/profitloss/MyPainter.dart';
+import 'package:farmsmart_flutter/ui/common/MyPainter.dart';
 import 'package:flutter/material.dart';
 
 class CircularProgress extends StatefulWidget {
@@ -11,12 +10,17 @@ class CircularProgress extends StatefulWidget {
 class _CircularProgressState extends State<CircularProgress>{
 
   double percentage;
+  double increment;
+  double defaultValue = 0;
+  double percentageComplete = 100.0;
+
   @override
   void initState(){
 
     super.initState();
     setState(() {
       percentage = 0.0;
+      increment = 10.0;
     });
   }
   
@@ -42,9 +46,9 @@ class _CircularProgressState extends State<CircularProgress>{
               child: Text("Click"),
               onPressed: () {
                 setState(() {
-                  percentage += 10.0;
-                  if (percentage>100.0){
-                    percentage = 0.0;
+                  percentage += increment;
+                  if (percentage > percentageComplete){
+                    percentage = defaultValue;
                   }
                 });
               }),
@@ -53,7 +57,4 @@ class _CircularProgressState extends State<CircularProgress>{
       ),
     );
   }
-
-
-
 }

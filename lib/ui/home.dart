@@ -5,7 +5,7 @@ import 'package:farmsmart_flutter/ui/community/community_child.dart';
 import 'package:farmsmart_flutter/ui/discover/discover_page.dart';
 import 'package:farmsmart_flutter/ui/home_viewmodel.dart';
 import 'package:farmsmart_flutter/ui/myplot/PlotList.dart';
-import 'package:farmsmart_flutter/ui/profitloss/CircularProgress.dart';
+import 'package:farmsmart_flutter/ui/common/CircularProgress.dart';
 import 'package:farmsmart_flutter/ui/profitloss/profit_loss_child.dart';
 import 'package:farmsmart_flutter/utils/assets.dart';
 import 'package:farmsmart_flutter/utils/colors.dart';
