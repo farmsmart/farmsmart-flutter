@@ -8,7 +8,12 @@ class PlayGroundTasksDataSource {
       PlaygroundWidget(
         title: 'TASK FARM-402 Test playground widget',
         child: Text('Test play ground'),
-      )
+      ),
+      /* Template
+      PlaygroundWidget(
+        title: '#TASK NAME#',
+        child: YourWidget(),
+      ),*/
     ];
   }
 }

@@ -55,7 +55,6 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
     HomeCommunityChild(),
     PlaygroundView(
       widgetList: PlaygroundDataSource().getList(),
-      appBarColor: Color(0xFF9CBD3A),
     ),
   ];
 
