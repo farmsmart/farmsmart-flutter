@@ -1,3 +1,6 @@
+import 'package:farmsmart_flutter/ui/common/ActionSheet.dart';
+import 'package:farmsmart_flutter/ui/common/ActionSheetListItem.dart';
+import 'package:farmsmart_flutter/ui/mockData/MockActionSheetViewModel.dart';
 import 'package:farmsmart_flutter/ui/playground/playground_widget.dart';
 import 'package:farmsmart_flutter/ui/profitloss/ProfitLossHeader.dart';
 import 'package:farmsmart_flutter/ui/profitloss/ProfitLossListItem.dart';
@@ -26,6 +29,23 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
             viewModel: MockProfitLossListItemViewModel.buildPositive(),
             style: ProfitLossItemStyle.defaultStyle()),
       ),
+      PlaygroundWidget(
+        title: 'FARM-355 Generic Action Sheet - Type 1',
+        child: ActionSheet(viewModel: MockActionSheetViewModel.buildStandard(), style: ActionSheetStyle.defaultStyle(), cellStyle: ActionSheetListItemStyle.defaultStyle())
+      ),
+      PlaygroundWidget(
+          title: 'FARM-355 Generic Action Sheet - Type 2',
+          child: ActionSheet(viewModel: MockActionSheetViewModel.buildStandardBigger(), style: ActionSheetStyle.defaultStyle(), cellStyle: ActionSheetListItemStyle.defaultStyle())
+
+      ),
+      PlaygroundWidget(
+          title: 'FARM-355 Generic Action Sheet - Type 3',
+          child: ActionSheet(viewModel: MockActionSheetViewModel.buildWithIcon(), style: ActionSheetStyle.defaultStyle(), cellStyle: ActionSheetListItemStyle.defaultStyle())
+      ),
+      PlaygroundWidget(
+          title: 'FARM-355 Generic Action Sheet - Type 4',
+          child: ActionSheet(viewModel: MockActionSheetViewModel.buildWithCheckBox(), style: ActionSheetStyle.defaultStyle(), cellStyle: ActionSheetListItemStyle.selectableStyle())
+      )
       /* Template
       PlaygroundWidget(
         title: '#TASK NAME#',
@@ -34,3 +54,5 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
     ];
   }
 }
+
+
