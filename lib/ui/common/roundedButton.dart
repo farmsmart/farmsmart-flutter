@@ -4,7 +4,7 @@ class RoundedButtonViewModel {
   String title;
   String icon;
   Function onTap;
-  Color backgroundColor; // shouldn't be here
+  Color backgroundColor;
 
   RoundedButtonViewModel({this.title, this.icon, this.onTap, this.backgroundColor});
 }
@@ -100,42 +100,28 @@ class RoundedButton  extends StatelessWidget {
   final RoundedButtonViewModel _viewModel;
   final RoundedButtonStyle _style;
 
-  const RoundedButton({Key key, RoundedButtonViewModel viewModel, RoundedButtonStyle style }) : this._viewModel = viewModel, this._style = style, super(key: key);
+  const RoundedButton({Key key, RoundedButtonViewModel viewModel, RoundedButtonStyle style })
+      : this._viewModel = viewModel,
+        this._style = style,
+        super(key: key);
 
-  static Widget _build(RoundedButtonViewModel viewModel, RoundedButtonStyle style) {
-
-    List<Widget> _buildButtonContent(){
-      List<Widget> listBuilder = [];
-      if (viewModel.icon != null) {
-        listBuilder.add(
-            Image.asset(viewModel.icon, height: style.buttonIconSize)
-        );
-      }
-      if (viewModel.title != null) {
-        listBuilder.add(
-            Text(
-                viewModel.title,
-                style: style.buttonTextStyle
-            ));
-      }
-      return listBuilder;
-    }
-
+  @override
+  Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => viewModel.onTap(),
+      onTap: () => _viewModel.onTap(),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
           Padding(
-            padding: style.edgePadding,
+            padding: _style.edgePadding,
             child: Container(
               alignment: Alignment.center,
-              height: style.height,
-              width: style.width,
+              height: _style.height,
+              width: _style.width,
               decoration: BoxDecoration(
-                  color: viewModel.backgroundColor != null ? viewModel.backgroundColor : style.backgroundColor,
-                  shape: style.buttonShape,
-                  borderRadius: style.borderRadius
+                  color: _viewModel.backgroundColor != null ? _viewModel.backgroundColor : _style.backgroundColor,
+                  shape: _style.buttonShape,
+                  borderRadius: _style.borderRadius
               ),
               child: Wrap(
                 direction: Axis.horizontal,
@@ -148,10 +134,20 @@ class RoundedButton  extends StatelessWidget {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return _build(_viewModel, _style);
+    List<Widget> _buildButtonContent(){
+      List<Widget> listBuilder = [];
+      if (_viewModel.icon != null) {
+        listBuilder.add(
+            Image.asset(_viewModel.icon, height: _style.buttonIconSize)
+        );
+      }
+      if (_viewModel.title != null) {
+        listBuilder.add(
+            Text(
+                _viewModel.title,
+                style: _style.buttonTextStyle
+            ));
+      }
+      return listBuilder;
+    }
   }
-
-
-}
