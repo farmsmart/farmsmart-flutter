@@ -80,7 +80,6 @@ class DogTag extends StatelessWidget {
   const DogTag({Key key, DogTagViewModel viewModel, DogTagStyle style }) : this._viewModel = viewModel, this._style = style, super(key:key);
 
   static Widget _build(DogTagViewModel viewModel, DogTagStyle style) {
-
     List<Widget> _buildButtonContent(){
       List<Widget> listBuilder = [];
 
