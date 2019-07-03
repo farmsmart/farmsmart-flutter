@@ -5,6 +5,10 @@ import 'package:farmsmart_flutter/model/loading_status.dart';
 import 'package:farmsmart_flutter/ui/discover/viewModel/ArticleDetailViewModel.dart';
 import 'package:farmsmart_flutter/ui/discover/viewModel/ArticleListItemViewModel.dart';
 
+/*
+      Transform:
+      [ArticleEntity] -> [ArticleDetailViewModel]
+*/
 class ArticleDetailViewModelTransformer
     implements ObjectTransformer<ArticleEntity, ArticleDetailViewModel> {
   ObjectTransformer<ArticleEntity, ArticleListItemViewModel>
