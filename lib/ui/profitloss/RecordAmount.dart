@@ -58,7 +58,7 @@ class RecordAmount extends StatelessWidget {
         },
         physics: ScrollPhysics(),
         shrinkWrap: true,
-        header: RecordAmountHeader(viewModel: RecordAmountHeaderViewModel(viewModel.amount), style: RecordAmountHeaderStyle.defaultCostStyle()),
+        header: RecordAmountHeader(viewModel: RecordAmountHeaderViewModel(viewModel.amount), style: RecordAmountHeaderStyle.defaultSaleStyle()),
         footer: RoundedButton.build(context: context, title: viewModel.buttonTitle, onTap: null) //FIXME: use new button
     );
   }

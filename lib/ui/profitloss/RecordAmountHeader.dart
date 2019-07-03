@@ -8,36 +8,28 @@ class RecordAmountHeaderViewModel {
 }
 
 class RecordAmountHeaderStyle {
+  final TextStyle hintTextStyle;
   final TextStyle titleTextStyle;
 
-  RecordAmountHeaderStyle({this.titleTextStyle});
+  RecordAmountHeaderStyle({this.hintTextStyle, this.titleTextStyle});
 
   factory RecordAmountHeaderStyle.defaultCostStyle() {
     return RecordAmountHeaderStyle(
-      titleTextStyle: const TextStyle(fontSize: 72, fontWeight: FontWeight.w700, color: Color(0x4cff8d4f))
-    );
-  }
-
-  factory RecordAmountHeaderStyle.recordCostStyle() {
-    return RecordAmountHeaderStyle.defaultCostStyle().copyWith(
-        titleTextStyle: const TextStyle(fontSize: 72, fontWeight: FontWeight.w700, color: Color(0xFFff8d4f))
-    );
-  }
-
-  factory RecordAmountHeaderStyle.recordSaleStyle() {
-    return RecordAmountHeaderStyle.defaultCostStyle().copyWith(
-      titleTextStyle: const TextStyle(fontSize: 72, fontWeight: FontWeight.w700, color: Color(0xFF24d900)),
+      hintTextStyle: const TextStyle(fontSize: 72, fontWeight: FontWeight.w700, color: Color(0x4cff8d4f)),
+      titleTextStyle: const TextStyle(fontSize: 72, fontWeight: FontWeight.w700, color: Color(0xFFff8d4f))
     );
   }
 
   factory RecordAmountHeaderStyle.defaultSaleStyle() {
     return RecordAmountHeaderStyle.defaultCostStyle().copyWith(
-      titleTextStyle: const TextStyle(fontSize: 72, fontWeight: FontWeight.w700, color: Color(0xFF24d900)),
+      hintTextStyle: const TextStyle(fontSize: 72, fontWeight: FontWeight.w700, color: Color(0x4c24d900)),
+        titleTextStyle: const TextStyle(fontSize: 72, fontWeight: FontWeight.w700, color: Color(0xFF24d900))
     );
   }
 
-  RecordAmountHeaderStyle copyWith({TextStyle titleTextStyle}) {
+  RecordAmountHeaderStyle copyWith({TextStyle hintTextStyle, TextStyle titleTextStyle}) {
     return RecordAmountHeaderStyle(
+      hintTextStyle: hintTextStyle ?? this.hintTextStyle,
       titleTextStyle: titleTextStyle ?? this.titleTextStyle
     );
   }
@@ -61,7 +53,8 @@ class RecordAmountHeader extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 TextField(
-                decoration: InputDecoration.collapsed(hintText: viewModel.amount),
+                decoration: InputDecoration(hintText: viewModel.amount, hintStyle: style.hintTextStyle),
+                  keyboardType: TextInputType.number,
                   textAlign: TextAlign.center,
                   style: style.titleTextStyle,
                   maxLines: 1
