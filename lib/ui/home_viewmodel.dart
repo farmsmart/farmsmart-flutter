@@ -1,7 +1,6 @@
 import 'package:farmsmart_flutter/data/model/article_entity.dart';
 import 'package:farmsmart_flutter/model/loading_status.dart';
 import 'package:farmsmart_flutter/redux/app/app_state.dart';
-import 'package:farmsmart_flutter/redux/home/discover/discover_actions.dart';
 import 'package:farmsmart_flutter/redux/home/home_actions.dart';
 import 'package:farmsmart_flutter/redux/home/screens.dart';
 import 'package:redux/redux.dart';
@@ -15,7 +14,6 @@ class HomeViewmodel {
   final Function showProfitLossChild;
   final Function showArticlesChild;
   final Function showCommunityChild;
-  final Function getSingleArticle;
   final Function goToPrivacyPolicy;
   final Function showDebugMenu;
 
@@ -25,7 +23,6 @@ class HomeViewmodel {
       this.showArticlesChild,
       this.showCommunityChild,
       this.showMyPlotChild,
-      this.getSingleArticle,
       this.showProfitLossChild,
       this.goToPrivacyPolicy,
       this.showDebugMenu});

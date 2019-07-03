@@ -26,9 +26,10 @@ import 'package:farmsmart_flutter/ui/playground/playground_view.dart';
 
 /// Home "screen" route. Scaffold has all the app subcomponents available inside,
 /// like bottom bar or action bar.
-/// 
+///
 
-final  cms = FlameLink(store: Firestore.instance);
+final cms =
+    FlameLink(store: Firestore.instance, environment: Environment.development);
 final articleRepo = ArticlesRepositoryFlameLink(cms);
 
 class Home extends StatefulWidget {
@@ -60,18 +61,6 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
     }
   }
 
-  final List<Widget> _children = [
-    PlotList(),
-    HomeProfitLossChild(),
-    ArticleList(viewModelProvider: ArticleListProvider(repository: articleRepo, group: ArticleCollectionGroup.discovery)),
-    HomeCommunityChild(),
-    PlaygroundView(widgetList: [
-      StandardListItem(viewModel: ArticleToArticleListViewModelItemTransformer(detailTransformer: ArticleToArticleDetailViewModelTransformer(listItemTransformer:ArticleToArticleListViewModelItemTransformer())).transform(from: MockArticle.build())),
-      HeroListItem(viewModel: ArticleToArticleListViewModelItemTransformer(detailTransformer: ArticleToArticleDetailViewModelTransformer(listItemTransformer:ArticleToArticleListViewModelItemTransformer())).transform(from: MockArticle.build())),
-      ArticleList(viewModelProvider: ArticleListProvider(repository: MockArticlesRepository(articleCount: 2000)))
-    ], appBarColor: Color(0xFF9CBD3A),),
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -91,6 +80,45 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
   Widget content(BuildContext context, HomeViewmodel viewModel) {
     homeViewModel = viewModel;
     FarmsmartLocalizations localizations = FarmsmartLocalizations.of(context);
+    final discoverTab = Navigator(
+        initialRoute: "/discover",
+        onGenerateRoute: (RouteSettings settings) {
+          WidgetBuilder builder = (BuildContext _) => ArticleList(
+              viewModelProvider: ArticleListProvider(
+                  title: localizations.discoverTab,
+                  repository: articleRepo,
+                  group: ArticleCollectionGroup.discovery));
+          return MaterialPageRoute(builder: builder, settings: settings);
+        });
+
+    final List<Widget> _children = [
+      PlotList(),
+      HomeProfitLossChild(),
+      discoverTab,
+      HomeCommunityChild(),
+      PlaygroundView(
+        widgetList: [
+          StandardListItem(
+              viewModel: ArticleToArticleListViewModelItemTransformer(
+                      detailTransformer:
+                          ArticleToArticleDetailViewModelTransformer(
+                              listItemTransformer:
+                                  ArticleToArticleListViewModelItemTransformer()))
+                  .transform(from: MockArticle.build())),
+          HeroListItem(
+              viewModel: ArticleToArticleListViewModelItemTransformer(
+                      detailTransformer:
+                          ArticleToArticleDetailViewModelTransformer(
+                              listItemTransformer:
+                                  ArticleToArticleListViewModelItemTransformer()))
+                  .transform(from: MockArticle.build())),
+          ArticleList(
+              viewModelProvider: ArticleListProvider( title: "Test",
+                  repository: MockArticlesRepository(articleCount: 2000)))
+        ],
+        appBarColor: Color(0xFF9CBD3A),
+      ),
+    ];
     return Scaffold(
       // We could share a list of pre defined actions for the app bar.
       body: _children[viewModel.currentTab],
@@ -144,7 +172,7 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
 
   Future<void> _retrieveDynamicLink(HomeViewmodel viewModel) async {
     final PendingDynamicLinkData data =
-    await FirebaseDynamicLinks.instance.retrieveDynamicLink();
+        await FirebaseDynamicLinks.instance.retrieveDynamicLink();
     if (data != null) {
       var decodedDynamicLink = Uri.decodeComponent(data.link.toString());
       var stringURLtoURI = Uri.parse(decodedDynamicLink);
@@ -152,7 +180,7 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
       if (stringURLtoURI != null) {
         String articleId = stringURLtoURI.queryParameters[DeepLink.ParameterID];
         debugPrint('Fetching id=${articleId}');
-        homeViewModel.getSingleArticle(articleId);
+        //TODO: LH restore this function
       }
     }
   }

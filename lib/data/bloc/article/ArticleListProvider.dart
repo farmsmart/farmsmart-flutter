@@ -18,10 +18,12 @@ import 'package:farmsmart_flutter/ui/discover/viewModel/ArticleListViewModel.dar
 class ArticleListProvider implements ViewModelProvider<ArticleListViewModel> {
   final ArticleRepositoryInterface _repo;
   final ArticleCollectionGroup _group;
+  final String _title;
   ArticleListProvider(
-      {ArticleRepositoryInterface repository,
+      {String title, ArticleRepositoryInterface repository,
       ArticleCollectionGroup group = ArticleCollectionGroup.all})
-      : this._repo = repository,
+      : this._title = title, 
+        this._repo = repository,
         this._group = group;
 
   final StreamController<ArticleListViewModel> _controller =
@@ -38,7 +40,7 @@ class ArticleListProvider implements ViewModelProvider<ArticleListViewModel> {
       return transformer.transform(from: article);
     }).toList();
     return ArticleListViewModel(
-        title: "",
+        title: _title,
         status: LoadingStatus.SUCCESS,
         articleListItemViewModels: items,
         update: () => _update(controller));

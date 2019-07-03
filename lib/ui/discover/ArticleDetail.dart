@@ -1,9 +1,11 @@
 import 'package:farmsmart_flutter/model/loading_status.dart';
 import 'package:farmsmart_flutter/ui/common/headerAndFooterListView.dart';
 import 'package:farmsmart_flutter/ui/common/network_image_from_future.dart';
+import 'package:farmsmart_flutter/ui/discover/ArticleList.dart';
 import 'package:farmsmart_flutter/ui/discover/viewModel/ArticleDetailViewModel.dart';
 import 'package:farmsmart_flutter/ui/discover/viewModel/ArticleListItemViewModel.dart';
 import 'package:farmsmart_flutter/ui/discover/StandardListItem.dart';
+import 'package:farmsmart_flutter/ui/discover/viewModel/ArticleListViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 
@@ -93,11 +95,21 @@ class _ArticleDetailState extends State<ArticleDetail> {
         SizedBox(height: style.spaceBetweenElements),
         _buildBody(viewModel, style),
         SizedBox(height: style.spaceBetweenElements),
+        Container(
+          padding: style.titlePagePadding,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text("Related Articles", style: style.titlePageStyle)
+            ],
+          ),
+        )
       ],
     );
   }
 
-  void _tappedListItem({BuildContext context, ArticleDetailViewModel viewModel}) {
+  void _tappedListItem(
+      {BuildContext context, ArticleDetailViewModel viewModel}) {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => ArticleDetail(viewModel: viewModel),
@@ -130,7 +142,11 @@ class _ArticleDetailState extends State<ArticleDetail> {
                 itemCount: releatedViewModels.length,
                 itemBuilder: (BuildContext context, int index) {
                   final viewModel = releatedViewModels[index];
-                  return StandardListItem(viewModel: viewModel, onTap: () => _tappedListItem(context: context, viewModel: viewModel.detailViewModel),).build(context);
+                  return StandardListItem(
+                    viewModel: viewModel,
+                    onTap: () => _tappedListItem(
+                        context: context, viewModel: viewModel.detailViewModel),
+                  ).build(context);
                 },
                 physics: ScrollPhysics(),
                 shrinkWrap: true,

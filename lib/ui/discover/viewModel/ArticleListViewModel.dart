@@ -1,11 +1,6 @@
-import 'dart:async';
 import 'package:farmsmart_flutter/model/loading_status.dart';
 import 'package:farmsmart_flutter/ui/discover/viewModel/ArticleListItemViewModel.dart';
 
-
-abstract class ArticleListViewModelProvider {
-   StreamController<ArticleListViewModel> provide();
-}
 
 class ArticleListViewModel {
   final String title; 

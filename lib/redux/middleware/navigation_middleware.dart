@@ -1,9 +1,7 @@
 import 'package:farmsmart_flutter/redux/app/app_state.dart';
 import 'package:farmsmart_flutter/redux/home/home_actions.dart';
 import 'package:farmsmart_flutter/redux/home/myPlot/my_plot_actions.dart';
-import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';
-import 'package:farmsmart_flutter/redux/home/discover/discover_actions.dart';
 
 import '../../app_routes.dart';
 import '../keys.dart';
