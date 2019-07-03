@@ -14,10 +14,7 @@ abstract class ProfitLossItemStyle {
 
   final TextStyle titleStyle;
   final TextStyle subtitleStyle;
-
-
   final EdgeInsets edgePadding;
-
   final double elevation;
   final double detailLineSpace;
   final double titleLineSpace;

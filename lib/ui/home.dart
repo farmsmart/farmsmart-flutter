@@ -4,6 +4,7 @@ import 'package:farmsmart_flutter/ui/app_bar.dart';
 import 'package:farmsmart_flutter/farmsmart_localizations.dart';
 import 'package:farmsmart_flutter/redux/app/app_state.dart';
 import 'package:farmsmart_flutter/ui/common/ActionSheet.dart';
+import 'package:farmsmart_flutter/ui/common/PlaygroundWidgetTryOut.dart';
 import 'package:farmsmart_flutter/ui/community/community_child.dart';
 import 'package:farmsmart_flutter/ui/discover/discover_page.dart';
 import 'package:farmsmart_flutter/ui/home_viewmodel.dart';
@@ -62,8 +63,8 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
       ActionSheet(viewModel: MockProfitLossListViewModel.build(), style: ActionSheetStyle.defaultStyle()),
       RoundedButton(viewModel: MockRoundedButtonViewModel.buildLarge(), style: RoundedButtonStyle.largeRoundedButtonStyle()),
       RoundedButton(viewModel: MockRoundedButtonViewModel.buildCompact(), style: RoundedButtonStyle.compactRoundedButton()),
-      RoundedButton(viewModel: MockRoundedButtonViewModel.buildCompact(), style: RoundedButtonStyle.compactBigRoundedButton())
-    ], appBarColor: Color(0xFF9CBD3A),),
+      RoundedButton(viewModel: MockRoundedButtonViewModel.buildCompact(), style: RoundedButtonStyle.compactBigRoundedButton()),
+    ], appBarColor: Color(0xFF9CBD3A)),
   ];
 
   @override
