@@ -1,17 +1,11 @@
 import 'package:farmsmart_flutter/data/firebase_const.dart';
 import 'package:farmsmart_flutter/farmsmart_localizations.dart';
-import 'package:farmsmart_flutter/model/loading_status.dart';
 import 'package:farmsmart_flutter/redux/app/app_state.dart';
 import 'package:farmsmart_flutter/ui/community/community_child.dart';
 import 'package:farmsmart_flutter/ui/discover/discover_page.dart';
 import 'package:farmsmart_flutter/ui/home_viewmodel.dart';
 import 'package:farmsmart_flutter/ui/myplot/PlotList.dart';
-<<<<<<< HEAD
-import 'package:farmsmart_flutter/ui/profitloss/RecordAmount.dart';
-import 'package:farmsmart_flutter/ui/profitloss/RecordAmountListItem.dart';
-=======
 import 'package:farmsmart_flutter/ui/playground/playground_view.dart';
->>>>>>> develop
 import 'package:farmsmart_flutter/ui/profitloss/profit_loss_child.dart';
 import 'package:farmsmart_flutter/utils/assets.dart';
 import 'package:farmsmart_flutter/utils/colors.dart';

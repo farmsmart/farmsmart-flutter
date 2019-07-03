@@ -51,6 +51,7 @@ class RecordAmountHeader extends StatelessWidget {
 
   static Widget _build(RecordAmountHeaderViewModel viewModel, RecordAmountHeaderStyle style) {
     return Container(
+      padding: EdgeInsets.symmetric(horizontal: 32),
       height: 138,
       child: Row(
         children: <Widget>[

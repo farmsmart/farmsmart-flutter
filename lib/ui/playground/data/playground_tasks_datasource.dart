@@ -11,10 +11,6 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
     return [
       //Add Your tasks here
       PlaygroundWidget(
-        title: 'TASK FARM-402 Test playground widget',
-        child: Text('Test play ground'),
-      ),
-      PlaygroundWidget(
         title: 'TASK FARM-59',
         child:  RecordAmount(viewModel: RecordAmountViewModel(LoadingStatus.SUCCESS, [
           RecordAmountListItemViewModel("assets/icons/detail_icon_date.png", "Date", detail: "Today", arrow: "assets/icons/chevron.png"),
@@ -22,11 +18,6 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
           RecordAmountListItemViewModel("assets/icons/detail_icon_description.png", "Description (optional)"),
         ], "00", "Record Cost")),
       )
-      /* Template
-      PlaygroundWidget(
-        title: '#TASK NAME#',
-        child: YourWidget(),
-      ),*/
     ];
   }
 }
