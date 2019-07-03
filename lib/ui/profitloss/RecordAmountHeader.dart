@@ -62,6 +62,7 @@ class RecordAmountHeader extends StatelessWidget {
               children: <Widget>[
                 TextField(
                 decoration: InputDecoration.collapsed(hintText: viewModel.amount),
+                  textAlign: TextAlign.center,
                   style: style.titleTextStyle,
                   maxLines: 1
                 ),
