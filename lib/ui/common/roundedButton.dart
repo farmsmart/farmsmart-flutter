@@ -53,8 +53,7 @@ class _DefaultStyle implements RoundedButtonStyle {
 }
 
 class RoundedButton {
-  static build(
-      {RoundedButtonStyle style = const _DefaultStyle(),
+  static build({RoundedButtonStyle style = const _DefaultStyle(),
         @required  BuildContext context,
         String title, IconData icon,
         Function onTap}) {

@@ -1,10 +1,13 @@
 import 'package:farmsmart_flutter/data/firebase_const.dart';
 import 'package:farmsmart_flutter/farmsmart_localizations.dart';
+import 'package:farmsmart_flutter/model/loading_status.dart';
 import 'package:farmsmart_flutter/redux/app/app_state.dart';
 import 'package:farmsmart_flutter/ui/community/community_child.dart';
 import 'package:farmsmart_flutter/ui/discover/discover_page.dart';
 import 'package:farmsmart_flutter/ui/home_viewmodel.dart';
 import 'package:farmsmart_flutter/ui/myplot/PlotList.dart';
+import 'package:farmsmart_flutter/ui/profitloss/RecordAmount.dart';
+import 'package:farmsmart_flutter/ui/profitloss/RecordAmountListItem.dart';
 import 'package:farmsmart_flutter/ui/profitloss/profit_loss_child.dart';
 import 'package:farmsmart_flutter/utils/assets.dart';
 import 'package:farmsmart_flutter/utils/colors.dart';
@@ -52,7 +55,13 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
     HomeProfitLossChild(),
     ArticleList(),
     HomeCommunityChild(),
-    PlaygroundView(widgetList: [], appBarColor: Color(0xFF9CBD3A),),
+    PlaygroundView(widgetList: [
+      RecordAmount(viewModel: RecordAmountViewModel(LoadingStatus.SUCCESS, [
+        RecordAmountListItemViewModel("assets/icons/detail_icon_date.png", "Date", detail: "Today", arrow: "assets/icons/chevron.png"),
+        RecordAmountListItemViewModel("assets/icons/detail_icon_best_soil.png", "Crop", detail: "Tomatoes", arrow: "assets/icons/chevron.png"),
+        RecordAmountListItemViewModel("assets/icons/detail_icon_description.png", "Description (optional)"),
+      ], "00", "Record Cost")),
+    ], appBarColor: Color(0xFF9CBD3A),),
   ];
 
   @override
