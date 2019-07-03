@@ -1,7 +1,9 @@
 import 'package:farmsmart_flutter/ui/playground/playground_widget.dart';
 import 'package:flutter/widgets.dart';
+import 'package:farmsmart_flutter/ui/playground/data/playground_data_source.dart';
 
-class PlayGroundTasksDataSource {
+class PlayGroundTasksDataSource implements PlaygroundDataSource {
+  @override
   List<PlaygroundWidget> getList() {
     return [
       //Add Your tasks here

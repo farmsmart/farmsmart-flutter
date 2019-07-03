@@ -13,7 +13,7 @@ import 'package:farmsmart_flutter/utils/dimens.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:farmsmart_flutter/ui/playground/data/playground_datasource.dart';
+import 'package:farmsmart_flutter/ui/playground/data/playground_datasource_impl.dart';
 
 /// Home "screen" route. Scaffold has all the app subcomponents available inside,
 /// like bottom bar or action bar.
@@ -53,7 +53,7 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
     ArticleList(),
     HomeCommunityChild(),
     PlaygroundView(
-      widgetList: PlaygroundDataSource().getList(),
+      widgetList: PlaygroundDataSourceImpl().getList(),
     ),
   ];
 
