@@ -6,8 +6,9 @@ class ProfitLossListItemViewModel {
   final String title;
   final String subtitle;
   final String detail;
+  final DogTagStyle style;
 
-  ProfitLossListItemViewModel({this.title, this.subtitle, this.detail});
+  ProfitLossListItemViewModel({this.title, this.subtitle, this.detail, this.style});
 }
 
 class ProfitLossItemStyle {
@@ -69,7 +70,7 @@ class ProfitLossListItem extends StatelessWidget {
                         _buildMainTextView(viewModel, style),
                         SizedBox(width: style.detailLineSpace),
                         DogTag(viewModel: DogTagViewModel(number: viewModel.detail),
-                            style: DogTagStyle.positiveStyle(),
+                            style: viewModel.style,
                             )
                       ])),
               ListDivider.build(),

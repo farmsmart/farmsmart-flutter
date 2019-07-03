@@ -8,6 +8,7 @@ class MockRoundedButtonViewModel {
       title: _mockTitleText.random(),
     );
   }
+
   static RoundedButtonViewModel buildCompact() {
     return RoundedButtonViewModel(
       icon: "assets/icons/profit_add.png"

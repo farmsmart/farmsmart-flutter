@@ -13,12 +13,11 @@ import 'package:farmsmart_flutter/ui/profitloss/ProfitLossHeader.dart';
 class ProfitLossListViewModel {
   LoadingStatus loadingStatus;
   final String title;
-  final String subtitle;
   final String detailText;
 
   final List<ProfitLossListItemViewModel> transactions;
 
-  ProfitLossListViewModel({this.title, this.detailText, this.subtitle, this.loadingStatus, this.transactions});
+  ProfitLossListViewModel({this.title, this.detailText, this.loadingStatus, this.transactions});
 
   static ProfitLossListViewModel fromStore(Store<AppState> store) {
     final mockViewModel = MockProfitLossListViewModel.build();
@@ -85,7 +84,7 @@ class _ProfitLossState extends State<ProfitLossPage>  {
         },
         physics: ScrollPhysics(),
         shrinkWrap: true,
-        header: ProfitLossHeader(viewModel: ProfitLossHeaderViewModel(viewModel.title, viewModel.subtitle, viewModel.detailText), style: ProfitLossHeaderStyle.defaultStyle()),
+        header: ProfitLossHeader(viewModel: ProfitLossHeaderViewModel(viewModel.title, viewModel.detailText), style: ProfitLossHeaderStyle.defaultStyle()),
         footer: SizedBox(height: profitStyle.bottomEdgePadding,)
     );
   }

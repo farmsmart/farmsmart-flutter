@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 
 class ProfitLossHeaderViewModel {
   String title;
-  String subtitle;
   String detail;
 
-  ProfitLossHeaderViewModel(this.title, this.subtitle, this.detail);
+  ProfitLossHeaderViewModel(this.title, this.detail);
 }
 
 class ProfitLossHeaderStyle {
@@ -85,15 +84,12 @@ class ProfitLossHeader extends StatelessWidget {
                 )
               ],
             ),
-            Row(
-              children: <Widget>[
-                _buildSubTitle(viewModel, style),
-              ],
-            )
           ]),
     );
   }
 
+  //FIXME: Out of scope for the moment
+  /*
   static Widget _buildSubTitle(ProfitLossHeaderViewModel viewModel, ProfitLossHeaderStyle style) {
     return Container(
         child: GestureDetector(
@@ -106,6 +102,7 @@ class ProfitLossHeader extends StatelessWidget {
           },
         ));
   }
+*/
 
   @override
   Widget build(BuildContext context) {
