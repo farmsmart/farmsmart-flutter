@@ -1,8 +1,8 @@
 import 'package:farmsmart_flutter/ui/common/listDivider.dart';
 import 'package:farmsmart_flutter/ui/common/network_image_from_future.dart';
+import 'package:farmsmart_flutter/ui/discover/viewModel/ArticleListItemViewModel.dart';
 import 'package:flutter/material.dart';
 import 'ArticleListItemStyle.dart';
-import 'ArticleListViewModel.dart';
 
 class _DefaultStyle implements ArticleListItemStyle {
   static const Color titleColor = Color(0xFF1a1b46);
@@ -29,20 +29,23 @@ class _DefaultStyle implements ArticleListItemStyle {
   final int maxLinesPerSummary = 3;
 
   const _DefaultStyle();
-
 }
 
 class HeroListItem extends StatelessWidget {
   final ArticleListItemViewModel _viewModel;
   final Function _onTap;
 
-  const HeroListItem({Key key, ArticleListItemViewModel viewModel, Function onTap}) : this._viewModel = viewModel, this._onTap = onTap, super(key: key);
-  
+  const HeroListItem(
+      {Key key, ArticleListItemViewModel viewModel, Function onTap})
+      : this._viewModel = viewModel,
+        this._onTap = onTap,
+        super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return _build(_viewModel);
   }
-  
+
   Widget _build(ArticleListItemViewModel viewModel,
       {ArticleListItemStyle itemStyle = const _DefaultStyle()}) {
     return GestureDetector(
@@ -56,7 +59,8 @@ class HeroListItem extends StatelessWidget {
               padding: itemStyle.listEdgePadding,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[ _buildHeroArticleImage(viewModel, itemStyle),
+                children: <Widget>[
+                  _buildHeroArticleImage(viewModel, itemStyle),
                   SizedBox(height: itemStyle.imageLineSpace),
                   Text(viewModel.title,
                       maxLines: itemStyle.maxLinesPerTitle,
@@ -79,8 +83,8 @@ class HeroListItem extends StatelessWidget {
       ArticleListItemStyle articleListStyle) {
     return ClipRRect(
       borderRadius: articleListStyle.imageBorderRadius,
-      child: NetworkImageFromFuture(articleData.image.urlToFit(), fit: BoxFit.fitWidth),
+      child: NetworkImageFromFuture(articleData.image.urlToFit(),
+          fit: BoxFit.fitWidth),
     );
   }
-
 }

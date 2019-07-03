@@ -1,18 +1,21 @@
 import 'package:farmsmart_flutter/ui/common/listDivider.dart';
 import 'package:farmsmart_flutter/ui/common/network_image_from_future.dart';
+import 'package:farmsmart_flutter/ui/discover/viewModel/ArticleListItemViewModel.dart';
 import 'package:farmsmart_flutter/utils/strings.dart';
 import 'package:flutter/material.dart';
 import 'ArticleListItemStyle.dart';
-import 'ArticleListViewModel.dart';
 
 class _DefaultStyle implements ArticleListItemStyle {
   static const Color titleColor = Color(0xFF1a1b46);
   static const Color bodyColor = Color(0xFF767690);
 
-  final TextStyle titleTextStyle = const TextStyle(fontSize: 17, fontWeight: FontWeight.w700, color: titleColor);
-  final TextStyle summaryTextStyle = const TextStyle(fontSize: 15, fontWeight: FontWeight.w400, color: bodyColor);
+  final TextStyle titleTextStyle = const TextStyle(
+      fontSize: 17, fontWeight: FontWeight.w700, color: titleColor);
+  final TextStyle summaryTextStyle = const TextStyle(
+      fontSize: 15, fontWeight: FontWeight.w400, color: bodyColor);
 
-  final EdgeInsets listEdgePadding = const EdgeInsets.only(left: 32.0, right: 32.0, top: 23, bottom: 23);
+  final EdgeInsets listEdgePadding =
+      const EdgeInsets.only(left: 32.0, right: 32.0, top: 23, bottom: 23);
   final EdgeInsets cardMargin = const EdgeInsets.all(0);
 
   final double imageLineSpace = 22;
@@ -20,7 +23,8 @@ class _DefaultStyle implements ArticleListItemStyle {
   final double textLineSpace = 9.5;
   final double cardElevation = 0;
 
-  final BorderRadius imageBorderRadius = const BorderRadius.all(Radius.circular(10.0));
+  final BorderRadius imageBorderRadius =
+      const BorderRadius.all(Radius.circular(10.0));
 
   final int maxLinesPerTitle = 2;
   final int maxLinesPerSummary = 2;
@@ -29,18 +33,22 @@ class _DefaultStyle implements ArticleListItemStyle {
 }
 
 class StandardListItem extends StatelessWidget {
-
   final ArticleListItemViewModel _viewModel;
   final Function _onTap;
 
-  const StandardListItem({Key key, ArticleListItemViewModel viewModel, Function onTap}) : this._viewModel = viewModel, this._onTap = onTap, super(key: key);
+  const StandardListItem(
+      {Key key, ArticleListItemViewModel viewModel, Function onTap})
+      : this._viewModel = viewModel,
+        this._onTap = onTap,
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return _build(_viewModel);
   }
-  
-  Widget _build(ArticleListItemViewModel viewModel, {ArticleListItemStyle itemStyle = const _DefaultStyle()}) {
+
+  Widget _build(ArticleListItemViewModel viewModel,
+      {ArticleListItemStyle itemStyle = const _DefaultStyle()}) {
     return GestureDetector(
       onTap: _onTap,
       child: Card(
@@ -67,18 +75,20 @@ class StandardListItem extends StatelessWidget {
     );
   }
 
-  _buildListItemImage(ArticleListItemViewModel viewModel, ArticleListItemStyle itemStyle) {
+  _buildListItemImage(
+      ArticleListItemViewModel viewModel, ArticleListItemStyle itemStyle) {
     return ClipRRect(
         borderRadius: itemStyle.imageBorderRadius,
         child: NetworkImageFromFuture(
-            viewModel.image.urlToFit(width: itemStyle.imageHeight, height: itemStyle.imageHeight),
+            viewModel.image.urlToFit(
+                width: itemStyle.imageHeight, height: itemStyle.imageHeight),
             height: itemStyle.imageHeight,
             width: itemStyle.imageHeight,
-            fit: BoxFit.cover)
-    );
+            fit: BoxFit.cover));
   }
 
-  _buildArticleInformation(ArticleListItemViewModel viewModel, ArticleListItemStyle itemStyle) {
+  _buildArticleInformation(
+      ArticleListItemViewModel viewModel, ArticleListItemStyle itemStyle) {
     return Expanded(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -97,5 +107,4 @@ class StandardListItem extends StatelessWidget {
       ),
     );
   }
-
 }

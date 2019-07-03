@@ -1,4 +1,5 @@
 import 'package:farmsmart_flutter/data/model/ImageEntity.dart';
+import 'package:farmsmart_flutter/data/model/ImageURLProvider.dart';
 import 'package:farmsmart_flutter/model/enums.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:farmsmart_flutter/data/model/entities_const.dart';
@@ -33,7 +34,7 @@ class ArticleEntity {
 // LH this is to make getting the main article image easier
 // if we want to get more images from an article, we can get the image entities
 // and use their ImageEntityURLProvider 
-class ArticleImageProvider implements ImageEntityURLProvider {
+class ArticleImageProvider implements ImageURLProvider {
   final ArticleEntity _article;
   ArticleImageProvider(ArticleEntity article) : _article = article;
   @override

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:farmsmart_flutter/data/model/EntityCollectionInterface.dart';
 import 'package:farmsmart_flutter/data/model/ImageEntity.dart';
+import 'package:farmsmart_flutter/data/model/ImageURLProvider.dart';
 import '../ImageRepositoryInterface.dart';
 import 'FlameLink.dart';
 
@@ -34,7 +35,7 @@ ImageEntity _transform(FlameLink cms, DocumentSnapshot snapshot) {
     return FlamelinkImageEntity(cms ,0, 0, imageFileNamePath, alternateSizes);
 }
 
-class FlameLinkImageProvider implements ImageEntityURLProvider {
+class FlameLinkImageProvider implements ImageURLProvider {
   final FlameLink _cms;
   final ImageEntity _entity;
   FlameLinkImageProvider(FlameLink cms, ImageEntity entity) : _cms = cms, _entity = entity;

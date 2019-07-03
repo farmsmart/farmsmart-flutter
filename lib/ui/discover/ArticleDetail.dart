@@ -1,56 +1,11 @@
-import 'package:farmsmart_flutter/data/model/ImageEntity.dart';
-import 'package:farmsmart_flutter/data/model/article_entity.dart';
 import 'package:farmsmart_flutter/model/loading_status.dart';
 import 'package:farmsmart_flutter/ui/common/headerAndFooterListView.dart';
 import 'package:farmsmart_flutter/ui/common/network_image_from_future.dart';
+import 'package:farmsmart_flutter/ui/discover/viewModel/ArticleDetailViewModel.dart';
+import 'package:farmsmart_flutter/ui/discover/viewModel/ArticleListItemViewModel.dart';
 import 'package:farmsmart_flutter/ui/discover/StandardListItem.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'ArticleListViewModel.dart';
-
-typedef GetList<T> = Future<List<T>> Function();
-
-class ArticleDetailViewModel {
-  final LoadingStatus loadingStatus;
-  final String title;
-  final String subtitle;
-  final ImageEntityURLProvider image;
-  final String body;
-  Function shareAction;
-  GetList<ArticleListItemViewModel> getRelated;
-  /*
-          String deepLink = await buildArticleDeeplink(articleID);
-          var response = await FlutterShareMe().shareToSystem(msg: Strings.shareArticleText + deepLink);
-  */
-
-  ArticleDetailViewModel(this.loadingStatus, this.title, this.subtitle,
-      this.image, this.body, this.shareAction);
-
-  static ArticleDetailViewModel fromArticleEntityToViewModel(
-      ArticleEntity article) {
-    ArticleDetailViewModel viewModel = ArticleDetailViewModel(
-        LoadingStatus.SUCCESS,
-        article.title,
-        article.summary,
-        ArticleImageProvider(article),
-        article.content,
-        null);
-    if (article.related != null) {
-      viewModel.getRelated = () {
-        if (article.related == null) {
-          return Future.value([]);
-        }
-        return article.related.getEntities().then((articles) {
-          return articles.map((article) {
-            return ArticleListItemViewModel.fromArticleEntityToViewModel(
-                article: article);
-          }).toList();
-        });
-      };
-    }
-    return viewModel;
-  }
-}
 
 abstract class ArticleDetailStyle {
   final TextStyle titlePageStyle;
@@ -183,7 +138,6 @@ class _ArticleDetailState extends State<ArticleDetail> {
                 footer: footer),
           ),
         );
-        ;
       },
     );
   }

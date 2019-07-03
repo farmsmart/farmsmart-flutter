@@ -1,4 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:farmsmart_flutter/data/bloc/article/ArticleListProvider.dart';
+import 'package:farmsmart_flutter/data/bloc/article/ArticleToArticleDetailTransformer.dart';
+import 'package:farmsmart_flutter/data/bloc/article/ArticleToArticleListItemViewModelTransformer.dart';
 import 'package:farmsmart_flutter/data/firebase_const.dart';
 import 'package:farmsmart_flutter/data/repositories/ArticleRepositoryInterface.dart';
 import 'package:farmsmart_flutter/data/repositories/implementation/ArticlesRepositoryFlamelink.dart';
@@ -8,7 +11,6 @@ import 'package:farmsmart_flutter/farmsmart_localizations.dart';
 import 'package:farmsmart_flutter/redux/app/app_state.dart';
 import 'package:farmsmart_flutter/ui/community/community_child.dart';
 import 'package:farmsmart_flutter/ui/discover/ArticleList.dart';
-import 'package:farmsmart_flutter/ui/discover/ArticleListViewModel.dart';
 import 'package:farmsmart_flutter/ui/discover/HeroListItem.dart';
 import 'package:farmsmart_flutter/ui/discover/StandardListItem.dart';
 import 'package:farmsmart_flutter/ui/home_viewmodel.dart';
@@ -21,9 +23,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:farmsmart_flutter/ui/playground/playground_view.dart';
-import 'package:farmsmart_flutter/flavors/flavor.dart';
-
-import 'discover/ArticleListProvider.dart';
 
 /// Home "screen" route. Scaffold has all the app subcomponents available inside,
 /// like bottom bar or action bar.
@@ -67,8 +66,8 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
     ArticleList(viewModelProvider: ArticleListProvider(repository: articleRepo, group: ArticleCollectionGroup.discovery)),
     HomeCommunityChild(),
     PlaygroundView(widgetList: [
-      StandardListItem(viewModel:ArticleListItemViewModel.fromArticleEntityToViewModel(article: MockArticle.build())),
-      HeroListItem(viewModel:ArticleListItemViewModel.fromArticleEntityToViewModel(article: MockArticle.build())),
+      StandardListItem(viewModel: ArticleToArticleListViewModelItemTransformer(detailTransformer: ArticleToArticleDetailViewModelTransformer(listItemTransformer:ArticleToArticleListViewModelItemTransformer())).transform(from: MockArticle.build())),
+      HeroListItem(viewModel: ArticleToArticleListViewModelItemTransformer(detailTransformer: ArticleToArticleDetailViewModelTransformer(listItemTransformer:ArticleToArticleListViewModelItemTransformer())).transform(from: MockArticle.build())),
       ArticleList(viewModelProvider: ArticleListProvider(repository: MockArticlesRepository(articleCount: 2000)))
     ], appBarColor: Color(0xFF9CBD3A),),
   ];
