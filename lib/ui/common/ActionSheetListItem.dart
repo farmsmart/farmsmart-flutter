@@ -41,7 +41,7 @@ class ActionSheetListItemStyle {
       actionItemHeight: 70,
       iconLineSpace: 21.5,
       actionItemElevation: 0,
-      iconHeight: 16.5,
+      iconHeight: 20,
       maxLines: 1,
     );
   }
