@@ -1,5 +1,5 @@
-
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class RecordAmountHeaderViewModel {
   String amount;
@@ -53,11 +53,13 @@ class RecordAmountHeader extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 TextField(
-                decoration: InputDecoration(hintText: viewModel.amount, hintStyle: style.hintTextStyle),
+                decoration: InputDecoration(hintText: viewModel.amount, hintStyle: style.hintTextStyle, border: InputBorder.none, counterText: ""),
                   keyboardType: TextInputType.number,
                   textAlign: TextAlign.center,
                   style: style.titleTextStyle,
-                  maxLines: 1
+                  inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
+                  maxLength: 7,
+                  maxLines: 1,
                 ),
                  ]
                 )
