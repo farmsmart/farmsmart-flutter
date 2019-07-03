@@ -4,12 +4,12 @@ import 'package:farmsmart_flutter/ui/discover/viewModel/ArticleDetailViewModel.d
 import 'package:farmsmart_flutter/ui/discover/viewModel/ArticleListItemViewModel.dart';
 import 'package:farmsmart_flutter/utils/strings.dart';
 
-class ArticleToArticleListViewModelItemTransformer
+class ArticleListViewModelItemTransformer
     implements ObjectTransformer<ArticleEntity, ArticleListItemViewModel> {
   final ObjectTransformer<ArticleEntity, ArticleDetailViewModel>
       _detailTransformer;
 
-  ArticleToArticleListViewModelItemTransformer(
+  ArticleListViewModelItemTransformer(
       {ObjectTransformer<ArticleEntity, ArticleDetailViewModel>
           detailTransformer})
       : this._detailTransformer = detailTransformer;

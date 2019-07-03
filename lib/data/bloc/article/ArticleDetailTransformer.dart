@@ -1,22 +1,22 @@
 import 'package:farmsmart_flutter/data/bloc/Transformer.dart';
-import 'package:farmsmart_flutter/data/bloc/article/ArticleToArticleListItemViewModelTransformer.dart';
+import 'package:farmsmart_flutter/data/bloc/article/ArticleListItemViewModelTransformer.dart';
 import 'package:farmsmart_flutter/data/model/article_entity.dart';
 import 'package:farmsmart_flutter/model/loading_status.dart';
 import 'package:farmsmart_flutter/ui/discover/viewModel/ArticleDetailViewModel.dart';
 import 'package:farmsmart_flutter/ui/discover/viewModel/ArticleListItemViewModel.dart';
 
-class ArticleToArticleDetailViewModelTransformer
+class ArticleDetailViewModelTransformer
     implements ObjectTransformer<ArticleEntity, ArticleDetailViewModel> {
   ObjectTransformer<ArticleEntity, ArticleListItemViewModel>
       _listItemTransformer;
 
-  ArticleToArticleDetailViewModelTransformer(
+  ArticleDetailViewModelTransformer(
       {ObjectTransformer<ArticleEntity, ArticleListItemViewModel>
           listItemTransformer})
       : this._listItemTransformer = listItemTransformer;
 
   void setListItemTransformer(
-      ArticleToArticleListViewModelItemTransformer transformer) {
+      ArticleListViewModelItemTransformer transformer) {
     _listItemTransformer = transformer;
   }
 

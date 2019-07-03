@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:farmsmart_flutter/data/bloc/ViewModelProvider.dart';
-import 'package:farmsmart_flutter/data/bloc/article/ArticleToArticleDetailTransformer.dart';
-import 'package:farmsmart_flutter/data/bloc/article/ArticleToArticleListItemViewModelTransformer.dart';
+import 'package:farmsmart_flutter/data/bloc/article/ArticleDetailTransformer.dart';
+import 'package:farmsmart_flutter/data/bloc/article/ArticleListItemViewModelTransformer.dart';
 import 'package:farmsmart_flutter/data/model/article_entity.dart';
 import 'package:farmsmart_flutter/data/repositories/ArticleRepositoryInterface.dart';
 import 'package:farmsmart_flutter/model/loading_status.dart';
@@ -10,9 +10,8 @@ import 'package:farmsmart_flutter/ui/discover/viewModel/ArticleListViewModel.dar
 
 
 /*
-  This class is responisibile for providing view models to the views
-  and linking the repos via transformers.
-  repo -> model -> transformer -> viewModel
+       [Model]    ->               [Bloc]             -> [View]  
+   [repo , model] -> [ViewModelProvider, Transformer] -> [viewModel, widget]
 */
 
 class ArticleListProvider implements ViewModelProvider<ArticleListViewModel> {
@@ -31,8 +30,8 @@ class ArticleListProvider implements ViewModelProvider<ArticleListViewModel> {
 
   ArticleListViewModel _modelFromArticles(
       StreamController controller, List<ArticleEntity> articles) {
-    final detailTransformer = ArticleToArticleDetailViewModelTransformer();
-    final transformer = ArticleToArticleListViewModelItemTransformer(
+    final detailTransformer = ArticleDetailViewModelTransformer();
+    final transformer = ArticleListViewModelItemTransformer(
         detailTransformer: detailTransformer);
     detailTransformer.setListItemTransformer(
         transformer); //LH we add this after as depends on having the list transformer

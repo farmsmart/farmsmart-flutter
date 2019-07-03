@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:farmsmart_flutter/data/bloc/article/ArticleListProvider.dart';
-import 'package:farmsmart_flutter/data/bloc/article/ArticleToArticleDetailTransformer.dart';
-import 'package:farmsmart_flutter/data/bloc/article/ArticleToArticleListItemViewModelTransformer.dart';
+import 'package:farmsmart_flutter/data/bloc/article/ArticleDetailTransformer.dart';
+import 'package:farmsmart_flutter/data/bloc/article/ArticleListItemViewModelTransformer.dart';
 import 'package:farmsmart_flutter/data/firebase_const.dart';
 import 'package:farmsmart_flutter/data/repositories/ArticleRepositoryInterface.dart';
 import 'package:farmsmart_flutter/data/repositories/implementation/ArticlesRepositoryFlamelink.dart';
@@ -99,18 +99,18 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
       PlaygroundView(
         widgetList: [
           StandardListItem(
-              viewModel: ArticleToArticleListViewModelItemTransformer(
+              viewModel: ArticleListViewModelItemTransformer(
                       detailTransformer:
-                          ArticleToArticleDetailViewModelTransformer(
+                          ArticleDetailViewModelTransformer(
                               listItemTransformer:
-                                  ArticleToArticleListViewModelItemTransformer()))
+                                  ArticleListViewModelItemTransformer()))
                   .transform(from: MockArticle.build())),
           HeroListItem(
-              viewModel: ArticleToArticleListViewModelItemTransformer(
+              viewModel: ArticleListViewModelItemTransformer(
                       detailTransformer:
-                          ArticleToArticleDetailViewModelTransformer(
+                          ArticleDetailViewModelTransformer(
                               listItemTransformer:
-                                  ArticleToArticleListViewModelItemTransformer()))
+                                  ArticleListViewModelItemTransformer()))
                   .transform(from: MockArticle.build())),
           ArticleList(
               viewModelProvider: ArticleListProvider( title: "Test",
