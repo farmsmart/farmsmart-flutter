@@ -17,7 +17,8 @@ class ProfitLossListViewModel {
 
   final List<ProfitLossListItemViewModel> transactions;
 
-  ProfitLossListViewModel({this.title, this.detailText, this.loadingStatus, this.transactions});
+  ProfitLossListViewModel(
+      {this.title, this.detailText, this.loadingStatus, this.transactions});
 
   static ProfitLossListViewModel fromStore(Store<AppState> store) {
     final mockViewModel = MockProfitLossListViewModel.build();
@@ -34,11 +35,15 @@ abstract class ProfitLossStyle {
   final double actionButtonIconSize;
   final double bottomEdgePadding;
 
-  ProfitLossStyle(this.actionButtonBackgroundColour, this.actionButtonSize,
-      this.actionButtonElevation, this.actionButtonIconSize, this.bottomEdgePadding);
+  ProfitLossStyle(
+      this.actionButtonBackgroundColour,
+      this.actionButtonSize,
+      this.actionButtonElevation,
+      this.actionButtonIconSize,
+      this.bottomEdgePadding);
 }
 
-class _DefaultStyle implements ProfitLossStyle{
+class _DefaultStyle implements ProfitLossStyle {
   final Color actionButtonBackgroundColour = const Color(0xFF25df0c);
   final double actionButtonSize = 48.0;
   final double actionButtonElevation = 0;
@@ -54,7 +59,7 @@ class ProfitLossPage extends StatefulWidget {
   }
 }
 
-class _ProfitLossState extends State<ProfitLossPage>  {
+class _ProfitLossState extends State<ProfitLossPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,7 +69,8 @@ class _ProfitLossState extends State<ProfitLossPage>  {
     );
   }
 
-  Widget _buildBody(BuildContext context, ProfitLossListViewModel viewModel, {ProfitLossStyle profitStyle = const _DefaultStyle()}) {
+  Widget _buildBody(BuildContext context, ProfitLossListViewModel viewModel,
+      {ProfitLossStyle profitStyle = const _DefaultStyle()}) {
     switch (viewModel.loadingStatus) {
       case LoadingStatus.LOADING:
         return Container(
@@ -76,41 +82,47 @@ class _ProfitLossState extends State<ProfitLossPage>  {
     }
   }
 
-  Widget _buildPage(BuildContext context, ProfitLossListViewModel viewModel, ProfitLossStyle profitStyle) {
+  Widget _buildPage(BuildContext context, ProfitLossListViewModel viewModel,
+      ProfitLossStyle profitStyle) {
     return HeaderAndFooterListView.builder(
         itemCount: viewModel.transactions.length,
         itemBuilder: (BuildContext context, int index) {
-          return ProfitLossListItem(viewModel: viewModel.transactions[index], style: ProfitLossItemStyle.defaultStyle());
+          return ProfitLossListItem(
+              viewModel: viewModel.transactions[index],
+              style: ProfitLossItemStyle.defaultStyle());
         },
         physics: ScrollPhysics(),
         shrinkWrap: true,
-        header: ProfitLossHeader(viewModel: ProfitLossHeaderViewModel(viewModel.title, viewModel.detailText), style: ProfitLossHeaderStyle.defaultStyle()),
-        footer: SizedBox(height: profitStyle.bottomEdgePadding,)
-    );
+        header: ProfitLossHeader(
+            viewModel: ProfitLossHeaderViewModel(
+                viewModel.title, viewModel.detailText),
+            style: ProfitLossHeaderStyle.defaultStyle()),
+        footer: SizedBox(
+          height: profitStyle.bottomEdgePadding,
+        ));
   }
 
-
-  Widget _buildPageWithFloatingButton(BuildContext context, ProfitLossListViewModel viewModel, ProfitLossStyle profitStyle) {
+  Widget _buildPageWithFloatingButton(BuildContext context,
+      ProfitLossListViewModel viewModel, ProfitLossStyle profitStyle) {
     return Scaffold(
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         body: _buildPage(context, viewModel, profitStyle),
-        floatingActionButton: RoundedButton(viewModel: RoundedButtonViewModel(icon: "assets/icons/profit_add.png", onTap: () => _showToast(context)), style: RoundedButtonStyle.compactBigRoundedButton())
-    );
+        floatingActionButton: RoundedButton(
+            viewModel: RoundedButtonViewModel(
+                icon: "assets/icons/profit_add.png",
+                onTap: () => _showToast(context)),
+            style: RoundedButtonStyle.compactBigRoundedButton()));
   }
 
   //FIXME: Only is built for show that this buttons are not functional yet
   static void _showToast(BuildContext context) {
-
     final String toastText = "Not Implemented Yet";
     final String toastButtonText = "BACK";
     final scaffold = Scaffold.of(context);
-    scaffold.showSnackBar(
-        SnackBar(
-          content: Text(
-              toastText
-          ),
-          action: SnackBarAction(label: toastButtonText, onPressed: scaffold.hideCurrentSnackBar),
-        )
-    );
+    scaffold.showSnackBar(SnackBar(
+      content: Text(toastText),
+      action: SnackBarAction(
+          label: toastButtonText, onPressed: scaffold.hideCurrentSnackBar),
+    ));
   }
 }
