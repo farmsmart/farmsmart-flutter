@@ -129,7 +129,7 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
 
   Future<void> _retrieveDynamicLink(HomeViewmodel viewModel) async {
     final PendingDynamicLinkData data =
-        await FirebaseDynamicLinks.instance.retrieveDynamicLink();
+    await FirebaseDynamicLinks.instance.retrieveDynamicLink();
     if (data != null) {
       var decodedDynamicLink = Uri.decodeComponent(data.link.toString());
       var stringURLtoURI = Uri.parse(decodedDynamicLink);

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 class PlaygroundView extends StatefulWidget {
   static const double _defaultFontSize = 40;
   static const String _defaultTitle = 'Playground';
-  static const String _defaultAllWidgetsTitle = 'All atoms';
   static const _defaultAppBarTitle = Text(
     _defaultTitle,
     style: TextStyle(
@@ -16,16 +15,12 @@ class PlaygroundView extends StatefulWidget {
   final List<Widget> widgetList;
   final Color appBarColor;
   final Widget appBarTitle;
-  final String allWidgetsText;
-  final bool showAtoms;
 
   PlaygroundView(
       {Key key,
       @required this.widgetList,
       this.appBarColor = const Color(0xFF9CBD3A),
-      this.appBarTitle = _defaultAppBarTitle,
-      this.allWidgetsText = _defaultAllWidgetsTitle,
-      this.showAtoms = true});
+      this.appBarTitle = _defaultAppBarTitle});
 
   @override
   _PlaygroundViewState createState() => _PlaygroundViewState();
@@ -128,15 +123,6 @@ class _PlaygroundViewState extends State<PlaygroundView> {
     );
   }
 
-  ListTile _playgroundAllListItem(int index, BuildContext context) {
-    return ListTile(
-      title: Text(widget.allWidgetsText),
-      onTap: () {
-        _navigateToNextPlayground(context, index);
-      },
-    );
-  }
-
   ListTile _playgroundListItem(int index, BuildContext context) {
     if (items[index] is PlaygroundWidget) {
       return ListTile(
@@ -167,18 +153,6 @@ class _PlaygroundViewState extends State<PlaygroundView> {
               child: childWidget,
               appBarColor: widget.appBarColor,
               customTitle: customTitle,
-            ),
-      ),
-    );
-  }
-
-  void _navigateToNextPlayground(BuildContext context, int index) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => PlaygroundView(
-              widgetList: widget.widgetList,
-              appBarColor: widget.appBarColor,
-              showAtoms: true,
             ),
       ),
     );

@@ -9,7 +9,8 @@ class PlaygroundDataSource {
           PlaygroundWidget(
             title: 'All atoms',
             child: PlaygroundView(
-                widgetList: PlayGroundAtomDataSource().getList()),
+                widgetList: PlayGroundAtomDataSource().getList(),
+            ),
           ),
         ] +
         PlayGroundTasksDataSource().getList();
