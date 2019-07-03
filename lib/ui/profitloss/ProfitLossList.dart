@@ -81,7 +81,7 @@ class _ProfitLossState extends State<ProfitLossPage>  {
     return HeaderAndFooterListView.builder(
         itemCount: viewModel.transactions.length,
         itemBuilder: (BuildContext context, int index) {
-          return ProfitLossListItem().buildListItem(viewModel.transactions[index]);
+          return ProfitLossListItem(viewModel: viewModel.transactions[index], style: ProfitLossItemStyle.defaultStyle());
         },
         physics: ScrollPhysics(),
         shrinkWrap: true,

@@ -6,7 +6,6 @@ class ProfitLossHeaderViewModel {
   String detail;
 
   ProfitLossHeaderViewModel(this.title, this.subtitle, this.detail);
-
 }
 
 class ProfitLossHeaderStyle {
