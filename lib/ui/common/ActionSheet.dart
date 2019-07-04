@@ -121,7 +121,7 @@ class ActionSheet extends StatelessWidget {
           break;
         case ActionType.selectable:
           listBuilder.add(ActionSheetListItem(style: ActionSheetListItemStyle.selectableStyle(),
-              viewModel: ActionSheetListItemViewModel(title: action.title, onTap: action.onTap, icon: action.icon, checkBoxIcon: action.checkBoxIcon, isDestructive: action.isDestructive, type: action.type)));
+              viewModel: ActionSheetListItemViewModel(title: action.title, onTap: action.onTap, icon: action.icon, checkBoxIcon: action.checkBoxIcon, isDestructive: action.isDestructive, type: action.type, isSelected: false)));
           break;
         }
 

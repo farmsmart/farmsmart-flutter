@@ -12,11 +12,12 @@ class ActionSheetListItemViewModel {
   String icon;
   ActionType type;
   String checkBoxIcon;
+  bool isSelected;
   bool isDestructive;
   Function onTap;
 
   ActionSheetListItemViewModel({this.title, this.icon, this.type,
-      this.checkBoxIcon, this.isDestructive, this.onTap});
+      this.checkBoxIcon, this.isSelected, this.isDestructive, this.onTap});
 }
 
 class ActionSheetListItemStyle {
@@ -94,17 +95,30 @@ class ActionSheetListItemStyle {
   }
 }
 
-class ActionSheetListItem extends StatelessWidget {
+class ActionSheetListItem extends StatefulWidget {
   final ActionSheetListItemViewModel _viewModel;
   final ActionSheetListItemStyle _style;
 
-  const ActionSheetListItem(
-      {Key key,
-      ActionSheetListItemViewModel viewModel,
-      ActionSheetListItemStyle style})
-      : this._viewModel = viewModel,
-        this._style = style,
-        super(key: key);
+  const ActionSheetListItem({ActionSheetListItemViewModel viewModel, ActionSheetListItemStyle style}) : this._viewModel = viewModel, this._style = style;
+
+  @override
+  _ActionSheetListItemState createState() => _ActionSheetListItemState(_viewModel, _style);
+}
+
+
+class _ActionSheetListItemState extends State<ActionSheetListItem> {
+  final ActionSheetListItemViewModel _viewModel;
+  final ActionSheetListItemStyle _style;
+
+  _ActionSheetListItemState(this._viewModel, this._style);
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      _viewModel.isSelected = !_viewModel.isSelected;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -114,7 +128,7 @@ class ActionSheetListItem extends StatelessWidget {
           elevation: _style.actionItemElevation,
           color: _style.actionItemBackgroundColor,
           child: InkWell(
-            onTap: () => _viewModel.onTap,
+            onTap: () => switchCheck(),
             child: Container(
               padding: _style.actionItemEdgePadding,
               alignment: Alignment.center,
@@ -160,14 +174,24 @@ class ActionSheetListItem extends StatelessWidget {
     }
 
     if (viewModel.checkBoxIcon != null) {
+      var checkbox = "assets/icons/radio_button_default.png";
+      viewModel.isSelected ? checkbox = "assets/icons/radio_button_active.png" : checkbox = "assets/icons/radio_button_default.png";
+
       listBuilder.add(SizedBox(width: style.iconLineSpace));
       listBuilder.add(Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
-          Image.asset(viewModel.checkBoxIcon, height: style.iconHeight)
+          Image.asset(checkbox, height: style.iconHeight)
         ],
       ));
     }
     return listBuilder;
   }
+
+  void switchCheck() {
+    setState(() {
+      _viewModel.isSelected = !_viewModel.isSelected;
+    });
+  }
 }
+
