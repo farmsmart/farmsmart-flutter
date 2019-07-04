@@ -6,9 +6,6 @@ import 'package:farmsmart_flutter/utils/strings.dart';
 import 'package:farmsmart_flutter/utils/colors.dart';
 import 'package:farmsmart_flutter/utils/dimens.dart';
 import 'package:farmsmart_flutter/utils/styles.dart';
-import 'package:flutter_share_me/flutter_share_me.dart';
-import 'package:package_info/package_info.dart';
-import 'package:farmsmart_flutter/data/firebase_const.dart';
 
 // We define here generic margins for the app
 abstract class CustomAppBar {
@@ -50,16 +47,6 @@ abstract class CustomAppBar {
     );
   }
 
-  static AppBar buildForArticleDetail(String title, Widget shareActions) {
-    return AppBar(
-      leading: backIcon(),
-      automaticallyImplyLeading: true,
-      // adds the back button automatically
-      actions: <Widget>[shareActions],
-      elevation: 0,
-    );
-  }
-
   static AppBar buildForDetail(String title) {
     return AppBar(
       leading: backIcon(),
@@ -86,29 +73,6 @@ abstract class CustomAppBar {
         onPressed: action(),
       ),
     );
-  }
-
-  static Future<String> getPackageInfo() async {
-    PackageInfo packageInfo = await PackageInfo.fromPlatform();
-    String packageName = packageInfo.packageName;
-    return packageName;
-  }
-
-  static Future<String> buildArticleDeeplink(String articleID) async {
-    String packageID = await getPackageInfo();
-
-    String dynamicLinkPrefix = DeepLink.Prefix + "/?link=";
-
-    String dynamicLinkBody =
-        DeepLink.linkDomain + "?id=" + articleID + "&type=article";
-    String dynamicLinkBodyEncoded =
-        Uri.encodeComponent(dynamicLinkBody); // To encode url
-
-    String dynamicLinkSufix = "&apn=" + packageID + "&efr=1";
-
-    String fullDynamicLink =
-        dynamicLinkPrefix + dynamicLinkBodyEncoded + dynamicLinkSufix;
-    return fullDynamicLink;
   }
 
   static Widget popUpMenuAction(Function goToPrivacyPolicy) {

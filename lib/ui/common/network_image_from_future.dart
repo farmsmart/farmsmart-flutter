@@ -9,24 +9,24 @@ class NetworkImageFromFuture extends StatelessWidget {
   final double width;
   final BoxFit fit;
 
-  NetworkImageFromFuture(this.futureUrl, {@required this.height, @required this.width, this.fit});
+  NetworkImageFromFuture(this.futureUrl, {this.height, this.width, this.fit});
 
   @override
   Widget build(BuildContext context) {
+    final placeholder = Image.asset(Assets.IMAGE_PLACE_HOLDER);
     return SizedBox(width:width, height: height,
       child: FittedBox(
         fit: fit,
         child: FutureBuilder(
             future: futureUrl,
             builder: (BuildContext context, AsyncSnapshot<String> url) {
-              final placeholder = Image.asset(Assets.IMAGE_PLACE_HOLDER);
                 if (!url.hasData) {
                   return placeholder;
                 }
                 return CachedNetworkImage(
             imageUrl: url.data,
-            placeholder: (context, url) =>  CircularProgressIndicator(),
-            errorWidget: (context, url, error) => Text(error.toString()),);
+            placeholder: (context, url) =>  placeholder,
+            errorWidget: (context, url, error) => placeholder,);
             }),
       ),
     );

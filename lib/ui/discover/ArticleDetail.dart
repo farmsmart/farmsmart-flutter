@@ -1,13 +1,17 @@
 import 'package:farmsmart_flutter/model/loading_status.dart';
+import 'package:farmsmart_flutter/ui/common/ContextualAppBar.dart';
 import 'package:farmsmart_flutter/ui/common/headerAndFooterListView.dart';
 import 'package:farmsmart_flutter/ui/common/network_image_from_future.dart';
-import 'package:farmsmart_flutter/ui/discover/ArticleList.dart';
 import 'package:farmsmart_flutter/ui/discover/viewModel/ArticleDetailViewModel.dart';
 import 'package:farmsmart_flutter/ui/discover/viewModel/ArticleListItemViewModel.dart';
 import 'package:farmsmart_flutter/ui/discover/StandardListItem.dart';
-import 'package:farmsmart_flutter/ui/discover/viewModel/ArticleListViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:share/share.dart';
+
+class _Strings {
+  static const String shareText = "Check out this article from the FarmSmart mobile app \n ";
+}
 
 abstract class ArticleDetailStyle {
   final TextStyle titlePageStyle;
@@ -20,6 +24,7 @@ abstract class ArticleDetailStyle {
 
   final double spaceBetweenDataAndImage;
   final double spaceBetweenElements;
+  final double imageHeight;
 
   final int maxLinesPerTitle;
 
@@ -32,6 +37,7 @@ abstract class ArticleDetailStyle {
       this.bodyPadding,
       this.spaceBetweenDataAndImage,
       this.spaceBetweenElements,
+      this.imageHeight,
       this.maxLinesPerTitle);
 }
 
@@ -55,70 +61,29 @@ class _DefaultStyle implements ArticleDetailStyle {
 
   final double spaceBetweenDataAndImage = 36;
   final double spaceBetweenElements = 41;
+  final double imageHeight = 192;
 
   final int maxLinesPerTitle = 2;
 
   const _DefaultStyle();
 }
 
-class ArticleDetail extends StatefulWidget {
+class ArticleDetail extends StatelessWidget {
   final ArticleDetailViewModel _viewModel;
+  final ArticleDetailStyle _style; 
 
-  const ArticleDetail({Key key, ArticleDetailViewModel viewModel})
+  const ArticleDetail({Key key, ArticleDetailViewModel viewModel, ArticleDetailStyle style = const _DefaultStyle()})
       : this._viewModel = viewModel,
+      this._style = style,
         super(key: key);
-  @override
-  State<StatefulWidget> createState() {
-    return _ArticleDetailState(_viewModel);
-  }
-}
-
-class _ArticleDetailState extends State<ArticleDetail> {
-  final ArticleDetailViewModel _viewModel;
-
-  _ArticleDetailState(ArticleDetailViewModel viewModel)
-      : this._viewModel = viewModel;
 
   @override
   Widget build(BuildContext context) {
-    return _build(context, _viewModel);
+    return _build(context: context, viewModel: _viewModel,style: _style);
   }
 
-  Widget _buildHeader(BuildContext context, ArticleDetailViewModel viewModel,
-      ArticleDetailStyle style) {
-    return Column(
-      children: <Widget>[
-        _buildTitle(viewModel.title, style),
-        _buildArticlePublishingDate(viewModel, style),
-        SizedBox(height: style.spaceBetweenDataAndImage),
-        _buildImage(viewModel),
-        SizedBox(height: style.spaceBetweenElements),
-        _buildBody(viewModel, style),
-        SizedBox(height: style.spaceBetweenElements),
-        Container(
-          padding: style.titlePagePadding,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text("Related Articles", style: style.titlePageStyle)
-            ],
-          ),
-        )
-      ],
-    );
-  }
-
-  void _tappedListItem(
-      {BuildContext context, ArticleDetailViewModel viewModel}) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => ArticleDetail(viewModel: viewModel),
-      ),
-    );
-  }
-
-  Widget _build(BuildContext context, ArticleDetailViewModel viewModel,
-      {ArticleDetailStyle style = const _DefaultStyle()}) {
+  Widget _build({BuildContext context, ArticleDetailViewModel viewModel,
+      ArticleDetailStyle style }) {
     var releatedViewModels = [];
     final loadingWidget = Container(
         child: CircularProgressIndicator(), alignment: Alignment.center);
@@ -134,9 +99,7 @@ class _ArticleDetailState extends State<ArticleDetail> {
             ? loadingWidget
             : null;
         return Scaffold(
-          appBar: AppBar(
-            backgroundColor: Color(0xFFFFFFFF),
-          ),
+          appBar: _buildAppBar(context),
           body: Container(
             child: HeaderAndFooterListView.builder(
                 itemCount: releatedViewModels.length,
@@ -150,7 +113,8 @@ class _ArticleDetailState extends State<ArticleDetail> {
                 },
                 physics: ScrollPhysics(),
                 shrinkWrap: true,
-                header: _buildHeader(context, viewModel, style),
+                header: _buildHeader(
+                    context, releatedViewModels.isNotEmpty, viewModel, style),
                 footer: footer),
           ),
         );
@@ -158,53 +122,94 @@ class _ArticleDetailState extends State<ArticleDetail> {
     );
   }
 
-// FIXME: Reuse the _buildScreenTitle from discover page (don't need to redefine here)
-  Widget _buildTitle(
-      String selectedArticleTitle, ArticleDetailStyle articleStyle) {
-    return Container(
-        padding: articleStyle.titlePagePadding,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Expanded(
-              child: Text(
-                selectedArticleTitle,
-                style: articleStyle.titlePageStyle,
-                maxLines: articleStyle.maxLinesPerTitle,
-              ),
-            )
-          ],
-        ));
+  void _share() async {
+    final link = await _viewModel.shareLink;
+    await Share.share(_Strings.shareText + link);
   }
 
-  Widget _buildArticlePublishingDate(
+  Widget _buildAppBar(BuildContext context) {
+    return ContextualAppBar(shareAction: _share,).build(context);
+  }
+
+  Widget _buildHeader(BuildContext context, bool relatedTitle,
       ArticleDetailViewModel viewModel, ArticleDetailStyle style) {
+    final topWidgets = [
+      _buildTitle(),
+      _buildArticlePublishingDate(),
+      SizedBox(height: style.spaceBetweenDataAndImage),
+      _buildImage(),
+      SizedBox(height: style.spaceBetweenElements),
+      _buildBody(),
+      SizedBox(height: style.spaceBetweenElements),
+    ];
+    final midWidgets = [
+      Container(
+        padding: style.titlePagePadding,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(_viewModel.relatedTitle, style: style.titlePageStyle)
+          ],
+        ),
+      ),
+    ];
+    final headerWidgets = relatedTitle ? topWidgets + midWidgets : topWidgets;
+    return Column(
+      children: headerWidgets,
+    );
+  }
+
+  void _tappedListItem(
+      {BuildContext context, ArticleDetailViewModel viewModel}) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => ArticleDetail(viewModel: viewModel),
+      ),
+    );
+  }
+
+  Widget _buildTitle() {
     return Container(
-        padding: style.leftRightPadding,
+        padding: _style.titlePagePadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Expanded(
               child: Text(
-                viewModel.subtitle,
-                style: style.dateStyle,
+                _viewModel.title,
+                style: _style.titlePageStyle,
+                maxLines: _style.maxLinesPerTitle,
               ),
             )
           ],
         ));
   }
 
-  Widget _buildImage(ArticleDetailViewModel viewModel) {
+  Widget _buildArticlePublishingDate() {
     return Container(
-        child: NetworkImageFromFuture(viewModel.image.urlToFit(height: 192.0),
-            fit: BoxFit.cover, height: 192.0));
+        padding: _style.leftRightPadding,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Expanded(
+              child: Text(
+                _viewModel.subtitle,
+                style: _style.dateStyle,
+              ),
+            )
+          ],
+        ));
   }
 
-//TODO: Investigate how to add style to Html elements
-  Widget _buildBody(
-      ArticleDetailViewModel selectedArticle, ArticleDetailStyle articleStyle) {
+  Widget _buildImage() {
     return Container(
-        padding: articleStyle.bodyPadding,
-        child: Html(data: selectedArticle.body, useRichText: true));
+        child: NetworkImageFromFuture(_viewModel.image.urlToFit(height: _style.imageHeight),
+            fit: BoxFit.cover, height: _style.imageHeight));
+  }
+
+  Widget _buildBody() {
+    return Container(
+        padding: _style.bodyPadding,
+        child: Html(data: _viewModel.body, useRichText: true));
   }
 }

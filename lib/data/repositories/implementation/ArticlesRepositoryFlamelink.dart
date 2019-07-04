@@ -3,13 +3,17 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:farmsmart_flutter/data/model/EntityCollectionInterface.dart';
 import 'package:farmsmart_flutter/data/model/article_entity.dart';
 import 'package:farmsmart_flutter/data/model/entities_const.dart';
+import 'package:farmsmart_flutter/data/repositories/implementation/FlameLinkMetaTransformer.dart';
 import 'package:farmsmart_flutter/data/repositories/implementation/ImageRepositoryFlamelink.dart';
+import 'package:farmsmart_flutter/data/repositories/implementation/transformers/FirebaseArticleTransformer.dart';
 import 'FlameLink.dart';
 import '../../firebase_const.dart';
 import '../ArticleRepositoryInterface.dart';
 
+final transformer = FlamelinkArticleTransformer();
+
 ArticleEntity _transform(FlameLink cms, DocumentSnapshot snapshot) {
-  var article = ArticleEntity.articleFromDocument(snapshot);
+  var article = transformer.transform(from: snapshot);
   var relatedRefs = [];
   var imageRefs = [];
   if (snapshot.data[RELATED_ARTICLES] != null) {
@@ -48,6 +52,7 @@ class ArticlesRepositoryFlameLink implements ArticleRepositoryInterface {
   final FlameLink _cms;
   static final _articleSchema = "article";
   static final _articleDirectoryName = "articleDirectory";
+
 
   ArticlesRepositoryFlameLink(FlameLink cms) : _cms = cms;
 

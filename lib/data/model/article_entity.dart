@@ -13,21 +13,25 @@ class ArticleEntity {
   Status status;
   String summary;
   String title;
+  Timestamp published;
 
   ArticleEntity(
       {this.id,
       this.content,
       this.status,
       this.summary,
-      this.title});
+      this.title,
+      this.published});
 
+//TODO: LH this is deprecated remove when doing MyPlot repo....
   factory ArticleEntity.articleFromDocument(DocumentSnapshot articleDocument) =>
       ArticleEntity(
           id: articleDocument.data[ID],
           content: articleDocument.data[CONTENT],
           status: statusValues.map[articleDocument.data[STATUS]],
           summary: articleDocument.data[SUMMARY],
-          title: articleDocument.data[TITLE]);
+          title: articleDocument.data[TITLE],
+          published: articleDocument.data[PUBLISHED]);
 }
 
 

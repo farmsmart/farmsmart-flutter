@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:farmsmart_flutter/data/model/EntityCollectionInterface.dart';
 import 'package:farmsmart_flutter/data/model/article_entity.dart';
 import 'package:farmsmart_flutter/data/repositories/ArticleRepositoryInterface.dart';
@@ -12,6 +13,7 @@ class MockArticle {
       status: Status.PUBLISHED,
       summary: _mockPlainText.random(),
       title: _mockTitleText.random(),
+      published: Timestamp.now(),
     );
   }
   static List<ArticleEntity> list({int count = 50}) {

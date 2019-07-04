@@ -87,7 +87,7 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
                   group: ArticleCollectionGroup.discovery));
           return MaterialPageRoute(builder: builder, settings: settings);
         });
-
+  
     final List<Widget> _children = [
       PlotList(),
       HomeProfitLossChild(),
