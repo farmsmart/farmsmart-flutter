@@ -102,7 +102,6 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
       bottomNavigationBar: Theme(
         data: Theme.of(context).copyWith(primaryColor: Color(primaryGreen)),
         child: BottomNavigationBar(
-
           type: BottomNavigationBarType.fixed,
           onTap: viewModel.changeTab,
           currentIndex: viewModel.currentTab,
@@ -154,7 +153,6 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
     if (data != null) {
       var decodedDynamicLink = Uri.decodeComponent(data.link.toString());
       var stringURLtoURI = Uri.parse(decodedDynamicLink);
-
       if (stringURLtoURI != null) {
         String articleId = stringURLtoURI.queryParameters[DeepLink.ParameterID];
         debugPrint('Fetching id=${articleId}');
