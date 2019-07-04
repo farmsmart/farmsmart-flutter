@@ -21,9 +21,7 @@ class ProfitLossListViewModel {
       {this.title, this.detailText, this.loadingStatus, this.transactions});
 
   static ProfitLossListViewModel fromStore(Store<AppState> store) {
-    final mockViewModel = MockProfitLossListViewModel.build();
-
-    return mockViewModel;
+    return MockProfitLossListViewModel.build();
   }
 }
 

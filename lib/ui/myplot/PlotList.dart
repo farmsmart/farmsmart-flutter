@@ -13,10 +13,9 @@ import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
 
 class PlotListViewModel {
   final String title;
-
   final String buttonTitle;
 
-  PlotListViewModel(this.title, this.buttonTitle);
+  PlotListViewModel(this.title, this.buttonTitle,);
 }
 
 PlotListViewModel buildPlotListViewModel() {
@@ -149,9 +148,7 @@ class _MyPlotState extends State<PlotList> {
                 FlatButton(
                     child: Text(
                         retryButton),
-                    onPressed: () {
-                      //FIXME: Needs to implement the retry functionality
-                    }
+                    onPressed: viewModel.update
                 )
               ])
         ],
