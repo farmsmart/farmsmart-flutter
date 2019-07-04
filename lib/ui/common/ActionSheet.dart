@@ -98,34 +98,35 @@ class ActionSheet extends StatelessWidget {
         this._cellStyle = cellStyle,
         super(key: key);
 
-  static Widget _build(BuildContext context, ActionSheetViewModel viewModel,
-      ActionSheetStyle style, ActionSheetListItemStyle cellStyle) {
+  @override
+  Widget build(BuildContext context) {
     return Container(
-        color: style.cornersColor,
+        color: _style.cornersColor,
         child: Container(
             decoration: BoxDecoration(
-                color: style.backgroundColor,
+                color: _style.backgroundColor,
                 borderRadius: BorderRadius.only(
-                    topLeft: style.cornerRadius, topRight: style.cornerRadius)),
+                    topLeft: _style.cornerRadius,
+                    topRight: _style.cornerRadius)),
             child: HeaderAndFooterListView.builder(
                 physics: NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
-                itemCount: viewModel.actions.length,
+                itemCount: _viewModel.actions.length,
                 itemBuilder: (BuildContext context, int index) =>
                     ActionSheetListItem(
                         viewModel: ActionSheetListItemViewModel(
-                            viewModel.actions[index].title,
-                            viewModel.actions[index].action,
-                            viewModel.actions[index].isDestructive,
-                            icon: viewModel.actions[index].icon,
+                            _viewModel.actions[index].title,
+                            _viewModel.actions[index].action,
+                            _viewModel.actions[index].isDestructive,
+                            icon: _viewModel.actions[index].icon,
                             checkBoxIcon:
-                                viewModel.actions[index].checkBoxIcon),
-                        style: cellStyle,
-                        numberOfActions: viewModel.actions.length,
+                                _viewModel.actions[index].checkBoxIcon),
+                        style: _cellStyle,
+                        numberOfActions: _viewModel.actions.length,
                         currentAction: index),
-                header: _buildIndicatorLine(style),
+                header: _buildIndicatorLine(_style),
                 footer: RoundedButton.build(
-                    RoundedButtonViewModel(title: viewModel.confirmButtonTitle),
+                    RoundedButtonViewModel(title: _viewModel.confirmButtonTitle),
                     style: ActionSheetLargeRoundedButtonStyle()))));
   }
 
@@ -141,10 +142,5 @@ class ActionSheet extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return _build(context, _viewModel, _style, _cellStyle);
   }
 }
