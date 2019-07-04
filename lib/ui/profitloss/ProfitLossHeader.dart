@@ -73,29 +73,29 @@ class ProfitLossHeader extends StatelessWidget {
         this._style = style,
         super(key: key);
 
-  static Widget _build(BuildContext context,
-      ProfitLossHeaderViewModel viewModel, ProfitLossHeaderStyle style) {
+  @override
+  Widget build(BuildContext context) {
     return Container(
-      margin: style.titleEdgePadding,
+      margin: _style.titleEdgePadding,
       child: Column(children: <Widget>[
         Row(
           crossAxisAlignment: CrossAxisAlignment.baseline,
           textBaseline: TextBaseline.alphabetic,
           children: <Widget>[
-            Text(viewModel.title,
-                style: style.titleTextStyle,
-                maxLines: style.maxLines,
+            Text(_viewModel.title,
+                style: _style.titleTextStyle,
+                maxLines: _style.maxLines,
                 overflow: TextOverflow.ellipsis),
             SizedBox(
-              width: style.detailTextSpacing,
+              width: _style.detailTextSpacing,
             ),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text(viewModel.detail,
-                      style: style.detailTextStyle,
-                      maxLines: style.maxLines,
+                  Text(_viewModel.detail,
+                      style: _style.detailTextStyle,
+                      maxLines: _style.maxLines,
                       overflow: TextOverflow.ellipsis),
                 ],
               ),
@@ -121,9 +121,4 @@ class ProfitLossHeader extends StatelessWidget {
         ));
   }
 */
-
-  @override
-  Widget build(BuildContext context) {
-    return _build(context, _viewModel, _style);
-  }
 }
