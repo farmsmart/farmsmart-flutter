@@ -12,7 +12,13 @@ class RecordAmountHeaderStyle {
   final TextStyle hintTextStyle;
   final TextStyle titleTextStyle;
 
-  RecordAmountHeaderStyle({this.hintTextStyle, this.titleTextStyle});
+  final EdgeInsets edgePadding;
+
+  final double height;
+  final int maxLines;
+
+  RecordAmountHeaderStyle({this.hintTextStyle, this.titleTextStyle,
+      this.edgePadding, this.height, this.maxLines});
 
   factory RecordAmountHeaderStyle.defaultCostStyle() {
     return RecordAmountHeaderStyle(
@@ -28,18 +34,17 @@ class RecordAmountHeaderStyle {
 
   factory RecordAmountHeaderStyle.defaultSaleStyle() {
     return RecordAmountHeaderStyle.defaultCostStyle().copyWith(
-        hintTextStyle: const TextStyle(
-            fontSize: 72,
-            fontWeight: FontWeight.w700,
-            color: Color(0x4c24d900)),
-        titleTextStyle: const TextStyle(
-            fontSize: 72,
-            fontWeight: FontWeight.w700,
-            color: Color(0xFF24d900)));
+        hintTextStyle: const TextStyle(fontSize: 72, fontWeight: FontWeight.w700, color: Color(0x4c24d900)),
+        titleTextStyle: const TextStyle(fontSize: 72, fontWeight: FontWeight.w700, color: Color(0xFF24d900)),
+        edgePadding: const EdgeInsets.symmetric(horizontal: 32),
+        height: 138,
+        maxLines: 1
+    );
   }
 
   RecordAmountHeaderStyle copyWith(
-      {TextStyle hintTextStyle, TextStyle titleTextStyle}) {
+      {TextStyle hintTextStyle, TextStyle titleTextStyle,
+  EdgeInsets edgePadding, double height, int maxLines}) {
     return RecordAmountHeaderStyle(
         hintTextStyle: hintTextStyle ?? this.hintTextStyle,
         titleTextStyle: titleTextStyle ?? this.titleTextStyle);
@@ -64,8 +69,8 @@ class RecordAmountHeader extends StatelessWidget {
         '^\$|^(0|([1-9][0-9]{0,3}))(\\.[0-9]{0,2})?\$');
 
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 32),
-      height: 138,
+      padding: _style.edgePadding,
+      height: _style.height,
       child: Row(
         children: <Widget>[
           Expanded(
@@ -84,8 +89,7 @@ class RecordAmountHeader extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: _style.titleTextStyle,
                   inputFormatters: [_amountValidator],
-                  maxLength: 7,
-                  maxLines: 1,
+                  maxLines: _style.maxLines,
                 ),
               ])),
         ],
