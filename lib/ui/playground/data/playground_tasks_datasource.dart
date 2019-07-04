@@ -45,7 +45,7 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
       PlaygroundWidget(
           title: 'FARM-355 Generic Action Sheet - Type 4',
           child: ActionSheet(viewModel: MockActionSheetViewModel.buildWithCheckBox(), style: ActionSheetStyle.defaultStyle(), cellStyle: ActionSheetListItemStyle.selectableStyle())
-      )
+      ),
       /* Template
       PlaygroundWidget(
         title: '#TASK NAME#',

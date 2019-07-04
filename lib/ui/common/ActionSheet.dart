@@ -11,7 +11,8 @@ class ActionSheetViewModel {
   String confirmButtonTitle;
   String cancelButtonTitle;
 
-  ActionSheetViewModel(this.actions, this.confirmButtonTitle, {this.cancelButtonTitle});
+  ActionSheetViewModel(this.actions, this.confirmButtonTitle,
+      {this.cancelButtonTitle});
 }
 
 class ActionSheetStyle {
@@ -29,11 +30,15 @@ class ActionSheetStyle {
   final double indicatorLineThickness;
   final double indicatorLineWidth;
 
-
-  ActionSheetStyle({this.backgroundColor,
-      this.indicatorLineColor, this.confirmButtonBackgroundColor,
-      this.cancelButtonBackgroundColor, this.indicatorLineEdgePadding,
-      this.cornerRadius, this.indicatorLineRadius, this.indicatorLineThickness,
+  ActionSheetStyle(
+      {this.backgroundColor,
+      this.indicatorLineColor,
+      this.confirmButtonBackgroundColor,
+      this.cancelButtonBackgroundColor,
+      this.indicatorLineEdgePadding,
+      this.cornerRadius,
+      this.indicatorLineRadius,
+      this.indicatorLineThickness,
       this.indicatorLineWidth});
 
   factory ActionSheetStyle.defaultStyle() {
@@ -50,23 +55,30 @@ class ActionSheetStyle {
     );
   }
 
-  ActionSheetStyle copyWith({Color backgroundColor,
-    Color indicatorLineColor, Color confirmButtonBackgroundColor,
-    Color cancelButtonBackgroundColor, EdgeInsets indicatorLineEdgePadding,
-    Radius cornerRadius, Radius indicatorLineRadius, double indicatorLineThickness,
-    double indicatorLineWidth}) {
-
+  ActionSheetStyle copyWith(
+      {Color backgroundColor,
+      Color indicatorLineColor,
+      Color confirmButtonBackgroundColor,
+      Color cancelButtonBackgroundColor,
+      EdgeInsets indicatorLineEdgePadding,
+      Radius cornerRadius,
+      Radius indicatorLineRadius,
+      double indicatorLineThickness,
+      double indicatorLineWidth}) {
     return ActionSheetStyle(
-        backgroundColor: backgroundColor ?? this.backgroundColor,
-        indicatorLineColor: indicatorLineColor ?? this.indicatorLineColor,
-        confirmButtonBackgroundColor: confirmButtonBackgroundColor ?? this.confirmButtonBackgroundColor,
-        cancelButtonBackgroundColor: cancelButtonBackgroundColor ?? this.cancelButtonBackgroundColor,
-        indicatorLineEdgePadding: indicatorLineEdgePadding ?? this.indicatorLineEdgePadding,
-        cornerRadius: cornerRadius ?? this.cornerRadius,
-        indicatorLineRadius: indicatorLineRadius ?? this.indicatorLineRadius,
-        indicatorLineThickness: indicatorLineThickness ?? this.indicatorLineThickness,
-        indicatorLineWidth: indicatorLineWidth ?? this.indicatorLineWidth,
-
+      backgroundColor: backgroundColor ?? this.backgroundColor,
+      indicatorLineColor: indicatorLineColor ?? this.indicatorLineColor,
+      confirmButtonBackgroundColor:
+          confirmButtonBackgroundColor ?? this.confirmButtonBackgroundColor,
+      cancelButtonBackgroundColor:
+          cancelButtonBackgroundColor ?? this.cancelButtonBackgroundColor,
+      indicatorLineEdgePadding:
+          indicatorLineEdgePadding ?? this.indicatorLineEdgePadding,
+      cornerRadius: cornerRadius ?? this.cornerRadius,
+      indicatorLineRadius: indicatorLineRadius ?? this.indicatorLineRadius,
+      indicatorLineThickness:
+          indicatorLineThickness ?? this.indicatorLineThickness,
+      indicatorLineWidth: indicatorLineWidth ?? this.indicatorLineWidth,
     );
   }
 }
@@ -76,9 +88,18 @@ class ActionSheet extends StatelessWidget {
   final ActionSheetStyle _style;
   final ActionSheetListItemStyle _cellStyle;
 
-  const ActionSheet({Key key, ActionSheetViewModel viewModel, ActionSheetStyle style, ActionSheetListItemStyle cellStyle}) : this._viewModel = viewModel, this._style = style, this._cellStyle = cellStyle, super(key: key);
+  const ActionSheet(
+      {Key key,
+      ActionSheetViewModel viewModel,
+      ActionSheetStyle style,
+      ActionSheetListItemStyle cellStyle})
+      : this._viewModel = viewModel,
+        this._style = style,
+        this._cellStyle = cellStyle,
+        super(key: key);
 
-  static Widget _build(BuildContext context, ActionSheetViewModel viewModel, ActionSheetStyle style, ActionSheetListItemStyle cellStyle) {
+  static Widget _build(BuildContext context, ActionSheetViewModel viewModel,
+      ActionSheetStyle style, ActionSheetListItemStyle cellStyle) {
     return Container(
         color: style.cornersColor,
         child: Container(
@@ -91,16 +112,20 @@ class ActionSheet extends StatelessWidget {
                 shrinkWrap: true,
                 itemCount: viewModel.actions.length,
                 itemBuilder: (BuildContext context, int index) =>
-                    ActionSheetListItem(viewModel: ActionSheetListItemViewModel(
-                        viewModel.actions[index].title,
-                        viewModel.actions[index].action,
-                        viewModel.actions[index].isDestructive,
-                        icon: viewModel.actions[index].icon,
-                        checkBoxIcon: viewModel.actions[index].checkBoxIcon),
-                        style: cellStyle, numberOfActions: viewModel.actions.length, currentAction: index),
-                    //_buildActionCell(style, viewModel.actions[index], viewModel.actions.length, index),
+                    ActionSheetListItem(
+                        viewModel: ActionSheetListItemViewModel(
+                            viewModel.actions[index].title,
+                            viewModel.actions[index].action,
+                            viewModel.actions[index].isDestructive,
+                            icon: viewModel.actions[index].icon,
+                            checkBoxIcon:
+                                viewModel.actions[index].checkBoxIcon),
+                        style: cellStyle,
+                        numberOfActions: viewModel.actions.length,
+                        currentAction: index),
                 header: _buildIndicatorLine(style),
-                footer: RoundedButton.build(RoundedButtonViewModel(title: viewModel.confirmButtonTitle),
+                footer: RoundedButton.build(
+                    RoundedButtonViewModel(title: viewModel.confirmButtonTitle),
                     style: ActionSheetLargeRoundedButtonStyle()))));
   }
 
@@ -121,13 +146,5 @@ class ActionSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _build(context, _viewModel, _style, _cellStyle);
-  }
-
-  //FIXME: To show ActionBottomSheet (need to implement)
-  Future _onMenuPressed(BuildContext context) async {
-    showModalBottomSheet(
-        context: context,
-        builder: (widgetBuilder) =>  ActionSheet(viewModel: MockActionSheetViewModel.buildStandard(), style: ActionSheetStyle.defaultStyle())
-    );
   }
 }
