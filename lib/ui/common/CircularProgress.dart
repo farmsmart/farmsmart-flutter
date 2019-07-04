@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:farmsmart_flutter/ui/common/MyPainter.dart';
 import 'package:flutter/material.dart';
 
@@ -6,55 +8,50 @@ class CircularProgress extends StatefulWidget {
   _CircularProgressState createState() => _CircularProgressState();
 }
 
-
-class _CircularProgressState extends State<CircularProgress>{
-
+class _CircularProgressState extends State<CircularProgress> {
   double percentage;
   double increment;
   double defaultValue = 0;
   double percentageComplete = 100.0;
 
   @override
-  void initState(){
-
+  void initState() {
     super.initState();
     setState(() {
       percentage = 0.0;
       increment = 10.0;
+      startTimer();
     });
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        height: 200,
-        width: 200,
+        height: 87,
+        width: 87,
         child: CustomPaint(
           foregroundPainter: MyPainter(
-              lineColor: Colors.amber,
-              completeColor: Colors.blueAccent,
+              lineColor: Colors.transparent,
+              completeColor: Color(0xff24d900),
               completePercent: percentage,
-            width: 8.0
-          ),
+              width: 3.0),
           child: Padding(
-              padding: EdgeInsets.all(8.0),
-          child: RaisedButton(
-              color: Colors.purple,
-              splashColor: Colors.blueAccent,
-              shape: CircleBorder(),
-              child: Text("Click"),
-              onPressed: () {
-                setState(() {
-                  percentage += increment;
-                  if (percentage > percentageComplete){
-                    percentage = defaultValue;
-                  }
-                });
-              }),
+            padding: EdgeInsets.all(4.0),
           ),
         ),
       ),
     );
+  }
+
+  void startTimer() {
+    Timer.periodic(Duration(milliseconds: 500), (timer) {
+      setState(() {
+        percentage += increment;
+        if (percentage > percentageComplete) {
+          percentage = defaultValue;
+        }
+      });
+    });
   }
 }

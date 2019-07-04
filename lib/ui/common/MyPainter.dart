@@ -50,5 +50,4 @@ class MyPainter extends CustomPainter{
   bool shouldRepaint(CustomPainter oldDelegate) {
     return true;
   }
-
 }
