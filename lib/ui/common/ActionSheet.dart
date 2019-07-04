@@ -8,15 +8,14 @@ import 'package:flutter/material.dart';
 
 class ActionSheetViewModel {
   List<ActionSheetListItemViewModel> actions;
-  String confirmButtonTitle;
   String cancelButtonTitle;
+  String confirmButtonTitle;
 
-  ActionSheetViewModel(this.actions, this.confirmButtonTitle,
-      {this.cancelButtonTitle});
+  ActionSheetViewModel(this.actions, this.cancelButtonTitle,
+  {this.confirmButtonTitle});
 }
 
 class ActionSheetStyle {
-  final Color cornersColor = const Color(0xFF737373);
   final Color backgroundColor;
   final Color indicatorLineColor;
   final Color confirmButtonBackgroundColor;
@@ -86,48 +85,63 @@ class ActionSheetStyle {
 class ActionSheet extends StatelessWidget {
   final ActionSheetViewModel _viewModel;
   final ActionSheetStyle _style;
-  final ActionSheetListItemStyle _cellStyle;
 
-  const ActionSheet(
-      {Key key,
-      ActionSheetViewModel viewModel,
-      ActionSheetStyle style,
-      ActionSheetListItemStyle cellStyle})
-      : this._viewModel = viewModel,
-        this._style = style,
-        this._cellStyle = cellStyle,
-        super(key: key);
+  const ActionSheet({Key key, ActionSheetViewModel viewModel, ActionSheetStyle style}) : this._viewModel = viewModel, this._style = style, super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final Color cornersColor = const Color(0xFF737373);
     return Container(
-        color: _style.cornersColor,
+        color: cornersColor,
         child: Container(
             decoration: BoxDecoration(
                 color: _style.backgroundColor,
                 borderRadius: BorderRadius.only(
                     topLeft: _style.cornerRadius,
                     topRight: _style.cornerRadius)),
-            child: HeaderAndFooterListView.builder(
-                physics: NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: _viewModel.actions.length,
-                itemBuilder: (BuildContext context, int index) =>
-                    ActionSheetListItem(
-                        viewModel: ActionSheetListItemViewModel(
-                            _viewModel.actions[index].title,
-                            _viewModel.actions[index].action,
-                            _viewModel.actions[index].isDestructive,
-                            icon: _viewModel.actions[index].icon,
-                            checkBoxIcon:
-                                _viewModel.actions[index].checkBoxIcon),
-                        style: _cellStyle,
-                        numberOfActions: _viewModel.actions.length,
-                        currentAction: index),
-                header: _buildIndicatorLine(_style),
-                footer: RoundedButton.build(
-                    RoundedButtonViewModel(title: _viewModel.confirmButtonTitle),
-                    style: ActionSheetLargeRoundedButtonStyle()))));
+            child: Column(
+              children: buildCells(_style, _viewModel),
+    ))
+    );
+  }
+
+  static List<Widget> buildCells(ActionSheetStyle style, ActionSheetViewModel viewModel) {
+    List<Widget> listBuilder = [];
+
+    listBuilder.add(_buildIndicatorLine(style));
+    for (var action in viewModel.actions) {
+      switch (action.type) {
+        case ActionType.simple:
+          listBuilder.add(ActionSheetListItem(style: ActionSheetListItemStyle.defaultStyle(),
+              viewModel: ActionSheetListItemViewModel(title: action.title, onTap: action.onTap, isDestructive: action.isDestructive, type: action.type)));
+          break;
+        case ActionType.withIcon:
+          listBuilder.add(ActionSheetListItem(style: ActionSheetListItemStyle.defaultStyle(),
+              viewModel: ActionSheetListItemViewModel(title: action.title, onTap: action.onTap, icon: action.icon, isDestructive: action.isDestructive, type: action.type)));
+          break;
+        case ActionType.selectable:
+          listBuilder.add(ActionSheetListItem(style: ActionSheetListItemStyle.selectableStyle(),
+              viewModel: ActionSheetListItemViewModel(title: action.title, onTap: action.onTap, icon: action.icon, checkBoxIcon: action.checkBoxIcon, isDestructive: action.isDestructive, type: action.type)));
+          break;
+        }
+
+      if (action != viewModel.actions.last) {
+        listBuilder.add(ListDivider.build());
+      }
+    }
+
+    listBuilder.add(
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+               RoundedButton.build(RoundedButtonViewModel(title: viewModel.cancelButtonTitle),
+                   style: ActionSheetLargeRoundedButtonStyle()),
+               RoundedButton.build(RoundedButtonViewModel(title: viewModel.confirmButtonTitle),
+                   style: ActionSheetLargeRoundedButtonStyle())
+          ],
+        ));
+
+    return listBuilder;
   }
 
   static Widget _buildIndicatorLine(ActionSheetStyle style) {

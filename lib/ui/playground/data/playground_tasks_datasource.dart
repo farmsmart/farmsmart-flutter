@@ -31,20 +31,20 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
       ),
       PlaygroundWidget(
         title: 'FARM-355 Generic Action Sheet - Type 1',
-        child: ActionSheet(viewModel: MockActionSheetViewModel.buildStandard(), style: ActionSheetStyle.defaultStyle(), cellStyle: ActionSheetListItemStyle.defaultStyle())
+        child: ActionSheet(viewModel: MockActionSheetViewModel.buildStandard(), style: ActionSheetStyle.defaultStyle())
       ),
       PlaygroundWidget(
           title: 'FARM-355 Generic Action Sheet - Type 2',
-          child: ActionSheet(viewModel: MockActionSheetViewModel.buildStandardBigger(), style: ActionSheetStyle.defaultStyle(), cellStyle: ActionSheetListItemStyle.defaultStyle())
+          child: ActionSheet(viewModel: MockActionSheetViewModel.buildStandardBigger(), style: ActionSheetStyle.defaultStyle())
 
       ),
       PlaygroundWidget(
           title: 'FARM-355 Generic Action Sheet - Type 3',
-          child: ActionSheet(viewModel: MockActionSheetViewModel.buildWithIcon(), style: ActionSheetStyle.defaultStyle(), cellStyle: ActionSheetListItemStyle.defaultStyle())
+          child: ActionSheet(viewModel: MockActionSheetViewModel.buildWithIcon(), style: ActionSheetStyle.defaultStyle())
       ),
       PlaygroundWidget(
           title: 'FARM-355 Generic Action Sheet - Type 4',
-          child: ActionSheet(viewModel: MockActionSheetViewModel.buildWithCheckBox(), style: ActionSheetStyle.defaultStyle(), cellStyle: ActionSheetListItemStyle.selectableStyle())
+          child: ActionSheet(viewModel: MockActionSheetViewModel.buildWithCheckBox(), style: ActionSheetStyle.defaultStyle())
       ),
       /* Template
       PlaygroundWidget(

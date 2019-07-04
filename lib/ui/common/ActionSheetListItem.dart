@@ -1,15 +1,22 @@
 import 'package:farmsmart_flutter/ui/common/ListDivider.dart';
 import 'package:flutter/material.dart';
 
+enum ActionType {
+  simple,
+  withIcon,
+  selectable
+}
+
 class ActionSheetListItemViewModel {
   String title;
   String icon;
+  ActionType type;
   String checkBoxIcon;
   bool isDestructive;
-  Function action;
+  Function onTap;
 
-  ActionSheetListItemViewModel(this.title, this.action, this.isDestructive,
-      {this.icon, this.checkBoxIcon});
+  ActionSheetListItemViewModel({this.title, this.icon, this.type,
+      this.checkBoxIcon, this.isDestructive, this.onTap});
 }
 
 class ActionSheetListItemStyle {
@@ -90,19 +97,13 @@ class ActionSheetListItemStyle {
 class ActionSheetListItem extends StatelessWidget {
   final ActionSheetListItemViewModel _viewModel;
   final ActionSheetListItemStyle _style;
-  final int _numberOfItems;
-  final int _currentItem;
 
   const ActionSheetListItem(
       {Key key,
       ActionSheetListItemViewModel viewModel,
-      ActionSheetListItemStyle style,
-      int numberOfActions,
-      int currentAction})
+      ActionSheetListItemStyle style})
       : this._viewModel = viewModel,
         this._style = style,
-        this._numberOfItems = numberOfActions,
-        this._currentItem = currentAction,
         super(key: key);
 
   @override
@@ -113,7 +114,7 @@ class ActionSheetListItem extends StatelessWidget {
           elevation: _style.actionItemElevation,
           color: _style.actionItemBackgroundColor,
           child: InkWell(
-            onTap: () => _viewModel.action,
+            onTap: () => _viewModel.onTap,
             child: Container(
               padding: _style.actionItemEdgePadding,
               alignment: Alignment.center,
@@ -129,9 +130,6 @@ class ActionSheetListItem extends StatelessWidget {
             ),
           ),
         ),
-        _currentItem == _numberOfItems - 1
-            ? Wrap()
-            : ListDivider.build(), // FIXME: temporal solution for divider
       ],
     );
   }

@@ -13,8 +13,7 @@ class MockActionSheetViewModel {
 
     return ActionSheetViewModel(
         list,
-        _mockButtonTitle.random(),
-        cancelButtonTitle: _mockButtonTitle.random(),
+        "Cancel",
     );
   }
 
@@ -26,8 +25,7 @@ class MockActionSheetViewModel {
 
     return ActionSheetViewModel(
       list,
-      _mockButtonTitle.random(),
-      cancelButtonTitle: _mockButtonTitle.random(),
+      "Cancel",
     );
   }
 
@@ -39,8 +37,7 @@ class MockActionSheetViewModel {
 
     return ActionSheetViewModel(
       list,
-      _mockButtonTitle.random(),
-      cancelButtonTitle: _mockButtonTitle.random(),
+      "Cancel",
     );
   }
 
@@ -53,7 +50,7 @@ class MockActionSheetViewModel {
     return ActionSheetViewModel(
       list,
       _mockButtonTitle.random(),
-      cancelButtonTitle: _mockButtonTitle.random(),
+      confirmButtonTitle: _mockButtonTitle.random(),
     );
   }
 }
@@ -61,36 +58,40 @@ class MockActionSheetViewModel {
 class MockActionSheetListItemViewModel {
   static ActionSheetListItemViewModel buildStandard(index) {
     return ActionSheetListItemViewModel(
-      _mockItemTitleStandard[index],
-      null,
-      _mockItemDestructive[index],
+      title: _mockItemTitleStandard[index],
+      type: ActionType.simple,
+      onTap: null,
+      isDestructive: _mockItemDestructive[index],
     );
   }
 
   static ActionSheetListItemViewModel buildStandardBigger(index) {
     return ActionSheetListItemViewModel(
-      _mockItemTitleStandardBigger[index],
-      null,
-      _mockItemDestructive[index],
+      title: _mockItemTitleStandardBigger[index],
+      type: ActionType.simple,
+      onTap: null,
+      isDestructive: _mockItemDestructive[index],
     );
   }
 
   static ActionSheetListItemViewModel buildWithIcon(index) {
     return ActionSheetListItemViewModel(
-      _mockItemTitleWithIcon[index],
-      null,
-      _mockItemDestructive[index],
+      title: _mockItemTitleWithIcon[index],
+      type: ActionType.withIcon,
+      onTap: null,
+      isDestructive: _mockItemDestructive[index],
       icon: _mockIcon[index]
     );
   }
 
   static ActionSheetListItemViewModel buildWithCheckbox(index) {
     return ActionSheetListItemViewModel(
-        _mockItemTitleSelectable[index],
-      null,
-      _mockItemDestructive[index],
+      title: _mockItemTitleSelectable[index],
+      type: ActionType.selectable,
+      onTap: null,
+      isDestructive: _mockItemDestructive[index],
       icon: _mockFlagIcon[index],
-      checkBoxIcon: _mockCheckBoxIcon[index]
+      checkBoxIcon: _mockCheckBoxIcon[index],
     );
   }
 }
@@ -105,6 +106,6 @@ List _mockFlagIcon = ["assets/icons/flag_kenya.png", "assets/icons/flag_usa.png"
 List _mockCheckBoxIcon = ["assets/icons/radio_button_active.png", "assets/icons/radio_button_default.png"];
 
 MockString _mockButtonTitle = MockString(library: [
-  "Cancel"]);
+  "Confirm"]);
 
 
