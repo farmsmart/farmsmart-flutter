@@ -57,7 +57,7 @@ class MockProfitLossListItemViewModel {
         title: _mockTitleText.random(),
         subtitle: _mockTitleText.random(),
         detail: _mockPositiveCurrencyText.random(),
-        style: DogTagStyle.positiveStyle()
+        style: DogTagStyle.defaultStyle()
     );
   }
 

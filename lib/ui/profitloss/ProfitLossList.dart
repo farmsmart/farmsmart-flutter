@@ -27,7 +27,6 @@ class ProfitLossListViewModel {
 
 abstract class ProfitLossStyle {
   final Color actionButtonBackgroundColour;
-
   final double actionButtonSize;
   final double actionButtonElevation;
   final double actionButtonIconSize;
@@ -102,14 +101,15 @@ class _ProfitLossState extends State<ProfitLossPage> {
 
   Widget _buildPageWithFloatingButton(BuildContext context,
       ProfitLossListViewModel viewModel, ProfitLossStyle profitStyle) {
+    final String roundedButtonIcon = "assets/icons/profit_add.png";
     return Scaffold(
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         body: _buildPage(context, viewModel, profitStyle),
         floatingActionButton: RoundedButton(
             viewModel: RoundedButtonViewModel(
-                icon: "assets/icons/profit_add.png",
+                icon: roundedButtonIcon,
                 onTap: () => _showToast(context)),
-            style: RoundedButtonStyle.compactBigRoundedButton()));
+            style: RoundedButtonStyle.bigRoundedButton()));
   }
 
   //FIXME: Only is built for show that this buttons are not functional yet

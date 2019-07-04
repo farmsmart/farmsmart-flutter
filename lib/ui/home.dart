@@ -66,13 +66,13 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
     HomeCommunityChild(),
     PlaygroundView(widgetList: [
       RoundedButton(viewModel: MockRoundedButtonViewModel.buildLarge(), style: RoundedButtonStyle.largeRoundedButtonStyle()),
-      RoundedButton(viewModel: MockRoundedButtonViewModel.buildCompact(), style: RoundedButtonStyle.compactRoundedButton()),
-      RoundedButton(viewModel: MockRoundedButtonViewModel.buildCompact(), style: RoundedButtonStyle.compactBigRoundedButton()),
+      RoundedButton(viewModel: MockRoundedButtonViewModel.buildCompact(), style: RoundedButtonStyle.defaultStyle()),
+      RoundedButton(viewModel: MockRoundedButtonViewModel.buildCompact(), style: RoundedButtonStyle.bigRoundedButton()),
       ProfitLossHeader(viewModel: MockProfitLossHeaderViewModel.build(), style: ProfitLossHeaderStyle.defaultStyle()),
       ProfitLossListItem(viewModel: MockProfitLossListItemViewModel.buildPositive(), style: ProfitLossItemStyle.defaultStyle()),
       ProfitLossListItem(viewModel: MockProfitLossListItemViewModel.buildNegative(), style: ProfitLossItemStyle.defaultStyle()),
       DogTag(viewModel: MockDogTagViewModel.buildWithText(), style: DogTagStyle.defaultStyle()),
-      DogTag(viewModel: MockDogTagViewModel.buildWithPositiveNumber(), style: DogTagStyle.positiveStyle()),
+      DogTag(viewModel: MockDogTagViewModel.buildWithPositiveNumber(), style: DogTagStyle.defaultStyle()),
       DogTag(viewModel: MockDogTagViewModel.buildWithNegativeNumber(), style: DogTagStyle.negativeStyle())
     ], appBarColor: Color(0xFF9CBD3A)),
   ];

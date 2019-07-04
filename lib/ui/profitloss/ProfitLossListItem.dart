@@ -6,10 +6,12 @@ class ProfitLossListItemViewModel {
   final String title;
   final String subtitle;
   final String detail;
+
+  final Function onTap;
   final DogTagStyle style;
 
   ProfitLossListItemViewModel(
-      {this.title, this.subtitle, this.detail, this.style});
+      {this.title, this.subtitle, this.detail, this.style, this.onTap});
 }
 
 class ProfitLossItemStyle {
@@ -82,7 +84,7 @@ class ProfitLossListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        //onTap: viewModel.onTap,
+        onTap: _viewModel.onTap,
         child: Card(
             elevation: _style.elevation,
             child: Column(children: <Widget>[

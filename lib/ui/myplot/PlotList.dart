@@ -15,7 +15,7 @@ class PlotListViewModel {
   final String title;
   final String buttonTitle;
 
-  PlotListViewModel(this.title, this.buttonTitle,);
+  PlotListViewModel(this.title, this.buttonTitle);
 }
 
 PlotListViewModel buildPlotListViewModel() {
@@ -111,6 +111,7 @@ class _MyPlotState extends State<PlotList> {
 
   Widget _buildTitle(PlotListViewModel viewModel, PlotListStyle myPlotStyle,
       {BuildContext context}) {
+    final String roundedButtonIcon = "assets/icons/profit_add.png";
     return Container(
         padding: myPlotStyle.titleEdgePadding,
         child: Row(
@@ -126,8 +127,8 @@ class _MyPlotState extends State<PlotList> {
                   ]
               ),
               RoundedButton(viewModel:
-                  RoundedButtonViewModel(icon: "assets/icons/profit_add.png", onTap: () => _showToast(context)),
-                  style: RoundedButtonStyle.compactRoundedButton())
+                  RoundedButtonViewModel(icon: roundedButtonIcon, onTap: () => _showToast(context)),
+                  style: RoundedButtonStyle.defaultStyle())
             ]
         )
     );

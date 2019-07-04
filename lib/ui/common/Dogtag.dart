@@ -45,12 +45,8 @@ class DogTagStyle {
         spacing: 5.5);
   }
 
-  factory DogTagStyle.positiveStyle() {
-    return DogTagStyle.defaultStyle().copyWith();
-  }
-
   factory DogTagStyle.negativeStyle() {
-    return DogTagStyle.positiveStyle().copyWith(
+    return DogTagStyle.defaultStyle().copyWith(
         backgroundColor: Color(0x14ff8d4f),
         titleTextStyle: TextStyle(
             fontSize: 15,
