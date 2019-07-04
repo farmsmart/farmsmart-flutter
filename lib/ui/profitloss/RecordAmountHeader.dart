@@ -1,3 +1,4 @@
+import 'package:farmsmart_flutter/ui/common/RegExInputFormatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -42,6 +43,8 @@ class RecordAmountHeader extends StatelessWidget {
   const RecordAmountHeader({Key key, RecordAmountHeaderViewModel viewModel, RecordAmountHeaderStyle style}) : this._viewModel = viewModel, this._style = style, super(key: key);
 
   static Widget _build(RecordAmountHeaderViewModel viewModel, RecordAmountHeaderStyle style) {
+    final _amountValidator = RegExInputFormatter.withRegex('^\$|^(0|([1-9][0-9]{0,3}))(\\.[0-9]{0,2})?\$');
+
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 32),
       height: 138,
@@ -54,10 +57,10 @@ class RecordAmountHeader extends StatelessWidget {
               children: <Widget>[
                 TextField(
                 decoration: InputDecoration(hintText: viewModel.amount, hintStyle: style.hintTextStyle, border: InputBorder.none, counterText: ""),
-                  keyboardType: TextInputType.number,
+                  keyboardType: TextInputType.numberWithOptions(signed: false, decimal: true),
                   textAlign: TextAlign.center,
                   style: style.titleTextStyle,
-                  inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
+                  inputFormatters: [_amountValidator],
                   maxLength: 7,
                   maxLines: 1,
                 ),
@@ -73,5 +76,4 @@ class RecordAmountHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return _build(_viewModel, _style);
   }
-
 }
