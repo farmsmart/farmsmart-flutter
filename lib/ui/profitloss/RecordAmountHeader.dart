@@ -16,23 +16,33 @@ class RecordAmountHeaderStyle {
 
   factory RecordAmountHeaderStyle.defaultCostStyle() {
     return RecordAmountHeaderStyle(
-      hintTextStyle: const TextStyle(fontSize: 72, fontWeight: FontWeight.w700, color: Color(0x4cff8d4f)),
-      titleTextStyle: const TextStyle(fontSize: 72, fontWeight: FontWeight.w700, color: Color(0xFFff8d4f))
-    );
+        hintTextStyle: const TextStyle(
+            fontSize: 72,
+            fontWeight: FontWeight.w700,
+            color: Color(0x4cff8d4f)),
+        titleTextStyle: const TextStyle(
+            fontSize: 72,
+            fontWeight: FontWeight.w700,
+            color: Color(0xFFff8d4f)));
   }
 
   factory RecordAmountHeaderStyle.defaultSaleStyle() {
     return RecordAmountHeaderStyle.defaultCostStyle().copyWith(
-      hintTextStyle: const TextStyle(fontSize: 72, fontWeight: FontWeight.w700, color: Color(0x4c24d900)),
-        titleTextStyle: const TextStyle(fontSize: 72, fontWeight: FontWeight.w700, color: Color(0xFF24d900))
-    );
+        hintTextStyle: const TextStyle(
+            fontSize: 72,
+            fontWeight: FontWeight.w700,
+            color: Color(0x4c24d900)),
+        titleTextStyle: const TextStyle(
+            fontSize: 72,
+            fontWeight: FontWeight.w700,
+            color: Color(0xFF24d900)));
   }
 
-  RecordAmountHeaderStyle copyWith({TextStyle hintTextStyle, TextStyle titleTextStyle}) {
+  RecordAmountHeaderStyle copyWith(
+      {TextStyle hintTextStyle, TextStyle titleTextStyle}) {
     return RecordAmountHeaderStyle(
-      hintTextStyle: hintTextStyle ?? this.hintTextStyle,
-      titleTextStyle: titleTextStyle ?? this.titleTextStyle
-    );
+        hintTextStyle: hintTextStyle ?? this.hintTextStyle,
+        titleTextStyle: titleTextStyle ?? this.titleTextStyle);
   }
 }
 
@@ -40,10 +50,18 @@ class RecordAmountHeader extends StatelessWidget {
   final RecordAmountHeaderViewModel _viewModel;
   final RecordAmountHeaderStyle _style;
 
-  const RecordAmountHeader({Key key, RecordAmountHeaderViewModel viewModel, RecordAmountHeaderStyle style}) : this._viewModel = viewModel, this._style = style, super(key: key);
+  const RecordAmountHeader(
+      {Key key,
+      RecordAmountHeaderViewModel viewModel,
+      RecordAmountHeaderStyle style})
+      : this._viewModel = viewModel,
+        this._style = style,
+        super(key: key);
 
-  static Widget _build(RecordAmountHeaderViewModel viewModel, RecordAmountHeaderStyle style) {
-    final _amountValidator = RegExInputFormatter.withRegex('^\$|^(0|([1-9][0-9]{0,3}))(\\.[0-9]{0,2})?\$');
+  @override
+  Widget build(BuildContext context) {
+    final _amountValidator = RegExInputFormatter.withRegex(
+        '^\$|^(0|([1-9][0-9]{0,3}))(\\.[0-9]{0,2})?\$');
 
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 32),
@@ -51,29 +69,27 @@ class RecordAmountHeader extends StatelessWidget {
       child: Row(
         children: <Widget>[
           Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
                 TextField(
-                decoration: InputDecoration(hintText: viewModel.amount, hintStyle: style.hintTextStyle, border: InputBorder.none, counterText: ""),
-                  keyboardType: TextInputType.numberWithOptions(signed: false, decimal: true),
+                  decoration: InputDecoration(
+                      hintText: _viewModel.amount,
+                      hintStyle: _style.hintTextStyle,
+                      border: InputBorder.none,
+                      counterText: ""),
+                  keyboardType: TextInputType.numberWithOptions(
+                      signed: false, decimal: true),
                   textAlign: TextAlign.center,
-                  style: style.titleTextStyle,
+                  style: _style.titleTextStyle,
                   inputFormatters: [_amountValidator],
                   maxLength: 7,
                   maxLines: 1,
                 ),
-                 ]
-                )
-            ),
+              ])),
         ],
       ),
     );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return _build(_viewModel, _style);
   }
 }
