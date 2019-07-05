@@ -14,7 +14,10 @@ import 'package:package_info/package_info.dart';
 */
 class _Strings {
   static const relatedTitle = "Related Articles";
-  static const readTime = "minute read"; 
+  static const readTime = "minute read";
+  static const divider = " - ";
+  static const lessThanMin = "<1";
+  static const publishedDateFormat = "d MMMM";
 }
 
 class ArticleDetailViewModelTransformer
@@ -26,18 +29,18 @@ class ArticleDetailViewModelTransformer
       {ObjectTransformer<ArticleEntity, ArticleListItemViewModel>
           listItemTransformer})
       : this._listItemTransformer = listItemTransformer;
-  final _dateFormatter = DateFormat("d MMMM");
+  final _dateFormatter = DateFormat(_Strings.publishedDateFormat);
   @override
   ArticleDetailViewModel transform({ArticleEntity from}) {
-    
     ArticleDetailViewModel viewModel = ArticleDetailViewModel(
-        LoadingStatus.SUCCESS,
-        from.title,
-        _subtitle(article: from),
-        Intl.message(_Strings.relatedTitle),
-        ArticleImageProvider(from),
-        from.content,
-        buildArticleDeeplink(from.id));
+      LoadingStatus.SUCCESS,
+      from.title,
+      _subtitle(article: from),
+      Intl.message(_Strings.relatedTitle),
+      ArticleImageProvider(from),
+      from.content,
+      buildArticleDeeplink(from.id),
+    );
     viewModel.getRelated = () {
       if (from.related == null) {
         return Future.value([]);
@@ -53,23 +56,33 @@ class ArticleDetailViewModelTransformer
 
   String _subtitle({ArticleEntity article}) {
     int readMins = _minuteCount(article.content);
-    final minString = (readMins == 0) ? "<1" : readMins.toString();
-    return _dateFormatter.format(article.published.toDate()) + " - " + minString + " "+ Intl.message(_Strings.readTime);
+    final minString =
+        (readMins == 0) ? _Strings.lessThanMin : readMins.toString();
+    final dateString = (article.published == null)
+        ? ""
+        : _dateFormatter.format(article.published.toDate());
+    return dateString +
+        _Strings.divider +
+        minString +
+        " " +
+        Intl.message(_Strings.readTime);
   }
 
-  int _minuteCount(String content){
+  int _minuteCount(String content) {
     //TODO: check these values
     final int wordsPerMin = 200;
     final int averageCharsPerWord = 8;
     return content.length ~/ (wordsPerMin * averageCharsPerWord);
   }
-  
-  void setListItemTransformer(
-      ArticleListViewModelItemTransformer transformer) {
+
+  void setListItemTransformer(ArticleListItemViewModelTransformer transformer) {
     _listItemTransformer = transformer;
   }
 
-   static Future<String> getPackageInfo() async {
+  //TODO: LH clean this up (model deeplinks in a class) so it can be reused for any type of share
+  // just taken from original code for now.
+
+  static Future<String> getPackageInfo() async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     String packageName = packageInfo.packageName;
     return packageName;

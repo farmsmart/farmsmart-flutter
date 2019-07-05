@@ -16,18 +16,18 @@ class PlayGroundAtomDataSource implements PlaygroundDataSource {
       Card(child: Text('Atom widget 2')),
       Text('Atom widget 4'),
       StandardListItem(
-              viewModel: ArticleListViewModelItemTransformer(
+              viewModel: ArticleListItemViewModelTransformer(
                       detailTransformer:
                           ArticleDetailViewModelTransformer(
                               listItemTransformer:
-                                  ArticleListViewModelItemTransformer()))
+                                  ArticleListItemViewModelTransformer()))
                   .transform(from: MockArticle.build())),
           HeroListItem(
-              viewModel: ArticleListViewModelItemTransformer(
+              viewModel: ArticleListItemViewModelTransformer(
                       detailTransformer:
                           ArticleDetailViewModelTransformer(
                               listItemTransformer:
-                                  ArticleListViewModelItemTransformer()))
+                                  ArticleListItemViewModelTransformer()))
                   .transform(from: MockArticle.build()))
     ];
   }

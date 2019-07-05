@@ -39,7 +39,7 @@ class FlameLink {
   final String _environment;
   final String _locale;
 
-  FlameLink({Firestore store, String locale = FlameLink.defaultLocale,Environment environment = Environment.development})
+  FlameLink({Firestore store, String locale = FlameLink.defaultLocale,Environment environment = Environment.production})
       : this._store = store,
         this._locale = locale,
         this._environment = _environmentValues[environment];

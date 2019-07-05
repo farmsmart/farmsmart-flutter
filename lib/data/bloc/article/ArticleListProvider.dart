@@ -31,7 +31,7 @@ class ArticleListProvider implements ViewModelProvider<ArticleListViewModel> {
   ArticleListViewModel _modelFromArticles(
       StreamController controller, List<ArticleEntity> articles) {
     final detailTransformer = ArticleDetailViewModelTransformer();
-    final transformer = ArticleListViewModelItemTransformer(
+    final transformer = ArticleListItemViewModelTransformer(
         detailTransformer: detailTransformer);
     detailTransformer.setListItemTransformer(
         transformer); //LH we add this after as depends on having the list transformer

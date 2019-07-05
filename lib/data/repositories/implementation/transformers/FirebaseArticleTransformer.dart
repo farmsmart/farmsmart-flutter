@@ -15,12 +15,17 @@ class FlamelinkArticleTransformer implements ObjectTransformer<DocumentSnapshot,
   @override
   ArticleEntity transform({DocumentSnapshot from}) {
     final meta = _metaTransformer.transform(from: from);
+    final id = castOrNull<String>(from.data[ID]);
+    final content = castOrNull<String>(from.data[CONTENT]);
+    final status = castOrNull<String>(from.data[STATUS]);
+    final summary = castOrNull<String>(from.data[SUMMARY]);
+    final title = castOrNull<String>(from.data[TITLE]);
     return ArticleEntity(
-          id: from.data[ID],
-          content: from.data[CONTENT],
-          status: statusValues.map[from.data[STATUS]],
-          summary: from.data[SUMMARY],
-          title: from.data[TITLE],
+          id: id,
+          content: content,
+          status: statusValues.map[status],
+          summary: summary,
+          title: title,
           published: meta.createdDate );
   }
 }

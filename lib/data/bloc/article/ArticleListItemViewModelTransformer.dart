@@ -9,12 +9,12 @@ import 'package:farmsmart_flutter/utils/strings.dart';
       [ArticleEntity] -> [ArticleListItemViewModel]
 */
 
-class ArticleListViewModelItemTransformer
+class ArticleListItemViewModelTransformer
     implements ObjectTransformer<ArticleEntity, ArticleListItemViewModel> {
   final ObjectTransformer<ArticleEntity, ArticleDetailViewModel>
       _detailTransformer;
 
-  ArticleListViewModelItemTransformer(
+  ArticleListItemViewModelTransformer(
       {ObjectTransformer<ArticleEntity, ArticleDetailViewModel>
           detailTransformer})
       : this._detailTransformer = detailTransformer;

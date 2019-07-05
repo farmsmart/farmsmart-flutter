@@ -20,12 +20,18 @@ class FlamelinkMetaTransformer
     if (metaData == null) {
       return null;
     }
+    final createdBy = castOrNull<String>(metaData[_Fields.createdBy]);
+    final created =  castOrNull<Timestamp>(metaData[_Fields.createdDate]) ;
+    final modified = castOrNull<Timestamp>(metaData[_Fields.modified]);
+    final locale = castOrNull<String>(metaData[_Fields.locale]);
+    final docId = castOrNull<String>(metaData[_Fields.docId]);
+    final env = castOrNull<String>(metaData[_Fields.env]);
     return FlamelinkMeta(
-        createdBy: metaData[_Fields.createdBy],
-        createdDate: Timestamp.now(),
-        modified: Timestamp.now(),
-        locale: metaData[_Fields.locale],
-        docId: metaData[_Fields.docId],
-        env: metaData[_Fields.env]);
+        createdBy: createdBy,
+        createdDate: created,
+        modified: modified,
+        locale: locale,
+        docId: docId,
+        env: env);
   }
 }
