@@ -94,29 +94,12 @@ class ActionSheetListItemStyle {
   }
 }
 
-class ActionSheetListItem extends StatefulWidget {
+class ActionSheetListItem extends StatelessWidget {
   final ActionSheetListItemViewModel _viewModel;
+  static ActionSheetListItemStyle _style;
 
-  const ActionSheetListItem({ActionSheetListItemViewModel viewModel}) : this._viewModel = viewModel;
+  const ActionSheetListItem({Key key, ActionSheetListItemViewModel viewModel}) : this._viewModel = viewModel, super(key: key);
 
-  @override
-  _ActionSheetListItemState createState() => _ActionSheetListItemState(_viewModel);
-}
-
-
-class _ActionSheetListItemState extends State<ActionSheetListItem> {
-  final ActionSheetListItemViewModel _viewModel;
-  ActionSheetListItemStyle _style;
-
-  _ActionSheetListItemState(this._viewModel);
-
-  @override
-  void initState() {
-    super.initState();
-    setState(() {
-      _viewModel.isSelected = !_viewModel.isSelected;
-    });
-  }
 
   Widget build(BuildContext context) {
     switch(_viewModel.type) {
@@ -137,7 +120,7 @@ class _ActionSheetListItemState extends State<ActionSheetListItem> {
           elevation: _style.actionItemElevation,
           color: _style.actionItemBackgroundColor,
           child: InkWell(
-            onTap: () => checkTap(),
+            //onTap: () => checkTap(),
             child: Container(
               padding: _style.actionItemEdgePadding,
               alignment: Alignment.center,
@@ -195,17 +178,6 @@ class _ActionSheetListItemState extends State<ActionSheetListItem> {
       ));
     }
     return listBuilder;
-  }
-
-  void checkTap() {
-    if (_viewModel.type == ActionType.selectable) {
-      setState(() {
-        _viewModel.isSelected = !_viewModel.isSelected;
-        print("1");
-      });
-    } else {
-      _viewModel.onTap;
-    }
   }
 }
 

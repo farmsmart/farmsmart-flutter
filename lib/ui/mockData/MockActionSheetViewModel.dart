@@ -93,7 +93,7 @@ class MockActionSheetListItemViewModel {
       onTap: null,
       isDestructive: _mockItemDestructive[index],
       icon: _mockFlagIcon[index],
-      isSelected: false,
+      isSelected: _mockItemDestructive[index+1],
       checkBoxIcon: _mockCheckBoxIcon[index],
     );
   }

@@ -80,7 +80,7 @@ class ActionSheetStyle {
   }
 }
 
-class ActionSheet extends StatelessWidget {
+class ActionSheet extends StatefulWidget {
   final ActionSheetViewModel _viewModel;
   final ActionSheetStyle _style;
 
@@ -88,6 +88,21 @@ class ActionSheet extends StatelessWidget {
       : this._viewModel = viewModel,
         this._style = style,
         super(key: key);
+
+  @override
+  _ActionSheetState createState() => _ActionSheetState(_viewModel, _style);
+}
+
+class _ActionSheetState extends State<ActionSheet> {
+  final ActionSheetViewModel _viewModel;
+  final ActionSheetStyle _style;
+
+  _ActionSheetState(this._viewModel, this._style);
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   Widget build(BuildContext context) {
     final Color cornersColor = const Color(0xFF737373);
@@ -113,7 +128,7 @@ class ActionSheet extends StatelessWidget {
             )));
   }
 
-  static List<Widget> buildFooterButtons(ActionSheetViewModel _viewModel) {
+  List<Widget> buildFooterButtons(ActionSheetViewModel _viewModel) {
     List<Widget> listBuilder = [RoundedButton.build(RoundedButtonViewModel(
         title: _viewModel.cancelButtonTitle), style: ActionSheetLargeRoundedButtonStyle())];
 
@@ -125,23 +140,45 @@ class ActionSheet extends StatelessWidget {
     return listBuilder;
   }
 
-  static Widget buildList(ActionSheetStyle style, ActionSheetViewModel viewModel) {
+  Widget buildList(ActionSheetStyle style, ActionSheetViewModel viewModel) {
     return ListView.separated(
       itemCount: viewModel.actions.length,
-      itemBuilder: (context, index) => ActionSheetListItem(
-          viewModel: ActionSheetListItemViewModel(
-              title: viewModel.actions[index].title,
-              icon: viewModel.actions[index].icon,
-              type: viewModel.actions[index].type,
-              checkBoxIcon: viewModel.actions[index].checkBoxIcon,
-              isSelected: viewModel.actions[index].isSelected,
-              isDestructive: viewModel.actions[index].isDestructive,
-              onTap: viewModel.actions[index].onTap)),
+      itemBuilder: (context, index) => ListTile(
+        title: ActionSheetListItem(
+            viewModel: ActionSheetListItemViewModel(
+                title: viewModel.actions[index].title,
+                icon: viewModel.actions[index].icon,
+                type: viewModel.actions[index].type,
+                checkBoxIcon: viewModel.actions[index].checkBoxIcon,
+                isSelected: viewModel.actions[index].isSelected,
+                isDestructive: viewModel.actions[index].isDestructive,
+                onTap: viewModel.actions[index].onTap)),
+        onTap: () => checkTap(index),
+
+      ),
       separatorBuilder: (context, index) => ListDivider.build(),
     );
   }
 
-  static Widget _buildIndicatorLine(ActionSheetStyle style) {
+  void checkTap(int index) {
+    if (_viewModel.actions[index].type == ActionType.selectable) {
+
+      setState(() {
+        _viewModel.actions[index].isSelected = !_viewModel.actions[index].isSelected;
+
+        if (index == _viewModel.actions.length-1) {
+          _viewModel.actions[index-1].isSelected = !_viewModel.actions[index-1].isSelected;
+        } else {
+          _viewModel.actions[index+1].isSelected = !_viewModel.actions[index+1].isSelected;
+        }
+      });
+
+    } else {
+      _viewModel.actions[index].onTap;
+    }
+  }
+
+  Widget _buildIndicatorLine(ActionSheetStyle style) {
     return Center(
       child: Container(
         margin: style.indicatorLineEdgePadding,
