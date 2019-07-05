@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 
-enum ActionType {
-  simple,
-  withIcon,
-  selectable
-}
+enum ActionType { simple, withIcon, selectable }
 
 class ActionSheetListItemViewModel {
   String title;
@@ -15,8 +11,14 @@ class ActionSheetListItemViewModel {
   bool isDestructive;
   Function onTap;
 
-  ActionSheetListItemViewModel({this.title, this.icon, this.type,
-      this.checkBoxIcon, this.isSelected, this.isDestructive, this.onTap});
+  ActionSheetListItemViewModel(
+      {this.title,
+      this.icon,
+      this.type,
+      this.checkBoxIcon,
+      this.isSelected,
+      this.isDestructive,
+      this.onTap});
 }
 
 class ActionSheetListItemStyle {
@@ -98,11 +100,12 @@ class ActionSheetListItem extends StatelessWidget {
   final ActionSheetListItemViewModel _viewModel;
   static ActionSheetListItemStyle _style;
 
-  const ActionSheetListItem({Key key, ActionSheetListItemViewModel viewModel}) : this._viewModel = viewModel, super(key: key);
-
+  const ActionSheetListItem({Key key, ActionSheetListItemViewModel viewModel})
+      : this._viewModel = viewModel,
+        super(key: key);
 
   Widget build(BuildContext context) {
-    switch(_viewModel.type) {
+    switch (_viewModel.type) {
       case ActionType.simple:
         _style = ActionSheetListItemStyle.defaultStyle();
         break;
@@ -119,21 +122,18 @@ class ActionSheetListItem extends StatelessWidget {
         Card(
           elevation: _style.actionItemElevation,
           color: _style.actionItemBackgroundColor,
-          child: InkWell(
-            //onTap: () => checkTap(),
-            child: Container(
-              padding: _style.actionItemEdgePadding,
-              alignment: Alignment.center,
-              height: _style.actionItemHeight,
-              child: Wrap(
-                  direction: Axis.horizontal,
-                  crossAxisAlignment: WrapCrossAlignment.start,
-                  children: <Widget>[
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: _buildActionContent(_style, _viewModel)),
-                  ]),
-            ),
+          child: Container(
+            padding: _style.actionItemEdgePadding,
+            alignment: Alignment.center,
+            height: _style.actionItemHeight,
+            child: Wrap(
+                direction: Axis.horizontal,
+                crossAxisAlignment: WrapCrossAlignment.start,
+                children: <Widget>[
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: _buildActionContent(_style, _viewModel)),
+                ]),
           ),
         ),
       ],
@@ -167,17 +167,16 @@ class ActionSheetListItem extends StatelessWidget {
 
     if (viewModel.checkBoxIcon != null) {
       var checkbox = "assets/icons/radio_button_default.png";
-      viewModel.isSelected ? checkbox = "assets/icons/radio_button_active.png" : checkbox = "assets/icons/radio_button_default.png";
+      viewModel.isSelected
+          ? checkbox = "assets/icons/radio_button_active.png"
+          : checkbox = "assets/icons/radio_button_default.png";
 
       listBuilder.add(SizedBox(width: style.iconLineSpace));
       listBuilder.add(Row(
         mainAxisAlignment: MainAxisAlignment.end,
-        children: <Widget>[
-          Image.asset(checkbox, height: style.iconHeight)
-        ],
+        children: <Widget>[Image.asset(checkbox, height: style.iconHeight)],
       ));
     }
     return listBuilder;
   }
 }
-
