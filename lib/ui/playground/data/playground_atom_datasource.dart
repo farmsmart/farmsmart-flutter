@@ -34,6 +34,9 @@ class PlayGroundAtomDataSource implements PlaygroundDataSource {
       ActionSheetListItem(
           style: ActionSheetListItemStyle.selectableStyle(),
           viewModel: MockActionSheetViewModel.buildWithCheckBox().actions.first)
+      ActionSheetListItem(viewModel: MockActionSheetViewModel.buildStandard().actions.first),
+      ActionSheetListItem(viewModel: MockActionSheetViewModel.buildWithIcon().actions.first),
+      ActionSheetListItem(viewModel: MockActionSheetViewModel.buildWithCheckBox().actions.first)
     ];
   }
 }

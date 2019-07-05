@@ -60,6 +60,7 @@ class MockActionSheetListItemViewModel {
       title: _mockItemTitleStandard[index],
       type: ActionType.simple,
       onTap: null,
+      isSelected: false,
       isDestructive: _mockItemDestructive[index],
     );
   }
@@ -69,6 +70,7 @@ class MockActionSheetListItemViewModel {
       title: _mockItemTitleStandardBigger[index],
       type: ActionType.simple,
       onTap: null,
+      isSelected: false,
       isDestructive: _mockItemDestructive[index],
     );
   }
@@ -78,7 +80,8 @@ class MockActionSheetListItemViewModel {
       title: _mockItemTitleWithIcon[index],
       type: ActionType.withIcon,
       onTap: null,
-      isDestructive: _mockItemDestructive[index],
+        isSelected: false,
+        isDestructive: _mockItemDestructive[index],
       icon: _mockIcon[index]
     );
   }
@@ -90,6 +93,7 @@ class MockActionSheetListItemViewModel {
       onTap: null,
       isDestructive: _mockItemDestructive[index],
       icon: _mockFlagIcon[index],
+      isSelected: false,
       checkBoxIcon: _mockCheckBoxIcon[index],
     );
   }

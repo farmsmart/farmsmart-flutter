@@ -1,4 +1,3 @@
-import 'package:farmsmart_flutter/ui/common/ListDivider.dart';
 import 'package:flutter/material.dart';
 
 enum ActionType {
@@ -97,20 +96,19 @@ class ActionSheetListItemStyle {
 
 class ActionSheetListItem extends StatefulWidget {
   final ActionSheetListItemViewModel _viewModel;
-  final ActionSheetListItemStyle _style;
 
-  const ActionSheetListItem({ActionSheetListItemViewModel viewModel, ActionSheetListItemStyle style}) : this._viewModel = viewModel, this._style = style;
+  const ActionSheetListItem({ActionSheetListItemViewModel viewModel}) : this._viewModel = viewModel;
 
   @override
-  _ActionSheetListItemState createState() => _ActionSheetListItemState(_viewModel, _style);
+  _ActionSheetListItemState createState() => _ActionSheetListItemState(_viewModel);
 }
 
 
 class _ActionSheetListItemState extends State<ActionSheetListItem> {
   final ActionSheetListItemViewModel _viewModel;
-  final ActionSheetListItemStyle _style;
+  ActionSheetListItemStyle _style;
 
-  _ActionSheetListItemState(this._viewModel, this._style);
+  _ActionSheetListItemState(this._viewModel);
 
   @override
   void initState() {
@@ -120,8 +118,19 @@ class _ActionSheetListItemState extends State<ActionSheetListItem> {
     });
   }
 
-  @override
   Widget build(BuildContext context) {
+    switch(_viewModel.type) {
+      case ActionType.simple:
+        _style = ActionSheetListItemStyle.defaultStyle();
+        break;
+      case ActionType.withIcon:
+        _style = ActionSheetListItemStyle.defaultStyle();
+        break;
+      case ActionType.selectable:
+        _style = ActionSheetListItemStyle.selectableStyle();
+        break;
+    }
+
     return Column(
       children: <Widget>[
         Card(

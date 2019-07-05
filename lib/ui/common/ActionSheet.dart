@@ -1,9 +1,7 @@
 import 'package:farmsmart_flutter/ui/common/ActionSheetLargeRoundedButtonStyle.dart';
 import 'package:farmsmart_flutter/ui/common/ActionSheetListItem.dart';
 import 'package:farmsmart_flutter/ui/common/ListDivider.dart';
-import 'package:farmsmart_flutter/ui/common/headerAndFooterListView.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
-import 'package:farmsmart_flutter/ui/mockData/MockActionSheetViewModel.dart';
 import 'package:flutter/material.dart';
 
 class ActionSheetViewModel {
@@ -12,7 +10,7 @@ class ActionSheetViewModel {
   String confirmButtonTitle;
 
   ActionSheetViewModel(this.actions, this.cancelButtonTitle,
-  {this.confirmButtonTitle});
+      {this.confirmButtonTitle});
 }
 
 class ActionSheetStyle {
@@ -86,9 +84,11 @@ class ActionSheet extends StatelessWidget {
   final ActionSheetViewModel _viewModel;
   final ActionSheetStyle _style;
 
-  const ActionSheet({Key key, ActionSheetViewModel viewModel, ActionSheetStyle style}) : this._viewModel = viewModel, this._style = style, super(key: key);
+  const ActionSheet({Key key, ActionSheetViewModel viewModel, ActionSheetStyle style})
+      : this._viewModel = viewModel,
+        this._style = style,
+        super(key: key);
 
-  @override
   Widget build(BuildContext context) {
     final Color cornersColor = const Color(0xFF737373);
     return Container(
@@ -100,48 +100,45 @@ class ActionSheet extends StatelessWidget {
                     topLeft: _style.cornerRadius,
                     topRight: _style.cornerRadius)),
             child: Column(
-              children: buildCells(_style, _viewModel),
-    ))
-    );
+              children: <Widget>[
+                _buildIndicatorLine(_style),
+                Expanded(
+                  child: buildList(_style, _viewModel),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: buildFooterButtons(_viewModel),
+                )
+              ],
+            )));
   }
 
-  static List<Widget> buildCells(ActionSheetStyle style, ActionSheetViewModel viewModel) {
-    List<Widget> listBuilder = [];
+  static List<Widget> buildFooterButtons(ActionSheetViewModel _viewModel) {
+    List<Widget> listBuilder = [RoundedButton.build(RoundedButtonViewModel(
+        title: _viewModel.cancelButtonTitle), style: ActionSheetLargeRoundedButtonStyle())];
 
-    listBuilder.add(_buildIndicatorLine(style));
-    for (var action in viewModel.actions) {
-      switch (action.type) {
-        case ActionType.simple:
-          listBuilder.add(ActionSheetListItem(style: ActionSheetListItemStyle.defaultStyle(),
-              viewModel: ActionSheetListItemViewModel(title: action.title, onTap: action.onTap, isDestructive: action.isDestructive, type: action.type)));
-          break;
-        case ActionType.withIcon:
-          listBuilder.add(ActionSheetListItem(style: ActionSheetListItemStyle.defaultStyle(),
-              viewModel: ActionSheetListItemViewModel(title: action.title, onTap: action.onTap, icon: action.icon, isDestructive: action.isDestructive, type: action.type)));
-          break;
-        case ActionType.selectable:
-          listBuilder.add(ActionSheetListItem(style: ActionSheetListItemStyle.selectableStyle(),
-              viewModel: ActionSheetListItemViewModel(title: action.title, onTap: action.onTap, icon: action.icon, checkBoxIcon: action.checkBoxIcon, isDestructive: action.isDestructive, type: action.type, isSelected: false)));
-          break;
-        }
-
-      if (action != viewModel.actions.last) {
-        listBuilder.add(ListDivider.build());
-      }
+    if (_viewModel.confirmButtonTitle != null) {
+      listBuilder.add(RoundedButton.build(RoundedButtonViewModel(
+          title: _viewModel.confirmButtonTitle), style: ActionSheetLargeRoundedButtonStyle()));
     }
 
-    listBuilder.add(
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-               RoundedButton.build(RoundedButtonViewModel(title: viewModel.cancelButtonTitle),
-                   style: ActionSheetLargeRoundedButtonStyle()),
-               RoundedButton.build(RoundedButtonViewModel(title: viewModel.confirmButtonTitle),
-                   style: ActionSheetLargeRoundedButtonStyle())
-          ],
-        ));
-
     return listBuilder;
+  }
+
+  static Widget buildList(ActionSheetStyle style, ActionSheetViewModel viewModel) {
+    return ListView.separated(
+      itemCount: viewModel.actions.length,
+      itemBuilder: (context, index) => ActionSheetListItem(
+          viewModel: ActionSheetListItemViewModel(
+              title: viewModel.actions[index].title,
+              icon: viewModel.actions[index].icon,
+              type: viewModel.actions[index].type,
+              checkBoxIcon: viewModel.actions[index].checkBoxIcon,
+              isSelected: viewModel.actions[index].isSelected,
+              isDestructive: viewModel.actions[index].isDestructive,
+              onTap: viewModel.actions[index].onTap)),
+      separatorBuilder: (context, index) => ListDivider.build(),
+    );
   }
 
   static Widget _buildIndicatorLine(ActionSheetStyle style) {
