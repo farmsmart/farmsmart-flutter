@@ -9,8 +9,8 @@ class CircularProgress extends StatefulWidget {
 }
 
 class _CircularProgressState extends State<CircularProgress> {
-  double percentage;
-  double increment;
+  double percentage = 0;
+  double increment = 10;
   double defaultValue = 0;
   double percentageComplete = 100.0;
 
@@ -18,8 +18,6 @@ class _CircularProgressState extends State<CircularProgress> {
   void initState() {
     super.initState();
     setState(() {
-      percentage = 0.0;
-      increment = 10.0;
       startTimer();
     });
   }
@@ -46,12 +44,14 @@ class _CircularProgressState extends State<CircularProgress> {
 
   void startTimer() {
     Timer.periodic(Duration(milliseconds: 500), (timer) {
-      setState(() {
-        percentage += increment;
-        if (percentage > percentageComplete) {
-          percentage = defaultValue;
-        }
-      });
+      if(this.mounted){
+        setState(() {
+          percentage += increment;
+          if (percentage > percentageComplete) {
+            percentage = defaultValue;
+          }
+        });
+      }
     });
   }
 }
