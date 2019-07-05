@@ -137,7 +137,7 @@ class _ActionSheetListItemState extends State<ActionSheetListItem> {
           elevation: _style.actionItemElevation,
           color: _style.actionItemBackgroundColor,
           child: InkWell(
-            onTap: () => switchCheck(),
+            onTap: () => checkTap(),
             child: Container(
               padding: _style.actionItemEdgePadding,
               alignment: Alignment.center,
@@ -197,10 +197,15 @@ class _ActionSheetListItemState extends State<ActionSheetListItem> {
     return listBuilder;
   }
 
-  void switchCheck() {
-    setState(() {
-      _viewModel.isSelected = !_viewModel.isSelected;
-    });
+  void checkTap() {
+    if (_viewModel.type == ActionType.selectable) {
+      setState(() {
+        _viewModel.isSelected = !_viewModel.isSelected;
+        print("1");
+      });
+    } else {
+      _viewModel.onTap;
+    }
   }
 }
 
