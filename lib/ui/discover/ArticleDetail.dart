@@ -10,7 +10,8 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:share/share.dart';
 
 class _Strings {
-  static const String shareText = "Check out this article from the FarmSmart mobile app \n ";
+  static const String shareText =
+      "Check out this article from the FarmSmart mobile app \n ";
 }
 
 abstract class ArticleDetailStyle {
@@ -70,20 +71,25 @@ class _DefaultStyle implements ArticleDetailStyle {
 
 class ArticleDetail extends StatelessWidget {
   final ArticleDetailViewModel _viewModel;
-  final ArticleDetailStyle _style; 
+  final ArticleDetailStyle _style;
 
-  const ArticleDetail({Key key, ArticleDetailViewModel viewModel, ArticleDetailStyle style = const _DefaultStyle()})
+  const ArticleDetail(
+      {Key key,
+      ArticleDetailViewModel viewModel,
+      ArticleDetailStyle style = const _DefaultStyle()})
       : this._viewModel = viewModel,
-      this._style = style,
+        this._style = style,
         super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return _build(context: context, viewModel: _viewModel,style: _style);
+    return _build(context: context, viewModel: _viewModel, style: _style);
   }
 
-  Widget _build({BuildContext context, ArticleDetailViewModel viewModel,
-      ArticleDetailStyle style }) {
+  Widget _build(
+      {BuildContext context,
+      ArticleDetailViewModel viewModel,
+      ArticleDetailStyle style}) {
     var releatedViewModels = [];
     final loadingWidget = Container(
         child: CircularProgressIndicator(), alignment: Alignment.center);
@@ -128,7 +134,9 @@ class ArticleDetail extends StatelessWidget {
   }
 
   Widget _buildAppBar(BuildContext context) {
-    return ContextualAppBar(shareAction: _share,).build(context);
+    return ContextualAppBar(
+      shareAction: _share,
+    ).build(context);
   }
 
   Widget _buildHeader(BuildContext context, bool relatedTitle,
@@ -203,8 +211,10 @@ class ArticleDetail extends StatelessWidget {
 
   Widget _buildImage() {
     return Container(
-        child: NetworkImageFromFuture(_viewModel.image.urlToFit(height: _style.imageHeight),
-            fit: BoxFit.cover, height: _style.imageHeight));
+        child: NetworkImageFromFuture(
+            _viewModel.image.urlToFit(height: _style.imageHeight),
+            fit: BoxFit.cover,
+            height: _style.imageHeight));
   }
 
   Widget _buildBody() {
