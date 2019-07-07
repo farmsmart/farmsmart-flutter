@@ -2,12 +2,13 @@ import 'package:farmsmart_flutter/data/model/EntityCollectionInterface.dart';
 import 'package:farmsmart_flutter/data/model/crop_entity.dart';
 import 'package:farmsmart_flutter/data/repositories/MockStrings.dart';
 import 'package:farmsmart_flutter/data/repositories/crop/CropRepositoryInterface.dart';
+import 'package:farmsmart_flutter/data/repositories/implementation/MockArticlesRepository.dart';
 import 'package:farmsmart_flutter/model/enums.dart';
 import 'package:farmsmart_flutter/utils/MockString.dart';
 
 class MockCrop {
   static CropEntity build() {
-    return CropEntity(id: mockPlainText.identifier(),
+    final entity = CropEntity(id: mockPlainText.identifier(),
     companionPlants: _plants.list(),
     complexity: CropComplexity.BEGINNER,
     content: mockRichText.random(),
@@ -21,6 +22,8 @@ class MockCrop {
     summary: mockPlainText.random(length: 1000),
     waterRequirement: LoHi.MEDIUM,
     );
+    entity.stageArticles = MockArticleEntityCollection();
+    return entity;
   }
 
   static List<CropEntity> list({int count = 50}) {
@@ -31,6 +34,8 @@ class MockCrop {
     return articles;
   }
 }
+
+
 
 class MockCropRepository implements CropRepositoryInterface {
 
@@ -61,7 +66,6 @@ class MockCropRepository implements CropRepositoryInterface {
   }
 
 }
-
 
 // Mock Strings --------------
 
