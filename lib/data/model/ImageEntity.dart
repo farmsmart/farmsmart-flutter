@@ -5,6 +5,5 @@ class ImageEntity {
     final int height;
     final String path;
     ImageURLProvider urlProvider;
-    final List<ImageEntity> otherSizes;
-  ImageEntity(this.width, this.height, this.path, this.urlProvider, this.otherSizes);
+  ImageEntity(this.width, this.height, this.path, this.urlProvider);
 }
