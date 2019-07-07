@@ -1,11 +1,14 @@
 // Maybe we can separate ui and data model with this class.
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:farmsmart_flutter/data/model/EntityCollectionInterface.dart';
+import 'package:farmsmart_flutter/data/model/article_entity.dart';
 import 'package:farmsmart_flutter/data/model/stage_entity.dart';
 import 'package:farmsmart_flutter/model/enums.dart';
 import 'package:farmsmart_flutter/data/model/entities_const.dart';
 
 class CropEntity {
+  String id;
   List<String> companionPlants;
   CropComplexity complexity;
   String content;
@@ -23,8 +26,10 @@ class CropEntity {
   Status status;
   String summary;
   LoHi waterRequirement;
+  EntityCollection<ArticleEntity> stageArticles;
 
   CropEntity({
+    this.id,
     this.companionPlants,
     this.complexity,
     this.content,
@@ -46,6 +51,7 @@ class CropEntity {
 
   factory CropEntity.cropFromDocument(DocumentSnapshot cropDocument) =>
       CropEntity(
+        id: cropDocument.documentID,
         companionPlants: extractListOfString(cropDocument, COMPANION_PLANTS),
         complexity: extractComplexity(cropDocument),
         content: (cropDocument.data[CONTENT] != null) ? cropDocument.data[CONTENT] : "",
