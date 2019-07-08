@@ -3,8 +3,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:farmsmart_flutter/data/model/EntityCollectionInterface.dart';
 import 'package:farmsmart_flutter/data/model/ImageEntity.dart';
 import 'package:farmsmart_flutter/data/model/ImageURLProvider.dart';
+
+import '../../FlameLink.dart';
 import '../ImageRepositoryInterface.dart';
-import 'FlameLink.dart';
 
 
 class ImageEntityFields {

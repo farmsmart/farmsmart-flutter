@@ -1,5 +1,5 @@
 import 'package:farmsmart_flutter/data/bloc/article/ArticleListProvider.dart';
-import 'package:farmsmart_flutter/data/repositories/implementation/MockArticlesRepository.dart';
+import 'package:farmsmart_flutter/data/repositories/article/implementation/MockArticlesRepository.dart';
 import 'package:farmsmart_flutter/ui/discover/ArticleList.dart';
 import 'package:farmsmart_flutter/ui/playground/playground_widget.dart';
 import 'package:flutter/widgets.dart';

@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:farmsmart_flutter/data/bloc/article/ArticleListProvider.dart';
 import 'package:farmsmart_flutter/data/firebase_const.dart';
-import 'package:farmsmart_flutter/data/repositories/ArticleRepositoryInterface.dart';
-import 'package:farmsmart_flutter/data/repositories/implementation/ArticlesRepositoryFlamelink.dart';
-import 'package:farmsmart_flutter/data/repositories/implementation/FlameLink.dart';
+import 'package:farmsmart_flutter/data/repositories/FlameLink.dart';
+import 'package:farmsmart_flutter/data/repositories/article/ArticleRepositoryInterface.dart';
+import 'package:farmsmart_flutter/data/repositories/article/implementation/ArticlesRepositoryFlamelink.dart';
 import 'package:farmsmart_flutter/farmsmart_localizations.dart';
 import 'package:farmsmart_flutter/redux/app/app_state.dart';
 import 'package:farmsmart_flutter/ui/community/community_child.dart';

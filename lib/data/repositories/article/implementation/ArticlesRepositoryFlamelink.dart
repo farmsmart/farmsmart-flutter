@@ -3,11 +3,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:farmsmart_flutter/data/model/EntityCollectionInterface.dart';
 import 'package:farmsmart_flutter/data/model/article_entity.dart';
 import 'package:farmsmart_flutter/data/model/entities_const.dart';
-import 'package:farmsmart_flutter/data/repositories/implementation/ImageRepositoryFlamelink.dart';
-import 'package:farmsmart_flutter/data/repositories/implementation/transformers/FirebaseArticleTransformer.dart';
-import 'FlameLink.dart';
-import '../../firebase_const.dart';
+import 'package:farmsmart_flutter/data/repositories/image/implementation/ImageRepositoryFlamelink.dart';
+import '../../../firebase_const.dart';
+import '../../FlameLink.dart';
 import '../ArticleRepositoryInterface.dart';
+import 'transformers/FirebaseArticleTransformer.dart';
 
 final transformer = FlamelinkArticleTransformer();
 

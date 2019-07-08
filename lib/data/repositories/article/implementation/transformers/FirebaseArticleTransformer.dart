@@ -3,9 +3,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:farmsmart_flutter/data/bloc/Transformer.dart';
 import 'package:farmsmart_flutter/data/model/article_entity.dart';
 import 'package:farmsmart_flutter/data/model/entities_const.dart';
-import 'package:farmsmart_flutter/data/repositories/implementation/FlameLinkMetaTransformer.dart';
-import 'package:farmsmart_flutter/data/repositories/implementation/FlamelinkMeta.dart';
 import 'package:farmsmart_flutter/model/enums.dart';
+
+import '../../../FlamelinkMeta.dart';
+import '../FlameLinkMetaTransformer.dart';
 
 class FlamelinkArticleTransformer implements ObjectTransformer<DocumentSnapshot, ArticleEntity> {
   final ObjectTransformer<DocumentSnapshot,FlamelinkMeta> _metaTransformer;

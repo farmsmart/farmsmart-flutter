@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:farmsmart_flutter/data/bloc/Transformer.dart';
-import 'package:farmsmart_flutter/data/repositories/implementation/FlamelinkMeta.dart';
+
+import '../../FlamelinkMeta.dart';
 
 class _Fields {
   static const createdBy = "createdBy";

@@ -1,9 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:farmsmart_flutter/data/model/EntityCollectionInterface.dart';
 import 'package:farmsmart_flutter/data/model/article_entity.dart';
-import 'package:farmsmart_flutter/data/repositories/ArticleRepositoryInterface.dart';
 import 'package:farmsmart_flutter/model/enums.dart';
 import 'package:farmsmart_flutter/utils/MockString.dart';
+
+import '../ArticleRepositoryInterface.dart';
 
 class MockArticle {
   static ArticleEntity build() {

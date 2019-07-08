@@ -1,6 +1,6 @@
 import 'package:farmsmart_flutter/data/bloc/article/ArticleDetailTransformer.dart';
 import 'package:farmsmart_flutter/data/bloc/article/ArticleListItemViewModelTransformer.dart';
-import 'package:farmsmart_flutter/data/repositories/implementation/MockArticlesRepository.dart';
+import 'package:farmsmart_flutter/data/repositories/article/implementation/MockArticlesRepository.dart';
 import 'package:farmsmart_flutter/ui/discover/HeroListItem.dart';
 import 'package:farmsmart_flutter/ui/discover/StandardListItem.dart';
 import 'package:flutter/widgets.dart';

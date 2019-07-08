@@ -4,7 +4,7 @@ import 'package:farmsmart_flutter/data/bloc/ViewModelProvider.dart';
 import 'package:farmsmart_flutter/data/bloc/article/ArticleDetailTransformer.dart';
 import 'package:farmsmart_flutter/data/bloc/article/ArticleListItemViewModelTransformer.dart';
 import 'package:farmsmart_flutter/data/model/article_entity.dart';
-import 'package:farmsmart_flutter/data/repositories/ArticleRepositoryInterface.dart';
+import 'package:farmsmart_flutter/data/repositories/article/ArticleRepositoryInterface.dart';
 import 'package:farmsmart_flutter/model/loading_status.dart';
 import 'package:farmsmart_flutter/ui/discover/viewModel/ArticleListViewModel.dart';
 
