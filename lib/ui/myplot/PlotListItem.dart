@@ -85,7 +85,6 @@ class _defaultStyle implements PlotListItemStyle {
 
   const _defaultStyle();
 }
-
 class PlotListItem {
   Widget buildListItem(PlotListItemViewModel viewModel, {PlotListItemStyle itemStyle = const _defaultStyle()}) {
     return GestureDetector(
@@ -101,7 +100,8 @@ class PlotListItem {
                       children: <Widget>[
                         _buildMainTextView(viewModel, itemStyle),
                         SizedBox(width: itemStyle.imageLineSpace),
-                        _buildPlotImage(viewModel.imageUrl, itemStyle)
+                        //FIXME: Fix this coz the image is not showing now
+                        //_buildPlotImage(viewModel.imageUrl, itemStyle)
                       ])),
               ListDivider.build(),
             ]
@@ -155,19 +155,5 @@ class PlotListItem {
         ],
       ),
     );
-  }
-
-  ClipOval _buildPlotImage(Future<String> imageUrl, PlotListItemStyle itemStyle) {
-    return ClipOval(
-        child: Stack(children: <Widget>[
-      NetworkImageFromFuture(imageUrl,
-          height: itemStyle.imageSize,
-          width: itemStyle.imageSize,
-          fit: BoxFit.cover),
-      Positioned.fill(
-          child: Container(
-        color: itemStyle.overlayColor,
-      ))
-    ]));
   }
 }
