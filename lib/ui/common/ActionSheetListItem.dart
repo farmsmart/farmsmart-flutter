@@ -66,6 +66,7 @@ class ActionSheetListItemStyle {
     );
   }
 
+  //TODO: Refactor style with new code style template
   factory ActionSheetListItemStyle.selectableStyle() {
     return ActionSheetListItemStyle.defaultStyle().copyWith(iconHeight: 24);
   }
