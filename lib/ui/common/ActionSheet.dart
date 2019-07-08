@@ -1,4 +1,3 @@
-import 'package:farmsmart_flutter/ui/common/ActionSheetLargeRoundedButtonStyle.dart';
 import 'package:farmsmart_flutter/ui/common/ActionSheetListItem.dart';
 import 'package:farmsmart_flutter/ui/common/ListDivider.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
@@ -158,8 +157,7 @@ class _ActionSheetState extends State<ActionSheet> {
                     checkBoxIcon: viewModel.actions[index].checkBoxIcon,
                     isSelected: viewModel.actions[index].isSelected,
                     isDestructive: viewModel.actions[index].isDestructive,
-                    onTap: viewModel.actions[index].onTap
-                )),
+                    onTap: viewModel.actions[index].onTap)),
             onTap: () => select(index),
           ),
       separatorBuilder: (context, index) => ListDivider.build(),
@@ -168,15 +166,29 @@ class _ActionSheetState extends State<ActionSheet> {
 
   List<Widget> buildListFooter(ActionSheetViewModel _viewModel) {
     List<Widget> listBuilder = [
-      RoundedButton.build(
-          RoundedButtonViewModel(title: _viewModel.cancelButtonTitle),
-          style: ActionSheetLargeRoundedButtonStyle())
+      RoundedButton(
+          viewModel:
+              RoundedButtonViewModel(title: _viewModel.cancelButtonTitle),
+          style: RoundedButtonStyle.defaultStyle().copyWith(
+            backgroundColor: Color(0xFFe9eaf2),
+            buttonTextStyle: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.w500,
+                color: Color(0xFF4c4e6e)),
+          ))
     ];
 
     if (_viewModel.confirmButtonTitle != null) {
-      listBuilder.add(RoundedButton.build(
-          RoundedButtonViewModel(title: _viewModel.confirmButtonTitle),
-          style: ActionSheetLargeRoundedButtonStyle()));
+      listBuilder.add(RoundedButton(
+          viewModel:
+              RoundedButtonViewModel(title: _viewModel.confirmButtonTitle),
+          style: RoundedButtonStyle.defaultStyle().copyWith(
+            backgroundColor: Color(0xFFe9eaf2),
+            buttonTextStyle: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.w500,
+                color: Color(0xFF4c4e6e)),
+          )));
     }
 
     return listBuilder;

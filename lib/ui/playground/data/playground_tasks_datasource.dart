@@ -1,13 +1,12 @@
 import 'package:farmsmart_flutter/ui/common/ActionSheet.dart';
-import 'package:farmsmart_flutter/ui/common/ActionSheetListItem.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockActionSheetViewModel.dart';
+import 'package:farmsmart_flutter/ui/playground/data/playground_data_source.dart';
 import 'package:farmsmart_flutter/ui/playground/playground_widget.dart';
 import 'package:farmsmart_flutter/ui/profitloss/ProfitLossHeader.dart';
 import 'package:farmsmart_flutter/ui/profitloss/ProfitLossListItem.dart';
 import 'package:farmsmart_flutter/ui/profitloss/mockRepositoryTryout/MockTransactionRepository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:farmsmart_flutter/ui/playground/data/playground_data_source.dart';
 
 class PlayGroundTasksDataSource implements PlaygroundDataSource {
   @override
@@ -32,9 +31,6 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
             style: ProfitLossItemStyle.defaultStyle()),
       ),
       PlaygroundWidget(
-        title: 'FARM-355 Generic Action Sheet - Type 1',
-        child: ActionSheet(viewModel: MockActionSheetViewModel.buildStandard(), style: ActionSheetStyle.defaultStyle())
-      ),
           title: 'FARM-355 Generic Action Sheet - Type 1',
           child: Container(
             height: 350,

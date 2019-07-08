@@ -19,21 +19,6 @@ class PlayGroundAtomDataSource implements PlaygroundDataSource {
       DogTag(viewModel: MockDogTagViewModel.buildWithText(), style: DogTagStyle.defaultStyle()),
       DogTag(viewModel: MockDogTagViewModel.buildWithPositiveNumber(), style: DogTagStyle.defaultStyle()),
       DogTag(viewModel: MockDogTagViewModel.buildWithNegativeNumber(), style: DogTagStyle.negativeStyle()),
-      Text('Atom widget 1'),
-      Card(child: Text('Atom widget 2')),
-      Text('Atom widget 4'),
-      ActionSheetListItem(style: ActionSheetListItemStyle.defaultStyle(), viewModel: MockActionSheetViewModel.buildStandard().actions.first, numberOfActions: 1, currentAction: 1),
-      ActionSheetListItem(style: ActionSheetListItemStyle.defaultStyle(), viewModel: MockActionSheetViewModel.buildWithIcon().actions.first, numberOfActions: 1, currentAction: 1),
-      ActionSheetListItem(style: ActionSheetListItemStyle.selectableStyle(), viewModel: MockActionSheetViewModel.buildWithCheckBox().actions.first, numberOfActions: 1, currentAction: 1)
-      ActionSheetListItem(
-          style: ActionSheetListItemStyle.defaultStyle(),
-          viewModel: MockActionSheetViewModel.buildStandard().actions.first),
-      ActionSheetListItem(
-          style: ActionSheetListItemStyle.defaultStyle(),
-          viewModel: MockActionSheetViewModel.buildWithIcon().actions.first),
-      ActionSheetListItem(
-          style: ActionSheetListItemStyle.selectableStyle(),
-          viewModel: MockActionSheetViewModel.buildWithCheckBox().actions.first)
       ActionSheetListItem(viewModel: MockActionSheetViewModel.buildStandard().actions.first),
       ActionSheetListItem(viewModel: MockActionSheetViewModel.buildWithIcon().actions.first),
       ActionSheetListItem(viewModel: MockActionSheetViewModel.buildWithCheckBox().actions.first)
