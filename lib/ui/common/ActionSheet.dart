@@ -103,6 +103,10 @@ class _ActionSheetState extends State<ActionSheet> {
   @override
   void initState() {
     super.initState();
+    setState(() {
+      clearSelection();
+      _viewModel.actions.first.isSelected = true;
+    });
   }
 
   Widget build(BuildContext context) {
@@ -156,7 +160,7 @@ class _ActionSheetState extends State<ActionSheet> {
                     isSelected: viewModel.actions[index].isSelected,
                     isDestructive: viewModel.actions[index].isDestructive,
                     onTap: viewModel.actions[index].onTap)),
-            onTap: () => checkTap(index),
+            onTap: () => select(index),
           ),
       separatorBuilder: (context, index) => ListDivider.build(),
     );
@@ -178,23 +182,20 @@ class _ActionSheetState extends State<ActionSheet> {
     return listBuilder;
   }
 
-  void checkTap(int index) {
+  void select(int index) {
     if (_viewModel.actions[index].type == ActionType.selectable) {
-
       setState(() {
-        _viewModel.actions[index].isSelected =
-            !_viewModel.actions[index].isSelected;
-
-        if (index == _viewModel.actions.length - 1) {
-          _viewModel.actions[index - 1].isSelected =
-              !_viewModel.actions[index - 1].isSelected;
-        } else {
-          _viewModel.actions[index + 1].isSelected =
-              !_viewModel.actions[index + 1].isSelected;
-        }
+        clearSelection();
+        _viewModel.actions[index].isSelected = true;
       });
     } else {
       _viewModel.actions[index].onTap;
+    }
+  }
+
+  void clearSelection() {
+    for (var actions in _viewModel.actions) {
+      actions.isSelected = false;
     }
   }
 }
