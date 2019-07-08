@@ -20,7 +20,7 @@ class ArticleEntityCollectionFlamelink implements EntityCollection<ArticleEntity
   final bool _onlyPublished;
 
   ArticleEntityCollectionFlamelink({FlamelinkDocumentCollection collection, bool onlyPublished = true})
-      :_collection = collection, _onlyPublished = onlyPublished;
+      : _collection = collection, _onlyPublished = onlyPublished;
 
   @override
   Future<List<ArticleEntity>> getEntities({int limit = 0}) {
