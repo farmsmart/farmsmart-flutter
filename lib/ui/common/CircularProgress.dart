@@ -82,14 +82,10 @@ class CircularProgress extends StatefulWidget {
 
   @override
   _CircularProgressState createState() =>
-      _CircularProgressState(_viewModel, _style);
+      _CircularProgressState();
 }
 
 class _CircularProgressState extends State<CircularProgress> {
-  final CircularProgressStyle _style;
-  final CircularProgressViewModel _viewModel;
-
-  _CircularProgressState(this._viewModel, this._style);
 
   double defaultValue = 0;
   double percentageComplete = 100.0;
@@ -106,16 +102,16 @@ class _CircularProgressState extends State<CircularProgress> {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        height: _style.height,
-        width: _style.width,
+        height: widget._style.height,
+        width: widget._style.width,
         child: CustomPaint(
           foregroundPainter: MyPainter(
-              lineColor: _style.lineColor,
-              completeColor: _style.completeColor,
+              lineColor: widget._style.lineColor,
+              completeColor: widget._style.completeColor,
               completePercent: percentageComplete,
-              width: _style.testWidth),
+              width: widget._style.testWidth),
           child: Padding(
-            padding: _style.edgePadding,
+            padding: widget._style.edgePadding,
             child: ClipOval(
               child: Stack(children: _buildPlotContent()),
             ),
