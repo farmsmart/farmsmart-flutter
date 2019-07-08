@@ -104,13 +104,11 @@ class _ActionSheetState extends State<ActionSheet> {
   void initState() {
     super.initState();
 
-    bool isLanguageSelected = checkIfLanguageIsSelected();
-
-    if (!isLanguageSelected) {
-    setState(() {
-      clearSelection();
-    _viewModel.actions.last.isSelected = true;
-    });
+    if (!isLanguageIsSelected()) {
+      setState(() {
+        clearSelection();
+        _viewModel.actions.last.isSelected = true;
+      });
     }
   }
 
@@ -187,6 +185,21 @@ class _ActionSheetState extends State<ActionSheet> {
     return listBuilder;
   }
 
+  bool isLanguageIsSelected() {
+    for (var action in _viewModel.actions) {
+      if (action.isSelected != false) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  void clearSelection() {
+    for (var actions in _viewModel.actions) {
+      actions.isSelected = false;
+    }
+  }
+
   void select(int index) {
     if (_viewModel.actions[index].type == ActionType.selectable) {
       setState(() {
@@ -196,20 +209,5 @@ class _ActionSheetState extends State<ActionSheet> {
     } else {
       _viewModel.actions[index].onTap;
     }
-  }
-
-  void clearSelection() {
-    for (var actions in _viewModel.actions) {
-      actions.isSelected = false;
-    }
-  }
-
-  bool checkIfLanguageIsSelected() {
-    for (var action in _viewModel.actions) {
-      if (action.isSelected != false) {
-        return true;
-      }
-    }
-    return false;
   }
 }

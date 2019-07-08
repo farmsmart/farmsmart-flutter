@@ -11,12 +11,11 @@ class ActionSheetListItemViewModel {
   bool isDestructive;
   Function onTap;
 
-  ActionSheetListItemViewModel(
-      {this.title,
+  ActionSheetListItemViewModel({this.title,
       this.icon,
       this.type,
       this.checkBoxIcon,
-      this.isSelected,
+      this.isSelected : false,
       this.isDestructive,
       this.onTap});
 }
