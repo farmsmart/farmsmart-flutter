@@ -103,10 +103,15 @@ class _ActionSheetState extends State<ActionSheet> {
   @override
   void initState() {
     super.initState();
+
+    bool isLanguageSelected = checkIfLanguageIsSelected();
+
+    if (!isLanguageSelected) {
     setState(() {
       clearSelection();
-      _viewModel.actions.first.isSelected = true;
+    _viewModel.actions.last.isSelected = true;
     });
+    }
   }
 
   Widget build(BuildContext context) {
@@ -197,5 +202,14 @@ class _ActionSheetState extends State<ActionSheet> {
     for (var actions in _viewModel.actions) {
       actions.isSelected = false;
     }
+  }
+
+  bool checkIfLanguageIsSelected() {
+    for (var action in _viewModel.actions) {
+      if (action.isSelected != false) {
+        return true;
+      }
+    }
+    return false;
   }
 }
