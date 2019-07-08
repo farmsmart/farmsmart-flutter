@@ -10,17 +10,22 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
     return [
       //Add Your tasks here
       PlaygroundWidget(
-        title: 'TASK FARM-62 View-Prof-Loss-Statement Header',
-        child: ProfitLossHeader(viewModel: MockProfitLossHeaderViewModel.build(), style: ProfitLossHeaderStyle.defaultStyle())
-      ),
+          title: 'TASK FARM-62 View-Prof-Loss-Statement Header',
+          child: ProfitLossHeader(
+              viewModel: MockProfitLossHeaderViewModel.build(),
+              style: ProfitLossHeaderStyle.defaultStyle())),
       PlaygroundWidget(
         title: 'TASK FARM-62 View-Prof-Loss-Statement Negative',
-        child: ProfitLossListItem(viewModel: MockProfitLossListItemViewModel.buildNegative(), style: ProfitLossItemStyle.defaultStyle()),
+        child: ProfitLossListItem(
+            viewModel: MockProfitLossListItemViewModel.buildNegative(),
+            style: ProfitLossItemStyle.defaultStyle()),
       ),
-    PlaygroundWidget(
-    title: 'TASK FARM-62 View-Prof-Loss-Statement Positive',
-    child: ProfitLossListItem(viewModel: MockProfitLossListItemViewModel.buildPositive(), style: ProfitLossItemStyle.defaultStyle()),
-    ),
+      PlaygroundWidget(
+        title: 'TASK FARM-62 View-Prof-Loss-Statement Positive',
+        child: ProfitLossListItem(
+            viewModel: MockProfitLossListItemViewModel.buildPositive(),
+            style: ProfitLossItemStyle.defaultStyle()),
+      ),
       /* Template
       PlaygroundWidget(
         title: '#TASK NAME#',

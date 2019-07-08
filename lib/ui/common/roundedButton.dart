@@ -48,6 +48,7 @@ class RoundedButtonStyle {
     );
   }
 
+//TODO: Needs to style refactor, should be outside of the class.
   factory RoundedButtonStyle.bigRoundedButton() {
     return RoundedButtonStyle.defaultStyle().copyWith(
         borderRadius: BorderRadius.all(Radius.circular(40)),
@@ -56,6 +57,7 @@ class RoundedButtonStyle {
         buttonIconSize: 14.0);
   }
 
+//TODO: Needs to style refactor, should be outside of the class.
   factory RoundedButtonStyle.largeRoundedButtonStyle() {
     return RoundedButtonStyle.defaultStyle().copyWith(
       borderRadius: BorderRadius.all(Radius.circular(16)),
@@ -69,6 +71,7 @@ class RoundedButtonStyle {
     );
   }
 
+//TODO: Needs to style refactor, should be outside of the class.
   factory RoundedButtonStyle.actionSheetLargeRoundedButton() {
     return RoundedButtonStyle.largeRoundedButtonStyle().copyWith(
       backgroundColor: Color(0xFFe9eaf2),
