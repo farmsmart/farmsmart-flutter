@@ -43,7 +43,8 @@ class _ArticleDetailState extends State<ArticleDetailScreen> {
     }
   }
 
-  Widget _buildList(BuildContext context, ArticleEntity selectedArticle, Function getRelatedArticles) {
+  Widget _buildList(
+      BuildContext context, ArticleEntity selectedArticle, Function getRelatedArticles) {
     return Scaffold(
         appBar: CustomAppBar.buildForArticleDetail(selectedArticle.title, CustomAppBar.shareAction(selectedArticle.id)),
         body: SingleChildScrollView(
