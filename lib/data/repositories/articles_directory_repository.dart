@@ -5,8 +5,7 @@ import 'package:farmsmart_flutter/data/model/article_entity.dart';
 import 'package:farmsmart_flutter/data/model/stage_entity.dart';
 import 'package:flutter/foundation.dart';
 
-// LH this file is deprecated !!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
+@Deprecated('This file is deprecated, the directory implementtation detail is now hidden in the Article Repository implementation.')
 class ArticlesDirectoryRepository {
   static final ArticlesDirectoryRepository _articlesDir =
       ArticlesDirectoryRepository._internal();
