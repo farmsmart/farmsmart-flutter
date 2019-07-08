@@ -4,6 +4,10 @@ import 'package:farmsmart_flutter/ui/common/ListDivider.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
 import 'package:flutter/material.dart';
 
+class _Constants {
+  static final Color cornersColor = const Color(0xFF737373);
+}
+
 class ActionSheetViewModel {
   List<ActionSheetListItemViewModel> actions;
   String cancelButtonTitle;
@@ -103,19 +107,11 @@ class _ActionSheetState extends State<ActionSheet> {
   @override
   void initState() {
     super.initState();
-
-    if (!isLanguageIsSelected()) {
-      setState(() {
-        clearSelection();
-        _viewModel.actions.last.isSelected = true;
-      });
-    }
   }
 
   Widget build(BuildContext context) {
-    final Color cornersColor = const Color(0xFF737373);
     return Container(
-        color: cornersColor,
+        color: _Constants.cornersColor, //TODO: check the real corners color
         child: Container(
             decoration: BoxDecoration(
                 color: _style.backgroundColor,
@@ -162,7 +158,8 @@ class _ActionSheetState extends State<ActionSheet> {
                     checkBoxIcon: viewModel.actions[index].checkBoxIcon,
                     isSelected: viewModel.actions[index].isSelected,
                     isDestructive: viewModel.actions[index].isDestructive,
-                    onTap: viewModel.actions[index].onTap)),
+                    onTap: viewModel.actions[index].onTap
+                )),
             onTap: () => select(index),
           ),
       separatorBuilder: (context, index) => ListDivider.build(),
@@ -185,15 +182,6 @@ class _ActionSheetState extends State<ActionSheet> {
     return listBuilder;
   }
 
-  bool isLanguageIsSelected() {
-    for (var action in _viewModel.actions) {
-      if (action.isSelected != false) {
-        return true;
-      }
-    }
-    return false;
-  }
-
   void clearSelection() {
     for (var actions in _viewModel.actions) {
       actions.isSelected = false;
@@ -209,5 +197,15 @@ class _ActionSheetState extends State<ActionSheet> {
     } else {
       _viewModel.actions[index].onTap;
     }
+  }
+
+  //TODO: Use this method to change confirm RoundedButton style (enabled/disabled) - New RoundedButton needed
+  bool hasSelectedItem() {
+    for (var action in _viewModel.actions) {
+      if (action.isSelected != false) {
+        return true;
+      }
+    }
+    return false;
   }
 }

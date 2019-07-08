@@ -11,16 +11,19 @@ class ActionSheetListItemViewModel {
   bool isDestructive;
   Function onTap;
 
-  ActionSheetListItemViewModel({this.title,
+  ActionSheetListItemViewModel(
+      {this.title,
       this.icon,
       this.type,
       this.checkBoxIcon,
-      this.isSelected : false,
+      this.isSelected: false,
       this.isDestructive,
       this.onTap});
 }
 
 class ActionSheetListItemStyle {
+  final String defaultCheckBox;
+  final String activeCheckBox;
   final Color actionItemBackgroundColor;
 
   final TextStyle actionTextStyle;
@@ -36,7 +39,8 @@ class ActionSheetListItemStyle {
   final int maxLines;
 
   ActionSheetListItemStyle(
-      {this.actionItemBackgroundColor,
+      {this.defaultCheckBox, this.activeCheckBox,
+        this.actionItemBackgroundColor,
       this.actionTextStyle,
       this.destructiveTextStyle,
       this.actionItemEdgePadding,
@@ -48,6 +52,8 @@ class ActionSheetListItemStyle {
 
   factory ActionSheetListItemStyle.defaultStyle() {
     return ActionSheetListItemStyle(
+      defaultCheckBox: "assets/icons/radio_button_default.png",
+      activeCheckBox: "assets/icons/radio_button_active.png",
       actionItemBackgroundColor: const Color(0x00000000),
       actionTextStyle: const TextStyle(
           fontSize: 17,
@@ -165,16 +171,15 @@ class ActionSheetListItem extends StatelessWidget {
       ));
     }
 
+    // TODO: add icons inside the style
     if (viewModel.checkBoxIcon != null) {
-      var checkbox = "assets/icons/radio_button_default.png";
-      viewModel.isSelected
-          ? checkbox = "assets/icons/radio_button_active.png"
-          : checkbox = "assets/icons/radio_button_default.png";
+      var checkBoxIcon;
+      viewModel.isSelected ? checkBoxIcon = style.activeCheckBox : checkBoxIcon = style.defaultCheckBox;
 
       listBuilder.add(SizedBox(width: style.iconLineSpace));
       listBuilder.add(Row(
         mainAxisAlignment: MainAxisAlignment.end,
-        children: <Widget>[Image.asset(checkbox, height: style.iconHeight)],
+        children: <Widget>[Image.asset(checkBoxIcon, height: style.iconHeight)],
       ));
     }
     return listBuilder;
