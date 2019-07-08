@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:farmsmart_flutter/ui/profitloss/mockRepositoryTryout/MockTransactionRepository.dart';
+
 import 'package:farmsmart_flutter/redux/app/app_state.dart';
 import 'package:farmsmart_flutter/redux/app/app_reducer.dart';
 import 'package:farmsmart_flutter/redux/middleware/navigation_middleware.dart';
@@ -11,7 +13,6 @@ import 'package:redux_logging/redux_logging.dart';
 
 Future<Store<AppState>> createStore() async {
 //  var prefs = await SharedPreferences.getInstance();
-
   return Store(
     appReducer,
     initialState: AppState.initial(),
@@ -21,7 +22,7 @@ Future<Store<AppState>> createStore() async {
       LoggingMiddleware.printer(),
       NavigationMiddleware(),
       MyPlotMiddleWare(),
-      DiscoverMiddleWare()
+      DiscoverMiddleWare(),
     ],
   );
 }
