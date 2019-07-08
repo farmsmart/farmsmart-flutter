@@ -1,31 +1,19 @@
 import 'package:farmsmart_flutter/data/firebase_const.dart';
 import 'package:farmsmart_flutter/redux/app/app_state.dart';
-import 'package:farmsmart_flutter/ui/app_bar.dart';
 import 'package:farmsmart_flutter/farmsmart_localizations.dart';
-import 'package:farmsmart_flutter/redux/app/app_state.dart';
-import 'package:farmsmart_flutter/ui/common/ActionSheet.dart';
-import 'package:farmsmart_flutter/ui/common/PlaygroundWidgetTryOut.dart';
 import 'package:farmsmart_flutter/ui/community/community_child.dart';
 import 'package:farmsmart_flutter/ui/discover/discover_page.dart';
 import 'package:farmsmart_flutter/ui/home_viewmodel.dart';
-import 'package:farmsmart_flutter/ui/mockData/MockActionSheetViewModel.dart';
-import 'package:farmsmart_flutter/ui/mockData/MockRoundedButtonViewModel.dart';
-import 'package:farmsmart_flutter/ui/mockData/MockDogTagViewModel.dart';
-import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
-import 'package:farmsmart_flutter/ui/common/Dogtag.dart';
 import 'package:farmsmart_flutter/ui/myplot/PlotList.dart';
-import 'package:farmsmart_flutter/ui/profitloss/ProfitLossHeader.dart';
-import 'package:farmsmart_flutter/ui/profitloss/ProfitLossListItem.dart';
-import 'package:farmsmart_flutter/ui/profitloss/mockRepositoryTryout/MockTransactionRepository.dart';
+import 'package:farmsmart_flutter/ui/playground/playground_view.dart';
 import 'package:farmsmart_flutter/utils/assets.dart';
 import 'package:farmsmart_flutter/utils/colors.dart';
 import 'package:farmsmart_flutter/utils/dimens.dart';
-import 'package:flutter/material.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'profitloss/ProfitLossList.dart';
-import 'package:farmsmart_flutter/ui/playground/playground_view.dart';
-import 'package:farmsmart_flutter/flavors/flavor.dart';
+import 'package:farmsmart_flutter/ui/playground/data/playground_datasource_impl.dart';
 
 /// Home "screen" route. Scaffold has all the app subcomponents available inside,
 /// like bottom bar or action bar.
@@ -64,17 +52,9 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
     ProfitLossPage(),
     ArticleList(),
     HomeCommunityChild(),
-    PlaygroundView(widgetList: [
-      RoundedButton(viewModel: MockRoundedButtonViewModel.buildLarge(), style: RoundedButtonStyle.largeRoundedButtonStyle()),
-      RoundedButton(viewModel: MockRoundedButtonViewModel.buildCompact(), style: RoundedButtonStyle.defaultStyle()),
-      RoundedButton(viewModel: MockRoundedButtonViewModel.buildCompact(), style: RoundedButtonStyle.bigRoundedButton()),
-      ProfitLossHeader(viewModel: MockProfitLossHeaderViewModel.build(), style: ProfitLossHeaderStyle.defaultStyle()),
-      ProfitLossListItem(viewModel: MockProfitLossListItemViewModel.buildPositive(), style: ProfitLossItemStyle.defaultStyle()),
-      ProfitLossListItem(viewModel: MockProfitLossListItemViewModel.buildNegative(), style: ProfitLossItemStyle.defaultStyle()),
-      DogTag(viewModel: MockDogTagViewModel.buildWithText(), style: DogTagStyle.defaultStyle()),
-      DogTag(viewModel: MockDogTagViewModel.buildWithPositiveNumber(), style: DogTagStyle.defaultStyle()),
-      DogTag(viewModel: MockDogTagViewModel.buildWithNegativeNumber(), style: DogTagStyle.negativeStyle())
-    ], appBarColor: Color(0xFF9CBD3A)),
+    PlaygroundView(
+      widgetList: PlaygroundDataSourceImpl().getList(),
+    ),
   ];
 
   @override
@@ -82,13 +62,13 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
     return Scaffold(
       body: LayoutBuilder(
         builder: (context, constraints) => SafeArea(
-          child: Container(
-            color: Color(black),
-            child: StoreConnector<AppState, HomeViewmodel>(
-                builder: (_, viewModel) => content(context, viewModel),
-                converter: (store) => HomeViewmodel.fromStore(store)),
-          ),
-        ),
+              child: Container(
+                color: Color(black),
+                child: StoreConnector<AppState, HomeViewmodel>(
+                    builder: (_, viewModel) => content(context, viewModel),
+                    converter: (store) => HomeViewmodel.fromStore(store)),
+              ),
+            ),
       ),
     );
   }
@@ -149,7 +129,7 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
 
   Future<void> _retrieveDynamicLink(HomeViewmodel viewModel) async {
     final PendingDynamicLinkData data =
-    await FirebaseDynamicLinks.instance.retrieveDynamicLink();
+        await FirebaseDynamicLinks.instance.retrieveDynamicLink();
     if (data != null) {
       var decodedDynamicLink = Uri.decodeComponent(data.link.toString());
       var stringURLtoURI = Uri.parse(decodedDynamicLink);
