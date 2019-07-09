@@ -12,7 +12,7 @@ class PlayGroundAtomDataSource implements PlaygroundDataSource {
   @override
   List<Widget> getList() {
     return [
-      //Add your atoms here
+      //Add your atoms
       RoundedButton(viewModel: MockRoundedButtonViewModel.buildLarge(), style: RoundedButtonStyle.largeRoundedButtonStyle()),
       RoundedButton(viewModel: MockRoundedButtonViewModel.buildCompact(), style: RoundedButtonStyle.defaultStyle()),
       RoundedButton(viewModel: MockRoundedButtonViewModel.buildCompact(), style: RoundedButtonStyle.bigRoundedButton()),

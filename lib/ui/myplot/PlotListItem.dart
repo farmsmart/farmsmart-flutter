@@ -69,7 +69,7 @@ class _defaultStyle implements PlotListItemStyle {
   final EdgeInsets cardEdgePadding = const EdgeInsets.all(0);
   final EdgeInsets edgePadding = const EdgeInsets.only(left: 32.0, top: 27.0, right: 32.0, bottom: 27.0);
 
-  final TextStyle subtitleTextStyle = const TextStyle(fontSize: 15, fontWeight: FontWeight.normal, color: Color(0xff767690));
+  final TextStyle subtitleTextStyle = const TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: Color(0xff767690));
   final TextStyle detailTextStyle = const TextStyle(fontSize: 11, fontWeight: FontWeight.normal, color: Color(0xff25df0c));
   final TextStyle titleTextStyle = const TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: Color(0xff1a1b46));
 
@@ -77,7 +77,9 @@ class _defaultStyle implements PlotListItemStyle {
 
   final double elevation = 0.0;
   final double imageSize = 80.0;
-  final double headingLineSpace = 12.5;
+
+  //FIXME: CHeckThat!
+  final double headingLineSpace = 10;
   final double detailLineSpace = 12;
   final double imageLineSpace = 20;
   final int maxLineText = 1;
