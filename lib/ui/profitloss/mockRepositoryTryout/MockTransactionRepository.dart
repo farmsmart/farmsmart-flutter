@@ -58,7 +58,7 @@ MockString _mockCurrencyText = MockString(library: [
 
 MockString _mockPositiveCurrencyText = MockString(library: ["+255", "0", "+2", "+300", "+450", "+25"]);
 MockString _mockNegativeCurrencyText = MockString(library: ["-255", "-50", "-2", "-300", "-450", "-25"]);
-MockString _mockTotalCurrency = MockString(library: ["994,999", "99,99", "00000", "254,360", "92" ]);
+MockString _mockTotalCurrency = MockString(library: ["2,150", "99,99", "00000", "254,360", "92" ]);
 
 class MockProfitLossListItemViewModel {
   static ProfitLossListItemViewModel buildPositive() {
