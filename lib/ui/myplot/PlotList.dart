@@ -23,11 +23,11 @@ PlotListViewModel buildPlotListViewModel() {
 }
 
 abstract class PlotListStyle {
-
   final Color primaryColor;
 
   final EdgeInsets edgePadding;
   final EdgeInsets titleEdgePadding;
+  final EdgeInsets largeButtonEdgePadding;
 
   final String buttonText;
   final String errorButtonText;
@@ -35,16 +35,16 @@ abstract class PlotListStyle {
 
   final TextStyle titleTextStyle;
 
-  PlotListStyle(this.primaryColor, this.edgePadding, this.titleEdgePadding,
+  PlotListStyle(this.primaryColor, this.edgePadding, this.titleEdgePadding, this.largeButtonEdgePadding,
       this.titleTextStyle, this.errorText, this.buttonText, this.errorButtonText);
 }
 
 class _DefaultStyle implements PlotListStyle {
-
   final Color primaryColor =  const Color(0xff24d900);
 
-  final EdgeInsets edgePadding = const EdgeInsets.only(top: 20.0) ;
+  final EdgeInsets edgePadding = const EdgeInsets.only(top: 20.0);
   final EdgeInsets titleEdgePadding = const EdgeInsets.only(left: 32, top: 30, right: 32, bottom: 0);
+  final EdgeInsets largeButtonEdgePadding = const EdgeInsets.only(left: 32, top: 31, right: 32, bottom: 32);
 
   final TextStyle titleTextStyle = const TextStyle(fontSize: 27, fontWeight: FontWeight.bold, color: Color(0xFF000000));
 
@@ -105,8 +105,17 @@ class _MyPlotState extends State<PlotList> {
         physics: ScrollPhysics(),
         shrinkWrap: true,
         header: _buildTitle(viewModel, plotStyle, context: context),
-        footer: RoundedButton(viewModel: RoundedButtonViewModel(title: viewModel.buttonTitle, onTap: () => _showToast(context)),
-            style: RoundedButtonStyle.largeRoundedButtonStyle()));
+        footer: Padding(
+          padding: plotStyle.largeButtonEdgePadding,
+          child: Row(
+            children: <Widget>[
+              Expanded(
+                child: RoundedButton(viewModel: RoundedButtonViewModel(title: viewModel.buttonTitle, onTap: () => _showToast(context)),
+                    style: RoundedButtonStyle.largeRoundedButtonStyle()),
+              ),
+            ],
+          ),
+        ));
   }
 
   Widget _buildTitle(PlotListViewModel viewModel, PlotListStyle myPlotStyle,

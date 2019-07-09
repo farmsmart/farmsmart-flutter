@@ -22,37 +22,50 @@ class ActionSheetStyle {
   final Color confirmButtonBackgroundColor;
   final Color cancelButtonBackgroundColor;
 
+  final TextStyle confirmButtonTextStyle;
+
   final EdgeInsets indicatorLineEdgePadding;
+  final EdgeInsets edgePadding;
 
   final Radius cornerRadius;
   final Radius indicatorLineRadius;
 
   final double indicatorLineThickness;
   final double indicatorLineWidth;
+  final double buttonSpacing;
 
   ActionSheetStyle(
       {this.backgroundColor,
       this.indicatorLineColor,
       this.confirmButtonBackgroundColor,
       this.cancelButtonBackgroundColor,
+        this.confirmButtonTextStyle,
       this.indicatorLineEdgePadding,
+      this.edgePadding,
       this.cornerRadius,
       this.indicatorLineRadius,
       this.indicatorLineThickness,
-      this.indicatorLineWidth});
+      this.indicatorLineWidth,
+      this.buttonSpacing});
 
   factory ActionSheetStyle.defaultStyle() {
     return ActionSheetStyle(
-      backgroundColor: const Color(0xFFffffff),
-      indicatorLineColor: const Color(0xFFe0e1ee),
-      confirmButtonBackgroundColor: const Color(0xFF24d900),
-      cancelButtonBackgroundColor: const Color(0xFFe9eaf2),
-      indicatorLineEdgePadding: const EdgeInsets.only(top: 8, bottom: 50),
-      cornerRadius: const Radius.circular(40),
-      indicatorLineRadius: const Radius.circular(2.5),
-      indicatorLineThickness: 5,
-      indicatorLineWidth: 40,
-    );
+        backgroundColor: const Color(0xFFffffff),
+        indicatorLineColor: const Color(0xFFe0e1ee),
+        confirmButtonBackgroundColor: const Color(0xFF24d900),
+        cancelButtonBackgroundColor: const Color(0xFFe9eaf2),
+        confirmButtonTextStyle: TextStyle(
+            fontSize: 15,
+            fontWeight: FontWeight.w500,
+            color: Color(0xFFffffff)),
+        indicatorLineEdgePadding: const EdgeInsets.only(top: 8, bottom: 50),
+        edgePadding:
+            const EdgeInsets.only(left: 32, top: 31, right: 32, bottom: 32),
+        cornerRadius: const Radius.circular(40),
+        indicatorLineRadius: const Radius.circular(2.5),
+        indicatorLineThickness: 5,
+        indicatorLineWidth: 40,
+        buttonSpacing: 16);
   }
 
   ActionSheetStyle copyWith(
@@ -60,26 +73,31 @@ class ActionSheetStyle {
       Color indicatorLineColor,
       Color confirmButtonBackgroundColor,
       Color cancelButtonBackgroundColor,
+      TextStyle confirmButtonTextStyle,
       EdgeInsets indicatorLineEdgePadding,
+      EdgeInsets edgePadding,
       Radius cornerRadius,
       Radius indicatorLineRadius,
       double indicatorLineThickness,
-      double indicatorLineWidth}) {
+      double indicatorLineWidth,
+      double buttonSpacing}) {
     return ActionSheetStyle(
-      backgroundColor: backgroundColor ?? this.backgroundColor,
-      indicatorLineColor: indicatorLineColor ?? this.indicatorLineColor,
-      confirmButtonBackgroundColor:
-          confirmButtonBackgroundColor ?? this.confirmButtonBackgroundColor,
-      cancelButtonBackgroundColor:
-          cancelButtonBackgroundColor ?? this.cancelButtonBackgroundColor,
-      indicatorLineEdgePadding:
-          indicatorLineEdgePadding ?? this.indicatorLineEdgePadding,
-      cornerRadius: cornerRadius ?? this.cornerRadius,
-      indicatorLineRadius: indicatorLineRadius ?? this.indicatorLineRadius,
-      indicatorLineThickness:
-          indicatorLineThickness ?? this.indicatorLineThickness,
-      indicatorLineWidth: indicatorLineWidth ?? this.indicatorLineWidth,
-    );
+        backgroundColor: backgroundColor ?? this.backgroundColor,
+        indicatorLineColor: indicatorLineColor ?? this.indicatorLineColor,
+        confirmButtonBackgroundColor:
+            confirmButtonBackgroundColor ?? this.confirmButtonBackgroundColor,
+        cancelButtonBackgroundColor:
+            cancelButtonBackgroundColor ?? this.cancelButtonBackgroundColor,
+        confirmButtonTextStyle : confirmButtonTextStyle ?? this.confirmButtonTextStyle,
+        indicatorLineEdgePadding:
+            indicatorLineEdgePadding ?? this.indicatorLineEdgePadding,
+        edgePadding: edgePadding ?? this.edgePadding,
+        cornerRadius: cornerRadius ?? this.cornerRadius,
+        indicatorLineRadius: indicatorLineRadius ?? this.indicatorLineRadius,
+        indicatorLineThickness:
+            indicatorLineThickness ?? this.indicatorLineThickness,
+        indicatorLineWidth: indicatorLineWidth ?? this.indicatorLineWidth,
+        buttonSpacing: buttonSpacing ?? this.buttonSpacing);
   }
 }
 
@@ -124,10 +142,9 @@ class _ActionSheetState extends State<ActionSheet> {
                   child: _buildList(_style, _viewModel),
                 ),
                 Padding(
-                  padding:
-                      EdgeInsets.only(left: 32, top: 31, right: 32, bottom: 32),
+                  padding: _style.edgePadding,
                   child: Row(
-                    children: buildListFooter(_viewModel, context),
+                    children: _buildListFooter(_style, _viewModel, context),
                   ),
                 ),
               ],
@@ -167,12 +184,14 @@ class _ActionSheetState extends State<ActionSheet> {
     );
   }
 
-  List<Widget> buildListFooter(ActionSheetViewModel _viewModel, BuildContext context) {
+  List<Widget> _buildListFooter(ActionSheetStyle _style,
+      ActionSheetViewModel _viewModel, BuildContext context) {
     List<Widget> listBuilder = [
       Expanded(
         child: RoundedButton(
-            viewModel:
-                RoundedButtonViewModel(title: _viewModel.cancelButtonTitle, onTap: () => Navigator.pop(context)),
+            viewModel: RoundedButtonViewModel(
+                title: _viewModel.cancelButtonTitle,
+                onTap: () => Navigator.pop(context)),
             style: RoundedButtonStyle.actionSheetLargeRoundedButton()),
       )
     ];
@@ -181,13 +200,13 @@ class _ActionSheetState extends State<ActionSheet> {
       listBuilder.clear();
       listBuilder.add(Expanded(
         child: RoundedButton(
-            viewModel:
-                RoundedButtonViewModel(title: _viewModel.cancelButtonTitle, onTap: () => dismissActionSheet()),
+            viewModel: RoundedButtonViewModel(
+                title: _viewModel.cancelButtonTitle,
+                onTap: () => dismissActionSheet()),
             style: RoundedButtonStyle.actionSheetLargeRoundedButton()),
       ));
-      listBuilder.add(SizedBox(width: 16));
-      listBuilder.add(Expanded(
-        child: hasSelectedItem(context)));
+      listBuilder.add(SizedBox(width: _style.buttonSpacing));
+      listBuilder.add(Expanded(child: hasSelectedItem(context, _style)));
     }
 
     return listBuilder;
@@ -215,25 +234,21 @@ class _ActionSheetState extends State<ActionSheet> {
     }
   }
 
-  //TODO: Use this method to change confirm RoundedButton style (enabled/disabled) - New RoundedButton needed
-  RoundedButton hasSelectedItem(BuildContext context) {
+  RoundedButton hasSelectedItem(BuildContext context, ActionSheetStyle style) {
     for (var action in _viewModel.actions) {
       if (action.isSelected != false) {
         return RoundedButton(
             viewModel:
-            RoundedButtonViewModel(title: _viewModel.confirmButtonTitle),
+                RoundedButtonViewModel(title: _viewModel.confirmButtonTitle),
             style: RoundedButtonStyle.actionSheetLargeRoundedButton().copyWith(
-            backgroundColor: Color(0xFF24d900),
-            buttonTextStyle: TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.w500,
-                color: Color(0xFFffffff))));
+                backgroundColor: style.confirmButtonBackgroundColor,
+                buttonTextStyle: style.confirmButtonTextStyle));
       }
     }
 
     return RoundedButton(
-        viewModel:
-        RoundedButtonViewModel(title: _viewModel.confirmButtonTitle, onTap: null),
+        viewModel: RoundedButtonViewModel(
+            title: _viewModel.confirmButtonTitle, onTap: null),
         style: RoundedButtonStyle.actionSheetLargeRoundedButton());
   }
 }
