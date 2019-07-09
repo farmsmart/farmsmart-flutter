@@ -1,153 +1,159 @@
+import 'package:farmsmart_flutter/ui/common/ActionSheetListItem.dart';
 import 'package:farmsmart_flutter/ui/common/ListDivider.dart';
-import 'package:farmsmart_flutter/ui/common/headerAndFooterListView.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
-import 'package:farmsmart_flutter/ui/mockData/MockActionSheetViewModel.dart';
 import 'package:flutter/material.dart';
 
-class ActionListItemViewModel {
-  String title;
-  String icon;
-  String checkBoxIcon;
-  bool isDestructive;
-  Function action;
-
-  ActionListItemViewModel(this.title, this.action, this.isDestructive, {this.icon, this.checkBoxIcon});
+class _Constants {
+  static final Color cornersColor = const Color(0xFF737373);
 }
 
 class ActionSheetViewModel {
-  List<ActionListItemViewModel> actions;
-  String confirmButtonTitle;
+  List<ActionSheetListItemViewModel> actions;
   String cancelButtonTitle;
+  String confirmButtonTitle;
 
-  ActionSheetViewModel(this.actions, this.confirmButtonTitle, {this.cancelButtonTitle});
+  ActionSheetViewModel(this.actions, this.cancelButtonTitle,
+      {this.confirmButtonTitle});
 }
 
 class ActionSheetStyle {
-  final Color cornersColor = const Color(0xFF737373);
   final Color backgroundColor;
   final Color indicatorLineColor;
-  final Color actionItemBackgroundColor;
   final Color confirmButtonBackgroundColor;
   final Color cancelButtonBackgroundColor;
 
-  final TextStyle actionTextStyle;
-  final TextStyle destructiveTextStyle;
+  final TextStyle confirmButtonTextStyle;
 
-  final EdgeInsets actionItemEdgePadding;
   final EdgeInsets indicatorLineEdgePadding;
+  final EdgeInsets largeButtonEdgePadding;
 
   final Radius cornerRadius;
   final Radius indicatorLineRadius;
 
   final double indicatorLineThickness;
-  final double actionItemHeight;
-  final double iconLineSpace;
-  final double actionItemElevation;
-  final double iconHeight;
+  final double indicatorLineWidth;
+  final double buttonSpacing;
 
-  final int maxLines;
-
-  ActionSheetStyle({this.backgroundColor, this.indicatorLineColor,
-      this.actionItemBackgroundColor, this.confirmButtonBackgroundColor,
-      this.cancelButtonBackgroundColor, this.actionTextStyle,
-      this.destructiveTextStyle, this.actionItemEdgePadding,
-      this.indicatorLineEdgePadding, this.cornerRadius, this.indicatorLineRadius,
-      this.indicatorLineThickness, this.actionItemHeight, this.iconLineSpace,
-      this.actionItemElevation, this.iconHeight, this.maxLines});
+  ActionSheetStyle(
+      {this.backgroundColor,
+      this.indicatorLineColor,
+      this.confirmButtonBackgroundColor,
+      this.cancelButtonBackgroundColor,
+      this.confirmButtonTextStyle,
+      this.indicatorLineEdgePadding,
+      this.largeButtonEdgePadding,
+      this.cornerRadius,
+      this.indicatorLineRadius,
+      this.indicatorLineThickness,
+      this.indicatorLineWidth,
+      this.buttonSpacing});
 
   factory ActionSheetStyle.defaultStyle() {
     return ActionSheetStyle(
-      backgroundColor: const Color(0xFFffffff),
-      indicatorLineColor: const Color(0xFFe0e1ee),
-      actionItemBackgroundColor: const Color(0x00000000),
-      confirmButtonBackgroundColor: const Color(0xFF24d900),
-      cancelButtonBackgroundColor: const Color(0xFFe9eaf2),
-      actionTextStyle: const TextStyle(fontSize: 17,
-          fontWeight: FontWeight.normal,
-          color: Color(0xFF1a1b46)),
-      destructiveTextStyle: const TextStyle(fontSize: 17,
-          fontWeight: FontWeight.normal,
-          color: Color(0xFFff6060)),
-      actionItemEdgePadding: const EdgeInsets.symmetric(horizontal: 32),
-      indicatorLineEdgePadding: const EdgeInsets.only(top: 8, bottom: 50),
-      cornerRadius: const Radius.circular(40),
-      indicatorLineRadius: const Radius.circular(2.5),
-      indicatorLineThickness: 5,
-      actionItemHeight: 70,
-      iconLineSpace: 21.5,
-      actionItemElevation: 0,
-      iconHeight: 16.5,
-      maxLines: 1,
-    );
+        backgroundColor: const Color(0xFFffffff),
+        indicatorLineColor: const Color(0xFFe0e1ee),
+        confirmButtonBackgroundColor: const Color(0xFF24d900),
+        cancelButtonBackgroundColor: const Color(0xFFe9eaf2),
+        confirmButtonTextStyle: TextStyle(
+            fontSize: 15,
+            fontWeight: FontWeight.w500,
+            color: Color(0xFFffffff)),
+        indicatorLineEdgePadding: const EdgeInsets.only(top: 8, bottom: 50),
+        largeButtonEdgePadding:
+            const EdgeInsets.only(left: 32, top: 31, right: 32, bottom: 32),
+        cornerRadius: const Radius.circular(40),
+        indicatorLineRadius: const Radius.circular(2.5),
+        indicatorLineThickness: 5,
+        indicatorLineWidth: 40,
+        buttonSpacing: 16);
   }
 
-  factory ActionSheetStyle.selectableStyle() {
-    return ActionSheetStyle.defaultStyle().copyWith(iconHeight: 24);
-  }
-
-  ActionSheetStyle copyWith({Color backgroundColor, Color indicatorLineColor,
-    Color actionItemBackgroundColor, Color confirmButtonBackgroundColor, Color cancelButtonBackgroundColor,
-    TextStyle actionTextStyle, TextStyle destructiveTextStyle, EdgeInsets actionItemEdgePadding,
-    EdgeInsets indicatorLineEdgePadding, Radius cornerRadius, Radius indicatorLineRadius,
-    double indicatorLineThickness, double actionItemHeight, double iconLineSpace,
-    double actionItemElevation, double iconHeight, int maxLines}) {
-
+  ActionSheetStyle copyWith(
+      {Color backgroundColor,
+      Color indicatorLineColor,
+      Color confirmButtonBackgroundColor,
+      Color cancelButtonBackgroundColor,
+      TextStyle confirmButtonTextStyle,
+      EdgeInsets indicatorLineEdgePadding,
+      EdgeInsets largeButtonEdgePadding,
+      Radius cornerRadius,
+      Radius indicatorLineRadius,
+      double indicatorLineThickness,
+      double indicatorLineWidth,
+      double buttonSpacing}) {
     return ActionSheetStyle(
         backgroundColor: backgroundColor ?? this.backgroundColor,
         indicatorLineColor: indicatorLineColor ?? this.indicatorLineColor,
-        actionItemBackgroundColor: actionItemBackgroundColor ?? this.actionItemBackgroundColor,
-        confirmButtonBackgroundColor: confirmButtonBackgroundColor ?? this.confirmButtonBackgroundColor,
-        cancelButtonBackgroundColor: cancelButtonBackgroundColor ?? this.cancelButtonBackgroundColor,
-        actionTextStyle: actionTextStyle ?? this.actionTextStyle,
-        destructiveTextStyle: destructiveTextStyle ?? this.destructiveTextStyle,
-        actionItemEdgePadding: actionItemEdgePadding ?? this. actionItemEdgePadding,
-        indicatorLineEdgePadding: indicatorLineEdgePadding ?? this.indicatorLineEdgePadding,
+        confirmButtonBackgroundColor:
+            confirmButtonBackgroundColor ?? this.confirmButtonBackgroundColor,
+        cancelButtonBackgroundColor:
+            cancelButtonBackgroundColor ?? this.cancelButtonBackgroundColor,
+        confirmButtonTextStyle:
+            confirmButtonTextStyle ?? this.confirmButtonTextStyle,
+        indicatorLineEdgePadding:
+            indicatorLineEdgePadding ?? this.indicatorLineEdgePadding,
+        largeButtonEdgePadding:
+            largeButtonEdgePadding ?? this.largeButtonEdgePadding,
         cornerRadius: cornerRadius ?? this.cornerRadius,
         indicatorLineRadius: indicatorLineRadius ?? this.indicatorLineRadius,
-        indicatorLineThickness: indicatorLineThickness ?? this.indicatorLineThickness,
-        actionItemHeight: actionItemHeight ?? this.actionItemHeight,
-        iconLineSpace: iconLineSpace ?? this.iconLineSpace,
-        actionItemElevation: actionItemElevation ?? this.actionItemElevation,
-        iconHeight: iconHeight ?? this.iconHeight,
-        maxLines: maxLines ?? this.maxLines
-    );
+        indicatorLineThickness:
+            indicatorLineThickness ?? this.indicatorLineThickness,
+        indicatorLineWidth: indicatorLineWidth ?? this.indicatorLineWidth,
+        buttonSpacing: buttonSpacing ?? this.buttonSpacing);
   }
 }
 
-class ActionSheet extends StatelessWidget{
+class ActionSheet extends StatefulWidget {
   final ActionSheetViewModel _viewModel;
   final ActionSheetStyle _style;
 
-  const ActionSheet({Key key, ActionSheetViewModel viewModel, ActionSheetStyle style}) : this._viewModel = viewModel, this._style = style, super(key: key);
+  const ActionSheet(
+      {Key key, ActionSheetViewModel viewModel, ActionSheetStyle style})
+      : this._viewModel = viewModel,
+        this._style = style,
+        super(key: key);
 
-  static Widget _build(BuildContext context, ActionSheetViewModel viewModel, ActionSheetStyle style) {
-    return Container(
-        color: style.cornersColor,
-        child: Container(
-            decoration: BoxDecoration(
-                color: style.backgroundColor,
-                borderRadius: BorderRadius.only(
-                    topLeft: style.cornerRadius, topRight: style.cornerRadius)),
-            child: HeaderAndFooterListView.builder(
-                physics: NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: viewModel.actions.length,
-                itemBuilder: (BuildContext context, int index) =>
-                    _buildActionCell(style, viewModel.actions[index],
-                        viewModel.actions.length, index),
-                header: _buildIndicatorLine(style),
-                footer: RoundedButton(viewModel: RoundedButtonViewModel(title: viewModel.confirmButtonTitle),
-                    style: RoundedButtonStyle.actionSheetLargeRoundedButton()))
-        ));
+  @override
+  _ActionSheetState createState() => _ActionSheetState();
+}
+
+class _ActionSheetState extends State<ActionSheet> {
+  @override
+  void initState() {
+    super.initState();
   }
 
+  Widget build(BuildContext context) {
+    return Container(
+        color: _Constants.cornersColor, //TODO: check the real corners color
+        child: Container(
+            decoration: BoxDecoration(
+                color: widget._style.backgroundColor,
+                borderRadius: BorderRadius.only(
+                    topLeft: widget._style.cornerRadius,
+                    topRight: widget._style.cornerRadius)),
+            child: Column(
+              children: <Widget>[
+                _buildIndicatorLine(widget._style),
+                Expanded(
+                  child: _buildList(widget._style, widget._viewModel),
+                ),
+                Padding(
+                  padding: widget._style.largeButtonEdgePadding,
+                  child: Row(
+                    children: _buildListFooter(
+                        widget._style, widget._viewModel, context),
+                  ),
+                ),
+              ],
+            )));
+  }
 
-
-  static Widget _buildIndicatorLine(ActionSheetStyle style) {
+  Widget _buildIndicatorLine(ActionSheetStyle style) {
     return Center(
       child: Container(
         margin: style.indicatorLineEdgePadding,
-        width: 100,
+        width: style.indicatorLineWidth,
         height: style.indicatorLineThickness,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(style.indicatorLineRadius),
@@ -157,80 +163,90 @@ class ActionSheet extends StatelessWidget{
     );
   }
 
-  static Widget _buildActionCell(ActionSheetStyle style, ActionListItemViewModel viewModel,
-      int numberOfActions, int currentAction) {
-    return Column(
-      children: <Widget>[
-        Card(
-          elevation: style.actionItemElevation,
-          color: style.actionItemBackgroundColor,
-          child: InkWell(
-            onTap: () => print(viewModel.title), //No mock here -> View Model
-            child: Container(
-              padding: style.actionItemEdgePadding,
-              alignment: Alignment.center,
-              height: style.actionItemHeight,
-              child: Wrap(
-                  direction: Axis.horizontal,
-                  crossAxisAlignment: WrapCrossAlignment.start,
-                  children: <Widget>[
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                        children: _buildActionContent(style, viewModel)
-                    ),
-                  ]),
-            ),
+  Widget _buildList(ActionSheetStyle style, ActionSheetViewModel viewModel) {
+    return ListView.separated(
+      itemCount: viewModel.actions.length,
+      itemBuilder: (context, index) => ListTile(
+            title: ActionSheetListItem(
+                viewModel: ActionSheetListItemViewModel(
+                    title: viewModel.actions[index].title,
+                    icon: viewModel.actions[index].icon,
+                    type: viewModel.actions[index].type,
+                    checkBoxIcon: viewModel.actions[index].checkBoxIcon,
+                    isSelected: viewModel.actions[index].isSelected,
+                    isDestructive: viewModel.actions[index].isDestructive,
+                    onTap: viewModel.actions[index].onTap)),
+            onTap: () => select(index),
           ),
-        ),
-        currentAction == numberOfActions - 1 ? Wrap() : ListDivider.build(),
-      ],
+      separatorBuilder: (context, index) => ListDivider.build(),
     );
   }
 
-  static List<Widget> _buildActionContent(ActionSheetStyle style, ActionListItemViewModel viewModel) {
-    List<Widget> listBuilder = [];
+  List<Widget> _buildListFooter(ActionSheetStyle style,
+      ActionSheetViewModel viewModel, BuildContext context) {
+    List<Widget> listBuilder = [
+      Expanded(
+        child: RoundedButton(
+            viewModel: RoundedButtonViewModel(
+                title: viewModel.cancelButtonTitle,
+                onTap: () => Navigator.pop(context)),
+            style: RoundedButtonStyle.actionSheetLargeRoundedButton()),
+      )
+    ];
 
-    if (viewModel.icon != null) {
-      listBuilder.add(Image.asset(viewModel.icon, height: style.iconHeight));
-      listBuilder.add(SizedBox(width: style.iconLineSpace));
-
-    } if (viewModel.title != null) {
+    if (viewModel.confirmButtonTitle != null) {
+      listBuilder.clear();
       listBuilder.add(Expanded(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(viewModel.title,
-                style: viewModel.isDestructive
-                    ? style.destructiveTextStyle
-                    : style.actionTextStyle,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1),
-          ],
-        ),
+        child: RoundedButton(
+            viewModel: RoundedButtonViewModel(
+                title: viewModel.cancelButtonTitle,
+                onTap: () => dismissActionSheet()),
+            style: RoundedButtonStyle.actionSheetLargeRoundedButton()),
       ));
-
-    } if (viewModel.checkBoxIcon != null) {
-      listBuilder.add(SizedBox(width: style.iconLineSpace));
-      listBuilder.add(Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: <Widget>[
-      Image.asset(viewModel.checkBoxIcon, height: style.iconHeight)
-        ],
-      ));
+      listBuilder.add(SizedBox(width: style.buttonSpacing));
+      listBuilder.add(Expanded(child: hasSelectedItem(context, style)));
     }
+
     return listBuilder;
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return _build(context, _viewModel, _style);
+  void dismissActionSheet() {
+    clearSelection();
+    Navigator.pop(context);
   }
 
-  //FIXME: To show ActionBottomSheet (need to implement)
-  Future _onMenuPressed(BuildContext context) async {
-    showModalBottomSheet(
-        context: context,
-        builder: (widgetBuilder) =>  ActionSheet(viewModel: MockProfitLossListViewModel.build(), style: ActionSheetStyle.defaultStyle())
-    );
+  void clearSelection() {
+    for (var actions in widget._viewModel.actions) {
+      actions.isSelected = false;
+    }
+  }
+
+  void select(int index) {
+    if (widget._viewModel.actions[index].type == ActionType.selectable) {
+      setState(() {
+        clearSelection();
+        widget._viewModel.actions[index].isSelected = true;
+      });
+    } else {
+      widget._viewModel.actions[index].onTap;
+    }
+  }
+
+  RoundedButton hasSelectedItem(BuildContext context, ActionSheetStyle style) {
+    for (var action in widget._viewModel.actions) {
+      if (action.isSelected != false) {
+        return RoundedButton(
+            viewModel: RoundedButtonViewModel(
+                title: widget._viewModel.confirmButtonTitle),
+            style: RoundedButtonStyle.actionSheetLargeRoundedButton().copyWith(
+                backgroundColor: style.confirmButtonBackgroundColor,
+                buttonTextStyle: style.confirmButtonTextStyle));
+      }
+    }
+
+    return RoundedButton(
+        viewModel: RoundedButtonViewModel(
+            title: widget._viewModel.confirmButtonTitle, onTap: null),
+        style: RoundedButtonStyle.actionSheetLargeRoundedButton());
   }
 }
