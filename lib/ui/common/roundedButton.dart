@@ -58,7 +58,8 @@ class RoundedButtonStyle {
   factory RoundedButtonStyle.largeRoundedButtonStyle() {
     return RoundedButtonStyle.defaultStyle().copyWith(
       borderRadius: BorderRadius.all(Radius.circular(16)),
-      buttonTextStyle: TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: Color(0xffffffff)),
+      buttonTextStyle: TextStyle(
+          fontSize: 17, fontWeight: FontWeight.bold, color: Color(0xffffffff)),
       iconEdgePadding: 5,
       height: 56,
       width: double.infinity,

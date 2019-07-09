@@ -10,7 +10,6 @@ import 'myplot_viewmodel.dart';
 import 'PlotListItem.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
 
-
 class PlotListViewModel {
   final String title;
   final String buttonTitle;
@@ -35,18 +34,28 @@ abstract class PlotListStyle {
 
   final TextStyle titleTextStyle;
 
-  PlotListStyle(this.primaryColor, this.edgePadding, this.titleEdgePadding, this.largeButtonEdgePadding,
-      this.titleTextStyle, this.errorText, this.buttonText, this.errorButtonText);
+  PlotListStyle(
+      this.primaryColor,
+      this.edgePadding,
+      this.titleEdgePadding,
+      this.largeButtonEdgePadding,
+      this.titleTextStyle,
+      this.errorText,
+      this.buttonText,
+      this.errorButtonText);
 }
 
 class _DefaultStyle implements PlotListStyle {
-  final Color primaryColor =  const Color(0xff24d900);
+  final Color primaryColor = const Color(0xff24d900);
 
   final EdgeInsets edgePadding = const EdgeInsets.only(top: 20.0);
-  final EdgeInsets titleEdgePadding = const EdgeInsets.only(left: 32, top: 30, right: 32, bottom: 0);
-  final EdgeInsets largeButtonEdgePadding = const EdgeInsets.only(left: 32, top: 31, right: 32, bottom: 32);
+  final EdgeInsets titleEdgePadding =
+      const EdgeInsets.only(left: 32, top: 30, right: 32, bottom: 0);
+  final EdgeInsets largeButtonEdgePadding =
+      const EdgeInsets.only(left: 32, top: 31, right: 32, bottom: 32);
 
-  final TextStyle titleTextStyle = const TextStyle(fontSize: 27, fontWeight: FontWeight.bold, color: Color(0xFF000000));
+  final TextStyle titleTextStyle = const TextStyle(
+      fontSize: 27, fontWeight: FontWeight.bold, color: Color(0xFF000000));
 
   final String errorText = "Something went wrong while loading data";
   final String buttonText = "Add Another Crop";
@@ -79,9 +88,7 @@ class _MyPlotState extends State<PlotList> {
     switch (viewModel.loadingStatus) {
       case LoadingStatus.LOADING:
         return Container(
-            child:
-            CircularProgressIndicator(),
-            alignment: Alignment.center);
+            child: CircularProgressIndicator(), alignment: Alignment.center);
       case LoadingStatus.SUCCESS:
         return _buildPage(
             context, viewModel.cropsList, myPlotStyle, viewModel.goToDetail);
@@ -91,15 +98,14 @@ class _MyPlotState extends State<PlotList> {
     }
   }
 
-
   Widget _buildPage(BuildContext context, List<CropEntity> cropList,
       PlotListStyle plotStyle, Function goToDetail) {
     final viewModel = buildPlotListViewModel();
     return HeaderAndFooterListView.builder(
         itemCount: cropList.length,
         itemBuilder: (BuildContext context, int index) {
-          final itemViewModel = fromCropEntityToViewModel(
-              cropList[index], goToDetail);
+          final itemViewModel =
+              fromCropEntityToViewModel(cropList[index], goToDetail);
           return PlotListItem().buildListItem(itemViewModel);
         },
         physics: ScrollPhysics(),
@@ -110,7 +116,10 @@ class _MyPlotState extends State<PlotList> {
           child: Row(
             children: <Widget>[
               Expanded(
-                child: RoundedButton(viewModel: RoundedButtonViewModel(title: viewModel.buttonTitle, onTap: () => _showToast(context)),
+                child: RoundedButton(
+                    viewModel: RoundedButtonViewModel(
+                        title: viewModel.buttonTitle,
+                        onTap: () => _showToast(context)),
                     style: RoundedButtonStyle.largeRoundedButtonStyle()),
               ),
             ],
@@ -133,14 +142,13 @@ class _MyPlotState extends State<PlotList> {
                       viewModel.title,
                       style: myPlotStyle.titleTextStyle,
                     )
-                  ]
-              ),
-              RoundedButton(viewModel:
-                  RoundedButtonViewModel(icon: roundedButtonIcon, onTap: () => _showToast(context)),
+                  ]),
+              RoundedButton(
+                  viewModel: RoundedButtonViewModel(
+                      icon: roundedButtonIcon,
+                      onTap: () => _showToast(context)),
                   style: RoundedButtonStyle.defaultStyle())
-            ]
-        )
-    );
+            ]));
   }
 
   Widget _buildErrorPage(BuildContext context, MyPlotViewModel viewModel,
@@ -151,16 +159,9 @@ class _MyPlotState extends State<PlotList> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          AlertDialog(
-              title: Text(
-                  plotStyle.errorText),
-              actions: <Widget>[
-                FlatButton(
-                    child: Text(
-                        retryButton),
-                    onPressed: viewModel.update
-                )
-              ])
+          AlertDialog(title: Text(plotStyle.errorText), actions: <Widget>[
+            FlatButton(child: Text(retryButton), onPressed: viewModel.update)
+          ])
         ],
       ),
     );
@@ -171,14 +172,10 @@ class _MyPlotState extends State<PlotList> {
     final String toastText = "Not Implemented Yet";
     final String toastButtonText = "BACK";
     final scaffold = Scaffold.of(context);
-    scaffold.showSnackBar(
-        SnackBar(
-          content: Text(
-              toastText
-          ),
-          action: SnackBarAction(label: toastButtonText, onPressed: scaffold.hideCurrentSnackBar),
-        )
-    );
+    scaffold.showSnackBar(SnackBar(
+      content: Text(toastText),
+      action: SnackBarAction(
+          label: toastButtonText, onPressed: scaffold.hideCurrentSnackBar),
+    ));
   }
-
 }

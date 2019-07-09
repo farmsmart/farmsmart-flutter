@@ -94,11 +94,11 @@ class ActionSheetListItemStyle {
         defaultCheckBox: defaultCheckBox ?? this.defaultCheckBox,
         activeCheckBox: activeCheckbox ?? this.activeCheckBox,
         actionItemBackgroundColor:
-        actionItemBackgroundColor ?? this.actionItemBackgroundColor,
+            actionItemBackgroundColor ?? this.actionItemBackgroundColor,
         actionTextStyle: actionTextStyle ?? this.actionTextStyle,
         destructiveTextStyle: destructiveTextStyle ?? this.destructiveTextStyle,
         actionItemEdgePadding:
-        actionItemEdgePadding ?? this.actionItemEdgePadding,
+            actionItemEdgePadding ?? this.actionItemEdgePadding,
         actionItemHeight: actionItemHeight ?? this.actionItemHeight,
         iconLineSpace: iconLineSpace ?? this.iconLineSpace,
         actionItemElevation: actionItemElevation ?? this.actionItemElevation,
