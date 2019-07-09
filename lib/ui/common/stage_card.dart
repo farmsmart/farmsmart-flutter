@@ -1,3 +1,4 @@
+import 'package:farmsmart_flutter/ui/common/Dogtag.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -11,8 +12,7 @@ class StateCardViewModel {
   String inactiveButtonText;
   Function actionButton;
 
-  StateCardViewModel(
-      this.stageNumber,
+  StateCardViewModel(this.stageNumber,
       this.stageTitle,
       this.stateStatusText,
       this.completeText,
@@ -28,23 +28,21 @@ abstract class StageCardStyle {
   final TextStyle stageNumberTextStyle;
   final TextStyle stageTitleTextStyle;
 
-  StageCardStyle(
-      this.cardCornerRadius,
+  StageCardStyle(this.cardCornerRadius,
       this.cardBackgroundColor,
       this.cardContentPadding,
       this.stageNumberTextStyle,
       this.stageTitleTextStyle);
 
-  StageCardStyle copyWith(
-      {double cardCornerRadius,
-      Color cardBackgroundColor,
-      EdgeInsets cardContentPadding});
+  StageCardStyle copyWith({double cardCornerRadius,
+    Color cardBackgroundColor,
+    EdgeInsets cardContentPadding});
 }
 
 class _DefaultStyle implements StageCardStyle {
   final double cardCornerRadius = 20.0;
   final Color cardBackgroundColor = const Color(0xFFf5f8fa);
-  final EdgeInsets cardContentPadding = const EdgeInsets.all(16);
+  final EdgeInsets cardContentPadding = const EdgeInsets.symmetric(horizontal: 24, vertical: 20);
   final TextStyle stageNumberTextStyle = const TextStyle(
     color: Color(0xFF767690),
     fontSize: 15,
@@ -86,10 +84,9 @@ class StageCard extends StatefulWidget {
   final StateCardViewModel _viewModel;
   final StageCardStyle _style;
 
-  StageCard(
-      {Key key,
-      StateCardViewModel viewModel,
-      StageCardStyle style = _defaultStyle})
+  StageCard({Key key,
+    StateCardViewModel viewModel,
+    StageCardStyle style = _defaultStyle})
       : this._viewModel = viewModel,
         this._style = style,
         super(key: key);
@@ -114,7 +111,7 @@ class _StageCardState extends State<StageCard> {
       child: Padding(
         padding: widget._style.cardContentPadding,
         child: Column(
-          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -127,6 +124,8 @@ class _StageCardState extends State<StageCard> {
                       'Stage 2',
                       style: widget._style.stageNumberTextStyle,
                     ),
+                    SizedBox(height: 8,)
+                    ,
                     Text(
                       //TODO replace string by viewModel
                       'Planting',
@@ -134,30 +133,32 @@ class _StageCardState extends State<StageCard> {
                     ),
                   ],
                 ),
-
-                //TODO: replace by Dogtag
-                Container(
-                  child: Padding(
-                    padding: const EdgeInsets.all(6.0),
-                    child: Text(
-                      //TODO replace string by viewModel
-                      'Completed',
-                      textAlign: TextAlign.center,
-                    ),
+                DogTag(
+                  viewModel: DogTagViewModel(
+                    title: 'Completed',
                   ),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20.0),
-                      color: Colors.green),
+                  style: DogTagStyle.defaultStyle().copyWith(
+                    backgroundColor: Color(0xff24d900),
+                    titleTextStyle: TextStyle(color: Color(0xffffffff),fontSize: 11, fontWeight: FontWeight.bold),
+
+
+                  ),
                 ),
               ],
             ),
-            //Replace by rounded button well done
-            RoundedButton.build(
-              context: context,
-              //TODO replace string by viewModel
-              title: 'Mark as Complete',
-              //TODO replace function by viewModel
-              onTap: () {},
+            RoundedButton(
+              viewModel: RoundedButtonViewModel(
+                  title: 'Revert to In Progress', onTap: () {}),
+              style: RoundedButtonStyle.defaultStyle().copyWith(
+                backgroundColor: Color(0xffe9eaf2),
+                borderRadius: BorderRadius.all(Radius.circular(16)),
+                edgePadding: EdgeInsets.only(left: 0, top: 10, right: 0, bottom: 0),
+                buttonTextStyle: TextStyle(
+                    fontSize: 13, fontWeight: FontWeight.bold, color: Color(0xff4c4e6e)),
+                iconEdgePadding: 5,
+                height: 45,
+                width: double.infinity,
+                buttonIconSize: null,),
             )
           ],
         ),
