@@ -6,10 +6,11 @@ import 'package:flutter/material.dart';
 import 'network_image_from_future.dart';
 
 class CircularProgressViewModel {
-  double percentage;
+  double initialValue;
   double increment;
+  List<Widget> content;
 
-  CircularProgressViewModel(this.percentage, this.increment);
+  CircularProgressViewModel({@required this.initialValue, this.increment, this.content});
 }
 
 abstract class CircularProgressStyle {
@@ -74,7 +75,7 @@ class CircularProgress extends StatefulWidget {
 
   CircularProgress(
       {Key key,
-      CircularProgressViewModel viewModel,
+      @required CircularProgressViewModel viewModel,
       CircularProgressStyle style = _defaultStyle})
       : this._viewModel = viewModel,
         this._style = style,
@@ -95,6 +96,7 @@ class _CircularProgressState extends State<CircularProgress> {
     super.initState();
     setState(() {
       //startTimer();
+      //checkPercentage();
     });
   }
 
@@ -108,12 +110,13 @@ class _CircularProgressState extends State<CircularProgress> {
           foregroundPainter: MyPainter(
               lineColor: widget._style.lineColor,
               completeColor: widget._style.completeColor,
-              completePercent: percentageComplete,
+              completePercent: widget._viewModel.initialValue,
               width: widget._style.testWidth),
           child: Padding(
             padding: widget._style.edgePadding,
             child: ClipOval(
-              child: Stack(children: _buildPlotContent()),
+              child: Stack(
+                  children: widget._viewModel.content),
             ),
           ),
         ),
@@ -121,21 +124,12 @@ class _CircularProgressState extends State<CircularProgress> {
     );
   }
 
-  List<Widget> _buildPlotContent({Future<String> imageUrl}) {
-    List<Widget> listBuilder = [];
-    if (imageUrl != null) {
-      listBuilder.add(
-        NetworkImageFromFuture(imageUrl,
-            height: 80, width: 80, fit: BoxFit.cover),
-      );
-      listBuilder.add(Positioned.fill(
-          child: Container(
-        color: Color(0x1425df0c),
-      )));
+  void checkPercentage() {
+    widget._viewModel.initialValue += widget._viewModel.increment;
+    if (widget._viewModel.increment > percentageComplete) {
+      widget._viewModel.initialValue = defaultValue;
     }
-    return listBuilder;
   }
-
 /*
   void startTimer() {
     Timer.periodic(Duration(milliseconds: 500), (timer) {

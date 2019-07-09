@@ -8,7 +8,7 @@ class PlayGroundAtomDataSource implements PlaygroundDataSource {
   List<Widget> getList() {
     return [
       //Add your atoms here
-      CircularProgress(),
+      //CircularProgress(),
     ];
   }
 }
