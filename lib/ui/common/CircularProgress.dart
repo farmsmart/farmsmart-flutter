@@ -7,10 +7,9 @@ import 'network_image_from_future.dart';
 
 class CircularProgressViewModel {
   double initialValue;
-  double increment;
   List<Widget> content;
 
-  CircularProgressViewModel({@required this.initialValue, this.increment, this.content});
+  CircularProgressViewModel({@required this.initialValue, this.content});
 }
 
 abstract class CircularProgressStyle {
@@ -18,11 +17,11 @@ abstract class CircularProgressStyle {
   final double width;
   final Color completeColor;
   final Color lineColor;
-  final double testWidth;
-  final EdgeInsets edgePadding;
+  final double lineWidth;
+  final EdgeInsets innerPadding;
 
   CircularProgressStyle(this.height, this.width, this.completeColor,
-      this.lineColor, this.testWidth, this.edgePadding);
+      this.lineColor, this.lineWidth, this.innerPadding);
 
   CircularProgressStyle copyWith(
       {double height,
@@ -38,8 +37,8 @@ class _DefaultStyle implements CircularProgressStyle {
   final double width = 87;
   final Color completeColor = const Color(0xff24d900);
   final Color lineColor = Colors.transparent;
-  final double testWidth = 3;
-  final EdgeInsets edgePadding = const EdgeInsets.all(4.0);
+  final double lineWidth = 3;
+  final EdgeInsets innerPadding = const EdgeInsets.all(4.0);
 
   const _DefaultStyle(
       {double height,
@@ -62,8 +61,8 @@ class _DefaultStyle implements CircularProgressStyle {
         width: width ?? this.width,
         completeColor: completeColor ?? this.completeColor,
         lineColor: lineColor ?? this.lineColor,
-        testWidth: testWidth ?? this.testWidth,
-        edgePadding: edgePadding ?? this.edgePadding);
+        testWidth: testWidth ?? this.lineWidth,
+        edgePadding: edgePadding ?? this.innerPadding);
   }
 }
 
@@ -87,7 +86,6 @@ class CircularProgress extends StatefulWidget {
 }
 
 class _CircularProgressState extends State<CircularProgress> {
-
   double defaultValue = 0;
   double percentageComplete = 100.0;
 
@@ -95,8 +93,6 @@ class _CircularProgressState extends State<CircularProgress> {
   void initState() {
     super.initState();
     setState(() {
-      //startTimer();
-      //checkPercentage();
     });
   }
 
@@ -111,9 +107,9 @@ class _CircularProgressState extends State<CircularProgress> {
               lineColor: widget._style.lineColor,
               completeColor: widget._style.completeColor,
               completePercent: widget._viewModel.initialValue,
-              width: widget._style.testWidth),
+              width: widget._style.lineWidth),
           child: Padding(
-            padding: widget._style.edgePadding,
+            padding: widget._style.innerPadding,
             child: ClipOval(
               child: Stack(
                   children: widget._viewModel.content),
@@ -123,24 +119,4 @@ class _CircularProgressState extends State<CircularProgress> {
       ),
     );
   }
-
-  void checkPercentage() {
-    widget._viewModel.initialValue += widget._viewModel.increment;
-    if (widget._viewModel.increment > percentageComplete) {
-      widget._viewModel.initialValue = defaultValue;
-    }
-  }
-/*
-  void startTimer() {
-    Timer.periodic(Duration(milliseconds: 500), (timer) {
-      if(this.mounted){
-        setState(() {
-          percentage += increment;
-          if (percentage > percentageComplete) {
-            percentage = defaultValue;
-          }
-        });
-      }
-    });
-  }*/
 }

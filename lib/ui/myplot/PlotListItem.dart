@@ -122,9 +122,9 @@ class PlotListItem {
                       children: <Widget>[
                         _buildMainTextView(viewModel, itemStyle),
                         SizedBox(width: itemStyle.imageLineSpace),
-
                         //FIXME: This value parameters are hardcoded right now, later should be the current stage number divided by all the stages.
-                        CircularProgress(viewModel: CircularProgressViewModel(initialValue: 5.5+50, increment: 10, content: _buildPlotImageContent(itemStyle, viewModel.imageUrl)))
+                        CircularProgress(viewModel: CircularProgressViewModel(
+                            initialValue: 20, content: _buildPlotImageContent(itemStyle, viewModel.imageUrl)))
                       ])),
               ListDivider.build(),
             ])));
@@ -186,7 +186,7 @@ class PlotListItem {
     );
     listBuilder.add(Positioned.fill(
         child: Container(
-      color: Color(0x1425df0c),
+      color: itemStyle.overlayColor,
     )));
     return listBuilder;
   }
