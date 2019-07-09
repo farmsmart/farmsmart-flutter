@@ -123,10 +123,13 @@ class _ActionSheetState extends State<ActionSheet> {
                 Expanded(
                   child: _buildList(_style, _viewModel),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: buildListFooter(_viewModel),
-                )
+                Padding(
+                  padding:
+                      EdgeInsets.only(left: 32, top: 31, right: 32, bottom: 32),
+                  child: Row(
+                    children: buildListFooter(_viewModel, context),
+                  ),
+                ),
               ],
             )));
   }
@@ -164,34 +167,35 @@ class _ActionSheetState extends State<ActionSheet> {
     );
   }
 
-  List<Widget> buildListFooter(ActionSheetViewModel _viewModel) {
+  List<Widget> buildListFooter(ActionSheetViewModel _viewModel, BuildContext context) {
     List<Widget> listBuilder = [
-      RoundedButton(
-          viewModel:
-              RoundedButtonViewModel(title: _viewModel.cancelButtonTitle),
-          style: RoundedButtonStyle.defaultStyle().copyWith(
-            backgroundColor: Color(0xFFe9eaf2),
-            buttonTextStyle: TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.w500,
-                color: Color(0xFF4c4e6e)),
-          ))
+      Expanded(
+        child: RoundedButton(
+            viewModel:
+                RoundedButtonViewModel(title: _viewModel.cancelButtonTitle, onTap: () => Navigator.pop(context)),
+            style: RoundedButtonStyle.actionSheetLargeRoundedButton()),
+      )
     ];
 
     if (_viewModel.confirmButtonTitle != null) {
-      listBuilder.add(RoundedButton(
-          viewModel:
-              RoundedButtonViewModel(title: _viewModel.confirmButtonTitle),
-          style: RoundedButtonStyle.defaultStyle().copyWith(
-            backgroundColor: Color(0xFFe9eaf2),
-            buttonTextStyle: TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.w500,
-                color: Color(0xFF4c4e6e)),
-          )));
+      listBuilder.clear();
+      listBuilder.add(Expanded(
+        child: RoundedButton(
+            viewModel:
+                RoundedButtonViewModel(title: _viewModel.cancelButtonTitle, onTap: () => dismissActionSheet()),
+            style: RoundedButtonStyle.actionSheetLargeRoundedButton()),
+      ));
+      listBuilder.add(SizedBox(width: 16));
+      listBuilder.add(Expanded(
+        child: hasSelectedItem(context)));
     }
 
     return listBuilder;
+  }
+
+  void dismissActionSheet() {
+    clearSelection();
+    Navigator.pop(context);
   }
 
   void clearSelection() {
@@ -212,12 +216,24 @@ class _ActionSheetState extends State<ActionSheet> {
   }
 
   //TODO: Use this method to change confirm RoundedButton style (enabled/disabled) - New RoundedButton needed
-  bool hasSelectedItem() {
+  RoundedButton hasSelectedItem(BuildContext context) {
     for (var action in _viewModel.actions) {
       if (action.isSelected != false) {
-        return true;
+        return RoundedButton(
+            viewModel:
+            RoundedButtonViewModel(title: _viewModel.confirmButtonTitle),
+            style: RoundedButtonStyle.actionSheetLargeRoundedButton().copyWith(
+            backgroundColor: Color(0xFF24d900),
+            buttonTextStyle: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.w500,
+                color: Color(0xFFffffff))));
       }
     }
-    return false;
+
+    return RoundedButton(
+        viewModel:
+        RoundedButtonViewModel(title: _viewModel.confirmButtonTitle, onTap: null),
+        style: RoundedButtonStyle.actionSheetLargeRoundedButton());
   }
 }

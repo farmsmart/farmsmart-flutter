@@ -90,7 +90,6 @@ class MockActionSheetListItemViewModel {
       onTap: null,
       isDestructive: _mockItemDestructive[index],
       icon: _mockFlagIcon[index],
-      isSelected: _mockItemDestructive[index+1],
       checkBoxIcon: _mockCheckBoxIcon[index],
     );
   }
@@ -102,7 +101,7 @@ List _mockItemTitleStandardBigger = ["Take New Photo", "Choose from LIbrary", "R
 List _mockItemTitleWithIcon = ["Record a New Sale", "Record a new Cost"];
 List _mockItemTitleSelectable = ["English", "Swahili"];
 List _mockIcon = ["assets/icons/detail_icon_cost.png", "assets/icons/detail_icon_sale.png"];
-List _mockFlagIcon = ["assets/icons/flag_kenya.png", "assets/icons/flag_usa.png"];
+List _mockFlagIcon = ["assets/icons/flag_usa.png", "assets/icons/flag_kenya.png"];
 List _mockCheckBoxIcon = ["assets/icons/radio_button_active.png", "assets/icons/radio_button_default.png"];
 
 MockString _mockButtonTitle = MockString(library: [

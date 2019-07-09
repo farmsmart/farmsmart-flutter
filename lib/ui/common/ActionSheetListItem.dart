@@ -39,8 +39,9 @@ class ActionSheetListItemStyle {
   final int maxLines;
 
   ActionSheetListItemStyle(
-      {this.defaultCheckBox, this.activeCheckBox,
-        this.actionItemBackgroundColor,
+      {this.defaultCheckBox,
+      this.activeCheckBox,
+      this.actionItemBackgroundColor,
       this.actionTextStyle,
       this.destructiveTextStyle,
       this.actionItemEdgePadding,
@@ -78,7 +79,9 @@ class ActionSheetListItemStyle {
   }
 
   ActionSheetListItemStyle copyWith(
-      {Color actionItemBackgroundColor,
+      {String defaultCheckBox,
+      String activeCheckbox,
+      Color actionItemBackgroundColor,
       TextStyle actionTextStyle,
       TextStyle destructiveTextStyle,
       EdgeInsets actionItemEdgePadding,
@@ -88,12 +91,14 @@ class ActionSheetListItemStyle {
       double iconHeight,
       int maxLines}) {
     return ActionSheetListItemStyle(
+        defaultCheckBox: defaultCheckBox ?? this.defaultCheckBox,
+        activeCheckBox: activeCheckbox ?? this.activeCheckBox,
         actionItemBackgroundColor:
-            actionItemBackgroundColor ?? this.actionItemBackgroundColor,
+        actionItemBackgroundColor ?? this.actionItemBackgroundColor,
         actionTextStyle: actionTextStyle ?? this.actionTextStyle,
         destructiveTextStyle: destructiveTextStyle ?? this.destructiveTextStyle,
         actionItemEdgePadding:
-            actionItemEdgePadding ?? this.actionItemEdgePadding,
+        actionItemEdgePadding ?? this.actionItemEdgePadding,
         actionItemHeight: actionItemHeight ?? this.actionItemHeight,
         iconLineSpace: iconLineSpace ?? this.iconLineSpace,
         actionItemElevation: actionItemElevation ?? this.actionItemElevation,
@@ -174,7 +179,9 @@ class ActionSheetListItem extends StatelessWidget {
     // TODO: add icons inside the style
     if (viewModel.checkBoxIcon != null) {
       var checkBoxIcon;
-      viewModel.isSelected ? checkBoxIcon = style.activeCheckBox : checkBoxIcon = style.defaultCheckBox;
+      viewModel.isSelected
+          ? checkBoxIcon = style.activeCheckBox
+          : checkBoxIcon = style.defaultCheckBox;
 
       listBuilder.add(SizedBox(width: style.iconLineSpace));
       listBuilder.add(Row(
