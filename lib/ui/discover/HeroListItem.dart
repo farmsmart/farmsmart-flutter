@@ -1,4 +1,4 @@
-import 'package:farmsmart_flutter/ui/common/listDivider.dart';
+import 'package:farmsmart_flutter/ui/common/ListDivider.dart';
 import 'package:farmsmart_flutter/ui/common/network_image_from_future.dart';
 import 'package:flutter/material.dart';
 import 'ArticleListItemStyle.dart';
@@ -32,8 +32,7 @@ class _DefaultStyle implements ArticleListItemStyle {
 }
 
 class HeroListItem {
-  Widget builder(ArticleListItemViewModel viewModel,
-      {ArticleListItemStyle itemStyle = const _DefaultStyle()}) {
+  Widget builder(BuildContext context, ArticleListItemViewModel viewModel, {ArticleListItemStyle itemStyle = const _DefaultStyle()}) {
     return GestureDetector(
       onTap: viewModel.onTap,
       child: Column(
