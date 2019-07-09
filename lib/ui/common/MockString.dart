@@ -35,8 +35,3 @@ class MockString {
     return _rand.nextInt(maxSupported).toString();
   }
 }
-
-class MockInt {
-  final rng = new Random();
-  MockInt(rng);
-}

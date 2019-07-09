@@ -59,6 +59,7 @@ class _AppState extends State<FarmsmartApp> {
           ],
           supportedLocales: supportedLocales,
           theme: ThemeData(
+            fontFamily: 'GT-America-Standard',
             brightness: Brightness.light,
             scaffoldBackgroundColor: Color(backgroundColor),
             primaryColor: const Color(backgroundColor),
