@@ -17,7 +17,7 @@ Future<Store<AppState>> createStore() async {
     middleware: [
       LoggingMiddleware.printer(),
       NavigationMiddleware(),
-      MyPlotMiddleWare()
+      MyPlotMiddleWare(),
     ],
   );
 }
