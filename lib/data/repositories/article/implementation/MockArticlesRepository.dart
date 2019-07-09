@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:farmsmart_flutter/data/model/EntityCollectionInterface.dart';
 import 'package:farmsmart_flutter/data/model/article_entity.dart';
 import 'package:farmsmart_flutter/data/repositories/MockStrings.dart';
-import 'package:farmsmart_flutter/data/repositories/implementation/MockImageEntity.dart';
+import 'package:farmsmart_flutter/data/repositories/image/implementation/MockImageEntity.dart';
 import 'package:farmsmart_flutter/model/enums.dart';
 import '../ArticleRepositoryInterface.dart';
 
