@@ -1,18 +1,18 @@
 import 'package:farmsmart_flutter/data/firebase_const.dart';
-import 'package:farmsmart_flutter/farmsmart_localizations.dart';
 import 'package:farmsmart_flutter/redux/app/app_state.dart';
+import 'package:farmsmart_flutter/farmsmart_localizations.dart';
 import 'package:farmsmart_flutter/ui/community/community_child.dart';
 import 'package:farmsmart_flutter/ui/discover/discover_page.dart';
 import 'package:farmsmart_flutter/ui/home_viewmodel.dart';
 import 'package:farmsmart_flutter/ui/myplot/PlotList.dart';
 import 'package:farmsmart_flutter/ui/playground/playground_view.dart';
-import 'package:farmsmart_flutter/ui/profitloss/profit_loss_child.dart';
 import 'package:farmsmart_flutter/utils/assets.dart';
 import 'package:farmsmart_flutter/utils/colors.dart';
 import 'package:farmsmart_flutter/utils/dimens.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'profitloss/ProfitLossList.dart';
 import 'package:farmsmart_flutter/ui/playground/data/playground_datasource_impl.dart';
 
 /// Home "screen" route. Scaffold has all the app subcomponents available inside,
@@ -49,7 +49,7 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
 
   final List<Widget> _children = [
     PlotList(),
-    HomeProfitLossChild(),
+    ProfitLossPage(),
     ArticleList(),
     HomeCommunityChild(),
     PlaygroundView(
@@ -129,11 +129,10 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
 
   Future<void> _retrieveDynamicLink(HomeViewmodel viewModel) async {
     final PendingDynamicLinkData data =
-    await FirebaseDynamicLinks.instance.retrieveDynamicLink();
+        await FirebaseDynamicLinks.instance.retrieveDynamicLink();
     if (data != null) {
       var decodedDynamicLink = Uri.decodeComponent(data.link.toString());
       var stringURLtoURI = Uri.parse(decodedDynamicLink);
-
       if (stringURLtoURI != null) {
         String articleId = stringURLtoURI.queryParameters[DeepLink.ParameterID];
         debugPrint('Fetching id=${articleId}');

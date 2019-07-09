@@ -79,8 +79,23 @@ flutter:
   - assets/icons/detail_icon_best_soil.png
   - assets/icons/detail_icon_date.png
   - assets/icons/detail_icon_description.png
-
   - assets/privacy_policy.html
+  - assets/icons/profit_add.png
+  - assets/privacy_policy.html
+  - assets/icons/flag_kenya.png
+  - assets/icons/flag_usa.png
+  - assets/icons/detail_icon_sale.png
+  - assets/icons/detail_icon_cost.png
+  - assets/icons/radio_button_default.png
+  - assets/icons/radio_button_active.png
+
+
+  fonts:
+  - family: GT-America-Standard
+    fonts:
+      - asset: assets/fonts/GT-America-Standard-Bold.ttf
+      - asset: assets/fonts/GT-America-Standard-Medium.ttf
+      - asset: assets/fonts/GT-America-Standard-Regular.ttf
 
 flutter_icons:
   android: "launcher_icon"

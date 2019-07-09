@@ -21,6 +21,7 @@ class MyPlotViewModel {
   final Function(CropEntity cropData) goToDetail;
   final Function(StageEntity stageData) goToStage;
   final Function(ArticleEntity relatedArticles) goToRelatedArticleDetail;
+  final Function update;
 
   MyPlotViewModel({this.loadingStatus,
     this.cropsList,
@@ -30,7 +31,8 @@ class MyPlotViewModel {
     this.goToDetail,
     this.goToStage,
     this.relatedSelectedArticle,
-    this.goToRelatedArticleDetail
+    this.goToRelatedArticleDetail,
+    this.update
   });
 
   static MyPlotViewModel fromStore(Store<AppState> store) {

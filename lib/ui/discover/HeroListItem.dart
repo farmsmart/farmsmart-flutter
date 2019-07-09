@@ -32,8 +32,7 @@ class _DefaultStyle implements ArticleListItemStyle {
 }
 
 class HeroListItem {
-  Widget builder(ArticleListItemViewModel viewModel,
-      {ArticleListItemStyle itemStyle = const _DefaultStyle()}) {
+  Widget builder(BuildContext context, ArticleListItemViewModel viewModel, {ArticleListItemStyle itemStyle = const _DefaultStyle()}) {
     return GestureDetector(
       onTap: viewModel.onTap,
       child: Column(

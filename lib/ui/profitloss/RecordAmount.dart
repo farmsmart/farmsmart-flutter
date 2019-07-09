@@ -1,6 +1,8 @@
 import 'package:farmsmart_flutter/model/loading_status.dart';
-import 'package:farmsmart_flutter/ui/common/headerAndFooterListView.dart';
+import 'package:farmsmart_flutter/ui/common/ListDivider.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
+import 'package:farmsmart_flutter/ui/mockData/MockRoundedButtonViewModel.dart';
+import 'package:farmsmart_flutter/ui/profitloss/RecordAmountDate.dart';
 import 'package:farmsmart_flutter/ui/profitloss/RecordAmountHeader.dart';
 import 'package:farmsmart_flutter/ui/profitloss/RecordAmountListItem.dart';
 import 'package:farmsmart_flutter/utils/strings.dart';
@@ -12,26 +14,21 @@ class RecordAmountViewModel {
   String amount;
   String buttonTitle;
 
-  RecordAmountViewModel(this.loadingStatus, this.actions, this.amount, this.buttonTitle);
+  RecordAmountViewModel(
+      this.loadingStatus, this.actions, this.amount, this.buttonTitle);
 }
 
 class RecordAmount extends StatelessWidget {
   final RecordAmountViewModel _viewModel;
 
-  const RecordAmount(
-      {Key key, RecordAmountViewModel viewModel})
+  const RecordAmount({Key key, RecordAmountViewModel viewModel})
       : this._viewModel = viewModel,
         super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return _build(context, _viewModel);
-  }
-
-  @override
-  Widget _build(BuildContext context, RecordAmountViewModel viewModel) {
     return Scaffold(
-      body: _buildBody(context, viewModel),
+      body: _buildBody(context, _viewModel),
     );
   }
 
@@ -41,14 +38,60 @@ class RecordAmount extends StatelessWidget {
         return Container(
             child: CircularProgressIndicator(), alignment: Alignment.center);
       case LoadingStatus.SUCCESS:
-        return _buildList(context, viewModel);
+        return _buildPage(context, viewModel);
       case LoadingStatus.ERROR:
         return Text(Strings.errorString);
     }
   }
 
-  Widget _buildList(BuildContext context, RecordAmountViewModel viewModel) {
-    return HeaderAndFooterListView.builder(
+  Widget _buildPage(BuildContext context, RecordAmountViewModel viewModel) {
+    return ListView(
+      children: <Widget>[
+        RecordAmountHeader(
+            viewModel: RecordAmountHeaderViewModel(viewModel.amount),
+            style: RecordAmountHeaderStyle.defaultSaleStyle()),
+        RecordAmountDate(
+            viewModel: RecordAmountDateViewModel(
+                "assets/icons/detail_icon_date.png",
+                "Date",
+                "Today",
+                "assets/icons/chevron.png",
+                DateTime.now())),
+        ListDivider.build(),
+        RecordAmountDate(
+            viewModel: RecordAmountDateViewModel(
+                "assets/icons/detail_icon_date.png",
+                "Date",
+                "Today",
+                "assets/icons/chevron.png",
+                DateTime.now())),
+        ListDivider.build(),
+        RecordAmountDate(
+            viewModel: RecordAmountDateViewModel(
+                "assets/icons/detail_icon_date.png",
+                "Date",
+                "Today",
+                "assets/icons/chevron.png",
+                DateTime.now())),
+        Padding(
+          padding: const EdgeInsets.all(32.0),
+          child: Row(
+            children: <Widget>[
+              Expanded(
+                child: RoundedButton(
+                    viewModel: MockRoundedButtonViewModel.buildLarge(),
+                    style: RoundedButtonStyle.largeRoundedButtonStyle()),
+              ),
+            ],
+          ),
+        )
+      ],
+    );
+  }
+  
+
+
+    /*return HeaderAndFooterListView.builder(
         itemCount: viewModel.actions.length,
         itemBuilder: (BuildContext context, int index) {
           return RecordAmountListItem(viewModel: viewModel.actions[index],
@@ -59,7 +102,6 @@ class RecordAmount extends StatelessWidget {
         physics: ScrollPhysics(),
         shrinkWrap: true,
         header: RecordAmountHeader(viewModel: RecordAmountHeaderViewModel(viewModel.amount), style: RecordAmountHeaderStyle.defaultSaleStyle()),
-        footer: RoundedButton.build(context: context, title: viewModel.buttonTitle, onTap: null) //FIXME: use new button
-    );
-  }
+        footer: RoundedButton(viewModel: RoundedButtonViewModel(title: viewModel.buttonTitle), style: RoundedButtonStyle.largeRoundedButtonStyle())
+    );*/
 }
