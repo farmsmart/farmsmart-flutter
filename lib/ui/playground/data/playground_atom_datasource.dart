@@ -14,7 +14,7 @@ class PlayGroundAtomDataSource implements PlaygroundDataSource {
       Text('Atom widget 4'),
       RecordAmountHeader(viewModel: RecordAmountHeaderViewModel("00"), style: RecordAmountHeaderStyle.defaultCostStyle()),
       RecordAmountHeader(viewModel: RecordAmountHeaderViewModel("00"), style: RecordAmountHeaderStyle.defaultSaleStyle()),
-      RecordAmountDate(viewModel: RecordAmountDateViewModel("assets/icons/detail_icon_date.png", "Date", "Today", "assets/icons/chevron.png"))
+      RecordAmountDate(viewModel: RecordAmountDateViewModel("assets/icons/detail_icon_date.png", "Date", "Today", "assets/icons/chevron.png", DateTime.now()))
     ];
   }
 }

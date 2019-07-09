@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:intl/intl.dart';
 
 class RecordAmountDateViewModel {
   String icon;
   String title;
   String detail;
   String arrow;
+  DateTime selectedDate;
 
-  RecordAmountDateViewModel(this.icon, this.title, this.detail, this.arrow);
+  RecordAmountDateViewModel(this.icon, this.title, this.detail, this.arrow,
+      this.selectedDate);
 }
 
 abstract class RecordAmountDateStyle {
@@ -77,13 +80,28 @@ class _DefaultStyle implements RecordAmountDateStyle {
 
 const RecordAmountDateStyle _defaultStyle = const _DefaultStyle();
 
-class RecordAmountDate extends StatelessWidget {
+
+class RecordAmountDate extends StatefulWidget {
   final RecordAmountDateStyle _style;
   final RecordAmountDateViewModel _viewModel;
 
-    RecordAmountDate({Key key, RecordAmountDateViewModel viewModel, RecordAmountDateStyle style = _defaultStyle}) : this._viewModel = viewModel, this._style = style, super(key: key);
+  const RecordAmountDate(
+      {Key key, RecordAmountDateViewModel viewModel, RecordAmountDateStyle style = _defaultStyle})
+      : this._viewModel = viewModel,
+        this._style = style,
+        super(key: key);
 
   @override
+  _RecordAmountDateState createState() => _RecordAmountDateState();
+}
+
+class _RecordAmountDateState extends State<RecordAmountDate> {
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
@@ -100,7 +118,7 @@ class RecordAmountDate extends StatelessWidget {
               children: <Widget>[
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
-                  children: _buildActionContent(_style, _viewModel)
+                  children: _buildActionContent(context, widget._style, widget._viewModel)
                 )
               ],
             ),
@@ -110,7 +128,7 @@ class RecordAmountDate extends StatelessWidget {
     );
   }
 
-  static List<Widget> _buildActionContent(RecordAmountDateStyle style, RecordAmountDateViewModel viewModel) {
+  List<Widget> _buildActionContent(BuildContext context, RecordAmountDateStyle style, RecordAmountDateViewModel viewModel) {
     List<Widget> listBuilder = [];
 
     listBuilder.add(Image.asset(viewModel.icon, height: style.iconHeight));
@@ -134,11 +152,9 @@ class RecordAmountDate extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
-          TextField(
-              decoration: InputDecoration.collapsed(hintText: viewModel.detail),
-              style: style.detailTextStyle,
-              //overflow: TextOverflow.ellipsis,
-              maxLines: 1),
+          InkWell(child:
+          Text(formatDate(viewModel.selectedDate) == formatDate(DateTime.now()) ? "Today" : formatDate(viewModel.selectedDate), style: style.detailTextStyle),
+          onTap: () => _selectDate(context)),
         ],
       ),
     ));
@@ -152,5 +168,25 @@ class RecordAmountDate extends StatelessWidget {
       ));
 
     return listBuilder;
+  }
+
+  Future<Null> _selectDate(BuildContext context) async {
+    final DateTime picked = await showDatePicker(
+        context: context,
+        initialDate: widget._viewModel.selectedDate,
+        firstDate: DateTime(2019, 6),
+        lastDate: DateTime(2101));
+    if (picked != null && picked != widget._viewModel.selectedDate)
+      setState(() {
+        widget._viewModel.selectedDate = picked;
+        formatDate(widget._viewModel.selectedDate);
+      });
+  }
+
+  String formatDate(DateTime selectedDate) {
+    var formatter = DateFormat('dd MMMM yyyy');
+    String formatted = formatter.format(selectedDate);
+    print(formatted);
+    return formatted;
   }
 }
