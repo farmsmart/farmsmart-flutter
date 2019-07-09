@@ -40,13 +40,15 @@ dependencies:
 
   webview_flutter: ^0.3.6
   firebase_dynamic_links: ^0.4.0+2
-  flutter_share_me: ^0.1.3
+  share: ^0.6.1+1
   package_info: ^0.4.0+3
+  cached_network_image: ^1.0.0
 
 
 
 
 dev_dependencies:
+  test:
   flutter_test:
     sdk: flutter
 

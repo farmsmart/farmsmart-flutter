@@ -1,56 +1,55 @@
+import 'package:farmsmart_flutter/data/model/ImageEntity.dart';
+import 'package:farmsmart_flutter/data/model/ImageURLProvider.dart';
 import 'package:farmsmart_flutter/model/enums.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:farmsmart_flutter/utils/strings.dart';
 import 'package:farmsmart_flutter/data/model/entities_const.dart';
+import 'EntityCollectionInterface.dart';
 
 class ArticleEntity {
   String id;
   String content;
-  String imagePathReference;
-  Future<String> imageUrl;
-  List<ArticleEntity> relatedArticles;
-  List<String> relatedArticlesPathReference;
+  EntityCollection<ImageEntity> images;
+  EntityCollection<ArticleEntity> related;
   Status status;
   String summary;
   String title;
+  Timestamp published;
 
   ArticleEntity(
       {this.id,
       this.content,
-      this.imagePathReference,
-      this.imageUrl,
-      this.relatedArticles,
-      this.relatedArticlesPathReference,
       this.status,
       this.summary,
-      this.title});
+      this.title,
+      this.published});
 
+//TODO: LH this is deprecated remove when doing MyPlot repo....
   factory ArticleEntity.articleFromDocument(DocumentSnapshot articleDocument) =>
       ArticleEntity(
           id: articleDocument.data[ID],
           content: articleDocument.data[CONTENT],
-          imagePathReference: articleDocument.data[IMAGE].first.path,
-          imageUrl: Future.value(Strings.emptyString),
-          relatedArticles: List(),
-          relatedArticlesPathReference:
-              extractRelatedArticlesPaths(articleDocument),
           status: statusValues.map[articleDocument.data[STATUS]],
           summary: articleDocument.data[SUMMARY],
-          title: articleDocument.data[TITLE]);
-
-  void setImageUrl(Future<String> imageUrl) {
-    this.imageUrl = imageUrl;
-  }
-
-  void addRelatedArticle(ArticleEntity relatedArticle) {
-    this.relatedArticles.add(relatedArticle);
-  }
+          title: articleDocument.data[TITLE],
+          published: articleDocument.data[PUBLISHED]);
 }
 
-List<String> extractRelatedArticlesPaths(DocumentSnapshot document) {
-  if (document.data[RELATED_ARTICLES] != null) {
-    return List<String>.from(
-        document.data[RELATED_ARTICLES].map((stage) => stage[ARTICLE].path));
+
+// LH this is to make getting the main article image easier
+// if we want to get more images from an article, we can get the image entities
+// and use their ImageEntityURLProvider 
+class ArticleImageProvider implements ImageURLProvider {
+  final ArticleEntity _article;
+  ArticleImageProvider(ArticleEntity article) : _article = article;
+  @override
+  Future<String> urlToFit({double width, double height}) {
+    if ( _article.images == null)
+    {
+      return Future.value(null);
+    }
+    return _article.images.getEntities(limit: 1).then((imageEntities) {
+      // NB: we assume the first image is the hero
+      return imageEntities.first.urlProvider.urlToFit(width: width,height: height);
+    });
   }
-  return null;
 }

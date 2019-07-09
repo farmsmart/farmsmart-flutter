@@ -30,7 +30,7 @@ class StageEntity {
         status: statusValues.map[stageDocument.data[STATUS]],
         content: stageDocument.data[CONTENT],
         stageRelatedArticles: List(),
-        stageRelatedArticlesPathReference: extractRelatedArticlesPaths(stageDocument)
+        stageRelatedArticlesPathReference: null
       );
 
   void addStageRelatedArticle(ArticleEntity relatedArticle) {

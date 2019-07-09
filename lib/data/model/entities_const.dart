@@ -11,6 +11,7 @@ const ARTICLE = "article";
 
 // Articles Directory Entity
 const TITLE = "title";
+const PUBLISHED = "published";
 
 // Crop Entity
 const COMPANION_PLANTS = "companionPlants";

@@ -6,9 +6,6 @@ import 'package:farmsmart_flutter/utils/strings.dart';
 import 'package:farmsmart_flutter/utils/colors.dart';
 import 'package:farmsmart_flutter/utils/dimens.dart';
 import 'package:farmsmart_flutter/utils/styles.dart';
-import 'package:flutter_share_me/flutter_share_me.dart';
-import 'package:package_info/package_info.dart';
-import 'package:farmsmart_flutter/data/firebase_const.dart';
 
 // We define here generic margins for the app
 abstract class CustomAppBar {
@@ -50,17 +47,6 @@ abstract class CustomAppBar {
     );
   }
 
-  static AppBar buildForArticleDetail(String title, Widget shareActions) {
-    return AppBar(
-      leading: backIcon(),
-      automaticallyImplyLeading: true,
-      // adds the back button automatically
-      title: Text(title, style: Styles.appBarDetailTextStyle()),
-      actions: <Widget>[shareActions],
-      centerTitle: true,
-    );
-  }
-
   static AppBar buildForDetail(String title) {
     return AppBar(
       leading: backIcon(),
@@ -77,38 +63,16 @@ abstract class CustomAppBar {
         onPressed: () {});
   }
 
-  static Widget shareAction(String articleID) {
-    return IconButton(
-      icon: Icon(Icons.share, color: Color(primaryGreen), size: appBarIconSize),
-      onPressed: () async {
-        String deepLink = await buildArticleDeeplink(articleID);
-        var response = await FlutterShareMe()
-            .shareToSystem(msg: Strings.shareArticleText + deepLink);
-      },
+  static Widget shareAction(Function action) {
+    final Color appBarButtonsColor = const Color(0xFF1a1b46);
+
+    return Container(
+      margin: EdgeInsets.only(right: 22.0),
+      child: IconButton(
+        icon: Icon(Icons.share, color: appBarButtonsColor, size: 22.0),
+        onPressed: action(),
+      ),
     );
-  }
-
-  static Future<String> getPackageInfo() async {
-    PackageInfo packageInfo = await PackageInfo.fromPlatform();
-    String packageName = packageInfo.packageName;
-    return packageName;
-  }
-
-  static Future<String> buildArticleDeeplink(String articleID) async {
-    String packageID = await getPackageInfo();
-
-    String dynamicLinkPrefix = DeepLink.Prefix + "/?link=";
-
-    String dynamicLinkBody =
-        DeepLink.linkDomain + "?id=" + articleID + "&type=article";
-    String dynamicLinkBodyEncoded =
-        Uri.encodeComponent(dynamicLinkBody); // To encode url
-
-    String dynamicLinkSufix = "&apn=" + packageID + "&efr=1";
-
-    String fullDynamicLink =
-        dynamicLinkPrefix + dynamicLinkBodyEncoded + dynamicLinkSufix;
-    return fullDynamicLink;
   }
 
   static Widget popUpMenuAction(Function goToPrivacyPolicy) {
@@ -134,6 +98,12 @@ abstract class CustomAppBar {
   }
 
   static Widget backIcon() {
-    return BackButton(color: Color(primaryGreen));
+    final Color appBarButtonsColor = const Color(0xFF1a1b46);
+    return Container(
+      margin: EdgeInsets.only(left: 25),
+      child: BackButton(
+          color: appBarButtonsColor,
+      ),
+    );
   }
 }

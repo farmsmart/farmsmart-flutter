@@ -1,3 +1,8 @@
+import 'package:farmsmart_flutter/data/bloc/article/ArticleDetailTransformer.dart';
+import 'package:farmsmart_flutter/data/bloc/article/ArticleListItemViewModelTransformer.dart';
+import 'package:farmsmart_flutter/data/repositories/article/implementation/MockArticlesRepository.dart';
+import 'package:farmsmart_flutter/ui/discover/HeroListItem.dart';
+import 'package:farmsmart_flutter/ui/discover/StandardListItem.dart';
 import 'package:farmsmart_flutter/ui/common/Dogtag.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockDogTagViewModel.dart';
@@ -86,7 +91,8 @@ class PlayGroundAtomDataSource implements PlaygroundDataSource {
             alignment: Alignment.center,
             padding: EdgeInsets.symmetric(vertical: 20.0),
             child: ActionSheetListItem(
-            viewModel: MockActionSheetViewModel.buildStandard().actions.first),
+                viewModel:
+                    MockActionSheetViewModel.buildStandard().actions.first),
           )),
       PlaygroundWidget(
           title: 'Action Sheet Item with Icon',
@@ -94,7 +100,8 @@ class PlayGroundAtomDataSource implements PlaygroundDataSource {
             alignment: Alignment.center,
             padding: EdgeInsets.symmetric(vertical: 20.0),
             child: ActionSheetListItem(
-                viewModel: MockActionSheetViewModel.buildWithIcon().actions.first),
+                viewModel:
+                    MockActionSheetViewModel.buildWithIcon().actions.first),
           )),
       PlaygroundWidget(
           title: 'Action Sheet Item with Checkbox',
@@ -102,8 +109,21 @@ class PlayGroundAtomDataSource implements PlaygroundDataSource {
             alignment: Alignment.center,
             padding: EdgeInsets.symmetric(vertical: 20.0),
             child: ActionSheetListItem(
-                viewModel: MockActionSheetViewModel.buildWithCheckBox().actions.first),
+                viewModel:
+                    MockActionSheetViewModel.buildWithCheckBox().actions.first),
           )),
+      StandardListItem(
+          viewModel: ArticleListItemViewModelTransformer(
+                  detailTransformer: ArticleDetailViewModelTransformer(
+                      listItemTransformer:
+                          ArticleListItemViewModelTransformer()))
+              .transform(from: MockArticle.build())),
+      HeroListItem(
+          viewModel: ArticleListItemViewModelTransformer(
+                  detailTransformer: ArticleDetailViewModelTransformer(
+                      listItemTransformer:
+                          ArticleListItemViewModelTransformer()))
+              .transform(from: MockArticle.build())),
     ];
   }
 }
