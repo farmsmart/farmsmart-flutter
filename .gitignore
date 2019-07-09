@@ -80,3 +80,5 @@ farmsmart_release_key.jks
 service-account.json
 key.properties
 local.properties
+assets/fonts/*
+!assets/fonts/GT-America-Standard*enc.ttf
