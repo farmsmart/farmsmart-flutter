@@ -60,7 +60,7 @@ class ArticleDetailViewModelTransformer
         (readMins == 0) ? _Strings.lessThanMin : readMins.toString();
     final dateString = (article.published == null)
         ? ""
-        : _dateFormatter.format(article.published.toDate());
+        : _dateFormatter.format(article.published);
     return dateString +
         _Strings.divider +
         minString +
