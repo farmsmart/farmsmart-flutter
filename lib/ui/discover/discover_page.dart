@@ -85,7 +85,7 @@ class _DiscoveryState extends State<ArticleList> {
         itemBuilder: (BuildContext context, int index) {
           final viewModel = fromArticleEntityToViewModel(articlesList[index], getRelatedArticles);
           if (index == 0) {
-            return HeroListItem().builder(viewModel);
+            return HeroListItem().builder(context, viewModel);
           } else {
             return StandardListItem().builder(viewModel);
           }

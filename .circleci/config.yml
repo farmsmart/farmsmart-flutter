@@ -99,6 +99,20 @@ jobs:
           echo "export VERSION_NAME=${VERSION_NAME}" >> ./env.sh
       - *save_workspace
 
+  flutter-build-rc:
+    executor: flutter
+    steps:
+      - *restore_workspace
+      - run: |
+          flutter packages get
+          VERSION_NAME="RC_${CIRCLE_TAG}_${CIRCLE_SHA1:0:7}"
+          echo "Building flutter development apk - BUILD_NAME:${VERSION_NAME}"
+          flutter build apk --build-name="${VERSION_NAME}" --release --flavor production -t lib/main_production.dart
+          APK_BUILD_PATH=$(find ./build -name '*release.apk')
+          echo "export APK_BUILD_PATH=${APK_BUILD_PATH}" >> ./env.sh
+          echo "export VERSION_NAME=${VERSION_NAME}" >> ./env.sh
+      - *save_workspace
+
   flutter-build-32:
     executor: flutter
     steps:
@@ -186,10 +200,16 @@ workflows:
     jobs:
       - prepare:
           context: gcp-kms
+          filters:
+            tags:
+              only: /.*/
 
       - test:
           requires:
             - prepare
+          filters:
+            tags:
+              only: /.*/  
 
       - flutter-build-dev:
           requires:
@@ -198,6 +218,16 @@ workflows:
           filters:
             branches:
               only: /develop|feature.*/
+      
+      - flutter-build-rc:
+          requires:
+            - test
+          context: dev
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /.*/
 
       - upload-to-app-sharing:
           requires:
@@ -207,6 +237,17 @@ workflows:
             branches:
               only: /develop|feature.*/
 
+      - upload-to-app-sharing:
+          name: upload-to-app-sharing-rc
+          requires:
+            - flutter-build-rc
+          context: dev
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /.*/
+
       - slack-notification-dev:
           requires:
             - upload-to-app-sharing
@@ -214,6 +255,17 @@ workflows:
           filters:
             branches:
               only: /develop|feature.*/
+
+      - slack-notification-dev:
+          name: slack-notification-dev-rc
+          requires:
+            - upload-to-app-sharing-rc
+          context: dev
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /.*/
 
       # prod
       - get-next-version:
