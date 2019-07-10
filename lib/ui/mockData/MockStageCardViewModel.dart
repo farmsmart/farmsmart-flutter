@@ -8,7 +8,7 @@ class MockStageCardViewModel {
       stageNumber: _mockStage.random(),
       stageTitle: _mockTitle.random(),
       actionButton: () {},
-      actionButtonText: 'Revert to In Progress',
+      actionButtonText: 'Begin Stage',
       stageStatusTitle: 'Upcoming'
     );
   }
