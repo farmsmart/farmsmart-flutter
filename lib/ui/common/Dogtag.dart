@@ -21,37 +21,40 @@ class DogTagStyle {
   final int maxLines;
   final double iconSize;
   final double spacing;
+  final Color iconColor;
 
-  DogTagStyle(
+  const DogTagStyle(
       {this.backgroundColor,
       this.borderRadius,
       this.edgePadding,
       this.titleTextStyle,
       this.maxLines,
       this.iconSize,
+      this.iconColor,
       this.spacing});
 
   factory DogTagStyle.defaultStyle() {
     return DogTagStyle(
         backgroundColor: Color(0x1425df0c),
         borderRadius: BorderRadius.all(Radius.circular(20.0)),
-        edgePadding: EdgeInsets.only(top: 4.5, right: 12, left: 12, bottom: 4.5),
+        edgePadding:
+            EdgeInsets.only(top: 4.5, right: 12, left: 12, bottom: 4.5),
         titleTextStyle: TextStyle(
             fontSize: 15,
             fontWeight: FontWeight.w500,
             color: Color(0xff21c400)),
         maxLines: 1,
         iconSize: 8,
+        iconColor: Colors.black,
         spacing: 5.5);
   }
 
   factory DogTagStyle.negativeStyle() {
     return DogTagStyle.defaultStyle().copyWith(
-        backgroundColor: Color(0x14ff8d4f),
-        titleTextStyle: TextStyle(
-            fontSize: 15,
-            fontWeight: FontWeight.w500,
-            color: Color(0xffff8d4f)));
+      backgroundColor: Color(0x14ff8d4f),
+      titleTextStyle: TextStyle(
+          fontSize: 15, fontWeight: FontWeight.w500, color: Color(0xffff8d4f)),
+    );
   }
 
   factory DogTagStyle.compactStyle() {
@@ -71,6 +74,7 @@ class DogTagStyle {
       TextStyle titleTextStyle,
       int maxLines,
       double iconSize,
+      Color iconColor,
       double spacing}) {
     return DogTagStyle(
         backgroundColor: backgroundColor ?? this.backgroundColor,
@@ -79,6 +83,7 @@ class DogTagStyle {
         titleTextStyle: titleTextStyle ?? this.titleTextStyle,
         maxLines: maxLines ?? this.maxLines,
         iconSize: iconSize ?? this.iconSize,
+        iconColor: iconColor ?? this.iconColor,
         spacing: spacing ?? this.spacing);
   }
 }
@@ -126,7 +131,7 @@ class DogTag extends StatelessWidget {
         Icon(
           viewModel.icon,
           size: style.iconSize,
-          color: Colors.black,
+          color: style.iconColor,
         ),
       );
     }

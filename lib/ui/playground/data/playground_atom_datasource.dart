@@ -60,7 +60,7 @@ class PlayGroundAtomDataSource implements PlaygroundDataSource {
             height: 100,
             child: DogTag(
                 viewModel: MockDogTagViewModel.buildWithText(),
-                style: DogTagStyle.defaultStyle()),
+                style: DogTagStyle.compactStyle()),
           )),
 
       PlaygroundWidget(

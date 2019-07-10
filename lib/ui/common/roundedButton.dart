@@ -19,7 +19,7 @@ class RoundedButtonStyle {
   final double iconEdgePadding;
   final double buttonIconSize;
 
-  RoundedButtonStyle({
+  const RoundedButtonStyle({
     this.height,
     this.width,
     this.iconButtonColor,
