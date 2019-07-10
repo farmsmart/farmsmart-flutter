@@ -5,112 +5,175 @@ import 'package:intl/intl.dart';
 class RecordAmountListItemViewModel {
   String icon;
   String title;
-  String detail;
+  String hint;
   String arrow;
   DateTime selectedDate;
   List<String> listOfCrops = [];
   String selectedCrop;
 
-  RecordAmountListItemViewModel(this.icon, this.detail,
-      {this.arrow, this.title, this.selectedDate, this.listOfCrops, this.selectedCrop});
+  RecordAmountListItemViewModel(this.icon, this.hint,
+      {this.arrow,
+      this.title,
+      this.selectedDate,
+      this.listOfCrops,
+      this.selectedCrop});
 }
 
 abstract class RecordAmountListItemStyle {
   final Color actionItemBackgroundColor;
 
   final TextStyle titleTextStyle;
-  final TextStyle pendingTitleTextStyle;
+  final TextStyle pendingDetailTextStyle;
   final TextStyle detailTextStyle;
 
   final EdgeInsets actionItemEdgePadding;
+  final EdgeInsets cardMargins;
+  final CrossAxisAlignment itemAlignment;
 
   final double actionItemElevation;
 
   final double actionItemHeight;
   final double iconHeight;
   final double iconLineSpace;
+  final double detailTextSpacing;
+
+  final int maxLines;
 
   RecordAmountListItemStyle(
       this.actionItemBackgroundColor,
       this.titleTextStyle,
-      this.pendingTitleTextStyle,
+      this.pendingDetailTextStyle,
       this.detailTextStyle,
       this.actionItemEdgePadding,
+      this.cardMargins,
+      this.itemAlignment,
       this.actionItemElevation,
       this.actionItemHeight,
       this.iconHeight,
-      this.iconLineSpace);
+      this.iconLineSpace,
+      this.detailTextSpacing,
+      this.maxLines);
 
   RecordAmountListItemStyle copyWith(
       {Color actionItemBackgroundColor,
       TextStyle titleTextStyle,
-      TextStyle pendingTitleTextStyle,
+      TextStyle pendingDetailTextStyle,
       TextStyle detailTextStyle,
       EdgeInsets actionItemEdgePadding,
+      EdgeInsets cardMargins,
+      CrossAxisAlignment itemAlignment,
       double actionItemElevation,
       double actionItemHeight,
       double iconHeight,
-      double iconLineSpace});
+      double iconLineSpace,
+      double detailTextSpacing,
+      int maxLines});
 }
 
 class _DefaultStyle implements RecordAmountListItemStyle {
-  final Color actionItemBackgroundColor = const Color(0x00000000);
+  final Color actionItemBackgroundColor;
 
-  final TextStyle titleTextStyle = const TextStyle(
-      fontSize: 17, fontWeight: FontWeight.w400, color: Color(0xFF1a1b46));
-  final TextStyle pendingTitleTextStyle = const TextStyle(
-      fontSize: 15, fontWeight: FontWeight.normal, color: Color(0x4c767690));
-  final TextStyle detailTextStyle = const TextStyle(
-      fontSize: 15, fontWeight: FontWeight.normal, color: Color(0xff767690));
+  final TextStyle titleTextStyle;
+  final TextStyle pendingDetailTextStyle;
+  final TextStyle detailTextStyle;
 
-  final EdgeInsets actionItemEdgePadding =
-      const EdgeInsets.symmetric(horizontal: 32);
+  final EdgeInsets actionItemEdgePadding;
+  final EdgeInsets cardMargins;
 
-  final double actionItemElevation = 0;
+  final double actionItemElevation;
+  final CrossAxisAlignment itemAlignment;
 
-  final double actionItemHeight = 70;
-  final double iconHeight = 20;
-  final double iconLineSpace = 22;
+  final double actionItemHeight;
+  final double iconHeight;
+  final double iconLineSpace;
+  final double detailTextSpacing;
+
+  final int maxLines;
 
   const _DefaultStyle(
       {Color actionItemBackgroundColor,
       TextStyle titleTextStyle,
-      TextStyle pendingTitleTextStyle,
+      TextStyle pendingDetailTextStyle,
       TextStyle detailTextStyle,
       EdgeInsets actionItemEdgePadding,
+      EdgeInsets cardMargins,
+      CrossAxisAlignment itemAlignment,
       double actionItemElevation,
       double actionItemHeight,
       double iconHeight,
-      double iconLineSpace});
+      double iconLineSpace,
+      double detailTextSpacing,
+      int maxLines})
+      : this.actionItemBackgroundColor =
+            actionItemBackgroundColor ?? const Color(0x00000000),
+        this.titleTextStyle = titleTextStyle ??
+            const TextStyle(
+                fontSize: 17,
+                fontWeight: FontWeight.w400,
+                color: Color(0xFF1a1b46)),
+        this.pendingDetailTextStyle = pendingDetailTextStyle ??
+            const TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.normal,
+                color: Color(0x4c767690)),
+        this.detailTextStyle = detailTextStyle ??
+            const TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.normal,
+                color: Color(0xff767690)),
+        this.actionItemEdgePadding =
+            actionItemEdgePadding ?? const EdgeInsets.symmetric(horizontal: 32),
+        this.cardMargins = cardMargins ?? const EdgeInsets.all(0),
+        this.itemAlignment = itemAlignment ?? CrossAxisAlignment.center,
+        this.actionItemElevation = actionItemElevation ?? 0,
+        this.actionItemHeight = actionItemHeight ?? 70,
+        this.iconHeight = iconHeight ?? 20,
+        this.iconLineSpace = iconLineSpace ?? 22,
+        this.detailTextSpacing = detailTextSpacing ?? 13,
+        this.maxLines = maxLines ?? 5;
 
   @override
   RecordAmountListItemStyle copyWith(
       {Color actionItemBackgroundColor,
       TextStyle titleTextStyle,
-      TextStyle pendingTitleTextStyle,
+      TextStyle pendingDetailTextStyle,
       TextStyle detailTextStyle,
       EdgeInsets actionItemEdgePadding,
+      EdgeInsets cardMargins,
+      CrossAxisAlignment itemAlignment,
       double actionItemElevation,
       double actionItemHeight,
       double iconHeight,
-      double iconLineSpace}) {
+      double iconLineSpace,
+      double detailTextSpacing,
+      int maxLines}) {
     return _DefaultStyle(
         actionItemBackgroundColor:
             actionItemBackgroundColor ?? this.actionItemBackgroundColor,
         titleTextStyle: titleTextStyle ?? this.titleTextStyle,
-        pendingTitleTextStyle:
-            pendingTitleTextStyle ?? this.pendingTitleTextStyle,
+        pendingDetailTextStyle:
+            pendingDetailTextStyle ?? this.pendingDetailTextStyle,
         detailTextStyle: detailTextStyle ?? this.detailTextStyle,
         actionItemEdgePadding:
             actionItemEdgePadding ?? this.actionItemEdgePadding,
+        cardMargins: cardMargins ?? this.cardMargins,
+        itemAlignment: itemAlignment ?? this.itemAlignment,
         actionItemElevation: actionItemElevation ?? this.actionItemElevation,
-        actionItemHeight: actionItemHeight ?? this.actionItemHeight);
+        actionItemHeight: actionItemHeight ?? this.actionItemHeight,
+        detailTextSpacing: detailTextSpacing ?? this.detailTextSpacing,
+        maxLines: maxLines ?? this.maxLines);
   }
 }
 
 const RecordAmountListItemStyle _defaultStyle = const _DefaultStyle();
 
-RecordAmountListItemStyle biggerStyle = _defaultStyle.copyWith(actionItemHeight: 200);
+RecordAmountListItemStyle biggerCellStyle = _defaultStyle.copyWith(
+    detailTextStyle: const TextStyle(
+        fontSize: 17, fontWeight: FontWeight.normal, color: Color(0xff1a1b46)),
+    pendingDetailTextStyle: const TextStyle(
+        fontSize: 17, fontWeight: FontWeight.normal, color: Color(0x4c1a1b46)),
+    actionItemHeight: 150,
+    itemAlignment: CrossAxisAlignment.start);
 
 class RecordAmountListItem extends StatefulWidget {
   final RecordAmountListItemStyle _style;
@@ -138,11 +201,11 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
     return Column(
       children: <Widget>[
         Card(
-            margin: EdgeInsets.all(0),
-            elevation: 0,
-            color: Color(0x00000000),
+            margin: widget._style.cardMargins,
+            elevation: widget._style.actionItemElevation,
+            color: widget._style.actionItemBackgroundColor,
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 32),
+              padding: widget._style.actionItemEdgePadding,
               alignment: Alignment.center,
               height: widget._style.actionItemHeight,
               child: Wrap(
@@ -151,6 +214,7 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
                   children: <Widget>[
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: widget._style.itemAlignment,
                       children: _buildCellContent(),
                     )
                   ]),
@@ -166,7 +230,9 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
     ];
 
     if (widget._viewModel.selectedDate != null) {
-      listBuilder.add(Text(widget._viewModel.title, style: widget._style.titleTextStyle));
+      listBuilder.add(
+          Text(widget._viewModel.title, style: widget._style.titleTextStyle));
+
       listBuilder.add(Expanded(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
@@ -175,7 +241,7 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
                 child: Text(
                     formatDate(widget._viewModel.selectedDate) ==
                             formatDate(DateTime.now())
-                        ? "Today"
+                        ? widget._viewModel.hint
                         : formatDate(widget._viewModel.selectedDate),
                     style: widget._style.detailTextStyle),
                 onTap: () => _selectDate(context)),
@@ -185,40 +251,43 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
     }
 
     if (widget._viewModel.listOfCrops != null) {
-      listBuilder.add(Text(widget._viewModel.title, style: widget._style.titleTextStyle));
+      listBuilder.add(
+          Text(widget._viewModel.title, style: widget._style.titleTextStyle));
       listBuilder.add(Expanded(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: <Widget>[
             DropdownButtonHideUnderline(
               child: DropdownButton(
-                value: widget._viewModel.selectedCrop,
-                style: widget._style.detailTextStyle,
-                items: getDropDownMenuItems(),
-                onChanged: changeDropDownItem,
-                hint: Text("Select...", style: widget._style.pendingTitleTextStyle),
-                icon: Icon(Icons.lens, size: 0)
-              ),
+                  value: widget._viewModel.selectedCrop,
+                  style: widget._style.detailTextStyle,
+                  items: getDropDownMenuItems(),
+                  onChanged: changeDropDownItem,
+                  hint: Text(widget._viewModel.hint,
+                      style: widget._style.pendingDetailTextStyle),
+                  icon: Icon(Icons.lens, size: 0)),
             )
           ],
         ),
       ));
     }
 
-    if (widget._viewModel.selectedDate == null && widget._viewModel.listOfCrops == null) {
+    if (widget._viewModel.selectedDate == null &&
+        widget._viewModel.listOfCrops == null) {
       listBuilder.add(Expanded(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: <Widget>[
             TextField(
               decoration: InputDecoration(
-                  hintText: "Description (optional)...",
-                  hintStyle: widget._style.pendingTitleTextStyle,
+                  hintText: widget._viewModel.hint,
+                  hintStyle: widget._style.pendingDetailTextStyle,
                   border: InputBorder.none,
+                  contentPadding: widget._style.cardMargins,
                   counterText: ""),
               textAlign: TextAlign.left,
               style: widget._style.detailTextStyle,
-              maxLines: 5,
+              maxLines: widget._style.maxLines,
             ),
           ],
         ),
@@ -229,7 +298,10 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
     listBuilder.add(SizedBox(width: widget._style.iconLineSpace));
     listBuilder.add(Row(
         mainAxisAlignment: MainAxisAlignment.end,
-        children: <Widget>[Image.asset(widget._viewModel.arrow, height: 13)]));
+        children: <Widget>[
+          Image.asset(widget._viewModel.arrow,
+              height: widget._style.detailTextSpacing)
+        ]));
 
     return listBuilder;
   }
@@ -240,6 +312,7 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
         initialDate: widget._viewModel.selectedDate,
         firstDate: DateTime(2019, 6),
         lastDate: DateTime(2101));
+
     if (picked != null && picked != widget._viewModel.selectedDate)
       setState(() {
         widget._viewModel.selectedDate = picked;

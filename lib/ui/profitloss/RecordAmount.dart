@@ -27,18 +27,12 @@ class RecordAmount extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: _buildBody(context, _viewModel),
-    );
-  }
-
-  Widget _buildBody(BuildContext context, RecordAmountViewModel viewModel) {
-    switch (viewModel.loadingStatus) {
+    switch (_viewModel.loadingStatus) {
       case LoadingStatus.LOADING:
         return Container(
             child: CircularProgressIndicator(), alignment: Alignment.center);
       case LoadingStatus.SUCCESS:
-        return _buildPage(context, viewModel);
+        return _buildPage(context, _viewModel);
       case LoadingStatus.ERROR:
         return Text(Strings.errorString);
     }
@@ -59,7 +53,7 @@ class RecordAmount extends StatelessWidget {
         ListDivider.build(),
         RecordAmountListItem(
             viewModel: RecordAmountListItemViewModel(
-                "assets/icons/detail_icon_best_soil.png", "Today",
+                "assets/icons/detail_icon_best_soil.png", "Select ...",
                 arrow: "assets/icons/chevron.png",
                 title: "Crop",
                 listOfCrops: [
@@ -74,16 +68,18 @@ class RecordAmount extends StatelessWidget {
         ListDivider.build(),
         RecordAmountListItem(
             viewModel: RecordAmountListItemViewModel(
-                "assets/icons/detail_icon_date.png", "Today",
-                arrow: "assets/icons/chevron.png")),
+                "assets/icons/detail_icon_description.png",
+                "Description (optional)...",
+                arrow: "assets/icons/chevron.png"),
+            style: biggerCellStyle),
         Padding(
           padding: const EdgeInsets.all(32.0),
           child: Row(
             children: <Widget>[
               Expanded(
                 child: RoundedButton(
-                    viewModel: MockRoundedButtonViewModel.buildLarge(),
-                    style: RoundedButtonStyle.largeRoundedButtonStyle()),
+                    viewModel: RoundedButtonViewModel(title: "Record Sale"),
+                    style: RoundedButtonStyle.largeRoundedButtonStyle().copyWith(backgroundColor: Color(0xFFe9eaf2))),
               ),
             ],
           ),
