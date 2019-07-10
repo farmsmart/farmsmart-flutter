@@ -13,7 +13,12 @@ class MockCircularProgressViewModel {
 
 List<Widget> _mockContentWithImage() {
   List<Widget> listBuilder = [];
-  listBuilder.add(FadeInImage(placeholder: null, image: null));
+  listBuilder.add(Image.network(
+    _mockImage.random(),
+    height: 80,
+    width: 80,
+    fit: BoxFit.cover,
+  ));
   listBuilder.add(Positioned.fill(
       child: Container(
     color: Color(0x1425df0c),
@@ -29,21 +34,3 @@ MockString _mockImage = MockString(library: [
   "https://firebasestorage.googleapis.com/v0/b/farmsmart-20190415.appspot.com/o/flamelink%2Fmedia%2FHQUyfY1LG7GOpjhfaGoq_Screenshot%202019-06-06%2017.17.08"
       ".png?alt=media&token=aeb484ee-0978-4ddc-8fec-d0806c3a1e3b",
 ]);
-
-
-/*
-List<Widget> _mockContentWithImage() {
-  List<Widget> listBuilder = [];
-  listBuilder.add(Image.network(
-    _mockImage.random(),
-    height: 80,
-    width: 80,
-    fit: BoxFit.cover,
-  ));
-  listBuilder.add(Positioned.fill(
-      child: Container(
-    color: Color(0x1425df0c),
-  )));
-  return listBuilder;
-}
- */
