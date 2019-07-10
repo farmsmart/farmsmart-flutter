@@ -3,57 +3,65 @@ import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-enum Stage { upcoming, inProgress, complete }
-
-class StageStatus {
-  Stage stage;
-  String stageStatusText;
-  String actionText;
-  Function actionButton;
-
-  StageStatus({
-    this.stage,
-    this.stageStatusText,
-    this.actionText,
-    this.actionButton,
-  });
-}
+export 'package:farmsmart_flutter/ui/common/Dogtag.dart';
+export 'package:farmsmart_flutter/ui/common/roundedButton.dart';
 
 class StageCardViewModel {
   String stageNumber;
   String stageTitle;
-  StageStatus stageStatus;
+  String actionButtonText;
+  String stageStatusTitle;
+  Function actionButton;
+  IconData dogTagIcon;
 
-  StageCardViewModel({
-    this.stageNumber,
-    this.stageTitle,
-    this.stageStatus
-  });
+  StageCardViewModel(
+      {this.stageNumber,
+      this.stageTitle,
+      this.actionButtonText,
+      this.stageStatusTitle,
+      this.actionButton,
+      this.dogTagIcon});
 }
 
-abstract class StageCardStyle {
+class StageCardStyle {
   final double cardCornerRadius;
   final Color cardBackgroundColor;
   final EdgeInsets cardContentPadding;
   final TextStyle stageNumberTextStyle;
   final TextStyle stageTitleTextStyle;
+  final RoundedButtonStyle actionButtonStyle;
+  final DogTagStyle stageTagStyle;
 
-  StageCardStyle(
+  const StageCardStyle({
     this.cardCornerRadius,
     this.cardBackgroundColor,
     this.cardContentPadding,
     this.stageNumberTextStyle,
     this.stageTitleTextStyle,
-  );
-
-  StageCardStyle copyWith({
-    double cardCornerRadius,
-    Color cardBackgroundColor,
-    EdgeInsets cardContentPadding,
+    this.actionButtonStyle,
+    this.stageTagStyle,
   });
+
+  StageCardStyle copyWith(
+      {double cardCornerRadius,
+      Color cardBackgroundColor,
+      EdgeInsets cardContentPadding,
+      TextStyle stageNumberTextStyle,
+      TextStyle stageTitleTextStyle,
+      RoundedButtonStyle actionButtonStyle,
+      DogTagStyle stageTagStyle}) {
+    return StageCardStyle(
+        cardCornerRadius: cardCornerRadius ?? this.cardCornerRadius,
+        cardBackgroundColor: cardBackgroundColor ?? this.cardBackgroundColor,
+        cardContentPadding: cardContentPadding ?? this.cardContentPadding,
+        stageNumberTextStyle: stageNumberTextStyle ?? this.stageNumberTextStyle,
+        stageTitleTextStyle: stageTitleTextStyle ?? this.stageTitleTextStyle,
+        actionButtonStyle: actionButtonStyle ?? this.actionButtonStyle,
+        stageTagStyle: stageTagStyle ?? this.stageTagStyle);
+  }
 }
 
-class _DefaultStyle implements StageCardStyle {
+class _DefaultStyle extends StageCardStyle {
   final double cardCornerRadius = 20.0;
   final Color cardBackgroundColor = const Color(0xFFf5f8fa);
   final EdgeInsets cardContentPadding =
@@ -67,125 +75,106 @@ class _DefaultStyle implements StageCardStyle {
     fontSize: 20,
     fontWeight: FontWeight.bold,
   );
-
-  const _DefaultStyle(
-      {double cardCornerRadius,
-      Color cardBackgroundColor,
-      EdgeInsets cardContentPadding,
-      TextStyle stageNumberTextStyle,
-      TextStyle stageTitleTextStyle,});
-
-  @override
-  StageCardStyle copyWith({
-    double cardCornerRadius,
-    Color cardBackgroundColor,
-    EdgeInsets cardContentPadding,
-    TextStyle stageNumberTextStyle,
-    TextStyle stageTitleTextStyle,
-  }) {
-    return _DefaultStyle(
-        cardCornerRadius: cardCornerRadius ?? this.cardCornerRadius,
-        cardBackgroundColor: cardBackgroundColor ?? this.cardBackgroundColor,
-        cardContentPadding: cardContentPadding ?? this.cardContentPadding,
-        stageNumberTextStyle: stageNumberTextStyle ?? this.stageNumberTextStyle,
-        stageTitleTextStyle: stageTitleTextStyle ?? this.stageTitleTextStyle);
-  }
-}
-
-const StageCardStyle _defaultStyle = const _DefaultStyle();
-
-class StageCard extends StatefulWidget {
-  final StageCardViewModel _viewModel;
-  final StageCardStyle _style;
-
-  StageCard(
-      {Key key,
-      @required StageCardViewModel viewModel,
-      StageCardStyle style = _defaultStyle})
-      : this._viewModel = viewModel,
-        this._style = style,
-        super(key: key);
-
-  @override
-  _StageCardState createState() => _StageCardState();
-}
-
-class _StageCardState extends State<StageCard> {
-  static RoundedButtonStyle _actionButtonStyle =
-      RoundedButtonStyle.defaultStyle().copyWith(
+  final RoundedButtonStyle actionButtonStyle = const RoundedButtonStyle(
     backgroundColor: Color(0xff24d900),
     borderRadius: BorderRadius.all(Radius.circular(16)),
-    edgePadding: EdgeInsets.only(left: 0, top: 10, right: 0, bottom: 0),
     buttonTextStyle: TextStyle(
         fontSize: 13, fontWeight: FontWeight.bold, color: Color(0xffffffff)),
     iconEdgePadding: 5,
     height: 45,
     width: double.infinity,
     buttonIconSize: null,
+    iconButtonColor: Color(0xFFFFFFFF),
+    buttonShape: BoxShape.rectangle,
+  );
+  final DogTagStyle stageTagStyle = const DogTagStyle(
+    backgroundColor: Color(0xff24d900),
+    titleTextStyle: TextStyle(
+        color: Color(0xffffffff), fontSize: 11, fontWeight: FontWeight.bold),
+    borderRadius: BorderRadius.all(Radius.circular(20.0)),
+    edgePadding: EdgeInsets.only(top: 8.5, right: 12, left: 12, bottom: 8),
+    maxLines: 1,
+    iconSize: 8,
+    spacing: 5.5,
   );
 
-  RoundedButtonStyle _revertActionButtonStyle = _actionButtonStyle.copyWith(
-    backgroundColor: Color(0xffe9eaf2),
-    buttonTextStyle: TextStyle(
-        fontSize: 13, fontWeight: FontWeight.bold, color: Color(0xff4c4e6e)),
-  );
+  const _DefaultStyle({
+    double cardCornerRadius,
+    Color cardBackgroundColor,
+    EdgeInsets cardContentPadding,
+    TextStyle stageNumberTextStyle,
+    TextStyle stageTitleTextStyle,
+    RoundedButtonStyle actionButtonStyle,
+    DogTagStyle stageTagStyle,
+  });
+}
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
+const StageCardStyle _defaultStyle = const _DefaultStyle();
+
+class StageCard extends StatelessWidget {
+  static final int _maxLines = 1;
+  static final double _titleHeightSeparator = 2;
+  static final int _titleFlexValue = 3;
+  final StageCardViewModel _viewModel;
+  final StageCardStyle _style;
+
+  const StageCard({
+    Key key,
+    @required StageCardViewModel viewModel,
+    StageCardStyle style = _defaultStyle,
+  })  : this._viewModel = viewModel,
+        this._style = style,
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(widget._style.cardCornerRadius),
-          color: widget._style.cardBackgroundColor),
+          borderRadius: BorderRadius.circular(_style.cardCornerRadius),
+          color: _style.cardBackgroundColor),
       child: Padding(
-        padding: widget._style.cardContentPadding,
+        padding: _style.cardContentPadding,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      //TODO replace string by viewModel
-                      'Stage 2',
-                      style: widget._style.stageNumberTextStyle,
-                    ),
-                    SizedBox(
-                      height: 2,
-                    ),
-                    Text(
-                      //TODO replace string by viewModel
-                      'Planting',
-                      style: widget._style.stageTitleTextStyle,
-                    ),
-                  ],
+                Expanded(
+                  flex: _titleFlexValue,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        _viewModel.stageNumber,
+                        style: _style.stageNumberTextStyle,
+                        maxLines: _maxLines,
+                      ),
+                      SizedBox(
+                        height: _titleHeightSeparator,
+                      ),
+                      Text(
+                        _viewModel.stageTitle,
+                        style: _style.stageTitleTextStyle,
+                        maxLines: _maxLines,
+                      ),
+                    ],
+                  ),
                 ),
                 DogTag(
                   viewModel: DogTagViewModel(
-                    title: 'Complete',
-                  ),
-                  style: DogTagStyle.defaultStyle().copyWith(
-                    backgroundColor: Color(0xff24d900),
-                    titleTextStyle: TextStyle(
-                        color: Color(0xffffffff),
-                        fontSize: 11,
-                        fontWeight: FontWeight.bold),
-                  ),
+                      title: _viewModel.stageStatusTitle,
+                      icon: _viewModel.dogTagIcon),
+                  style: _style.stageTagStyle,
                 ),
               ],
             ),
             RoundedButton(
               viewModel: RoundedButtonViewModel(
-                  title: 'Revert to In Progress', onTap: () {}),
-              style: _actionButtonStyle,
+                  title: _viewModel.actionButtonText,
+                  onTap: _viewModel.actionButton),
+              style: _style.actionButtonStyle,
             )
           ],
         ),

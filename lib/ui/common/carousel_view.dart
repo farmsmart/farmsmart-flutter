@@ -1,41 +1,26 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import 'stage_card.dart';
-
-class CarouselView extends StatefulWidget {
-  @override
-  _CarouselViewState createState() => _CarouselViewState();
+class _DefaultConstants {
+  static const int _initialPage = 0;
+  static const double _viewPortFraction = 0.8;
 }
 
-class _CarouselViewState extends State<CarouselView> {
+class CarouselView extends StatelessWidget {
+  final List<Widget> children;
+  final double viewPortFraction;
+  final int initialPage;
+
+  const CarouselView({
+    @required this.children,
+    this.viewPortFraction = _DefaultConstants._viewPortFraction,
+    this.initialPage = _DefaultConstants._initialPage,
+  });
+
   @override
   Widget build(BuildContext context) {
     return PageView(
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: StageCard(),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: StageCard(),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: StageCard(),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: StageCard(),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: StageCard(),
-        ),
-      ],
-      controller: PageController(viewportFraction: 0.8, initialPage: 0),
+      children: children,
+      controller: PageController(viewportFraction: viewPortFraction, initialPage: initialPage),
     );
-    //onPagechanged
   }
 }
