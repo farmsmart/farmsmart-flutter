@@ -13,9 +13,9 @@ class StageCardStyles {
           ),
         ),
         stageTagStyle: _defaultDogTagStyle.copyWith(
-          backgroundColor: Color(0xffffffff),
+          backgroundColor: Color(0xffb7b8c9),
           titleTextStyle: TextStyle(
-              color: Color(0xffb7b8c9),
+              color: Color(0xffffffff),
               fontSize: 11,
               fontWeight: FontWeight.bold),
         ));
@@ -95,7 +95,7 @@ class StageCardStyles {
     titleTextStyle: TextStyle(
         color: Color(0xffffffff), fontSize: 11, fontWeight: FontWeight.bold),
     borderRadius: BorderRadius.all(Radius.circular(20.0)),
-    edgePadding: EdgeInsets.only(top: 8.5, right: 12, left: 12, bottom: 8),
+    edgePadding: EdgeInsets.only(top: 8, right: 12, left: 12, bottom: 8),
     maxLines: 1,
     iconSize: 8,
     spacing: 5.5,

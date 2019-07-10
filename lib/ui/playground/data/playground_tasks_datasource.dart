@@ -99,17 +99,33 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
           height: 162,
           child: CarouselView(
             children: <Widget>[
-              StageCard(
-                viewModel: MockStageCardViewModel.buildCompleteState(),
-                style: StageCardStyles.getCompleteStageStyle(),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: StageCard(
+                  viewModel: MockStageCardViewModel.buildCompleteState(),
+                  style: StageCardStyles.getCompleteStageStyle(),
+                ),
               ),
-              StageCard(
-                viewModel: MockStageCardViewModel.buildInProgressState(),
-                style: StageCardStyles.getInProgressStageStyle(),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: StageCard(
+                  viewModel: MockStageCardViewModel.buildInProgressState(),
+                  style: StageCardStyles.getInProgressStageStyle(),
+                ),
               ),
-              StageCard(
-                viewModel: MockStageCardViewModel.buildUpcomingState(),
-                style: StageCardStyles.getUpcomingStageStyle(),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: StageCard(
+                  viewModel: MockStageCardViewModel.buildUpcomingState(),
+                  style: StageCardStyles.getUpcomingStageStyle(),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: StageCard(
+                  viewModel: MockStageCardViewModel.buildRandom(),
+                  style: StageCardStyles.getUpcomingStageStyle(),
+                ),
               ),
             ],
           ),
@@ -117,8 +133,11 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
       ),
       PlaygroundWidget(
         title: 'TASK FARM-278 Card view',
-        child: StageCard(
-          viewModel: MockStageCardViewModel.buildCompleteState(),
+        child: Container(
+          height: 162,
+          child: StageCard(
+            viewModel: MockStageCardViewModel.buildCompleteState(),
+          ),
         ),
       ),
       /* Template

@@ -8,7 +8,7 @@ class MockStageCardViewModel {
       stageNumber: _mockStage.random(),
       stageTitle: _mockTitle.random(),
       actionButton: () {},
-      actionButtonText: _mockActionButtonText.random(),
+      actionButtonText: 'Revert to In Progress',
       stageStatusTitle: 'Upcoming'
     );
   }
@@ -18,7 +18,7 @@ class MockStageCardViewModel {
         stageNumber: _mockStage.random(),
         stageTitle: _mockTitle.random(),
         actionButton: () {},
-        actionButtonText: _mockActionButtonText.random(),
+        actionButtonText: 'Mark as Complete',
         stageStatusTitle: 'In Progress'
     );
   }
@@ -29,8 +29,18 @@ class MockStageCardViewModel {
         stageTitle: _mockTitle.random(),
         dogTagIcon: Icons.check,
         actionButton: () {},
-        actionButtonText: _mockActionButtonText.random(),
+        actionButtonText: 'Revert to In Progress',
         stageStatusTitle: 'Complete'
+    );
+  }
+
+  static StageCardViewModel buildRandom() {
+    return StageCardViewModel(
+        stageNumber: _mockLargeStrings.random(),
+        stageTitle: _mockLargeStrings.random(),
+        actionButton: () {},
+        actionButtonText: _mockActionButtonText.random(),
+        stageStatusTitle: _mockStageStatus.random()
     );
   }
 }
@@ -48,6 +58,11 @@ MockString _mockStage = MockString(library: [
   "Stage 2 ",
   "Stage 3 ",
   "Stage 4 ",
+]);
+
+MockString _mockLargeStrings = MockString(library: [
+  "Very large text to test the limits  ",
+  "Large text to test the limits limits limits limits ",
 ]);
 
 MockString _mockStageStatus = MockString(library: [
