@@ -57,7 +57,9 @@ class PlayGroundAtomDataSource implements PlaygroundDataSource {
       ActionSheetListItem(
           viewModel:
               MockActionSheetViewModel.buildWithCheckBox().actions.first),
-      CircularProgress(viewModel: MockCircularProgressViewModel.build()),
+      CircularProgress(
+        viewModel: MockCircularProgressViewModel.buildWIthImage(),
+      )
     ];
   }
 }
