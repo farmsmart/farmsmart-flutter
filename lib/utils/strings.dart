@@ -3,7 +3,6 @@
 class Strings {
 
   static String addCropButtonText = "Add Another Crop";
-  static String shareArticleText = "Check out this article from the FarmSmart mobile app \n ";
 
   static String emptyString = "";
   static String errorString = "Error";
