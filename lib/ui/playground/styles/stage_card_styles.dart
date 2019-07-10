@@ -8,7 +8,7 @@ class StageCardStyles {
           backgroundColor: Color(0xff24d900),
           buttonTextStyle: TextStyle(
             fontSize: 13,
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w500,
             color: Color(0xffffffff),
           ),
         ),
@@ -27,7 +27,7 @@ class StageCardStyles {
           backgroundColor: Color(0xff24d900),
           buttonTextStyle: TextStyle(
             fontSize: 13,
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w500,
             color: Color(0xffffffff),
           ),
         ),
@@ -46,7 +46,7 @@ class StageCardStyles {
           backgroundColor: Color(0xffe9eaf2),
           buttonTextStyle: TextStyle(
             fontSize: 13,
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w500,
             color: Color(0xff4c4e6e),
           ),
         ),
@@ -79,7 +79,7 @@ class StageCardStyles {
 
   static RoundedButtonStyle _defaultRoundedButtonStyle = RoundedButtonStyle(
     backgroundColor: Color(0xff24d900),
-    borderRadius: BorderRadius.all(Radius.circular(16)),
+    borderRadius: BorderRadius.all(Radius.circular(8)),
     buttonTextStyle: TextStyle(
         fontSize: 13, fontWeight: FontWeight.bold, color: Color(0xffffffff)),
     iconEdgePadding: 5,
@@ -94,7 +94,7 @@ class StageCardStyles {
     backgroundColor: Color(0xff24d900),
     titleTextStyle: TextStyle(
         color: Color(0xffffffff), fontSize: 11, fontWeight: FontWeight.bold),
-    borderRadius: BorderRadius.all(Radius.circular(20.0)),
+    borderRadius: BorderRadius.all(Radius.circular(14.0)),
     edgePadding: EdgeInsets.only(top: 8, right: 12, left: 12, bottom: 8),
     maxLines: 1,
     iconSize: 8,
