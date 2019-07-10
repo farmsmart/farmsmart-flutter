@@ -5,6 +5,7 @@ import 'package:farmsmart_flutter/ui/mockData/MockRoundedButtonViewModel.dart';
 import 'package:farmsmart_flutter/ui/profitloss/RecordAmountListItem.dart';
 import 'package:farmsmart_flutter/ui/profitloss/RecordAmountHeader.dart';
 import 'package:farmsmart_flutter/ui/profitloss/RecordAmountListItem.dart';
+import 'package:farmsmart_flutter/ui/profitloss/RecordAmountListItemStyles.dart';
 import 'package:farmsmart_flutter/utils/strings.dart';
 import 'package:flutter/material.dart';
 
@@ -71,7 +72,7 @@ class RecordAmount extends StatelessWidget {
                 "assets/icons/detail_icon_description.png",
                 "Description (optional)...",
                 arrow: "assets/icons/chevron.png"),
-            style: biggerCellStyle),
+            style: RecordAmountListItemStyles.biggerStyle),
         Padding(
           padding: const EdgeInsets.all(32.0),
           child: Row(

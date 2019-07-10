@@ -19,7 +19,7 @@ class RecordAmountListItemViewModel {
       this.selectedCrop});
 }
 
-abstract class RecordAmountListItemStyle {
+class RecordAmountListItemStyle {
   final Color actionItemBackgroundColor;
 
   final TextStyle titleTextStyle;
@@ -39,7 +39,7 @@ abstract class RecordAmountListItemStyle {
 
   final int maxLines;
 
-  RecordAmountListItemStyle(
+  const RecordAmountListItemStyle({
       this.actionItemBackgroundColor,
       this.titleTextStyle,
       this.pendingDetailTextStyle,
@@ -52,87 +52,8 @@ abstract class RecordAmountListItemStyle {
       this.iconHeight,
       this.iconLineSpace,
       this.detailTextSpacing,
-      this.maxLines);
+      this.maxLines});
 
-  RecordAmountListItemStyle copyWith(
-      {Color actionItemBackgroundColor,
-      TextStyle titleTextStyle,
-      TextStyle pendingDetailTextStyle,
-      TextStyle detailTextStyle,
-      EdgeInsets actionItemEdgePadding,
-      EdgeInsets cardMargins,
-      CrossAxisAlignment itemAlignment,
-      double actionItemElevation,
-      double actionItemHeight,
-      double iconHeight,
-      double iconLineSpace,
-      double detailTextSpacing,
-      int maxLines});
-}
-
-class _DefaultStyle implements RecordAmountListItemStyle {
-  final Color actionItemBackgroundColor;
-
-  final TextStyle titleTextStyle;
-  final TextStyle pendingDetailTextStyle;
-  final TextStyle detailTextStyle;
-
-  final EdgeInsets actionItemEdgePadding;
-  final EdgeInsets cardMargins;
-
-  final double actionItemElevation;
-  final CrossAxisAlignment itemAlignment;
-
-  final double actionItemHeight;
-  final double iconHeight;
-  final double iconLineSpace;
-  final double detailTextSpacing;
-
-  final int maxLines;
-
-  const _DefaultStyle(
-      {Color actionItemBackgroundColor,
-      TextStyle titleTextStyle,
-      TextStyle pendingDetailTextStyle,
-      TextStyle detailTextStyle,
-      EdgeInsets actionItemEdgePadding,
-      EdgeInsets cardMargins,
-      CrossAxisAlignment itemAlignment,
-      double actionItemElevation,
-      double actionItemHeight,
-      double iconHeight,
-      double iconLineSpace,
-      double detailTextSpacing,
-      int maxLines})
-      : this.actionItemBackgroundColor =
-            actionItemBackgroundColor ?? const Color(0x00000000),
-        this.titleTextStyle = titleTextStyle ??
-            const TextStyle(
-                fontSize: 17,
-                fontWeight: FontWeight.w400,
-                color: Color(0xFF1a1b46)),
-        this.pendingDetailTextStyle = pendingDetailTextStyle ??
-            const TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.normal,
-                color: Color(0x4c767690)),
-        this.detailTextStyle = detailTextStyle ??
-            const TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.normal,
-                color: Color(0xff767690)),
-        this.actionItemEdgePadding =
-            actionItemEdgePadding ?? const EdgeInsets.symmetric(horizontal: 32),
-        this.cardMargins = cardMargins ?? const EdgeInsets.all(0),
-        this.itemAlignment = itemAlignment ?? CrossAxisAlignment.center,
-        this.actionItemElevation = actionItemElevation ?? 0,
-        this.actionItemHeight = actionItemHeight ?? 70,
-        this.iconHeight = iconHeight ?? 20,
-        this.iconLineSpace = iconLineSpace ?? 22,
-        this.detailTextSpacing = detailTextSpacing ?? 13,
-        this.maxLines = maxLines ?? 5;
-
-  @override
   RecordAmountListItemStyle copyWith(
       {Color actionItemBackgroundColor,
       TextStyle titleTextStyle,
@@ -147,33 +68,72 @@ class _DefaultStyle implements RecordAmountListItemStyle {
       double iconLineSpace,
       double detailTextSpacing,
       int maxLines}) {
-    return _DefaultStyle(
-        actionItemBackgroundColor:
-            actionItemBackgroundColor ?? this.actionItemBackgroundColor,
-        titleTextStyle: titleTextStyle ?? this.titleTextStyle,
-        pendingDetailTextStyle:
-            pendingDetailTextStyle ?? this.pendingDetailTextStyle,
-        detailTextStyle: detailTextStyle ?? this.detailTextStyle,
-        actionItemEdgePadding:
-            actionItemEdgePadding ?? this.actionItemEdgePadding,
-        cardMargins: cardMargins ?? this.cardMargins,
-        itemAlignment: itemAlignment ?? this.itemAlignment,
-        actionItemElevation: actionItemElevation ?? this.actionItemElevation,
-        actionItemHeight: actionItemHeight ?? this.actionItemHeight,
-        detailTextSpacing: detailTextSpacing ?? this.detailTextSpacing,
-        maxLines: maxLines ?? this.maxLines);
+    return RecordAmountListItemStyle(
+      actionItemBackgroundColor:
+      actionItemBackgroundColor ?? this.actionItemBackgroundColor,
+      titleTextStyle: titleTextStyle ?? this.titleTextStyle,
+      pendingDetailTextStyle:
+      pendingDetailTextStyle ?? this.pendingDetailTextStyle,
+      detailTextStyle: detailTextStyle ?? this.detailTextStyle,
+      actionItemEdgePadding:
+      actionItemEdgePadding ?? this.actionItemEdgePadding,
+      cardMargins: cardMargins ?? this.cardMargins,
+      itemAlignment: itemAlignment ?? this.itemAlignment,
+      actionItemElevation: actionItemElevation ?? this.actionItemElevation,
+      actionItemHeight: actionItemHeight ?? this.actionItemHeight,
+      iconHeight: iconHeight ?? this.iconHeight,
+      iconLineSpace: iconLineSpace ?? this.iconLineSpace,
+      detailTextSpacing: detailTextSpacing ?? this.detailTextSpacing,
+      maxLines: maxLines ?? this.maxLines
+    );
   }
 }
 
-const RecordAmountListItemStyle _defaultStyle = const _DefaultStyle();
+class _DefaultStyle extends RecordAmountListItemStyle {
+  final Color actionItemBackgroundColor = const Color(0x00000000);
 
-RecordAmountListItemStyle biggerCellStyle = _defaultStyle.copyWith(
-    detailTextStyle: const TextStyle(
-        fontSize: 17, fontWeight: FontWeight.normal, color: Color(0xff1a1b46)),
-    pendingDetailTextStyle: const TextStyle(
-        fontSize: 17, fontWeight: FontWeight.normal, color: Color(0x4c1a1b46)),
-    actionItemHeight: 150,
-    itemAlignment: CrossAxisAlignment.start);
+  final TextStyle titleTextStyle = const TextStyle(
+      fontSize: 17,
+      fontWeight: FontWeight.w400,
+      color: Color(0xFF1a1b46));
+  final TextStyle pendingDetailTextStyle =const TextStyle(
+      fontSize: 15,
+      fontWeight: FontWeight.normal,
+      color: Color(0x4c767690));
+  final TextStyle detailTextStyle = const TextStyle(
+      fontSize: 15,
+      fontWeight: FontWeight.normal,
+      color: Color(0xff767690));
+
+  final EdgeInsets actionItemEdgePadding = const EdgeInsets.symmetric(horizontal: 32);
+  final EdgeInsets cardMargins = const EdgeInsets.all(0);
+
+  final double actionItemElevation = 0;
+  final CrossAxisAlignment itemAlignment = CrossAxisAlignment.center;
+
+  final double actionItemHeight = 70;
+  final double iconHeight = 20;
+  final double iconLineSpace = 22;
+  final double detailTextSpacing = 13;
+
+  final int maxLines = 5;
+
+  const _DefaultStyle({Color actionItemBackgroundColor,
+    TextStyle titleTextStyle,
+    TextStyle pendingDetailTextStyle,
+    TextStyle detailTextStyle,
+    EdgeInsets actionItemEdgePadding,
+    EdgeInsets cardMargins,
+    CrossAxisAlignment itemAlignment,
+    double actionItemElevation,
+    double actionItemHeight,
+    double iconHeight,
+    double iconLineSpace,
+    double detailTextSpacing,
+    int maxLines});
+}
+
+const RecordAmountListItemStyle _defaultStyle = const _DefaultStyle();
 
 class RecordAmountListItem extends StatefulWidget {
   final RecordAmountListItemStyle _style;
