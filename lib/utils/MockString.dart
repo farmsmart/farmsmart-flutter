@@ -36,4 +36,13 @@ class MockString {
     int maxSupported = 1 << 32;
     return _rand.nextInt(maxSupported).toString();
   }
+
+  List<String> list({int limit = 0}) {
+      List<String> strings = [];
+      final generationCount = (limit == 0) ? _rand.nextInt(_library.length) : limit;
+      for (var i = 0; i < generationCount; i++) {
+        strings.add(random());
+      }
+      return strings;
+  }
 }

@@ -18,7 +18,8 @@ class ImageEntityFields {
 
 class FlamelinkImageEntity extends ImageEntity {
   final FlameLink _cms;
-  FlamelinkImageEntity(FlameLink cms, int width, int height, String path, List<ImageEntity> otherSizes) : this._cms = cms, super(width, height, path, null, otherSizes) {
+  final List<ImageEntity> otherSizes;
+  FlamelinkImageEntity(FlameLink cms, int width, int height, String path, List<ImageEntity> otherSizes) : this._cms = cms, this.otherSizes = otherSizes, super(width, height, path, null) {
     this.urlProvider = FlameLinkImageProvider(_cms, this);
   }
 } 
@@ -39,7 +40,7 @@ ImageEntity _transform(FlameLink cms, DocumentSnapshot snapshot) {
 class FlameLinkImageProvider implements ImageURLProvider {
   final FlameLink _cms;
   final ImageEntity _entity;
-  FlameLinkImageProvider(FlameLink cms, ImageEntity entity) : _cms = cms, _entity = entity;
+  FlameLinkImageProvider(FlameLink cms, FlamelinkImageEntity entity) : _cms = cms, _entity = entity;
 
   @override
   Future<String> urlToFit({double width, double height}) {

@@ -1,11 +1,14 @@
-// Maybe we can separate ui and data model with this class.
-
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:farmsmart_flutter/data/model/EntityCollectionInterface.dart';
+import 'package:farmsmart_flutter/data/model/ImageEntity.dart';
+import 'package:farmsmart_flutter/data/model/ImageURLProvider.dart';
+import 'package:farmsmart_flutter/data/model/article_entity.dart';
 import 'package:farmsmart_flutter/data/model/stage_entity.dart';
 import 'package:farmsmart_flutter/model/enums.dart';
 import 'package:farmsmart_flutter/data/model/entities_const.dart';
 
 class CropEntity {
+  String id;
   List<String> companionPlants;
   CropComplexity complexity;
   String content;
@@ -23,8 +26,11 @@ class CropEntity {
   Status status;
   String summary;
   LoHi waterRequirement;
+  EntityCollection<ArticleEntity> stageArticles;
+  EntityCollection<ImageEntity> images;
 
   CropEntity({
+    this.id,
     this.companionPlants,
     this.complexity,
     this.content,
@@ -46,6 +52,7 @@ class CropEntity {
 
   factory CropEntity.cropFromDocument(DocumentSnapshot cropDocument) =>
       CropEntity(
+        id: cropDocument.documentID,
         companionPlants: extractListOfString(cropDocument, COMPANION_PLANTS),
         complexity: extractComplexity(cropDocument),
         content: (cropDocument.data[CONTENT] != null) ? cropDocument.data[CONTENT] : "",
@@ -120,4 +127,21 @@ LoHi extractWaterRequirements(DocumentSnapshot document) {
     return loHiValues.map[document.data[WATER_REQUIREMENT]];
   }
   return null;
+}
+
+// LH this is to make getting the main crop image easier
+class CropImageProvider implements ImageURLProvider {
+  final CropEntity _crop;
+  CropImageProvider(CropEntity crop) : _crop = crop;
+  @override
+  Future<String> urlToFit({double width, double height}) {
+    if ( _crop.images == null)
+    {
+      return Future.value(null);
+    }
+    return _crop.images.getEntities(limit: 1).then((imageEntities) {
+      // NB: we assume the first image is the hero
+      return imageEntities.first.urlProvider.urlToFit(width: width,height: height);
+    });
+  }
 }
