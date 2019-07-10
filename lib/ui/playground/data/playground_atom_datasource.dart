@@ -1,4 +1,4 @@
-import 'package:farmsmart_flutter/ui/profitloss/RecordAmountDate.dart';
+import 'package:farmsmart_flutter/ui/profitloss/RecordAmountListItem.dart';
 import 'package:farmsmart_flutter/ui/profitloss/RecordAmountHeader.dart';
 import 'package:farmsmart_flutter/data/bloc/article/ArticleDetailTransformer.dart';
 import 'package:farmsmart_flutter/data/bloc/article/ArticleListItemViewModelTransformer.dart';
@@ -51,19 +51,19 @@ class PlayGroundAtomDataSource implements PlaygroundDataSource {
       RecordAmountHeader(
           viewModel: RecordAmountHeaderViewModel("00"),
           style: RecordAmountHeaderStyle.defaultSaleStyle()),
-      RecordAmountPicker(
-          viewModel: RecordAmountPickerViewModel(
+      RecordAmountListItem(
+          viewModel: RecordAmountListItemViewModel(
               "assets/icons/detail_icon_date.png",
-              "Date",
               "Today",
-              "assets/icons/chevron.png",
+              title: "Date",
+              arrow: "assets/icons/chevron.png",
               selectedDate: DateTime.now())),
-      RecordAmountPicker(
-          viewModel: RecordAmountPickerViewModel(
+      RecordAmountListItem(
+          viewModel: RecordAmountListItemViewModel(
               "assets/icons/detail_icon_date.png",
-              "Date",
               "Today",
-              "assets/icons/chevron.png",
+              title: "Date",
+              arrow: "assets/icons/chevron.png",
               listOfCrops: [
             "Okra",
             "Tomatoes",

@@ -1,6 +1,7 @@
 import 'package:farmsmart_flutter/model/loading_status.dart';
 import 'package:farmsmart_flutter/ui/playground/playground_widget.dart';
 import 'package:farmsmart_flutter/ui/profitloss/RecordAmount.dart';
+import 'package:farmsmart_flutter/ui/profitloss/RecordAmountHeader.dart';
 import 'package:farmsmart_flutter/ui/profitloss/RecordAmountListItem.dart';
 import 'package:farmsmart_flutter/data/bloc/article/ArticleListProvider.dart';
 import 'package:farmsmart_flutter/data/repositories/article/implementation/MockArticlesRepository.dart';
@@ -74,11 +75,11 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
                 LoadingStatus.SUCCESS,
                 [
                   RecordAmountListItemViewModel(
-                      "assets/icons/detail_icon_date.png", "Date",
-                      detail: "Today", arrow: "assets/icons/chevron.png"),
+                      "assets/icons/detail_icon_date.png",
+                      "Today", arrow: "assets/icons/chevron.png", title: "Date"),
                   RecordAmountListItemViewModel(
-                      "assets/icons/detail_icon_best_soil.png", "Crop",
-                      detail: "Tomatoes", arrow: "assets/icons/chevron.png"),
+                      "assets/icons/detail_icon_best_soil.png",
+                      "Tomatoes", arrow: "assets/icons/chevron.png", title: "Crop"),
                   RecordAmountListItemViewModel(
                       "assets/icons/detail_icon_description.png",
                       "Description (optional)"),

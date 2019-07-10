@@ -1,192 +1,270 @@
-import 'package:farmsmart_flutter/ui/common/ListDivider.dart';
 import 'package:flutter/material.dart';
-
-enum CellType {
-  pickDate,
-  pickCrop,
-  addText
-}
+import 'package:flutter/widgets.dart';
+import 'package:intl/intl.dart';
 
 class RecordAmountListItemViewModel {
   String icon;
   String title;
   String detail;
   String arrow;
-  CellType cellType;
+  DateTime selectedDate;
+  List<String> listOfCrops = [];
+  String selectedCrop;
 
-  RecordAmountListItemViewModel(this.icon, this.title, {this.detail, this.arrow});
+  RecordAmountListItemViewModel(this.icon, this.detail,
+      {this.arrow, this.title, this.selectedDate, this.listOfCrops, this.selectedCrop});
 }
 
-class RecordAmountListItemStyle {
+abstract class RecordAmountListItemStyle {
   final Color actionItemBackgroundColor;
 
   final TextStyle titleTextStyle;
   final TextStyle pendingTitleTextStyle;
   final TextStyle detailTextStyle;
-  final TextStyle pendingDetailTextStyle;
 
   final EdgeInsets actionItemEdgePadding;
 
-  final double actionItemHeight;
-  final double iconLineSpace;
   final double actionItemElevation;
+
+  final double actionItemHeight;
   final double iconHeight;
+  final double iconLineSpace;
 
-  final int maxLines;
+  RecordAmountListItemStyle(
+      this.actionItemBackgroundColor,
+      this.titleTextStyle,
+      this.pendingTitleTextStyle,
+      this.detailTextStyle,
+      this.actionItemEdgePadding,
+      this.actionItemElevation,
+      this.actionItemHeight,
+      this.iconHeight,
+      this.iconLineSpace);
 
-  RecordAmountListItemStyle({this.actionItemBackgroundColor, this.titleTextStyle,
-      this.pendingTitleTextStyle, this.detailTextStyle,
-      this.pendingDetailTextStyle, this.actionItemEdgePadding,
-      this.actionItemHeight, this.iconLineSpace, this.actionItemElevation,
-      this.iconHeight, this.maxLines});
+  RecordAmountListItemStyle copyWith(
+      {Color actionItemBackgroundColor,
+      TextStyle titleTextStyle,
+      TextStyle pendingTitleTextStyle,
+      TextStyle detailTextStyle,
+      EdgeInsets actionItemEdgePadding,
+      double actionItemElevation,
+      double actionItemHeight,
+      double iconHeight,
+      double iconLineSpace});
+}
 
-  factory RecordAmountListItemStyle.defaultStyle() {
-    return RecordAmountListItemStyle(
-      actionItemBackgroundColor: const Color(0x00000000),
-      titleTextStyle: const TextStyle(fontSize: 17, fontWeight: FontWeight.normal, color: Color(0xFF1a1b46)),
-      pendingTitleTextStyle: const TextStyle(fontSize: 17, fontWeight: FontWeight.normal, color: Color(0xFF767690)),
-      detailTextStyle: const TextStyle(fontSize: 15, fontWeight: FontWeight.normal, color: Color(0x4c767690)),
-      pendingDetailTextStyle: const TextStyle(fontSize: 15, fontWeight: FontWeight.normal, color: Color(0xFF767690)),
-      actionItemEdgePadding: const EdgeInsets.symmetric(horizontal: 32),
-      actionItemHeight: 70,
-      iconLineSpace: 22,
-      actionItemElevation: 0,
-      iconHeight: 20,
-      maxLines: 1,
-    );
-  }
+class _DefaultStyle implements RecordAmountListItemStyle {
+  final Color actionItemBackgroundColor = const Color(0x00000000);
 
-  factory RecordAmountListItemStyle.fillStype() {
-    return RecordAmountListItemStyle.defaultStyle().copyWith(
-      actionItemHeight: 168,
-    );
-  }
+  final TextStyle titleTextStyle = const TextStyle(
+      fontSize: 17, fontWeight: FontWeight.w400, color: Color(0xFF1a1b46));
+  final TextStyle pendingTitleTextStyle = const TextStyle(
+      fontSize: 15, fontWeight: FontWeight.normal, color: Color(0x4c767690));
+  final TextStyle detailTextStyle = const TextStyle(
+      fontSize: 15, fontWeight: FontWeight.normal, color: Color(0xff767690));
 
+  final EdgeInsets actionItemEdgePadding =
+      const EdgeInsets.symmetric(horizontal: 32);
 
-  RecordAmountListItemStyle copyWith({Color actionItemBackgroundColor, TextStyle titleTextStyle,
-    TextStyle pendingTitleTextStyle, TextStyle detailTextStyle,
-    TextStyle pendingDetailTextStyle, EdgeInsets actionItemEdgePadding,
-    double actionItemHeight, double iconLineSpace, double actionItemElevation,
-    double iconHeight, int maxLines}) {
+  final double actionItemElevation = 0;
 
-    return RecordAmountListItemStyle(
-        actionItemBackgroundColor: actionItemBackgroundColor ?? this.actionItemBackgroundColor,
+  final double actionItemHeight = 70;
+  final double iconHeight = 20;
+  final double iconLineSpace = 22;
+
+  const _DefaultStyle(
+      {Color actionItemBackgroundColor,
+      TextStyle titleTextStyle,
+      TextStyle pendingTitleTextStyle,
+      TextStyle detailTextStyle,
+      EdgeInsets actionItemEdgePadding,
+      double actionItemElevation,
+      double actionItemHeight,
+      double iconHeight,
+      double iconLineSpace});
+
+  @override
+  RecordAmountListItemStyle copyWith(
+      {Color actionItemBackgroundColor,
+      TextStyle titleTextStyle,
+      TextStyle pendingTitleTextStyle,
+      TextStyle detailTextStyle,
+      EdgeInsets actionItemEdgePadding,
+      double actionItemElevation,
+      double actionItemHeight,
+      double iconHeight,
+      double iconLineSpace}) {
+    return _DefaultStyle(
+        actionItemBackgroundColor:
+            actionItemBackgroundColor ?? this.actionItemBackgroundColor,
         titleTextStyle: titleTextStyle ?? this.titleTextStyle,
-        pendingTitleTextStyle: pendingTitleTextStyle ?? this.pendingTitleTextStyle,
+        pendingTitleTextStyle:
+            pendingTitleTextStyle ?? this.pendingTitleTextStyle,
         detailTextStyle: detailTextStyle ?? this.detailTextStyle,
-        pendingDetailTextStyle: pendingDetailTextStyle ?? this.pendingDetailTextStyle,
-        actionItemEdgePadding: actionItemEdgePadding ?? this.actionItemEdgePadding,
-        actionItemHeight: actionItemHeight ?? this.actionItemHeight,
-        iconLineSpace: iconLineSpace ?? this.iconLineSpace,
+        actionItemEdgePadding:
+            actionItemEdgePadding ?? this.actionItemEdgePadding,
         actionItemElevation: actionItemElevation ?? this.actionItemElevation,
-        iconHeight: iconHeight ?? this.iconHeight,
-        maxLines: maxLines ?? this.maxLines
-    );
+        actionItemHeight: actionItemHeight ?? this.actionItemHeight);
   }
 }
 
+const RecordAmountListItemStyle _defaultStyle = const _DefaultStyle();
 
-class RecordAmountListItem extends StatelessWidget {
-  final RecordAmountListItemViewModel _viewModel;
+RecordAmountListItemStyle biggerStyle = _defaultStyle.copyWith(actionItemHeight: 200);
+
+class RecordAmountListItem extends StatefulWidget {
   final RecordAmountListItemStyle _style;
-  final int _numberOfItems;
-  final int _currentItem;
+  final RecordAmountListItemViewModel _viewModel;
 
-  const RecordAmountListItem({Key key, RecordAmountListItemViewModel viewModel, RecordAmountListItemStyle style, int numberOfActions, int currentAction}) : this._viewModel = viewModel, this._style = style, this._numberOfItems = numberOfActions, this._currentItem = currentAction, super(key: key);
+  const RecordAmountListItem(
+      {Key key,
+      RecordAmountListItemViewModel viewModel,
+      RecordAmountListItemStyle style = _defaultStyle})
+      : this._viewModel = viewModel,
+        this._style = style,
+        super(key: key);
 
-  static Widget _build(RecordAmountListItemStyle style, RecordAmountListItemViewModel viewModel, int numberOfActions, int currentAction) {
+  @override
+  _RecordAmountListItemState createState() => _RecordAmountListItemState();
+}
+
+class _RecordAmountListItemState extends State<RecordAmountListItem> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
         Card(
-          elevation: style.actionItemElevation,
-          color: style.actionItemBackgroundColor,
-          child: InkWell(
-            onTap: () => print("hud"),
+            margin: EdgeInsets.all(0),
+            elevation: 0,
+            color: Color(0x00000000),
             child: Container(
-              padding: style.actionItemEdgePadding,
+              padding: EdgeInsets.symmetric(horizontal: 32),
               alignment: Alignment.center,
-              height: style.actionItemHeight,
+              height: widget._style.actionItemHeight,
               child: Wrap(
                   direction: Axis.horizontal,
                   crossAxisAlignment: WrapCrossAlignment.start,
                   children: <Widget>[
                     Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: _buildActionContent(style, viewModel)
-                    ),
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: _buildCellContent(),
+                    )
                   ]),
-            ),
-          ),
-        ),
-        currentAction == numberOfActions - 1 ? Wrap() : ListDivider.build(), // FIXME: temporal solution for divider
+            ))
       ],
     );
   }
 
-  static List<Widget> _buildActionContent(RecordAmountListItemStyle style, RecordAmountListItemViewModel viewModel) {
-    List<Widget> listBuilder = [];
+  List<Widget> _buildCellContent() {
+    List<Widget> listBuilder = [
+      Image.asset(widget._viewModel.icon, height: widget._style.iconHeight),
+      SizedBox(width: widget._style.iconLineSpace),
+    ];
 
-    if (viewModel.icon != null) {
-        listBuilder.add(Image.asset(viewModel.icon, height: style.iconHeight));
-        listBuilder.add(SizedBox(width: style.iconLineSpace));
+    if (widget._viewModel.selectedDate != null) {
+      listBuilder.add(Text(widget._viewModel.title, style: widget._style.titleTextStyle));
+      listBuilder.add(Expanded(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: <Widget>[
+            InkWell(
+                child: Text(
+                    formatDate(widget._viewModel.selectedDate) ==
+                            formatDate(DateTime.now())
+                        ? "Today"
+                        : formatDate(widget._viewModel.selectedDate),
+                    style: widget._style.detailTextStyle),
+                onTap: () => _selectDate(context)),
+          ],
+        ),
+      ));
+    }
 
-    } if (viewModel.title != null) {
-      if (viewModel.detail == null) {
-        listBuilder.add(Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              TextField(
-                  decoration: InputDecoration.collapsed(hintText: viewModel.title, hintStyle: style.pendingTitleTextStyle),
-                  style: style.titleTextStyle,
-                  //overflow: TextOverflow.ellipsis,
-                  maxLines: 5),
-            ],
-          ),
-        ));
-      } else {
-        listBuilder.add(Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(viewModel.title,
-                  style: style.titleTextStyle,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1),
-            ],
-          ),
-        ));
-      }
-    } if (viewModel.detail != null) {
+    if (widget._viewModel.listOfCrops != null) {
+      listBuilder.add(Text(widget._viewModel.title, style: widget._style.titleTextStyle));
+      listBuilder.add(Expanded(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: <Widget>[
+            DropdownButtonHideUnderline(
+              child: DropdownButton(
+                value: widget._viewModel.selectedCrop,
+                style: widget._style.detailTextStyle,
+                items: getDropDownMenuItems(),
+                onChanged: changeDropDownItem,
+                hint: Text("Select...", style: widget._style.pendingTitleTextStyle),
+                icon: Icon(Icons.lens, size: 0)
+              ),
+            )
+          ],
+        ),
+      ));
+    }
+
+    if (widget._viewModel.selectedDate == null && widget._viewModel.listOfCrops == null) {
       listBuilder.add(Expanded(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: <Widget>[
             TextField(
-                decoration: InputDecoration.collapsed(hintText: viewModel.detail),
-                style: style.detailTextStyle,
-                //overflow: TextOverflow.ellipsis,
-                maxLines: 1),
+              decoration: InputDecoration(
+                  hintText: "Description (optional)...",
+                  hintStyle: widget._style.pendingTitleTextStyle,
+                  border: InputBorder.none,
+                  counterText: ""),
+              textAlign: TextAlign.left,
+              style: widget._style.detailTextStyle,
+              maxLines: 5,
+            ),
           ],
         ),
       ));
-    } if (viewModel.arrow != null) {
-      listBuilder.add(SizedBox(width: style.iconLineSpace));
-      listBuilder.add(Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: <Widget>[
-          Image.asset(viewModel.arrow, height: 13)
-        ],
-      ));
+      return listBuilder;
     }
+
+    listBuilder.add(SizedBox(width: widget._style.iconLineSpace));
+    listBuilder.add(Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: <Widget>[Image.asset(widget._viewModel.arrow, height: 13)]));
+
     return listBuilder;
   }
 
-
-  @override
-  Widget build(BuildContext context) {
-    return _build(_style, _viewModel, _numberOfItems, _currentItem);
+  Future<Null> _selectDate(BuildContext context) async {
+    final DateTime picked = await showDatePicker(
+        context: context,
+        initialDate: widget._viewModel.selectedDate,
+        firstDate: DateTime(2019, 6),
+        lastDate: DateTime(2101));
+    if (picked != null && picked != widget._viewModel.selectedDate)
+      setState(() {
+        widget._viewModel.selectedDate = picked;
+        formatDate(widget._viewModel.selectedDate);
+      });
   }
 
+  String formatDate(DateTime selectedDate) {
+    var formatter = DateFormat('dd MMMM yyyy');
+    String formatted = formatter.format(selectedDate);
+    print(formatted);
+    return formatted;
+  }
+
+  List<DropdownMenuItem<String>> getDropDownMenuItems() {
+    List<DropdownMenuItem<String>> items = new List();
+    for (String crop in widget._viewModel.listOfCrops) {
+      items.add(new DropdownMenuItem(value: crop, child: new Text(crop)));
+    }
+    return items;
+  }
+
+  void changeDropDownItem(String selectedCrop) {
+    setState(() {
+      widget._viewModel.selectedCrop = selectedCrop;
+    });
+  }
 }

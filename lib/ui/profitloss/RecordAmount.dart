@@ -2,7 +2,7 @@ import 'package:farmsmart_flutter/model/loading_status.dart';
 import 'package:farmsmart_flutter/ui/common/ListDivider.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockRoundedButtonViewModel.dart';
-import 'package:farmsmart_flutter/ui/profitloss/RecordAmountDate.dart';
+import 'package:farmsmart_flutter/ui/profitloss/RecordAmountListItem.dart';
 import 'package:farmsmart_flutter/ui/profitloss/RecordAmountHeader.dart';
 import 'package:farmsmart_flutter/ui/profitloss/RecordAmountListItem.dart';
 import 'package:farmsmart_flutter/utils/strings.dart';
@@ -50,38 +50,32 @@ class RecordAmount extends StatelessWidget {
         RecordAmountHeader(
             viewModel: RecordAmountHeaderViewModel(viewModel.amount),
             style: RecordAmountHeaderStyle.defaultSaleStyle()),
-        RecordAmountPicker(
-            viewModel: RecordAmountPickerViewModel(
-                "assets/icons/detail_icon_date.png",
-                "Date",
-                "Today",
-                "assets/icons/chevron.png",
+        RecordAmountListItem(
+            viewModel: RecordAmountListItemViewModel(
+                "assets/icons/detail_icon_date.png", "Today",
+                arrow: "assets/icons/chevron.png",
+                title: "Date",
                 selectedDate: DateTime.now())),
         ListDivider.build(),
-        RecordAmountPicker(
-            viewModel: RecordAmountPickerViewModel(
-                "assets/icons/detail_icon_best_soil.png",
-                "Crop",
-                "Today",
-                "assets/icons/chevron.png",
-              listOfCrops: [
-                "Okra",
-                "Tomatoes",
-                "Potatoes",
-                "Cowpeas",
-                "Sweetcorn",
-                "Cucumber",
-                "Beetroot"
-              ]
-               )),
+        RecordAmountListItem(
+            viewModel: RecordAmountListItemViewModel(
+                "assets/icons/detail_icon_best_soil.png", "Today",
+                arrow: "assets/icons/chevron.png",
+                title: "Crop",
+                listOfCrops: [
+              "Okra",
+              "Tomatoes",
+              "Potatoes",
+              "Cowpeas",
+              "Sweetcorn",
+              "Cucumber",
+              "Beetroot"
+            ])),
         ListDivider.build(),
-        /*RecordAmountPicker(
-            viewModel: RecordAmountPickerViewModel(
-                "assets/icons/detail_icon_date.png",
-                "Date",
-                "Today",
-                "assets/icons/chevron.png",
-                DateTime.now())),*/
+        RecordAmountListItem(
+            viewModel: RecordAmountListItemViewModel(
+                "assets/icons/detail_icon_date.png", "Today",
+                arrow: "assets/icons/chevron.png")),
         Padding(
           padding: const EdgeInsets.all(32.0),
           child: Row(
@@ -97,20 +91,4 @@ class RecordAmount extends StatelessWidget {
       ],
     );
   }
-  
-
-
-    /*return HeaderAndFooterListView.builder(
-        itemCount: viewModel.actions.length,
-        itemBuilder: (BuildContext context, int index) {
-          return RecordAmountListItem(viewModel: viewModel.actions[index],
-              style: index+1 != viewModel.actions.length ? RecordAmountListItemStyle.defaultStyle() : RecordAmountListItemStyle.fillStype(),
-              currentAction: index,
-              numberOfActions: viewModel.actions.length);
-        },
-        physics: ScrollPhysics(),
-        shrinkWrap: true,
-        header: RecordAmountHeader(viewModel: RecordAmountHeaderViewModel(viewModel.amount), style: RecordAmountHeaderStyle.defaultSaleStyle()),
-        footer: RoundedButton(viewModel: RoundedButtonViewModel(title: viewModel.buttonTitle), style: RoundedButtonStyle.largeRoundedButtonStyle())
-    );*/
 }
