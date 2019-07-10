@@ -15,7 +15,7 @@ class MockDogTagViewModel {
   }
   static DogTagViewModel buildWithNegativeNumber() {
     return DogTagViewModel(
-      number: _mockNegativeNumber.random()
+      number: _mockNegativeNumber.random(),
     );
   }
 }

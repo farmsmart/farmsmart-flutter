@@ -4,7 +4,7 @@ import 'package:farmsmart_flutter/model/loading_status.dart';
 import 'package:farmsmart_flutter/ui/profitloss/ProfitLossHeader.dart';
 import 'package:farmsmart_flutter/ui/profitloss/ProfitLossListItem.dart';
 import 'package:farmsmart_flutter/ui/common/Dogtag.dart';
-
+import 'package:farmsmart_flutter/ui/common/DogTagStyles.dart';
 import '../ProfitLossList.dart';
 import 'MockString.dart';
 
@@ -18,7 +18,7 @@ class MockProfitLossListViewModel {
     return ProfitLossListViewModel(
         loadingStatus: LoadingStatus.SUCCESS,
         title: _mockTotalCurrency.random(),
-        detailText: _mockDetailText.random(),
+        detailText: _mockCurrencyText.random(),
         transactions: list
     );
   }
@@ -47,9 +47,18 @@ MockString _mockDetailText = MockString(library: [
   "A Bit Longer day 9000"
 ]);
 
-MockString _mockPositiveCurrencyText = MockString(library: ["255", "0", "2", "300", "450", "25"]);
+MockString _mockCurrencyText = MockString(library: [
+  "Eur",
+  "Usd",
+  "KSh",
+  "RPZ",
+  "EUR",
+  "USD",
+]);
+
+MockString _mockPositiveCurrencyText = MockString(library: ["+255", "0", "+2", "+300", "+450", "+25"]);
 MockString _mockNegativeCurrencyText = MockString(library: ["-255", "-50", "-2", "-300", "-450", "-25"]);
-MockString _mockTotalCurrency = MockString(library: ["99944,999", "99,99", "00000", "254,360", "92" ]);
+MockString _mockTotalCurrency = MockString(library: ["2,150"]);
 
 class MockProfitLossListItemViewModel {
   static ProfitLossListItemViewModel buildPositive() {
@@ -57,7 +66,7 @@ class MockProfitLossListItemViewModel {
         title: _mockTitleText.random(),
         subtitle: _mockTitleText.random(),
         detail: _mockPositiveCurrencyText.random(),
-        style: DogTagStyle.defaultStyle()
+        style: DogTagStyles.positiveStyle()
     );
   }
 
@@ -66,7 +75,7 @@ class MockProfitLossListItemViewModel {
         title: _mockTitleText.random(),
         subtitle: _mockTitleText.random(),
         detail: _mockNegativeCurrencyText.random(),
-        style: DogTagStyle.negativeStyle()
+        style: DogTagStyles.negativeStyle()
     );
   }
 }

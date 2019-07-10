@@ -43,7 +43,7 @@ class ProfitLossItemStyle {
             fontWeight: FontWeight.normal,
             color: Color(0xff1a1b46)),
         edgePadding: const EdgeInsets.only(
-            left: 32.0, top: 26.0, right: 32.0, bottom: 23.5),
+            left: 32.0, top: 21.3, right: 32.0, bottom: 21.3),
         elevation: 0.0,
         detailLineSpace: 20.5,
         maxLines: 1,
@@ -86,6 +86,7 @@ class ProfitLossListItem extends StatelessWidget {
     return GestureDetector(
         onTap: _viewModel.onTap,
         child: Card(
+          margin: EdgeInsets.all(0),
             elevation: _style.elevation,
             child: Column(children: <Widget>[
               Container(
