@@ -21,28 +21,42 @@ class PlayGroundAtomDataSource implements PlaygroundDataSource {
     return [
       //Add your atoms here
       StandardListItem(
-              viewModel: ArticleListItemViewModelTransformer(
-                      detailTransformer:
-                          ArticleDetailViewModelTransformer(
-                              listItemTransformer:
-                                  ArticleListItemViewModelTransformer()))
-                  .transform(from: MockArticle.build())),
-          HeroListItem(
-              viewModel: ArticleListItemViewModelTransformer(
-                      detailTransformer:
-                          ArticleDetailViewModelTransformer(
-                              listItemTransformer:
-                                  ArticleListItemViewModelTransformer()))
-                  .transform(from: MockArticle.build())),
-      RoundedButton(viewModel: MockRoundedButtonViewModel.buildLarge(), style: RoundedButtonStyle.largeRoundedButtonStyle()),
-      RoundedButton(viewModel: MockRoundedButtonViewModel.buildCompact(), style: RoundedButtonStyle.defaultStyle()),
-      RoundedButton(viewModel: MockRoundedButtonViewModel.buildCompact(), style: RoundedButtonStyle.bigRoundedButton()),
-      DogTag(viewModel: MockDogTagViewModel.buildWithText(), style: DogTagStyle.defaultStyle()),
-      DogTag(viewModel: MockDogTagViewModel.buildWithPositiveNumber(), style: DogTagStyle.defaultStyle()),
-      DogTag(viewModel: MockDogTagViewModel.buildWithNegativeNumber(), style: DogTagStyle.negativeStyle()),
-      ActionSheetListItem(viewModel: MockActionSheetViewModel.buildStandard().actions.first),
-      ActionSheetListItem(viewModel: MockActionSheetViewModel.buildWithIcon().actions.first),
-      ActionSheetListItem(viewModel: MockActionSheetViewModel.buildWithCheckBox().actions.first),
+          viewModel: ArticleListItemViewModelTransformer(
+                  detailTransformer: ArticleDetailViewModelTransformer(
+                      listItemTransformer:
+                          ArticleListItemViewModelTransformer()))
+              .transform(from: MockArticle.build())),
+      HeroListItem(
+          viewModel: ArticleListItemViewModelTransformer(
+                  detailTransformer: ArticleDetailViewModelTransformer(
+                      listItemTransformer:
+                          ArticleListItemViewModelTransformer()))
+              .transform(from: MockArticle.build())),
+      RoundedButton(
+          viewModel: MockRoundedButtonViewModel.buildLarge(),
+          style: RoundedButtonStyle.largeRoundedButtonStyle()),
+      RoundedButton(
+          viewModel: MockRoundedButtonViewModel.buildCompact(),
+          style: RoundedButtonStyle.defaultStyle()),
+      RoundedButton(
+          viewModel: MockRoundedButtonViewModel.buildCompact(),
+          style: RoundedButtonStyle.bigRoundedButton()),
+      DogTag(
+          viewModel: MockDogTagViewModel.buildWithText(),
+          style: DogTagStyle.defaultStyle()),
+      DogTag(
+          viewModel: MockDogTagViewModel.buildWithPositiveNumber(),
+          style: DogTagStyle.defaultStyle()),
+      DogTag(
+          viewModel: MockDogTagViewModel.buildWithNegativeNumber(),
+          style: DogTagStyle.negativeStyle()),
+      ActionSheetListItem(
+          viewModel: MockActionSheetViewModel.buildStandard().actions.first),
+      ActionSheetListItem(
+          viewModel: MockActionSheetViewModel.buildWithIcon().actions.first),
+      ActionSheetListItem(
+          viewModel:
+              MockActionSheetViewModel.buildWithCheckBox().actions.first),
       CircularProgress(viewModel: MockCircularProgressViewModel.build()),
     ];
   }

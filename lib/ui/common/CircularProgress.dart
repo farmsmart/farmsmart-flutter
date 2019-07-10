@@ -9,7 +9,8 @@ class CircularProgressViewModel {
   double initialValue;
   List<Widget> content;
 
-  CircularProgressViewModel({@required this.initialValue, @required this.content});
+  CircularProgressViewModel(
+      {@required this.initialValue, @required this.content});
 }
 
 abstract class CircularProgressStyle {
@@ -81,8 +82,7 @@ class CircularProgress extends StatefulWidget {
         super(key: key);
 
   @override
-  _CircularProgressState createState() =>
-      _CircularProgressState();
+  _CircularProgressState createState() => _CircularProgressState();
 }
 
 class _CircularProgressState extends State<CircularProgress> {
@@ -92,8 +92,7 @@ class _CircularProgressState extends State<CircularProgress> {
   @override
   void initState() {
     super.initState();
-    setState(() {
-    });
+    setState(() {});
   }
 
   @override
@@ -111,8 +110,7 @@ class _CircularProgressState extends State<CircularProgress> {
           child: Padding(
             padding: widget._style.innerPadding,
             child: ClipOval(
-              child: Stack(
-                  children: widget._viewModel.content),
+              child: Stack(children: widget._viewModel.content),
             ),
           ),
         ),
