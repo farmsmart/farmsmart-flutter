@@ -6,6 +6,7 @@ import 'package:farmsmart_flutter/ui/discover/HeroListItem.dart';
 import 'package:farmsmart_flutter/ui/discover/StandardListItem.dart';
 import 'package:farmsmart_flutter/ui/common/Dogtag.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
+import 'package:farmsmart_flutter/ui/mockData/MockCircularProgressViewModel.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockDogTagViewModel.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockRoundedButtonViewModel.dart';
 import 'package:farmsmart_flutter/ui/common/ActionSheetListItem.dart';
@@ -19,9 +20,6 @@ class PlayGroundAtomDataSource implements PlaygroundDataSource {
   List<Widget> getList() {
     return [
       //Add your atoms here
-      Text('Atom widget 1'),
-      Card(child: Text('Atom widget 2')),
-      Text('Atom widget 4'),
       StandardListItem(
               viewModel: ArticleListItemViewModelTransformer(
                       detailTransformer:
@@ -44,7 +42,8 @@ class PlayGroundAtomDataSource implements PlaygroundDataSource {
       DogTag(viewModel: MockDogTagViewModel.buildWithNegativeNumber(), style: DogTagStyle.negativeStyle()),
       ActionSheetListItem(viewModel: MockActionSheetViewModel.buildStandard().actions.first),
       ActionSheetListItem(viewModel: MockActionSheetViewModel.buildWithIcon().actions.first),
-      ActionSheetListItem(viewModel: MockActionSheetViewModel.buildWithCheckBox().actions.first)
+      ActionSheetListItem(viewModel: MockActionSheetViewModel.buildWithCheckBox().actions.first),
+      CircularProgress(viewModel: MockCircularProgressViewModel.build()),
     ];
   }
 }

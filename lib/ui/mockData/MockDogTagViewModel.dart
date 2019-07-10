@@ -1,5 +1,6 @@
 import 'package:farmsmart_flutter/ui/common/Dogtag.dart';
 import 'package:farmsmart_flutter/ui/common/MockString.dart';
+import 'package:flutter/material.dart';
 
 
 class MockDogTagViewModel {
@@ -15,7 +16,7 @@ class MockDogTagViewModel {
   }
   static DogTagViewModel buildWithNegativeNumber() {
     return DogTagViewModel(
-      number: _mockNegativeNumber.random()
+      number: _mockNegativeNumber.random(),
     );
   }
 }

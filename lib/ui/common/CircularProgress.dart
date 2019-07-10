@@ -9,7 +9,7 @@ class CircularProgressViewModel {
   double initialValue;
   List<Widget> content;
 
-  CircularProgressViewModel({@required this.initialValue, this.content});
+  CircularProgressViewModel({@required this.initialValue, @required this.content});
 }
 
 abstract class CircularProgressStyle {
