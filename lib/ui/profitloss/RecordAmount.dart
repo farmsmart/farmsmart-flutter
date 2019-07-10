@@ -80,7 +80,8 @@ class RecordAmount extends StatelessWidget {
               Expanded(
                 child: RoundedButton(
                     viewModel: RoundedButtonViewModel(title: "Record Sale"),
-                    style: RoundedButtonStyle.largeRoundedButtonStyle().copyWith(backgroundColor: Color(0xFFe9eaf2))),
+                    style: RoundedButtonStyle.largeRoundedButtonStyle()
+                        .copyWith(backgroundColor: Color(0xFFe9eaf2))),
               ),
             ],
           ),

@@ -20,6 +20,14 @@ class RecordAmountHeaderStyle {
   RecordAmountHeaderStyle({this.hintTextStyle, this.titleTextStyle,
       this.edgePadding, this.height, this.maxLines});
 
+  RecordAmountHeaderStyle copyWith(
+      {TextStyle hintTextStyle, TextStyle titleTextStyle,
+        EdgeInsets edgePadding, double height, int maxLines}) {
+    return RecordAmountHeaderStyle(
+        hintTextStyle: hintTextStyle ?? this.hintTextStyle,
+        titleTextStyle: titleTextStyle ?? this.titleTextStyle);
+  }
+
   factory RecordAmountHeaderStyle.defaultCostStyle() {
     return RecordAmountHeaderStyle(
         hintTextStyle: const TextStyle(
@@ -40,14 +48,6 @@ class RecordAmountHeaderStyle {
         height: 138,
         maxLines: 1
     );
-  }
-
-  RecordAmountHeaderStyle copyWith(
-      {TextStyle hintTextStyle, TextStyle titleTextStyle,
-  EdgeInsets edgePadding, double height, int maxLines}) {
-    return RecordAmountHeaderStyle(
-        hintTextStyle: hintTextStyle ?? this.hintTextStyle,
-        titleTextStyle: titleTextStyle ?? this.titleTextStyle);
   }
 }
 

@@ -39,8 +39,8 @@ class RecordAmountListItemStyle {
 
   final int maxLines;
 
-  const RecordAmountListItemStyle({
-      this.actionItemBackgroundColor,
+  const RecordAmountListItemStyle(
+      {this.actionItemBackgroundColor,
       this.titleTextStyle,
       this.pendingDetailTextStyle,
       this.detailTextStyle,
@@ -69,23 +69,22 @@ class RecordAmountListItemStyle {
       double detailTextSpacing,
       int maxLines}) {
     return RecordAmountListItemStyle(
-      actionItemBackgroundColor:
-      actionItemBackgroundColor ?? this.actionItemBackgroundColor,
-      titleTextStyle: titleTextStyle ?? this.titleTextStyle,
-      pendingDetailTextStyle:
-      pendingDetailTextStyle ?? this.pendingDetailTextStyle,
-      detailTextStyle: detailTextStyle ?? this.detailTextStyle,
-      actionItemEdgePadding:
-      actionItemEdgePadding ?? this.actionItemEdgePadding,
-      cardMargins: cardMargins ?? this.cardMargins,
-      itemAlignment: itemAlignment ?? this.itemAlignment,
-      actionItemElevation: actionItemElevation ?? this.actionItemElevation,
-      actionItemHeight: actionItemHeight ?? this.actionItemHeight,
-      iconHeight: iconHeight ?? this.iconHeight,
-      iconLineSpace: iconLineSpace ?? this.iconLineSpace,
-      detailTextSpacing: detailTextSpacing ?? this.detailTextSpacing,
-      maxLines: maxLines ?? this.maxLines
-    );
+        actionItemBackgroundColor:
+            actionItemBackgroundColor ?? this.actionItemBackgroundColor,
+        titleTextStyle: titleTextStyle ?? this.titleTextStyle,
+        pendingDetailTextStyle:
+            pendingDetailTextStyle ?? this.pendingDetailTextStyle,
+        detailTextStyle: detailTextStyle ?? this.detailTextStyle,
+        actionItemEdgePadding:
+            actionItemEdgePadding ?? this.actionItemEdgePadding,
+        cardMargins: cardMargins ?? this.cardMargins,
+        itemAlignment: itemAlignment ?? this.itemAlignment,
+        actionItemElevation: actionItemElevation ?? this.actionItemElevation,
+        actionItemHeight: actionItemHeight ?? this.actionItemHeight,
+        iconHeight: iconHeight ?? this.iconHeight,
+        iconLineSpace: iconLineSpace ?? this.iconLineSpace,
+        detailTextSpacing: detailTextSpacing ?? this.detailTextSpacing,
+        maxLines: maxLines ?? this.maxLines);
   }
 }
 
@@ -93,19 +92,14 @@ class _DefaultStyle extends RecordAmountListItemStyle {
   final Color actionItemBackgroundColor = const Color(0x00000000);
 
   final TextStyle titleTextStyle = const TextStyle(
-      fontSize: 17,
-      fontWeight: FontWeight.w400,
-      color: Color(0xFF1a1b46));
-  final TextStyle pendingDetailTextStyle =const TextStyle(
-      fontSize: 15,
-      fontWeight: FontWeight.normal,
-      color: Color(0x4c767690));
+      fontSize: 17, fontWeight: FontWeight.w400, color: Color(0xFF1a1b46));
+  final TextStyle pendingDetailTextStyle = const TextStyle(
+      fontSize: 15, fontWeight: FontWeight.normal, color: Color(0x4c767690));
   final TextStyle detailTextStyle = const TextStyle(
-      fontSize: 15,
-      fontWeight: FontWeight.normal,
-      color: Color(0xff767690));
+      fontSize: 15, fontWeight: FontWeight.normal, color: Color(0xff767690));
 
-  final EdgeInsets actionItemEdgePadding = const EdgeInsets.symmetric(horizontal: 32);
+  final EdgeInsets actionItemEdgePadding =
+      const EdgeInsets.symmetric(horizontal: 32);
   final EdgeInsets cardMargins = const EdgeInsets.all(0);
 
   final double actionItemElevation = 0;
@@ -118,19 +112,20 @@ class _DefaultStyle extends RecordAmountListItemStyle {
 
   final int maxLines = 5;
 
-  const _DefaultStyle({Color actionItemBackgroundColor,
-    TextStyle titleTextStyle,
-    TextStyle pendingDetailTextStyle,
-    TextStyle detailTextStyle,
-    EdgeInsets actionItemEdgePadding,
-    EdgeInsets cardMargins,
-    CrossAxisAlignment itemAlignment,
-    double actionItemElevation,
-    double actionItemHeight,
-    double iconHeight,
-    double iconLineSpace,
-    double detailTextSpacing,
-    int maxLines});
+  const _DefaultStyle(
+      {Color actionItemBackgroundColor,
+      TextStyle titleTextStyle,
+      TextStyle pendingDetailTextStyle,
+      TextStyle detailTextStyle,
+      EdgeInsets actionItemEdgePadding,
+      EdgeInsets cardMargins,
+      CrossAxisAlignment itemAlignment,
+      double actionItemElevation,
+      double actionItemHeight,
+      double iconHeight,
+      double iconLineSpace,
+      double detailTextSpacing,
+      int maxLines});
 }
 
 const RecordAmountListItemStyle _defaultStyle = const _DefaultStyle();
