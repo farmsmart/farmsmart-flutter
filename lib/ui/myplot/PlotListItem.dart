@@ -1,4 +1,5 @@
 import 'package:farmsmart_flutter/data/model/crop_entity.dart';
+import 'package:farmsmart_flutter/ui/common/DogTagStyles.dart';
 import 'package:farmsmart_flutter/utils/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:farmsmart_flutter/ui/common/network_image_from_future.dart';
@@ -70,7 +71,7 @@ abstract class PlotListItemStyle {
       this.maxLineText);
 }
 
-class _defaultStyle implements PlotListItemStyle {
+class _DefaultStyle implements PlotListItemStyle {
   final Color primaryColor = const Color(0xff24d900);
   final Color dividerColor = const Color(0xfff5f8fa);
   final Color detailTextBackgroundColor = const Color(0x1425df0c);
@@ -93,19 +94,17 @@ class _defaultStyle implements PlotListItemStyle {
 
   final double elevation = 0.0;
   final double imageSize = 80.0;
-
-  //FIXME: CHeckThat!
   final double headingLineSpace = 5;
   final double detailLineSpace = 12;
   final double imageLineSpace = 20;
   final int maxLineText = 1;
 
-  const _defaultStyle();
+  const _DefaultStyle();
 }
 
 class PlotListItem {
   Widget buildListItem(PlotListItemViewModel viewModel,
-      {PlotListItemStyle itemStyle = const _defaultStyle()}) {
+      {PlotListItemStyle itemStyle = const _DefaultStyle()}) {
     return GestureDetector(
         onTap: viewModel.onTap,
         child: Card(
@@ -146,7 +145,7 @@ class PlotListItem {
           SizedBox(height: itemStyle.detailLineSpace),
           DogTag(
               viewModel: DogTagViewModel(title: viewModel.detail),
-              style: DogTagStyle.compactStyle())
+              style: DogTagStyles.compactStyle())
         ],
       ),
     );

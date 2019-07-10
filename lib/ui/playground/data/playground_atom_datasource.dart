@@ -1,6 +1,7 @@
 import 'package:farmsmart_flutter/data/bloc/article/ArticleDetailTransformer.dart';
 import 'package:farmsmart_flutter/data/bloc/article/ArticleListItemViewModelTransformer.dart';
 import 'package:farmsmart_flutter/data/repositories/article/implementation/MockArticlesRepository.dart';
+import 'package:farmsmart_flutter/ui/common/DogTagStyles.dart';
 import 'package:farmsmart_flutter/ui/discover/HeroListItem.dart';
 import 'package:farmsmart_flutter/ui/discover/StandardListItem.dart';
 import 'package:farmsmart_flutter/ui/common/Dogtag.dart';
@@ -66,7 +67,7 @@ class PlayGroundAtomDataSource implements PlaygroundDataSource {
           height: 100,
           child: DogTag(
             viewModel: MockDogTagViewModel.buildWithText(),
-            style: DogTagStyle.compactStyle(),
+            style: DogTagStyles.compactStyle(),
           ),
         ),
       ),
@@ -79,7 +80,7 @@ class PlayGroundAtomDataSource implements PlaygroundDataSource {
           height: 1000,
           child: DogTag(
             viewModel: MockDogTagViewModel.buildWithPositiveNumber(),
-            style: DogTagStyle.defaultStyle(),
+            style: DogTagStyles.positiveStyle(),
           ),
         ),
       ),
@@ -92,7 +93,7 @@ class PlayGroundAtomDataSource implements PlaygroundDataSource {
           height: 100,
           child: DogTag(
             viewModel: MockDogTagViewModel.buildWithNegativeNumber(),
-            style: DogTagStyle.negativeStyle(),
+            style: DogTagStyles.negativeStyle(),
           ),
         ),
       ),

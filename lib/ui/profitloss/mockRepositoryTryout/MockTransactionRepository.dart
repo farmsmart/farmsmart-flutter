@@ -4,7 +4,7 @@ import 'package:farmsmart_flutter/model/loading_status.dart';
 import 'package:farmsmart_flutter/ui/profitloss/ProfitLossHeader.dart';
 import 'package:farmsmart_flutter/ui/profitloss/ProfitLossListItem.dart';
 import 'package:farmsmart_flutter/ui/common/Dogtag.dart';
-
+import 'package:farmsmart_flutter/ui/common/DogTagStyles.dart';
 import '../ProfitLossList.dart';
 import 'MockString.dart';
 
@@ -66,7 +66,7 @@ class MockProfitLossListItemViewModel {
         title: _mockTitleText.random(),
         subtitle: _mockTitleText.random(),
         detail: _mockPositiveCurrencyText.random(),
-        style: DogTagStyle.defaultStyle()
+        style: DogTagStyles.positiveStyle()
     );
   }
 
@@ -75,7 +75,7 @@ class MockProfitLossListItemViewModel {
         title: _mockTitleText.random(),
         subtitle: _mockTitleText.random(),
         detail: _mockNegativeCurrencyText.random(),
-        style: DogTagStyle.negativeStyle()
+        style: DogTagStyles.negativeStyle()
     );
   }
 }
