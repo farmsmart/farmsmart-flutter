@@ -97,7 +97,7 @@ Widget buildListOfRelatedArticles(ArticleEntity articleData, MyPlotViewModel vie
 
 _buildListItemImage(ArticleEntity articleData) {
   return NetworkImageFromFuture(
-      articleData.imageUrl,
+      null,
       height: 90,
       width: 140,
       fit: BoxFit.cover

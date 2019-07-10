@@ -13,7 +13,6 @@ class RoundedButtonStyle {
   final Color backgroundColor;
   final BoxShape buttonShape;
   final BorderRadius borderRadius;
-  final EdgeInsets edgePadding;
   final TextStyle buttonTextStyle;
   final double height;
   final double width;
@@ -28,7 +27,6 @@ class RoundedButtonStyle {
     this.iconEdgePadding,
     this.buttonShape,
     this.borderRadius,
-    this.edgePadding,
     this.buttonTextStyle,
     this.buttonIconSize,
   });
@@ -39,7 +37,6 @@ class RoundedButtonStyle {
       backgroundColor: Color(0xff24d900),
       buttonShape: BoxShape.rectangle,
       borderRadius: BorderRadius.all(Radius.circular(20)),
-      edgePadding: EdgeInsets.all(0),
       buttonTextStyle: null,
       height: 24.0,
       width: 24.0,
@@ -61,7 +58,6 @@ class RoundedButtonStyle {
   factory RoundedButtonStyle.largeRoundedButtonStyle() {
     return RoundedButtonStyle.defaultStyle().copyWith(
       borderRadius: BorderRadius.all(Radius.circular(16)),
-      edgePadding: EdgeInsets.only(left: 32, top: 31, right: 32, bottom: 32),
       buttonTextStyle: TextStyle(
           fontSize: 17, fontWeight: FontWeight.bold, color: Color(0xffffffff)),
       iconEdgePadding: 5,
@@ -96,7 +92,6 @@ class RoundedButtonStyle {
       backgroundColor: backgroundColor ?? this.backgroundColor,
       buttonShape: buttonShape ?? this.buttonShape,
       borderRadius: borderRadius ?? this.borderRadius,
-      edgePadding: edgePadding ?? this.edgePadding,
       buttonTextStyle: buttonTextStyle ?? this.buttonTextStyle,
       height: height ?? this.height,
       iconEdgePadding: iconEdgePadding ?? this.iconEdgePadding,
@@ -123,22 +118,19 @@ class RoundedButton extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
-          Padding(
-            padding: _style.edgePadding,
-            child: Container(
-              alignment: Alignment.center,
-              height: _style.height,
-              width: _style.width,
-              decoration: BoxDecoration(
-                  color: _style.backgroundColor != null
-                      ? _style.backgroundColor
-                      : _style.backgroundColor,
-                  shape: _style.buttonShape,
-                  borderRadius: _style.borderRadius),
-              child: Wrap(
-                direction: Axis.horizontal,
-                children: _buildButtonContent(),
-              ),
+          Container(
+            alignment: Alignment.center,
+            height: _style.height,
+            width: _style.width,
+            decoration: BoxDecoration(
+                color: _style.backgroundColor != null
+                    ? _style.backgroundColor
+                    : _style.backgroundColor,
+                shape: _style.buttonShape,
+                borderRadius: _style.borderRadius),
+            child: Wrap(
+              direction: Axis.horizontal,
+              children: _buildButtonContent(),
             ),
           ),
         ],

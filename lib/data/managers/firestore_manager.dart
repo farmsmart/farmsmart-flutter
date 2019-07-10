@@ -66,23 +66,6 @@ class FireStoreManager {
     return Future.wait(imageFetchFutures);
   }
 
-
-  Future<dynamic> getArticlesImagePath(List<ArticleEntity> articlesList) async {
-    return Future.wait(articlesList
-        .map((ArticleEntity article) => Firestore.instance
-                .document(article.imagePathReference)
-                .get()
-                .then((imageSnapshot) {
-              Future<String> imagePath = Future.value(EMPTY);
-              if (imageSnapshot.data != null) {
-                imagePath = getImageDownloadURL(imageSnapshot);
-              }
-              article.setImageUrl(imagePath);
-              return article;
-            }))
-        .toList());
-  }
-
   Future<String> getImageDownloadURL(DocumentSnapshot imageDocument) {
     final sizePath = imageDocument.data[imageSizes].first[imagePath];
     final imageFileNamePath = imageDocument.data[imageFile];

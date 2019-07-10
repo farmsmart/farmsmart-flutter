@@ -1,8 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:farmsmart_flutter/data/bloc/article/ArticleListProvider.dart';
 import 'package:farmsmart_flutter/data/firebase_const.dart';
-import 'package:farmsmart_flutter/redux/app/app_state.dart';
+import 'package:farmsmart_flutter/data/repositories/FlameLink.dart';
+import 'package:farmsmart_flutter/data/repositories/article/ArticleRepositoryInterface.dart';
+import 'package:farmsmart_flutter/data/repositories/article/implementation/ArticlesRepositoryFlamelink.dart';
 import 'package:farmsmart_flutter/farmsmart_localizations.dart';
+import 'package:farmsmart_flutter/redux/app/app_state.dart';
 import 'package:farmsmart_flutter/ui/community/community_child.dart';
-import 'package:farmsmart_flutter/ui/discover/discover_page.dart';
+import 'package:farmsmart_flutter/ui/discover/ArticleList.dart';
 import 'package:farmsmart_flutter/ui/home_viewmodel.dart';
 import 'package:farmsmart_flutter/ui/myplot/PlotList.dart';
 import 'package:farmsmart_flutter/ui/playground/playground_view.dart';
@@ -15,8 +20,14 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'profitloss/ProfitLossList.dart';
 import 'package:farmsmart_flutter/ui/playground/data/playground_datasource_impl.dart';
 
+
 /// Home "screen" route. Scaffold has all the app subcomponents available inside,
 /// like bottom bar or action bar.
+///
+
+final cms =
+    FlameLink(store: Firestore.instance, environment: Environment.development);
+final articleRepo = ArticlesRepositoryFlameLink(cms);
 
 class Home extends StatefulWidget {
   @override
@@ -76,6 +87,26 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
   Widget content(BuildContext context, HomeViewmodel viewModel) {
     homeViewModel = viewModel;
     FarmsmartLocalizations localizations = FarmsmartLocalizations.of(context);
+    final discoverTab = Navigator(
+        initialRoute: "/discover",
+        onGenerateRoute: (RouteSettings settings) {
+          WidgetBuilder builder = (BuildContext _) => ArticleList(
+              viewModelProvider: ArticleListProvider(
+                  title: localizations.discoverTab,
+                  repository: articleRepo,
+                  group: ArticleCollectionGroup.discovery));
+          return MaterialPageRoute(builder: builder, settings: settings);
+        });
+  
+    final List<Widget> _children = [
+      PlotList(),
+      ProfitLossPage(),
+      discoverTab,
+      HomeCommunityChild(),
+      PlaygroundView(
+        widgetList: PlaygroundDataSourceImpl().getList(),
+      ),
+    ];
     return Scaffold(
       // We could share a list of pre defined actions for the app bar.
       body: _children[viewModel.currentTab],
@@ -136,7 +167,7 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
       if (stringURLtoURI != null) {
         String articleId = stringURLtoURI.queryParameters[DeepLink.ParameterID];
         debugPrint('Fetching id=${articleId}');
-        homeViewModel.getSingleArticle(articleId);
+        //TODO: LH restore this function
       }
     }
   }

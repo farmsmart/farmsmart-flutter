@@ -1,9 +1,6 @@
 import 'package:farmsmart_flutter/redux/home/home_state.dart';
 import 'package:farmsmart_flutter/redux/home/myPlot/my_plot_state.dart';
 import 'package:meta/meta.dart';
-import 'package:farmsmart_flutter/redux/home/discover/discover_state.dart';
-import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
-
 
 // Class that controls the global state of the app
 // For architecture purposes we sub-divide it in smaller appstates.
@@ -15,12 +12,10 @@ class AppState{
   // hashcode and == operators adding it.
   final HomeState homeState;
   final MyPlotState myPlotState;
-  final DiscoverState discoverState;
 
   AppState({
     @required this.homeState,
     @required this.myPlotState,
-    @required this.discoverState,
   });
 
 
@@ -29,7 +24,6 @@ class AppState{
     return AppState(
         homeState: HomeState.initial(),
         myPlotState: MyPlotState.initial(),
-        discoverState: DiscoverState.initial(),
     );
   }
 
@@ -37,12 +31,10 @@ class AppState{
   AppState copyWith({
     HomeState homeState,
     MyPlotState myPlotState,
-    DiscoverState discoverState,
   }){
     return AppState(
         homeState: homeState ?? this.homeState,
         myPlotState: myPlotState ?? this.myPlotState,
-        discoverState: discoverState ?? this.discoverState
     );
   }
 
@@ -53,12 +45,10 @@ class AppState{
               runtimeType == other.runtimeType &&
               // if we add a new one we concat with '&&' chars
               homeState == other.homeState &&
-              myPlotState == other.myPlotState &&
-              discoverState == other.discoverState;
+              myPlotState == other.myPlotState;
 
   @override
   int get hashCode =>
       homeState.hashCode ^ // if we add a new one we concat with '^' char
-      myPlotState.hashCode ^ // if we add a new one we concat with '^' char
-      discoverState.hashCode;
+      myPlotState.hashCode;
 }

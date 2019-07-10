@@ -5,6 +5,7 @@ import 'package:farmsmart_flutter/data/model/article_entity.dart';
 import 'package:farmsmart_flutter/data/model/stage_entity.dart';
 import 'package:flutter/foundation.dart';
 
+@Deprecated('This file is deprecated, the directory implementtation detail is now hidden in the Article Repository implementation.')
 class ArticlesDirectoryRepository {
   static final ArticlesDirectoryRepository _articlesDir =
       ArticlesDirectoryRepository._internal();
@@ -32,17 +33,7 @@ class ArticlesDirectoryRepository {
   }
 
   Future<ArticleEntity> getRelatedArticles(ArticleEntity article) async {
-    Stopwatch sw = Stopwatch();
-    sw.start();
-    List<ArticleEntity> relatedArticles = await _getListOfRelatedArticles(
-        article.relatedArticlesPathReference, ListOfRelatedArticles.LIMIT);
-    debugPrint('getRelatedArticles() ${sw.elapsed.inMilliseconds} ms ');
-    sw.reset();
-    await _getListOfArticlesWithImages(relatedArticles);
-    article.relatedArticles = relatedArticles;
-    debugPrint('getRelatedArticleImages() ${sw.elapsed.inMilliseconds} ms ');
-    sw.stop();
-    return article;
+    return Future.value(null); // LH this file is deprecated
   }
 
   Future<StageEntity> getStageRelatedArticles(StageEntity stage) async {
@@ -78,7 +69,7 @@ class ArticlesDirectoryRepository {
   /// Attaches images to supplied articles
   Future<dynamic> _getListOfArticlesWithImages(
       List<ArticleEntity> articlesWithoutImages) {
-    return _firestoreManager.getArticlesImagePath(articlesWithoutImages);
+    return Future.value([]);// _firestoreManager.getArticlesImagePath(articlesWithoutImages);
   }
 
   Future<List<ArticleEntity>> _getListOfRelatedArticles(
