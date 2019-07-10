@@ -11,3 +11,8 @@ class MockStage extends MockEntity<NewStageEntity> {
       return NewStageEntity(id: _identifiers.identifier(), article: _articleBuilder.build(), started: DateTime.now(), ended: DateTime.now());
   }
 }
+
+MockStage _stageBuilder = MockStage();
+class MockArticleEntityCollection extends MockEntityCollection<NewStageEntity> {
+  MockArticleEntityCollection() : super(_stageBuilder);
+}

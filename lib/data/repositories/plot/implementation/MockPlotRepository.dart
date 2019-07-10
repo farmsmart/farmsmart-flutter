@@ -1,4 +1,6 @@
 
+import 'dart:async';
+
 import 'package:farmsmart_flutter/data/model/EntityCollectionInterface.dart';
 import 'package:farmsmart_flutter/data/model/PlotEntity.dart';
 import 'package:farmsmart_flutter/data/model/PlotInfoEntity.dart';
@@ -11,10 +13,11 @@ import '../PlotRepositoryInterface.dart';
 
 MockString _identifiers = MockString();
 MockStage _mockStage = MockStage();
+MockString _titles = MockString(library: ["TEA", "Sugarcane","Maize", "Mirra", "PYRETHRUM" , "Coffee" ]);
 
 class MockPlotEntity {
    static PlotEntity build() {
-    final entity = PlotEntity(id: _identifiers.identifier(), crop: MockCrop.build(), score: 0.5, stages: _mockStage.list());
+    final entity = PlotEntity(id: _identifiers.identifier(), title: _titles.random(), crop: MockCrop.build(), score: 0.5, stages: _mockStage.list());
     return entity;
   }
   
@@ -28,14 +31,15 @@ class MockPlotEntity {
 }
 
 class MockPlotRepository implements PlotRepositoryInterface {
-  @override
-  final _delay = Duration(seconds: 1);
+  final _plotStreamController =  StreamController<List<PlotEntity>>.broadcast(); 
   List<PlotEntity> _plots = [];
 
+  @override
   Future<PlotEntity> addPlot({ProfileEntity toProfile, PlotInfoEntity plotInfo, CropEntity crop}) {
     final entity = MockPlotEntity.build();
     _plots.add(entity);
-    return Future.delayed(_delay, () => entity);
+    _update();
+    return Future.value(entity);
   }
 
   @override
@@ -45,7 +49,7 @@ class MockPlotRepository implements PlotRepositoryInterface {
 
   @override
   Future<List<PlotEntity>> getFarm(ProfileEntity forProfile) {
-    return Future.delayed(_delay, () => _plots);
+    return Future.value(_plots);
   }
 
   @override
@@ -62,8 +66,15 @@ class MockPlotRepository implements PlotRepositoryInterface {
 
   @override
   Stream<List<PlotEntity>> observeFarm(ProfileEntity forProfile) {
-    // TODO: implement observeFarm
-    return null;
+    return _plotStreamController.stream;
+  }
+
+  void _update() {
+    _plotStreamController.sink.add(_plots);
+  }
+
+  void dispose(){
+    _plotStreamController.close();
   }
   
 }

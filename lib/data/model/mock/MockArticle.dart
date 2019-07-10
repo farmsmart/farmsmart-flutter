@@ -23,11 +23,6 @@ class MockArticle extends MockEntity<ArticleEntity> {
 }
 
 MockArticle _articleBuilder = MockArticle();
-
-class MockArticleEntityCollection implements EntityCollection<ArticleEntity> {
-  final _delay = Duration(seconds: 1);
-  @override
-  Future<List<ArticleEntity>> getEntities({int limit = 0}) {
-    return Future.delayed(_delay, () => _articleBuilder.list());
-  }
+class MockArticleEntityCollection extends MockEntityCollection<ArticleEntity> {
+  MockArticleEntityCollection() : super(_articleBuilder);
 }

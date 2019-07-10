@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:farmsmart_flutter/data/bloc/article/ArticleListProvider.dart';
+import 'package:farmsmart_flutter/data/bloc/plot/PlotListProvider.dart';
 import 'package:farmsmart_flutter/data/firebase_const.dart';
 import 'package:farmsmart_flutter/data/repositories/FlameLink.dart';
 import 'package:farmsmart_flutter/data/repositories/article/ArticleRepositoryInterface.dart';
 import 'package:farmsmart_flutter/data/repositories/article/implementation/ArticlesRepositoryFlamelink.dart';
+import 'package:farmsmart_flutter/data/repositories/plot/implementation/MockPlotRepository.dart';
 import 'package:farmsmart_flutter/farmsmart_localizations.dart';
 import 'package:farmsmart_flutter/redux/app/app_state.dart';
 import 'package:farmsmart_flutter/ui/community/community_child.dart';
@@ -25,9 +27,9 @@ import 'package:farmsmart_flutter/ui/playground/data/playground_datasource_impl.
 /// like bottom bar or action bar.
 ///
 
-final cms =
-    FlameLink(store: Firestore.instance, environment: Environment.development);
+final cms = FlameLink(store: Firestore.instance, environment: Environment.development);
 final articleRepo = ArticlesRepositoryFlameLink(cms);
+final plotRepo = MockPlotRepository();
 
 class Home extends StatefulWidget {
   @override
@@ -58,16 +60,6 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
     }
   }
 
-  final List<Widget> _children = [
-    PlotList(),
-    ProfitLossPage(),
-    ArticleList(),
-    HomeCommunityChild(),
-    PlaygroundView(
-      widgetList: PlaygroundDataSourceImpl().getList(),
-    ),
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -97,9 +89,19 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
                   group: ArticleCollectionGroup.discovery));
           return MaterialPageRoute(builder: builder, settings: settings);
         });
+
+    final plotTab = Navigator(
+        initialRoute: "/plot",
+        onGenerateRoute: (RouteSettings settings) {
+          WidgetBuilder builder = (BuildContext _) => PlotList(
+              provider: PlotListProvider(
+                  title: localizations.myPlotTab,
+                  repository: plotRepo));
+          return MaterialPageRoute(builder: builder, settings: settings);
+        });
   
     final List<Widget> _children = [
-      PlotList(),
+      plotTab,
       ProfitLossPage(),
       discoverTab,
       HomeCommunityChild(),

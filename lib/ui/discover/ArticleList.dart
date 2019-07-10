@@ -17,6 +17,7 @@ abstract class ArticleListStyle {
   ArticleListStyle(this.titleTextStyle, this.titleEdgePadding);
   ArticleListStyle copyWith(
       {TextStyle titleTextStyle, EdgeInsets titleEdgePadding});
+
 }
 
 class _DefaultStyle implements ArticleListStyle {
@@ -59,9 +60,10 @@ class ArticleList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = _viewModelProvider.provide();
+    final controller = _viewModelProvider.observe();
     return StreamBuilder<ArticleListViewModel>(
         stream: controller.stream,
+        initialData: _viewModelProvider.initial(),
         builder: (BuildContext context,
             AsyncSnapshot<ArticleListViewModel> snapshot) {
           return _build(context, snapshot.data);

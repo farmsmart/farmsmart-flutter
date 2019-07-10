@@ -1,24 +1,18 @@
-import 'package:farmsmart_flutter/data/model/crop_entity.dart';
+import 'package:farmsmart_flutter/data/bloc/ViewModelProvider.dart';
 import 'package:farmsmart_flutter/model/loading_status.dart';
-import 'package:farmsmart_flutter/redux/app/app_state.dart';
-import 'package:farmsmart_flutter/redux/home/myPlot/my_plot_actions.dart';
 import 'package:farmsmart_flutter/ui/common/headerAndFooterListView.dart';
-import 'package:farmsmart_flutter/utils/strings.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'myplot_viewmodel.dart';
 import 'PlotListItem.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
 
 class PlotListViewModel {
   final String title;
   final String buttonTitle;
-
-  PlotListViewModel(this.title, this.buttonTitle);
-}
-
-PlotListViewModel buildPlotListViewModel() {
-  return PlotListViewModel(Strings.myPlotTab, "Add Another Crop");
+  final LoadingStatus status;
+  final List<PlotListItemViewModel> items;
+  final Function  update;
+  final Function  add;
+  PlotListViewModel({String title, String buttonTitle, LoadingStatus status, List<PlotListItemViewModel> items, Function update, Function add}) : this.title = title, this.status = status, this.buttonTitle = buttonTitle, this.items = items, this.update = update, this.add = add;
 }
 
 abstract class PlotListStyle {
@@ -64,49 +58,47 @@ class _DefaultStyle implements PlotListStyle {
   const _DefaultStyle();
 }
 
-class PlotList extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return _MyPlotState();
-  }
-}
+class PlotList extends StatelessWidget {
+  final ViewModelProvider<PlotListViewModel> _viewModelProvider;
 
-class _MyPlotState extends State<PlotList> {
+  const PlotList({Key key, ViewModelProvider<PlotListViewModel> provider}) : this._viewModelProvider = provider, super(key: key);
+
   @override
   Widget build(BuildContext context,
-      {PlotListStyle plotStyle = const _DefaultStyle()}) {
-    return Scaffold(
-      body: StoreConnector<AppState, MyPlotViewModel>(
-          onInit: (store) => store.dispatch(FetchCropListAction()),
-          builder: (_, viewModel) => _buildBody(context, viewModel, plotStyle),
-          converter: (store) => MyPlotViewModel.fromStore(store)),
-    );
+      {PlotListStyle style = const _DefaultStyle()}) {
+    final controller = _viewModelProvider.observe();
+    return StreamBuilder<PlotListViewModel>(
+        stream: controller.stream,
+        initialData: _viewModelProvider.initial(),
+        builder: (BuildContext context,
+            AsyncSnapshot<PlotListViewModel> snapshot) {
+          return _buildBody(context,  snapshot.data, style);
+        });
   }
 
-  Widget _buildBody(BuildContext context, MyPlotViewModel viewModel,
-      PlotListStyle myPlotStyle) {
-    switch (viewModel.loadingStatus) {
+  Widget _buildBody(BuildContext context, PlotListViewModel viewModel,
+      PlotListStyle style) {
+            final status =
+        (viewModel == null) ? LoadingStatus.LOADING : viewModel.status;
+    switch (status) {
       case LoadingStatus.LOADING:
         return Container(
             child: CircularProgressIndicator(), alignment: Alignment.center);
       case LoadingStatus.SUCCESS:
         return _buildPage(
-            context, viewModel.cropsList, myPlotStyle, viewModel.goToDetail);
+            context, viewModel, style, null);
       case LoadingStatus.ERROR:
         return _buildErrorPage(
-            context, viewModel, myPlotStyle); // TODO Check FARM-203
+            context, viewModel, style); // TODO Check FARM-203
     }
   }
 
-  Widget _buildPage(BuildContext context, List<CropEntity> cropList,
+  Widget _buildPage(BuildContext context, PlotListViewModel viewModel,
       PlotListStyle plotStyle, Function goToDetail) {
-    final viewModel = buildPlotListViewModel();
     return HeaderAndFooterListView.builder(
-        itemCount: cropList.length,
+        itemCount: viewModel.items.length,
         itemBuilder: (BuildContext context, int index) {
-          final itemViewModel =
-              fromCropEntityToViewModel(cropList[index], goToDetail);
-          return PlotListItem().buildListItem(itemViewModel);
+          return PlotListItem().buildListItem(viewModel.items[index]);
         },
         physics: ScrollPhysics(),
         shrinkWrap: true,
@@ -119,7 +111,7 @@ class _MyPlotState extends State<PlotList> {
                 child: RoundedButton(
                     viewModel: RoundedButtonViewModel(
                         title: viewModel.buttonTitle,
-                        onTap: () => _showToast(context)),
+                        onTap: () => viewModel.add() ),
                     style: RoundedButtonStyle.largeRoundedButtonStyle()),
               ),
             ],
@@ -146,12 +138,12 @@ class _MyPlotState extends State<PlotList> {
               RoundedButton(
                   viewModel: RoundedButtonViewModel(
                       icon: roundedButtonIcon,
-                      onTap: () => _showToast(context)),
+                      onTap: () => viewModel.add()),
                   style: RoundedButtonStyle.defaultStyle())
             ]));
   }
 
-  Widget _buildErrorPage(BuildContext context, MyPlotViewModel viewModel,
+  Widget _buildErrorPage(BuildContext context, PlotListViewModel viewModel,
       PlotListStyle plotStyle) {
     final String retryButton = "Retry";
     return Container(
