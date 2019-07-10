@@ -50,29 +50,38 @@ class RecordAmount extends StatelessWidget {
         RecordAmountHeader(
             viewModel: RecordAmountHeaderViewModel(viewModel.amount),
             style: RecordAmountHeaderStyle.defaultSaleStyle()),
-        RecordAmountDate(
-            viewModel: RecordAmountDateViewModel(
+        RecordAmountPicker(
+            viewModel: RecordAmountPickerViewModel(
                 "assets/icons/detail_icon_date.png",
                 "Date",
                 "Today",
                 "assets/icons/chevron.png",
-                DateTime.now())),
+                selectedDate: DateTime.now())),
         ListDivider.build(),
-        RecordAmountDate(
-            viewModel: RecordAmountDateViewModel(
-                "assets/icons/detail_icon_date.png",
-                "Date",
+        RecordAmountPicker(
+            viewModel: RecordAmountPickerViewModel(
+                "assets/icons/detail_icon_best_soil.png",
+                "Crop",
                 "Today",
                 "assets/icons/chevron.png",
-                DateTime.now())),
+              listOfCrops: [
+                "Okra",
+                "Tomatoes",
+                "Potatoes",
+                "Cowpeas",
+                "Sweetcorn",
+                "Cucumber",
+                "Beetroot"
+              ]
+               )),
         ListDivider.build(),
-        RecordAmountDate(
-            viewModel: RecordAmountDateViewModel(
+        /*RecordAmountPicker(
+            viewModel: RecordAmountPickerViewModel(
                 "assets/icons/detail_icon_date.png",
                 "Date",
                 "Today",
                 "assets/icons/chevron.png",
-                DateTime.now())),
+                DateTime.now())),*/
         Padding(
           padding: const EdgeInsets.all(32.0),
           child: Row(

@@ -2,18 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 
-class RecordAmountDateViewModel {
+class RecordAmountPickerViewModel {
   String icon;
   String title;
   String detail;
   String arrow;
   DateTime selectedDate;
+  List<String> listOfCrops = [];
+  String selectedCrop;
 
-  RecordAmountDateViewModel(
-      this.icon, this.title, this.detail, this.arrow, this.selectedDate);
+  RecordAmountPickerViewModel(this.icon, this.title, this.detail, this.arrow,
+      {this.selectedDate, this.listOfCrops, this.selectedCrop});
 }
 
-abstract class RecordAmountDateStyle {
+abstract class RecordAmountPickerStyle {
   final Color actionItemBackgroundColor;
 
   final TextStyle titleTextStyle;
@@ -28,7 +30,7 @@ abstract class RecordAmountDateStyle {
   final double iconHeight;
   final double iconLineSpace;
 
-  RecordAmountDateStyle(
+  RecordAmountPickerStyle(
       this.actionItemBackgroundColor,
       this.titleTextStyle,
       this.pendingTitleTextStyle,
@@ -39,7 +41,7 @@ abstract class RecordAmountDateStyle {
       this.iconHeight,
       this.iconLineSpace);
 
-  RecordAmountDateStyle copyWith(
+  RecordAmountPickerStyle copyWith(
       {Color actionItemBackgroundColor,
       TextStyle titleTextStyle,
       TextStyle pendingTitleTextStyle,
@@ -51,13 +53,13 @@ abstract class RecordAmountDateStyle {
       double iconLineSpace});
 }
 
-class _DefaultStyle implements RecordAmountDateStyle {
+class _DefaultStyle implements RecordAmountPickerStyle {
   final Color actionItemBackgroundColor = const Color(0x00000000);
 
   final TextStyle titleTextStyle = const TextStyle(
       fontSize: 17, fontWeight: FontWeight.w400, color: Color(0xFF1a1b46));
   final TextStyle pendingTitleTextStyle = const TextStyle(
-      fontSize: 17, fontWeight: FontWeight.normal, color: Color(0xFF767690));
+      fontSize: 15, fontWeight: FontWeight.normal, color: Color(0x4c767690));
   final TextStyle detailTextStyle = const TextStyle(
       fontSize: 15, fontWeight: FontWeight.normal, color: Color(0xff767690));
 
@@ -82,7 +84,7 @@ class _DefaultStyle implements RecordAmountDateStyle {
       double iconLineSpace});
 
   @override
-  RecordAmountDateStyle copyWith(
+  RecordAmountPickerStyle copyWith(
       {Color actionItemBackgroundColor,
       TextStyle titleTextStyle,
       TextStyle pendingTitleTextStyle,
@@ -106,25 +108,25 @@ class _DefaultStyle implements RecordAmountDateStyle {
   }
 }
 
-const RecordAmountDateStyle _defaultStyle = const _DefaultStyle();
+const RecordAmountPickerStyle _defaultStyle = const _DefaultStyle();
 
-class RecordAmountDate extends StatefulWidget {
-  final RecordAmountDateStyle _style;
-  final RecordAmountDateViewModel _viewModel;
+class RecordAmountPicker extends StatefulWidget {
+  final RecordAmountPickerStyle _style;
+  final RecordAmountPickerViewModel _viewModel;
 
-  const RecordAmountDate(
+  const RecordAmountPicker(
       {Key key,
-      RecordAmountDateViewModel viewModel,
-      RecordAmountDateStyle style = _defaultStyle})
+      RecordAmountPickerViewModel viewModel,
+      RecordAmountPickerStyle style = _defaultStyle})
       : this._viewModel = viewModel,
         this._style = style,
         super(key: key);
 
   @override
-  _RecordAmountDateState createState() => _RecordAmountDateState();
+  _RecordAmountPickerState createState() => _RecordAmountPickerState();
 }
 
-class _RecordAmountDateState extends State<RecordAmountDate> {
+class _RecordAmountPickerState extends State<RecordAmountPicker> {
   @override
   void initState() {
     super.initState();
@@ -138,50 +140,74 @@ class _RecordAmountDateState extends State<RecordAmountDate> {
             elevation: 0,
             color: Color(0x00000000),
             child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 32),
-                alignment: Alignment.center,
-                height: 70,
-                child: Wrap(
+              padding: EdgeInsets.symmetric(horizontal: 32),
+              alignment: Alignment.center,
+              height: 70,
+              child: Wrap(
                   direction: Axis.horizontal,
                   crossAxisAlignment: WrapCrossAlignment.start,
                   children: <Widget>[
                     Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          Image.asset(widget._viewModel.icon,
-                              height: widget._style.iconHeight),
-                          SizedBox(width: widget._style.iconLineSpace),
-                          Text(widget._viewModel.title,
-                              style: widget._style.titleTextStyle),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: <Widget>[
-                                InkWell(
-                                    child: Text(
-                                        formatDate(widget
-                                                    ._viewModel.selectedDate) ==
-                                                formatDate(DateTime.now())
-                                            ? "Today"
-                                            : formatDate(
-                                                widget._viewModel.selectedDate),
-                                        style: widget._style.detailTextStyle),
-                                    onTap: () => _selectDate(context)),
-                              ],
-                            ),
-                          ),
-                          SizedBox(width: widget._style.iconLineSpace),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: <Widget>[
-                              Image.asset(widget._viewModel.arrow, height: 13)
-                            ],
-                          )
-                        ])
-                  ],
-                )))
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: _buildCellContent(),
+                    )
+                  ]),
+            ))
       ],
     );
+  }
+
+  List<Widget> _buildCellContent() {
+    List<Widget> listBuilder = [
+      Image.asset(widget._viewModel.icon, height: widget._style.iconHeight),
+      SizedBox(width: widget._style.iconLineSpace),
+      Text(widget._viewModel.title, style: widget._style.titleTextStyle)
+    ];
+
+    if (widget._viewModel.selectedDate != null) {
+      listBuilder.add(Expanded(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: <Widget>[
+            InkWell(
+                child: Text(
+                    formatDate(widget._viewModel.selectedDate) ==
+                            formatDate(DateTime.now())
+                        ? "Today"
+                        : formatDate(widget._viewModel.selectedDate),
+                    style: widget._style.detailTextStyle),
+                onTap: () => _selectDate(context)),
+          ],
+        ),
+      ));
+    }
+
+    if (widget._viewModel.listOfCrops != null) {
+      listBuilder.add(Expanded(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: <Widget>[
+            DropdownButtonHideUnderline(
+              child: DropdownButton(
+                value: widget._viewModel.selectedCrop,
+                style: widget._style.detailTextStyle,
+                items: getDropDownMenuItems(),
+                onChanged: changeDropDownItem,
+                hint: Text("Select...", style: widget._style.pendingTitleTextStyle),
+                icon: Icon(Icons.lens, size: 0),
+              ),
+            )
+          ],
+        ),
+      ));
+    }
+
+    listBuilder.add(SizedBox(width: widget._style.iconLineSpace));
+    listBuilder.add(Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: <Widget>[Image.asset(widget._viewModel.arrow, height: 13)]));
+
+    return listBuilder;
   }
 
   Future<Null> _selectDate(BuildContext context) async {
@@ -202,5 +228,19 @@ class _RecordAmountDateState extends State<RecordAmountDate> {
     String formatted = formatter.format(selectedDate);
     print(formatted);
     return formatted;
+  }
+
+  List<DropdownMenuItem<String>> getDropDownMenuItems() {
+    List<DropdownMenuItem<String>> items = new List();
+    for (String crop in widget._viewModel.listOfCrops) {
+      items.add(new DropdownMenuItem(value: crop, child: new Text(crop)));
+    }
+    return items;
+  }
+
+  void changeDropDownItem(String selectedCrop) {
+    setState(() {
+      widget._viewModel.selectedCrop = selectedCrop;
+    });
   }
 }

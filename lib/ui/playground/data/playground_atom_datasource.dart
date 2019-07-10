@@ -51,13 +51,28 @@ class PlayGroundAtomDataSource implements PlaygroundDataSource {
       RecordAmountHeader(
           viewModel: RecordAmountHeaderViewModel("00"),
           style: RecordAmountHeaderStyle.defaultSaleStyle()),
-      RecordAmountDate(
-          viewModel: RecordAmountDateViewModel(
+      RecordAmountPicker(
+          viewModel: RecordAmountPickerViewModel(
               "assets/icons/detail_icon_date.png",
               "Date",
               "Today",
               "assets/icons/chevron.png",
-              DateTime.now())),
+              selectedDate: DateTime.now())),
+      RecordAmountPicker(
+          viewModel: RecordAmountPickerViewModel(
+              "assets/icons/detail_icon_date.png",
+              "Date",
+              "Today",
+              "assets/icons/chevron.png",
+              listOfCrops: [
+            "Okra",
+            "Tomatoes",
+            "Potatoes",
+            "Cowpeas",
+            "Sweetcorn",
+            "Cucumber",
+            "Beetroot"
+          ])),
       StandardListItem(
           viewModel: ArticleListItemViewModelTransformer(
                   detailTransformer: ArticleDetailViewModelTransformer(
