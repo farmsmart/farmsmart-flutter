@@ -129,15 +129,6 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
           ),
         ),
       ),
-      PlaygroundWidget(
-        title: 'TASK FARM-278 Card view',
-        child: Container(
-          height: 162,
-          child: StageCard(
-            viewModel: MockStageCardViewModel.buildCompleteState(),
-          ),
-        ),
-      ),
       /* Template
       PlaygroundWidget(
         title: '#TASK NAME#',

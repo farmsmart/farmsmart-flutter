@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 
 class _DefaultConstants {
   static const int _initialPage = 0;
-  static const double _viewPortFraction = 0.8;
+  static const double _viewPortFraction = 0.85;
 }
 
 class CarouselView extends StatelessWidget {
