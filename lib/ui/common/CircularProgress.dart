@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:farmsmart_flutter/ui/common/MyPainter.dart';
+import 'package:farmsmart_flutter/ui/common/CircularPainter.dart';
 import 'package:flutter/material.dart';
 
 import 'network_image_from_future.dart';
@@ -105,7 +105,7 @@ class _CircularProgressState extends State<CircularProgress> {
         height: widget._style.height,
         width: widget._style.width,
         child: CustomPaint(
-          foregroundPainter: MyPainter(
+          foregroundPainter: CircularPainter(
               lineColor: widget._style.lineColor,
               completeColor: widget._style.completeColor,
               completePercent: widget._viewModel.initialValue,

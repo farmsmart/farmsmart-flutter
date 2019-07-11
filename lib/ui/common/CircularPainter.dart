@@ -4,14 +4,14 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-class MyPainter extends CustomPainter{
+class CircularPainter extends CustomPainter{
   Color lineColor;
   Color completeColor;
   double completePercent;
   double width;
 
 
-  MyPainter({this.lineColor, this.completeColor, this.completePercent,
+  CircularPainter({this.lineColor, this.completeColor, this.completePercent,
       this.width});
 
   @override
