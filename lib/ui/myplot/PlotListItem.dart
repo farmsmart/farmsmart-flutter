@@ -11,20 +11,21 @@ class PlotListItemViewModel {
   final String title;
   final String subtitle;
   final String detail;
+  final double progress;
 
   Function onTap;
 
   final Future<String> imageUrl;
 
   PlotListItemViewModel(
-      this.title, this.subtitle, this.detail, this.imageUrl, this.onTap);
+      this.title, this.subtitle, this.detail, this.imageUrl, this.onTap, this.progress);
 }
 
 PlotListItemViewModel fromCropEntityToViewModel(
     CropEntity currentCrop, Function goToDetail) {
   //FIXME: Change the mocked data "planting" and "Day 6" with the correct FirebaseData when available
   return PlotListItemViewModel(currentCrop.name ?? Strings.defaultCropNameText,
-      "Planting", "Day 6", currentCrop.imageUrl, () => goToDetail(currentCrop));
+      "Planting", "Day 6", currentCrop.imageUrl, () => goToDetail(currentCrop), 0.7);
 }
 
 abstract class PlotListItemStyle {
@@ -124,7 +125,7 @@ class PlotListItem {
                           children: <Widget>[
                             _buildPlotImage(viewModel.imageUrl, itemStyle),
                             //FIXME: This value parameters are hardcoded right now, later should be the current stage number divided by all the stages.
-                            CircularProgress(progress: 80),
+                            CircularProgress(progress: viewModel.progress),
                           ],
                         )
                       ])),

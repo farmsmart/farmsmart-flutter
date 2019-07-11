@@ -16,7 +16,7 @@ class CircularProgress extends StatefulWidget {
 
 class _CircularProgressState extends State<CircularProgress> {
   double defaultValue = 0;
-  double percentageComplete = 100.0;
+  double percentageComplete = 1.0;
   final double height = 87;
   final double width = 87;
   final Color lineColor = Colors.transparent;
@@ -81,7 +81,7 @@ class _CircularPainter extends CustomPainter{
         line
     );
 
-    double arcAngle = 2*pi* (completePercent/100);
+    double arcAngle = 2*pi* completePercent;
 
     canvas.drawArc(
         Rect.fromCircle(center: center, radius: radius),
