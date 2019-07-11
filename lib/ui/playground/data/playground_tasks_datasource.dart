@@ -1,5 +1,6 @@
 import 'package:farmsmart_flutter/data/bloc/article/ArticleListProvider.dart';
 import 'package:farmsmart_flutter/data/repositories/article/implementation/MockArticlesRepository.dart';
+import 'package:farmsmart_flutter/ui/LandingPage.dart';
 import 'package:farmsmart_flutter/ui/discover/ArticleList.dart';
 import 'package:farmsmart_flutter/ui/common/ActionSheet.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockActionSheetViewModel.dart';
@@ -81,16 +82,13 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
                           style: ActionSheetStyle.defaultStyle()))),
             ],
           )),
-      /* Template
       PlaygroundWidget(
-        title: '#TASK NAME#',
-        child: YourWidget(),
-      ),*/
-      PlaygroundWidget(title: "FARM-280 Update Discover", child:
-          ArticleList(
-              viewModelProvider: ArticleListProvider( title: "Test",
-                  repository: MockArticlesRepository(articleCount: 2000)))
-      )
+          title: "FARM-280 Update Discover",
+          child: ArticleList(
+              viewModelProvider: ArticleListProvider(
+                  title: "Test",
+                  repository: MockArticlesRepository(articleCount: 2000)))),
+      PlaygroundWidget(title: "FARM-48 Landing Page", child: LandingPage())
     ];
   }
 }
