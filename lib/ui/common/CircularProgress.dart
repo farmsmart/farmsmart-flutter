@@ -13,7 +13,13 @@ class CircularProgressViewModel {
       {@required this.initialValue, @required this.content});
 }
 
-abstract class CircularProgressStyle {
+CircularProgressViewModel buildCircularProgressViewModel(
+    {@required double initialValue, @required List<Widget> content}) {
+  return CircularProgressViewModel(
+      initialValue: initialValue, content: content);
+}
+
+class CircularProgressStyle {
   final double height;
   final double width;
   final Color completeColor;
@@ -21,19 +27,33 @@ abstract class CircularProgressStyle {
   final double lineWidth;
   final EdgeInsets innerPadding;
 
-  CircularProgressStyle(this.height, this.width, this.completeColor,
-      this.lineColor, this.lineWidth, this.innerPadding);
+  const CircularProgressStyle(
+      {this.height,
+      this.width,
+      this.completeColor,
+      this.lineColor,
+      this.lineWidth,
+      this.innerPadding});
 
   CircularProgressStyle copyWith(
       {double height,
       double width,
       Color completeColor,
       Color lineColor,
-      double testWidth,
-      EdgeInsets edgePadding});
+      double lineWidth,
+      EdgeInsets edgePadding}) {
+    return CircularProgressStyle(
+      height: height ?? this.height,
+      width: width ?? this.width,
+      completeColor: completeColor ?? this.completeColor,
+      lineColor: lineColor ?? this.lineColor,
+      lineWidth: lineWidth ?? this.lineColor,
+      innerPadding: innerPadding ?? this.innerPadding,
+    );
+  }
 }
 
-class _DefaultStyle implements CircularProgressStyle {
+class _DefaultStyle extends CircularProgressStyle {
   final double height = 87;
   final double width = 87;
   final Color completeColor = const Color(0xff24d900);
@@ -48,32 +68,15 @@ class _DefaultStyle implements CircularProgressStyle {
       Color lineColor,
       double testWidth,
       EdgeInsets edgePadding});
-
-  @override
-  CircularProgressStyle copyWith(
-      {double height,
-      double width,
-      Color completeColor,
-      Color lineColor,
-      double testWidth,
-      EdgeInsets edgePadding}) {
-    return _DefaultStyle(
-        height: height ?? this.height,
-        width: width ?? this.width,
-        completeColor: completeColor ?? this.completeColor,
-        lineColor: lineColor ?? this.lineColor,
-        testWidth: testWidth ?? this.lineWidth,
-        edgePadding: edgePadding ?? this.innerPadding);
-  }
 }
 
 const CircularProgressStyle _defaultStyle = const _DefaultStyle();
 
 class CircularProgress extends StatefulWidget {
-  final CircularProgressStyle _style;
   final CircularProgressViewModel _viewModel;
+  final CircularProgressStyle _style;
 
-  CircularProgress(
+  const CircularProgress(
       {Key key,
       @required CircularProgressViewModel viewModel,
       CircularProgressStyle style = _defaultStyle})

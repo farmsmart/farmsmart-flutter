@@ -85,7 +85,8 @@ class DogTag extends StatelessWidget {
   final DogTagViewModel _viewModel;
   final DogTagStyle _style;
 
-  const DogTag({Key key, DogTagViewModel viewModel, DogTagStyle style = _defaultStyle})
+  const DogTag(
+      {Key key, DogTagViewModel viewModel, DogTagStyle style = _defaultStyle})
       : this._viewModel = viewModel,
         this._style = style,
         super(key: key);

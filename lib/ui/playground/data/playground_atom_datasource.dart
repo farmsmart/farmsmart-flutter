@@ -146,6 +146,14 @@ class PlayGroundAtomDataSource implements PlaygroundDataSource {
           from: MockArticle.build(),
         ),
       ),
+      PlaygroundWidget(
+        title: 'CircularProgress',
+        child: Container(
+          alignment: Alignment.center,
+          padding: EdgeInsets.symmetric(vertical: 20.0),
+          child: CircularProgress(viewModel: MockCircularProgressViewModel.buildWithImage()),
+        ),
+      ),
     ];
   }
 }

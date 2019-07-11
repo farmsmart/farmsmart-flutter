@@ -4,8 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class MockCircularProgressViewModel {
-
-  static CircularProgressViewModel buildWIthImage() {
+  static CircularProgressViewModel buildWithImage() {
     return CircularProgressViewModel(
         initialValue: 75, content: _mockContentWithImage());
   }
