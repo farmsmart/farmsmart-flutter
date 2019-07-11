@@ -1,5 +1,4 @@
 import 'package:farmsmart_flutter/redux/home/home_state.dart';
-import 'package:farmsmart_flutter/redux/home/myPlot/my_plot_state.dart';
 import 'package:meta/meta.dart';
 
 // Class that controls the global state of the app
@@ -11,11 +10,9 @@ class AppState{
   // create a new sub-state we need to update the required, initial, copywith
   // hashcode and == operators adding it.
   final HomeState homeState;
-  final MyPlotState myPlotState;
 
   AppState({
     @required this.homeState,
-    @required this.myPlotState,
   });
 
 
@@ -23,18 +20,15 @@ class AppState{
   factory AppState.initial(){
     return AppState(
         homeState: HomeState.initial(),
-        myPlotState: MyPlotState.initial(),
     );
   }
 
   // Copies the states of the app or replaces for new ones if needed.
   AppState copyWith({
     HomeState homeState,
-    MyPlotState myPlotState,
   }){
     return AppState(
         homeState: homeState ?? this.homeState,
-        myPlotState: myPlotState ?? this.myPlotState,
     );
   }
 
@@ -44,11 +38,9 @@ class AppState{
           other is AppState &&
               runtimeType == other.runtimeType &&
               // if we add a new one we concat with '&&' chars
-              homeState == other.homeState &&
-              myPlotState == other.myPlotState;
+              homeState == other.homeState;
 
   @override
   int get hashCode =>
-      homeState.hashCode ^ // if we add a new one we concat with '^' char
-      myPlotState.hashCode;
+      homeState.hashCode;
 }
