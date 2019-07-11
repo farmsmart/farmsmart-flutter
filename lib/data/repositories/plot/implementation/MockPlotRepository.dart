@@ -6,9 +6,9 @@ import 'package:farmsmart_flutter/data/model/PlotEntity.dart';
 import 'package:farmsmart_flutter/data/model/PlotInfoEntity.dart';
 import 'package:farmsmart_flutter/data/model/ProfileEntity.dart';
 import 'package:farmsmart_flutter/data/model/crop_entity.dart';
+import 'package:farmsmart_flutter/data/model/mock/MockCrop.dart';
 import 'package:farmsmart_flutter/data/model/mock/MockStage.dart';
-import 'package:farmsmart_flutter/data/repositories/crop/implementation/MockCropRepository.dart';
-import 'package:farmsmart_flutter/ui/profitloss/mockRepositoryTryout/MockString.dart';
+import 'package:farmsmart_flutter/data/model/mock/MockString.dart';
 import '../PlotRepositoryInterface.dart';
 
 MockString _identifiers = MockString();

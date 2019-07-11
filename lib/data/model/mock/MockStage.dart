@@ -1,5 +1,5 @@
 import 'package:farmsmart_flutter/data/model/NewStageEntity.dart';
-import 'package:farmsmart_flutter/ui/common/MockString.dart';
+import 'package:farmsmart_flutter/data/model/mock/MockString.dart';
 import 'MockArticle.dart';
 import 'MockEntity.dart';
 

@@ -4,8 +4,6 @@ import 'package:farmsmart_flutter/data/repositories/MockStrings.dart';
 import 'package:farmsmart_flutter/data/repositories/image/implementation/MockImageEntity.dart';
 import 'package:farmsmart_flutter/model/enums.dart';
 
-import '../EntityCollectionInterface.dart';
-
 class MockArticle extends MockEntity<ArticleEntity> {
    ArticleEntity build() {
     final entity = ArticleEntity(

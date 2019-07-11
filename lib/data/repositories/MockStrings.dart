@@ -1,6 +1,6 @@
 // Mock Strings --------------
 
-import 'package:farmsmart_flutter/utils/MockString.dart';
+import 'package:farmsmart_flutter/data/model/mock/MockString.dart';
 
 MockString mockTitleText = MockString(library: [
   "Title example",
