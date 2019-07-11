@@ -2,8 +2,6 @@
 import 'package:farmsmart_flutter/utils/colors.dart';
 import 'package:flutter/painting.dart';
 
-import 'box_shadows.dart';
-
 abstract class Styles {
 
   static TextStyle titleTextStyle() {
@@ -44,14 +42,6 @@ abstract class Styles {
 
   static TextStyle articleSummaryTextStyle() {
     return TextStyle(fontSize: 15, fontWeight: FontWeight.w400, color: Color(textGrey));
-  }
-
-  static BoxDecoration stageGreenBoxDecoration() {
-    return BoxDecoration(
-        color: Color(white),
-        border: Border.all(color : Color(primaryGreen)),
-        borderRadius: BorderRadius.circular(8.0),
-        boxShadow: BoxShadows.plotListItemShadow());
   }
 
 }
