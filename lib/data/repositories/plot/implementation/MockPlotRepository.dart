@@ -6,29 +6,11 @@ import 'package:farmsmart_flutter/data/model/PlotEntity.dart';
 import 'package:farmsmart_flutter/data/model/PlotInfoEntity.dart';
 import 'package:farmsmart_flutter/data/model/ProfileEntity.dart';
 import 'package:farmsmart_flutter/data/model/crop_entity.dart';
-import 'package:farmsmart_flutter/data/model/mock/MockCrop.dart';
-import 'package:farmsmart_flutter/data/model/mock/MockStage.dart';
-import 'package:farmsmart_flutter/data/model/mock/MockString.dart';
+import 'package:farmsmart_flutter/data/model/mock/MockPlot.dart';
 import '../PlotRepositoryInterface.dart';
 
-MockString _identifiers = MockString();
-MockStage _mockStage = MockStage();
-MockString _titles = MockString(library: ["TEA", "Sugarcane","Maize", "Mirra", "PYRETHRUM" , "Coffee" ]);
 
-class MockPlotEntity {
-   static PlotEntity build() {
-    final entity = PlotEntity(id: _identifiers.identifier(), title: _titles.random(), crop: MockCrop.build(), score: 0.5, stages: _mockStage.list());
-    return entity;
-  }
-  
-  static List<PlotEntity> list({int count = 50}) {
-    List<PlotEntity> plots = [];
-    for (var i = 0; i < count; i++) {
-      plots.add(build());
-    }
-    return plots;
-  }
-}
+final _plotBuilder = MockPlotEntity();
 
 class MockPlotRepository implements PlotRepositoryInterface {
   final _plotStreamController =  StreamController<List<PlotEntity>>.broadcast(); 
@@ -36,7 +18,7 @@ class MockPlotRepository implements PlotRepositoryInterface {
 
   @override
   Future<PlotEntity> addPlot({ProfileEntity toProfile, PlotInfoEntity plotInfo, CropEntity crop}) {
-    final entity = MockPlotEntity.build();
+    final entity = _plotBuilder.build();
     _plots.add(entity);
     _update();
     return Future.value(entity);

@@ -12,7 +12,7 @@ class StageBusinessLogic {
         return item;
       }
     }
-    return _stages.first;
+    return (_stages.last.ended != null ) ? _stages.last : _stages.first;
   }
   
 }

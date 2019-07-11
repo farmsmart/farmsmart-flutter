@@ -24,7 +24,7 @@ class PlotToPlotListItemViewModel implements ObjectTransformer<PlotEntity, PlotL
     final logic = StageBusinessLogic(from.stages);
     final started = logic.currentStage().started;
     if (started != null) {
-       final daysSinceStarted = started.difference(DateTime.now()).inDays;
+       final daysSinceStarted = DateTime.now().difference(started).inDays;
       return Intl.message(_Strings.day) + " " + daysSinceStarted.toString();
     }
    
