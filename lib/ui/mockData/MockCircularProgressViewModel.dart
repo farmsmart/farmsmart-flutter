@@ -3,12 +3,6 @@ import 'package:farmsmart_flutter/ui/common/MockString.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-class MockCircularProgressViewModel {
-  static CircularProgressViewModel buildWithImage() {
-    return CircularProgressViewModel(
-        initialValue: 75, content: _mockContentWithImage());
-  }
-}
 
 List<Widget> _mockContentWithImage() {
   List<Widget> listBuilder = [];

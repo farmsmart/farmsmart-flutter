@@ -120,8 +120,6 @@ class PlotListItem {
                         _buildMainTextView(viewModel, itemStyle),
                         SizedBox(width: itemStyle.imageLineSpace),
                         //FIXME: This value parameters are hardcoded right now, later should be the current stage number divided by all the stages.
-                        CircularProgress(viewModel: CircularProgressViewModel(
-                            initialValue: 20, content: _buildPlotImageContent(itemStyle, viewModel.imageUrl)))
                       ])),
               ListDivider.build(),
             ])));

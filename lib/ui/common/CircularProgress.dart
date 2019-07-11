@@ -5,83 +5,13 @@ import 'package:flutter/material.dart';
 
 import 'network_image_from_future.dart';
 
-class CircularProgressViewModel {
-  double initialValue;
-  List<Widget> content;
-
-  CircularProgressViewModel(
-      {@required this.initialValue, @required this.content});
-}
-
-CircularProgressViewModel buildCircularProgressViewModel(
-    {@required double initialValue, @required List<Widget> content}) {
-  return CircularProgressViewModel(
-      initialValue: initialValue, content: content);
-}
-
-class CircularProgressStyle {
-  final double height;
-  final double width;
-  final Color completeColor;
-  final Color lineColor;
-  final double lineWidth;
-  final EdgeInsets innerPadding;
-
-  const CircularProgressStyle(
-      {this.height,
-      this.width,
-      this.completeColor,
-      this.lineColor,
-      this.lineWidth,
-      this.innerPadding});
-
-  CircularProgressStyle copyWith(
-      {double height,
-      double width,
-      Color completeColor,
-      Color lineColor,
-      double lineWidth,
-      EdgeInsets edgePadding}) {
-    return CircularProgressStyle(
-      height: height ?? this.height,
-      width: width ?? this.width,
-      completeColor: completeColor ?? this.completeColor,
-      lineColor: lineColor ?? this.lineColor,
-      lineWidth: lineWidth ?? this.lineColor,
-      innerPadding: innerPadding ?? this.innerPadding,
-    );
-  }
-}
-
-class _DefaultStyle extends CircularProgressStyle {
-  final double height = 87;
-  final double width = 87;
-  final Color completeColor = const Color(0xff24d900);
-  final Color lineColor = Colors.transparent;
-  final double lineWidth = 3;
-  final EdgeInsets innerPadding = const EdgeInsets.all(4.0);
-
-  const _DefaultStyle(
-      {double height,
-      double width,
-      Color completeColor,
-      Color lineColor,
-      double testWidth,
-      EdgeInsets edgePadding});
-}
-
-const CircularProgressStyle _defaultStyle = const _DefaultStyle();
-
 class CircularProgress extends StatefulWidget {
-  final CircularProgressViewModel _viewModel;
-  final CircularProgressStyle _style;
+  final Color _lineColor;
+  final double _progress;
 
-  const CircularProgress(
-      {Key key,
-      @required CircularProgressViewModel viewModel,
-      CircularProgressStyle style = _defaultStyle})
-      : this._viewModel = viewModel,
-        this._style = style,
+  const CircularProgress({Key key, @required double progress, Color lineColor})
+      : this._lineColor = lineColor ?? const Color(0xff24d900),
+        this._progress = progress,
         super(key: key);
 
   @override
@@ -91,6 +21,11 @@ class CircularProgress extends StatefulWidget {
 class _CircularProgressState extends State<CircularProgress> {
   double defaultValue = 0;
   double percentageComplete = 100.0;
+  final double height = 87;
+  final double width = 87;
+  final Color lineColor = Colors.transparent;
+  final double lineWidth = 3;
+  final EdgeInsets innerPadding = const EdgeInsets.all(4.0);
 
   @override
   void initState() {
@@ -102,19 +37,16 @@ class _CircularProgressState extends State<CircularProgress> {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        height: widget._style.height,
-        width: widget._style.width,
+        height: height,
+        width: width,
         child: CustomPaint(
           foregroundPainter: CircularPainter(
-              lineColor: widget._style.lineColor,
-              completeColor: widget._style.completeColor,
-              completePercent: widget._viewModel.initialValue,
-              width: widget._style.lineWidth),
+              lineColor: lineColor,
+              completeColor: widget._lineColor,
+              completePercent: widget._progress,
+              width: lineWidth),
           child: Padding(
-            padding: widget._style.innerPadding,
-            child: ClipOval(
-              child: Stack(children: widget._viewModel.content),
-            ),
+            padding: innerPadding,
           ),
         ),
       ),
