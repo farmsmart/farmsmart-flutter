@@ -14,79 +14,123 @@ class RecordAmountViewModel {
   List<RecordAmountListItemViewModel> actions;
   String amount;
   String buttonTitle;
+  bool isFilled;
 
-  RecordAmountViewModel(
-      this.loadingStatus, this.actions, this.amount, this.buttonTitle);
+  RecordAmountViewModel(this.loadingStatus, this.actions, this.amount, this.buttonTitle, {this.isFilled : false});
 }
 
-class RecordAmount extends StatelessWidget {
+class RecordAmount extends StatefulWidget {
   final RecordAmountViewModel _viewModel;
 
-  const RecordAmount({Key key, RecordAmountViewModel viewModel})
+  RecordAmount({Key key, RecordAmountViewModel viewModel})
       : this._viewModel = viewModel,
         super(key: key);
 
   @override
+  RecordAmountState createState() => RecordAmountState();
+}
+
+class RecordAmountState extends State<RecordAmount> {
+  int number = 0;
+  bool amoundIsFilled = false;
+  bool cropIsFilled = false;
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      widget._viewModel.isFilled = false;
+    });
+  }
+
   Widget build(BuildContext context) {
-    switch (_viewModel.loadingStatus) {
+    switch (widget._viewModel.loadingStatus) {
       case LoadingStatus.LOADING:
         return Container(
             child: CircularProgressIndicator(), alignment: Alignment.center);
       case LoadingStatus.SUCCESS:
-        return _buildPage(context, _viewModel);
+        return _buildPage(context, widget._viewModel);
       case LoadingStatus.ERROR:
         return Text(Strings.errorString);
     }
   }
 
   Widget _buildPage(BuildContext context, RecordAmountViewModel viewModel) {
-    return ListView(
-      children: <Widget>[
-        RecordAmountHeader(
-            viewModel: RecordAmountHeaderViewModel(viewModel.amount),
-            style: RecordAmountHeaderStyle.defaultSaleStyle()),
-        RecordAmountListItem(
-            viewModel: RecordAmountListItemViewModel(
-                "assets/icons/detail_icon_date.png", "Today",
-                arrow: "assets/icons/chevron.png",
-                title: "Date",
-                selectedDate: DateTime.now())),
-        ListDivider.build(),
-        RecordAmountListItem(
-            viewModel: RecordAmountListItemViewModel(
-                "assets/icons/detail_icon_best_soil.png", "Select ...",
-                arrow: "assets/icons/chevron.png",
-                title: "Crop",
-                listOfCrops: [
-              "Okra",
-              "Tomatoes",
-              "Potatoes",
-              "Cowpeas",
-              "Sweetcorn",
-              "Cucumber",
-              "Beetroot"
-            ])),
-        ListDivider.build(),
-        RecordAmountListItem(
-            viewModel: RecordAmountListItemViewModel(
-                "assets/icons/detail_icon_description.png",
-                "Description (optional)...",
-                arrow: "assets/icons/chevron.png"),
-            style: RecordAmountListItemStyles.biggerStyle),
-        Padding(
-          padding: const EdgeInsets.all(32.0),
-          child: Row(
-            children: <Widget>[
-              Expanded(
-                child: RoundedButton(
-                    viewModel: RoundedButtonViewModel(title: "Record Sale"),
-                    style: RoundedButtonStyle.largeRoundedButtonStyle()
-                        .copyWith(backgroundColor: Color(0xFFe9eaf2))),
+    return GestureDetector(
+      onTap: ()  {
+        FocusScope.of(context).requestFocus(FocusNode());
+        checkIfFilled();
+      },
+      child: ListView(
+          children: <Widget>[
+            RecordAmountHeader(
+                viewModel: RecordAmountHeaderViewModel(viewModel.amount, listener: (amount) {
+                  amoundIsFilled = true;
+                  checkIfFilled();
+                }),
+                style: RecordAmountHeaderStyle.defaultSaleStyle(), parent: this),
+            RecordAmountListItem(
+                viewModel: RecordAmountListItemViewModel(
+                    "assets/icons/detail_icon_date.png", "Today",
+                    arrow: "assets/icons/chevron.png",
+                    title: "Date",
+                    selectedDate: DateTime.now()), parent: this),
+            ListDivider.build(),
+            RecordAmountListItem(
+                viewModel: RecordAmountListItemViewModel(
+                    "assets/icons/detail_icon_best_soil.png", "Select ...",
+                    arrow: "assets/icons/chevron.png",
+                    title: "Crop",
+                    listOfCrops: [
+                  "Okra",
+                  "Tomatoes",
+                  "Potatoes",
+                  "Cowpeas",
+                  "Sweetcorn",
+                  "Cucumber",
+                  "Beetroot"
+                ], listener: (crop) {
+                      cropIsFilled = true;
+                      checkIfFilled();
+                }), parent: this),
+            ListDivider.build(),
+            RecordAmountListItem(
+                viewModel: RecordAmountListItemViewModel(
+                    "assets/icons/detail_icon_description.png",
+                    "Description (optional)...",
+                    arrow: "assets/icons/chevron.png"),
+                style: RecordAmountListItemStyles.biggerStyle, parent: this),
+            Padding(
+              padding: const EdgeInsets.all(32.0),
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: RoundedButton(
+                      viewModel: RoundedButtonViewModel(title: "Record Sale"),
+                      style: widget._viewModel.isFilled == false
+                          ? RoundedButtonStyle.largeRoundedButtonStyle()
+                              .copyWith(backgroundColor: Color(0xFFe9eaf2))
+                          : RoundedButtonStyle.largeRoundedButtonStyle()
+                              .copyWith(backgroundColor: Color(0xFF24d900)),
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
-        )
-      ],
+            )
+          ],
+      ),
     );
+  }
+
+  checkIfFilled() {
+    setState(() {
+      if (amoundIsFilled && cropIsFilled) {
+        widget._viewModel.isFilled = true;
+      } else {
+        widget._viewModel.isFilled = false;
+      }
+    });
+    print(amoundIsFilled);
+    print(cropIsFilled);
   }
 }

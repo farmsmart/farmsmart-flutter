@@ -1,3 +1,4 @@
+import 'package:farmsmart_flutter/ui/profitloss/RecordAmount.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
@@ -10,13 +11,18 @@ class RecordAmountListItemViewModel {
   DateTime selectedDate;
   List<String> listOfCrops = [];
   String selectedCrop;
+  String description;
+  bool isFilled = false;
+  final Function(String) listener;
+
 
   RecordAmountListItemViewModel(this.icon, this.hint,
       {this.arrow,
       this.title,
       this.selectedDate,
       this.listOfCrops,
-      this.selectedCrop});
+      this.selectedCrop,
+      this.description, this.isFilled, this.listener});
 }
 
 class RecordAmountListItemStyle {
@@ -133,13 +139,15 @@ const RecordAmountListItemStyle _defaultStyle = const _DefaultStyle();
 class RecordAmountListItem extends StatefulWidget {
   final RecordAmountListItemStyle _style;
   final RecordAmountListItemViewModel _viewModel;
+  RecordAmountState parent;
 
-  const RecordAmountListItem(
+
+  RecordAmountListItem(
       {Key key,
       RecordAmountListItemViewModel viewModel,
-      RecordAmountListItemStyle style = _defaultStyle})
+      RecordAmountListItemStyle style = _defaultStyle, RecordAmountState parent})
       : this._viewModel = viewModel,
-        this._style = style,
+        this._style = style, this.parent = parent,
         super(key: key);
 
   @override
@@ -147,9 +155,17 @@ class RecordAmountListItem extends StatefulWidget {
 }
 
 class _RecordAmountListItemState extends State<RecordAmountListItem> {
+  final _textFieldController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _textFieldController.dispose();
+    super.dispose();
   }
 
   Widget build(BuildContext context) {
@@ -185,6 +201,7 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
     ];
 
     if (widget._viewModel.selectedDate != null) {
+      widget._viewModel.isFilled = true;
       listBuilder.add(
           Text(widget._viewModel.title, style: widget._style.titleTextStyle));
 
@@ -220,7 +237,8 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
                   onChanged: changeDropDownItem,
                   hint: Text(widget._viewModel.hint,
                       style: widget._style.pendingDetailTextStyle),
-                  icon: Icon(Icons.lens, size: 0)),
+                  icon: Icon(Icons.lens, size: 0),
+              ),
             )
           ],
         ),
@@ -229,6 +247,7 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
 
     if (widget._viewModel.selectedDate == null &&
         widget._viewModel.listOfCrops == null) {
+      widget._viewModel.isFilled = true;
       listBuilder.add(Expanded(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
@@ -243,6 +262,8 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
               textAlign: TextAlign.left,
               style: widget._style.detailTextStyle,
               maxLines: widget._style.maxLines,
+              controller: _textFieldController,
+              onEditingComplete: () => checkTextField,
             ),
           ],
         ),
@@ -290,9 +311,19 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
     return items;
   }
 
+  void checkTextField() {
+    setState(() {
+      if (_textFieldController.text != null) {
+        widget._viewModel.description = _textFieldController.text;
+      }
+    });
+    print(widget._viewModel.description);
+  }
+
   void changeDropDownItem(String selectedCrop) {
     setState(() {
       widget._viewModel.selectedCrop = selectedCrop;
+      widget.parent.cropIsFilled = true;
     });
   }
 }

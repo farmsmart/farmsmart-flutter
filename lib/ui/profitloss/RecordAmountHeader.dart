@@ -1,11 +1,14 @@
 import 'package:farmsmart_flutter/ui/common/RegExInputFormatter.dart';
+import 'package:farmsmart_flutter/ui/profitloss/RecordAmount.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class RecordAmountHeaderViewModel {
   String amount;
+  bool isFilled = false;
+  final Function(String) listener;
 
-  RecordAmountHeaderViewModel(this.amount);
+  RecordAmountHeaderViewModel(this.amount, {this.isFilled, this.listener});
 }
 
 class RecordAmountHeaderStyle {
@@ -54,13 +57,14 @@ class RecordAmountHeaderStyle {
 class RecordAmountHeader extends StatelessWidget {
   final RecordAmountHeaderViewModel _viewModel;
   final RecordAmountHeaderStyle _style;
+  RecordAmountState parent;
 
-  const RecordAmountHeader(
+  RecordAmountHeader(
       {Key key,
       RecordAmountHeaderViewModel viewModel,
-      RecordAmountHeaderStyle style})
+      RecordAmountHeaderStyle style, RecordAmountState parent})
       : this._viewModel = viewModel,
-        this._style = style,
+        this._style = style, this.parent = parent,
         super(key: key);
 
   @override
@@ -90,6 +94,8 @@ class RecordAmountHeader extends StatelessWidget {
                   style: _style.titleTextStyle,
                   inputFormatters: [_amountValidator],
                   maxLines: _style.maxLines,
+                  textInputAction: TextInputAction.done,
+                  onChanged: _viewModel.listener,
                 ),
               ])),
         ],
