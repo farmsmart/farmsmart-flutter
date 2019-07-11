@@ -21,48 +21,17 @@ class DogTagStyle {
   final int maxLines;
   final double iconSize;
   final double spacing;
+  final Color iconColor;
 
-  DogTagStyle(
+  const DogTagStyle(
       {this.backgroundColor,
       this.borderRadius,
       this.edgePadding,
       this.titleTextStyle,
       this.maxLines,
       this.iconSize,
+      this.iconColor,
       this.spacing});
-
-  factory DogTagStyle.defaultStyle() {
-    return DogTagStyle(
-        backgroundColor: Color(0x1425df0c),
-        borderRadius: BorderRadius.all(Radius.circular(20.0)),
-        edgePadding: EdgeInsets.only(top: 8.5, right: 12, left: 12, bottom: 8),
-        titleTextStyle: TextStyle(
-            fontSize: 15,
-            fontWeight: FontWeight.normal,
-            color: Color(0xff25df0c)),
-        maxLines: 1,
-        iconSize: 8,
-        spacing: 5.5);
-  }
-
-  factory DogTagStyle.negativeStyle() {
-    return DogTagStyle.defaultStyle().copyWith(
-        backgroundColor: Color(0x14ff8d4f),
-        titleTextStyle: TextStyle(
-            fontSize: 15,
-            fontWeight: FontWeight.normal,
-            color: Color(0xffff8d4f)));
-  }
-
-  factory DogTagStyle.compactStyle() {
-    return DogTagStyle.defaultStyle().copyWith(
-        edgePadding:
-            EdgeInsets.only(left: 12, top: 5.5, right: 12, bottom: 5.5),
-        titleTextStyle: TextStyle(
-            fontSize: 11,
-            fontWeight: FontWeight.normal,
-            color: Color(0xff25df0c)));
-  }
 
   DogTagStyle copyWith(
       {Color backgroundColor,
@@ -71,6 +40,7 @@ class DogTagStyle {
       TextStyle titleTextStyle,
       int maxLines,
       double iconSize,
+      Color iconColor,
       double spacing}) {
     return DogTagStyle(
         backgroundColor: backgroundColor ?? this.backgroundColor,
@@ -79,15 +49,43 @@ class DogTagStyle {
         titleTextStyle: titleTextStyle ?? this.titleTextStyle,
         maxLines: maxLines ?? this.maxLines,
         iconSize: iconSize ?? this.iconSize,
+        iconColor: iconColor ?? this.iconColor,
         spacing: spacing ?? this.spacing);
   }
 }
+
+class _DefaultStyle extends DogTagStyle {
+  final Color backgroundColor = const Color(0x1425df0c);
+  final BorderRadius borderRadius =
+      const BorderRadius.all(Radius.circular(20.0));
+  final EdgeInsets edgePadding =
+      const EdgeInsets.only(top: 4.5, right: 12, left: 12, bottom: 4.5);
+  final TextStyle titleTextStyle = const TextStyle(
+      fontSize: 15, fontWeight: FontWeight.w500, color: Color(0xff21c400));
+  final int maxLines = 1;
+  final double iconSize = 8;
+  final Color iconColor = Colors.black;
+  final double spacing = 5.5;
+
+  const _DefaultStyle({
+    Color backgroundColor,
+    BorderRadius borderRadius,
+    EdgeInsets edgePadding,
+    TextStyle titleTextStyle,
+    int maxLines,
+    double iconSize,
+    Color iconColor,
+    double spacing,
+  });
+}
+
+const DogTagStyle _defaultStyle = const _DefaultStyle();
 
 class DogTag extends StatelessWidget {
   final DogTagViewModel _viewModel;
   final DogTagStyle _style;
 
-  const DogTag({Key key, DogTagViewModel viewModel, DogTagStyle style})
+  const DogTag({Key key, DogTagViewModel viewModel, DogTagStyle style = _defaultStyle})
       : this._viewModel = viewModel,
         this._style = style,
         super(key: key);
@@ -126,7 +124,7 @@ class DogTag extends StatelessWidget {
         Icon(
           viewModel.icon,
           size: style.iconSize,
-          color: Colors.black,
+          color: style.iconColor,
         ),
       );
     }
