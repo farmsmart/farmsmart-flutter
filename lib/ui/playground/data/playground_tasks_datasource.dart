@@ -7,6 +7,7 @@ import 'package:farmsmart_flutter/ui/common/carousel_view.dart';
 import 'package:farmsmart_flutter/ui/common/stage_card.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockStageCardViewModel.dart';
 import 'package:farmsmart_flutter/ui/playground/data/playground_data_source.dart';
+import 'package:farmsmart_flutter/ui/playground/data/playground_stagecard_datasource.dart';
 import 'package:farmsmart_flutter/ui/playground/playground_widget.dart';
 import 'package:farmsmart_flutter/ui/playground/styles/stage_card_styles.dart';
 import 'package:farmsmart_flutter/ui/profitloss/ProfitLossHeader.dart';
@@ -96,36 +97,7 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
         child: Container(
           height: 162,
           child: CarouselView(
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: StageCard(
-                  viewModel: MockStageCardViewModel.buildCompleteState(),
-                  style: StageCardStyles.getCompleteStageStyle(),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: StageCard(
-                  viewModel: MockStageCardViewModel.buildInProgressState(),
-                  style: StageCardStyles.getInProgressStageStyle(),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: StageCard(
-                  viewModel: MockStageCardViewModel.buildUpcomingState(),
-                  style: StageCardStyles.getUpcomingStageStyle(),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: StageCard(
-                  viewModel: MockStageCardViewModel.buildRandom(),
-                  style: StageCardStyles.getUpcomingStageStyle(),
-                ),
-              ),
-            ],
+            children: PlaygroundStageCardDataSource().getList(),
           ),
         ),
       ),

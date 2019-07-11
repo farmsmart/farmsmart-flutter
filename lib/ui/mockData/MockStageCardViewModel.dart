@@ -5,52 +5,52 @@ import 'package:flutter/material.dart';
 class MockStageCardViewModel {
   static StageCardViewModel buildUpcomingState() {
     return StageCardViewModel(
-      stageNumber: _mockStage.random(),
-      stageTitle: _mockTitle.random(),
-      actionButton: () {},
-      actionButtonText: 'Begin Stage',
-      stageStatusTitle: 'Upcoming'
+      subtitle: _mockStage.random(),
+      title: _mockTitle.random(),
+      action: () {},
+      actionText: 'Begin Stage',
+      statusTitle: 'Upcoming'
     );
   }
 
   static StageCardViewModel buildInProgressState() {
     return StageCardViewModel(
-        stageNumber: _mockStage.random(),
-        stageTitle: _mockTitle.random(),
-        actionButton: () {},
-        actionButtonText: 'Mark as Complete',
-        stageStatusTitle: 'In Progress'
+        subtitle: _mockStage.random(),
+        title: _mockTitle.random(),
+        action: () {},
+        actionText: 'Mark as Complete',
+        statusTitle: 'In Progress'
     );
   }
 
   static StageCardViewModel buildCompleteState() {
     return StageCardViewModel(
-        stageNumber: _mockStage.random(),
-        stageTitle: _mockTitle.random(),
-        dogTagIcon: Icons.check,
-        actionButton: () {},
-        actionButtonText: 'Revert to In Progress',
-        stageStatusTitle: 'Complete'
+        subtitle: _mockStage.random(),
+        title: _mockTitle.random(),
+        statusIcon: Icons.check,
+        action: () {},
+        actionText: 'Revert to In Progress',
+        statusTitle: 'Complete'
     );
   }
 
   static StageCardViewModel buildRandom() {
     return StageCardViewModel(
-        stageNumber: _mockLargeStrings.random(),
-        stageTitle: _mockLargeStrings.random(),
-        actionButton: () {},
-        actionButtonText: _mockActionButtonText.random(),
-        stageStatusTitle: _mockStageStatus.random()
+        subtitle: _mockLargeStrings.random(),
+        title: _mockLargeStrings.random(),
+        action: () {},
+        actionText: _mockActionButtonText.random(),
+        statusTitle: _mockStageStatus.random()
     );
   }
 }
 
 MockString _mockTitle = MockString(library: [
-  "Preparation with large text ",
+  "Preparation ",
   "Planting with large text",
-  "Maintenance with large text",
-  "Harvesting with large text ",
-  "Next Step with large text",
+  "Maintenance med",
+  "Harvesting with ultra large text that shouldn't be visible at all",
+  "Next Step medium",
 ]);
 
 MockString _mockStage = MockString(library: [

@@ -7,70 +7,70 @@ export 'package:farmsmart_flutter/ui/common/Dogtag.dart';
 export 'package:farmsmart_flutter/ui/common/roundedButton.dart';
 
 class StageCardViewModel {
-  String stageNumber;
-  String stageTitle;
-  String actionButtonText;
-  String stageStatusTitle;
-  Function actionButton;
-  IconData dogTagIcon;
+  String subtitle;
+  String title;
+  String actionText;
+  String statusTitle;
+  Function action;
+  IconData statusIcon;
 
   StageCardViewModel(
-      {this.stageNumber,
-      this.stageTitle,
-      this.actionButtonText,
-      this.stageStatusTitle,
-      this.actionButton,
-      this.dogTagIcon});
+      {this.subtitle,
+      this.title,
+      this.actionText,
+      this.statusTitle,
+      this.action,
+      this.statusIcon});
 }
 
 class StageCardStyle {
-  final double cardCornerRadius;
-  final Color cardBackgroundColor;
-  final EdgeInsets cardContentPadding;
-  final TextStyle stageNumberTextStyle;
-  final TextStyle stageTitleTextStyle;
+  final double cornerRadius;
+  final Color backgroundColor;
+  final EdgeInsets contentPadding;
+  final TextStyle subtitleTextStyle;
+  final TextStyle titleTextStyle;
   final RoundedButtonStyle actionButtonStyle;
-  final DogTagStyle stageTagStyle;
+  final DogTagStyle statusTagStyle;
 
   const StageCardStyle({
-    this.cardCornerRadius,
-    this.cardBackgroundColor,
-    this.cardContentPadding,
-    this.stageNumberTextStyle,
-    this.stageTitleTextStyle,
+    this.cornerRadius,
+    this.backgroundColor,
+    this.contentPadding,
+    this.subtitleTextStyle,
+    this.titleTextStyle,
     this.actionButtonStyle,
-    this.stageTagStyle,
+    this.statusTagStyle,
   });
 
   StageCardStyle copyWith(
-      {double cardCornerRadius,
-      Color cardBackgroundColor,
-      EdgeInsets cardContentPadding,
-      TextStyle stageNumberTextStyle,
-      TextStyle stageTitleTextStyle,
+      {double cornerRadius,
+      Color backgroundColor,
+      EdgeInsets contentPadding,
+      TextStyle subtitleTextStyle,
+      TextStyle titleTextStyle,
       RoundedButtonStyle actionButtonStyle,
-      DogTagStyle stageTagStyle}) {
+      DogTagStyle statusTagStyle}) {
     return StageCardStyle(
-        cardCornerRadius: cardCornerRadius ?? this.cardCornerRadius,
-        cardBackgroundColor: cardBackgroundColor ?? this.cardBackgroundColor,
-        cardContentPadding: cardContentPadding ?? this.cardContentPadding,
-        stageNumberTextStyle: stageNumberTextStyle ?? this.stageNumberTextStyle,
-        stageTitleTextStyle: stageTitleTextStyle ?? this.stageTitleTextStyle,
+        cornerRadius: cornerRadius ?? this.cornerRadius,
+        backgroundColor: backgroundColor ?? this.backgroundColor,
+        contentPadding: contentPadding ?? this.contentPadding,
+        subtitleTextStyle: subtitleTextStyle ?? this.subtitleTextStyle,
+        titleTextStyle: titleTextStyle ?? this.titleTextStyle,
         actionButtonStyle: actionButtonStyle ?? this.actionButtonStyle,
-        stageTagStyle: stageTagStyle ?? this.stageTagStyle);
+        statusTagStyle: statusTagStyle ?? this.statusTagStyle);
   }
 }
 
 class _DefaultStyle extends StageCardStyle {
-  final double cardCornerRadius = 20.0;
-  final Color cardBackgroundColor = const Color(0xFFf5f8fa);
-  final EdgeInsets cardContentPadding =
+  final double cornerRadius = 20.0;
+  final Color backgroundColor = const Color(0xFFf5f8fa);
+  final EdgeInsets contentPadding =
       const EdgeInsets.symmetric(horizontal: 24, vertical: 20);
-  final TextStyle stageNumberTextStyle = const TextStyle(
+  final TextStyle subtitleTextStyle = const TextStyle(
     color: Color(0xFF767690),
     fontSize: 15,
   );
-  final TextStyle stageTitleTextStyle = const TextStyle(
+  final TextStyle titleTextStyle = const TextStyle(
     color: Color(0xFF1A1B46),
     fontSize: 20,
     fontWeight: FontWeight.bold,
@@ -87,7 +87,7 @@ class _DefaultStyle extends StageCardStyle {
     iconButtonColor: Color(0xFFFFFFFF),
     buttonShape: BoxShape.rectangle,
   );
-  final DogTagStyle stageTagStyle = const DogTagStyle(
+  final DogTagStyle statusTagStyle = const DogTagStyle(
     backgroundColor: Color(0xff24d900),
     titleTextStyle: TextStyle(
         color: Color(0xffffffff), fontSize: 11, fontWeight: FontWeight.bold),
@@ -99,13 +99,13 @@ class _DefaultStyle extends StageCardStyle {
   );
 
   const _DefaultStyle({
-    double cardCornerRadius,
-    Color cardBackgroundColor,
-    EdgeInsets cardContentPadding,
-    TextStyle stageNumberTextStyle,
-    TextStyle stageTitleTextStyle,
+    double cornerRadius,
+    Color backgroundColor,
+    EdgeInsets contentPadding,
+    TextStyle subtitleTextStyle,
+    TextStyle titleTextStyle,
     RoundedButtonStyle actionButtonStyle,
-    DogTagStyle stageTagStyle,
+    DogTagStyle statusTagStyle,
   });
 }
 
@@ -130,10 +130,10 @@ class StageCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(_style.cardCornerRadius),
-          color: _style.cardBackgroundColor),
+          borderRadius: BorderRadius.circular(_style.cornerRadius),
+          color: _style.backgroundColor),
       child: Padding(
-        padding: _style.cardContentPadding,
+        padding: _style.contentPadding,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
@@ -147,16 +147,16 @@ class StageCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        _viewModel.stageNumber,
-                        style: _style.stageNumberTextStyle,
+                        _viewModel.subtitle,
+                        style: _style.subtitleTextStyle,
                         maxLines: _maxLines,
                       ),
                       SizedBox(
                         height: _titleHeightSeparator,
                       ),
                       Text(
-                        _viewModel.stageTitle,
-                        style: _style.stageTitleTextStyle,
+                        _viewModel.title,
+                        style: _style.titleTextStyle,
                         maxLines: _maxLines,
                       ),
                     ],
@@ -164,16 +164,16 @@ class StageCard extends StatelessWidget {
                 ),
                 DogTag(
                   viewModel: DogTagViewModel(
-                      title: _viewModel.stageStatusTitle,
-                      icon: _viewModel.dogTagIcon),
-                  style: _style.stageTagStyle,
+                      title: _viewModel.statusTitle,
+                      icon: _viewModel.statusIcon),
+                  style: _style.statusTagStyle,
                 ),
               ],
             ),
             RoundedButton(
               viewModel: RoundedButtonViewModel(
-                  title: _viewModel.actionButtonText,
-                  onTap: _viewModel.actionButton),
+                  title: _viewModel.actionText,
+                  onTap: _viewModel.action),
               style: _style.actionButtonStyle,
             )
           ],
