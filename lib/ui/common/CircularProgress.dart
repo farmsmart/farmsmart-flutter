@@ -8,7 +8,8 @@ class CircularProgress extends StatefulWidget {
   const CircularProgress({Key key, @required double progress, Color lineColor})
       : this._lineColor = lineColor ?? const Color(0xff24d900),
         this._progress = progress,
-        assert(progress >= 0 && progress <= 1, 'Progress should be between 0 and 1'),
+        assert(progress >= 0 && progress <= 1,
+            'Progress should be between 0 and 1'),
         super(key: key);
 
   @override
@@ -16,8 +17,7 @@ class CircularProgress extends StatefulWidget {
 }
 
 class _CircularProgressState extends State<CircularProgress> {
-  double defaultValue = 0;
-  double percentageComplete = 1.0;
+  double progress = 1.0;
   final double height = 87;
   final double width = 87;
   final Color lineColor = Colors.transparent;
@@ -51,15 +51,14 @@ class _CircularProgressState extends State<CircularProgress> {
   }
 }
 
-class _CircularPainter extends CustomPainter{
+class _CircularPainter extends CustomPainter {
   Color lineColor;
   Color completeColor;
   double completePercent;
   double width;
 
-
-  _CircularPainter({this.lineColor, this.completeColor, this.completePercent,
-    this.width});
+  _CircularPainter(
+      {this.lineColor, this.completeColor, this.completePercent, this.width});
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -74,23 +73,14 @@ class _CircularPainter extends CustomPainter{
       ..style = PaintingStyle.stroke
       ..strokeWidth = width;
 
-    Offset center = Offset(size.width/2, size.height/2);
-    double radius = min(size.width/2, size.height/2);
-    canvas.drawCircle(
-        center,
-        radius,
-        line
-    );
+    Offset center = Offset(size.width / 2, size.height / 2);
+    double radius = min(size.width / 2, size.height / 2);
+    canvas.drawCircle(center, radius, line);
 
-    double arcAngle = 2*pi* completePercent;
+    double arcAngle = 2 * pi * completePercent;
 
-    canvas.drawArc(
-        Rect.fromCircle(center: center, radius: radius),
-        -pi/2,
-        arcAngle,
-        false,
-        complete
-    );
+    canvas.drawArc(Rect.fromCircle(center: center, radius: radius), -pi / 2,
+        arcAngle, false, complete);
   }
 
   @override
