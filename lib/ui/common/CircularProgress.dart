@@ -8,6 +8,7 @@ class CircularProgress extends StatefulWidget {
   const CircularProgress({Key key, @required double progress, Color lineColor})
       : this._lineColor = lineColor ?? const Color(0xff24d900),
         this._progress = progress,
+        assert(progress >= 0 && progress <= 1, 'Progress should be between 0 and 1'),
         super(key: key);
 
   @override
