@@ -151,7 +151,7 @@ class PlayGroundAtomDataSource implements PlaygroundDataSource {
         child: Container(
           alignment: Alignment.center,
           padding: EdgeInsets.symmetric(vertical: 20.0),
-          child: CircularProgress(progress: 20)
+          child: CircularProgress(progress: 75)
         ),
       ),
     ];

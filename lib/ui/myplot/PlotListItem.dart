@@ -119,7 +119,14 @@ class PlotListItem {
                       children: <Widget>[
                         _buildMainTextView(viewModel, itemStyle),
                         SizedBox(width: itemStyle.imageLineSpace),
-                        //FIXME: This value parameters are hardcoded right now, later should be the current stage number divided by all the stages.
+                        Stack(
+                          alignment: AlignmentDirectional.center,
+                          children: <Widget>[
+                            _buildPlotImage(viewModel.imageUrl, itemStyle),
+                            //FIXME: This value parameters are hardcoded right now, later should be the current stage number divided by all the stages.
+                            CircularProgress(progress: 80),
+                          ],
+                        )
                       ])),
               ListDivider.build(),
             ])));
@@ -152,16 +159,18 @@ class PlotListItem {
     );
   }
 
-  List<Widget> _buildPlotImageContent(PlotListItemStyle itemStyle, Future<String> imageUrl) {
-    List<Widget> listBuilder = [];
-    listBuilder.add(
-      NetworkImageFromFuture(imageUrl,
-          height: itemStyle.imageSize, width: itemStyle.imageSize, fit: BoxFit.cover),
-    );
-    listBuilder.add(Positioned.fill(
-        child: Container(
-      color: itemStyle.overlayColor,
-    )));
-    return listBuilder;
+  ClipOval _buildPlotImage(
+      Future<String> imageUrl, PlotListItemStyle itemStyle) {
+    return ClipOval(
+        child: Stack(children: <Widget>[
+          NetworkImageFromFuture(imageUrl,
+              height: itemStyle.imageSize,
+              width: itemStyle.imageSize,
+              fit: BoxFit.cover),
+          Positioned.fill(
+              child: Container(
+                color: itemStyle.overlayColor,
+              )),
+        ]));
   }
 }

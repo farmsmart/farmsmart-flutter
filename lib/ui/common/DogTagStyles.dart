@@ -21,7 +21,7 @@ class DogTagStyles {
             EdgeInsets.only(left: 12, top: 5.5, right: 12, bottom: 5.5),
         titleTextStyle: TextStyle(
             fontSize: 11,
-            fontWeight: FontWeight.w500,
+            fontWeight: FontWeight.w600,
             color: Color(0xff21c400)));
   }
 

@@ -1,9 +1,5 @@
-import 'dart:async';
-
-import 'package:farmsmart_flutter/ui/common/CircularPainter.dart';
 import 'package:flutter/material.dart';
-
-import 'network_image_from_future.dart';
+import 'dart:math';
 
 class CircularProgress extends StatefulWidget {
   final Color _lineColor;
@@ -40,7 +36,7 @@ class _CircularProgressState extends State<CircularProgress> {
         height: height,
         width: width,
         child: CustomPaint(
-          foregroundPainter: CircularPainter(
+          foregroundPainter: _CircularPainter(
               lineColor: lineColor,
               completeColor: widget._lineColor,
               completePercent: widget._progress,
@@ -51,5 +47,53 @@ class _CircularProgressState extends State<CircularProgress> {
         ),
       ),
     );
+  }
+}
+
+class _CircularPainter extends CustomPainter{
+  Color lineColor;
+  Color completeColor;
+  double completePercent;
+  double width;
+
+
+  _CircularPainter({this.lineColor, this.completeColor, this.completePercent,
+    this.width});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    Paint line = Paint()
+      ..color = lineColor
+      ..strokeCap = StrokeCap.round
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = width;
+    Paint complete = Paint()
+      ..color = completeColor
+      ..strokeCap = StrokeCap.round
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = width;
+
+    Offset center = Offset(size.width/2, size.height/2);
+    double radius = min(size.width/2, size.height/2);
+    canvas.drawCircle(
+        center,
+        radius,
+        line
+    );
+
+    double arcAngle = 2*pi* (completePercent/100);
+
+    canvas.drawArc(
+        Rect.fromCircle(center: center, radius: radius),
+        -pi/2,
+        arcAngle,
+        false,
+        complete
+    );
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) {
+    return true;
   }
 }
