@@ -6,7 +6,8 @@ import 'package:farmsmart_flutter/ui/myplot/PlotListItem.dart';
 import 'package:intl/intl.dart';
 
 class _Strings {
-  static const day= "Day";
+  static const day = "Day";
+  static const upcoming = "Upcoming";
 }
 
 class PlotToPlotListItemViewModel implements ObjectTransformer<PlotEntity, PlotListItemViewModel> {
@@ -27,6 +28,6 @@ class PlotToPlotListItemViewModel implements ObjectTransformer<PlotEntity, PlotL
        final daysSinceStarted = DateTime.now().difference(started).inDays;
       return Intl.message(_Strings.day) + " " + daysSinceStarted.toString();
     }
-   
+    return Intl.message(_Strings.upcoming) ;
   }
 }

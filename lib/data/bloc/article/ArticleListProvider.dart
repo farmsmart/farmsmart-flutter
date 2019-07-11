@@ -53,7 +53,7 @@ class ArticleListProvider implements ViewModelProvider<ArticleListViewModel> {
   ArticleListViewModel _viewModel({ LoadingStatus status , List<ArticleListItemViewModel> items }) {
     return ArticleListViewModel(
         title: _title,
-        status: LoadingStatus.SUCCESS,
+        status: status,
         articleListItemViewModels: items,
         update: () => _update(_controller));
   }

@@ -6,6 +6,7 @@ import 'package:farmsmart_flutter/data/repositories/plot/PlotRepositoryInterface
 import 'package:farmsmart_flutter/model/loading_status.dart';
 import 'package:farmsmart_flutter/ui/myplot/PlotList.dart';
 import 'package:farmsmart_flutter/ui/myplot/PlotListItem.dart';
+import 'package:intl/intl.dart';
 
 import 'PlotToPlotListItemViewModel.dart';
 
@@ -13,6 +14,10 @@ import 'PlotToPlotListItemViewModel.dart';
        [Model]    ->               [Bloc]             -> [View]  
    [repo , model] -> [ViewModelProvider, Transformer] -> [viewModel, widget]
 */
+
+class _Strings {
+  static final addCrop = "Add Another Crop";
+}
 
 class PlotListProvider implements ViewModelProvider<PlotListViewModel> {
   final PlotRepositoryInterface _repo;
@@ -68,7 +73,7 @@ class PlotListProvider implements ViewModelProvider<PlotListViewModel> {
   }
 
   PlotListViewModel _viewModel({LoadingStatus  status, List<PlotListItemViewModel> items}){
-    return PlotListViewModel(title: _title, buttonTitle: "Add crop", status: status, items: items, update: () => _update(_controller), add: () => _add());
+    return PlotListViewModel(title: _title, buttonTitle: Intl.message(_Strings.addCrop), status: status, items: items, update: () => _update(_controller), add: () => _add());
   }
 
 
