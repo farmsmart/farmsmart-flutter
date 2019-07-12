@@ -15,8 +15,11 @@ class RecordAmountViewModel {
   String amount;
   String buttonTitle;
   bool isFilled;
+  Function onTap;
 
-  RecordAmountViewModel(this.loadingStatus, this.actions, this.amount, this.buttonTitle, {this.isFilled : false});
+  RecordAmountViewModel(
+      this.loadingStatus, this.actions, this.amount, this.buttonTitle,
+      {this.isFilled: false, this.onTap});
 }
 
 class RecordAmount extends StatefulWidget {
@@ -31,7 +34,7 @@ class RecordAmount extends StatefulWidget {
 }
 
 class RecordAmountState extends State<RecordAmount> {
-  int number = 0;
+  String selectedCrop;
   bool amoundIsFilled = false;
   bool cropIsFilled = false;
 
@@ -57,67 +60,76 @@ class RecordAmountState extends State<RecordAmount> {
 
   Widget _buildPage(BuildContext context, RecordAmountViewModel viewModel) {
     return GestureDetector(
-      onTap: ()  {
+      onTap: () {
         FocusScope.of(context).requestFocus(FocusNode());
         checkIfFilled();
       },
       child: ListView(
-          children: <Widget>[
-            RecordAmountHeader(
-                viewModel: RecordAmountHeaderViewModel(viewModel.amount, listener: (amount) {
-                  amoundIsFilled = true;
-                  checkIfFilled();
-                }),
-                style: RecordAmountHeaderStyle.defaultSaleStyle(), parent: this),
-            RecordAmountListItem(
-                viewModel: RecordAmountListItemViewModel(
-                    "assets/icons/detail_icon_date.png", "Today",
-                    arrow: "assets/icons/chevron.png",
-                    title: "Date",
-                    selectedDate: DateTime.now()), parent: this),
-            ListDivider.build(),
-            RecordAmountListItem(
-                viewModel: RecordAmountListItemViewModel(
-                    "assets/icons/detail_icon_best_soil.png", "Select ...",
-                    arrow: "assets/icons/chevron.png",
-                    title: "Crop",
-                    listOfCrops: [
-                  "Okra",
-                  "Tomatoes",
-                  "Potatoes",
-                  "Cowpeas",
-                  "Sweetcorn",
-                  "Cucumber",
-                  "Beetroot"
-                ], listener: (crop) {
-                      cropIsFilled = true;
-                      checkIfFilled();
-                }), parent: this),
-            ListDivider.build(),
-            RecordAmountListItem(
-                viewModel: RecordAmountListItemViewModel(
-                    "assets/icons/detail_icon_description.png",
-                    "Description (optional)...",
-                    arrow: "assets/icons/chevron.png"),
-                style: RecordAmountListItemStyles.biggerStyle, parent: this),
-            Padding(
-              padding: const EdgeInsets.all(32.0),
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    child: RoundedButton(
-                      viewModel: RoundedButtonViewModel(title: "Record Sale"),
-                      style: widget._viewModel.isFilled == false
-                          ? RoundedButtonStyle.largeRoundedButtonStyle()
-                              .copyWith(backgroundColor: Color(0xFFe9eaf2))
-                          : RoundedButtonStyle.largeRoundedButtonStyle()
-                              .copyWith(backgroundColor: Color(0xFF24d900)),
-                    ),
-                  ),
-                ],
-              ),
-            )
-          ],
+        children: <Widget>[
+          RecordAmountHeader(
+              viewModel: RecordAmountHeaderViewModel(viewModel.amount,
+                  listener: (amount) {
+                amoundIsFilled = true;
+                checkIfFilled();
+              }),
+              style: RecordAmountHeaderStyle.defaultSaleStyle()),
+          RecordAmountListItem(
+              viewModel: RecordAmountListItemViewModel(
+                  "assets/icons/detail_icon_date.png", "Today",
+                  arrow: "assets/icons/chevron.png",
+                  title: "Date",
+                  selectedDate: DateTime.now()),
+              parent: this),
+          ListDivider.build(),
+          RecordAmountListItem(
+              viewModel: RecordAmountListItemViewModel(
+                  "assets/icons/detail_icon_best_soil.png", "Select ...",
+                  selectedCrop: selectedCrop,
+                  arrow: "assets/icons/chevron.png",
+                  title: "Crop",
+                  listOfCrops: [
+                    "Okra",
+                    "Tomatoes",
+                    "Potatoes",
+                    "Cowpeas",
+                    "Sweetcorn",
+                    "Cucumber",
+                    "Beetroot"
+                  ], listener: (crop) {
+                cropIsFilled = true;
+                checkIfFilled();
+              }),
+              parent: this),
+          ListDivider.build(),
+          RecordAmountListItem(
+              viewModel: RecordAmountListItemViewModel(
+                  "assets/icons/detail_icon_description.png",
+                  "Description (optional)...",
+                  arrow: "assets/icons/chevron.png"),
+              style: RecordAmountListItemStyles.biggerStyle,
+              parent: this),
+          Padding(
+            padding: const EdgeInsets.all(32.0),
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  child: !widget._viewModel.isFilled
+                      ? RoundedButton(
+                          viewModel: RoundedButtonViewModel(
+                              title: "Record Sale", onTap: null),
+                          style: RoundedButtonStyle.largeRoundedButtonStyle()
+                              .copyWith(backgroundColor: Color(0xFFe9eaf2)))
+                      : RoundedButton(
+                          viewModel: RoundedButtonViewModel(
+                              title: "Record Sale",
+                              onTap: widget._viewModel.onTap),
+                          style: RoundedButtonStyle.largeRoundedButtonStyle()
+                              .copyWith(backgroundColor: Color(0xFF24d900))),
+                ),
+              ],
+            ),
+          )
+        ],
       ),
     );
   }
@@ -130,7 +142,5 @@ class RecordAmountState extends State<RecordAmount> {
         widget._viewModel.isFilled = false;
       }
     });
-    print(amoundIsFilled);
-    print(cropIsFilled);
   }
 }

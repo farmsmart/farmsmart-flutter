@@ -5,10 +5,9 @@ import 'package:flutter/services.dart';
 
 class RecordAmountHeaderViewModel {
   String amount;
-  bool isFilled = false;
   final Function(String) listener;
 
-  RecordAmountHeaderViewModel(this.amount, {this.isFilled, this.listener});
+  RecordAmountHeaderViewModel(this.amount, {this.listener});
 }
 
 class RecordAmountHeaderStyle {
@@ -20,12 +19,19 @@ class RecordAmountHeaderStyle {
   final double height;
   final int maxLines;
 
-  RecordAmountHeaderStyle({this.hintTextStyle, this.titleTextStyle,
-      this.edgePadding, this.height, this.maxLines});
+  RecordAmountHeaderStyle(
+      {this.hintTextStyle,
+      this.titleTextStyle,
+      this.edgePadding,
+      this.height,
+      this.maxLines});
 
   RecordAmountHeaderStyle copyWith(
-      {TextStyle hintTextStyle, TextStyle titleTextStyle,
-        EdgeInsets edgePadding, double height, int maxLines}) {
+      {TextStyle hintTextStyle,
+      TextStyle titleTextStyle,
+      EdgeInsets edgePadding,
+      double height,
+      int maxLines}) {
     return RecordAmountHeaderStyle(
         hintTextStyle: hintTextStyle ?? this.hintTextStyle,
         titleTextStyle: titleTextStyle ?? this.titleTextStyle);
@@ -45,26 +51,30 @@ class RecordAmountHeaderStyle {
 
   factory RecordAmountHeaderStyle.defaultSaleStyle() {
     return RecordAmountHeaderStyle.defaultCostStyle().copyWith(
-        hintTextStyle: const TextStyle(fontSize: 72, fontWeight: FontWeight.w700, color: Color(0x4c24d900)),
-        titleTextStyle: const TextStyle(fontSize: 72, fontWeight: FontWeight.w700, color: Color(0xFF24d900)),
+        hintTextStyle: const TextStyle(
+            fontSize: 72,
+            fontWeight: FontWeight.w700,
+            color: Color(0x4c24d900)),
+        titleTextStyle: const TextStyle(
+            fontSize: 72,
+            fontWeight: FontWeight.w700,
+            color: Color(0xFF24d900)),
         edgePadding: const EdgeInsets.symmetric(horizontal: 32),
         height: 138,
-        maxLines: 1
-    );
+        maxLines: 1);
   }
 }
 
 class RecordAmountHeader extends StatelessWidget {
   final RecordAmountHeaderViewModel _viewModel;
   final RecordAmountHeaderStyle _style;
-  RecordAmountState parent;
 
   RecordAmountHeader(
       {Key key,
       RecordAmountHeaderViewModel viewModel,
-      RecordAmountHeaderStyle style, RecordAmountState parent})
+      RecordAmountHeaderStyle style})
       : this._viewModel = viewModel,
-        this._style = style, this.parent = parent,
+        this._style = style,
         super(key: key);
 
   @override

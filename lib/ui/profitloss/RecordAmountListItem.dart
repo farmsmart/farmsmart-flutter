@@ -15,14 +15,15 @@ class RecordAmountListItemViewModel {
   bool isFilled = false;
   final Function(String) listener;
 
-
   RecordAmountListItemViewModel(this.icon, this.hint,
       {this.arrow,
       this.title,
       this.selectedDate,
       this.listOfCrops,
       this.selectedCrop,
-      this.description, this.isFilled, this.listener});
+      this.description,
+      this.isFilled,
+      this.listener});
 }
 
 class RecordAmountListItemStyle {
@@ -141,13 +142,14 @@ class RecordAmountListItem extends StatefulWidget {
   final RecordAmountListItemViewModel _viewModel;
   RecordAmountState parent;
 
-
   RecordAmountListItem(
       {Key key,
       RecordAmountListItemViewModel viewModel,
-      RecordAmountListItemStyle style = _defaultStyle, RecordAmountState parent})
+      RecordAmountListItemStyle style = _defaultStyle,
+      RecordAmountState parent})
       : this._viewModel = viewModel,
-        this._style = style, this.parent = parent,
+        this._style = style,
+        this.parent = parent,
         super(key: key);
 
   @override
@@ -201,7 +203,7 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
     ];
 
     if (widget._viewModel.selectedDate != null) {
-      widget._viewModel.isFilled = true;
+      //widget._viewModel.isFilled = true;
       listBuilder.add(
           Text(widget._viewModel.title, style: widget._style.titleTextStyle));
 
@@ -231,13 +233,13 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
           children: <Widget>[
             DropdownButtonHideUnderline(
               child: DropdownButton(
-                  value: widget._viewModel.selectedCrop,
-                  style: widget._style.detailTextStyle,
-                  items: getDropDownMenuItems(),
-                  onChanged: changeDropDownItem,
-                  hint: Text(widget._viewModel.hint,
-                      style: widget._style.pendingDetailTextStyle),
-                  icon: Icon(Icons.lens, size: 0),
+                value: widget._viewModel.selectedCrop,
+                style: widget._style.detailTextStyle,
+                items: getDropDownMenuItems(),
+                onChanged: changeDropDownItem,
+                hint: Text(widget._viewModel.hint,
+                    style: widget._style.pendingDetailTextStyle),
+                icon: Icon(Icons.lens, size: 0),
               ),
             )
           ],
@@ -247,7 +249,7 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
 
     if (widget._viewModel.selectedDate == null &&
         widget._viewModel.listOfCrops == null) {
-      widget._viewModel.isFilled = true;
+      //widget._viewModel.isFilled = true;
       listBuilder.add(Expanded(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
@@ -323,7 +325,9 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
   void changeDropDownItem(String selectedCrop) {
     setState(() {
       widget._viewModel.selectedCrop = selectedCrop;
+      widget.parent.selectedCrop = selectedCrop;
       widget.parent.cropIsFilled = true;
+      widget.parent.checkIfFilled();
     });
   }
 }
