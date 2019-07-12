@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 
 class TabNavigator extends StatelessWidget {
+  TabNavigator({
+    @required this.child,
+    @required this.navigatorKey,
+    @required this.barItem,
+  });
 
-  TabNavigator({this.navigatorKey, this.child, this.barItem});
-
-  final GlobalKey<NavigatorState> navigatorKey;
   final Widget child;
+  final GlobalKey<NavigatorState> navigatorKey;
   final BottomNavigationBarItem barItem;
 
   @override
@@ -13,8 +16,7 @@ class TabNavigator extends StatelessWidget {
     return Navigator(
       key: navigatorKey,
       onGenerateRoute: (RouteSettings settings) {
-        WidgetBuilder builder =
-            (BuildContext _) => child;
+        WidgetBuilder builder = (BuildContext _) => child;
         return MaterialPageRoute(builder: builder, settings: settings);
       },
     );

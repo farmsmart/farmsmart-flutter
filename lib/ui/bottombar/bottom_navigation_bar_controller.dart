@@ -3,18 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class BottomNavigationBarController extends StatefulWidget {
-  final List<Widget> pages;
-  final List<BottomNavigationBarItem> barItems;
-  final List<GlobalKey<NavigatorState>> navigatorKeys;
+  final List<TabNavigator> tabs;
 
   const BottomNavigationBarController({
     Key key,
-    this.pages,
-    this.barItems,
-    this.navigatorKeys,
-  })  : assert(pages.length == barItems.length,
-            'Pages lenght should match barItems lenght'),
-        super(key: key);
+    this.tabs,
+  }) : super(key: key);
 
   @override
   _BottomNavigationBarControllerState createState() =>
@@ -28,12 +22,13 @@ class _BottomNavigationBarControllerState
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async =>
-          !await widget.navigatorKeys[_selectedIndex].currentState.maybePop(),
+      onWillPop: () async => !await widget
+          .tabs[_selectedIndex].navigatorKey.currentState
+          .maybePop(),
       child: Scaffold(
         bottomNavigationBar: _bottomNavigationBar(_selectedIndex),
         body: Stack(
-          children: _buildChildren(),
+          children: _buildChildren(widget.tabs),
         ),
       ),
     );
@@ -46,25 +41,26 @@ class _BottomNavigationBarControllerState
       type: BottomNavigationBarType.fixed,
       onTap: (int index) => setState(() => _selectedIndex = index),
       currentIndex: selectedIndex,
-      items: widget.barItems,
+      items: _buildBarItems(widget.tabs),
     );
   }
 
-  List<Widget> _buildChildren() {
+  List<BottomNavigationBarItem> _buildBarItems(List<TabNavigator> tabs) {
+    return tabs.map((tabNavigator) => tabNavigator.barItem).toList();
+  }
+
+  List<Widget> _buildChildren(List<TabNavigator> tabs) {
     List<Widget> children = List();
-    widget.pages.asMap().forEach(
-        (index, child) => children.add(_buildOffstageNavigators(index)));
+    tabs.asMap().forEach((index, tabNavigator) =>
+        children.add(_buildOffstageNavigators(index, tabNavigator)));
     return children;
   }
 
-  Widget _buildOffstageNavigators(int index) {
+  Widget _buildOffstageNavigators(int index, TabNavigator tabNavigator) {
     return Visibility(
       visible: _selectedIndex == index,
       maintainState: true,
-      child: TabNavigator(
-        navigatorKey: widget.navigatorKeys[index],
-        child: widget.pages[index],
-      ),
+      child: tabNavigator,
     );
   }
 }
