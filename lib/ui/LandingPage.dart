@@ -39,7 +39,7 @@ class LandingPage extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[Text("Welcome Image")],
+            children: <Widget>[Image.asset("assets/raw/illustration_welcome.png")],
           ),
           SizedBox(
             height: 10,
