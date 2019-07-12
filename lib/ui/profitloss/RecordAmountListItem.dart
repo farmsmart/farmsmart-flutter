@@ -14,8 +14,8 @@ class RecordAmountListItemViewModel {
   String description;
   final Function(String) listener;
 
-  RecordAmountListItemViewModel(this.icon, this.hint,
-      {this.arrow,
+  RecordAmountListItemViewModel({this.icon, this.hint,
+      this.arrow,
       this.title,
       this.selectedDate,
       this.listOfCrops,

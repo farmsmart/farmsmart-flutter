@@ -7,7 +7,7 @@ class RecordAmountHeaderViewModel {
   String amount;
   final Function(String) listener;
 
-  RecordAmountHeaderViewModel(this.amount, {this.listener});
+  RecordAmountHeaderViewModel({this.amount, this.listener});
 }
 
 class RecordAmountHeaderStyle {

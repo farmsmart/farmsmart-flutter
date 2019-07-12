@@ -18,8 +18,12 @@ class RecordAmountViewModel {
   Function onTap;
 
   RecordAmountViewModel(
-      this.loadingStatus, this.actions, this.amount, this.buttonTitle,
-      {this.isFilled: false, this.onTap});
+      {this.loadingStatus,
+      this.actions,
+      this.amount,
+      this.buttonTitle,
+      this.isFilled: false,
+      this.onTap});
 }
 
 class RecordAmount extends StatefulWidget {
@@ -67,15 +71,17 @@ class RecordAmountState extends State<RecordAmount> {
       child: ListView(
         children: <Widget>[
           RecordAmountHeader(
-              viewModel: RecordAmountHeaderViewModel(viewModel.amount,
+              viewModel: RecordAmountHeaderViewModel(
+                  amount: viewModel.amount,
                   listener: (amount) {
-                amoundIsFilled = true;
-                checkIfFilled();
-              }),
+                    amoundIsFilled = true;
+                    checkIfFilled();
+                  }),
               style: RecordAmountHeaderStyle.defaultSaleStyle()),
           RecordAmountListItem(
               viewModel: RecordAmountListItemViewModel(
-                  "assets/icons/detail_icon_date.png", "Today",
+                  icon: "assets/icons/detail_icon_date.png",
+                  hint: "Today",
                   arrow: "assets/icons/chevron.png",
                   title: "Date",
                   selectedDate: DateTime.now()),
@@ -83,7 +89,8 @@ class RecordAmountState extends State<RecordAmount> {
           ListDivider.build(),
           RecordAmountListItem(
               viewModel: RecordAmountListItemViewModel(
-                  "assets/icons/detail_icon_best_soil.png", "Select ...",
+                  icon: "assets/icons/detail_icon_best_soil.png",
+                  hint: "Select ...",
                   selectedItem: selectedCrop,
                   arrow: "assets/icons/chevron.png",
                   title: "Crop",
@@ -95,16 +102,17 @@ class RecordAmountState extends State<RecordAmount> {
                     "Sweetcorn",
                     "Cucumber",
                     "Beetroot"
-                  ], listener: (crop) {
-                cropIsFilled = true;
-                checkIfFilled();
-              }),
+                  ],
+                  listener: (crop) {
+                    cropIsFilled = true;
+                    checkIfFilled();
+                  }),
               parent: this),
           ListDivider.build(),
           RecordAmountListItem(
               viewModel: RecordAmountListItemViewModel(
-                  "assets/icons/detail_icon_description.png",
-                  "Description (optional)...",
+                  icon: "assets/icons/detail_icon_description.png",
+                  hint: "Description (optional)...",
                   arrow: "assets/icons/chevron.png"),
               style: RecordAmountListItemStyles.biggerStyle,
               parent: this),
