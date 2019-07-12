@@ -1,6 +1,7 @@
 import 'package:farmsmart_flutter/model/loading_status.dart';
 import 'package:farmsmart_flutter/ui/common/ListDivider.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
+import 'package:farmsmart_flutter/ui/mockData/MockRecordAmountViewModel.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockRoundedButtonViewModel.dart';
 import 'package:farmsmart_flutter/ui/profitloss/RecordAmountListItem.dart';
 import 'package:farmsmart_flutter/ui/profitloss/RecordAmountHeader.dart';
@@ -70,39 +71,30 @@ class RecordAmountState extends State<RecordAmount> {
       },
       child: ListView(
         children: <Widget>[
-          RecordAmountHeader(
-              viewModel: RecordAmountHeaderViewModel(
-                  amount: viewModel.amount,
+          RecordAmountHeader(viewModel: RecordAmountHeaderViewModel(
                   listener: (amount) {
                     amoundIsFilled = true;
                     checkIfFilled();
                   }),
               style: RecordAmountHeaderStyle.defaultSaleStyle()),
           RecordAmountListItem(
-              viewModel: RecordAmountListItemViewModel(
-                  icon: "assets/icons/detail_icon_date.png",
-                  hint: "Today",
-                  arrow: "assets/icons/chevron.png",
-                  title: "Date",
-                  selectedDate: DateTime.now()),
+              viewModel:
+              RecordAmountListItemViewModel(
+                  icon: viewModel.actions[0].icon,
+                  hint: viewModel.actions[0].hint,
+                  arrow: viewModel.actions[0].arrow,
+                  title: viewModel.actions[0].title,
+                  selectedDate: viewModel.actions[0].selectedDate),
               parent: this),
           ListDivider.build(),
           RecordAmountListItem(
               viewModel: RecordAmountListItemViewModel(
-                  icon: "assets/icons/detail_icon_best_soil.png",
-                  hint: "Select ...",
+                  icon: viewModel.actions[1].icon,
+                  hint: viewModel.actions[1].hint,
                   selectedItem: selectedCrop,
-                  arrow: "assets/icons/chevron.png",
-                  title: "Crop",
-                  listOfCrops: [
-                    "Okra",
-                    "Tomatoes",
-                    "Potatoes",
-                    "Cowpeas",
-                    "Sweetcorn",
-                    "Cucumber",
-                    "Beetroot"
-                  ],
+                  arrow: viewModel.actions[1].arrow,
+                  title: viewModel.actions[1].title,
+                  listOfCrops: viewModel.actions[1].listOfCrops,
                   listener: (crop) {
                     cropIsFilled = true;
                     checkIfFilled();
@@ -111,9 +103,9 @@ class RecordAmountState extends State<RecordAmount> {
           ListDivider.build(),
           RecordAmountListItem(
               viewModel: RecordAmountListItemViewModel(
-                  icon: "assets/icons/detail_icon_description.png",
-                  hint: "Description (optional)...",
-                  arrow: "assets/icons/chevron.png"),
+                  icon: viewModel.actions[2].icon,
+                  hint: viewModel.actions[2].hint,
+                  arrow: viewModel.actions[2].arrow),
               style: RecordAmountListItemStyles.biggerStyle,
               parent: this),
           Padding(

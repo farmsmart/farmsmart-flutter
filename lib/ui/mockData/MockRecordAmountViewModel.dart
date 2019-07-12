@@ -4,11 +4,14 @@ import 'package:farmsmart_flutter/ui/profitloss/RecordAmountHeader.dart';
 import 'package:farmsmart_flutter/ui/profitloss/RecordAmountListItem.dart';
 
 class MockRecordAmountViewModel {
+  var cropIsfilled = false;
+  var amountIsFilled = false;
+
   static RecordAmountViewModel buildSale() {
     List<RecordAmountListItemViewModel> list = [];
 
-    for (var i = 0; i <= 3; i++) {
-      list.add(MockRecordAmountListItem.build(i));
+    for (var i = 0; i < 3; i++) {
+      list.add(MockRecordAmountListItemViewModel.build(i));
     }
 
     return RecordAmountViewModel (
@@ -17,13 +20,14 @@ class MockRecordAmountViewModel {
       buttonTitle: _mockButtonTitle[1],
       onTap: null,
     );
+
   }
 
   static RecordAmountViewModel buildCost() {
     List<RecordAmountListItemViewModel> list = [];
 
-    for (var i = 0; i <= 3; i++) {
-      list.add(MockRecordAmountListItem.build(i));
+    for (var i = 0; i < 3; i++) {
+      list.add(MockRecordAmountListItemViewModel.build(i));
     }
 
     return RecordAmountViewModel (
@@ -36,24 +40,22 @@ class MockRecordAmountViewModel {
 
 }
 
-class MockRecordAmountListItem {
+class MockRecordAmountListItemViewModel {
   static RecordAmountListItemViewModel build(int index) {
     return RecordAmountListItemViewModel(
       icon: _mockItemIcon[index],
       title: _mockItemTitle[index],
       hint: _mockItemHint[index],
       arrow: _mockArrowIcon[index],
+      selectedDate: _mockSelectedDate [index],
       listOfCrops: _mockListOfCrops[index],
+      listener: null,
     );
   }
 }
 
-class MockRecordAmountHeaderViewModel {
-  static RecordAmountHeaderViewModel build() {
-    return RecordAmountHeaderViewModel();
-  }
-}
 
+List _mockSelectedDate = [DateTime.now(), null, null];
 
 List _mockButtonTitle = ["Record Cost", "Record Sale"];
 

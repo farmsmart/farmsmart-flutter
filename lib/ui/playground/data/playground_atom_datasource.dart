@@ -1,3 +1,4 @@
+import 'package:farmsmart_flutter/ui/mockData/MockRecordAmountViewModel.dart';
 import 'package:farmsmart_flutter/ui/profitloss/RecordAmountListItem.dart';
 import 'package:farmsmart_flutter/ui/profitloss/RecordAmountHeader.dart';
 import 'package:farmsmart_flutter/data/bloc/article/ArticleDetailTransformer.dart';
@@ -45,7 +46,13 @@ class PlayGroundAtomDataSource implements PlaygroundDataSource {
       ActionSheetListItem(
           viewModel:
               MockActionSheetViewModel.buildWithCheckBox().actions.first),
-      RecordAmountHeader(
+      RecordAmountHeader(viewModel: RecordAmountHeaderViewModel(), style: RecordAmountHeaderStyle.defaultCostStyle()),
+      RecordAmountHeader(viewModel: RecordAmountHeaderViewModel(), style: RecordAmountHeaderStyle.defaultSaleStyle()),
+      RecordAmountListItem(viewModel: MockRecordAmountListItemViewModel.build(0)),
+      RecordAmountListItem(viewModel: MockRecordAmountListItemViewModel.build(1)),
+      RecordAmountListItem(viewModel: MockRecordAmountListItemViewModel.build(2)),
+
+      /*RecordAmountHeader(
           viewModel: RecordAmountHeaderViewModel("00"),
           style: RecordAmountHeaderStyle.defaultCostStyle()),
       RecordAmountHeader(
@@ -72,7 +79,7 @@ class PlayGroundAtomDataSource implements PlaygroundDataSource {
             "Sweetcorn",
             "Cucumber",
             "Beetroot"
-          ])),
+          ])), */
       StandardListItem(
           viewModel: ArticleListItemViewModelTransformer(
                   detailTransformer: ArticleDetailViewModelTransformer(
