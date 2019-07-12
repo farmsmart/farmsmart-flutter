@@ -10,9 +10,8 @@ class RecordAmountListItemViewModel {
   String arrow;
   DateTime selectedDate;
   List<String> listOfCrops = [];
-  String selectedCrop;
+  String selectedItem;
   String description;
-  bool isFilled = false;
   final Function(String) listener;
 
   RecordAmountListItemViewModel(this.icon, this.hint,
@@ -20,9 +19,8 @@ class RecordAmountListItemViewModel {
       this.title,
       this.selectedDate,
       this.listOfCrops,
-      this.selectedCrop,
+      this.selectedItem,
       this.description,
-      this.isFilled,
       this.listener});
 }
 
@@ -188,7 +186,7 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: widget._style.itemAlignment,
-                      children: _buildCellContent(),
+                      children: _buildItemContent(),
                     )
                   ]),
             ))
@@ -196,81 +194,23 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
     );
   }
 
-  List<Widget> _buildCellContent() {
+  List<Widget> _buildItemContent() {
     List<Widget> listBuilder = [
       Image.asset(widget._viewModel.icon, height: widget._style.iconHeight),
       SizedBox(width: widget._style.iconLineSpace),
     ];
 
     if (widget._viewModel.selectedDate != null) {
-      //widget._viewModel.isFilled = true;
-      listBuilder.add(
-          Text(widget._viewModel.title, style: widget._style.titleTextStyle));
-
-      listBuilder.add(Expanded(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: <Widget>[
-            InkWell(
-                child: Text(
-                    formatDate(widget._viewModel.selectedDate) ==
-                            formatDate(DateTime.now())
-                        ? widget._viewModel.hint
-                        : formatDate(widget._viewModel.selectedDate),
-                    style: widget._style.detailTextStyle),
-                onTap: () => _selectDate(context)),
-          ],
-        ),
-      ));
+      _buildDatePicker(listBuilder);
     }
 
     if (widget._viewModel.listOfCrops != null) {
-      listBuilder.add(
-          Text(widget._viewModel.title, style: widget._style.titleTextStyle));
-      listBuilder.add(Expanded(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: <Widget>[
-            DropdownButtonHideUnderline(
-              child: DropdownButton(
-                value: widget._viewModel.selectedCrop,
-                style: widget._style.detailTextStyle,
-                items: getDropDownMenuItems(),
-                onChanged: changeDropDownItem,
-                hint: Text(widget._viewModel.hint,
-                    style: widget._style.pendingDetailTextStyle),
-                icon: Icon(Icons.lens, size: 0),
-              ),
-            )
-          ],
-        ),
-      ));
+      _buildItemPicker(listBuilder);
     }
 
     if (widget._viewModel.selectedDate == null &&
         widget._viewModel.listOfCrops == null) {
-      //widget._viewModel.isFilled = true;
-      listBuilder.add(Expanded(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: <Widget>[
-            TextField(
-              decoration: InputDecoration(
-                  hintText: widget._viewModel.hint,
-                  hintStyle: widget._style.pendingDetailTextStyle,
-                  border: InputBorder.none,
-                  contentPadding: widget._style.cardMargins,
-                  counterText: ""),
-              textAlign: TextAlign.left,
-              style: widget._style.detailTextStyle,
-              maxLines: widget._style.maxLines,
-              controller: _textFieldController,
-              onEditingComplete: () => checkTextField,
-            ),
-          ],
-        ),
-      ));
-      return listBuilder;
+      return _buildDescriptionTextField(listBuilder);
     }
 
     listBuilder.add(SizedBox(width: widget._style.iconLineSpace));
@@ -284,6 +224,74 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
     return listBuilder;
   }
 
+  List<Widget> _buildDescriptionTextField(List<Widget> listBuilder) {
+    listBuilder.add(Expanded(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: <Widget>[
+          TextField(
+            decoration: InputDecoration(
+                hintText: widget._viewModel.hint,
+                hintStyle: widget._style.pendingDetailTextStyle,
+                border: InputBorder.none,
+                contentPadding: widget._style.cardMargins,
+                counterText: ""),
+            textAlign: TextAlign.left,
+            style: widget._style.detailTextStyle,
+            maxLines: widget._style.maxLines,
+            controller: _textFieldController,
+            onEditingComplete: () => _checkTextField,
+          ),
+        ],
+      ),
+    ));
+    return listBuilder;
+  }
+
+  void _buildItemPicker(List<Widget> listBuilder) {
+    listBuilder.add(
+        Text(widget._viewModel.title, style: widget._style.titleTextStyle));
+    listBuilder.add(Expanded(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: <Widget>[
+          DropdownButtonHideUnderline(
+            child: DropdownButton(
+              value: widget._viewModel.selectedItem,
+              style: widget._style.detailTextStyle,
+              items: _getDropDownMenuItems(),
+              onChanged: _changeDropDownItem,
+              hint: Text(widget._viewModel.hint,
+                  style: widget._style.pendingDetailTextStyle),
+              icon: Icon(Icons.lens, size: 0),
+            ),
+          )
+        ],
+      ),
+    ));
+  }
+
+  void _buildDatePicker(List<Widget> listBuilder) {
+    listBuilder.add(
+        Text(widget._viewModel.title, style: widget._style.titleTextStyle));
+
+    listBuilder.add(Expanded(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: <Widget>[
+          InkWell(
+              child: Text(
+                  _formatDate(widget._viewModel.selectedDate) ==
+                          _formatDate(DateTime.now())
+                      ? widget._viewModel.hint
+                      : _formatDate(widget._viewModel.selectedDate),
+                  style: widget._style.detailTextStyle),
+              onTap: () => _selectDate(context)),
+        ],
+      ),
+    ));
+  }
+
   Future<Null> _selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
         context: context,
@@ -294,18 +302,18 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
     if (picked != null && picked != widget._viewModel.selectedDate)
       setState(() {
         widget._viewModel.selectedDate = picked;
-        formatDate(widget._viewModel.selectedDate);
+        _formatDate(widget._viewModel.selectedDate);
       });
   }
 
-  String formatDate(DateTime selectedDate) {
+  String _formatDate(DateTime selectedDate) {
     var formatter = DateFormat('dd MMMM yyyy');
     String formatted = formatter.format(selectedDate);
     print(formatted);
     return formatted;
   }
 
-  List<DropdownMenuItem<String>> getDropDownMenuItems() {
+  List<DropdownMenuItem<String>> _getDropDownMenuItems() {
     List<DropdownMenuItem<String>> items = new List();
     for (String crop in widget._viewModel.listOfCrops) {
       items.add(new DropdownMenuItem(value: crop, child: new Text(crop)));
@@ -313,18 +321,17 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
     return items;
   }
 
-  void checkTextField() {
+  void _checkTextField() {
     setState(() {
       if (_textFieldController.text != null) {
         widget._viewModel.description = _textFieldController.text;
       }
     });
-    print(widget._viewModel.description);
   }
 
-  void changeDropDownItem(String selectedCrop) {
+  void _changeDropDownItem(String selectedCrop) {
     setState(() {
-      widget._viewModel.selectedCrop = selectedCrop;
+      widget._viewModel.selectedItem = selectedCrop;
       widget.parent.selectedCrop = selectedCrop;
       widget.parent.cropIsFilled = true;
       widget.parent.checkIfFilled();

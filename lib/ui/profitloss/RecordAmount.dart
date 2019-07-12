@@ -84,7 +84,7 @@ class RecordAmountState extends State<RecordAmount> {
           RecordAmountListItem(
               viewModel: RecordAmountListItemViewModel(
                   "assets/icons/detail_icon_best_soil.png", "Select ...",
-                  selectedCrop: selectedCrop,
+                  selectedItem: selectedCrop,
                   arrow: "assets/icons/chevron.png",
                   title: "Crop",
                   listOfCrops: [
