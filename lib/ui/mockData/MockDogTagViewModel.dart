@@ -1,6 +1,5 @@
 import 'package:farmsmart_flutter/ui/common/Dogtag.dart';
 import 'package:farmsmart_flutter/ui/common/MockString.dart';
-import 'package:flutter/material.dart';
 
 
 class MockDogTagViewModel {
