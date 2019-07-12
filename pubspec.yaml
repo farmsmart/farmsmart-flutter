@@ -89,8 +89,9 @@ flutter:
     - assets/raw/1.5x/
     - assets/raw/2.0x/
     - assets/raw/3.0x/
-    - assets/raw/2.0x/
+    - assets/raw/4.0x/
     - assets/raw/illustration_welcome.png
+    - assets/raw/logo_default.png
 
 
   fonts:
