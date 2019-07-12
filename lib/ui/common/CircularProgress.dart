@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 
-class CircularProgress extends StatefulWidget {
+class CircularProgress extends StatelessWidget {
   final Color _lineColor;
   final double _progress;
 
@@ -13,34 +13,22 @@ class CircularProgress extends StatefulWidget {
         super(key: key);
 
   @override
-  _CircularProgressState createState() => _CircularProgressState();
-}
-
-class _CircularProgressState extends State<CircularProgress> {
-  double progress = 1.0;
-  final double height = 87;
-  final double width = 87;
-  final Color lineColor = Colors.transparent;
-  final double lineWidth = 3;
-  final EdgeInsets innerPadding = const EdgeInsets.all(4.0);
-
-  @override
-  void initState() {
-    super.initState();
-    setState(() {});
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final double height = 87;
+    final double width = 87;
+    final Color trackColor = Colors.transparent;
+    final double lineWidth = 3;
+    final EdgeInsets innerPadding = const EdgeInsets.all(4.0);
+
     return Center(
       child: Container(
         height: height,
         width: width,
         child: CustomPaint(
           foregroundPainter: _CircularPainter(
-              lineColor: lineColor,
-              completeColor: widget._lineColor,
-              completePercent: widget._progress,
+              trackColor: trackColor,
+              lineColor: _lineColor,
+              progress: _progress,
               width: lineWidth),
           child: Padding(
             padding: innerPadding,
@@ -52,23 +40,23 @@ class _CircularProgressState extends State<CircularProgress> {
 }
 
 class _CircularPainter extends CustomPainter {
+  Color trackColor;
   Color lineColor;
-  Color completeColor;
-  double completePercent;
+  double progress;
   double width;
 
   _CircularPainter(
-      {this.lineColor, this.completeColor, this.completePercent, this.width});
+      {this.trackColor, this.lineColor, this.progress, this.width});
 
   @override
   void paint(Canvas canvas, Size size) {
     Paint line = Paint()
-      ..color = lineColor
+      ..color = trackColor
       ..strokeCap = StrokeCap.round
       ..style = PaintingStyle.stroke
       ..strokeWidth = width;
     Paint complete = Paint()
-      ..color = completeColor
+      ..color = lineColor
       ..strokeCap = StrokeCap.round
       ..style = PaintingStyle.stroke
       ..strokeWidth = width;
@@ -77,7 +65,7 @@ class _CircularPainter extends CustomPainter {
     double radius = min(size.width / 2, size.height / 2);
     canvas.drawCircle(center, radius, line);
 
-    double arcAngle = 2 * pi * completePercent;
+    double arcAngle = 2 * pi * progress;
 
     canvas.drawArc(Rect.fromCircle(center: center, radius: radius), -pi / 2,
         arcAngle, false, complete);
