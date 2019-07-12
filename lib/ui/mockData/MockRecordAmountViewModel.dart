@@ -4,9 +4,6 @@ import 'package:farmsmart_flutter/ui/profitloss/RecordAmountHeader.dart';
 import 'package:farmsmart_flutter/ui/profitloss/RecordAmountListItem.dart';
 
 class MockRecordAmountViewModel {
-  var cropIsfilled = false;
-  var amountIsFilled = false;
-
   static RecordAmountViewModel buildSale() {
     List<RecordAmountListItemViewModel> list = [];
 
@@ -19,8 +16,8 @@ class MockRecordAmountViewModel {
       actions: list,
       buttonTitle: _mockButtonTitle[1],
       onTap: null,
+      type: RecordType.sale
     );
-
   }
 
   static RecordAmountViewModel buildCost() {
@@ -35,6 +32,41 @@ class MockRecordAmountViewModel {
       actions: list,
       buttonTitle: _mockButtonTitle[0],
       onTap: null,
+      type: RecordType.cost
+    );
+  }
+
+  static RecordAmountViewModel buildViewSale() {
+    List<RecordAmountListItemViewModel> list = [];
+
+    for (var i = 0; i < 3; i++) {
+      list.add(MockRecordAmountListItemViewModel.buildNotEditable(i));
+    }
+
+    return RecordAmountViewModel (
+        loadingStatus: LoadingStatus.SUCCESS,
+        actions: list,
+        buttonTitle: _mockButtonTitle[1],
+        onTap: null,
+        type: RecordType.sale,
+        isEditable: false,
+    );
+  }
+
+  static RecordAmountViewModel buildViewCost() {
+    List<RecordAmountListItemViewModel> list = [];
+
+    for (var i = 0; i < 3; i++) {
+      list.add(MockRecordAmountListItemViewModel.buildNotEditable(i));
+    }
+
+    return RecordAmountViewModel (
+      loadingStatus: LoadingStatus.SUCCESS,
+      actions: list,
+      buttonTitle: _mockButtonTitle[1],
+      onTap: null,
+      type: RecordType.cost,
+      isEditable: false,
     );
   }
 
@@ -52,8 +84,28 @@ class MockRecordAmountListItemViewModel {
       listener: null,
     );
   }
+
+  static RecordAmountListItemViewModel buildNotEditable(int index) {
+    return RecordAmountListItemViewModel(
+      icon: _mockItemIcon[index],
+      title: _mockItemTitle[index],
+      hint: _mockItemHint[index],
+      arrow: _mockArrowIcon[index],
+      selectedDate: _mockSelectedDate [index],
+      listOfCrops: _mockListOfCrops[index],
+      listener: null,
+      isEditable: false,
+    );
+  }
 }
 
+List _mockCrop = [ "Okra",
+"Tomatoes",
+"Potatoes",
+"Cowpeas",
+"Sweetcorn",
+"Cucumber",
+"Beetroot"];
 
 List _mockSelectedDate = [DateTime.now(), null, null];
 

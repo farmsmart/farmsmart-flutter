@@ -78,6 +78,14 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
         child: RecordAmount(viewModel: MockRecordAmountViewModel.buildCost()),
       ),
       PlaygroundWidget(
+        title: 'TASK FARM-59 View a Sale',
+        child: RecordAmount(viewModel: MockRecordAmountViewModel.buildViewSale()),
+      ),
+      PlaygroundWidget(
+        title: 'TASK FARM-59 View a Cost',
+        child: RecordAmount(viewModel: MockRecordAmountViewModel.buildViewCost()),
+      ),
+      PlaygroundWidget(
           title: "FARM-280 Update Discover",
           child: ArticleList(
               viewModelProvider: ArticleListProvider(

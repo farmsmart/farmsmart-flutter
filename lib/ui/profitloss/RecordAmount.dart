@@ -10,6 +10,11 @@ import 'package:farmsmart_flutter/ui/profitloss/RecordAmountListItemStyles.dart'
 import 'package:farmsmart_flutter/utils/strings.dart';
 import 'package:flutter/material.dart';
 
+enum RecordType {
+  cost,
+  sale,
+}
+
 class RecordAmountViewModel {
   LoadingStatus loadingStatus;
   List<RecordAmountListItemViewModel> actions;
@@ -17,14 +22,18 @@ class RecordAmountViewModel {
   String buttonTitle;
   bool isFilled;
   Function onTap;
+  RecordType type;
+  bool isEditable;
 
   RecordAmountViewModel(
       {this.loadingStatus,
       this.actions,
-      this.amount,
+      this.amount: "00",
       this.buttonTitle,
       this.isFilled: false,
-      this.onTap});
+      this.onTap,
+      this.type,
+      this.isEditable: true});
 }
 
 class RecordAmount extends StatefulWidget {
@@ -70,65 +79,93 @@ class RecordAmountState extends State<RecordAmount> {
         checkIfFilled();
       },
       child: ListView(
+        children: _buildContent(viewModel),
+      ),
+    );
+  }
+
+  List<Widget> _buildContent(RecordAmountViewModel viewModel) {
+    List<Widget> listBuilder = [];
+
+    listBuilder.add(RecordAmountHeader(
+        viewModel: RecordAmountHeaderViewModel(
+            isEditable: viewModel.isEditable,
+            amount: viewModel.amount,
+            listener: (amount) {
+              amoundIsFilled = true;
+              checkIfFilled();
+            }),
+        style: viewModel.type == RecordType.sale
+            ? RecordAmountHeaderStyle.defaultSaleStyle()
+            : RecordAmountHeaderStyle.defaultCostStyle()));
+
+    listBuilder.add(RecordAmountListItem(
+        viewModel: RecordAmountListItemViewModel(
+            isEditable: viewModel.isEditable,
+            icon: viewModel.actions[0].icon,
+            hint: viewModel.actions[0].hint,
+            arrow: viewModel.actions[0].arrow,
+            title: viewModel.actions[0].title,
+            selectedDate: viewModel.actions[0].selectedDate),
+        parent: this));
+
+    listBuilder.add(ListDivider.build());
+
+    listBuilder.add(RecordAmountListItem(
+        viewModel: RecordAmountListItemViewModel(
+            isEditable: viewModel.isEditable,
+            icon: viewModel.actions[1].icon,
+            hint: viewModel.actions[1].hint,
+            selectedItem: selectedCrop,
+            arrow: viewModel.actions[1].arrow,
+            title: viewModel.actions[1].title,
+            listOfCrops: viewModel.actions[1].listOfCrops,
+            listener: (crop) {
+              cropIsFilled = true;
+              checkIfFilled();
+            }),
+        parent: this));
+
+    listBuilder.add(ListDivider.build());
+
+    listBuilder.add(RecordAmountListItem(
+        viewModel: RecordAmountListItemViewModel(
+            isEditable: viewModel.isEditable,
+            icon: viewModel.actions[2].icon,
+            hint: viewModel.actions[2].hint,
+            arrow: viewModel.actions[2].arrow),
+        style: RecordAmountListItemStyles.biggerStyle,
+        parent: this));
+
+    if (viewModel.isEditable) {
+      listBuilder.add(_buildFooter(viewModel));
+    }
+
+    return listBuilder;
+  }
+
+  Padding _buildFooter(RecordAmountViewModel viewModel) {
+    return Padding(
+      padding: const EdgeInsets.all(32.0),
+      child: Row(
         children: <Widget>[
-          RecordAmountHeader(viewModel: RecordAmountHeaderViewModel(
-                  listener: (amount) {
-                    amoundIsFilled = true;
-                    checkIfFilled();
-                  }),
-              style: RecordAmountHeaderStyle.defaultSaleStyle()),
-          RecordAmountListItem(
-              viewModel:
-              RecordAmountListItemViewModel(
-                  icon: viewModel.actions[0].icon,
-                  hint: viewModel.actions[0].hint,
-                  arrow: viewModel.actions[0].arrow,
-                  title: viewModel.actions[0].title,
-                  selectedDate: viewModel.actions[0].selectedDate),
-              parent: this),
-          ListDivider.build(),
-          RecordAmountListItem(
-              viewModel: RecordAmountListItemViewModel(
-                  icon: viewModel.actions[1].icon,
-                  hint: viewModel.actions[1].hint,
-                  selectedItem: selectedCrop,
-                  arrow: viewModel.actions[1].arrow,
-                  title: viewModel.actions[1].title,
-                  listOfCrops: viewModel.actions[1].listOfCrops,
-                  listener: (crop) {
-                    cropIsFilled = true;
-                    checkIfFilled();
-                  }),
-              parent: this),
-          ListDivider.build(),
-          RecordAmountListItem(
-              viewModel: RecordAmountListItemViewModel(
-                  icon: viewModel.actions[2].icon,
-                  hint: viewModel.actions[2].hint,
-                  arrow: viewModel.actions[2].arrow),
-              style: RecordAmountListItemStyles.biggerStyle,
-              parent: this),
-          Padding(
-            padding: const EdgeInsets.all(32.0),
-            child: Row(
-              children: <Widget>[
-                Expanded(
-                  child: !widget._viewModel.isFilled
-                      ? RoundedButton(
-                          viewModel: RoundedButtonViewModel(
-                              title: "Record Sale", onTap: null),
-                          style: RoundedButtonStyle.largeRoundedButtonStyle()
-                              .copyWith(backgroundColor: Color(0xFFe9eaf2)))
-                      : RoundedButton(
-                          viewModel: RoundedButtonViewModel(
-                              title: "Record Sale",
-                              onTap: widget._viewModel.onTap),
-                          style: RoundedButtonStyle.largeRoundedButtonStyle()
-                              .copyWith(backgroundColor: Color(0xFF24d900))),
-                ),
-              ],
-            ),
-          )
+          Expanded(
+            child: !widget._viewModel.isFilled
+                ? RoundedButton(
+                    viewModel: RoundedButtonViewModel(
+                        title: viewModel.buttonTitle, onTap: null),
+                    style: RoundedButtonStyle.largeRoundedButtonStyle()
+                        .copyWith(backgroundColor: Color(0xFFe9eaf2)))
+                : RoundedButton(
+                    viewModel: RoundedButtonViewModel(
+                        title: viewModel.buttonTitle,
+                        onTap: widget._viewModel.onTap),
+                    style: viewModel.type == RecordType.sale
+                        ? RoundedButtonStyle.largeRoundedButtonStyle()
+                            .copyWith(backgroundColor: Color(0xFF24d900))
+                        : RoundedButtonStyle.largeRoundedButtonStyle()
+                            .copyWith(backgroundColor: Color(0xFFff8d4f))),
+          ),
         ],
       ),
     );

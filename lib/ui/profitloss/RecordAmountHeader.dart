@@ -6,8 +6,9 @@ import 'package:flutter/services.dart';
 class RecordAmountHeaderViewModel {
   String amount;
   final Function(String) listener;
+  bool isEditable;
 
-  RecordAmountHeaderViewModel({this.amount : "00", this.listener});
+  RecordAmountHeaderViewModel({this.amount, this.listener, this.isEditable});
 }
 
 class RecordAmountHeaderStyle {
@@ -106,6 +107,7 @@ class RecordAmountHeader extends StatelessWidget {
                   maxLines: _style.maxLines,
                   textInputAction: TextInputAction.done,
                   onChanged: _viewModel.listener,
+                  enabled: _viewModel.isEditable,
                 ),
               ])),
         ],

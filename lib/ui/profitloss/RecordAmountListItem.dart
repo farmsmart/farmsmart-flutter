@@ -13,6 +13,7 @@ class RecordAmountListItemViewModel {
   String selectedItem;
   String description;
   final Function(String) listener;
+  bool isEditable;
 
   RecordAmountListItemViewModel({this.icon, this.hint,
       this.arrow,
@@ -21,7 +22,7 @@ class RecordAmountListItemViewModel {
       this.listOfCrops,
       this.selectedItem,
       this.description,
-      this.listener});
+      this.listener, this.isEditable});
 }
 
 class RecordAmountListItemStyle {
