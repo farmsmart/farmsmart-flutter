@@ -24,6 +24,7 @@ class RecordAmountViewModel {
   Function onTap;
   RecordType type;
   bool isEditable;
+  String description;
 
   RecordAmountViewModel(
       {this.loadingStatus,
@@ -133,6 +134,7 @@ class RecordAmountState extends State<RecordAmount> {
             isEditable: viewModel.isEditable,
             icon: viewModel.actions[2].icon,
             hint: viewModel.actions[2].hint,
+            description: viewModel.actions[2].description,
             arrow: viewModel.actions[2].arrow),
         style: RecordAmountListItemStyles.biggerStyle,
         parent: this));

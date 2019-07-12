@@ -15,14 +15,17 @@ class RecordAmountListItemViewModel {
   final Function(String) listener;
   bool isEditable;
 
-  RecordAmountListItemViewModel({this.icon, this.hint,
+  RecordAmountListItemViewModel(
+      {this.icon,
+      this.hint,
       this.arrow,
       this.title,
       this.selectedDate,
       this.listOfCrops,
       this.selectedItem,
       this.description,
-      this.listener, this.isEditable});
+      this.listener,
+      this.isEditable});
 }
 
 class RecordAmountListItemStyle {
@@ -230,19 +233,22 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
-          TextField(
-            decoration: InputDecoration(
-                hintText: widget._viewModel.hint,
-                hintStyle: widget._style.pendingDetailTextStyle,
-                border: InputBorder.none,
-                contentPadding: widget._style.cardMargins,
-                counterText: ""),
-            textAlign: TextAlign.left,
-            style: widget._style.detailTextStyle,
-            maxLines: widget._style.maxLines,
-            controller: _textFieldController,
-            onEditingComplete: () => _checkTextField,
-          ),
+          widget._viewModel.isEditable
+              ? TextField(
+                  decoration: InputDecoration(
+                      hintText: widget._viewModel.hint,
+                      hintStyle: widget._style.pendingDetailTextStyle,
+                      border: InputBorder.none,
+                      contentPadding: widget._style.cardMargins,
+                      counterText: ""),
+                  textAlign: TextAlign.left,
+                  style: widget._style.detailTextStyle,
+                  maxLines: widget._style.maxLines,
+                  controller: _textFieldController,
+                  onEditingComplete: () => _checkTextField,
+                )
+              : Text(widget._viewModel.description,
+                  style: widget._style.detailTextStyle),
         ],
       ),
     ));
@@ -260,7 +266,7 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
             child: DropdownButton(
               value: widget._viewModel.selectedItem,
               style: widget._style.detailTextStyle,
-              items: _getDropDownMenuItems(),
+              items: widget._viewModel.isEditable ? _getDropDownMenuItems() : null,
               onChanged: _changeDropDownItem,
               hint: Text(widget._viewModel.hint,
                   style: widget._style.pendingDetailTextStyle),
@@ -287,7 +293,8 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
                       ? widget._viewModel.hint
                       : _formatDate(widget._viewModel.selectedDate),
                   style: widget._style.detailTextStyle),
-              onTap: () => _selectDate(context)),
+              onTap: () =>
+                  widget._viewModel.isEditable ? _selectDate(context) : null),
         ],
       ),
     ));

@@ -93,7 +93,7 @@ class RecordAmountHeader extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                TextField(
+                _viewModel.isEditable ? TextField(
                   decoration: InputDecoration(
                       hintText: _viewModel.amount,
                       hintStyle: _style.hintTextStyle,
@@ -108,7 +108,7 @@ class RecordAmountHeader extends StatelessWidget {
                   textInputAction: TextInputAction.done,
                   onChanged: _viewModel.listener,
                   enabled: _viewModel.isEditable,
-                ),
+                ) : Text(_viewModel.amount, style: _style.titleTextStyle),
               ])),
         ],
       ),
