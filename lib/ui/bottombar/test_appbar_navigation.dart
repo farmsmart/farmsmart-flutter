@@ -22,24 +22,43 @@ class SampleApp extends StatelessWidget {
   // This widget is the root of your application.
   static final double bottomBarIconSize = 25;
 
-  static final ArticleList _articleList = ArticleList(
-      key: PageStorageKey('ArticleList'),
+  static final Widget _discoverPage = ArticleList(
       viewModelProvider: ArticleListProvider(
           title: 'Discover',
           repository: articleRepo,
           group: ArticleCollectionGroup.discovery));
 
-  static final PlaygroundView _playgroundView = PlaygroundView(
-    key: PageStorageKey('Playground'),
+  static final Widget _myPlotPage = FirstPage();
+  static final Widget _profitLossPage = SecondPage();
+  static final Widget _communityPage = SecondPage();
+
+  static final Widget _playgroundView = PlaygroundView(
     widgetList: PlaygroundDataSourceImpl().getList(),
   );
 
   final List<Widget> _pages = [
-    _articleList,
+    _myPlotPage,
+    _profitLossPage,
+    _discoverPage,
+    _communityPage,
     _playgroundView,
   ];
 
   final List<BottomNavigationBarItem> _barItems = [
+    BottomNavigationBarItem(
+      activeIcon: Image.asset(Assets.BOTTOM_BAR_MY_PLOT_SELECTED,
+          height: bottomBarIconSize),
+      icon: Image.asset(Assets.BOTTOM_BAR_MY_PLOT_UNSELECTED,
+          height: bottomBarIconSize),
+      title: Text('My Plot'),
+    ),
+    BottomNavigationBarItem(
+      activeIcon: Image.asset(Assets.BOTTOM_BAR_PROFIT_LOSS_SELECTED,
+          height: bottomBarIconSize),
+      icon: Image.asset(Assets.BOTTOM_BAR_PROFIT_LOSS_UNSELECTED,
+          height: bottomBarIconSize),
+      title: Text('Profit/Loss'),
+    ),
     BottomNavigationBarItem(
       activeIcon: Image.asset(Assets.BOTTOM_BAR_DISCOVER_SELECTED,
           height: bottomBarIconSize),
@@ -52,17 +71,39 @@ class SampleApp extends StatelessWidget {
           height: bottomBarIconSize),
       icon: Image.asset(Assets.BOTTOM_BAR_COMMUNITY_UNSELECTED,
           height: bottomBarIconSize),
+      title: Text('Community'),
+    ),
+    BottomNavigationBarItem(
+      activeIcon: Image.asset(Assets.BOTTOM_BAR_COMMUNITY_SELECTED,
+          height: bottomBarIconSize),
+      icon: Image.asset(Assets.BOTTOM_BAR_COMMUNITY_UNSELECTED,
+          height: bottomBarIconSize),
       title: Text('Debug'),
     )
+  ];
+
+  final List<GlobalKey<NavigatorState>> navigatorKeys = [
+    GlobalKey<NavigatorState>(),
+    GlobalKey<NavigatorState>(),
+    GlobalKey<NavigatorState>(),
+    GlobalKey<NavigatorState>(),
+    GlobalKey<NavigatorState>(),
   ];
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Bottom Navigation Bar Demo',
+      theme: ThemeData(
+        fontFamily: 'GT-America-Standard',
+        brightness: Brightness.light,
+        scaffoldBackgroundColor: Color(0xFFFFFFFF),
+        primaryColor: const Color(0xFFFFFFFF),
+        accentColor: const Color(0xFF757575),
+      ),
       home: BottomNavigationBarController(
         pages: _pages,
         barItems: _barItems,
+        navigatorKeys: navigatorKeys,
       ),
     );
   }
@@ -74,9 +115,6 @@ class FirstPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("First Screen"),
-      ),
       body: ListView.builder(itemBuilder: (context, index) {
         return ListTile(
           title: Text('Lorem Ipsum'),
@@ -97,9 +135,6 @@ class SecondPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Second Screen"),
-      ),
       body: ListView.builder(itemBuilder: (context, index) {
         return ListTile(
             title: Text('Lorem Ipsum'),
