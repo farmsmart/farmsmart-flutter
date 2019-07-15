@@ -1,5 +1,6 @@
 import 'package:farmsmart_flutter/data/model/ImageURLProvider.dart';
 import 'package:farmsmart_flutter/ui/common/DogTagStyles.dart';
+import 'package:farmsmart_flutter/ui/myplot/viewmodel/PlotDetailViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:farmsmart_flutter/ui/common/network_image_from_future.dart';
 import 'package:farmsmart_flutter/ui/common/CircularProgress.dart';
@@ -12,8 +13,14 @@ class PlotListItemViewModel {
   final String detail;
   final double progress;
   final ImageURLProvider imageProvider;
+  final PlotDetailViewModel detailViewModel;
 
+<<<<<<< HEAD
   PlotListItemViewModel({ String title, String subtitle, String detail, double progress, ImageURLProvider imageProvider}) : this.title = title, this.subtitle = subtitle, this.detail = detail, this.progress = progress, this.imageProvider = imageProvider;
+=======
+  PlotListItemViewModel({ String title, String subtitle, String detail, ImageURLProvider imageProvider, PlotDetailViewModel detailViewModel}) : this.title = title, this.subtitle = subtitle, this.detail = detail, this.imageProvider = imageProvider, this.detailViewModel = detailViewModel;
+
+>>>>>>> WIP Plot detail view
 }
 
 abstract class PlotListItemStyle {
@@ -90,9 +97,9 @@ class _DefaultStyle implements PlotListItemStyle {
 }
 
 class PlotListItem {
-  Widget buildListItem(PlotListItemViewModel viewModel, {PlotListItemStyle itemStyle = const _DefaultStyle()}) {
+  Widget buildListItem({PlotListItemViewModel viewModel, Function onTap, PlotListItemStyle itemStyle = const _DefaultStyle()}) {
     return GestureDetector(
-        onTap: null,
+        onTap: onTap,
         child: Card(
             margin: itemStyle.cardEdgePadding,
             elevation: itemStyle.elevation,
@@ -122,22 +129,28 @@ class PlotListItem {
   }
 
   _buildMainTextView(PlotListItemViewModel viewModel, PlotListItemStyle itemStyle) {
+    final titleText = viewModel.title ?? "";
+    final subtitleText = viewModel.subtitle ?? "";
     return Expanded(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Text(
-            viewModel.title,
-            maxLines: itemStyle.maxLineText,
-            overflow: TextOverflow.ellipsis,
-            style: itemStyle.titleTextStyle,
-          ),
-          SizedBox(height: itemStyle.headingLineSpace),
-          Text(viewModel.subtitle,
+          Visibility(visible:viewModel.title != null ,
+                      child: Text(
+              titleText,
               maxLines: itemStyle.maxLineText,
               overflow: TextOverflow.ellipsis,
-              style: itemStyle.subtitleTextStyle),
+              style: itemStyle.titleTextStyle,
+            ),
+          ),
+          SizedBox(height: itemStyle.headingLineSpace),
+          Visibility(visible: viewModel.subtitle != null,
+                      child: Text(subtitleText,
+                maxLines: itemStyle.maxLineText,
+                overflow: TextOverflow.ellipsis,
+                style: itemStyle.subtitleTextStyle),
+          ),
           SizedBox(height: itemStyle.detailLineSpace),
           DogTag(viewModel: DogTagViewModel(title: viewModel.detail),
             style: DogTagStyles.compactStyle()

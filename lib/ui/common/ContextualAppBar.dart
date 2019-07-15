@@ -30,7 +30,7 @@ class ContextualAppBar extends StatelessWidget {
     final share = Container(
       margin: EdgeInsets.only(right:_style.insets.right),
       child:IconButton(icon: Icon(Icons.share, color: _style.iconColor), onPressed: _shareAction,));
-    final actions = (_shareAction == null) ? [] : [share]; 
+    final List<Widget> actions = (_shareAction == null) ? [] : [share]; 
     return AppBar(
       leading: isRoot ? _buildDismissIcon(context) : _buildBackIcon(),
       backgroundColor: theme.primaryColor,

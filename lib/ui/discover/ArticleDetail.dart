@@ -119,8 +119,8 @@ class ArticleDetail extends StatelessWidget {
                 },
                 physics: ScrollPhysics(),
                 shrinkWrap: true,
-                header: _buildHeader(
-                    context, releatedViewModels.isNotEmpty, viewModel, style),
+                header: buildHeader(
+                    context, releatedViewModels.isNotEmpty),
                 footer: footer),
           ),
         );
@@ -139,24 +139,23 @@ class ArticleDetail extends StatelessWidget {
     ).build(context);
   }
 
-  Widget _buildHeader(BuildContext context, bool relatedTitle,
-      ArticleDetailViewModel viewModel, ArticleDetailStyle style) {
+  Widget buildHeader(BuildContext context, bool relatedTitle) {
     final topWidgets = [
       _buildTitle(),
       _buildArticlePublishingDate(),
-      SizedBox(height: style.spaceBetweenDataAndImage),
+      SizedBox(height: _style.spaceBetweenDataAndImage),
       _buildImage(),
-      SizedBox(height: style.spaceBetweenElements),
+      SizedBox(height: _style.spaceBetweenElements),
       _buildBody(),
-      SizedBox(height: style.spaceBetweenElements),
+      SizedBox(height: _style.spaceBetweenElements),
     ];
     final midWidgets = [
       Container(
-        padding: style.titlePagePadding,
+        padding: _style.titlePagePadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(_viewModel.relatedTitle, style: style.titlePageStyle)
+            Text(_viewModel.relatedTitle, style: _style.titlePageStyle)
           ],
         ),
       ),
@@ -177,7 +176,7 @@ class ArticleDetail extends StatelessWidget {
   }
 
   Widget _buildTitle() {
-    return Container(
+    return Visibility(visible: _viewModel.title.isNotEmpty, child: Container(
         padding: _style.titlePagePadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -190,11 +189,11 @@ class ArticleDetail extends StatelessWidget {
               ),
             )
           ],
-        ));
+        )));
   }
 
   Widget _buildArticlePublishingDate() {
-    return Container(
+    return Visibility(visible: _viewModel.subtitle.isNotEmpty, child: Container(
         padding: _style.leftRightPadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -206,7 +205,7 @@ class ArticleDetail extends StatelessWidget {
               ),
             )
           ],
-        ));
+        )));
   }
 
   Widget _buildImage() {

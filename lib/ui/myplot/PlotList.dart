@@ -2,8 +2,11 @@ import 'package:farmsmart_flutter/data/bloc/ViewModelProvider.dart';
 import 'package:farmsmart_flutter/model/loading_status.dart';
 import 'package:farmsmart_flutter/ui/common/headerAndFooterListView.dart';
 import 'package:flutter/material.dart';
+import 'PlotDetail.dart';
 import 'PlotListItem.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
+
+import 'viewmodel/PlotDetailViewModel.dart';
 
 class PlotListViewModel {
   final String title;
@@ -95,10 +98,14 @@ class PlotList extends StatelessWidget {
 
   Widget _buildPage(BuildContext context, PlotListViewModel viewModel,
       PlotListStyle plotStyle, Function goToDetail) {
+       
     return HeaderAndFooterListView.builder(
         itemCount: viewModel.items.length,
         itemBuilder: (BuildContext context, int index) {
-          return PlotListItem().buildListItem(viewModel.items[index]);
+           final itemViewModel = viewModel.items[index];
+           final tapFunction = () => _tappedListItem(
+          context: context, viewModel: itemViewModel.detailViewModel);
+          return PlotListItem().buildListItem(viewModel: viewModel.items[index], onTap: tapFunction);
         },
         physics: ScrollPhysics(),
         shrinkWrap: true,
@@ -155,6 +162,15 @@ class PlotList extends StatelessWidget {
             FlatButton(child: Text(retryButton), onPressed: viewModel.update)
           ])
         ],
+      ),
+    );
+  }
+
+    void _tappedListItem(
+      {BuildContext context, PlotDetailViewModel viewModel}) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => PlotDetail(viewModel: viewModel),
       ),
     );
   }
