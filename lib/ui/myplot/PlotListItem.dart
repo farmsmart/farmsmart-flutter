@@ -3,6 +3,7 @@ import 'package:farmsmart_flutter/ui/common/DogTagStyles.dart';
 import 'package:farmsmart_flutter/utils/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:farmsmart_flutter/ui/common/network_image_from_future.dart';
+import 'package:farmsmart_flutter/ui/common/CircularProgress.dart';
 import 'package:farmsmart_flutter/ui/common/Dogtag.dart';
 import 'package:farmsmart_flutter/ui/common/ListDivider.dart';
 
@@ -10,20 +11,26 @@ class PlotListItemViewModel {
   final String title;
   final String subtitle;
   final String detail;
+  final double progress;
 
   Function onTap;
 
   final Future<String> imageUrl;
 
-  PlotListItemViewModel(
-      this.title, this.subtitle, this.detail, this.imageUrl, this.onTap);
+  PlotListItemViewModel(this.title, this.subtitle, this.detail, this.imageUrl,
+      this.onTap, this.progress);
 }
 
 PlotListItemViewModel fromCropEntityToViewModel(
     CropEntity currentCrop, Function goToDetail) {
   //FIXME: Change the mocked data "planting" and "Day 6" with the correct FirebaseData when available
-  return PlotListItemViewModel(currentCrop.name ?? Strings.defaultCropNameText,
-      "Planting", "Day 6", currentCrop.imageUrl, () => goToDetail(currentCrop));
+  return PlotListItemViewModel(
+      currentCrop.name ?? Strings.defaultCropNameText,
+      "Planting",
+      "Day 6",
+      currentCrop.imageUrl,
+      () => goToDetail(currentCrop),
+      0.7);
 }
 
 abstract class PlotListItemStyle {
@@ -50,6 +57,8 @@ abstract class PlotListItemStyle {
   final double detailLineSpace;
   final double imageLineSpace;
   final int maxLineText;
+  final double circularSize;
+  final double circularLineWidth;
 
   PlotListItemStyle(
       this.primaryColor,
@@ -68,7 +77,9 @@ abstract class PlotListItemStyle {
       this.headingLineSpace,
       this.overlayColor,
       this.imageLineSpace,
-      this.maxLineText);
+      this.maxLineText,
+      this.circularSize,
+      this.circularLineWidth);
 }
 
 class _DefaultStyle implements PlotListItemStyle {
@@ -98,6 +109,8 @@ class _DefaultStyle implements PlotListItemStyle {
   final double detailLineSpace = 12;
   final double imageLineSpace = 20;
   final int maxLineText = 1;
+  final double circularSize = 87;
+  final double circularLineWidth = 3;
 
   const _DefaultStyle();
 }
@@ -118,7 +131,14 @@ class PlotListItem {
                       children: <Widget>[
                         _buildMainTextView(viewModel, itemStyle),
                         SizedBox(width: itemStyle.imageLineSpace),
-                        _buildPlotImage(viewModel.imageUrl, itemStyle)
+                        Stack(
+                          alignment: AlignmentDirectional.center,
+                          children: <Widget>[
+                            _buildPlotImage(viewModel.imageUrl, itemStyle),
+                            CircularProgress(
+                                progress: viewModel.progress, lineWidth: itemStyle.circularLineWidth, size: itemStyle.circularSize,),
+                          ],
+                        )
                       ])),
               ListDivider.build(),
             ])));
@@ -162,7 +182,7 @@ class PlotListItem {
       Positioned.fill(
           child: Container(
         color: itemStyle.overlayColor,
-      ))
+      )),
     ]));
   }
 }

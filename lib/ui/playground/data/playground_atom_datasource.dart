@@ -1,3 +1,4 @@
+import 'package:farmsmart_flutter/ui/common/CircularProgress.dart';
 import 'package:farmsmart_flutter/data/bloc/article/ArticleDetailTransformer.dart';
 import 'package:farmsmart_flutter/data/bloc/article/ArticleListItemViewModelTransformer.dart';
 import 'package:farmsmart_flutter/data/repositories/article/implementation/MockArticlesRepository.dart';
@@ -10,10 +11,10 @@ import 'package:farmsmart_flutter/ui/discover/StandardListItem.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockActionSheetViewModel.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockDogTagViewModel.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockRoundedButtonViewModel.dart';
+import 'package:farmsmart_flutter/ui/mockData/MockStageCardViewModel.dart';
 import 'package:farmsmart_flutter/ui/playground/data/playground_data_source.dart';
 import 'package:farmsmart_flutter/ui/playground/playground_widget.dart';
 import 'package:farmsmart_flutter/ui/common/stage_card.dart';
-import 'package:farmsmart_flutter/ui/mockData/MockStageCardViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -144,6 +145,14 @@ class PlayGroundAtomDataSource implements PlaygroundDataSource {
                     listItemTransformer: ArticleListItemViewModelTransformer()))
             .transform(
           from: MockArticle.build(),
+        ),
+      ),
+      PlaygroundWidget(
+        title: 'CircularProgress',
+        child: Container(
+          alignment: Alignment.center,
+          padding: EdgeInsets.symmetric(vertical: 20.0),
+          child: CircularProgress(progress: 0.75, lineWidth: 3, size: 87,)
         ),
       ),
       PlaygroundWidget(
