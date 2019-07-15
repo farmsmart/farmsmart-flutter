@@ -37,11 +37,79 @@ class RecordAmountViewModel {
       this.isEditable: true});
 }
 
+class RecordAmountStyle {
+  final EdgeInsets buttonEdgePadding;
+
+  final EdgeInsets appBarLeftMargin;
+  final EdgeInsets appBarRightMargin;
+
+  final double headerLineSpace;
+  final double appBarElevation;
+  final double appBarIconHeight;
+  final double appBarIconWidth;
+
+  const RecordAmountStyle(
+      {this.buttonEdgePadding,
+      this.appBarLeftMargin,
+      this.appBarRightMargin,
+      this.headerLineSpace,
+      this.appBarElevation,
+      this.appBarIconHeight,
+      this.appBarIconWidth});
+
+  RecordAmountStyle copyWit(
+      {EdgeInsets buttonEdgePadding,
+      EdgeInsets appBarLeftMargin,
+      EdgeInsets appBarRightMargin,
+      double headerLineSpace,
+      double appBarElevation,
+      double appBarIconHeight,
+      double appBarIconWidth}) {
+    return RecordAmountStyle(
+        buttonEdgePadding: buttonEdgePadding ?? this.buttonEdgePadding,
+        appBarLeftMargin: appBarLeftMargin ?? this.appBarLeftMargin,
+        appBarRightMargin: appBarRightMargin ?? this.appBarRightMargin,
+        headerLineSpace: headerLineSpace ?? this.headerLineSpace,
+        appBarElevation: appBarElevation ?? this.appBarElevation,
+        appBarIconHeight: appBarIconHeight ?? this.appBarIconHeight,
+        appBarIconWidth: appBarIconWidth ?? this.appBarIconWidth);
+  }
+}
+
+class _DefaultStyle extends RecordAmountStyle {
+  final EdgeInsets buttonEdgePadding = const EdgeInsets.all(32.0);
+
+  final EdgeInsets appBarLeftMargin = const EdgeInsets.only(left: 31);
+  final EdgeInsets appBarRightMargin = const EdgeInsets.only(right: 2);
+
+  final double headerLineSpace = 13;
+
+  final double appBarElevation = 0;
+  final double appBarIconHeight = 20;
+  final double appBarIconWidth = 20.5;
+
+  const _DefaultStyle(
+      {EdgeInsets buttonEdgePadding,
+      EdgeInsets appBarLeftMargin,
+      EdgeInsets appBarRightMargin,
+      double headerLineSpace,
+      double appBarElevation,
+      double appBarIconHeight,
+      double appBarIconWidth});
+}
+
+const RecordAmountStyle _defaultStyle = const _DefaultStyle();
+
 class RecordAmount extends StatefulWidget {
   final RecordAmountViewModel _viewModel;
+  final RecordAmountStyle _style;
 
-  RecordAmount({Key key, RecordAmountViewModel viewModel})
+  RecordAmount(
+      {Key key,
+      RecordAmountViewModel viewModel,
+      RecordAmountStyle style = _defaultStyle})
       : this._viewModel = viewModel,
+        this._style = style,
         super(key: key);
 
   @override
@@ -52,6 +120,9 @@ class RecordAmountState extends State<RecordAmount> {
   String selectedCrop;
   bool amoundIsFilled = false;
   bool cropIsFilled = false;
+  final int firstListItem = 0;
+  final int secondListItem = 1;
+  final int thirdListItem = 2;
 
   @override
   void initState() {
@@ -67,28 +138,29 @@ class RecordAmountState extends State<RecordAmount> {
         return Container(
             child: CircularProgressIndicator(), alignment: Alignment.center);
       case LoadingStatus.SUCCESS:
-        return _buildPage(context, widget._viewModel);
+        return _buildPage(context, widget._viewModel, widget._style);
       case LoadingStatus.ERROR:
         return Text(Strings.errorString);
     }
   }
 
-
-
-  Widget _buildPage(BuildContext context, RecordAmountViewModel viewModel) {
+  Widget _buildPage(BuildContext context, RecordAmountViewModel viewModel,
+      RecordAmountStyle style) {
     return Scaffold(
       appBar: AppBar(
-          elevation: 0,
-          leading: FlatButton(
-              onPressed: () => Navigator.pop(context, false),
-              padding: EdgeInsets.only(left: 31.5),
-              child: Image.asset('assets/icons/nav_icon_back.png',
-                  height: 20, width: 20.5)),
-      actions: <Widget>[FlatButton(
-          onPressed: () => null,
-          padding: EdgeInsets.only(right: 2),
-          child: Image.asset('assets/icons/nav_icon_options.png',
-              height: 20, width: 20.5))],
+        elevation: style.appBarElevation,
+        leading: FlatButton(
+            onPressed: () => Navigator.pop(context, false),
+            padding: style.appBarLeftMargin,
+            child: Image.asset('assets/icons/nav_icon_back.png',
+                height: style.appBarIconHeight, width: style.appBarIconWidth)),
+        actions: <Widget>[
+          FlatButton(
+              onPressed: () => null,
+              padding: style.appBarRightMargin,
+              child: Image.asset('assets/icons/nav_icon_options.png',
+                  height: style.appBarIconHeight, width: style.appBarIconWidth))
+        ],
       ),
       body: GestureDetector(
         onTap: () {
@@ -96,13 +168,14 @@ class RecordAmountState extends State<RecordAmount> {
           checkIfFilled();
         },
         child: ListView(
-          children: _buildContent(viewModel),
+          children: _buildContent(viewModel, style),
         ),
       ),
     );
   }
 
-  List<Widget> _buildContent(RecordAmountViewModel viewModel) {
+  List<Widget> _buildContent(
+      RecordAmountViewModel viewModel, RecordAmountStyle style) {
     List<Widget> listBuilder = [];
 
     listBuilder.add(RecordAmountHeader(
@@ -117,16 +190,16 @@ class RecordAmountState extends State<RecordAmount> {
             ? RecordAmountHeaderStyle.defaultSaleStyle()
             : RecordAmountHeaderStyle.defaultCostStyle()));
 
-    listBuilder.add(SizedBox(height: 13));
+    listBuilder.add(SizedBox(height: style.headerLineSpace));
 
     listBuilder.add(RecordAmountListItem(
         viewModel: RecordAmountListItemViewModel(
             isEditable: viewModel.isEditable,
-            icon: viewModel.actions[0].icon,
-            hint: viewModel.actions[0].hint,
-            arrow: viewModel.actions[0].arrow,
-            title: viewModel.actions[0].title,
-            selectedDate: viewModel.actions[0].selectedDate),
+            icon: viewModel.actions[firstListItem].icon,
+            hint: viewModel.actions[firstListItem].hint,
+            arrow: viewModel.actions[firstListItem].arrow,
+            title: viewModel.actions[firstListItem].title,
+            selectedDate: viewModel.actions[firstListItem].selectedDate),
         parent: this));
 
     listBuilder.add(ListDivider.build());
@@ -134,14 +207,14 @@ class RecordAmountState extends State<RecordAmount> {
     listBuilder.add(RecordAmountListItem(
         viewModel: RecordAmountListItemViewModel(
             isEditable: viewModel.isEditable,
-            icon: viewModel.actions[1].icon,
-            hint: viewModel.actions[1].hint,
+            icon: viewModel.actions[secondListItem].icon,
+            hint: viewModel.actions[secondListItem].hint,
             selectedItem: viewModel.isEditable
                 ? selectedCrop
-                : viewModel.actions[1].selectedItem,
-            arrow: viewModel.actions[1].arrow,
-            title: viewModel.actions[1].title,
-            listOfCrops: viewModel.actions[1].listOfCrops,
+                : viewModel.actions[secondListItem].selectedItem,
+            arrow: viewModel.actions[secondListItem].arrow,
+            title: viewModel.actions[secondListItem].title,
+            listOfCrops: viewModel.actions[secondListItem].listOfCrops,
             listener: (crop) {
               cropIsFilled = true;
               checkIfFilled();
@@ -153,23 +226,24 @@ class RecordAmountState extends State<RecordAmount> {
     listBuilder.add(RecordAmountListItem(
         viewModel: RecordAmountListItemViewModel(
             isEditable: viewModel.isEditable,
-            icon: viewModel.actions[2].icon,
-            hint: viewModel.actions[2].hint,
-            description: viewModel.actions[2].description,
-            arrow: viewModel.actions[2].arrow),
+            icon: viewModel.actions[thirdListItem].icon,
+            hint: viewModel.actions[thirdListItem].hint,
+            description: viewModel.actions[thirdListItem].description,
+            arrow: viewModel.actions[thirdListItem].arrow),
         style: RecordAmountListItemStyles.biggerStyle,
         parent: this));
 
     if (viewModel.isEditable) {
-      listBuilder.add(_buildFooter(viewModel));
+      listBuilder.add(_buildFooter(viewModel, style));
     }
 
     return listBuilder;
   }
 
-  Padding _buildFooter(RecordAmountViewModel viewModel) {
+  Padding _buildFooter(
+      RecordAmountViewModel viewModel, RecordAmountStyle style) {
     return Padding(
-      padding: const EdgeInsets.all(32.0),
+      padding: style.buttonEdgePadding,
       child: Row(
         children: <Widget>[
           Expanded(

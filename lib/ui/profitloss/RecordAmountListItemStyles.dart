@@ -18,7 +18,6 @@ class RecordAmountListItemStyles {
       cardMargins: EdgeInsets.all(0),
       actionItemElevation: 0,
       itemAlignment: CrossAxisAlignment.center,
-      actionItemHeight: 69,
       iconHeight: 20,
       iconLineSpace: 22,
       detailTextSpacing: 13,
@@ -29,7 +28,6 @@ class RecordAmountListItemStyles {
         fontSize: 17, fontWeight: FontWeight.normal, color: Color(0xff1a1b46)),
     pendingDetailTextStyle: TextStyle(
         fontSize: 17, fontWeight: FontWeight.normal, color: Color(0x4c1a1b46)),
-    actionItemHeight: 150,
     itemAlignment: CrossAxisAlignment.start);
 
 }
