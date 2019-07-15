@@ -1,32 +1,132 @@
 import 'dart:ui';
 
+import 'package:farmsmart_flutter/ui/common/ActionSheet.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
+import 'package:farmsmart_flutter/ui/mockData/MockActionSheetViewModel.dart';
 import 'package:flutter/material.dart';
 
 class LandingPageViewModel {
-  String title;
-  String buttonTitle;
-  Image welcomeImage;
-  Image titleImage;
+  String detailText;
+  String actionText;
   String footerText;
 
-  LandingPageViewModel(this.title, this.buttonTitle, this.welcomeImage,
-      this.titleImage, this.footerText);
+  String headerImage;
+  String subtitleImage;
+
+  LandingPageViewModel({this.detailText,
+    this.actionText,
+    this.headerImage,
+    this.subtitleImage,
+    this.footerText});
 }
 
 class LandingPageStyle {
-  final TextStyle titleTextStyle;
-  final TextStyle buttonTextStyle;
+  final TextStyle detailTextStyle;
+  final TextStyle footerTextStyle;
 
-  LandingPageStyle({this.titleTextStyle, this.buttonTextStyle});
+  final EdgeInsets headerEdgePadding;
+  final EdgeInsets detailTextEdgePadding;
+  final EdgeInsets actionEdgePadding;
+  final EdgeInsets footerTextEdgePadding;
+
+  final double subtitleLineSpace;
+  final double detailTextLineSpace;
+  final double actionLineSpace;
+  final int detailTextMaxLines;
+  final int footerTextMaxLines;
+
+  const LandingPageStyle({
+    this.detailTextStyle,
+    this.footerTextStyle,
+    this.headerEdgePadding,
+    this.detailTextEdgePadding,
+    this.actionEdgePadding,
+    this.footerTextEdgePadding,
+    this.subtitleLineSpace,
+    this.detailTextLineSpace,
+    this.actionLineSpace,
+    this.detailTextMaxLines,
+    this.footerTextMaxLines,
+  });
+
+  LandingPageStyle copyWith({
+    TextStyle detailTextStyle,
+    TextStyle footerTextStyle,
+    EdgeInsets headerEdgePadding,
+    EdgeInsets detailTextEdgePadding,
+    EdgeInsets actionEdgePadding,
+    EdgeInsets footerTextEdgePadding,
+    double subtitleLineSpace,
+    double detailTextLineSpace,
+    double actionLineSpace,
+    int detailTextMaxLines,
+    int footerTextMaxLines,
+  }) {
+    return LandingPageStyle(
+      detailTextStyle: detailTextStyle ?? this.detailTextStyle,
+      footerTextStyle: footerTextStyle ?? this.footerTextStyle,
+      headerEdgePadding: headerEdgePadding ?? this.headerEdgePadding,
+      detailTextEdgePadding:
+      detailTextEdgePadding ?? this.detailTextEdgePadding,
+      actionEdgePadding: actionEdgePadding ?? this.actionEdgePadding,
+      footerTextEdgePadding: footerTextEdgePadding ?? this.footerTextEdgePadding,
+      subtitleLineSpace: subtitleLineSpace ?? this.subtitleLineSpace,
+      detailTextLineSpace: detailTextLineSpace ?? this.detailTextLineSpace,
+      actionLineSpace: actionLineSpace ?? this.actionLineSpace,
+      detailTextMaxLines: detailTextMaxLines ?? this.detailTextMaxLines,
+      footerTextMaxLines: footerTextMaxLines ?? this.footerTextMaxLines,
+    );
+  }
 }
+
+class _DefaultStyle extends LandingPageStyle {
+  final TextStyle detailTextStyle = const TextStyle(
+      fontSize: 17,
+      height: 1.1,
+      fontWeight: FontWeight.normal,
+      color: Color(0xff4c4e6e));
+  final TextStyle footerTextStyle = const TextStyle(
+      fontWeight: FontWeight.normal, fontSize: 15, color: Color(0xff4c4e6e));
+
+  final EdgeInsets headerEdgePadding = const EdgeInsets.only(
+      top: 56, bottom: 20.5);
+  final EdgeInsets detailTextEdgePadding =
+  const EdgeInsets.only(left: 39.75, right: 39.75);
+  final EdgeInsets actionEdgePadding = const EdgeInsets.only(
+      left: 34, right: 34);
+  final EdgeInsets footerTextEdgePadding = const EdgeInsets.only(
+      left: 30, right: 30, bottom: 16);
+
+  final double subtitleLineSpace = 13;
+  final double detailTextLineSpace = 38;
+  final double actionLineSpace = 30;
+  final int detailTextMaxLines = 3;
+  final int footerTextMaxLines = 1;
+
+  const _DefaultStyle({
+    TextStyle detailTextStyle,
+    TextStyle footerTextStyle,
+    EdgeInsets headerEdgePadding,
+    EdgeInsets detailTextEdgePadding,
+    EdgeInsets actionEdgePadding,
+    EdgeInsets footerTextEdgePadding,
+    double subtitleLineSpace,
+    double detailTextLineSpace,
+    double actionLineSpace,
+    int detailTextMaxLines,
+    int footerTextMaxLines,
+  });
+}
+
+const LandingPageStyle _defaultStyle = const _DefaultStyle();
 
 class LandingPage extends StatelessWidget {
   final LandingPageViewModel _viewModel;
   final LandingPageStyle _style;
 
-  const LandingPage(
-      {Key key, LandingPageViewModel viewModel, LandingPageStyle style})
+  const LandingPage({Key key,
+    LandingPageViewModel viewModel,
+    LandingPageStyle style = _defaultStyle})
       : this._viewModel = viewModel,
         this._style = style,
         super(key: key);
@@ -37,70 +137,102 @@ class LandingPage extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            Padding(
-              padding: EdgeInsets.only(top: 53, bottom: 31.5),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Image.asset("assets/raw/illustration_welcome.png")
-                ],
-              ),
-            ),
+            _buildHeader(),
+            _buildSubtitle(),
             SizedBox(
-              height: 18.5,
+              height: _style.subtitleLineSpace,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Image.asset("assets/raw/logo_default.png"),
-              ],
-            ),
+            _buildDetailText(),
             SizedBox(
-              height: 32,
+              height: _style.detailTextLineSpace,
             ),
-            Padding(
-              padding: EdgeInsets.only(left: 40, right: 39.5),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Expanded(
-                    child: Text(
-                      "A network and knowledge source for farmers in Kenya",
-                      textAlign: TextAlign.center,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                          fontSize: 17,
-                          fontWeight: FontWeight.normal,
-                          color: Color(0xff4c4e6e)),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            _buildAction(context),
             SizedBox(
-              height: 66,
+              height: _style.actionLineSpace,
             ),
-            Padding(
-              padding: EdgeInsets.only(left: 34, right: 34),
-              child: RoundedButton(
-                viewModel: RoundedButtonViewModel(title: "ANZA"),
-                style: RoundedButtonStyle.largeRoundedButtonStyle(),
-              ),
-            ),
-            SizedBox(
-              height: 34,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text("Switch Langauge – Badilisha Lugha", style: TextStyle(fontWeight: FontWeight.normal, fontSize: 15, color: Color(0xff4c4e6e)),),
-              ],
-            ),
+            _buildFooter(),
           ],
         ),
       ),
     );
   }
+
+  Row _buildFooter() {
+    return Row(
+            children: <Widget>[
+              Expanded(
+                child: Padding(
+                  padding: _style.footerTextEdgePadding,
+                  child: Text(
+                    _viewModel.footerText,
+                    textAlign: TextAlign.center,
+                    style: _style.footerTextStyle,
+                    maxLines: _style.footerTextMaxLines,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ),
+            ],
+          );
+  }
+
+  Padding _buildAction(BuildContext context) {
+    return Padding(
+            padding: _style.actionEdgePadding,
+            child: RoundedButton(
+              viewModel: RoundedButtonViewModel(title: _viewModel.actionText,
+                  onTap: () => _onMenuPressed(context)),
+              style: RoundedButtonStyle.largeRoundedButtonStyle(),
+            ),
+          );
+  }
+
+  Padding _buildDetailText() {
+    return Padding(
+            padding: _style.detailTextEdgePadding,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Expanded(
+                  child: Text(
+                    _viewModel.detailText,
+                    textAlign: TextAlign.center,
+                    maxLines: _style.detailTextMaxLines,
+                    overflow: TextOverflow.ellipsis,
+                    style: _style.detailTextStyle,
+                  ),
+                ),
+              ],
+            ),
+          );
+  }
+
+  Row _buildSubtitle() {
+    return Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Image.asset(_viewModel.subtitleImage),
+            ],
+          );
+  }
+
+  Padding _buildHeader() {
+    return Padding(
+            padding: _style.headerEdgePadding,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[Image.asset(_viewModel.headerImage)],
+            ),
+          );
+  }
+}
+
+Future _onMenuPressed(BuildContext context) async {
+  showModalBottomSheet(
+      context: context,
+      builder: (widgetBuilder) =>
+          ActionSheet(
+              viewModel: MockActionSheetViewModel.buildWithCheckBox(),
+              style: ActionSheetStyle.defaultStyle()));
 }
