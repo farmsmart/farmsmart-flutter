@@ -61,7 +61,7 @@ class RecordAmountHeaderStyle {
             fontWeight: FontWeight.w500,
             color: Color(0xFF24d900),letterSpacing: 4.32),
         edgePadding: const EdgeInsets.symmetric(horizontal: 32),
-        height: 138,
+        height: 137.5,
         maxLines: 1);
   }
 }

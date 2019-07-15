@@ -104,7 +104,7 @@ class _DefaultStyle extends RecordAmountListItemStyle {
       fontSize: 15, fontWeight: FontWeight.normal, color: Color(0xff767690));
 
   final EdgeInsets actionItemEdgePadding =
-      const EdgeInsets.only(left: 32, right: 32, top: 26, bottom: 26);
+      const EdgeInsets.only(left: 32, right: 32, top: 25.8, bottom: 25.8);
   final EdgeInsets cardMargins = const EdgeInsets.all(0);
 
   final double actionItemElevation = 0;
