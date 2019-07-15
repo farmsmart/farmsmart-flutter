@@ -3,13 +3,12 @@ import 'package:flutter/material.dart';
 class TabNavigator extends StatelessWidget {
   TabNavigator({
     @required this.child,
-    @required this.navigatorKey,
     @required this.barItem,
   });
 
   final Widget child;
-  final GlobalKey<NavigatorState> navigatorKey;
   final BottomNavigationBarItem barItem;
+  final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
   @override
   Widget build(BuildContext context) {

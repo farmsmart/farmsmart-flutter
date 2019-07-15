@@ -2,21 +2,23 @@ import 'package:farmsmart_flutter/ui/bottombar/tab_navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-class BottomNavigationBarController extends StatefulWidget {
+class PersistentBottomNavigationBar extends StatefulWidget {
+  final Color backgroundColor;
   final List<TabNavigator> tabs;
 
-  const BottomNavigationBarController({
+  const PersistentBottomNavigationBar({
     Key key,
+    this.backgroundColor = Colors.white,
     this.tabs,
   }) : super(key: key);
 
   @override
-  _BottomNavigationBarControllerState createState() =>
-      _BottomNavigationBarControllerState();
+  _PersistentBottomNavigationBarState createState() =>
+      _PersistentBottomNavigationBarState();
 }
 
-class _BottomNavigationBarControllerState
-    extends State<BottomNavigationBarController> {
+class _PersistentBottomNavigationBarState
+    extends State<PersistentBottomNavigationBar> {
   int _selectedIndex = 0;
 
   @override
@@ -37,7 +39,7 @@ class _BottomNavigationBarControllerState
   Widget _bottomNavigationBar(int selectedIndex) {
     return BottomNavigationBar(
       elevation: 0,
-      backgroundColor: Colors.white,
+      backgroundColor: widget.backgroundColor,
       type: BottomNavigationBarType.fixed,
       onTap: (int index) => setState(() => _selectedIndex = index),
       currentIndex: selectedIndex,
@@ -52,11 +54,11 @@ class _BottomNavigationBarControllerState
   List<Widget> _buildChildren(List<TabNavigator> tabs) {
     List<Widget> children = List();
     tabs.asMap().forEach((index, tabNavigator) =>
-        children.add(_buildOffstageNavigators(index, tabNavigator)));
+        children.add(_buildVisibilityNavigators(index, tabNavigator)));
     return children;
   }
 
-  Widget _buildOffstageNavigators(int index, TabNavigator tabNavigator) {
+  Widget _buildVisibilityNavigators(int index, TabNavigator tabNavigator) {
     return Visibility(
       visible: _selectedIndex == index,
       maintainState: true,
