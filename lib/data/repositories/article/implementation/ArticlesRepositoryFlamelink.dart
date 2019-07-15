@@ -3,54 +3,34 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:farmsmart_flutter/data/model/EntityCollectionInterface.dart';
 import 'package:farmsmart_flutter/data/model/article_entity.dart';
 import 'package:farmsmart_flutter/data/model/entities_const.dart';
-import 'package:farmsmart_flutter/data/repositories/image/implementation/ImageRepositoryFlamelink.dart';
 import '../../../firebase_const.dart';
 import '../../FlameLink.dart';
+import 'package:farmsmart_flutter/model/enums.dart';
 import '../ArticleRepositoryInterface.dart';
 import 'transformers/FirebaseArticleTransformer.dart';
 
-final transformer = FlamelinkArticleTransformer();
 
 ArticleEntity _transform(FlameLink cms, DocumentSnapshot snapshot) {
-  var article = transformer.transform(from: snapshot);
-  var relatedRefs = [];
-  var imageRefs = [];
-  if (snapshot.data[RELATED_ARTICLES] != null) {
-    relatedRefs = List<String>.from(snapshot.data[RELATED_ARTICLES]
-        .map((article) => article[ARTICLE].path)).toList();
-  }
-  if (snapshot.data[IMAGE] != null) {
-    imageRefs =
-        List<String>.from(snapshot.data[IMAGE].map((image) => image.path))
-            .toList();
-  }
-  final relatedPaths = List<String>.from(relatedRefs);
-  final imagePaths = List<String>.from(imageRefs);
-
-  final articleCollection =
-      FlamelinkDocumentCollection.list(cms: cms, paths: relatedPaths);
-  final imageCollection =
-      FlamelinkDocumentCollection.list(cms: cms, paths: imagePaths);
-  article.related =
-      ArticleEntityCollectionFlamelink(collection: articleCollection);
-  article.images = ImageEntityCollectionFlamelink(collection: imageCollection);
-  return article;
+  final transformer = FlamelinkArticleTransformer(cms: cms);
+  return transformer.transform(from: snapshot);
 }
 
-class ArticleEntityCollectionFlamelink
-    implements EntityCollection<ArticleEntity> {
+class ArticleEntityCollectionFlamelink implements EntityCollection<ArticleEntity> {
   final FlamelinkDocumentCollection _collection;
+  final bool _onlyPublished;
 
-  ArticleEntityCollectionFlamelink({FlamelinkDocumentCollection collection})
-      : _collection = collection;
+  ArticleEntityCollectionFlamelink({FlamelinkDocumentCollection collection, bool onlyPublished = true})
+      : _collection = collection, _onlyPublished = onlyPublished;
 
   @override
   Future<List<ArticleEntity>> getEntities({int limit = 0}) {
-    return _collection.getDocuments().then((documents) {
-      return documents
-          .map((document) => _transform(_collection.cms, document))
-          .toList();
-    });
+    return _collection.getDocuments().then((documents) { 
+      var articles =  documents.map((document) => _transform(_collection.cms, document)).toList(); 
+      if(_onlyPublished) {
+          articles.removeWhere((article) { return article.status != Status.PUBLISHED;});
+      }
+      return articles;
+      });
   }
 }
 
@@ -58,6 +38,7 @@ class ArticlesRepositoryFlameLink implements ArticleRepositoryInterface {
   final FlameLink _cms;
   static final _articleSchema = "article";
   static final _articleDirectoryName = "articleDirectory";
+
 
   ArticlesRepositoryFlameLink(FlameLink cms) : _cms = cms;
 
@@ -88,8 +69,7 @@ class ArticlesRepositoryFlameLink implements ArticleRepositoryInterface {
   }
 
   @override
-  Future<List<ArticleEntity>> getArticles(
-      EntityCollection<ArticleEntity> collection) {
+  Future<List<ArticleEntity>> getArticles(EntityCollection<ArticleEntity> collection) {
     return collection.getEntities();
   }
 
@@ -107,8 +87,7 @@ class ArticlesRepositoryFlameLink implements ArticleRepositoryInterface {
         final publishedDocuments = _cms
             .documentsQuery(schema: _articleSchema, limit: limit)
             .where(PUBLICATION_STATUS, isEqualTo: DataStatus.PUBLISHED);
-        final collection =
-            FlamelinkDocumentCollection(cms: _cms, query: publishedDocuments);
+        final collection = FlamelinkDocumentCollection(cms: _cms, query: publishedDocuments);
         return ArticleEntityCollectionFlamelink(collection: collection)
             .getEntities();
     }
@@ -120,10 +99,8 @@ class ArticlesRepositoryFlameLink implements ArticleRepositoryInterface {
           .map((article) => article[ARTICLE].path.toString())
           .toList();
       final paths = List<String>.from(refs);
-      final collection =
-          FlamelinkDocumentCollection.list(cms: _cms, paths: paths);
-      return ArticleEntityCollectionFlamelink(collection: collection)
-          .getEntities();
+      final collection = FlamelinkDocumentCollection.list(cms: _cms, paths: paths);
+      return ArticleEntityCollectionFlamelink(collection: collection).getEntities();
     });
   }
 }

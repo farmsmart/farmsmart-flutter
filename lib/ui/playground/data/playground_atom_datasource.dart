@@ -1,97 +1,196 @@
 import 'package:farmsmart_flutter/ui/mockData/MockRecordAmountViewModel.dart';
 import 'package:farmsmart_flutter/ui/profitloss/RecordAmountListItem.dart';
 import 'package:farmsmart_flutter/ui/profitloss/RecordAmountHeader.dart';
+import 'package:farmsmart_flutter/ui/common/CircularProgress.dart';
 import 'package:farmsmart_flutter/data/bloc/article/ArticleDetailTransformer.dart';
 import 'package:farmsmart_flutter/data/bloc/article/ArticleListItemViewModelTransformer.dart';
 import 'package:farmsmart_flutter/data/repositories/article/implementation/MockArticlesRepository.dart';
-import 'package:farmsmart_flutter/ui/discover/HeroListItem.dart';
-import 'package:farmsmart_flutter/ui/discover/StandardListItem.dart';
+import 'package:farmsmart_flutter/ui/common/ActionSheetListItem.dart';
+import 'package:farmsmart_flutter/ui/common/DogTagStyles.dart';
 import 'package:farmsmart_flutter/ui/common/Dogtag.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
+import 'package:farmsmart_flutter/ui/discover/HeroListItem.dart';
+import 'package:farmsmart_flutter/ui/discover/StandardListItem.dart';
+import 'package:farmsmart_flutter/ui/mockData/MockActionSheetViewModel.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockDogTagViewModel.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockRoundedButtonViewModel.dart';
-import 'package:farmsmart_flutter/ui/common/ActionSheetListItem.dart';
-import 'package:farmsmart_flutter/ui/mockData/MockActionSheetViewModel.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
+import 'package:farmsmart_flutter/ui/mockData/MockStageCardViewModel.dart';
 import 'package:farmsmart_flutter/ui/playground/data/playground_data_source.dart';
+import 'package:farmsmart_flutter/ui/playground/playground_widget.dart';
+import 'package:farmsmart_flutter/ui/common/stage_card.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class PlayGroundAtomDataSource implements PlaygroundDataSource {
   @override
   List<Widget> getList() {
     return [
-      //Add your atoms here
-      RoundedButton(
-          viewModel: MockRoundedButtonViewModel.buildLarge(),
-          style: RoundedButtonStyle.largeRoundedButtonStyle()),
-      RoundedButton(
-          viewModel: MockRoundedButtonViewModel.buildCompact(),
-          style: RoundedButtonStyle.defaultStyle()),
-      RoundedButton(
-          viewModel: MockRoundedButtonViewModel.buildCompact(),
-          style: RoundedButtonStyle.bigRoundedButton()),
-      DogTag(
-          viewModel: MockDogTagViewModel.buildWithText(),
-          style: DogTagStyle.defaultStyle()),
-      DogTag(
-          viewModel: MockDogTagViewModel.buildWithPositiveNumber(),
-          style: DogTagStyle.defaultStyle()),
-      DogTag(
-          viewModel: MockDogTagViewModel.buildWithNegativeNumber(),
-          style: DogTagStyle.negativeStyle()),
-      ActionSheetListItem(
-          viewModel: MockActionSheetViewModel.buildStandard().actions.first),
-      ActionSheetListItem(
-          viewModel: MockActionSheetViewModel.buildWithIcon().actions.first),
-      ActionSheetListItem(
-          viewModel:
-              MockActionSheetViewModel.buildWithCheckBox().actions.first),
-      RecordAmountHeader(viewModel: RecordAmountHeaderViewModel(), style: RecordAmountHeaderStyle.defaultCostStyle()),
-      RecordAmountHeader(viewModel: RecordAmountHeaderViewModel(), style: RecordAmountHeaderStyle.defaultSaleStyle()),
-      RecordAmountListItem(viewModel: MockRecordAmountListItemViewModel.build(0)),
-      RecordAmountListItem(viewModel: MockRecordAmountListItemViewModel.build(1)),
-      RecordAmountListItem(viewModel: MockRecordAmountListItemViewModel.build(2)),
+      //Add your atoms
+      PlaygroundWidget(
+        title: 'RoundedButton Large',
+        child: Container(
+          alignment: Alignment.center,
+          padding: EdgeInsets.all(20.0),
+          height: 96,
+          child: RoundedButton(
+            viewModel: MockRoundedButtonViewModel.buildLarge(),
+            style: RoundedButtonStyle.largeRoundedButtonStyle(),
+          ),
+        ),
+      ),
 
-      /*RecordAmountHeader(
-          viewModel: RecordAmountHeaderViewModel("00"),
-          style: RecordAmountHeaderStyle.defaultCostStyle()),
-      RecordAmountHeader(
-          viewModel: RecordAmountHeaderViewModel("00"),
-          style: RecordAmountHeaderStyle.defaultSaleStyle()),
-      RecordAmountListItem(
-          viewModel: RecordAmountListItemViewModel(
-              "assets/icons/detail_icon_date.png",
-              "Today",
-              title: "Date",
-              arrow: "assets/icons/chevron.png",
-              selectedDate: DateTime.now())),
-      RecordAmountListItem(
-          viewModel: RecordAmountListItemViewModel(
-              "assets/icons/detail_icon_date.png",
-              "Today",
-              title: "Date",
-              arrow: "assets/icons/chevron.png",
-              listOfCrops: [
-            "Okra",
-            "Tomatoes",
-            "Potatoes",
-            "Cowpeas",
-            "Sweetcorn",
-            "Cucumber",
-            "Beetroot"
-          ])), */
+      PlaygroundWidget(
+        title: 'RoundedButton Compact',
+        child: Container(
+          alignment: Alignment.center,
+          padding: EdgeInsets.all(20.0),
+          height: 64,
+          child: RoundedButton(
+            viewModel: MockRoundedButtonViewModel.buildCompact(),
+            style: RoundedButtonStyle.defaultStyle(),
+          ),
+        ),
+      ),
+
+      PlaygroundWidget(
+        title: 'RoundedButton Compact Big',
+        child: Container(
+          alignment: Alignment.center,
+          padding: EdgeInsets.all(20.0),
+          height: 88,
+          child: RoundedButton(
+            viewModel: MockRoundedButtonViewModel.buildCompact(),
+            style: RoundedButtonStyle.bigRoundedButton(),
+          ),
+        ),
+      ),
+
+      PlaygroundWidget(
+        title: 'DogTag Days',
+        child: Container(
+          alignment: Alignment.center,
+          padding: EdgeInsets.all(20.0),
+          height: 100,
+          child: DogTag(
+            viewModel: MockDogTagViewModel.buildWithText(),
+            style: DogTagStyles.compactStyle(),
+          ),
+        ),
+      ),
+
+      PlaygroundWidget(
+        title: 'DogTag Positive',
+        child: Container(
+          alignment: Alignment.center,
+          padding: EdgeInsets.all(20.0),
+          height: 1000,
+          child: DogTag(
+            viewModel: MockDogTagViewModel.buildWithPositiveNumber(),
+            style: DogTagStyles.positiveStyle(),
+          ),
+        ),
+      ),
+
+      PlaygroundWidget(
+        title: 'DogTag Negative',
+        child: Container(
+          alignment: Alignment.center,
+          padding: EdgeInsets.all(20.0),
+          height: 100,
+          child: DogTag(
+            viewModel: MockDogTagViewModel.buildWithNegativeNumber(),
+            style: DogTagStyles.negativeStyle(),
+          ),
+        ),
+      ),
+
+      PlaygroundWidget(
+        title: 'Simple Action Sheet Item',
+        child: Container(
+          alignment: Alignment.center,
+          padding: EdgeInsets.symmetric(vertical: 20.0),
+          child: ActionSheetListItem(
+              viewModel:
+                  MockActionSheetViewModel.buildStandard().actions.first),
+        ),
+      ),
+      PlaygroundWidget(
+        title: 'Action Sheet Item with Icon',
+        child: Container(
+          alignment: Alignment.center,
+          padding: EdgeInsets.symmetric(vertical: 20.0),
+          child: ActionSheetListItem(
+              viewModel:
+                  MockActionSheetViewModel.buildWithIcon().actions.first),
+        ),
+      ),
+      PlaygroundWidget(
+        title: 'Action Sheet Item with Checkbox',
+        child: Container(
+          alignment: Alignment.center,
+          padding: EdgeInsets.symmetric(vertical: 20.0),
+          child: ActionSheetListItem(
+              viewModel:
+                  MockActionSheetViewModel.buildWithCheckBox().actions.first),
+        ),
+      ),
       StandardListItem(
-          viewModel: ArticleListItemViewModelTransformer(
-                  detailTransformer: ArticleDetailViewModelTransformer(
-                      listItemTransformer:
-                          ArticleListItemViewModelTransformer()))
-              .transform(from: MockArticle.build())),
+        viewModel: ArticleListItemViewModelTransformer(
+                detailTransformer: ArticleDetailViewModelTransformer(
+                    listItemTransformer: ArticleListItemViewModelTransformer()))
+            .transform(
+          from: MockArticle.build(),
+        ),
+      ),
       HeroListItem(
-          viewModel: ArticleListItemViewModelTransformer(
-                  detailTransformer: ArticleDetailViewModelTransformer(
-                      listItemTransformer:
-                          ArticleListItemViewModelTransformer()))
-              .transform(from: MockArticle.build())),
+        viewModel: ArticleListItemViewModelTransformer(
+                detailTransformer: ArticleDetailViewModelTransformer(
+                    listItemTransformer: ArticleListItemViewModelTransformer()))
+            .transform(
+          from: MockArticle.build(),
+        ),
+      ),
+      PlaygroundWidget(
+        title: 'CircularProgress',
+        child: Container(
+          alignment: Alignment.center,
+          padding: EdgeInsets.symmetric(vertical: 20.0),
+          child: CircularProgress(progress: 0.75, lineWidth: 3, size: 87,)
+        ),
+      ),
+      PlaygroundWidget(
+        title: 'Stage Card',
+        child: Container(
+          height: 162,
+          child: StageCard(
+            viewModel: MockStageCardViewModel.buildCompleteState(),
+          ),
+        ),
+      ),
+      PlaygroundWidget(
+        title: "FARM-59 - Record a cost header",
+        child: RecordAmountHeader(viewModel: RecordAmountHeaderViewModel(amount: MockRecordAmountViewModel.buildCost().amount, isEditable: true), style: RecordAmountHeaderStyle.defaultCostStyle())
+      ),
+
+      PlaygroundWidget(
+          title: "FARM-59 - Record a sale header",
+          child:  RecordAmountHeader(viewModel: RecordAmountHeaderViewModel(amount: MockRecordAmountViewModel.buildCost().amount, isEditable: true), style: RecordAmountHeaderStyle.defaultSaleStyle())
+      ),
+
+      PlaygroundWidget(
+          title: "FARM-59 - Pick up date",
+          child: RecordAmountListItem(viewModel: MockRecordAmountListItemViewModel.build(0))
+      ),
+
+      PlaygroundWidget(
+          title: "FARM-59 - Pick up crop",
+          child: RecordAmountListItem(viewModel: MockRecordAmountListItemViewModel.build(1))
+      ),
+
+      PlaygroundWidget(
+          title: "FARM-59 - Add description",
+          child: RecordAmountListItem(viewModel: MockRecordAmountListItemViewModel.build(2))
+      )
     ];
   }
 }

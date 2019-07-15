@@ -1,7 +1,9 @@
 import 'package:farmsmart_flutter/data/model/crop_entity.dart';
+import 'package:farmsmart_flutter/ui/common/DogTagStyles.dart';
 import 'package:farmsmart_flutter/utils/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:farmsmart_flutter/ui/common/network_image_from_future.dart';
+import 'package:farmsmart_flutter/ui/common/CircularProgress.dart';
 import 'package:farmsmart_flutter/ui/common/Dogtag.dart';
 import 'package:farmsmart_flutter/ui/common/ListDivider.dart';
 
@@ -9,18 +11,26 @@ class PlotListItemViewModel {
   final String title;
   final String subtitle;
   final String detail;
+  final double progress;
 
   Function onTap;
 
   final Future<String> imageUrl;
 
-  PlotListItemViewModel(
-      this.title, this.subtitle, this.detail, this.imageUrl, this.onTap);
+  PlotListItemViewModel(this.title, this.subtitle, this.detail, this.imageUrl,
+      this.onTap, this.progress);
 }
 
-PlotListItemViewModel fromCropEntityToViewModel(CropEntity currentCrop, Function goToDetail) {
+PlotListItemViewModel fromCropEntityToViewModel(
+    CropEntity currentCrop, Function goToDetail) {
   //FIXME: Change the mocked data "planting" and "Day 6" with the correct FirebaseData when available
-  return PlotListItemViewModel(currentCrop.name ?? Strings.defaultCropNameText, "Planting", "Day 6", currentCrop.imageUrl, () => goToDetail(currentCrop));
+  return PlotListItemViewModel(
+      currentCrop.name ?? Strings.defaultCropNameText,
+      "Planting",
+      "Day 6",
+      currentCrop.imageUrl,
+      () => goToDetail(currentCrop),
+      0.7);
 }
 
 abstract class PlotListItemStyle {
@@ -38,7 +48,6 @@ abstract class PlotListItemStyle {
   final EdgeInsets cardEdgePadding;
   final BorderRadius detailTextBorderRadius;
 
-  final TextStyle detailTextStyle;
   final TextStyle titleTextStyle;
   final TextStyle subtitleTextStyle;
 
@@ -48,52 +57,73 @@ abstract class PlotListItemStyle {
   final double detailLineSpace;
   final double imageLineSpace;
   final int maxLineText;
+  final double circularSize;
+  final double circularLineWidth;
 
-  PlotListItemStyle(this.primaryColor, this.dividerColor, this.edgePadding,
-      this.detailTextEdgePadding, this.dividerEdgePadding,
-      this.detailTextBorderRadius, this.detailTextStyle,
-      this.titleTextStyle, this.subtitleTextStyle, this.elevation,
+  PlotListItemStyle(
+      this.primaryColor,
+      this.dividerColor,
+      this.edgePadding,
+      this.detailTextEdgePadding,
+      this.dividerEdgePadding,
+      this.detailTextBorderRadius,
+      this.titleTextStyle,
+      this.subtitleTextStyle,
+      this.elevation,
       this.cardEdgePadding,
-      this.imageSize, this.detailTextBackgroundColor,this.detailLineSpace, this.headingLineSpace,
-      this.overlayColor, this.imageLineSpace, this.maxLineText);
+      this.imageSize,
+      this.detailTextBackgroundColor,
+      this.detailLineSpace,
+      this.headingLineSpace,
+      this.overlayColor,
+      this.imageLineSpace,
+      this.maxLineText,
+      this.circularSize,
+      this.circularLineWidth);
 }
 
-class _defaultStyle implements PlotListItemStyle {
+class _DefaultStyle implements PlotListItemStyle {
   final Color primaryColor = const Color(0xff24d900);
   final Color dividerColor = const Color(0xfff5f8fa);
   final Color detailTextBackgroundColor = const Color(0x1425df0c);
   final Color overlayColor = const Color(0x1425df0c);
 
-  final EdgeInsets detailTextEdgePadding = const EdgeInsets.only(left: 12, top: 5.5, right: 12, bottom: 5.5);
+  final EdgeInsets detailTextEdgePadding =
+      const EdgeInsets.only(left: 12, top: 5.5, right: 12, bottom: 5.5);
   final EdgeInsets dividerEdgePadding = const EdgeInsets.only(left: 25.0);
   final EdgeInsets cardEdgePadding = const EdgeInsets.all(0);
-  final EdgeInsets edgePadding = const EdgeInsets.only(left: 32.0, top: 27.0, right: 32.0, bottom: 27.0);
+  final EdgeInsets edgePadding =
+      const EdgeInsets.only(left: 32.0, top: 27.0, right: 32.0, bottom: 27.0);
 
-  final TextStyle subtitleTextStyle = const TextStyle(fontSize: 15, fontWeight: FontWeight.normal, color: Color(0xff767690));
-  final TextStyle detailTextStyle = const TextStyle(fontSize: 11, fontWeight: FontWeight.normal, color: Color(0xff25df0c));
-  final TextStyle titleTextStyle = const TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: Color(0xff1a1b46));
+  final TextStyle subtitleTextStyle = const TextStyle(
+      fontSize: 15, fontWeight: FontWeight.normal, color: Color(0xff767690));
+  final TextStyle titleTextStyle = const TextStyle(
+      fontSize: 17, fontWeight: FontWeight.w500, color: Color(0xff1a1b46));
 
-  final BorderRadius detailTextBorderRadius = const BorderRadius.all(Radius.circular(20.0));
+  final BorderRadius detailTextBorderRadius =
+      const BorderRadius.all(Radius.circular(20.0));
 
   final double elevation = 0.0;
   final double imageSize = 80.0;
-  final double headingLineSpace = 12.5;
+  final double headingLineSpace = 5;
   final double detailLineSpace = 12;
   final double imageLineSpace = 20;
   final int maxLineText = 1;
+  final double circularSize = 87;
+  final double circularLineWidth = 3;
 
-  const _defaultStyle();
+  const _DefaultStyle();
 }
 
 class PlotListItem {
-  Widget buildListItem(PlotListItemViewModel viewModel, {PlotListItemStyle itemStyle = const _defaultStyle()}) {
+  Widget buildListItem(PlotListItemViewModel viewModel,
+      {PlotListItemStyle itemStyle = const _DefaultStyle()}) {
     return GestureDetector(
         onTap: viewModel.onTap,
         child: Card(
             margin: itemStyle.cardEdgePadding,
             elevation: itemStyle.elevation,
-            child:
-            Column(children: <Widget>[
+            child: Column(children: <Widget>[
               Container(
                   padding: itemStyle.edgePadding,
                   child: Row(
@@ -101,16 +131,21 @@ class PlotListItem {
                       children: <Widget>[
                         _buildMainTextView(viewModel, itemStyle),
                         SizedBox(width: itemStyle.imageLineSpace),
-                        _buildPlotImage(viewModel.imageUrl, itemStyle)
+                        Stack(
+                          alignment: AlignmentDirectional.center,
+                          children: <Widget>[
+                            _buildPlotImage(viewModel.imageUrl, itemStyle),
+                            CircularProgress(
+                                progress: viewModel.progress, lineWidth: itemStyle.circularLineWidth, size: itemStyle.circularSize,),
+                          ],
+                        )
                       ])),
               ListDivider.build(),
-            ]
-            )
-        )
-    );
+            ])));
   }
 
-  _buildMainTextView(PlotListItemViewModel viewModel, PlotListItemStyle itemStyle) {
+  _buildMainTextView(
+      PlotListItemViewModel viewModel, PlotListItemStyle itemStyle) {
     return Expanded(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -128,14 +163,16 @@ class PlotListItem {
               overflow: TextOverflow.ellipsis,
               style: itemStyle.subtitleTextStyle),
           SizedBox(height: itemStyle.detailLineSpace),
-          DogTag(viewModel: DogTagViewModel(title: viewModel.detail),
-            style: DogTagStyle.compactStyle()
-          )],
+          DogTag(
+              viewModel: DogTagViewModel(title: viewModel.detail),
+              style: DogTagStyles.compactStyle())
+        ],
       ),
     );
   }
 
-  ClipOval _buildPlotImage(Future<String> imageUrl, PlotListItemStyle itemStyle) {
+  ClipOval _buildPlotImage(
+      Future<String> imageUrl, PlotListItemStyle itemStyle) {
     return ClipOval(
         child: Stack(children: <Widget>[
       NetworkImageFromFuture(imageUrl,
@@ -145,7 +182,7 @@ class PlotListItem {
       Positioned.fill(
           child: Container(
         color: itemStyle.overlayColor,
-      ))
+      )),
     ]));
   }
 }

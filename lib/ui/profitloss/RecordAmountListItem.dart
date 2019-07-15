@@ -25,7 +25,7 @@ class RecordAmountListItemViewModel {
       this.selectedItem,
       this.description,
       this.listener,
-      this.isEditable});
+      this.isEditable : true});
 }
 
 class RecordAmountListItemStyle {
