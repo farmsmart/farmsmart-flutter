@@ -147,21 +147,7 @@ class RecordAmountState extends State<RecordAmount> {
   Widget _buildPage(BuildContext context, RecordAmountViewModel viewModel,
       RecordAmountStyle style) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: style.appBarElevation,
-        leading: FlatButton(
-            onPressed: () => Navigator.pop(context, false),
-            padding: style.appBarLeftMargin,
-            child: Image.asset('assets/icons/nav_icon_back.png',
-                height: style.appBarIconHeight, width: style.appBarIconWidth)),
-        actions: <Widget>[
-          FlatButton(
-              onPressed: () => null,
-              padding: style.appBarRightMargin,
-              child: Image.asset('assets/icons/nav_icon_options.png',
-                  height: style.appBarIconHeight, width: style.appBarIconWidth))
-        ],
-      ),
+      appBar: viewModel.isEditable ? _buildSimpleAppBar(style, context) : _buildEditAppBar(style, context),
       body: GestureDetector(
         onTap: () {
           FocusScope.of(context).requestFocus(FocusNode());
@@ -171,6 +157,35 @@ class RecordAmountState extends State<RecordAmount> {
           children: _buildContent(viewModel, style),
         ),
       ),
+    );
+  }
+
+  AppBar _buildSimpleAppBar(RecordAmountStyle style, BuildContext context) {
+    return AppBar(
+      elevation: style.appBarElevation,
+      leading: FlatButton(
+          onPressed: () => Navigator.pop(context, false),
+          padding: style.appBarLeftMargin,
+          child: Image.asset('assets/icons/nav_icon_cancel.png',
+              height: style.appBarIconHeight, width: style.appBarIconWidth))
+    );
+  }
+
+  AppBar _buildEditAppBar(RecordAmountStyle style, BuildContext context) {
+    return AppBar(
+      elevation: style.appBarElevation,
+      leading: FlatButton(
+          onPressed: () => Navigator.of(context).pop(false),
+          padding: style.appBarLeftMargin,
+          child: Image.asset('assets/icons/nav_icon_back.png',
+              height: style.appBarIconHeight, width: style.appBarIconWidth)),
+      actions: <Widget>[
+        FlatButton(
+            onPressed: () => null,
+            padding: style.appBarRightMargin,
+            child: Image.asset('assets/icons/nav_icon_options.png',
+                height: style.appBarIconHeight, width: style.appBarIconWidth))
+      ],
     );
   }
 

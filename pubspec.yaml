@@ -92,6 +92,7 @@ flutter:
   - assets/icons/radio_button_active.png
   - assets/icons/nav_icon_back.png
   - assets/icons/nav_icon_options.png
+  - assets/icons/nav_icon_cancel.png
 
 
   fonts:
