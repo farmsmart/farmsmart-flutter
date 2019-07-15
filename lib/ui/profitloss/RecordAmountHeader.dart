@@ -42,24 +42,24 @@ class RecordAmountHeaderStyle {
     return RecordAmountHeaderStyle(
         hintTextStyle: const TextStyle(
             fontSize: 72,
-            fontWeight: FontWeight.w700,
-            color: Color(0x4cff8d4f)),
+            fontWeight: FontWeight.w500,
+            color: Color(0x4cff8d4f), letterSpacing: 4.32),
         titleTextStyle: const TextStyle(
             fontSize: 72,
-            fontWeight: FontWeight.w700,
-            color: Color(0xFFff8d4f)));
+            fontWeight: FontWeight.w500,
+            color: Color(0xFFff8d4f), letterSpacing: 4.32));
   }
 
   factory RecordAmountHeaderStyle.defaultSaleStyle() {
     return RecordAmountHeaderStyle.defaultCostStyle().copyWith(
         hintTextStyle: const TextStyle(
             fontSize: 72,
-            fontWeight: FontWeight.w700,
-            color: Color(0x4c24d900)),
+            fontWeight: FontWeight.w500,
+            color: Color(0x4c24d900), letterSpacing: 4.32),
         titleTextStyle: const TextStyle(
             fontSize: 72,
-            fontWeight: FontWeight.w700,
-            color: Color(0xFF24d900)),
+            fontWeight: FontWeight.w500,
+            color: Color(0xFF24d900),letterSpacing: 4.32),
         edgePadding: const EdgeInsets.symmetric(horizontal: 32),
         height: 138,
         maxLines: 1);
@@ -98,6 +98,7 @@ class RecordAmountHeader extends StatelessWidget {
                       hintText: _viewModel.amount,
                       hintStyle: _style.hintTextStyle,
                       border: InputBorder.none,
+                      contentPadding: EdgeInsets.all(0),
                       counterText: ""),
                   keyboardType: TextInputType.numberWithOptions(
                       signed: false, decimal: true),

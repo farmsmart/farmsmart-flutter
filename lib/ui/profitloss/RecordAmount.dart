@@ -86,7 +86,7 @@ class RecordAmountState extends State<RecordAmount> {
                   height: 20, width: 20.5)),
       actions: <Widget>[FlatButton(
           onPressed: () => null,
-          //padding: EdgeInsets.only(right: 25),
+          padding: EdgeInsets.only(right: 2),
           child: Image.asset('assets/icons/nav_icon_options.png',
               height: 20, width: 20.5))],
       ),
@@ -105,7 +105,6 @@ class RecordAmountState extends State<RecordAmount> {
   List<Widget> _buildContent(RecordAmountViewModel viewModel) {
     List<Widget> listBuilder = [];
 
-    listBuilder.add(SizedBox(height: 40));
     listBuilder.add(RecordAmountHeader(
         viewModel: RecordAmountHeaderViewModel(
             isEditable: viewModel.isEditable,
@@ -118,7 +117,7 @@ class RecordAmountState extends State<RecordAmount> {
             ? RecordAmountHeaderStyle.defaultSaleStyle()
             : RecordAmountHeaderStyle.defaultCostStyle()));
 
-    listBuilder.add(SizedBox(height: 34));
+    listBuilder.add(SizedBox(height: 13));
 
     listBuilder.add(RecordAmountListItem(
         viewModel: RecordAmountListItemViewModel(

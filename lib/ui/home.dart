@@ -11,12 +11,15 @@ import 'package:farmsmart_flutter/ui/discover/ArticleList.dart';
 import 'package:farmsmart_flutter/ui/home_viewmodel.dart';
 import 'package:farmsmart_flutter/ui/myplot/PlotList.dart';
 import 'package:farmsmart_flutter/ui/playground/playground_view.dart';
+import 'package:farmsmart_flutter/ui/playground/playground_widget.dart';
+import 'package:farmsmart_flutter/ui/profitloss/RecordAmount.dart';
 import 'package:farmsmart_flutter/utils/assets.dart';
 import 'package:farmsmart_flutter/utils/colors.dart';
 import 'package:farmsmart_flutter/utils/dimens.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'mockData/MockRecordAmountViewModel.dart';
 import 'profitloss/ProfitLossList.dart';
 import 'package:farmsmart_flutter/ui/playground/data/playground_datasource_impl.dart';
 
@@ -99,7 +102,11 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
         });
   
     final List<Widget> _children = [
-      PlotList(),
+      PlaygroundWidget(
+        title: 'TASK FARM-59 Record a Cost',
+        child: RecordAmount(viewModel: MockRecordAmountViewModel.buildCost()),
+      ),
+      //PlotList(),
       ProfitLossPage(),
       discoverTab,
       HomeCommunityChild(),

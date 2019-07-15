@@ -18,7 +18,7 @@ class RecordAmountListItemStyles {
       cardMargins: EdgeInsets.all(0),
       actionItemElevation: 0,
       itemAlignment: CrossAxisAlignment.center,
-      actionItemHeight: 70,
+      actionItemHeight: 69,
       iconHeight: 20,
       iconLineSpace: 22,
       detailTextSpacing: 13,
