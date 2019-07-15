@@ -4,32 +4,32 @@ import 'dart:math';
 class CircularProgress extends StatelessWidget {
   final Color _lineColor;
   final double _progress;
+  final double _size;
+  final double _lineWidth;
+  final Color trackColor = Colors.transparent;
+  final EdgeInsets innerPadding = const EdgeInsets.all(4.0);
 
-  const CircularProgress({Key key, @required double progress, Color lineColor})
+  const CircularProgress({Key key, @required double progress, @required double size, @required double lineWidth, Color lineColor})
       : this._lineColor = lineColor ?? const Color(0xff24d900),
         this._progress = progress,
+        this._size = size,
+        this._lineWidth = lineWidth,
         assert(progress >= 0 && progress <= 1,
             'Progress should be between 0 and 1'),
         super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final double height = 87;
-    final double width = 87;
-    final Color trackColor = Colors.transparent;
-    final double lineWidth = 3;
-    final EdgeInsets innerPadding = const EdgeInsets.all(4.0);
-
     return Center(
       child: Container(
-        height: height,
-        width: width,
+        height: _size,
+        width: _size,
         child: CustomPaint(
           foregroundPainter: _CircularPainter(
               trackColor: trackColor,
               lineColor: _lineColor,
               progress: _progress,
-              width: lineWidth),
+              width: _lineWidth),
           child: Padding(
             padding: innerPadding,
           ),
