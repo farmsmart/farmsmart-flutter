@@ -73,14 +73,23 @@ class RecordAmountState extends State<RecordAmount> {
     }
   }
 
+
+
   Widget _buildPage(BuildContext context, RecordAmountViewModel viewModel) {
     return Scaffold(
       appBar: AppBar(
+          elevation: 0,
           leading: FlatButton(
-              onPressed: null,
-              padding: EdgeInsets.all(0.0),
+              onPressed: () => Navigator.pop(context, false),
+              padding: EdgeInsets.only(left: 31.5),
               child: Image.asset('assets/icons/nav_icon_back.png',
-                  height: 20, width: 20.5))),
+                  height: 20, width: 20.5)),
+      actions: <Widget>[FlatButton(
+          onPressed: () => null,
+          //padding: EdgeInsets.only(right: 25),
+          child: Image.asset('assets/icons/nav_icon_options.png',
+              height: 20, width: 20.5))],
+      ),
       body: GestureDetector(
         onTap: () {
           FocusScope.of(context).requestFocus(FocusNode());
@@ -96,6 +105,7 @@ class RecordAmountState extends State<RecordAmount> {
   List<Widget> _buildContent(RecordAmountViewModel viewModel) {
     List<Widget> listBuilder = [];
 
+    listBuilder.add(SizedBox(height: 40));
     listBuilder.add(RecordAmountHeader(
         viewModel: RecordAmountHeaderViewModel(
             isEditable: viewModel.isEditable,
@@ -107,6 +117,8 @@ class RecordAmountState extends State<RecordAmount> {
         style: viewModel.type == RecordType.sale
             ? RecordAmountHeaderStyle.defaultSaleStyle()
             : RecordAmountHeaderStyle.defaultCostStyle()));
+
+    listBuilder.add(SizedBox(height: 34));
 
     listBuilder.add(RecordAmountListItem(
         viewModel: RecordAmountListItemViewModel(

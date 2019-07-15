@@ -108,13 +108,13 @@ class _DefaultStyle extends RecordAmountListItemStyle {
       fontSize: 15, fontWeight: FontWeight.normal, color: Color(0xff767690));
 
   final EdgeInsets actionItemEdgePadding =
-      const EdgeInsets.symmetric(horizontal: 32);
+      const EdgeInsets.only(left: 32, right: 32, top: 27, bottom: 27);
   final EdgeInsets cardMargins = const EdgeInsets.all(0);
 
   final double actionItemElevation = 0;
   final CrossAxisAlignment itemAlignment = CrossAxisAlignment.center;
 
-  final double actionItemHeight = 70;
+ // final double actionItemHeight = 70;
   final double iconHeight = 20;
   final double iconLineSpace = 22;
   final double detailTextSpacing = 13;
@@ -182,7 +182,7 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
             child: Container(
               padding: widget._style.actionItemEdgePadding,
               alignment: Alignment.center,
-              height: widget._style.actionItemHeight,
+              //height: widget._style.actionItemHeight,
               child: Wrap(
                   direction: Axis.horizontal,
                   crossAxisAlignment: WrapCrossAlignment.start,
@@ -231,7 +231,7 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
   List<Widget> _buildDescriptionTextField(List<Widget> listBuilder) {
     listBuilder.add(Expanded(
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           widget._viewModel.isEditable
               ? TextField(
@@ -249,6 +249,7 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
                   enabled: widget._viewModel.isEditable,
                 )
               : Text(widget._viewModel.description,
+                  textAlign: TextAlign.left,
                   style: widget._style.detailTextStyle)
         ],
       ),
@@ -260,7 +261,8 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
     listBuilder.add(
         Text(widget._viewModel.title, style: widget._style.titleTextStyle));
     listBuilder.add(Expanded(
-      child: Column(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
           widget._viewModel.isEditable
@@ -275,6 +277,8 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
                     hint: Text(widget._viewModel.hint,
                         style: widget._style.pendingDetailTextStyle),
                     icon: Icon(Icons.lens, size: 0),
+                    isDense: true,
+                    isExpanded: false,
                   ),
                 )
               : Text(widget._viewModel.selectedItem,
@@ -330,7 +334,8 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
   List<DropdownMenuItem<String>> _getDropDownMenuItems() {
     List<DropdownMenuItem<String>> items = new List();
     for (String crop in widget._viewModel.listOfCrops) {
-      items.add(new DropdownMenuItem(value: crop, child: new Text(crop)));
+      items.add(new DropdownMenuItem(value: crop,
+          child: new Text(crop)));
     }
     return items;
   }
