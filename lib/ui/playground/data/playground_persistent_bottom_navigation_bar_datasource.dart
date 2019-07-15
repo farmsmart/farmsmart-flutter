@@ -9,37 +9,32 @@ class PlaygroundPersistentBottomNavigationBar {
     return [
       _buildMockTabNavigator(
         1,
-        'Tab 1',
         'assets/icons/my_plot_selected.png',
         'assets/icons/my_plot.png',
       ),
       _buildMockTabNavigator(
         2,
-        'Tab 2',
-        'assets/icons/mprofit_loss_selected.png',
+        'assets/icons/profit_loss_selected.png',
         'assets/icons/profit_loss.png',
       ),
       _buildMockTabNavigator(
         3,
-        'Tab 3',
         'assets/icons/discover_selected.png',
         'assets/icons/discover.png',
       ),
       _buildMockTabNavigator(
         4,
-        'Tab 4',
         'assets/icons/community_selected.png',
         'assets/icons/community.png',
       ),
       _buildMockTabNavigatorWithCircleImageWidget(
         5,
-        'Tab 5',
       ),
     ];
   }
 
   TabNavigator _buildMockTabNavigator(
-      int pageNumber, String title, String activeIconPath, String iconPath) {
+      int pageNumber, String activeIconPath, String iconPath) {
     return TabNavigator(
       child: MockTabPage(
         pageNumber: pageNumber,
@@ -53,25 +48,35 @@ class PlaygroundPersistentBottomNavigationBar {
           iconPath,
           height: _bottomBarIconSize,
         ),
-        title: Text(
-          title,
-        ),
+        title: SizedBox.shrink(),
       ),
     );
   }
 
-  TabNavigator _buildMockTabNavigatorWithCircleImageWidget(
-      int pageNumber, String title) {
+  TabNavigator _buildMockTabNavigatorWithCircleImageWidget(int pageNumber) {
     return TabNavigator(
       child: MockTabPage(
         pageNumber: pageNumber,
       ),
       barItem: BottomNavigationBarItem(
-        activeIcon: CircleAvatar(backgroundColor: Colors.green,),
-        icon: CircleAvatar(backgroundColor: Colors.green[200],),
-        title: Text(
-          title,
+        activeIcon: Container(
+          decoration: BoxDecoration(
+            color: Color(0xff24d900),
+            shape: BoxShape.circle,
+          ),
+          padding: EdgeInsets.all(2.0),
+          height: 27,
+          child: CircleAvatar(
+            child: Image.asset('assets/raw/mock_profile_image.png'),
+          ),
         ),
+        icon: Container(
+          height: 27,
+          child: CircleAvatar(
+            child: Image.asset('assets/raw/mock_profile_image.png'),
+          ),
+        ),
+        title: SizedBox.shrink(),
       ),
     );
   }
