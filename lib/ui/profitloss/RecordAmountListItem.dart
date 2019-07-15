@@ -246,9 +246,10 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
                   maxLines: widget._style.maxLines,
                   controller: _textFieldController,
                   onEditingComplete: () => _checkTextField,
+                  enabled: widget._viewModel.isEditable,
                 )
               : Text(widget._viewModel.description,
-                  style: widget._style.detailTextStyle),
+                  style: widget._style.detailTextStyle)
         ],
       ),
     ));
@@ -262,17 +263,22 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
-          DropdownButtonHideUnderline(
-            child: DropdownButton(
-              value: widget._viewModel.selectedItem,
-              style: widget._style.detailTextStyle,
-              items: widget._viewModel.isEditable ? _getDropDownMenuItems() : null,
-              onChanged: _changeDropDownItem,
-              hint: Text(widget._viewModel.hint,
-                  style: widget._style.pendingDetailTextStyle),
-              icon: Icon(Icons.lens, size: 0),
-            ),
-          )
+          widget._viewModel.isEditable
+              ? DropdownButtonHideUnderline(
+                  child: DropdownButton(
+                    value: widget._viewModel.selectedItem,
+                    style: widget._style.detailTextStyle,
+                    items: widget._viewModel.isEditable
+                        ? _getDropDownMenuItems()
+                        : null,
+                    onChanged: _changeDropDownItem,
+                    hint: Text(widget._viewModel.hint,
+                        style: widget._style.pendingDetailTextStyle),
+                    icon: Icon(Icons.lens, size: 0),
+                  ),
+                )
+              : Text(widget._viewModel.selectedItem,
+                  style: widget._style.detailTextStyle)
         ],
       ),
     ));

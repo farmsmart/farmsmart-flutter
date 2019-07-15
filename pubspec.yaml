@@ -90,6 +90,7 @@ flutter:
   - assets/icons/detail_icon_cost.png
   - assets/icons/radio_button_default.png
   - assets/icons/radio_button_active.png
+  - assets/icons/nav_icon_back.png
 
 
   fonts:

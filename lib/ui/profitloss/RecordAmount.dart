@@ -74,13 +74,21 @@ class RecordAmountState extends State<RecordAmount> {
   }
 
   Widget _buildPage(BuildContext context, RecordAmountViewModel viewModel) {
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).requestFocus(FocusNode());
-        checkIfFilled();
-      },
-      child: ListView(
-        children: _buildContent(viewModel),
+    return Scaffold(
+      appBar: AppBar(
+          leading: FlatButton(
+              onPressed: null,
+              padding: EdgeInsets.all(0.0),
+              child: Image.asset('assets/icons/nav_icon_back.png',
+                  height: 20, width: 20.5))),
+      body: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).requestFocus(FocusNode());
+          checkIfFilled();
+        },
+        child: ListView(
+          children: _buildContent(viewModel),
+        ),
       ),
     );
   }
@@ -117,7 +125,9 @@ class RecordAmountState extends State<RecordAmount> {
             isEditable: viewModel.isEditable,
             icon: viewModel.actions[1].icon,
             hint: viewModel.actions[1].hint,
-            selectedItem: selectedCrop,
+            selectedItem: viewModel.isEditable
+                ? selectedCrop
+                : viewModel.actions[1].selectedItem,
             arrow: viewModel.actions[1].arrow,
             title: viewModel.actions[1].title,
             listOfCrops: viewModel.actions[1].listOfCrops,

@@ -107,7 +107,6 @@ class RecordAmountHeader extends StatelessWidget {
                   maxLines: _style.maxLines,
                   textInputAction: TextInputAction.done,
                   onChanged: _viewModel.listener,
-                  enabled: _viewModel.isEditable,
                 ) : Text(_viewModel.amount, style: _style.titleTextStyle),
               ])),
         ],

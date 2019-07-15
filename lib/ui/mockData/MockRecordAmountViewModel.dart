@@ -12,13 +12,12 @@ class MockRecordAmountViewModel {
       list.add(MockRecordAmountListItemViewModel.build(i));
     }
 
-    return RecordAmountViewModel (
-      loadingStatus: LoadingStatus.SUCCESS,
-      actions: list,
-      buttonTitle: _mockButtonTitle[1],
-      onTap: null,
-      type: RecordType.sale
-    );
+    return RecordAmountViewModel(
+        loadingStatus: LoadingStatus.SUCCESS,
+        actions: list,
+        buttonTitle: _mockButtonTitle[1],
+        onTap: null,
+        type: RecordType.sale);
   }
 
   static RecordAmountViewModel buildCost() {
@@ -28,13 +27,12 @@ class MockRecordAmountViewModel {
       list.add(MockRecordAmountListItemViewModel.build(i));
     }
 
-    return RecordAmountViewModel (
-      loadingStatus: LoadingStatus.SUCCESS,
-      actions: list,
-      buttonTitle: _mockButtonTitle[0],
-      onTap: null,
-      type: RecordType.cost
-    );
+    return RecordAmountViewModel(
+        loadingStatus: LoadingStatus.SUCCESS,
+        actions: list,
+        buttonTitle: _mockButtonTitle[0],
+        onTap: null,
+        type: RecordType.cost);
   }
 
   static RecordAmountViewModel buildViewSale() {
@@ -44,14 +42,14 @@ class MockRecordAmountViewModel {
       list.add(MockRecordAmountListItemViewModel.buildNotEditable(i));
     }
 
-    return RecordAmountViewModel (
-        loadingStatus: LoadingStatus.SUCCESS,
-        actions: list,
-        amount: "12.48",
-        buttonTitle: _mockButtonTitle[1],
-        onTap: null,
-        type: RecordType.sale,
-        isEditable: false,
+    return RecordAmountViewModel(
+      loadingStatus: LoadingStatus.SUCCESS,
+      actions: list,
+      amount: "12.48",
+      buttonTitle: _mockButtonTitle[1],
+      onTap: null,
+      type: RecordType.sale,
+      isEditable: false,
     );
   }
 
@@ -62,17 +60,15 @@ class MockRecordAmountViewModel {
       list.add(MockRecordAmountListItemViewModel.buildNotEditable(i));
     }
 
-    return RecordAmountViewModel (
-      loadingStatus: LoadingStatus.SUCCESS,
-      actions: list,
-      buttonTitle: _mockButtonTitle[1],
-      onTap: null,
-      type: RecordType.cost,
-      isEditable: false,
-      amount: "233.3"
-    );
+    return RecordAmountViewModel(
+        loadingStatus: LoadingStatus.SUCCESS,
+        actions: list,
+        buttonTitle: _mockButtonTitle[1],
+        onTap: null,
+        type: RecordType.cost,
+        isEditable: false,
+        amount: "233.3");
   }
-
 }
 
 class MockRecordAmountListItemViewModel {
@@ -82,7 +78,7 @@ class MockRecordAmountListItemViewModel {
       title: _mockItemTitle[index],
       hint: _mockItemHint[index],
       arrow: _mockArrowIcon[index],
-      selectedDate: _mockSelectedDate [index],
+      selectedDate: _mockSelectedDate[index],
       listOfCrops: _mockListOfCrops[index],
       listener: null,
     );
@@ -97,19 +93,22 @@ class MockRecordAmountListItemViewModel {
       description: _mockDescription.random(),
       selectedDate: _mockSelectedDate[index],
       listOfCrops: _mockListOfCrops[index],
+      selectedItem: _mockCrop[index],
       listener: null,
       isEditable: false,
     );
   }
 }
 
-List _mockCrop = [ "Okra",
-"Tomatoes",
-"Potatoes",
-"Cowpeas",
-"Sweetcorn",
-"Cucumber",
-"Beetroot"];
+List _mockCrop = [
+  "Okra",
+  "Tomatoes",
+  "Potatoes",
+  "Cowpeas",
+  "Sweetcorn",
+  "Cucumber",
+  "Beetroot"
+];
 
 List _mockSelectedDate = [DateTime.now(), null, null];
 
@@ -129,20 +128,22 @@ MockString _mockDescription = MockString(library: [
   "One more bigger title"
 ]);
 
-
 List _mockItemHint = ["Today", "Select...", "Description (optional)..."];
 List _mockArrowIcon = [
-  "assets/icons/chevron.png", "assets/icons/chevron.png", null];
-List _mockListOfCrops = [null, [
-  "Okra",
-  "Tomatoes",
-  "Potatoes",
-  "Cowpeas",
-  "Sweetcorn",
-  "Cucumber",
-  "Beetroot"
-], null
+  "assets/icons/chevron.png",
+  "assets/icons/chevron.png",
+  null
 ];
-
-
-
+List _mockListOfCrops = [
+  null,
+  [
+    "Okra",
+    "Tomatoes",
+    "Potatoes",
+    "Cowpeas",
+    "Sweetcorn",
+    "Cucumber",
+    "Beetroot"
+  ],
+  null
+];
