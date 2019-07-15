@@ -6,8 +6,13 @@ import 'package:farmsmart_flutter/ui/common/ActionSheet.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockActionSheetViewModel.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockLandingPageViewModel.dart';
 import 'package:farmsmart_flutter/ui/playground/data/playground_atom_datasource.dart';
+import 'package:farmsmart_flutter/ui/common/carousel_view.dart';
+import 'package:farmsmart_flutter/ui/common/stage_card.dart';
+import 'package:farmsmart_flutter/ui/mockData/MockStageCardViewModel.dart';
 import 'package:farmsmart_flutter/ui/playground/data/playground_data_source.dart';
+import 'package:farmsmart_flutter/ui/playground/data/playground_stagecard_datasource.dart';
 import 'package:farmsmart_flutter/ui/playground/playground_widget.dart';
+import 'package:farmsmart_flutter/ui/playground/styles/stage_card_styles.dart';
 import 'package:farmsmart_flutter/ui/profitloss/ProfitLossHeader.dart';
 import 'package:farmsmart_flutter/ui/profitloss/ProfitLossListItem.dart';
 import 'package:farmsmart_flutter/ui/profitloss/mockRepositoryTryout/MockTransactionRepository.dart';
@@ -83,6 +88,22 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
                           style: ActionSheetStyle.defaultStyle()))),
             ],
           )),
+      PlaygroundWidget(
+          title: 'FARM-355 Generic Action Sheet - Type 4',
+          child: Container(
+              height: 350,
+              child: ActionSheet(
+                  viewModel: MockActionSheetViewModel.buildWithCheckBox(),
+                  style: ActionSheetStyle.defaultStyle()))),
+      PlaygroundWidget(
+        title: 'TASK FARM-278 State carousel view',
+        child: Container(
+          height: 162,
+          child: CarouselView(
+            children: PlaygroundStageCardDataSource().getList(),
+          ),
+        ),
+      ),
       PlaygroundWidget(
           title: "FARM-280 Update Discover",
           child: ArticleList(

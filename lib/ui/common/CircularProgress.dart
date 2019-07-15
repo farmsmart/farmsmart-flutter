@@ -1,123 +1,78 @@
-import 'dart:async';
-
-import 'package:farmsmart_flutter/ui/common/CircularPainter.dart';
 import 'package:flutter/material.dart';
+import 'dart:math';
 
-import 'network_image_from_future.dart';
-
-class CircularProgressViewModel {
-  double initialValue;
-  List<Widget> content;
-
-  CircularProgressViewModel(
-      {@required this.initialValue, @required this.content});
-}
-
-CircularProgressViewModel buildCircularProgressViewModel(
-    {@required double initialValue, @required List<Widget> content}) {
-  return CircularProgressViewModel(
-      initialValue: initialValue, content: content);
-}
-
-class CircularProgressStyle {
-  final double height;
-  final double width;
-  final Color completeColor;
-  final Color lineColor;
-  final double lineWidth;
-  final EdgeInsets innerPadding;
-
-  const CircularProgressStyle(
-      {this.height,
-      this.width,
-      this.completeColor,
-      this.lineColor,
-      this.lineWidth,
-      this.innerPadding});
-
-  CircularProgressStyle copyWith(
-      {double height,
-      double width,
-      Color completeColor,
-      Color lineColor,
-      double lineWidth,
-      EdgeInsets edgePadding}) {
-    return CircularProgressStyle(
-      height: height ?? this.height,
-      width: width ?? this.width,
-      completeColor: completeColor ?? this.completeColor,
-      lineColor: lineColor ?? this.lineColor,
-      lineWidth: lineWidth ?? this.lineColor,
-      innerPadding: innerPadding ?? this.innerPadding,
-    );
-  }
-}
-
-class _DefaultStyle extends CircularProgressStyle {
-  final double height = 87;
-  final double width = 87;
-  final Color completeColor = const Color(0xff24d900);
-  final Color lineColor = Colors.transparent;
-  final double lineWidth = 3;
+class CircularProgress extends StatelessWidget {
+  final Color _lineColor;
+  final double _progress;
+  final double _size;
+  final double _lineWidth;
+  final Color trackColor = Colors.transparent;
   final EdgeInsets innerPadding = const EdgeInsets.all(4.0);
 
-  const _DefaultStyle(
-      {double height,
-      double width,
-      Color completeColor,
-      Color lineColor,
-      double testWidth,
-      EdgeInsets edgePadding});
-}
-
-const CircularProgressStyle _defaultStyle = const _DefaultStyle();
-
-class CircularProgress extends StatefulWidget {
-  final CircularProgressViewModel _viewModel;
-  final CircularProgressStyle _style;
-
-  const CircularProgress(
-      {Key key,
-      @required CircularProgressViewModel viewModel,
-      CircularProgressStyle style = _defaultStyle})
-      : this._viewModel = viewModel,
-        this._style = style,
+  const CircularProgress({Key key, @required double progress, @required double size, @required double lineWidth, Color lineColor})
+      : this._lineColor = lineColor ?? const Color(0xff24d900),
+        this._progress = progress,
+        this._size = size,
+        this._lineWidth = lineWidth,
+        assert(progress >= 0 && progress <= 1,
+            'Progress should be between 0 and 1'),
         super(key: key);
-
-  @override
-  _CircularProgressState createState() => _CircularProgressState();
-}
-
-class _CircularProgressState extends State<CircularProgress> {
-  double defaultValue = 0;
-  double percentageComplete = 100.0;
-
-  @override
-  void initState() {
-    super.initState();
-    setState(() {});
-  }
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        height: widget._style.height,
-        width: widget._style.width,
+        height: _size,
+        width: _size,
         child: CustomPaint(
-          foregroundPainter: CircularPainter(
-              lineColor: widget._style.lineColor,
-              completeColor: widget._style.completeColor,
-              completePercent: widget._viewModel.initialValue,
-              width: widget._style.lineWidth),
+          foregroundPainter: _CircularPainter(
+              trackColor: trackColor,
+              lineColor: _lineColor,
+              progress: _progress,
+              width: _lineWidth),
           child: Padding(
-            padding: widget._style.innerPadding,
-            child: ClipOval(
-              child: Stack(children: widget._viewModel.content),
-            ),
+            padding: innerPadding,
           ),
         ),
       ),
     );
+  }
+}
+
+class _CircularPainter extends CustomPainter {
+  Color trackColor;
+  Color lineColor;
+  double progress;
+  double width;
+
+  _CircularPainter(
+      {this.trackColor, this.lineColor, this.progress, this.width});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    Paint line = Paint()
+      ..color = trackColor
+      ..strokeCap = StrokeCap.round
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = width;
+    Paint complete = Paint()
+      ..color = lineColor
+      ..strokeCap = StrokeCap.round
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = width;
+
+    Offset center = Offset(size.width / 2, size.height / 2);
+    double radius = min(size.width / 2, size.height / 2);
+    canvas.drawCircle(center, radius, line);
+
+    double arcAngle = 2 * pi * progress;
+
+    canvas.drawArc(Rect.fromCircle(center: center, radius: radius), -pi / 2,
+        arcAngle, false, complete);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) {
+    return true;
   }
 }
