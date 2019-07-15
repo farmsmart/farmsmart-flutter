@@ -18,8 +18,9 @@ final articleRepo = ArticlesRepositoryFlameLink(cms);
 
 void main() => runApp(SampleApp());
 
+//TODO Just for testing purposes, should be removed before merge.
 class SampleApp extends StatelessWidget {
-  // This widget is the root of your application.
+
   static final double bottomBarIconSize = 25;
 
   static final Widget _discoverPage = ArticleList(
