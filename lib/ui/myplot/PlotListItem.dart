@@ -136,7 +136,10 @@ class PlotListItem {
                           children: <Widget>[
                             _buildPlotImage(viewModel.imageUrl, itemStyle),
                             CircularProgress(
-                                progress: viewModel.progress, lineWidth: itemStyle.circularLineWidth, size: itemStyle.circularSize,),
+                              progress: viewModel.progress,
+                              lineWidth: itemStyle.circularLineWidth,
+                              size: itemStyle.circularSize,
+                            ),
                           ],
                         )
                       ])),
