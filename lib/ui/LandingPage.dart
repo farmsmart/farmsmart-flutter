@@ -13,12 +13,13 @@ class LandingPageViewModel {
   String headerImage;
   String subtitleImage;
 
-  LandingPageViewModel(
-      {this.detailText,
-      this.actionText,
-      this.headerImage,
-      this.subtitleImage,
-      this.footerText});
+  LandingPageViewModel({
+    this.detailText,
+    this.actionText,
+    this.headerImage,
+    this.subtitleImage,
+    this.footerText,
+  });
 }
 
 class LandingPageStyle {
@@ -136,43 +137,38 @@ class LandingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            _buildHeader(),
-            _buildSubtitle(),
-            SizedBox(height: _style.subtitleLineSpace),
-            _buildDetailText(),
-            SizedBox(height: _style.detailTextLineSpace),
-            _buildAction(context),
-            SizedBox(height: _style.actionLineSpace),
-            _buildFooter(context),
-          ],
-        ),
+    return SingleChildScrollView(
+      child: Column(
+        children: <Widget>[
+          _buildHeader(),
+          _buildSubtitle(),
+          SizedBox(height: _style.subtitleLineSpace),
+          _buildDetailText(),
+          SizedBox(height: _style.detailTextLineSpace),
+          _buildAction(context),
+          SizedBox(height: _style.actionLineSpace),
+          _buildFooter(context),
+        ],
       ),
     );
   }
 
-  Row _buildFooter(BuildContext context) {
-    return Row(
-      children: <Widget>[
-        Expanded(
-          child: Padding(
-            padding: _style.footerTextEdgePadding,
-            child: FlatButton(
-              onPressed: () => _onMenuPressed(context),
-              child: Text(
-                _viewModel.footerText,
-                textAlign: TextAlign.center,
-                style: _style.footerTextStyle,
-                maxLines: _style.footerTextMaxLines,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
+  Container _buildFooter(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      child: Padding(
+        padding: _style.footerTextEdgePadding,
+        child: FlatButton(
+          onPressed: () => _onMenuPressed(context),
+          child: Text(
+            _viewModel.footerText,
+            textAlign: TextAlign.center,
+            style: _style.footerTextStyle,
+            maxLines: _style.footerTextMaxLines,
+            overflow: TextOverflow.ellipsis,
           ),
         ),
-      ],
+      ),
     );
   }
 
@@ -189,19 +185,15 @@ class LandingPage extends StatelessWidget {
   Padding _buildDetailText() {
     return Padding(
       padding: _style.detailTextEdgePadding,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Expanded(
-            child: Text(
-              _viewModel.detailText,
-              textAlign: TextAlign.center,
-              maxLines: _style.detailTextMaxLines,
-              overflow: TextOverflow.ellipsis,
-              style: _style.detailTextStyle,
-            ),
-          ),
-        ],
+      child: Container(
+        width: double.infinity,
+        child: Text(
+          _viewModel.detailText,
+          textAlign: TextAlign.center,
+          maxLines: _style.detailTextMaxLines,
+          overflow: TextOverflow.ellipsis,
+          style: _style.detailTextStyle,
+        ),
       ),
     );
   }

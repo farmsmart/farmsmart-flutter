@@ -87,10 +87,7 @@ flutter:
     - assets/icons/detail_icon_cost.png
     - assets/icons/radio_button_default.png
     - assets/icons/radio_button_active.png
-    - assets/raw/1.5x/
-    - assets/raw/2.0x/
-    - assets/raw/3.0x/
-    - assets/raw/4.0x/
+    - assets/raw/
     - assets/raw/illustration_welcome.png
     - assets/raw/logo_default.png
 
