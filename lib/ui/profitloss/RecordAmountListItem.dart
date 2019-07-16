@@ -8,7 +8,6 @@ class _Constants {
   static final minDateLimit = DateTime(2019, 6);
   static final maxDateLimit = DateTime(2101);
   static final dateFormatter = DateFormat('dd MMMM yyyy');
-
 }
 
 class RecordAmountListItemViewModel {
@@ -193,28 +192,38 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
 
     return Column(
       children: <Widget>[
-        Card(
-          margin: style.cardMargins,
-          elevation: style.actionItemElevation,
-          color: style.actionItemBackgroundColor,
-          child: Container(
-            padding: style.actionItemEdgePadding,
-            alignment: Alignment.center,
-            child: Wrap(
-              direction: Axis.horizontal,
-              crossAxisAlignment: WrapCrossAlignment.start,
-              children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: style.itemAlignment,
-                  children: _buildItemContent(viewModel, style),
-                )
-              ],
+        GestureDetector(
+          onTap: () => _buildAction(viewModel, style),
+          child: Card(
+            margin: style.cardMargins,
+            elevation: style.actionItemElevation,
+            color: style.actionItemBackgroundColor,
+            child: Container(
+              padding: style.actionItemEdgePadding,
+              alignment: Alignment.center,
+              child: Wrap(
+                direction: Axis.horizontal,
+                crossAxisAlignment: WrapCrossAlignment.start,
+                children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: style.itemAlignment,
+                    children: _buildItemContent(viewModel, style),
+                  )
+                ],
+              ),
             ),
           ),
         )
       ],
     );
+  }
+
+  _buildAction(RecordAmountListItemViewModel viewModel,
+      RecordAmountListItemStyle style) {
+    if (viewModel.selectedDate != null) {
+      return viewModel.isEditable ? _selectDate(context, viewModel) : null;
+    }
   }
 
   List<Widget> _buildItemContent(RecordAmountListItemViewModel viewModel,
@@ -342,16 +351,12 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
-          InkWell(
-              child: Text(
-                  _formatDate(viewModel.selectedDate) ==
-                          _formatDate(_Constants.currentDate)
-                      ? viewModel.hint
-                      : _formatDate(viewModel.selectedDate),
-                  style: style.detailTextStyle),
-              onTap: () => viewModel.isEditable
-                  ? _selectDate(context, viewModel)
-                  : null),
+          Text(
+              _formatDate(viewModel.selectedDate) ==
+                      _formatDate(_Constants.currentDate)
+                  ? viewModel.hint
+                  : _formatDate(viewModel.selectedDate),
+              style: style.detailTextStyle),
         ],
       ),
     ));

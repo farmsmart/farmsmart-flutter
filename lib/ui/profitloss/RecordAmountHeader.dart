@@ -126,8 +126,10 @@ class RecordAmountHeader extends StatelessWidget {
                         style: _style.titleTextStyle,
                         inputFormatters: [_Constants.amountValidator],
                         maxLines: _style.maxLines,
+                        focusNode: _focusNode,
                         textInputAction: TextInputAction.done,
                         onChanged: _viewModel.listener,
+                        autofocus: true,
                       )
                     : Text(_viewModel.onAmountChanged, style: _style.titleTextStyle),
               ],
@@ -137,4 +139,7 @@ class RecordAmountHeader extends StatelessWidget {
       ),
     );
   }
+
+
+
 }

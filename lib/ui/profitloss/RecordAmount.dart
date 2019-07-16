@@ -152,6 +152,10 @@ class RecordAmountState extends State<RecordAmount> {
     }
   }
 
+  //TODO: clear hint when click amount
+  //TODO: touch area whole card
+
+
   Widget _buildPage(BuildContext context, RecordAmountViewModel viewModel,
       RecordAmountStyle style) {
     return Scaffold(
