@@ -15,17 +15,18 @@ class RecordAmountListItemViewModel {
   final Function(String) listener;
   bool isEditable;
 
-  RecordAmountListItemViewModel(
-      {this.icon,
-      this.hint,
-      this.arrow,
-      this.title,
-      this.selectedDate,
-      this.listOfCrops,
-      this.selectedItem,
-      this.description,
-      this.listener,
-      this.isEditable : true});
+  RecordAmountListItemViewModel({
+    this.icon,
+    this.hint,
+    this.arrow,
+    this.title,
+    this.selectedDate,
+    this.listOfCrops,
+    this.selectedItem,
+    this.description,
+    this.listener,
+    this.isEditable: true,
+  });
 }
 
 class RecordAmountListItemStyle {
@@ -47,49 +48,52 @@ class RecordAmountListItemStyle {
 
   final int maxLines;
 
-  const RecordAmountListItemStyle(
-      {this.actionItemBackgroundColor,
-      this.titleTextStyle,
-      this.pendingDetailTextStyle,
-      this.detailTextStyle,
-      this.actionItemEdgePadding,
-      this.cardMargins,
-      this.itemAlignment,
-      this.actionItemElevation,
-      this.iconHeight,
-      this.iconLineSpace,
-      this.detailTextSpacing,
-      this.maxLines});
+  const RecordAmountListItemStyle({
+    this.actionItemBackgroundColor,
+    this.titleTextStyle,
+    this.pendingDetailTextStyle,
+    this.detailTextStyle,
+    this.actionItemEdgePadding,
+    this.cardMargins,
+    this.itemAlignment,
+    this.actionItemElevation,
+    this.iconHeight,
+    this.iconLineSpace,
+    this.detailTextSpacing,
+    this.maxLines,
+  });
 
-  RecordAmountListItemStyle copyWith(
-      {Color actionItemBackgroundColor,
-      TextStyle titleTextStyle,
-      TextStyle pendingDetailTextStyle,
-      TextStyle detailTextStyle,
-      EdgeInsets actionItemEdgePadding,
-      EdgeInsets cardMargins,
-      CrossAxisAlignment itemAlignment,
-      double actionItemElevation,
-      double iconHeight,
-      double iconLineSpace,
-      double detailTextSpacing,
-      int maxLines}) {
+  RecordAmountListItemStyle copyWith({
+    Color actionItemBackgroundColor,
+    TextStyle titleTextStyle,
+    TextStyle pendingDetailTextStyle,
+    TextStyle detailTextStyle,
+    EdgeInsets actionItemEdgePadding,
+    EdgeInsets cardMargins,
+    CrossAxisAlignment itemAlignment,
+    double actionItemElevation,
+    double iconHeight,
+    double iconLineSpace,
+    double detailTextSpacing,
+    int maxLines,
+  }) {
     return RecordAmountListItemStyle(
-        actionItemBackgroundColor:
-            actionItemBackgroundColor ?? this.actionItemBackgroundColor,
-        titleTextStyle: titleTextStyle ?? this.titleTextStyle,
-        pendingDetailTextStyle:
-            pendingDetailTextStyle ?? this.pendingDetailTextStyle,
-        detailTextStyle: detailTextStyle ?? this.detailTextStyle,
-        actionItemEdgePadding:
-            actionItemEdgePadding ?? this.actionItemEdgePadding,
-        cardMargins: cardMargins ?? this.cardMargins,
-        itemAlignment: itemAlignment ?? this.itemAlignment,
-        actionItemElevation: actionItemElevation ?? this.actionItemElevation,
-        iconHeight: iconHeight ?? this.iconHeight,
-        iconLineSpace: iconLineSpace ?? this.iconLineSpace,
-        detailTextSpacing: detailTextSpacing ?? this.detailTextSpacing,
-        maxLines: maxLines ?? this.maxLines);
+      actionItemBackgroundColor:
+          actionItemBackgroundColor ?? this.actionItemBackgroundColor,
+      titleTextStyle: titleTextStyle ?? this.titleTextStyle,
+      pendingDetailTextStyle:
+          pendingDetailTextStyle ?? this.pendingDetailTextStyle,
+      detailTextStyle: detailTextStyle ?? this.detailTextStyle,
+      actionItemEdgePadding:
+          actionItemEdgePadding ?? this.actionItemEdgePadding,
+      cardMargins: cardMargins ?? this.cardMargins,
+      itemAlignment: itemAlignment ?? this.itemAlignment,
+      actionItemElevation: actionItemElevation ?? this.actionItemElevation,
+      iconHeight: iconHeight ?? this.iconHeight,
+      iconLineSpace: iconLineSpace ?? this.iconLineSpace,
+      detailTextSpacing: detailTextSpacing ?? this.detailTextSpacing,
+      maxLines: maxLines ?? this.maxLines,
+    );
   }
 }
 
@@ -97,11 +101,20 @@ class _DefaultStyle extends RecordAmountListItemStyle {
   final Color actionItemBackgroundColor = const Color(0x00000000);
 
   final TextStyle titleTextStyle = const TextStyle(
-      fontSize: 17, fontWeight: FontWeight.w400, color: Color(0xFF1a1b46));
+    fontSize: 17,
+    fontWeight: FontWeight.w400,
+    color: Color(0xFF1a1b46),
+  );
   final TextStyle pendingDetailTextStyle = const TextStyle(
-      fontSize: 15, fontWeight: FontWeight.normal, color: Color(0x4c767690));
+    fontSize: 15,
+    fontWeight: FontWeight.normal,
+    color: Color(0x4c767690),
+  );
   final TextStyle detailTextStyle = const TextStyle(
-      fontSize: 15, fontWeight: FontWeight.normal, color: Color(0xff767690));
+    fontSize: 15,
+    fontWeight: FontWeight.normal,
+    color: Color(0xff767690),
+  );
 
   final EdgeInsets actionItemEdgePadding =
       const EdgeInsets.only(left: 32, right: 32, top: 25.8, bottom: 25.8);
@@ -173,30 +186,36 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
     return Column(
       children: <Widget>[
         Card(
-            margin: style.cardMargins,
-            elevation: style.actionItemElevation,
-            color: style.actionItemBackgroundColor,
-            child: Container(
-              padding: style.actionItemEdgePadding,
-              alignment: Alignment.center,
-              child: Wrap(
-                  direction: Axis.horizontal,
-                  crossAxisAlignment: WrapCrossAlignment.start,
-                  children: <Widget>[
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: style.itemAlignment,
-                      children: _buildItemContent(viewModel, style),
-                    )
-                  ]),
-            ))
+          margin: style.cardMargins,
+          elevation: style.actionItemElevation,
+          color: style.actionItemBackgroundColor,
+          child: Container(
+            padding: style.actionItemEdgePadding,
+            alignment: Alignment.center,
+            child: Wrap(
+              direction: Axis.horizontal,
+              crossAxisAlignment: WrapCrossAlignment.start,
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: style.itemAlignment,
+                  children: _buildItemContent(viewModel, style),
+                )
+              ],
+            ),
+          ),
+        )
       ],
     );
   }
 
-  List<Widget> _buildItemContent(RecordAmountListItemViewModel viewModel, RecordAmountListItemStyle style) {
+  List<Widget> _buildItemContent(RecordAmountListItemViewModel viewModel,
+      RecordAmountListItemStyle style) {
     List<Widget> listBuilder = [
-      Image.asset(viewModel.icon, height: style.iconHeight),
+      Image.asset(
+        viewModel.icon,
+        height: style.iconHeight,
+      ),
       SizedBox(width: style.iconLineSpace),
     ];
 
@@ -208,25 +227,32 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
       _buildItemPicker(listBuilder, viewModel, style);
     }
 
-    if (viewModel.selectedDate == null &&
-        viewModel.listOfCrops == null) {
+    if (viewModel.selectedDate == null && viewModel.listOfCrops == null) {
       return _buildDescriptionTextField(listBuilder, viewModel, style);
     }
 
     if (viewModel.isEditable) {
       listBuilder.add(SizedBox(width: style.iconLineSpace));
-      listBuilder.add(Row(
+      listBuilder.add(
+        Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
-            Image.asset(viewModel.arrow,
-                height: style.detailTextSpacing)
-          ]));
+            Image.asset(
+              viewModel.arrow,
+              height: style.detailTextSpacing,
+            )
+          ],
+        ),
+      );
     }
 
     return listBuilder;
   }
 
-  List<Widget> _buildDescriptionTextField(List<Widget> listBuilder, RecordAmountListItemViewModel viewModel, RecordAmountListItemStyle style) {
+  List<Widget> _buildDescriptionTextField(
+      List<Widget> listBuilder,
+      RecordAmountListItemViewModel viewModel,
+      RecordAmountListItemStyle style) {
     listBuilder.add(Expanded(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -244,20 +270,28 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
                   maxLines: style.maxLines,
                   controller: _textFieldController,
                   onEditingComplete: () => _checkTextField(viewModel),
-                  enabled:viewModel.isEditable,
+                  enabled: viewModel.isEditable,
                 )
-              : Text(viewModel.description,
+              : Text(
+                  viewModel.description,
                   textAlign: TextAlign.left,
-                  style: style.detailTextStyle)
+                  style: style.detailTextStyle,
+                )
         ],
       ),
     ));
     return listBuilder;
   }
 
-  void _buildItemPicker(List<Widget> listBuilder, RecordAmountListItemViewModel viewModel, RecordAmountListItemStyle style) {
-    listBuilder.add(
-        Text(viewModel.title, style: style.titleTextStyle));
+  void _buildItemPicker(
+    List<Widget> listBuilder,
+    RecordAmountListItemViewModel viewModel,
+    RecordAmountListItemStyle style,
+  ) {
+    listBuilder.add(Text(
+      viewModel.title,
+      style: style.titleTextStyle,
+    ));
     listBuilder.add(Expanded(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
@@ -279,16 +313,22 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
                     isExpanded: false,
                   ),
                 )
-              : Text(viewModel.selectedItem,
-                  style: style.detailTextStyle)
+              : Text(
+                  viewModel.selectedItem,
+                  style: style.detailTextStyle,
+                )
         ],
       ),
     ));
   }
 
-  void _buildDatePicker(List<Widget> listBuilder, RecordAmountListItemViewModel viewModel, RecordAmountListItemStyle style) {
+  void _buildDatePicker(
+      List<Widget> listBuilder,
+      RecordAmountListItemViewModel viewModel,
+      RecordAmountListItemStyle style) {
     listBuilder.add(
-        Text(viewModel.title, style: style.titleTextStyle));
+      Text(viewModel.title, style: style.titleTextStyle),
+    );
 
     listBuilder.add(Expanded(
       child: Column(
@@ -301,14 +341,18 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
                       ? viewModel.hint
                       : _formatDate(viewModel.selectedDate),
                   style: style.detailTextStyle),
-              onTap: () =>
-                  viewModel.isEditable ? _selectDate(context, viewModel) : null),
+              onTap: () => viewModel.isEditable
+                  ? _selectDate(context, viewModel)
+                  : null),
         ],
       ),
     ));
   }
 
-  Future<Null> _selectDate(BuildContext context, RecordAmountListItemViewModel viewModel) async {
+  Future<Null> _selectDate(
+    BuildContext context,
+    RecordAmountListItemViewModel viewModel,
+  ) async {
     final DateTime picked = await showDatePicker(
         context: context,
         initialDate: viewModel.selectedDate,
@@ -329,11 +373,11 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
     return formatted;
   }
 
-  List<DropdownMenuItem<String>> _getDropDownMenuItems(RecordAmountListItemViewModel viewModel) {
+  List<DropdownMenuItem<String>> _getDropDownMenuItems(
+      RecordAmountListItemViewModel viewModel) {
     List<DropdownMenuItem<String>> items = new List();
     for (String crop in viewModel.listOfCrops) {
-      items.add(new DropdownMenuItem(value: crop,
-          child: new Text(crop)));
+      items.add(new DropdownMenuItem(value: crop, child: new Text(crop)));
     }
     return items;
   }
