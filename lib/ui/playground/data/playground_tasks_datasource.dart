@@ -8,6 +8,8 @@ import 'package:farmsmart_flutter/ui/mockData/MockActionSheetViewModel.dart';
 import 'package:farmsmart_flutter/ui/playground/data/playground_data_source.dart';
 import 'package:farmsmart_flutter/ui/playground/data/playground_stagecard_datasource.dart';
 import 'package:farmsmart_flutter/ui/playground/playground_widget.dart';
+import 'package:farmsmart_flutter/ui/profile/UserProfile.dart';
+import 'package:farmsmart_flutter/ui/profile/UserProfileListItem.dart';
 import 'package:farmsmart_flutter/ui/profitloss/ProfitLossHeader.dart';
 import 'package:farmsmart_flutter/ui/profitloss/ProfitLossListItem.dart';
 import 'package:farmsmart_flutter/ui/profitloss/mockRepositoryTryout/MockTransactionRepository.dart';
@@ -105,15 +107,51 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
         title: '#TASK NAME#',
         child: YourWidget(),
       ),*/
-      PlaygroundWidget(title: "FARM-280 Update Discover", child:
-          ArticleList(
-              viewModelProvider: ArticleListProvider( title: "Test",
-                  repository: MockArticlesRepository(articleCount: 2000)))
-      ),
-      PlaygroundWidget(title: "FARM-342 Persistent Bottom navigation bar",
+      PlaygroundWidget(
+          title: "FARM-280 Update Discover",
+          child: ArticleList(
+              viewModelProvider: ArticleListProvider(
+                  title: "Test",
+                  repository: MockArticlesRepository(articleCount: 2000)))),
+      PlaygroundWidget(
+        title: "FARM-342 Persistent Bottom navigation bar",
         child: PersistentBottomNavigationBar(
           backgroundColor: Colors.white,
-          tabs: PlaygroundPersistentBottomNavigationBar().getList(),),),
+          tabs: PlaygroundPersistentBottomNavigationBar().getList(),
+        ),
+      ),
+      PlaygroundWidget(
+          title: 'huha',
+          child: UserProfile(
+            viewModel: UserProfileViewModel(actions: [
+              UserProfileListItemViewModel(title: "AAA"),
+              UserProfileListItemViewModel(title: "BBB"),
+              UserProfileListItemViewModel(title: "CCC"),
+              UserProfileListItemViewModel(title: "BBB"),
+              UserProfileListItemViewModel(title: "BBB"),
+              UserProfileListItemViewModel(title: "BBB"),
+              UserProfileListItemViewModel(title: "BBB"),
+              UserProfileListItemViewModel(title: "BBB"),
+              UserProfileListItemViewModel(title: "BBB"),
+              UserProfileListItemViewModel(title: "BBB"),
+              UserProfileListItemViewModel(title: "BBB"),
+              UserProfileListItemViewModel(title: "BBB"),
+              UserProfileListItemViewModel(title: "BBB"),
+              UserProfileListItemViewModel(title: "BBB"),
+              UserProfileListItemViewModel(title: "BBB"),
+              UserProfileListItemViewModel(title: "BBB"),
+              UserProfileListItemViewModel(title: "BBB"),
+              UserProfileListItemViewModel(title: "BBB"),
+              UserProfileListItemViewModel(title: "BBB"),
+              UserProfileListItemViewModel(title: "BBB"),
+              UserProfileListItemViewModel(title: "BBB"),
+              UserProfileListItemViewModel(title: "BBB"),
+              UserProfileListItemViewModel(title: "BBB"),
+              UserProfileListItemViewModel(title: "BBB"),
+              UserProfileListItemViewModel(title: "BBB"),
+
+            ]),
+          )),
     ];
   }
 }
