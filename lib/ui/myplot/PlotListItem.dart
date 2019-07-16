@@ -93,7 +93,7 @@ class _DefaultStyle implements PlotListItemStyle {
   final EdgeInsets dividerEdgePadding = const EdgeInsets.only(left: 25.0);
   final EdgeInsets cardEdgePadding = const EdgeInsets.all(0);
   final EdgeInsets edgePadding =
-      const EdgeInsets.only(left: 32.0, top: 27.0, right: 32.0, bottom: 27.0);
+      const EdgeInsets.only(left: 32.0, top: 23.5, right: 30.5, bottom: 23.5);
 
   final TextStyle subtitleTextStyle = const TextStyle(
       fontSize: 15, fontWeight: FontWeight.normal, color: Color(0xff767690));
@@ -106,11 +106,11 @@ class _DefaultStyle implements PlotListItemStyle {
   final double elevation = 0.0;
   final double imageSize = 80.0;
   final double headingLineSpace = 5;
-  final double detailLineSpace = 12;
+  final double detailLineSpace = 11;
   final double imageLineSpace = 20;
   final int maxLineText = 1;
-  final double circularSize = 87;
-  final double circularLineWidth = 3;
+  final double circularSize = 86.5;
+  final double circularLineWidth = 2;
 
   const _DefaultStyle();
 }
