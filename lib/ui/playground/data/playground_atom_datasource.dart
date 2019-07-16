@@ -1,11 +1,13 @@
-import 'package:farmsmart_flutter/ui/common/CircularProgress.dart';
 import 'package:farmsmart_flutter/data/bloc/article/ArticleDetailTransformer.dart';
 import 'package:farmsmart_flutter/data/bloc/article/ArticleListItemViewModelTransformer.dart';
 import 'package:farmsmart_flutter/data/repositories/article/implementation/MockArticlesRepository.dart';
 import 'package:farmsmart_flutter/ui/common/ActionSheetListItem.dart';
+import 'package:farmsmart_flutter/ui/common/CircularProgress.dart';
 import 'package:farmsmart_flutter/ui/common/DogTagStyles.dart';
 import 'package:farmsmart_flutter/ui/common/Dogtag.dart';
+import 'package:farmsmart_flutter/ui/common/recommendation_card.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
+import 'package:farmsmart_flutter/ui/common/stage_card.dart';
 import 'package:farmsmart_flutter/ui/discover/HeroListItem.dart';
 import 'package:farmsmart_flutter/ui/discover/StandardListItem.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockActionSheetViewModel.dart';
@@ -14,7 +16,6 @@ import 'package:farmsmart_flutter/ui/mockData/MockRoundedButtonViewModel.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockStageCardViewModel.dart';
 import 'package:farmsmart_flutter/ui/playground/data/playground_data_source.dart';
 import 'package:farmsmart_flutter/ui/playground/playground_widget.dart';
-import 'package:farmsmart_flutter/ui/common/stage_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -150,10 +151,13 @@ class PlayGroundAtomDataSource implements PlaygroundDataSource {
       PlaygroundWidget(
         title: 'CircularProgress',
         child: Container(
-          alignment: Alignment.center,
-          padding: EdgeInsets.symmetric(vertical: 20.0),
-          child: CircularProgress(progress: 0.75, lineWidth: 3, size: 87,)
-        ),
+            alignment: Alignment.center,
+            padding: EdgeInsets.symmetric(vertical: 20.0),
+            child: CircularProgress(
+              progress: 0.75,
+              lineWidth: 3,
+              size: 87,
+            )),
       ),
       PlaygroundWidget(
         title: 'Stage Card',
@@ -161,6 +165,25 @@ class PlayGroundAtomDataSource implements PlaygroundDataSource {
           height: 162,
           child: StageCard(
             viewModel: MockStageCardViewModel.buildCompleteState(),
+          ),
+        ),
+      ),
+      PlaygroundWidget(
+        title: 'RecommendationCard',
+        child: Container(
+          child: RecommendationCard(
+            viewModel: RecommendationCardViewModel(
+              imagePath:
+                  'https://i0.wp.com/images-prod.healthline.com/hlcmsresource/images/AN_images/tomatoes-1296x728-feature.jpg?w=1155&h=1528',
+              title: 'title aisdsa daspdasdasdasj asdo ',
+              subtitle: 'subtitle ajsdpojasd asposadsaddj sapodj asd o',
+              description:
+                  'description oiasjdp oasdj aspodjas dposaj dpasojd aspdj psdoiah vadspig hadspgiha sd ighasdpg asd',
+              leftActionText: 'View details',
+              rightActionText: 'Add to My Plot',
+              leftAction: () {},
+              rightAction: () {},
+            ),
           ),
         ),
       )
