@@ -105,6 +105,7 @@ class UserProfile extends StatelessWidget {
   Widget _buildListOfActions(UserProfileViewModel viewModel) {
     return ListView.separated(
       shrinkWrap: true,
+      physics: ScrollPhysics(),
       itemCount: viewModel.actions.length,
       itemBuilder: (context, index) => UserProfileListItem(),
       separatorBuilder: (context, index) => ListDivider.build(),

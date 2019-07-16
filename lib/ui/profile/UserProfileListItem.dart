@@ -29,6 +29,9 @@ class UserProfileListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text("sdsdf");
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 32),
+      child: Text("sdsdf"),
+    );
   }
 }
