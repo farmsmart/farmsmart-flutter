@@ -98,8 +98,8 @@ class _DefaultStyle extends LandingPageStyle {
       left: 30, right: 30, bottom: 16);
 
   final double subtitleLineSpace = 13;
-  final double detailTextLineSpace = 38;
-  final double actionLineSpace = 30;
+  final double detailTextLineSpace = 40;
+  final double actionLineSpace = 15;
   final int detailTextMaxLines = 3;
   final int footerTextMaxLines = 1;
 
@@ -140,35 +140,38 @@ class LandingPage extends StatelessWidget {
             _buildHeader(),
             _buildSubtitle(),
             SizedBox(
-              height: _style.subtitleLineSpace,
+              height: _style.subtitleLineSpace
             ),
             _buildDetailText(),
             SizedBox(
-              height: _style.detailTextLineSpace,
+              height: _style.detailTextLineSpace
             ),
             _buildAction(context),
             SizedBox(
-              height: _style.actionLineSpace,
+              height: _style.actionLineSpace
             ),
-            _buildFooter(),
+            _buildFooter(context),
           ],
         ),
       ),
     );
   }
 
-  Row _buildFooter() {
+  Row _buildFooter(BuildContext context) {
     return Row(
             children: <Widget>[
               Expanded(
                 child: Padding(
                   padding: _style.footerTextEdgePadding,
-                  child: Text(
-                    _viewModel.footerText,
-                    textAlign: TextAlign.center,
-                    style: _style.footerTextStyle,
-                    maxLines: _style.footerTextMaxLines,
-                    overflow: TextOverflow.ellipsis,
+                  child: FlatButton(
+                    onPressed: () => _onMenuPressed(context),
+                    child: Text(
+                      _viewModel.footerText,
+                      textAlign: TextAlign.center,
+                      style: _style.footerTextStyle,
+                      maxLines: _style.footerTextMaxLines,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                 ),
               ),
@@ -180,8 +183,7 @@ class LandingPage extends StatelessWidget {
     return Padding(
             padding: _style.actionEdgePadding,
             child: RoundedButton(
-              viewModel: RoundedButtonViewModel(title: _viewModel.actionText,
-                  onTap: () => _onMenuPressed(context)),
+              viewModel: RoundedButtonViewModel(title: _viewModel.actionText),
               style: RoundedButtonStyle.largeRoundedButtonStyle(),
             ),
           );
@@ -211,7 +213,7 @@ class LandingPage extends StatelessWidget {
     return Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Image.asset(_viewModel.subtitleImage),
+              Image.asset(_viewModel.subtitleImage)
             ],
           );
   }
@@ -222,7 +224,7 @@ class LandingPage extends StatelessWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[Image.asset(_viewModel.headerImage)],
+              children: <Widget>[Image.asset(_viewModel.headerImage)]
             ),
           );
   }
