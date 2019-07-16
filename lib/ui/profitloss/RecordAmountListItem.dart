@@ -3,6 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 
+class _Constants {
+  static final currentDate = DateTime.now();
+  static final minDateLimit = DateTime(2019, 6);
+  static final maxDateLimit = DateTime(2101);
+  static final dateFormatter = DateFormat('dd MMMM yyyy');
+
+}
+
 class RecordAmountListItemViewModel {
   String icon;
   String title;
@@ -337,7 +345,7 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
           InkWell(
               child: Text(
                   _formatDate(viewModel.selectedDate) ==
-                          _formatDate(DateTime.now())
+                          _formatDate(_Constants.currentDate)
                       ? viewModel.hint
                       : _formatDate(viewModel.selectedDate),
                   style: style.detailTextStyle),
@@ -356,8 +364,8 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
     final DateTime picked = await showDatePicker(
       context: context,
       initialDate: viewModel.selectedDate,
-      firstDate: DateTime(2019, 6),
-      lastDate: DateTime(2101),
+      firstDate: _Constants.minDateLimit,
+      lastDate: _Constants.maxDateLimit,
     );
 
     if (picked != null && picked != viewModel.selectedDate)
@@ -368,8 +376,7 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
   }
 
   String _formatDate(DateTime selectedDate) {
-    var formatter = DateFormat('dd MMMM yyyy');
-    String formatted = formatter.format(selectedDate);
+    String formatted = _Constants.dateFormatter.format(selectedDate);
     print(formatted);
     return formatted;
   }

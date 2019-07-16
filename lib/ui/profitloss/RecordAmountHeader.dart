@@ -3,6 +3,11 @@ import 'package:farmsmart_flutter/ui/profitloss/RecordAmount.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+class _Constants {
+  static final amountValidator = RegExInputFormatter.withRegex(
+      '^\$|^(0|([1-9][0-9]{0,3}))(\\.[0-9]{0,2})?\$');
+}
+
 class RecordAmountHeaderViewModel {
   String onAmountChanged;
   final Function(String) listener;
@@ -97,9 +102,6 @@ class RecordAmountHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _amountValidator = RegExInputFormatter.withRegex(
-        '^\$|^(0|([1-9][0-9]{0,3}))(\\.[0-9]{0,2})?\$');
-
     return Container(
       padding: _style.edgePadding,
       height: _style.height,
@@ -122,7 +124,7 @@ class RecordAmountHeader extends StatelessWidget {
                             signed: false, decimal: true),
                         textAlign: TextAlign.center,
                         style: _style.titleTextStyle,
-                        inputFormatters: [_amountValidator],
+                        inputFormatters: [_Constants.amountValidator],
                         maxLines: _style.maxLines,
                         textInputAction: TextInputAction.done,
                         onChanged: _viewModel.listener,
