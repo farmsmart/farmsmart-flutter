@@ -13,11 +13,12 @@ class LandingPageViewModel {
   String headerImage;
   String subtitleImage;
 
-  LandingPageViewModel({this.detailText,
-    this.actionText,
-    this.headerImage,
-    this.subtitleImage,
-    this.footerText});
+  LandingPageViewModel(
+      {this.detailText,
+      this.actionText,
+      this.headerImage,
+      this.subtitleImage,
+      this.footerText});
 }
 
 class LandingPageStyle {
@@ -67,9 +68,10 @@ class LandingPageStyle {
       footerTextStyle: footerTextStyle ?? this.footerTextStyle,
       headerEdgePadding: headerEdgePadding ?? this.headerEdgePadding,
       detailTextEdgePadding:
-      detailTextEdgePadding ?? this.detailTextEdgePadding,
+          detailTextEdgePadding ?? this.detailTextEdgePadding,
       actionEdgePadding: actionEdgePadding ?? this.actionEdgePadding,
-      footerTextEdgePadding: footerTextEdgePadding ?? this.footerTextEdgePadding,
+      footerTextEdgePadding:
+          footerTextEdgePadding ?? this.footerTextEdgePadding,
       subtitleLineSpace: subtitleLineSpace ?? this.subtitleLineSpace,
       detailTextLineSpace: detailTextLineSpace ?? this.detailTextLineSpace,
       actionLineSpace: actionLineSpace ?? this.actionLineSpace,
@@ -88,14 +90,14 @@ class _DefaultStyle extends LandingPageStyle {
   final TextStyle footerTextStyle = const TextStyle(
       fontWeight: FontWeight.normal, fontSize: 15, color: Color(0xff4c4e6e));
 
-  final EdgeInsets headerEdgePadding = const EdgeInsets.only(
-      top: 56, bottom: 20.5);
+  final EdgeInsets headerEdgePadding =
+      const EdgeInsets.only(top: 56, bottom: 20.5);
   final EdgeInsets detailTextEdgePadding =
-  const EdgeInsets.only(left: 39.75, right: 39.75);
-  final EdgeInsets actionEdgePadding = const EdgeInsets.only(
-      left: 34, right: 34);
-  final EdgeInsets footerTextEdgePadding = const EdgeInsets.only(
-      left: 30, right: 30, bottom: 16);
+      const EdgeInsets.only(left: 39.75, right: 39.75);
+  final EdgeInsets actionEdgePadding =
+      const EdgeInsets.only(left: 34, right: 34);
+  final EdgeInsets footerTextEdgePadding =
+      const EdgeInsets.only(left: 30, right: 30, bottom: 16);
 
   final double subtitleLineSpace = 13;
   final double detailTextLineSpace = 40;
@@ -124,9 +126,10 @@ class LandingPage extends StatelessWidget {
   final LandingPageViewModel _viewModel;
   final LandingPageStyle _style;
 
-  const LandingPage({Key key,
-    LandingPageViewModel viewModel,
-    LandingPageStyle style = _defaultStyle})
+  const LandingPage(
+      {Key key,
+      LandingPageViewModel viewModel,
+      LandingPageStyle style = _defaultStyle})
       : this._viewModel = viewModel,
         this._style = style,
         super(key: key);
@@ -139,17 +142,11 @@ class LandingPage extends StatelessWidget {
           children: <Widget>[
             _buildHeader(),
             _buildSubtitle(),
-            SizedBox(
-              height: _style.subtitleLineSpace
-            ),
+            SizedBox(height: _style.subtitleLineSpace),
             _buildDetailText(),
-            SizedBox(
-              height: _style.detailTextLineSpace
-            ),
+            SizedBox(height: _style.detailTextLineSpace),
             _buildAction(context),
-            SizedBox(
-              height: _style.actionLineSpace
-            ),
+            SizedBox(height: _style.actionLineSpace),
             _buildFooter(context),
           ],
         ),
@@ -159,82 +156,78 @@ class LandingPage extends StatelessWidget {
 
   Row _buildFooter(BuildContext context) {
     return Row(
-            children: <Widget>[
-              Expanded(
-                child: Padding(
-                  padding: _style.footerTextEdgePadding,
-                  child: FlatButton(
-                    onPressed: () => _onMenuPressed(context),
-                    child: Text(
-                      _viewModel.footerText,
-                      textAlign: TextAlign.center,
-                      style: _style.footerTextStyle,
-                      maxLines: _style.footerTextMaxLines,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                ),
+      children: <Widget>[
+        Expanded(
+          child: Padding(
+            padding: _style.footerTextEdgePadding,
+            child: FlatButton(
+              onPressed: () => _onMenuPressed(context),
+              child: Text(
+                _viewModel.footerText,
+                textAlign: TextAlign.center,
+                style: _style.footerTextStyle,
+                maxLines: _style.footerTextMaxLines,
+                overflow: TextOverflow.ellipsis,
               ),
-            ],
-          );
+            ),
+          ),
+        ),
+      ],
+    );
   }
 
   Padding _buildAction(BuildContext context) {
     return Padding(
-            padding: _style.actionEdgePadding,
-            child: RoundedButton(
-              viewModel: RoundedButtonViewModel(title: _viewModel.actionText),
-              style: RoundedButtonStyle.largeRoundedButtonStyle(),
-            ),
-          );
+      padding: _style.actionEdgePadding,
+      child: RoundedButton(
+        viewModel: RoundedButtonViewModel(title: _viewModel.actionText),
+        style: RoundedButtonStyle.largeRoundedButtonStyle(),
+      ),
+    );
   }
 
   Padding _buildDetailText() {
     return Padding(
-            padding: _style.detailTextEdgePadding,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Expanded(
-                  child: Text(
-                    _viewModel.detailText,
-                    textAlign: TextAlign.center,
-                    maxLines: _style.detailTextMaxLines,
-                    overflow: TextOverflow.ellipsis,
-                    style: _style.detailTextStyle,
-                  ),
-                ),
-              ],
+      padding: _style.detailTextEdgePadding,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Expanded(
+            child: Text(
+              _viewModel.detailText,
+              textAlign: TextAlign.center,
+              maxLines: _style.detailTextMaxLines,
+              overflow: TextOverflow.ellipsis,
+              style: _style.detailTextStyle,
             ),
-          );
+          ),
+        ],
+      ),
+    );
   }
 
   Row _buildSubtitle() {
     return Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Image.asset(_viewModel.subtitleImage)
-            ],
-          );
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[Image.asset(_viewModel.subtitleImage)],
+    );
   }
 
   Padding _buildHeader() {
     return Padding(
-            padding: _style.headerEdgePadding,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[Image.asset(_viewModel.headerImage)]
-            ),
-          );
+      padding: _style.headerEdgePadding,
+      child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[Image.asset(_viewModel.headerImage)]),
+    );
   }
 }
 
 Future _onMenuPressed(BuildContext context) async {
   showModalBottomSheet(
       context: context,
-      builder: (widgetBuilder) =>
-          ActionSheet(
-              viewModel: MockActionSheetViewModel.buildWithCheckBox(),
-              style: ActionSheetStyle.defaultStyle()));
+      builder: (widgetBuilder) => ActionSheet(
+          viewModel: MockActionSheetViewModel.buildWithCheckBox(),
+          style: ActionSheetStyle.defaultStyle()));
 }
