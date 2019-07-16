@@ -13,6 +13,7 @@ class StageCardViewModel {
   String statusTitle;
   Function action;
   IconData statusIcon;
+  StageCardStyle style;
 
   StageCardViewModel(
       {this.subtitle,
@@ -20,7 +21,8 @@ class StageCardViewModel {
       this.actionText,
       this.statusTitle,
       this.action,
-      this.statusIcon});
+      this.statusIcon, 
+      this.style});
 }
 
 class StageCardStyle {

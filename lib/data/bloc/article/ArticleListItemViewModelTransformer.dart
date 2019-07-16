@@ -4,6 +4,8 @@ import 'package:farmsmart_flutter/ui/discover/viewModel/ArticleDetailViewModel.d
 import 'package:farmsmart_flutter/ui/discover/viewModel/ArticleListItemViewModel.dart';
 import 'package:farmsmart_flutter/utils/strings.dart';
 
+import 'ArticleDetailTransformer.dart';
+
 /*
       Transform:
       [ArticleEntity] -> [ArticleListItemViewModel]
@@ -27,5 +29,13 @@ class ArticleListItemViewModelTransformer
         from.summary ?? "",
         ArticleImageProvider(from),
         detailViewModel);
+  }
+
+
+  static ArticleListItemViewModelTransformer buildWithDetail(ArticleDetailViewModelTransformer detail) {
+    final transformer = ArticleListItemViewModelTransformer(
+        detailTransformer: detail);
+    detail.setListItemTransformer(transformer);
+      return transformer;
   }
 }
