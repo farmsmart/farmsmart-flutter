@@ -1,4 +1,5 @@
 import 'package:farmsmart_flutter/ui/mockData/MockRecordAmountViewModel.dart';
+import 'package:farmsmart_flutter/ui/playground/playground_view.dart';
 import 'package:farmsmart_flutter/ui/profitloss/RecordAmountListItem.dart';
 import 'package:farmsmart_flutter/ui/profitloss/RecordAmountHeader.dart';
 import 'package:farmsmart_flutter/ui/common/CircularProgress.dart';
@@ -153,10 +154,13 @@ class PlayGroundAtomDataSource implements PlaygroundDataSource {
       PlaygroundWidget(
         title: 'CircularProgress',
         child: Container(
-          alignment: Alignment.center,
-          padding: EdgeInsets.symmetric(vertical: 20.0),
-          child: CircularProgress(progress: 0.75, lineWidth: 3, size: 87,)
-        ),
+            alignment: Alignment.center,
+            padding: EdgeInsets.symmetric(vertical: 20.0),
+            child: CircularProgress(
+              progress: 0.75,
+              lineWidth: 3,
+              size: 87,
+            )),
       ),
       PlaygroundWidget(
         title: 'Stage Card',
@@ -167,30 +171,47 @@ class PlayGroundAtomDataSource implements PlaygroundDataSource {
           ),
         ),
       ),
-      PlaygroundWidget(
-        title: "FARM-59 - Record a cost header",
-        child: RecordAmountHeader(viewModel: RecordAmountHeaderViewModel(onAmountChanged: MockRecordAmountViewModel.buildCost().amount, isEditable: true), style: RecordAmountHeaderStyle.defaultCostStyle())
-      ),
 
       PlaygroundWidget(
-          title: "FARM-59 - Record a sale header",
-          child:  RecordAmountHeader(viewModel: RecordAmountHeaderViewModel(onAmountChanged: MockRecordAmountViewModel.buildCost().amount, isEditable: true), style: RecordAmountHeaderStyle.defaultSaleStyle())
+        title: 'FARM-50 Record a Cost/Sale',
+        child: PlaygroundView(
+          widgetList: [
+            PlaygroundWidget(
+              title: "Record Cost Header",
+              child: RecordAmountHeader(
+                  viewModel: RecordAmountHeaderViewModel(
+                      onAmountChanged:
+                          MockRecordAmountViewModel.buildCost().amount,
+                      isEditable: true),
+                  style: RecordAmountHeaderStyle.defaultCostStyle()),
+            ),
+            PlaygroundWidget(
+              title: "Record Sale Header",
+              child: RecordAmountHeader(
+                  viewModel: RecordAmountHeaderViewModel(
+                      onAmountChanged:
+                          MockRecordAmountViewModel.buildCost().amount,
+                      isEditable: true),
+                  style: RecordAmountHeaderStyle.defaultSaleStyle()),
+            ),
+            PlaygroundWidget(
+              title: "Pick up date",
+              child: RecordAmountListItem(
+                  viewModel: MockRecordAmountListItemViewModel.build(0)),
+            ),
+            PlaygroundWidget(
+              title: "Pick up crop",
+              child: RecordAmountListItem(
+                  viewModel: MockRecordAmountListItemViewModel.build(1)),
+            ),
+            PlaygroundWidget(
+              title: "Add description cell",
+              child: RecordAmountListItem(
+                  viewModel: MockRecordAmountListItemViewModel.build(2)),
+            ),
+          ],
+        ),
       ),
-
-      PlaygroundWidget(
-          title: "FARM-59 - Pick up date",
-          child: RecordAmountListItem(viewModel: MockRecordAmountListItemViewModel.build(0))
-      ),
-
-      PlaygroundWidget(
-          title: "FARM-59 - Pick up crop",
-          child: RecordAmountListItem(viewModel: MockRecordAmountListItemViewModel.build(1))
-      ),
-
-      PlaygroundWidget(
-          title: "FARM-59 - Add description",
-          child: RecordAmountListItem(viewModel: MockRecordAmountListItemViewModel.build(2))
-      )
     ];
   }
 }

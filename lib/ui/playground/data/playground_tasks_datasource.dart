@@ -33,10 +33,11 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
           child: PlaygroundView(
             widgetList: [
               PlaygroundWidget(
-                  title: 'TASK FARM-62 Profit-Loss Header',
-                  child: ProfitLossHeader(
-                      viewModel: MockProfitLossHeaderViewModel.build(),
-                      style: ProfitLossHeaderStyle.defaultStyle())),
+                title: 'TASK FARM-62 Profit-Loss Header',
+                child: ProfitLossHeader(
+                    viewModel: MockProfitLossHeaderViewModel.build(),
+                    style: ProfitLossHeaderStyle.defaultStyle()),
+              ),
               PlaygroundWidget(
                 title: 'TASK FARM-62 Profit-Loss Item Negative',
                 child: ProfitLossListItem(
@@ -56,22 +57,23 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
           child: PlaygroundView(
             widgetList: [
               PlaygroundWidget(
-                  title: 'FARM-355 Generic Action Sheet - Simple',
-                  child: Container(
-                    height: 350,
-                    child: ActionSheet(
-                        viewModel: MockActionSheetViewModel.buildStandard(),
-                        style: ActionSheetStyle.defaultStyle()),
-                  )),
+                title: 'FARM-355 Generic Action Sheet - Simple',
+                child: Container(
+                  height: 350,
+                  child: ActionSheet(
+                      viewModel: MockActionSheetViewModel.buildStandard(),
+                      style: ActionSheetStyle.defaultStyle()),
+                ),
+              ),
               PlaygroundWidget(
-                  title: 'FARM-355 Generic Action Sheet - Larger',
-                  child: Container(
-                    height: 420,
-                    child: ActionSheet(
-                        viewModel:
-                            MockActionSheetViewModel.buildStandardBigger(),
-                        style: ActionSheetStyle.defaultStyle()),
-                  )),
+                title: 'FARM-355 Generic Action Sheet - Larger',
+                child: Container(
+                  height: 420,
+                  child: ActionSheet(
+                      viewModel: MockActionSheetViewModel.buildStandardBigger(),
+                      style: ActionSheetStyle.defaultStyle()),
+                ),
+              ),
               PlaygroundWidget(
                   title: 'FARM-355 Generic Action Sheet - With icons',
                   child: Container(
@@ -107,21 +109,35 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
           ),
         ),
       ),
+
       PlaygroundWidget(
-        title: 'TASK FARM-59 Record a Sale',
-        child: RecordAmount(viewModel: MockRecordAmountViewModel.buildSale()),
-      ),
-      PlaygroundWidget(
-        title: 'TASK FARM-59 Record a Cost',
-        child: RecordAmount(viewModel: MockRecordAmountViewModel.buildCost()),
-      ),
-      PlaygroundWidget(
-        title: 'TASK FARM-59 View a Sale',
-        child: RecordAmount(viewModel: MockRecordAmountViewModel.buildViewSale()),
-      ),
-      PlaygroundWidget(
-        title: 'TASK FARM-59 View a Cost',
-        child: RecordAmount(viewModel: MockRecordAmountViewModel.buildViewCost()),
+        title: 'FARM-59 Record a Cost/Sale',
+        child: PlaygroundView(widgetList: [
+          PlaygroundWidget(
+            title: 'Record a Sale',
+            child: RecordAmount(
+              viewModel: MockRecordAmountViewModel.buildSale(),
+            ),
+          ),
+          PlaygroundWidget(
+            title: 'Record a Cost',
+            child: RecordAmount(
+              viewModel: MockRecordAmountViewModel.buildCost(),
+            ),
+          ),
+          PlaygroundWidget(
+            title: 'View a Sale',
+            child: RecordAmount(
+              viewModel: MockRecordAmountViewModel.buildViewSale(),
+            ),
+          ),
+          PlaygroundWidget(
+            title: 'View a Cost',
+            child: RecordAmount(
+              viewModel: MockRecordAmountViewModel.buildViewCost(),
+            ),
+          ),
+        ]),
       ),
       PlaygroundWidget(
           title: "FARM-280 Update Discover",

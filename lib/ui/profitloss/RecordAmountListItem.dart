@@ -354,10 +354,11 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
     RecordAmountListItemViewModel viewModel,
   ) async {
     final DateTime picked = await showDatePicker(
-        context: context,
-        initialDate: viewModel.selectedDate,
-        firstDate: DateTime(2019, 6),
-        lastDate: DateTime(2101));
+      context: context,
+      initialDate: viewModel.selectedDate,
+      firstDate: DateTime(2019, 6),
+      lastDate: DateTime(2101),
+    );
 
     if (picked != null && picked != viewModel.selectedDate)
       setState(() {
