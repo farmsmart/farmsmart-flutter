@@ -120,11 +120,11 @@ class RecordAmount extends StatefulWidget {
 
 class RecordAmountState extends State<RecordAmount> {
   String selectedCrop;
-  bool amoundIsFilled = false;
+  bool _amoundIsFilled = false;
   bool cropIsFilled = false;
-  final int firstListItem = 0;
-  final int secondListItem = 1;
-  final int thirdListItem = 2;
+  final int _firstListItem = 0;
+  final int _secondListItem = 1;
+  final int _thirdListItem = 2;
 
   @override
   void initState() {
@@ -222,9 +222,9 @@ class RecordAmountState extends State<RecordAmount> {
       RecordAmountHeader(
         viewModel: RecordAmountHeaderViewModel(
           isEditable: viewModel.isEditable,
-          amount: viewModel.amount,
+          onAmountChanged: viewModel.amount,
           listener: (amount) {
-            amoundIsFilled = true;
+            _amoundIsFilled = true;
             checkIfFilled();
           },
         ),
@@ -240,11 +240,11 @@ class RecordAmountState extends State<RecordAmount> {
       RecordAmountListItem(
         viewModel: RecordAmountListItemViewModel(
           isEditable: viewModel.isEditable,
-          icon: viewModel.actions[firstListItem].icon,
-          hint: viewModel.actions[firstListItem].hint,
-          arrow: viewModel.actions[firstListItem].arrow,
-          title: viewModel.actions[firstListItem].title,
-          selectedDate: viewModel.actions[firstListItem].selectedDate,
+          icon: viewModel.actions[_firstListItem].icon,
+          hint: viewModel.actions[_firstListItem].hint,
+          arrow: viewModel.actions[_firstListItem].arrow,
+          title: viewModel.actions[_firstListItem].title,
+          selectedDate: viewModel.actions[_firstListItem].selectedDate,
         ),
         parent: this,
       ),
@@ -256,14 +256,14 @@ class RecordAmountState extends State<RecordAmount> {
       RecordAmountListItem(
         viewModel: RecordAmountListItemViewModel(
           isEditable: viewModel.isEditable,
-          icon: viewModel.actions[secondListItem].icon,
-          hint: viewModel.actions[secondListItem].hint,
+          icon: viewModel.actions[_secondListItem].icon,
+          hint: viewModel.actions[_secondListItem].hint,
           selectedItem: viewModel.isEditable
               ? selectedCrop
-              : viewModel.actions[secondListItem].selectedItem,
-          arrow: viewModel.actions[secondListItem].arrow,
-          title: viewModel.actions[secondListItem].title,
-          listOfCrops: viewModel.actions[secondListItem].listOfCrops,
+              : viewModel.actions[_secondListItem].selectedItem,
+          arrow: viewModel.actions[_secondListItem].arrow,
+          title: viewModel.actions[_secondListItem].title,
+          listOfCrops: viewModel.actions[_secondListItem].listOfCrops,
           listener: (crop) {
             cropIsFilled = true;
             checkIfFilled();
@@ -279,10 +279,10 @@ class RecordAmountState extends State<RecordAmount> {
       RecordAmountListItem(
         viewModel: RecordAmountListItemViewModel(
             isEditable: viewModel.isEditable,
-            icon: viewModel.actions[thirdListItem].icon,
-            hint: viewModel.actions[thirdListItem].hint,
-            description: viewModel.actions[thirdListItem].description,
-            arrow: viewModel.actions[thirdListItem].arrow),
+            icon: viewModel.actions[_thirdListItem].icon,
+            hint: viewModel.actions[_thirdListItem].hint,
+            description: viewModel.actions[_thirdListItem].description,
+            arrow: viewModel.actions[_thirdListItem].arrow),
         style: RecordAmountListItemStyles.biggerStyle,
         parent: this,
       ),
@@ -326,7 +326,7 @@ class RecordAmountState extends State<RecordAmount> {
 
   checkIfFilled() {
     setState(() {
-      if (amoundIsFilled && cropIsFilled) {
+      if (_amoundIsFilled && cropIsFilled) {
         widget._viewModel.isFilled = true;
       } else {
         widget._viewModel.isFilled = false;

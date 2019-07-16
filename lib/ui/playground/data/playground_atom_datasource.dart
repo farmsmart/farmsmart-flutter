@@ -169,12 +169,12 @@ class PlayGroundAtomDataSource implements PlaygroundDataSource {
       ),
       PlaygroundWidget(
         title: "FARM-59 - Record a cost header",
-        child: RecordAmountHeader(viewModel: RecordAmountHeaderViewModel(amount: MockRecordAmountViewModel.buildCost().amount, isEditable: true), style: RecordAmountHeaderStyle.defaultCostStyle())
+        child: RecordAmountHeader(viewModel: RecordAmountHeaderViewModel(onAmountChanged: MockRecordAmountViewModel.buildCost().amount, isEditable: true), style: RecordAmountHeaderStyle.defaultCostStyle())
       ),
 
       PlaygroundWidget(
           title: "FARM-59 - Record a sale header",
-          child:  RecordAmountHeader(viewModel: RecordAmountHeaderViewModel(amount: MockRecordAmountViewModel.buildCost().amount, isEditable: true), style: RecordAmountHeaderStyle.defaultSaleStyle())
+          child:  RecordAmountHeader(viewModel: RecordAmountHeaderViewModel(onAmountChanged: MockRecordAmountViewModel.buildCost().amount, isEditable: true), style: RecordAmountHeaderStyle.defaultSaleStyle())
       ),
 
       PlaygroundWidget(

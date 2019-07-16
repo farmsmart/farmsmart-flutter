@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class RecordAmountHeaderViewModel {
-  String amount;
+  String onAmountChanged;
   final Function(String) listener;
   bool isEditable;
 
   RecordAmountHeaderViewModel({
-    this.amount,
+    this.onAmountChanged,
     this.listener,
     this.isEditable,
   });
@@ -113,7 +113,7 @@ class RecordAmountHeader extends StatelessWidget {
                 _viewModel.isEditable
                     ? TextField(
                         decoration: InputDecoration(
-                            hintText: _viewModel.amount,
+                            hintText: _viewModel.onAmountChanged,
                             hintStyle: _style.hintTextStyle,
                             border: InputBorder.none,
                             contentPadding: EdgeInsets.all(0),
@@ -127,7 +127,7 @@ class RecordAmountHeader extends StatelessWidget {
                         textInputAction: TextInputAction.done,
                         onChanged: _viewModel.listener,
                       )
-                    : Text(_viewModel.amount, style: _style.titleTextStyle),
+                    : Text(_viewModel.onAmountChanged, style: _style.titleTextStyle),
               ],
             ),
           ),

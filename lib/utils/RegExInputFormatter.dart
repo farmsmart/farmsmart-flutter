@@ -19,15 +19,15 @@ class RegExInputFormatter implements TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(
       TextEditingValue oldValue, TextEditingValue newValue) {
-    final oldValueValid = _isValid(oldValue.text);
-    final newValueValid = _isValid(newValue.text);
+    final oldValueValid = isValid(oldValue.text);
+    final newValueValid = isValid(newValue.text);
     if (oldValueValid && !newValueValid) {
       return oldValue;
     }
     return newValue;
   }
 
-  bool _isValid(String value) {
+  bool isValid(String value) {
     try {
       final matches = _regExp.allMatches(value);
       for (Match match in matches) {

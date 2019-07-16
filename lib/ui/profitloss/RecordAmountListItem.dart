@@ -308,7 +308,7 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
                     onChanged: _changeDropDownItem,
                     hint: Text(viewModel.hint,
                         style: style.pendingDetailTextStyle),
-                    icon: Icon(Icons.lens, size: 0),
+                    icon: Icon(null),
                     isDense: true,
                     isExpanded: false,
                   ),
