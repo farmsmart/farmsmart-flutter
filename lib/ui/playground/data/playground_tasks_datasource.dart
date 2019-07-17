@@ -1,19 +1,16 @@
 import 'package:farmsmart_flutter/data/bloc/article/ArticleListProvider.dart';
+import 'package:farmsmart_flutter/data/bloc/plot/PlotDetailProvider.dart';
 import 'package:farmsmart_flutter/data/bloc/plot/PlotListProvider.dart';
+import 'package:farmsmart_flutter/data/model/mock/MockPlot.dart';
 import 'package:farmsmart_flutter/data/repositories/article/implementation/MockArticlesRepository.dart';
 import 'package:farmsmart_flutter/ui/bottombar/persistent_bottom_navigation_bar.dart';
 import 'package:farmsmart_flutter/data/repositories/plot/implementation/MockPlotRepository.dart';
 import 'package:farmsmart_flutter/ui/discover/ArticleList.dart';
 import 'package:farmsmart_flutter/ui/common/ActionSheet.dart';
 import 'package:farmsmart_flutter/ui/common/carousel_view.dart';
-<<<<<<< HEAD
-import 'package:farmsmart_flutter/ui/discover/ArticleList.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockActionSheetViewModel.dart';
-=======
 import 'package:farmsmart_flutter/ui/myplot/PlotDetail.dart';
->>>>>>> WIP Plot detail view
 import 'package:farmsmart_flutter/ui/myplot/PlotList.dart';
-import 'package:farmsmart_flutter/ui/myplot/viewmodel/PlotDetailMockViewModel.dart';
 import 'package:farmsmart_flutter/ui/playground/data/playground_data_source.dart';
 import 'package:farmsmart_flutter/ui/playground/data/playground_stagecard_datasource.dart';
 import 'package:farmsmart_flutter/ui/playground/playground_widget.dart';
@@ -114,7 +111,6 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
         title: '#TASK NAME#',
         child: YourWidget(),
       ),*/
-<<<<<<< HEAD
       PlaygroundWidget(title: "FARM-280 Update Discover", child:
           ArticleList(
               viewModelProvider: ArticleListProvider( title: "Test",
@@ -124,19 +120,6 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
         child: PersistentBottomNavigationBar(
           backgroundColor: Colors.white,
           tabs: PlaygroundPersistentBottomNavigationBar().getList(),),),
-      PlaygroundWidget(title: "FARM-365 Plot Repository", child:
-          PlotList(
-              provider: PlotListProvider( title: "Test",
-                  repository: MockPlotRepository()))
-      ),
-
-=======
-      PlaygroundWidget(
-          title: "FARM-280 Update Discover",
-          child: ArticleList(
-              viewModelProvider: ArticleListProvider(
-                  title: "Test",
-                  repository: MockArticlesRepository(articleCount: 2000)))),
       PlaygroundWidget(
           title: 'TASK FARM-365 Plot',
           child: PlaygroundView(widgetList: [
@@ -145,9 +128,8 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
                 child: PlotList(
                     provider: PlotListProvider(
                         title: "Test", repository: MockPlotRepository()))),
-            PlaygroundWidget(title: "FARM-365 Plot Detail", child: PlotDetail(viewModel: MockPlotDetailViewModel.build(),))
+            PlaygroundWidget(title: "FARM-365 Plot Detail", child: PlotDetail(provider: PlotDetailProvider(MockPlotEntity().build(), MockPlotRepository()),))
           ])),
->>>>>>> WIP Plot detail view
     ];
   }
 }

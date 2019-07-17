@@ -1,6 +1,5 @@
 import 'package:farmsmart_flutter/data/bloc/article/ArticleDetailTransformer.dart';
 import 'package:farmsmart_flutter/data/bloc/plot/StageToStageCardViewModel.dart';
-import 'package:farmsmart_flutter/data/model/mock/MockArticle.dart';
 import 'package:farmsmart_flutter/data/model/mock/MockPlot.dart';
 import 'package:farmsmart_flutter/data/model/mock/MockString.dart';
 import 'package:farmsmart_flutter/data/repositories/MockStrings.dart';
@@ -13,7 +12,7 @@ class MockPlotDetailViewModel {
   static PlotDetailViewModel build() {
     final plotEntity = MockPlotEntity().build();
     final stages = plotEntity.stages;
-    final cardTransformer = StageToStageCardViewModel(plotEntity.stages);
+    final cardTransformer = StageToStageCardViewModel(plotEntity,null,null,null);
     final articleTransformer = ArticleDetailViewModelTransformer();
     final List<StageCardViewModel> cardViewModels = stages.map((stage){
       return cardTransformer.transform(from: stage);
@@ -23,7 +22,7 @@ class MockPlotDetailViewModel {
     }).toList();
 
     return PlotDetailViewModel(title: mockTitleText.random(), 
-    detailText: _days.random(), 
+    detailText: _days.randomIndexed(text: "Day", limit: 365), 
     progress: 0.5, 
     imageProvider: MockImageEntity().build().urlProvider, 
     stageCardViewModels: cardViewModels, 

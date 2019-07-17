@@ -1,6 +1,7 @@
 import 'package:farmsmart_flutter/data/bloc/Transformer.dart';
 import 'package:farmsmart_flutter/data/bloc/plot/StageBusinessLogic.dart';
 import 'package:farmsmart_flutter/data/model/NewStageEntity.dart';
+import 'package:farmsmart_flutter/data/model/PlotEntity.dart';
 import 'package:farmsmart_flutter/ui/common/stage_card.dart';
 import 'package:farmsmart_flutter/ui/playground/styles/stage_card_styles.dart';
 import 'package:intl/intl.dart';
@@ -13,32 +14,37 @@ class _Strings {
   static final complete = "Complete";
 
   static final completeAction = "Revert to In Progress";
-  static final upcomingAction = "Begin Stage";
+  static final readyAction = "Begin Stage";
+  static final upcomingAction = "Please complete previous";
   static final inProgressAction = "Mark as complete";
 }
 
 class StageToStageCardViewModel
     implements ObjectTransformer<NewStageEntity, StageCardViewModel> {
-  final List<NewStageEntity> _allStages;
+  final PlotEntity _plot;
+  final Function _beginAction;
+  final Function _completeAction;
+  final Function _revertAction;
   final StageBusinessLogic _logic = StageBusinessLogic();
 
-  StageToStageCardViewModel(this._allStages);
+  StageToStageCardViewModel(this._plot, this._beginAction, this._completeAction, this._revertAction);
 
   @override
   StageCardViewModel transform({NewStageEntity from}) {
     final subtitle = Intl.message(_Strings.stage) +
         " " +
-        _allStages.indexOf(from).toString();
+        _plot.stages.indexOf(from).toString();
         final status = _logic.status(from);
     return StageCardViewModel(
         title: from.article.title,
         subtitle: subtitle,
         statusTitle: _statusTitle(status),
-        actionText: _actionTitle(status), 
-        style: _cardStyle(status));
+        actionText: _actionTitle(status, from),
+        action: _action(status, from), 
+        style: _cardStyle(status, from));
   }
 
-  StageCardStyle _cardStyle(StageStatus status) {
+  StageCardStyle _cardStyle(StageStatus status , NewStageEntity stage) {
     switch (status) {
       case StageStatus.inProgress:
         return StageCardStyles.buildInProgressStageStyle();
@@ -47,11 +53,11 @@ class StageToStageCardViewModel
         return StageCardStyles.buildCompleteStageStyle();
         break;
       default:
-        return StageCardStyles.builtUpcomingStageStyle();
+        return _logic.canBegin(stage, _plot.stages) ? StageCardStyles.buildReadyToStartStageStyle() : StageCardStyles.buildUpcomingStageStyle();
     }
   }
 
-  String _actionTitle(StageStatus status) {
+  String _actionTitle(StageStatus status, NewStageEntity stage) {
     switch (status) {
       case StageStatus.inProgress:
         return Intl.message(_Strings.inProgressAction);
@@ -60,8 +66,22 @@ class StageToStageCardViewModel
         return Intl.message(_Strings.completeAction);
         break;
       default:
-        return Intl.message(_Strings.upcomingAction);
+        return _logic.canBegin(stage, _plot.stages) ?  Intl.message(_Strings.readyAction) : Intl.message(_Strings.upcomingAction);
     }
+  }
+
+  Function _action(StageStatus status, NewStageEntity stage) {
+      if ( _logic.canBegin(stage, _plot.stages) ) {
+        return () => _beginAction(_plot, stage);
+      } 
+      else if (_logic.canComplete(stage, _plot.stages))
+      {
+        return () => _completeAction(_plot, stage);
+      }
+      else if(_logic.isComplete(stage)){
+         return () => _revertAction(_plot, stage);
+      }
+      return null;
   }
 
   String _statusTitle(StageStatus status) {

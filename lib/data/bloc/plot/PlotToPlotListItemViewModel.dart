@@ -1,6 +1,7 @@
 import 'package:farmsmart_flutter/data/bloc/Transformer.dart';
 import 'package:farmsmart_flutter/data/bloc/article/ArticleDetailTransformer.dart';
 import 'package:farmsmart_flutter/data/bloc/article/ArticleListItemViewModelTransformer.dart';
+import 'package:farmsmart_flutter/data/bloc/plot/PlotDetailProvider.dart';
 import 'package:farmsmart_flutter/data/bloc/plot/StageBusinessLogic.dart';
 import 'package:farmsmart_flutter/data/bloc/plot/StageToStageCardViewModel.dart';
 import 'package:farmsmart_flutter/data/model/PlotEntity.dart';
@@ -18,22 +19,14 @@ class _Strings {
 class PlotToPlotListItemViewModel implements ObjectTransformer<PlotEntity, PlotListItemViewModel> {
 
   final _logic = StageBusinessLogic();
-  final _articleTransformer = ArticleListItemViewModelTransformer.buildWithDetail(ArticleDetailViewModelTransformer());
+  final PlotDetailProvider _detailProvider;
+  PlotToPlotListItemViewModel(this._detailProvider);
 
   @override
   PlotListItemViewModel transform({PlotEntity from}) {
     final title = from.title;
     final detailText = _detailString(from: from);
-    final stageTransformer = StageToStageCardViewModel(from.stages);
-    final stageViewModels = from.stages.map((stage) {
-        return stageTransformer.transform(from:stage);
-      }).toList();
-    final List<ArticleDetailViewModel> artcileViewModels = from.stages.map((stage) {
-        return _articleTransformer.transform(from: stage.article).detailViewModel;
-      }).toList();
-    final detailViewModel = PlotDetailViewModel(title:title, detailText: detailText, stageCardViewModels: stageViewModels, stageArticleViewModels: artcileViewModels, currentStage: _logic.currentStageIndex(from.stages));
-
-    return PlotListItemViewModel(title: title, subtitle:_subtitleString(from: from), detail: detailText, detailViewModel: detailViewModel, imageProvider: CropImageProvider(from.crop) );
+    return PlotListItemViewModel(title: title, subtitle:_subtitleString(from: from), detail: detailText, provider: _detailProvider, imageProvider: CropImageProvider(from.crop) );
   }
 
   String _subtitleString({PlotEntity from}) {
@@ -41,8 +34,8 @@ class PlotToPlotListItemViewModel implements ObjectTransformer<PlotEntity, PlotL
   }
 
   String _detailString({PlotEntity from}) {
-    final currentStage = _logic.currentStage(from.stages);
-    final started = currentStage.started;
+    final firstStage = from.stages.first;
+    final started = firstStage.started;
     if (started != null) {
        final daysSinceStarted = DateTime.now().difference(started).inDays;
       return Intl.message(_Strings.day) + " " + daysSinceStarted.toString();

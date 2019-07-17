@@ -1,3 +1,4 @@
+import 'package:farmsmart_flutter/data/bloc/ViewModelProvider.dart';
 import 'package:farmsmart_flutter/data/model/ImageURLProvider.dart';
 import 'package:farmsmart_flutter/ui/common/DogTagStyles.dart';
 import 'package:farmsmart_flutter/ui/myplot/viewmodel/PlotDetailViewModel.dart';
@@ -13,14 +14,11 @@ class PlotListItemViewModel {
   final String detail;
   final double progress;
   final ImageURLProvider imageProvider;
-  final PlotDetailViewModel detailViewModel;
+  final ViewModelProvider<PlotDetailViewModel> detailViewModelProvider;
 
-<<<<<<< HEAD
-  PlotListItemViewModel({ String title, String subtitle, String detail, double progress, ImageURLProvider imageProvider}) : this.title = title, this.subtitle = subtitle, this.detail = detail, this.progress = progress, this.imageProvider = imageProvider;
-=======
-  PlotListItemViewModel({ String title, String subtitle, String detail, ImageURLProvider imageProvider, PlotDetailViewModel detailViewModel}) : this.title = title, this.subtitle = subtitle, this.detail = detail, this.imageProvider = imageProvider, this.detailViewModel = detailViewModel;
 
->>>>>>> WIP Plot detail view
+  PlotListItemViewModel({ String title, String subtitle, String detail, double progress, ImageURLProvider imageProvider, ViewModelProvider<PlotDetailViewModel> provider}) : this.title = title, this.subtitle = subtitle, this.detail = detail, this.progress = progress, this.imageProvider = imageProvider, this.detailViewModelProvider = provider;
+
 }
 
 abstract class PlotListItemStyle {

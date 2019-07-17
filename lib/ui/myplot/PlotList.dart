@@ -104,7 +104,7 @@ class PlotList extends StatelessWidget {
         itemBuilder: (BuildContext context, int index) {
            final itemViewModel = viewModel.items[index];
            final tapFunction = () => _tappedListItem(
-          context: context, viewModel: itemViewModel.detailViewModel);
+          context: context, provider: itemViewModel.detailViewModelProvider);
           return PlotListItem().buildListItem(viewModel: viewModel.items[index], onTap: tapFunction);
         },
         physics: ScrollPhysics(),
@@ -167,10 +167,10 @@ class PlotList extends StatelessWidget {
   }
 
     void _tappedListItem(
-      {BuildContext context, PlotDetailViewModel viewModel}) {
+      {BuildContext context, ViewModelProvider<PlotDetailViewModel> provider}) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => PlotDetail(viewModel: viewModel),
+        builder: (context) => PlotDetail(provider: provider),
       ),
     );
   }

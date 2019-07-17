@@ -1,3 +1,4 @@
+import 'package:farmsmart_flutter/data/bloc/ViewModelProvider.dart';
 import 'package:farmsmart_flutter/data/repositories/image/implementation/MockImageEntity.dart';
 import 'package:farmsmart_flutter/ui/common/ContextualAppBar.dart';
 import 'package:farmsmart_flutter/ui/common/carousel_view.dart';
@@ -8,10 +9,30 @@ import 'package:farmsmart_flutter/ui/myplot/viewmodel/PlotDetailViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-class PlotDetail extends StatefulWidget {
-  final PlotDetailViewModel viewModel;
+abstract class PlotDetailStyle {
+  final TextStyle titleTextStyle;
+  final double stageSectionHeight;
+  const PlotDetailStyle(this.titleTextStyle, this.stageSectionHeight);
+}
 
-  PlotDetail({Key key, PlotDetailViewModel viewModel}) : this.viewModel = viewModel, super(key: key);
+class _DefaultStyle implements PlotDetailStyle {
+  final TextStyle titleTextStyle = null;
+  final double stageSectionHeight = 162;
+
+  const _DefaultStyle();
+}
+
+class PlotDetail extends StatefulWidget {
+  final ViewModelProvider<PlotDetailViewModel> _viewModelProvider;
+  final PlotDetailStyle _style;
+
+  PlotDetail(
+      {Key key,
+      ViewModelProvider<PlotDetailViewModel> provider,
+      PlotDetailStyle style = const _DefaultStyle()})
+      : this._viewModelProvider = provider,
+        this._style = style,
+        super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -24,33 +45,51 @@ class _PlotDetailState extends State<PlotDetail> {
 
   void initState() {
     super.initState();
-    _selectedStage = widget.viewModel.currentStage;
+    final viewModel = widget._viewModelProvider.initial();
+    _selectedStage = viewModel.currentStage;
   }
 
   @override
   Widget build(BuildContext context) {
-    final PlotListItemViewModel headerViewModel = PlotListItemViewModel(title: widget.viewModel.title, detail: widget.viewModel.detailText, imageProvider: MockImageEntity().build().urlProvider); 
-    final articleViewModel =  widget.viewModel.stageArticleViewModels[_selectedStage];      
-    final header = PlotListItem().buildListItem(viewModel: headerViewModel, onTap: null);
-    final stages = Container(height: 162, child: CarouselView(children: _stageCardDataSource(), initialPage: _selectedStage, onPageChange: _pageChanged,));
-    final article = ArticleDetail(viewModel: articleViewModel).buildHeader(context, false);
+    final provider = widget._viewModelProvider;
+    final controller = provider.observe();
+    return StreamBuilder<PlotDetailViewModel>(
+        stream: controller.stream,
+        initialData: provider.initial(),
+        builder: (BuildContext context,
+            AsyncSnapshot<PlotDetailViewModel> snapshot) {
+          final viewModel = snapshot.data;
+          final PlotListItemViewModel headerViewModel = PlotListItemViewModel(
+              title: viewModel.title,
+              detail: viewModel.detailText,
+              imageProvider: MockImageEntity().build().urlProvider);
+          final articleViewModel =
+              viewModel.stageArticleViewModels[_selectedStage];
+          final header = PlotListItem()
+              .buildListItem(viewModel: headerViewModel, onTap: null);
+          final stages = Container(
+              height: widget._style.stageSectionHeight,
+              child: CarouselView(
+                children: _stageCardDataSource(viewModel),
+                initialPage: _selectedStage,
+                onPageChange: _pageChanged,
+              ));
+          final article = ArticleDetail(viewModel: articleViewModel)
+              .buildHeader(context, false);
 
-    return Scaffold(
-          appBar: _buildAppBar(context),
-          body: ListView(children: <Widget>[
-      header,
-      stages,
-      article
-    ]));
+          return Scaffold(
+              appBar: _buildAppBar(context),
+              body: ListView(children: <Widget>[header, stages, article]));
+        });
   }
 
-  List<Widget> _stageCardDataSource(){
-    return widget.viewModel.stageCardViewModels.map((item) {
-        return _buildCard(item);
+  List<Widget> _stageCardDataSource(PlotDetailViewModel viewModel) {
+    return viewModel.stageCardViewModels.map((item) {
+      return _buildCard(item);
     }).toList();
   }
 
-  Widget _buildCard(StageCardViewModel viewModel){
+  Widget _buildCard(StageCardViewModel viewModel) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: StageCard(
@@ -67,6 +106,6 @@ class _PlotDetailState extends State<PlotDetail> {
   }
 
   void _pageChanged(int index) {
-      setState(() => _selectedStage = index);
+    setState(() => _selectedStage = index);
   }
 }
