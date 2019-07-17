@@ -13,6 +13,7 @@ import 'package:farmsmart_flutter/ui/discover/ArticleList.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockActionSheetViewModel.dart';
 import 'package:farmsmart_flutter/ui/playground/data/playground_data_source.dart';
 import 'package:farmsmart_flutter/ui/playground/data/playground_stagecard_datasource.dart';
+import 'package:farmsmart_flutter/ui/playground/playground_button_present_modal.dart';
 import 'package:farmsmart_flutter/ui/playground/playground_widget.dart';
 import 'package:farmsmart_flutter/ui/profitloss/ProfitLossHeader.dart';
 import 'package:farmsmart_flutter/ui/profitloss/ProfitLossListItem.dart';
@@ -114,19 +115,23 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
                   repository: MockArticlesRepository(articleCount: 2000)))),
       PlaygroundWidget(
         title: "FARM-48 Landing Page",
-        child: LandingPage(
-          viewModel: MockLandingPageViewModel.build(),
+        child: PlaygroundButtonPresentModal(
+          child: LandingPage(viewModel: MockLandingPageViewModel.build()),
         ),
       ),
-      PlaygroundWidget(title: "FARM-280 Update Discover", child:
-          ArticleList(
-              viewModelProvider: ArticleListProvider( title: "Test",
-                  repository: MockArticlesRepository(articleCount: 2000)))
-      ),
-      PlaygroundWidget(title: "FARM-342 Persistent Bottom navigation bar",
+      PlaygroundWidget(
+          title: "FARM-280 Update Discover",
+          child: ArticleList(
+              viewModelProvider: ArticleListProvider(
+                  title: "Test",
+                  repository: MockArticlesRepository(articleCount: 2000)))),
+      PlaygroundWidget(
+        title: "FARM-342 Persistent Bottom navigation bar",
         child: PersistentBottomNavigationBar(
           backgroundColor: Colors.white,
-          tabs: PlaygroundPersistentBottomNavigationBar().getList(),),),
+          tabs: PlaygroundPersistentBottomNavigationBar().getList(),
+        ),
+      ),
     ];
   }
 }
