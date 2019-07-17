@@ -16,7 +16,7 @@ class RoundedImageOverlay extends StatelessWidget {
     this.imageHeight = double.infinity,
     this.imageWidth = double.infinity,
     this.imageBorderRadius = const BorderRadius.all(Radius.circular(12.0)),
-    this.overlayColor = const Color(0xffffffff),
+    this.overlayColor = const Color(0x26ffffff),
     this.showOverlay = false,
     this.overlayIcon,
     this.overlayIconHeight = double.infinity,
