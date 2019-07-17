@@ -8,13 +8,28 @@ class _Constants {
   static final minDateLimit = DateTime(2019, 6);
   static final maxDateLimit = DateTime(2101);
   static final dateFormatter = DateFormat('dd MMMM yyyy');
+  static final dateIcon = "assets/icons/detail_icon_date.png";
+  static final cropIcon = "assets/icons/detail_icon_best_soil.png";
+  static final descriptionIcon = "assets/icons/detail_icon_description.png";
+  static final arrowIcon = "assets/icons/chevron.png";
+}
+
+class _Strings {
+  static final DATE = Intl.message("Date");
+  static final CROP = Intl.message("Crop");
+  static final TODAY = Intl.message("Today");
+  static final SELECT = Intl.message("Select...");
+  static final DESCRIPTION = Intl.message("Description (optional)...");
+}
+
+enum RecordCellType {
+  pickDate,
+  pickItem,
+  description,
 }
 
 class RecordAmountListItemViewModel {
-  String icon;
-  String title;
-  String hint;
-  String arrow;
+  RecordCellType type;
   DateTime selectedDate;
   List<String> listOfCrops = [];
   String selectedItem;
@@ -23,10 +38,7 @@ class RecordAmountListItemViewModel {
   bool isEditable;
 
   RecordAmountListItemViewModel({
-    this.icon,
-    this.hint,
-    this.arrow,
-    this.title,
+    this.type,
     this.selectedDate,
     this.listOfCrops,
     this.selectedItem,
@@ -37,17 +49,12 @@ class RecordAmountListItemViewModel {
 }
 
 class RecordAmountListItemStyle {
-  final Color actionItemBackgroundColor;
-
   final TextStyle titleTextStyle;
   final TextStyle pendingDetailTextStyle;
   final TextStyle detailTextStyle;
 
   final EdgeInsets actionItemEdgePadding;
   final EdgeInsets cardMargins;
-  final CrossAxisAlignment itemAlignment;
-
-  final double actionItemElevation;
 
   final double iconHeight;
   final double iconLineSpace;
@@ -56,14 +63,11 @@ class RecordAmountListItemStyle {
   final int maxLines;
 
   const RecordAmountListItemStyle({
-    this.actionItemBackgroundColor,
     this.titleTextStyle,
     this.pendingDetailTextStyle,
     this.detailTextStyle,
     this.actionItemEdgePadding,
     this.cardMargins,
-    this.itemAlignment,
-    this.actionItemElevation,
     this.iconHeight,
     this.iconLineSpace,
     this.detailTextSpacing,
@@ -71,22 +75,17 @@ class RecordAmountListItemStyle {
   });
 
   RecordAmountListItemStyle copyWith({
-    Color actionItemBackgroundColor,
     TextStyle titleTextStyle,
     TextStyle pendingDetailTextStyle,
     TextStyle detailTextStyle,
     EdgeInsets actionItemEdgePadding,
     EdgeInsets cardMargins,
-    CrossAxisAlignment itemAlignment,
-    double actionItemElevation,
     double iconHeight,
     double iconLineSpace,
     double detailTextSpacing,
     int maxLines,
   }) {
     return RecordAmountListItemStyle(
-      actionItemBackgroundColor:
-          actionItemBackgroundColor ?? this.actionItemBackgroundColor,
       titleTextStyle: titleTextStyle ?? this.titleTextStyle,
       pendingDetailTextStyle:
           pendingDetailTextStyle ?? this.pendingDetailTextStyle,
@@ -94,8 +93,6 @@ class RecordAmountListItemStyle {
       actionItemEdgePadding:
           actionItemEdgePadding ?? this.actionItemEdgePadding,
       cardMargins: cardMargins ?? this.cardMargins,
-      itemAlignment: itemAlignment ?? this.itemAlignment,
-      actionItemElevation: actionItemElevation ?? this.actionItemElevation,
       iconHeight: iconHeight ?? this.iconHeight,
       iconLineSpace: iconLineSpace ?? this.iconLineSpace,
       detailTextSpacing: detailTextSpacing ?? this.detailTextSpacing,
@@ -105,30 +102,27 @@ class RecordAmountListItemStyle {
 }
 
 class _DefaultStyle extends RecordAmountListItemStyle {
-  final Color actionItemBackgroundColor = const Color(0x00000000);
-
   final TextStyle titleTextStyle = const TextStyle(
     fontSize: 17,
     fontWeight: FontWeight.w400,
     color: Color(0xFF1a1b46),
   );
-  final TextStyle pendingDetailTextStyle = const TextStyle(
-    fontSize: 15,
-    fontWeight: FontWeight.normal,
-    color: Color(0x4c767690),
-  );
+
   final TextStyle detailTextStyle = const TextStyle(
     fontSize: 15,
     fontWeight: FontWeight.normal,
     color: Color(0xff767690),
   );
 
-  final EdgeInsets actionItemEdgePadding =
-      const EdgeInsets.only(left: 32, right: 32, top: 25.8, bottom: 25.8);
-  final EdgeInsets cardMargins = const EdgeInsets.all(0);
+  final TextStyle pendingDetailTextStyle = const TextStyle(
+    fontSize: 15,
+    fontWeight: FontWeight.normal,
+    color: Color(0x4c767690),
+  );
 
-  final double actionItemElevation = 0;
-  final CrossAxisAlignment itemAlignment = CrossAxisAlignment.center;
+  final EdgeInsets actionItemEdgePadding =
+      const EdgeInsets.only(left: 32, right: 32, top: 15, bottom: 15);
+  final EdgeInsets cardMargins = const EdgeInsets.all(0);
 
   final double iconHeight = 20;
   final double iconLineSpace = 22;
@@ -137,14 +131,11 @@ class _DefaultStyle extends RecordAmountListItemStyle {
   final int maxLines = 5;
 
   const _DefaultStyle(
-      {Color actionItemBackgroundColor,
-      TextStyle titleTextStyle,
+      {TextStyle titleTextStyle,
       TextStyle pendingDetailTextStyle,
       TextStyle detailTextStyle,
       EdgeInsets actionItemEdgePadding,
       EdgeInsets cardMargins,
-      CrossAxisAlignment itemAlignment,
-      double actionItemElevation,
       double iconHeight,
       double iconLineSpace,
       double detailTextSpacing,
@@ -156,6 +147,8 @@ const RecordAmountListItemStyle _defaultStyle = const _DefaultStyle();
 class RecordAmountListItem extends StatefulWidget {
   final RecordAmountListItemStyle _style;
   final RecordAmountListItemViewModel _viewModel;
+  final GlobalKey _pickerKey = new GlobalKey();
+
   RecordAmountState parent;
 
   RecordAmountListItem(
@@ -191,175 +184,175 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
     RecordAmountListItemStyle style = widget._style;
 
     return Column(
-      children: <Widget>[
-        GestureDetector(
-          onTap: () => _buildAction(viewModel, style),
-          child: Card(
-            margin: style.cardMargins,
-            elevation: style.actionItemElevation,
-            color: style.actionItemBackgroundColor,
-            child: Container(
-              padding: style.actionItemEdgePadding,
-              alignment: Alignment.center,
-              child: Wrap(
-                direction: Axis.horizontal,
-                crossAxisAlignment: WrapCrossAlignment.start,
-                children: <Widget>[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: style.itemAlignment,
-                    children: _buildItemContent(viewModel, style),
-                  )
-                ],
-              ),
-            ),
-          ),
-        )
-      ],
+      children: _buildItemContent(viewModel, style),
     );
-  }
-
-  _buildAction(RecordAmountListItemViewModel viewModel,
-      RecordAmountListItemStyle style) {
-    if (viewModel.selectedDate != null) {
-      return viewModel.isEditable ? _selectDate(context, viewModel) : null;
-    }
   }
 
   List<Widget> _buildItemContent(RecordAmountListItemViewModel viewModel,
       RecordAmountListItemStyle style) {
-    List<Widget> listBuilder = [
-      Image.asset(
-        viewModel.icon,
+    List<Widget> listBuilder = [];
+
+    switch (viewModel.type) {
+      case RecordCellType.pickDate:
+        listBuilder.add(_buildPickDate(viewModel, style));
+        break;
+      case RecordCellType.pickItem:
+        listBuilder.add(_buildPickItem(viewModel, style));
+        break;
+      case RecordCellType.description:
+        listBuilder.add(_buildDescription(viewModel, style));
+        break;
+    }
+    return listBuilder;
+  }
+
+  ListTile _buildPickDate(RecordAmountListItemViewModel viewModel,
+      RecordAmountListItemStyle style) {
+    return ListTile(
+      leading: Image.asset(
+        _Constants.dateIcon,
         height: style.iconHeight,
       ),
-      SizedBox(width: style.iconLineSpace),
-    ];
-
-    if (viewModel.selectedDate != null) {
-      _buildDatePicker(listBuilder, viewModel, style);
-    }
-
-    if (viewModel.listOfCrops != null) {
-      _buildItemPicker(listBuilder, viewModel, style);
-    }
-
-    if (viewModel.selectedDate == null && viewModel.listOfCrops == null) {
-      return _buildDescriptionTextField(listBuilder, viewModel, style);
-    }
-
-    if (viewModel.isEditable) {
-      listBuilder.add(SizedBox(width: style.iconLineSpace));
-      listBuilder.add(
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: <Widget>[
-            Image.asset(
-              viewModel.arrow,
-              height: style.detailTextSpacing,
-            )
-          ],
-        ),
-      );
-    }
-
-    return listBuilder;
-  }
-
-  List<Widget> _buildDescriptionTextField(
-      List<Widget> listBuilder,
-      RecordAmountListItemViewModel viewModel,
-      RecordAmountListItemStyle style) {
-    listBuilder.add(Expanded(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          viewModel.isEditable
-              ? TextField(
-                  decoration: InputDecoration(
-                      hintText: viewModel.hint,
-                      hintStyle: style.pendingDetailTextStyle,
-                      border: InputBorder.none,
-                      contentPadding: style.cardMargins,
-                      counterText: ""),
-                  textAlign: TextAlign.left,
-                  style: style.detailTextStyle,
-                  maxLines: style.maxLines,
-                  controller: _textFieldController,
-                  onEditingComplete: () => _checkTextField(viewModel),
-                  enabled: viewModel.isEditable,
-                )
-              : Text(
-                  viewModel.description,
-                  textAlign: TextAlign.left,
-                  style: style.detailTextStyle,
-                )
-        ],
-      ),
-    ));
-    return listBuilder;
-  }
-
-  void _buildItemPicker(
-    List<Widget> listBuilder,
-    RecordAmountListItemViewModel viewModel,
-    RecordAmountListItemStyle style,
-  ) {
-    listBuilder.add(Text(
-      viewModel.title,
-      style: style.titleTextStyle,
-    ));
-    listBuilder.add(Expanded(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: <Widget>[
-          viewModel.isEditable
-              ? DropdownButtonHideUnderline(
-                  child: DropdownButton(
-                    value: viewModel.selectedItem,
-                    style: style.detailTextStyle,
-                    items: viewModel.isEditable
-                        ? _getDropDownMenuItems(viewModel)
-                        : null,
-                    onChanged: _changeDropDownItem,
-                    hint: Text(viewModel.hint,
-                        style: style.pendingDetailTextStyle),
-                    icon: Icon(null),
-                    isDense: true,
-                    isExpanded: false,
-                  ),
-                )
-              : Text(
-                  viewModel.selectedItem,
-                  style: style.detailTextStyle,
-                )
-        ],
-      ),
-    ));
-  }
-
-  void _buildDatePicker(
-      List<Widget> listBuilder,
-      RecordAmountListItemViewModel viewModel,
-      RecordAmountListItemStyle style) {
-    listBuilder.add(
-      Text(viewModel.title, style: style.titleTextStyle),
-    );
-
-    listBuilder.add(Expanded(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
+      title: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Text(
-              _formatDate(viewModel.selectedDate) ==
-                      _formatDate(_Constants.currentDate)
-                  ? viewModel.hint
-                  : _formatDate(viewModel.selectedDate),
-              style: style.detailTextStyle),
+            _Strings.DATE,
+            textAlign: TextAlign.start,
+            style: style.titleTextStyle,
+          ),
+          Text(
+            _formatDate(viewModel.selectedDate) ==
+                    _formatDate(_Constants.currentDate)
+                ? _Strings.TODAY
+                : _formatDate(viewModel.selectedDate),
+            textAlign: TextAlign.end,
+            style: style.detailTextStyle,
+          )
         ],
       ),
-    ));
+      trailing: viewModel.isEditable
+          ? Image.asset(
+              _Constants.arrowIcon,
+              height: style.detailTextSpacing,
+            )
+          : null,
+      dense: true,
+      contentPadding: style.actionItemEdgePadding,
+      onTap: () => _selectDate(context, viewModel),
+      enabled: viewModel.isEditable,
+    );
+  }
+
+  ListTile _buildPickItem(RecordAmountListItemViewModel viewModel,
+      RecordAmountListItemStyle style) {
+    return ListTile(
+      leading: Image.asset(
+        _Constants.cropIcon,
+        height: style.iconHeight,
+      ),
+      title: viewModel.isEditable
+          ? PopupMenuButton(
+              key: widget._pickerKey,
+              onSelected: (selectedItem) => _changeDropDownItem(selectedItem),
+              itemBuilder: (BuildContext context) =>
+                  _getDropDownMenuItems(viewModel),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text(
+                    _Strings.CROP,
+                    textAlign: TextAlign.start,
+                    style: style.titleTextStyle,
+                  ),
+                  viewModel.selectedItem == null
+                      ? Text(
+                          _Strings.SELECT,
+                          textAlign: TextAlign.end,
+                          style: style.pendingDetailTextStyle,
+                        )
+                      : Text(
+                          viewModel.selectedItem,
+                          textAlign: TextAlign.end,
+                          style: style.detailTextStyle,
+                        )
+                ],
+              ),
+            )
+          : Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text(
+                  _Strings.CROP,
+                  textAlign: TextAlign.start,
+                  style: style.titleTextStyle,
+                ),
+                Text(
+                  viewModel.selectedItem == null
+                      ? _Strings.SELECT
+                      : viewModel.selectedItem,
+                  textAlign: TextAlign.end,
+                  style: style.detailTextStyle,
+                )
+              ],
+            ),
+      trailing: viewModel.isEditable
+          ? Image.asset(
+              _Constants.arrowIcon,
+              height: style.detailTextSpacing,
+            )
+          : null,
+      dense: true,
+      contentPadding: style.actionItemEdgePadding,
+      onTap: () => showPopUpMenu(),
+      enabled: viewModel.isEditable,
+    );
+  }
+
+  ListTile _buildDescription(RecordAmountListItemViewModel viewModel,
+      RecordAmountListItemStyle style) {
+    return ListTile(
+      title: Container(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Image.asset(
+              _Constants.descriptionIcon,
+              height: style.iconHeight,
+            ),
+            SizedBox(width: 20),
+            Expanded(
+              child: viewModel.isEditable
+                  ? TextField(
+                      decoration: InputDecoration(
+                          hintText: _Strings.DESCRIPTION,
+                          hintStyle: style.pendingDetailTextStyle,
+                          border: InputBorder.none,
+                          contentPadding: style.cardMargins,
+                          counterText: ""),
+                      textAlign: TextAlign.left,
+                      style: style.detailTextStyle,
+                      maxLines: style.maxLines,
+                      controller: _textFieldController,
+                      onEditingComplete: () => _checkTextField(viewModel),
+                      enabled: viewModel.isEditable,
+                    )
+                  : Text(viewModel.description, style: style.titleTextStyle),
+            ),
+          ],
+        ),
+      ),
+      dense: true,
+      contentPadding: style.actionItemEdgePadding,
+      onTap: () => _selectDate(context, viewModel),
+      enabled: viewModel.isEditable,
+    );
+  }
+
+  void showPopUpMenu() {
+    dynamic popUpMenustate = widget._pickerKey.currentState;
+    popUpMenustate.showButtonMenu();
   }
 
   Future<Null> _selectDate(
@@ -386,11 +379,11 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
     return formatted;
   }
 
-  List<DropdownMenuItem<String>> _getDropDownMenuItems(
+  List<PopupMenuItem> _getDropDownMenuItems(
       RecordAmountListItemViewModel viewModel) {
-    List<DropdownMenuItem<String>> items = new List();
+    List<PopupMenuItem> items = [];
     for (String crop in viewModel.listOfCrops) {
-      items.add(new DropdownMenuItem(value: crop, child: new Text(crop)));
+      items.add(PopupMenuItem(value: crop, child: Text(crop)));
     }
     return items;
   }

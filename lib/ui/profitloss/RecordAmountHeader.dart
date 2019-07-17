@@ -130,7 +130,8 @@ class RecordAmountHeader extends StatelessWidget {
                         onChanged: _viewModel.listener,
                         autofocus: true,
                       )
-                    : Text(_viewModel.onAmountChanged, style: _style.titleTextStyle),
+                    : Text(_viewModel.onAmountChanged,
+                        style: _style.titleTextStyle),
               ],
             ),
           ),
@@ -138,7 +139,4 @@ class RecordAmountHeader extends StatelessWidget {
       ),
     );
   }
-
-
-
 }

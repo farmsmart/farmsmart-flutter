@@ -7,6 +7,12 @@ import 'package:farmsmart_flutter/ui/profitloss/RecordAmountListItemStyles.dart'
 import 'package:farmsmart_flutter/utils/strings.dart';
 import 'package:flutter/material.dart';
 
+class _Constants {
+  static final int firstListItem = 0;
+  static final int secondListItem = 1;
+  static final int thirdListItem = 2;
+}
+
 enum RecordType {
   cost,
   sale,
@@ -122,9 +128,6 @@ class RecordAmountState extends State<RecordAmount> {
   String selectedCrop;
   bool _amoundIsFilled = false;
   bool cropIsFilled = false;
-  final int _firstListItem = 0;
-  final int _secondListItem = 1;
-  final int _thirdListItem = 2;
 
   @override
   void initState() {
@@ -153,8 +156,6 @@ class RecordAmountState extends State<RecordAmount> {
   }
 
   //TODO: clear hint when click amount
-  //TODO: touch area whole card
-
 
   Widget _buildPage(BuildContext context, RecordAmountViewModel viewModel,
       RecordAmountStyle style) {
@@ -243,12 +244,9 @@ class RecordAmountState extends State<RecordAmount> {
     listBuilder.add(
       RecordAmountListItem(
         viewModel: RecordAmountListItemViewModel(
+          type: RecordCellType.pickDate,
           isEditable: viewModel.isEditable,
-          icon: viewModel.actions[_firstListItem].icon,
-          hint: viewModel.actions[_firstListItem].hint,
-          arrow: viewModel.actions[_firstListItem].arrow,
-          title: viewModel.actions[_firstListItem].title,
-          selectedDate: viewModel.actions[_firstListItem].selectedDate,
+          selectedDate: viewModel.actions[_Constants.firstListItem].selectedDate,
         ),
         parent: this,
       ),
@@ -259,15 +257,12 @@ class RecordAmountState extends State<RecordAmount> {
     listBuilder.add(
       RecordAmountListItem(
         viewModel: RecordAmountListItemViewModel(
+          type: RecordCellType.pickItem,
           isEditable: viewModel.isEditable,
-          icon: viewModel.actions[_secondListItem].icon,
-          hint: viewModel.actions[_secondListItem].hint,
           selectedItem: viewModel.isEditable
               ? selectedCrop
-              : viewModel.actions[_secondListItem].selectedItem,
-          arrow: viewModel.actions[_secondListItem].arrow,
-          title: viewModel.actions[_secondListItem].title,
-          listOfCrops: viewModel.actions[_secondListItem].listOfCrops,
+              : viewModel.actions[_Constants.secondListItem].selectedItem,
+          listOfCrops: viewModel.actions[_Constants.secondListItem].listOfCrops,
           listener: (crop) {
             cropIsFilled = true;
             checkIfFilled();
@@ -282,11 +277,10 @@ class RecordAmountState extends State<RecordAmount> {
     listBuilder.add(
       RecordAmountListItem(
         viewModel: RecordAmountListItemViewModel(
-            isEditable: viewModel.isEditable,
-            icon: viewModel.actions[_thirdListItem].icon,
-            hint: viewModel.actions[_thirdListItem].hint,
-            description: viewModel.actions[_thirdListItem].description,
-            arrow: viewModel.actions[_thirdListItem].arrow),
+          type: RecordCellType.description,
+          isEditable: viewModel.isEditable,
+          description: viewModel.actions[_Constants.thirdListItem].description,
+        ),
         style: RecordAmountListItemStyles.biggerStyle,
         parent: this,
       ),

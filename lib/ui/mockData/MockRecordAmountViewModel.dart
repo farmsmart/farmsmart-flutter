@@ -74,10 +74,7 @@ class MockRecordAmountViewModel {
 class MockRecordAmountListItemViewModel {
   static RecordAmountListItemViewModel build(int index) {
     return RecordAmountListItemViewModel(
-      icon: _mockItemIcon[index],
-      title: _mockItemTitle[index],
-      hint: _mockItemHint[index],
-      arrow: _mockArrowIcon[index],
+      type: _celltype[index],
       selectedDate: _mockSelectedDate[index],
       listOfCrops: _mockListOfCrops[index],
       listener: null,
@@ -86,10 +83,6 @@ class MockRecordAmountListItemViewModel {
 
   static RecordAmountListItemViewModel buildNotEditable(int index) {
     return RecordAmountListItemViewModel(
-      icon: _mockItemIcon[index],
-      title: _mockItemTitle[index],
-      hint: _mockItemHint[index],
-      arrow: _mockArrowIcon[index],
       description: _mockDescription.random(),
       selectedDate: _mockSelectedDate[index],
       listOfCrops: _mockListOfCrops[index],
@@ -99,6 +92,9 @@ class MockRecordAmountListItemViewModel {
     );
   }
 }
+
+
+List _celltype = [RecordCellType.pickDate, RecordCellType.pickItem, RecordCellType.description];
 
 List _mockCrop = [
   "Okra",
@@ -114,13 +110,6 @@ List _mockSelectedDate = [DateTime.now(), null, null];
 
 List _mockButtonTitle = ["Record Cost", "Record Sale"];
 
-List _mockItemTitle = ["Date", "Crop", null];
-List _mockItemIcon = [
-  "assets/icons/detail_icon_date.png",
-  "assets/icons/detail_icon_best_soil.png",
-  "assets/icons/detail_icon_description.png"
-];
-
 MockString _mockDescription = MockString(library: [
   "Add another description",
   "This is a description a bit longer",
@@ -128,12 +117,6 @@ MockString _mockDescription = MockString(library: [
   "One more bigger title"
 ]);
 
-List _mockItemHint = ["Today", "Select...", "Description (optional)..."];
-List _mockArrowIcon = [
-  "assets/icons/chevron.png",
-  "assets/icons/chevron.png",
-  null
-];
 List _mockListOfCrops = [
   null,
   [
