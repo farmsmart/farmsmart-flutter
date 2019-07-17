@@ -179,35 +179,40 @@ class PlayGroundAtomDataSource implements PlaygroundDataSource {
             PlaygroundWidget(
               title: "Record Cost Header",
               child: RecordAmountHeader(
-                  viewModel: RecordAmountHeaderViewModel(
-                      onAmountChanged:
-                          MockRecordAmountViewModel.buildCost().amount,
-                      isEditable: true),
-                  style: RecordAmountHeaderStyle.defaultCostStyle()),
+                viewModel: RecordAmountHeaderViewModel(
+                    onAmountChanged:
+                        MockRecordAmountViewModel.buildCost().amount,
+                    isEditable: true),
+                style: RecordAmountHeaderStyle.defaultCostStyle(),
+              ),
             ),
             PlaygroundWidget(
               title: "Record Sale Header",
               child: RecordAmountHeader(
-                  viewModel: RecordAmountHeaderViewModel(
-                      onAmountChanged:
-                          MockRecordAmountViewModel.buildCost().amount,
-                      isEditable: true),
-                  style: RecordAmountHeaderStyle.defaultSaleStyle()),
+                viewModel: RecordAmountHeaderViewModel(
+                    onAmountChanged:
+                        MockRecordAmountViewModel.buildCost().amount,
+                    isEditable: true),
+                style: RecordAmountHeaderStyle.defaultSaleStyle(),
+              ),
             ),
             PlaygroundWidget(
               title: "Pick up date",
               child: RecordAmountListItem(
-                  viewModel: MockRecordAmountListItemViewModel.build(0)),
+                viewModel: MockRecordAmountListItemViewModel.build(0),
+              ),
             ),
             PlaygroundWidget(
               title: "Pick up crop",
               child: RecordAmountListItem(
-                  viewModel: MockRecordAmountListItemViewModel.build(1)),
+                viewModel: MockRecordAmountListItemViewModel.build(1),
+              ),
             ),
             PlaygroundWidget(
               title: "Add description cell",
               child: RecordAmountListItem(
-                  viewModel: MockRecordAmountListItemViewModel.build(2)),
+                viewModel: MockRecordAmountListItemViewModel.build(2),
+              ),
             ),
           ],
         ),

@@ -32,7 +32,7 @@ class RecordAmountViewModel {
   RecordAmountViewModel({
     this.loadingStatus,
     this.actions,
-    this.amount: "00",
+    this.amount,
     this.buttonTitle,
     this.isFilled: false,
     this.onTap,
@@ -165,7 +165,8 @@ class RecordAmountState extends State<RecordAmount> {
           : _buildEditAppBar(style, context),
       body: GestureDetector(
         onTap: () {
-          FocusScope.of(context).requestFocus(FocusNode());
+          //FocusScope.of(context).requestFocus(FocusNode());
+          FocusScope.of(context).detach();
           checkIfFilled();
         },
         child: ListView(

@@ -88,7 +88,7 @@ class RecordAmountHeaderStyle {
   }
 }
 
-class RecordAmountHeader extends StatelessWidget {
+class RecordAmountHeader extends StatefulWidget {
   final RecordAmountHeaderViewModel _viewModel;
   final RecordAmountHeaderStyle _style;
 
@@ -101,10 +101,43 @@ class RecordAmountHeader extends StatelessWidget {
         super(key: key);
 
   @override
+  _RecordAmountHeaderState createState() => _RecordAmountHeaderState();
+}
+
+class _RecordAmountHeaderState extends State<RecordAmountHeader> {
+  final _textFieldController = TextEditingController();
+  final FocusNode _focusNode = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+    _focusNode.addListener(textFieldFocusDidChange);
+
+    if (widget._viewModel.onAmountChanged == null) {
+      widget._viewModel.onAmountChanged = "00";
+    }
+  }
+
+  @override
+  void dispose() {
+    _textFieldController.dispose();
+    super.dispose();
+  }
+
+  void textFieldFocusDidChange() {
+    if (_focusNode.hasFocus) {
+      // textfield was tapped
+    }
+  }
+
+
   Widget build(BuildContext context) {
+    RecordAmountHeaderViewModel viewModel = widget._viewModel;
+    RecordAmountHeaderStyle style = widget._style;
+
     return Container(
-      padding: _style.edgePadding,
-      height: _style.height,
+      padding: style.edgePadding,
+      height: style.height,
       child: Row(
         children: <Widget>[
           Expanded(
@@ -112,31 +145,51 @@ class RecordAmountHeader extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                _viewModel.isEditable
+                viewModel.isEditable
                     ? TextField(
                         decoration: InputDecoration(
-                            hintText: _viewModel.onAmountChanged,
-                            hintStyle: _style.hintTextStyle,
+                            hintText: viewModel.onAmountChanged,
+                            hintStyle: style.hintTextStyle,
                             border: InputBorder.none,
                             contentPadding: EdgeInsets.all(0),
                             counterText: ""),
                         keyboardType: TextInputType.numberWithOptions(
                             signed: false, decimal: true),
                         textAlign: TextAlign.center,
-                        style: _style.titleTextStyle,
+                        style: style.titleTextStyle,
                         inputFormatters: [_Constants.amountValidator],
-                        maxLines: _style.maxLines,
-                        textInputAction: TextInputAction.done,
-                        onChanged: _viewModel.listener,
-                        autofocus: true,
+                        maxLines: style.maxLines,
+                        textInputAction: TextInputAction.next,
+                        controller: _textFieldController,
+                        onChanged: viewModel.listener,
+                        focusNode: _focusNode,
+                        onTap: () => cleanField(),
+                        onEditingComplete: () => resetHint(),
                       )
-                    : Text(_viewModel.onAmountChanged,
-                        style: _style.titleTextStyle),
+                    : Text(viewModel.onAmountChanged,
+                        style: style.titleTextStyle),
               ],
             ),
           ),
         ],
       ),
     );
+  }
+
+  cleanField() {
+    setState(() {
+      widget._viewModel.onAmountChanged = "";
+      //TODO: Apply this if want to reset amount onTap
+      //_textFieldController.text = "";
+    });
+  }
+
+  resetHint() {
+    setState(() {
+      if (_textFieldController.text == "") {
+        widget._viewModel.onAmountChanged = "00";
+      }
+      FocusScope.of(context).detach();
+    });
   }
 }
