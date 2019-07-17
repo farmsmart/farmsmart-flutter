@@ -26,6 +26,7 @@ class RecommendationCardViewModel {
   Function leftAction;
   Function rightAction;
   bool isAdded;
+  String addedIcon;
 
   RecommendationCardViewModel({
     this.image,
@@ -37,6 +38,7 @@ class RecommendationCardViewModel {
     this.leftAction,
     this.rightAction,
     this.isAdded = false,
+    this.addedIcon
   });
 }
 
@@ -51,8 +53,9 @@ class RecommendationCardStyle {
   final int descriptionMaxLines;
   final EdgeInsets contentPadding;
   final BoxDecoration rightActionBoxDecoration;
-  final Image addedIcon;
   final Color addedOverlayColor;
+  final double addedIconHeight;
+  final double addedIconWidth;
 
   const RecommendationCardStyle({
     this.titleTextStyle,
@@ -65,8 +68,9 @@ class RecommendationCardStyle {
     this.descriptionMaxLines,
     this.contentPadding,
     this.rightActionBoxDecoration,
-    this.addedIcon,
     this.addedOverlayColor,
+    this.addedIconHeight,
+    this.addedIconWidth
   });
 
   RecommendationCardStyle copyWith({
@@ -82,6 +86,8 @@ class RecommendationCardStyle {
     BoxDecoration rightBoxDecoration,
     Image addedIcon,
     Color addedOverlayColor,
+    int addedIconHeight,
+    int addedIconWidth,
   }) {
     return RecommendationCardStyle(
       titleTextStyle: titleTextStyle ?? this.titleTextStyle,
@@ -97,8 +103,9 @@ class RecommendationCardStyle {
       contentPadding: contentPadding ?? this.contentPadding,
       rightActionBoxDecoration:
           rightBoxDecoration ?? this.rightActionBoxDecoration,
-      addedIcon: addedIcon ?? this.addedIcon,
       addedOverlayColor: addedOverlayColor ?? this.addedOverlayColor,
+      addedIconHeight: addedIconHeight ?? this.addedIconHeight,
+      addedIconWidth: addedIconWidth ?? this.addedIconWidth,
     );
   }
 }
@@ -126,13 +133,9 @@ class _DefaultStyle extends RecommendationCardStyle {
 
   final EdgeInsets contentPadding = const EdgeInsets.all(32.0);
 
-  final Image addedIcon = const Image(
-    image: AssetImage('assets/icons/tick_large.png'),
-    width: 54,
-    height: 54,
-  );
-
   final Color addedOverlayColor = const Color(0x1924d900);
+  final double addedIconHeight = 54;
+  final double addedIconWidth = 54;
 
   static const defaultRoundedButtonStyle = const RoundedButtonStyle(
     backgroundColor: Color(0xffe9eaf2),
@@ -157,6 +160,8 @@ class _DefaultStyle extends RecommendationCardStyle {
     BorderRadiusGeometry imageBorderRadius,
     int descriptionMaxLines,
     EdgeInsets contentPadding,
+    double addedIconHeight,
+    double addedIconWidth,
   });
 }
 
@@ -223,7 +228,11 @@ class RecommendationCard extends StatelessWidget {
           color: _style.addedOverlayColor,
         ),
         child: Center(
-          child: _style.addedIcon,
+          child: Image(
+            image: AssetImage(_viewModel.addedIcon),
+            width: _style.addedIconWidth,
+            height: _style.addedIconHeight,
+          ),
         ),
       );
     } else {

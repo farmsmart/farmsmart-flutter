@@ -31,6 +31,12 @@ class RecommendationCardStyles {
             color: Color(0xff4c4e6e),
           ),
         ),
+        addedOverlayColor: const Color(0x1924d900),
+        addedIcon: Image(
+          image: AssetImage('assets/icons/tick_large.png'),
+          width: 54,
+          height: 54,
+        ),
       );
 
   static RecommendationCardStyle _defaultRecommendationCardStyle =
@@ -54,12 +60,8 @@ class RecommendationCardStyles {
     imageBorderRadius: const BorderRadius.all(Radius.circular(12.0)),
     descriptionMaxLines: 2,
     contentPadding: const EdgeInsets.all(32.0),
-    addedOverlayColor: const Color(0x1924d900),
-    addedIcon: Image(
-      image: AssetImage('assets/icons/tick_large.png'),
-      width: 54,
-      height: 54,
-    ),
+    addedIconWidth: 54,
+    addedIconHeight: 54,
   );
 
   static RoundedButtonStyle _defaultRoundedButtonStyle = RoundedButtonStyle(
