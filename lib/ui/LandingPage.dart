@@ -106,25 +106,27 @@ class LandingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        Column(
-          children: <Widget>[
-            _buildHeader(),
-            _buildSubtitle(),
-            SizedBox(height: _Constants.subtitleLineSpace),
-            _buildDetailText(),
-          ],
-        ),
-        Column(
-          children: <Widget>[
-            _buildAction(context),
-            SizedBox(height: _Constants.actionLineSpace),
-            _buildFooter(context),
-          ],
-        ),
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Column(
+            children: <Widget>[
+              _buildHeader(),
+              _buildSubtitle(),
+              SizedBox(height: _Constants.subtitleLineSpace),
+              _buildDetailText(),
+            ],
+          ),
+          Column(
+            children: <Widget>[
+              _buildAction(context),
+              SizedBox(height: _Constants.actionLineSpace),
+              _buildFooter(context),
+            ],
+          ),
+        ],
+      ),
     );
   }
 

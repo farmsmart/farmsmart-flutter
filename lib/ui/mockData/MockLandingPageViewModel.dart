@@ -2,7 +2,7 @@ import 'package:farmsmart_flutter/ui/LandingPage.dart';
 import 'package:intl/intl.dart';
 
 class _Strings {
-  static final String detailText = Intl.message("A network and knowledge source for farmers in Kenya");
+  static final String detailText = Intl.message("Kuwezesha wakenya elimu inayohitajika kuwa wakulima wenye mafanikio.");
   static final String actionText = Intl.message("Get Started");
   static final String footerText = Intl.message("Switch Langauge – Badilisha Lugha");
 }
