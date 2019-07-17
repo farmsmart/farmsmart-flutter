@@ -222,7 +222,7 @@ SPEC CHECKSUMS:
   cloud_firestore: cd6e849ecb8ab43e5a7a5f1f169304ca65436c03
   Firebase: fa80b9d987ca014a1ba9357496ef2a0178b28b12
   firebase_core: ce5006bb48508ee4e71e0f429a3f519bb8ee2961
-  firebase_dynamic_links: 4b2a2629122f9d47f4e2b07e20b77edf27834799
+  firebase_dynamic_links: 4a583047b253e5914d5e3c3891cca337ec087d48
   firebase_storage: 2543f377090a6e219caab9224dead5bbcb30ef33
   FirebaseAnalytics: 1743c5f4de3687d0745709dfdc4b1dea1484f44c
   FirebaseAnalyticsInterop: efbe45c8385ec626e29f9525e5ebd38520dfb6c1

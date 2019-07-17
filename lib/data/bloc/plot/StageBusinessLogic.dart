@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:farmsmart_flutter/data/model/NewStageEntity.dart';
 
 enum StageStatus {
@@ -7,6 +9,14 @@ enum StageStatus {
 }
 
 class StageBusinessLogic {
+
+  double progress(List<NewStageEntity> stages) {
+    if (isComplete(stages.last)) {
+      return  1.0;
+    }
+    final currentIndex = currentStageIndex(stages);
+    return max(0.05,currentIndex.toDouble()  / (stages.length).toDouble());
+  }
 
   NewStageEntity currentStage(List<NewStageEntity> stages) {
     for (var stage in stages) {

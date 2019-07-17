@@ -26,7 +26,8 @@ class PlotToPlotListItemViewModel implements ObjectTransformer<PlotEntity, PlotL
   PlotListItemViewModel transform({PlotEntity from}) {
     final title = from.title;
     final detailText = _detailString(from: from);
-    return PlotListItemViewModel(title: title, subtitle:_subtitleString(from: from), detail: detailText, provider: _detailProvider, imageProvider: CropImageProvider(from.crop) );
+    final progress = _logic.progress(from.stages);
+    return PlotListItemViewModel(title: title, subtitle:_subtitleString(from: from), detail: detailText, progress: progress, provider: _detailProvider, imageProvider: CropImageProvider(from.crop) );
   }
 
   String _subtitleString({PlotEntity from}) {

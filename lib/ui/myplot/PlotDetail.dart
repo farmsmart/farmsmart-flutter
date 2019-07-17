@@ -62,6 +62,7 @@ class _PlotDetailState extends State<PlotDetail> {
           final PlotListItemViewModel headerViewModel = PlotListItemViewModel(
               title: viewModel.title,
               detail: viewModel.detailText,
+              progress: viewModel.progress,
               imageProvider: MockImageEntity().build().urlProvider);
           final articleViewModel =
               viewModel.stageArticleViewModels[_selectedStage];

@@ -51,7 +51,8 @@ class PlotDetailProvider implements ViewModelProvider<PlotDetailViewModel> {
     final List<ArticleDetailViewModel> artcileViewModels = _plot.stages.map((stage) {
         return _articleTransformer.transform(from: stage.article).detailViewModel;
       }).toList();
-    final detailViewModel = PlotDetailViewModel(title: title, detailText: detailText, stageCardViewModels: stageViewModels, stageArticleViewModels: artcileViewModels, currentStage: _logic.currentStageIndex(_plot.stages));
+    final progress = _logic.progress(_plot.stages);
+    final detailViewModel = PlotDetailViewModel(title: title, detailText: detailText, progress: progress, stageCardViewModels: stageViewModels, stageArticleViewModels: artcileViewModels, currentStage: _logic.currentStageIndex(_plot.stages));
     return detailViewModel;
   }
 
