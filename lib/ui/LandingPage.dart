@@ -8,13 +8,13 @@ import 'package:flutter/material.dart';
 
 
 class _Constants {
-  static final EdgeInsets headerEdgePadding = EdgeInsets.only(top: 56, bottom: 20.5);
-  static final EdgeInsets detailTextEdgePadding = const EdgeInsets.only(left: 34.6, right: 34.6, bottom: 63.5);
+  static final EdgeInsets headerEdgePadding = EdgeInsets.only(top: 55, bottom: 20.5);
+  static final EdgeInsets detailTextEdgePadding = const EdgeInsets.only(left: 34.6, right: 34.6, bottom: 41);
   static final EdgeInsets actionEdgePadding = const EdgeInsets.only(left: 34, right: 34);
-  static final EdgeInsets footerTextEdgePadding = const EdgeInsets.only(left: 30, right: 30, bottom: 16);
+  static final EdgeInsets footerTextEdgePadding = const EdgeInsets.only(left: 30, right: 30, bottom: 17);
   static final double subtitleLineSpace = 12;
   static final double detailTextLineSpace = 53;
-  static final double actionLineSpace = 15;
+  static final double actionLineSpace = 16;
 }
 
 class LandingPageViewModel {
@@ -107,15 +107,23 @@ class LandingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        _buildHeader(),
-        _buildSubtitle(),
-        SizedBox(height: _Constants.subtitleLineSpace),
-        _buildDetailText(),
-        //SizedBox(height: _Constants.detailTextLineSpace),
-        _buildAction(context),
-        SizedBox(height: _Constants.actionLineSpace),
-        _buildFooter(context),
+        Column(
+          children: <Widget>[
+            _buildHeader(),
+            _buildSubtitle(),
+            SizedBox(height: _Constants.subtitleLineSpace),
+            _buildDetailText(),
+          ],
+        ),
+        Column(
+          children: <Widget>[
+            _buildAction(context),
+            SizedBox(height: _Constants.actionLineSpace),
+            _buildFooter(context),
+          ],
+        ),
       ],
     );
   }
