@@ -126,6 +126,8 @@ class RecordAmount extends StatefulWidget {
 
 class RecordAmountState extends State<RecordAmount> {
   String selectedCrop;
+  String selectedDate;
+  String amount;
   bool _amoundIsFilled = false;
   bool cropIsFilled = false;
 
@@ -154,8 +156,6 @@ class RecordAmountState extends State<RecordAmount> {
         return Text(Strings.errorString);
     }
   }
-
-  //TODO: clear hint when click amount
 
   Widget _buildPage(BuildContext context, RecordAmountViewModel viewModel,
       RecordAmountStyle style) {

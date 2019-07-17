@@ -2,10 +2,15 @@ import 'package:farmsmart_flutter/utils/RegExInputFormatter.dart';
 import 'package:farmsmart_flutter/ui/profitloss/RecordAmount.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 
 class _Constants {
   static final amountValidator = RegExInputFormatter.withRegex(
       '^\$|^(0|([1-9][0-9]{0,3}))(\\.[0-9]{0,2})?\$');
+}
+
+class _Strings {
+  static final HINT = Intl.message("00");
 }
 
 class RecordAmountHeaderViewModel {
@@ -107,15 +112,12 @@ class RecordAmountHeader extends StatefulWidget {
 class _RecordAmountHeaderState extends State<RecordAmountHeader> {
   final _textFieldController = TextEditingController();
   final FocusNode _focusNode = FocusNode();
+  var hint = _Strings.HINT;
 
   @override
   void initState() {
     super.initState();
     _focusNode.addListener(textFieldFocusDidChange);
-
-    if (widget._viewModel.onAmountChanged == null) {
-      widget._viewModel.onAmountChanged = "00";
-    }
   }
 
   @override
@@ -148,7 +150,7 @@ class _RecordAmountHeaderState extends State<RecordAmountHeader> {
                 viewModel.isEditable
                     ? TextField(
                         decoration: InputDecoration(
-                            hintText: viewModel.onAmountChanged,
+                            hintText: hint,
                             hintStyle: style.hintTextStyle,
                             border: InputBorder.none,
                             contentPadding: EdgeInsets.all(0),
@@ -178,17 +180,19 @@ class _RecordAmountHeaderState extends State<RecordAmountHeader> {
 
   cleanField() {
     setState(() {
-      widget._viewModel.onAmountChanged = "";
-      //TODO: Apply this if want to reset amount onTap
-      //_textFieldController.text = "";
+      if (_textFieldController.text == "") {
+        hint = "";
+      } else {
+        hint = _Strings.HINT;
+      }
     });
   }
 
   resetHint() {
     setState(() {
       if (_textFieldController.text == "") {
-        widget._viewModel.onAmountChanged = "00";
-      }
+        hint = "00";
+      } 
       FocusScope.of(context).detach();
     });
   }
