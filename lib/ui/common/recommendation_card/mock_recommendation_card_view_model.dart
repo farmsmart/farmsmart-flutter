@@ -13,7 +13,7 @@ class MockRecommendationCardViewModel {
       rightActionText: 'Add to Plot',
       rightAction: () {},
       image: NetworkImage(_mockImageUrl.random()),
-      addedIcon: 'assets/icons/tick_large.png',
+      overlayIcon: 'assets/icons/tick_large.png',
     );
   }
 
@@ -28,7 +28,7 @@ class MockRecommendationCardViewModel {
       rightAction: () {},
       image: NetworkImage('http://www.freemagebank.com/wp-content/uploads/edd/2015/07/GL0000302LR.jpg'),
       isAdded: true,
-      addedIcon: 'assets/icons/tick_large.png',
+      overlayIcon: 'assets/icons/tick_large.png',
     );
   }
 
@@ -44,7 +44,7 @@ class MockRecommendationCardViewModel {
       rightActionText: 'Add to Plot',
       rightAction: () {},
       image: NetworkImage(_mockImageUrl.random()),
-      addedIcon: 'assets/icons/tick_large.png',
+      overlayIcon: 'assets/icons/tick_large.png',
     );
   }
 
@@ -60,7 +60,7 @@ class MockRecommendationCardViewModel {
       rightActionText: 'Add to Plot',
       rightAction: () {},
       image: AssetImage('assets/raw/placeholder.webp'),
-      addedIcon: 'assets/icons/tick_large.png',
+      overlayIcon: 'assets/icons/tick_large.png',
     );
   }
 
@@ -76,7 +76,7 @@ class MockRecommendationCardViewModel {
       rightActionText: 'Added To Plot',
       rightAction: () {},
       image: AssetImage('assets/raw/placeholder.webp'),
-      addedIcon: 'assets/icons/tick_large.png',
+      overlayIcon: 'assets/icons/tick_large.png',
       isAdded: true,
     );
   }
