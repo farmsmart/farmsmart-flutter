@@ -37,6 +37,15 @@ class StageBusinessLogic {
     return 0;
   }
 
+  int daysSinceStarted(List<NewStageEntity> stages) {
+    final firstStage = stages.first;
+    final started = firstStage.started;
+    if (started != null) {
+       return DateTime.now().difference(started).inDays;
+    }
+    return 0;
+  }
+
   StageStatus status(NewStageEntity stage) {
     if(isInProgress(stage)) {
         return StageStatus.inProgress;
@@ -45,6 +54,18 @@ class StageBusinessLogic {
         return StageStatus.complete;
     }
     return StageStatus.upcoming;
+  }
+
+  bool isInProgress(NewStageEntity stage) {
+    return isStarted(stage) && !isComplete(stage);
+  }
+
+  bool isStarted(NewStageEntity stage) {
+    return (stage.started  != null) && stage.started.isBefore(DateTime.now());
+  }
+
+  bool isComplete(NewStageEntity stage) {
+    return (stage.ended  != null) && stage.ended.isBefore(DateTime.now());
   }
 
   bool canComplete(NewStageEntity stage, List<NewStageEntity> stages) {
@@ -59,18 +80,6 @@ class StageBusinessLogic {
     }
     final prevStage = stages[index-1];
     return isComplete(prevStage) && !isStarted(stage);
-  }
-
-  bool isInProgress(NewStageEntity stage) {
-    return isStarted(stage) && !isComplete(stage);
-  }
-
-  bool isStarted(NewStageEntity stage) {
-    return (stage.started  != null) && stage.started.isBefore(DateTime.now());
-  }
-
-  bool isComplete(NewStageEntity stage) {
-    return (stage.ended  != null) && stage.ended.isBefore(DateTime.now());
   }
   
 }

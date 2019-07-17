@@ -9,6 +9,7 @@ import 'package:farmsmart_flutter/ui/discover/viewModel/ArticleDetailViewModel.d
 import 'package:farmsmart_flutter/ui/myplot/viewmodel/PlotDetailViewModel.dart';
 
 import '../ViewModelProvider.dart';
+import 'PlotToPlotListItemViewModel.dart';
 import 'StageBusinessLogic.dart';
 import 'StageToStageCardViewModel.dart';
 
@@ -42,8 +43,7 @@ class PlotDetailProvider implements ViewModelProvider<PlotDetailViewModel> {
   }
 
    PlotDetailViewModel _viewModel(){
-    final title = _plot.title;
-    final detailText = "temp";
+    final headerViewModel = PlotToPlotListItemViewModel(null).transform(from: _plot);
     final stageTransformer = StageToStageCardViewModel(_plot,_beginStageAction,_completeStageAction, _revertStageAction);
     final stageViewModels = _plot.stages.map((stage) {
         return stageTransformer.transform(from:stage);
@@ -51,8 +51,7 @@ class PlotDetailProvider implements ViewModelProvider<PlotDetailViewModel> {
     final List<ArticleDetailViewModel> artcileViewModels = _plot.stages.map((stage) {
         return _articleTransformer.transform(from: stage.article).detailViewModel;
       }).toList();
-    final progress = _logic.progress(_plot.stages);
-    final detailViewModel = PlotDetailViewModel(title: title, detailText: detailText, progress: progress, stageCardViewModels: stageViewModels, stageArticleViewModels: artcileViewModels, currentStage: _logic.currentStageIndex(_plot.stages));
+    final detailViewModel = PlotDetailViewModel(title: headerViewModel.title, detailText: headerViewModel.detail, progress: headerViewModel.progress, stageCardViewModels: stageViewModels, stageArticleViewModels: artcileViewModels, currentStage: _logic.currentStageIndex(_plot.stages));
     return detailViewModel;
   }
 
