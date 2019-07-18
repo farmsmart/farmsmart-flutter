@@ -99,7 +99,7 @@ class PlotList extends StatelessWidget {
   Widget _buildPage(BuildContext context, PlotListViewModel viewModel,
       PlotListStyle plotStyle, Function goToDetail) {
        
-    return HeaderAndFooterListView.builder(
+    return HeaderAndFooterListView(
         itemCount: viewModel.items.length,
         itemBuilder: (BuildContext context, int index) {
            final itemViewModel = viewModel.items[index];
@@ -109,8 +109,8 @@ class PlotList extends StatelessWidget {
         },
         physics: ScrollPhysics(),
         shrinkWrap: true,
-        header: _buildTitle(viewModel, plotStyle, context: context),
-        footer: Padding(
+        headers: [_buildTitle(viewModel, plotStyle, context: context)],
+        footers: [Padding(
           padding: plotStyle.largeButtonEdgePadding,
           child: Row(
             children: <Widget>[
@@ -123,7 +123,7 @@ class PlotList extends StatelessWidget {
               ),
             ],
           ),
-        ));
+        )]);
   }
 
   Widget _buildTitle(PlotListViewModel viewModel, PlotListStyle myPlotStyle,

@@ -1,5 +1,6 @@
 import 'package:farmsmart_flutter/model/loading_status.dart';
 import 'package:farmsmart_flutter/ui/common/ContextualAppBar.dart';
+import 'package:farmsmart_flutter/ui/common/SectionListView.dart';
 import 'package:farmsmart_flutter/ui/common/headerAndFooterListView.dart';
 import 'package:farmsmart_flutter/ui/common/network_image_from_future.dart';
 import 'package:farmsmart_flutter/ui/discover/viewModel/ArticleDetailViewModel.dart';
@@ -69,11 +70,12 @@ class _DefaultStyle implements ArticleDetailStyle {
   const _DefaultStyle();
 }
 
-class ArticleDetail extends StatelessWidget {
+class ArticleDetail extends StatelessWidget implements ListViewSection {
   final ArticleDetailViewModel _viewModel;
   final ArticleDetailStyle _style;
+  List<ArticleListItemViewModel> _releatedViewModels = [];
 
-  const ArticleDetail(
+  ArticleDetail(
       {Key key,
       ArticleDetailViewModel viewModel,
       ArticleDetailStyle style = const _DefaultStyle()})
@@ -83,34 +85,33 @@ class ArticleDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _build(context: context, viewModel: _viewModel, style: _style);
-  }
-
-  Widget _build(
-      {BuildContext context,
-      ArticleDetailViewModel viewModel,
-      ArticleDetailStyle style}) {
-    var releatedViewModels = [];
-    final loadingWidget = Container(
-        child: CircularProgressIndicator(), alignment: Alignment.center);
-
     return FutureBuilder(
-      future: viewModel.getRelated(),
+      future: _viewModel.getRelated(),
       builder: (BuildContext context,
           AsyncSnapshot<List<ArticleListItemViewModel>> relatedArticles) {
         if (relatedArticles.hasData) {
-          releatedViewModels = relatedArticles.data;
+          _releatedViewModels = relatedArticles.data;
         }
-        final footer = (viewModel.loadingStatus == LoadingStatus.LOADING)
-            ? loadingWidget
-            : null;
         return Scaffold(
           appBar: _buildAppBar(context),
           body: Container(
-            child: HeaderAndFooterListView.builder(
-                itemCount: releatedViewModels.length,
+            child: _content(),
+          ),
+        );
+      },
+    );
+  }
+
+  HeaderAndFooterListView _content() {
+     final loadingWidget = Container(
+        child: CircularProgressIndicator(), alignment: Alignment.center);
+    final footer = (_viewModel.loadingStatus == LoadingStatus.LOADING)
+            ? loadingWidget
+            : null;
+      return HeaderAndFooterListView(
+                itemCount: _releatedViewModels.length,
                 itemBuilder: (BuildContext context, int index) {
-                  final viewModel = releatedViewModels[index];
+                  final viewModel = _releatedViewModels[index];
                   return StandardListItem(
                     viewModel: viewModel,
                     onTap: () => _tappedListItem(
@@ -119,13 +120,18 @@ class ArticleDetail extends StatelessWidget {
                 },
                 physics: ScrollPhysics(),
                 shrinkWrap: true,
-                header: buildHeader(
-                    context, releatedViewModels.isNotEmpty),
-                footer: footer),
-          ),
-        );
-      },
-    );
+                headers: [buildHeader(_releatedViewModels.isNotEmpty)],
+                footers: [footer]);
+  } 
+
+  @override
+  itemBuilder() {
+    return _content().itemBuilder();
+  }
+
+  @override
+  int length() {
+    return _content().length();
   }
 
   void _share() async {
@@ -139,7 +145,7 @@ class ArticleDetail extends StatelessWidget {
     ).build(context);
   }
 
-  Widget buildHeader(BuildContext context, bool relatedTitle) {
+  Widget buildHeader(bool relatedTitle) {
     final topWidgets = [
       _buildTitle(),
       _buildArticlePublishingDate(),

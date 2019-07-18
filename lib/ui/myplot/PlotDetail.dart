@@ -1,7 +1,9 @@
 import 'package:farmsmart_flutter/data/bloc/ViewModelProvider.dart';
 import 'package:farmsmart_flutter/data/repositories/image/implementation/MockImageEntity.dart';
 import 'package:farmsmart_flutter/ui/common/ContextualAppBar.dart';
+import 'package:farmsmart_flutter/ui/common/SectionListView.dart';
 import 'package:farmsmart_flutter/ui/common/carousel_view.dart';
+import 'package:farmsmart_flutter/ui/common/headerAndFooterListView.dart';
 import 'package:farmsmart_flutter/ui/common/stage_card.dart';
 import 'package:farmsmart_flutter/ui/discover/ArticleDetail.dart';
 import 'package:farmsmart_flutter/ui/myplot/PlotListItem.dart';
@@ -25,7 +27,7 @@ class _DefaultStyle implements PlotDetailStyle {
 class PlotDetail extends StatefulWidget {
   final ViewModelProvider<PlotDetailViewModel> _viewModelProvider;
   final PlotDetailStyle _style;
-
+  ArticleDetail _articleDetail;
   PlotDetail(
       {Key key,
       ViewModelProvider<PlotDetailViewModel> provider,
@@ -75,12 +77,14 @@ class _PlotDetailState extends State<PlotDetail> {
                 initialPage: _selectedStage,
                 onPageChange: _pageChanged,
               ));
-          final article = ArticleDetail(viewModel: articleViewModel)
-              .buildHeader(context, false);
+          widget._articleDetail = ArticleDetail(viewModel: articleViewModel);
+
+          final topSection = HeaderAndFooterListView(headers: <Widget>[header, stages],);
+          final sectionedList = SectionedListView(sections: [topSection, widget._articleDetail],);
 
           return Scaffold(
               appBar: _buildAppBar(context),
-              body: ListView(children: <Widget>[header, stages, article]));
+              body: sectionedList);
         });
   }
 

@@ -81,7 +81,7 @@ class _ProfitLossState extends State<ProfitLossPage> {
 
   Widget _buildPage(BuildContext context, ProfitLossListViewModel viewModel,
       ProfitLossStyle profitStyle) {
-    return HeaderAndFooterListView.builder(
+    return HeaderAndFooterListView(
         itemCount: viewModel.transactions.length,
         itemBuilder: (BuildContext context, int index) {
           return ProfitLossListItem(
@@ -90,13 +90,13 @@ class _ProfitLossState extends State<ProfitLossPage> {
         },
         physics: ScrollPhysics(),
         shrinkWrap: true,
-        header: ProfitLossHeader(
+        headers: [ProfitLossHeader(
             viewModel: ProfitLossHeaderViewModel(
                 viewModel.title, viewModel.detailText),
-            style: ProfitLossHeaderStyle.defaultStyle()),
-        footer: SizedBox(
+            style: ProfitLossHeaderStyle.defaultStyle())],
+        footers: [SizedBox(
           height: profitStyle.bottomEdgePadding,
-        ));
+        )]);
   }
 
   Widget _buildPageWithFloatingButton(BuildContext context,
