@@ -1,6 +1,7 @@
 import 'package:farmsmart_flutter/model/loading_status.dart';
 import 'package:farmsmart_flutter/ui/common/ListDivider.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
+import 'package:farmsmart_flutter/ui/profitloss/RecordAmountHeaderStyles.dart';
 import 'package:farmsmart_flutter/ui/profitloss/RecordAmountListItem.dart';
 import 'package:farmsmart_flutter/ui/profitloss/RecordAmountHeader.dart';
 import 'package:farmsmart_flutter/ui/profitloss/RecordAmountListItemStyles.dart';
@@ -235,8 +236,8 @@ class RecordAmountState extends State<RecordAmount> {
           },
         ),
         style: viewModel.type == RecordType.sale
-            ? RecordAmountHeaderStyle.defaultSaleStyle()
-            : RecordAmountHeaderStyle.defaultCostStyle(),
+            ? RecordAmountHeaderStyles.defaultSaleStyle
+            : RecordAmountHeaderStyles.defaultCostStyle,
       ),
     );
 
@@ -247,7 +248,8 @@ class RecordAmountState extends State<RecordAmount> {
         viewModel: RecordAmountListItemViewModel(
           type: RecordCellType.pickDate,
           isEditable: viewModel.isEditable,
-          selectedDate: viewModel.actions[_Constants.firstListItem].selectedDate,
+          selectedDate:
+              viewModel.actions[_Constants.firstListItem].selectedDate,
         ),
         parent: this,
       ),

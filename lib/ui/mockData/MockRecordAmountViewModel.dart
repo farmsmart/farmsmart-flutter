@@ -93,8 +93,11 @@ class MockRecordAmountListItemViewModel {
   }
 }
 
-
-List _celltype = [RecordCellType.pickDate, RecordCellType.pickItem, RecordCellType.description];
+List _celltype = [
+  RecordCellType.pickDate,
+  RecordCellType.pickItem,
+  RecordCellType.description
+];
 
 List _mockCrop = [
   "Okra",

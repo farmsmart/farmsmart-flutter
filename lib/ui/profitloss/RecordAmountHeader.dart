@@ -11,6 +11,7 @@ class _Constants {
 
 class _Strings {
   static final HINT = Intl.message("00");
+  static final EMPTY_STRING = "";
 }
 
 class RecordAmountHeaderViewModel {
@@ -34,7 +35,7 @@ class RecordAmountHeaderStyle {
   final double height;
   final int maxLines;
 
-  RecordAmountHeaderStyle({
+  const RecordAmountHeaderStyle({
     this.hintTextStyle,
     this.titleTextStyle,
     this.edgePadding,
@@ -52,46 +53,42 @@ class RecordAmountHeaderStyle {
     return RecordAmountHeaderStyle(
       hintTextStyle: hintTextStyle ?? this.hintTextStyle,
       titleTextStyle: titleTextStyle ?? this.titleTextStyle,
-    );
-  }
-
-  factory RecordAmountHeaderStyle.defaultCostStyle() {
-    return RecordAmountHeaderStyle(
-      hintTextStyle: const TextStyle(
-        fontSize: 72,
-        fontWeight: FontWeight.w500,
-        color: Color(0x4cff8d4f),
-        letterSpacing: 4.32,
-      ),
-      titleTextStyle: const TextStyle(
-        fontSize: 72,
-        fontWeight: FontWeight.w500,
-        color: Color(0xFFff8d4f),
-        letterSpacing: 4.32,
-      ),
-    );
-  }
-
-  factory RecordAmountHeaderStyle.defaultSaleStyle() {
-    return RecordAmountHeaderStyle.defaultCostStyle().copyWith(
-      hintTextStyle: const TextStyle(
-        fontSize: 72,
-        fontWeight: FontWeight.w500,
-        color: Color(0x4c24d900),
-        letterSpacing: 4.32,
-      ),
-      titleTextStyle: const TextStyle(
-        fontSize: 72,
-        fontWeight: FontWeight.w500,
-        color: Color(0xFF24d900),
-        letterSpacing: 4.32,
-      ),
-      edgePadding: const EdgeInsets.symmetric(horizontal: 32),
-      height: 137.5,
-      maxLines: 1,
+      edgePadding: edgePadding ?? this.edgePadding,
+      height: height ?? this.height,
+      maxLines: maxLines ?? this.maxLines,
     );
   }
 }
+
+class _DefaultStyle extends RecordAmountHeaderStyle {
+  final TextStyle hintTextStyle = const TextStyle(
+    fontSize: 72,
+    fontWeight: FontWeight.w500,
+    color: Color(0x4cff8d4f),
+    letterSpacing: 4.32,
+  );
+
+  final TextStyle titleTextStyle = const TextStyle(
+    fontSize: 72,
+    fontWeight: FontWeight.w500,
+    color: Color(0xFFff8d4f),
+    letterSpacing: 4.32,
+  );
+
+  final EdgeInsets edgePadding = const EdgeInsets.symmetric(horizontal: 32);
+  final double height = 137.5;
+  final int maxLines = 1;
+
+  const _DefaultStyle({
+    TextStyle hintTextStyle,
+    TextStyle titleTextStyle,
+    EdgeInsets edgePadding,
+    double height,
+    int maxLines,
+  });
+}
+
+const RecordAmountHeaderStyle _defaultStyle = const _DefaultStyle();
 
 class RecordAmountHeader extends StatefulWidget {
   final RecordAmountHeaderViewModel _viewModel;
@@ -100,7 +97,7 @@ class RecordAmountHeader extends StatefulWidget {
   RecordAmountHeader({
     Key key,
     RecordAmountHeaderViewModel viewModel,
-    RecordAmountHeaderStyle style,
+    RecordAmountHeaderStyle style = _defaultStyle,
   })  : this._viewModel = viewModel,
         this._style = style,
         super(key: key);
@@ -132,7 +129,6 @@ class _RecordAmountHeaderState extends State<RecordAmountHeader> {
     }
   }
 
-
   Widget build(BuildContext context) {
     RecordAmountHeaderViewModel viewModel = widget._viewModel;
     RecordAmountHeaderStyle style = widget._style;
@@ -154,7 +150,7 @@ class _RecordAmountHeaderState extends State<RecordAmountHeader> {
                             hintStyle: style.hintTextStyle,
                             border: InputBorder.none,
                             contentPadding: EdgeInsets.all(0),
-                            counterText: ""),
+                            counterText: _Strings.EMPTY_STRING),
                         keyboardType: TextInputType.numberWithOptions(
                             signed: false, decimal: true),
                         textAlign: TextAlign.center,
@@ -180,8 +176,8 @@ class _RecordAmountHeaderState extends State<RecordAmountHeader> {
 
   cleanField() {
     setState(() {
-      if (_textFieldController.text == "") {
-        hint = "";
+      if (_textFieldController.text == _Strings.EMPTY_STRING) {
+        hint = _Strings.EMPTY_STRING;
       } else {
         hint = _Strings.HINT;
       }
@@ -190,9 +186,9 @@ class _RecordAmountHeaderState extends State<RecordAmountHeader> {
 
   resetHint() {
     setState(() {
-      if (_textFieldController.text == "") {
-        hint = "00";
-      } 
+      if (_textFieldController.text == _Strings.EMPTY_STRING) {
+        hint = _Strings.HINT;
+      }
       FocusScope.of(context).detach();
     });
   }

@@ -1,5 +1,6 @@
 import 'package:farmsmart_flutter/ui/mockData/MockRecordAmountViewModel.dart';
 import 'package:farmsmart_flutter/ui/playground/playground_view.dart';
+import 'package:farmsmart_flutter/ui/profitloss/RecordAmountHeaderStyles.dart';
 import 'package:farmsmart_flutter/ui/profitloss/RecordAmountListItem.dart';
 import 'package:farmsmart_flutter/ui/profitloss/RecordAmountHeader.dart';
 import 'package:farmsmart_flutter/ui/common/CircularProgress.dart';
@@ -183,7 +184,7 @@ class PlayGroundAtomDataSource implements PlaygroundDataSource {
                     onAmountChanged:
                         MockRecordAmountViewModel.buildCost().amount,
                     isEditable: true),
-                style: RecordAmountHeaderStyle.defaultCostStyle(),
+                style: RecordAmountHeaderStyles.defaultCostStyle,
               ),
             ),
             PlaygroundWidget(
@@ -193,7 +194,7 @@ class PlayGroundAtomDataSource implements PlaygroundDataSource {
                     onAmountChanged:
                         MockRecordAmountViewModel.buildCost().amount,
                     isEditable: true),
-                style: RecordAmountHeaderStyle.defaultSaleStyle(),
+                style: RecordAmountHeaderStyles.defaultSaleStyle,
               ),
             ),
             PlaygroundWidget(
