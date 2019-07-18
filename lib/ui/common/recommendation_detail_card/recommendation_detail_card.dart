@@ -11,8 +11,8 @@ class _Constants {
   static final int titleFlexValue = 3;
   static final int imageFlexValue = 2;
   static final int titleMaxLines = 1;
-  static final double titleHeightSeparator = 16;
-  static final double actionHeightSeparator = 36;
+  static final double titleSpace = 16;
+  static final double actionSpace = 36;
   static final double imageSize = 100;
   static final BorderRadius imageRadius =
       const BorderRadius.all(Radius.circular(12));
@@ -180,7 +180,7 @@ class RecommendationDetailCard extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                       ),
                       SizedBox(
-                        height: _Constants.titleHeightSeparator,
+                        height: _Constants.titleSpace,
                       ),
                       DogTag(
                         viewModel: DogTagViewModel(title: _viewModel.subtitle),
@@ -210,7 +210,7 @@ class RecommendationDetailCard extends StatelessWidget {
               ],
             ),
             SizedBox(
-              height: _Constants.actionHeightSeparator,
+              height: _Constants.actionSpace,
             ),
             Container(
               decoration: _style.actionBoxDecoration,
