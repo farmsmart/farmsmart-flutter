@@ -127,7 +127,7 @@ class RecordAmount extends StatefulWidget {
 
 class RecordAmountState extends State<RecordAmount> {
   String selectedCrop;
-  String selectedDate;
+  DateTime selectedDate = DateTime.now();
   String amount;
   bool _amoundIsFilled = false;
   bool cropIsFilled = false;
@@ -216,7 +216,7 @@ class RecordAmountState extends State<RecordAmount> {
             height: style.appBarIconHeight,
             width: style.appBarIconWidth,
           ),
-        )
+        ),
       ],
     );
   }
@@ -248,8 +248,9 @@ class RecordAmountState extends State<RecordAmount> {
         viewModel: RecordAmountListItemViewModel(
           type: RecordCellType.pickDate,
           isEditable: viewModel.isEditable,
-          selectedDate:
-              viewModel.actions[_Constants.firstListItem].selectedDate,
+          selectedDate: viewModel.isEditable
+              ? selectedDate
+              : viewModel.actions[_Constants.firstListItem].selectedDate,
         ),
         parent: this,
       ),
@@ -333,5 +334,9 @@ class RecordAmountState extends State<RecordAmount> {
         widget._viewModel.isFilled = false;
       }
     });
+  }
+
+  saveDate() {
+
   }
 }

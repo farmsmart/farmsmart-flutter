@@ -20,6 +20,7 @@ class _Strings {
   static final TODAY = Intl.message("Today");
   static final SELECT = Intl.message("Select...");
   static final DESCRIPTION = Intl.message("Description (optional)...");
+  static final EMPTY_STRING = Intl.message("");
 }
 
 enum RecordCellType {
@@ -171,6 +172,9 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
   @override
   void initState() {
     super.initState();
+    setState(() {
+      //widget._viewModel.selectedDate = DateTime.now();
+    });
   }
 
   @override
@@ -330,12 +334,13 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
                           hintStyle: style.pendingDetailTextStyle,
                           border: InputBorder.none,
                           contentPadding: style.cardMargins,
-                          counterText: ""),
+                          counterText: _Strings.EMPTY_STRING),
                       textAlign: TextAlign.left,
                       style: style.detailTextStyle,
                       maxLines: style.maxLines,
                       controller: _textFieldController,
                       onEditingComplete: () => _checkTextField(viewModel),
+                      textInputAction: TextInputAction.next,
                       enabled: viewModel.isEditable,
                     )
                   : Text(viewModel.description, style: style.titleTextStyle),
@@ -366,16 +371,16 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
       lastDate: _Constants.maxDateLimit,
     );
 
-    if (picked != null && picked != viewModel.selectedDate)
+    if (picked != null) {
       setState(() {
         viewModel.selectedDate = picked;
-        _formatDate(viewModel.selectedDate);
+        widget.parent.selectedDate = picked;
       });
+    }
   }
 
   String _formatDate(DateTime selectedDate) {
     String formatted = _Constants.dateFormatter.format(selectedDate);
-    print(formatted);
     return formatted;
   }
 

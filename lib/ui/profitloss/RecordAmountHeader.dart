@@ -5,8 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
 class _Constants {
-  static final amountValidator = RegExInputFormatter.withRegex(
-      '^\$|^(0|([1-9][0-9]{0,3}))(\\.[0-9]{0,2})?\$');
+  static final amountValidator = RegExInputFormatter.withRegex('^\$|^(0|([1-9][0-9]{0,3}))(\\.[0-9]{0,2})?\$');
 }
 
 class _Strings {
@@ -114,7 +113,6 @@ class _RecordAmountHeaderState extends State<RecordAmountHeader> {
   @override
   void initState() {
     super.initState();
-    _focusNode.addListener(textFieldFocusDidChange);
   }
 
   @override
@@ -123,11 +121,6 @@ class _RecordAmountHeaderState extends State<RecordAmountHeader> {
     super.dispose();
   }
 
-  void textFieldFocusDidChange() {
-    if (_focusNode.hasFocus) {
-      // textfield was tapped
-    }
-  }
 
   Widget build(BuildContext context) {
     RecordAmountHeaderViewModel viewModel = widget._viewModel;

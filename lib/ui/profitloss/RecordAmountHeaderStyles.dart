@@ -6,13 +6,13 @@ class RecordAmountHeaderStyles {
     hintTextStyle: TextStyle(
       fontSize: 72,
       fontWeight: FontWeight.w500,
-      color: Color(0x4cff8d4f),
+      color: Color(0x4c24d900),
       letterSpacing: 4.32,
     ),
     titleTextStyle: TextStyle(
       fontSize: 72,
       fontWeight: FontWeight.w500,
-      color: Color(0xFFff8d4f),
+      color: Color(0xFF24d900),
       letterSpacing: 4.32,
     ),
     edgePadding: EdgeInsets.symmetric(horizontal: 32),
@@ -26,13 +26,13 @@ class RecordAmountHeaderStyles {
     hintTextStyle: const TextStyle(
       fontSize: 72,
       fontWeight: FontWeight.w500,
-      color: Color(0x4c24d900),
+      color: Color(0x4cff8d4f),
       letterSpacing: 4.32,
     ),
     titleTextStyle: const TextStyle(
       fontSize: 72,
       fontWeight: FontWeight.w500,
-      color: Color(0xFF24d900),
+      color: Color(0xffff8d4f),
       letterSpacing: 4.32,
     ),
   );
