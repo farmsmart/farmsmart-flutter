@@ -16,6 +16,7 @@ import 'package:farmsmart_flutter/ui/mockData/MockRoundedButtonViewModel.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockStageCardViewModel.dart';
 import 'package:farmsmart_flutter/ui/playground/data/playground_data_source.dart';
 import 'package:farmsmart_flutter/ui/playground/data/playground_recommendation_card_datasource.dart';
+import 'package:farmsmart_flutter/ui/playground/data/playground_recommendation_detail_card_datasource.dart';
 import 'package:farmsmart_flutter/ui/playground/playground_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -175,6 +176,12 @@ class PlayGroundAtomDataSource implements PlaygroundDataSource {
         title: 'Recommendation Card',
         child: PlaygroundView(
           widgetList: PlaygroundRecommendationCardDataSource().getList(),
+        ),
+      ),
+      PlaygroundWidget(
+        title: 'Recommendation detail card',
+        child: PlaygroundView(
+          widgetList: PlaygroundRecommendationDetailCardDatasource().getList(),
         ),
       )
     ];
