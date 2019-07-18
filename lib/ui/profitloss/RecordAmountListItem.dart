@@ -120,7 +120,7 @@ class _DefaultStyle extends RecordAmountListItemStyle {
   );
 
   final EdgeInsets actionItemEdgePadding =
-      const EdgeInsets.only(left: 32, right: 32, top: 15, bottom: 15);
+      const EdgeInsets.only(left: 32, right: 32, top: 10.5, bottom: 10.5);
   final EdgeInsets cardMargins = const EdgeInsets.all(0);
 
   final double iconHeight = 20;
@@ -211,25 +211,35 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
   ListTile _buildPickDate(RecordAmountListItemViewModel viewModel,
       RecordAmountListItemStyle style) {
     return ListTile(
-      leading: Image.asset(
-        _Constants.dateIcon,
-        height: style.iconHeight,
-      ),
       title: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          Text(
-            _Strings.DATE,
-            textAlign: TextAlign.start,
-            style: style.titleTextStyle,
+          Image.asset(
+            _Constants.dateIcon,
+            height: style.iconHeight,
           ),
-          Text(
-            _formatDate(viewModel.selectedDate) ==
-                    _formatDate(_Constants.currentDate)
-                ? _Strings.TODAY
-                : _formatDate(viewModel.selectedDate),
-            textAlign: TextAlign.end,
-            style: style.detailTextStyle,
+          SizedBox(
+            width: 22,
+          ),
+          Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text(
+                  _Strings.DATE,
+                  textAlign: TextAlign.start,
+                  style: style.titleTextStyle,
+                ),
+                Text(
+                  _formatDate(viewModel.selectedDate) ==
+                          _formatDate(_Constants.currentDate)
+                      ? _Strings.TODAY
+                      : _formatDate(viewModel.selectedDate),
+                  textAlign: TextAlign.end,
+                  style: style.detailTextStyle,
+                ),
+              ],
+            ),
           )
         ],
       ),
@@ -249,10 +259,6 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
   ListTile _buildPickItem(RecordAmountListItemViewModel viewModel,
       RecordAmountListItemStyle style) {
     return ListTile(
-      leading: Image.asset(
-        _Constants.cropIcon,
-        height: style.iconHeight,
-      ),
       title: viewModel.isEditable
           ? PopupMenuButton(
               key: widget._pickerKey,
@@ -260,41 +266,69 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
               itemBuilder: (BuildContext context) =>
                   _getDropDownMenuItems(viewModel),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
-                  Text(
-                    _Strings.CROP,
-                    textAlign: TextAlign.start,
-                    style: style.titleTextStyle,
+                  Image.asset(
+                    _Constants.cropIcon,
+                    height: style.iconHeight,
                   ),
-                  viewModel.selectedItem == null
-                      ? Text(
-                          _Strings.SELECT,
-                          textAlign: TextAlign.end,
-                          style: style.pendingDetailTextStyle,
-                        )
-                      : Text(
-                          viewModel.selectedItem,
-                          textAlign: TextAlign.end,
-                          style: style.detailTextStyle,
-                        )
+                  SizedBox(
+                    width: 22,
+                  ),
+                  Expanded(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text(
+                          _Strings.CROP,
+                          textAlign: TextAlign.start,
+                          style: style.titleTextStyle,
+                        ),
+                        viewModel.selectedItem == null
+                            ? Text(
+                                _Strings.SELECT,
+                                textAlign: TextAlign.end,
+                                style: style.pendingDetailTextStyle,
+                              )
+                            : Text(
+                                viewModel.selectedItem,
+                                textAlign: TextAlign.end,
+                                style: style.detailTextStyle,
+                              ),
+                      ],
+                    ),
+                  )
                 ],
               ),
             )
           : Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                Text(
-                  _Strings.CROP,
-                  textAlign: TextAlign.start,
-                  style: style.titleTextStyle,
+                Image.asset(
+                  _Constants.cropIcon,
+                  height: style.iconHeight,
                 ),
-                Text(
-                  viewModel.selectedItem == null
-                      ? _Strings.SELECT
-                      : viewModel.selectedItem,
-                  textAlign: TextAlign.end,
-                  style: style.detailTextStyle,
+                SizedBox(
+                  width: 22,
+                ),
+                Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(
+                        _Strings.CROP,
+                        textAlign: TextAlign.start,
+                        style: style.titleTextStyle,
+                      ),
+                      Text(
+                        viewModel.selectedItem == null
+                            ? _Strings.SELECT
+                            : viewModel.selectedItem,
+                        textAlign: TextAlign.end,
+                        style: style.detailTextStyle,
+                      ),
+                    ],
+                  ),
                 )
               ],
             ),
@@ -314,38 +348,46 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
   ListTile _buildDescription(RecordAmountListItemViewModel viewModel,
       RecordAmountListItemStyle style) {
     return ListTile(
-      title: Container(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Image.asset(
-              _Constants.descriptionIcon,
-              height: style.iconHeight,
-            ),
-            SizedBox(width: 20),
-            Expanded(
-              child: viewModel.isEditable
-                  ? TextField(
-                      decoration: InputDecoration(
-                          hintText: _Strings.DESCRIPTION,
-                          hintStyle: style.pendingDetailTextStyle,
-                          border: InputBorder.none,
-                          contentPadding: style.cardMargins,
-                          counterText: _Strings.EMPTY_STRING),
-                      textAlign: TextAlign.left,
-                      style: style.detailTextStyle,
-                      maxLines: style.maxLines,
-                      controller: _textFieldController,
-                      onEditingComplete: () => _checkTextField(viewModel),
-                      onChanged: (description) => _saveDescription(description),
-                      textInputAction: TextInputAction.next,
-                      enabled: viewModel.isEditable,
-                    )
-                  : Text(viewModel.description, style: style.titleTextStyle),
-            ),
-          ],
-        ),
+      title: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Image.asset(
+                _Constants.descriptionIcon,
+                height: style.iconHeight,
+              ),
+              SizedBox(width: 20),
+              Expanded(
+                child: viewModel.isEditable
+                    ? TextField(
+                        decoration: InputDecoration(
+                            hintText: _Strings.DESCRIPTION,
+                            hintStyle: style.pendingDetailTextStyle,
+                            border: InputBorder.none,
+                            contentPadding: style.cardMargins,
+                            counterText: _Strings.EMPTY_STRING),
+                        textAlign: TextAlign.left,
+                        style: style.detailTextStyle,
+                        maxLines: style.maxLines,
+                        controller: _textFieldController,
+                        onEditingComplete: () => _checkTextField(viewModel),
+                        onChanged: (description) =>
+                            _saveDescription(description),
+                        textInputAction: TextInputAction.next,
+                        enabled: viewModel.isEditable,
+                      )
+                    : Text(viewModel.description, style: style.titleTextStyle),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 12,
+          )
+        ],
       ),
       dense: true,
       contentPadding: style.actionItemEdgePadding,

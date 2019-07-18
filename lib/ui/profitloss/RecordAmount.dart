@@ -99,7 +99,7 @@ class _DefaultStyle extends RecordAmountStyle {
   final EdgeInsets appBarLeftMargin = const EdgeInsets.only(left: 31);
   final EdgeInsets appBarRightMargin = const EdgeInsets.only(right: 0);
 
-  final double headerLineSpace = 12.5;
+  final double headerLineSpace = 16;
 
   final double appBarElevation = 0;
   final double appBarIconHeight = 20;

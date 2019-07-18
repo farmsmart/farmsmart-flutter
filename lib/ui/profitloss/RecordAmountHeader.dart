@@ -74,7 +74,7 @@ class _DefaultStyle extends RecordAmountHeaderStyle {
   );
 
   final EdgeInsets edgePadding = const EdgeInsets.symmetric(horizontal: 32);
-  final double height = 137.5;
+  final double height = 91;
   final int maxLines = 1;
 
   const _DefaultStyle({
@@ -129,7 +129,7 @@ class _RecordAmountHeaderState extends State<RecordAmountHeader> {
 
     return Container(
       padding: style.edgePadding,
-      height: style.height,
+      height: 92,
       child: Row(
         children: <Widget>[
           Expanded(
