@@ -348,9 +348,8 @@ class RecordAmountState extends State<RecordAmount> {
         crop: selectedCrop,
         description: description,
       );
-      print(save.amount);
-      print(save.date.toString());
-      print(save.crop);
-      print(save.description);
+
+      //TODO: Temporal print
+      print(save.amount+" / "+save.date.toIso8601String()+" / "+save.crop+" / "+save.description);
   }
 }

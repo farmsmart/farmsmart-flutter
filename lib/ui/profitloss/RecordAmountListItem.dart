@@ -219,7 +219,7 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
             height: style.iconHeight,
           ),
           SizedBox(
-            width: 22,
+            width: style.iconLineSpace,
           ),
           Expanded(
             child: Row(
@@ -262,6 +262,7 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
       title: viewModel.isEditable
           ? PopupMenuButton(
               key: widget._pickerKey,
+              offset: Offset(90, 0),
               onSelected: (selectedItem) => _changeDropDownItem(selectedItem),
               itemBuilder: (BuildContext context) =>
                   _getDropDownMenuItems(viewModel),
@@ -273,7 +274,7 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
                     height: style.iconHeight,
                   ),
                   SizedBox(
-                    width: 22,
+                    width: style.iconLineSpace,
                   ),
                   Expanded(
                     child: Row(
@@ -302,14 +303,14 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
               ),
             )
           : Row(
-        mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 Image.asset(
                   _Constants.cropIcon,
                   height: style.iconHeight,
                 ),
                 SizedBox(
-                  width: 22,
+                  width: style.iconLineSpace,
                 ),
                 Expanded(
                   child: Row(
@@ -384,9 +385,7 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
               ),
             ],
           ),
-          SizedBox(
-            height: 12,
-          )
+          SizedBox(height: 12)
         ],
       ),
       dense: true,
