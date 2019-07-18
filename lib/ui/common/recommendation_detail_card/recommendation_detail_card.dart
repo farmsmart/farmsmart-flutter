@@ -163,67 +163,87 @@ class RecommendationDetailCard extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Expanded(
-                  flex: _Constants.titleFlexValue,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.max,
-                    children: <Widget>[
-                      Text(
-                        _viewModel.title,
-                        style: _style.titleTextStyle,
-                        maxLines: _Constants.titleMaxLines,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      SizedBox(
-                        height: _Constants.titleSpace,
-                      ),
-                      DogTag(
-                        viewModel: DogTagViewModel(title: _viewModel.subtitle),
-                        style: _style.subtitleTagStyle,
-                      ),
-                    ],
-                  ),
-                ),
-                Flexible(
-                  flex: _Constants.imageFlexValue,
-                  child: Container(
-                    width: _style.imageSize,
-                    height: _style.imageSize,
-                    child: RoundedImageOverlay(
-                      imageHeight: _style.imageSize,
-                      imageWidth: _style.imageSize,
-                      imageBorderRadius: _style.imageRadius,
-                      image: _viewModel.image,
-                      showOverlay: _viewModel.isAdded,
-                      overlayIconWidth: _style.imageOverlayWidth,
-                      overlayIcon: _viewModel.iconAssetOverlay,
-                      overlayIconHeight: _style.imageOverlayWidth,
-                      overlayColor: _style.imageOverlayColor,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: _Constants.actionSpace,
-            ),
-            Container(
-              decoration: _style.actionBoxDecoration,
-              child: RoundedButton(
-                viewModel: RoundedButtonViewModel(
-                  title: _viewModel.actionText,
-                  onTap: _viewModel.action,
-                ),
-                style: _style.actionStyle,
-              ),
-            )
+            buildTopContent(),
+            buildActionSpacer(),
+            buildActionButton()
           ],
         ),
+      ),
+    );
+  }
+
+  SizedBox buildActionSpacer() {
+    return SizedBox(
+      height: _Constants.actionSpace,
+    );
+  }
+
+  Container buildActionButton() {
+    return Container(
+      decoration: _style.actionBoxDecoration,
+      child: RoundedButton(
+        viewModel: RoundedButtonViewModel(
+          title: _viewModel.actionText,
+          onTap: _viewModel.action,
+        ),
+        style: _style.actionStyle,
+      ),
+    );
+  }
+
+  Row buildTopContent() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        buildTitleAndSubtitle(),
+        buildRoundedImage(),
+      ],
+    );
+  }
+
+  Flexible buildRoundedImage() {
+    return Flexible(
+      flex: _Constants.imageFlexValue,
+      child: Container(
+        width: _style.imageSize,
+        height: _style.imageSize,
+        child: RoundedImageOverlay(
+          imageHeight: _style.imageSize,
+          imageWidth: _style.imageSize,
+          imageBorderRadius: _style.imageRadius,
+          image: _viewModel.image,
+          showOverlay: _viewModel.isAdded,
+          overlayIconWidth: _style.imageOverlayWidth,
+          overlayIcon: _viewModel.iconAssetOverlay,
+          overlayIconHeight: _style.imageOverlayWidth,
+          overlayColor: _style.imageOverlayColor,
+        ),
+      ),
+    );
+  }
+
+  Expanded buildTitleAndSubtitle() {
+    return Expanded(
+      flex: _Constants.titleFlexValue,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.max,
+        children: <Widget>[
+          Text(
+            _viewModel.title,
+            style: _style.titleTextStyle,
+            maxLines: _Constants.titleMaxLines,
+            overflow: TextOverflow.ellipsis,
+          ),
+          SizedBox(
+            height: _Constants.titleSpace,
+          ),
+          DogTag(
+            viewModel: DogTagViewModel(title: _viewModel.subtitle),
+            style: _style.subtitleTagStyle,
+          ),
+        ],
       ),
     );
   }
