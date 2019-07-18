@@ -5,7 +5,8 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
 class _Constants {
-  static final amountValidator = RegExInputFormatter.withRegex('^\$|^(0|([1-9][0-9]{0,3}))(\\.[0-9]{0,2})?\$');
+  static final amountValidator = RegExInputFormatter.withRegex(
+      '^\$|^(0|([1-9][0-9]{0,3}))(\\.[0-9]{0,2})?\$');
 }
 
 class _Strings {
@@ -92,13 +93,16 @@ const RecordAmountHeaderStyle _defaultStyle = const _DefaultStyle();
 class RecordAmountHeader extends StatefulWidget {
   final RecordAmountHeaderViewModel _viewModel;
   final RecordAmountHeaderStyle _style;
+  RecordAmountState parent;
 
   RecordAmountHeader({
     Key key,
     RecordAmountHeaderViewModel viewModel,
     RecordAmountHeaderStyle style = _defaultStyle,
+    RecordAmountState parent,
   })  : this._viewModel = viewModel,
         this._style = style,
+        this.parent = parent,
         super(key: key);
 
   @override
@@ -120,7 +124,6 @@ class _RecordAmountHeaderState extends State<RecordAmountHeader> {
     _textFieldController.dispose();
     super.dispose();
   }
-
 
   Widget build(BuildContext context) {
     RecordAmountHeaderViewModel viewModel = widget._viewModel;
@@ -152,7 +155,7 @@ class _RecordAmountHeaderState extends State<RecordAmountHeader> {
                         maxLines: style.maxLines,
                         textInputAction: TextInputAction.next,
                         controller: _textFieldController,
-                        onChanged: viewModel.listener,
+                        onChanged: (amount) => _checkTextField(amount),
                         focusNode: _focusNode,
                         onTap: () => cleanField(),
                         onEditingComplete: () => resetHint(),
@@ -167,6 +170,21 @@ class _RecordAmountHeaderState extends State<RecordAmountHeader> {
     );
   }
 
+  _checkTextField(String amount) {
+    setState(() {
+      if (amount == "") {
+        hint = _Strings.HINT;
+        widget.parent.amoundIsFilled = false;
+        widget.parent.checkIfFilled();
+
+      } else {
+        widget.parent.amount = amount;
+        widget.parent.amoundIsFilled = true;
+        widget.parent.checkIfFilled();
+      }
+    });
+  }
+  
   cleanField() {
     setState(() {
       if (_textFieldController.text == _Strings.EMPTY_STRING) {
@@ -181,8 +199,11 @@ class _RecordAmountHeaderState extends State<RecordAmountHeader> {
     setState(() {
       if (_textFieldController.text == _Strings.EMPTY_STRING) {
         hint = _Strings.HINT;
+      } else {
+        widget.parent.amount = _textFieldController.text;
+        widget.parent.amoundIsFilled = true;
+        FocusScope.of(context).detach();
       }
-      FocusScope.of(context).detach();
     });
   }
 }

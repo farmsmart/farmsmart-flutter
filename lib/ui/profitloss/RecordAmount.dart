@@ -14,6 +14,15 @@ class _Constants {
   static final int thirdListItem = 2;
 }
 
+class RecordData {
+  String amount;
+  DateTime date;
+  String crop;
+  String description;
+
+  RecordData({this.amount, this.date, this.crop, this.description});
+}
+
 enum RecordType {
   cost,
   sale,
@@ -22,13 +31,13 @@ enum RecordType {
 class RecordAmountViewModel {
   LoadingStatus loadingStatus;
   List<RecordAmountListItemViewModel> actions;
-  String amount;
-  String buttonTitle;
-  bool isFilled;
-  Function onTap;
   RecordType type;
-  bool isEditable;
+  String amount;
   String description;
+  bool isFilled;
+  bool isEditable;
+  Function onTap;
+  String buttonTitle;
 
   RecordAmountViewModel({
     this.loadingStatus,
@@ -126,10 +135,11 @@ class RecordAmount extends StatefulWidget {
 }
 
 class RecordAmountState extends State<RecordAmount> {
+  String description;
   String selectedCrop;
   DateTime selectedDate = DateTime.now();
   String amount;
-  bool _amoundIsFilled = false;
+  bool amoundIsFilled = false;
   bool cropIsFilled = false;
 
   @override
@@ -231,14 +241,14 @@ class RecordAmountState extends State<RecordAmount> {
           isEditable: viewModel.isEditable,
           onAmountChanged: viewModel.amount,
           listener: (amount) {
-            _amoundIsFilled = true;
+            amoundIsFilled = true;
             checkIfFilled();
           },
         ),
         style: viewModel.type == RecordType.sale
             ? RecordAmountHeaderStyles.defaultSaleStyle
             : RecordAmountHeaderStyles.defaultCostStyle,
-      ),
+      parent: this),
     );
 
     listBuilder.add(SizedBox(height: style.headerLineSpace));
@@ -283,7 +293,9 @@ class RecordAmountState extends State<RecordAmount> {
         viewModel: RecordAmountListItemViewModel(
           type: RecordCellType.description,
           isEditable: viewModel.isEditable,
-          description: viewModel.actions[_Constants.thirdListItem].description,
+          description: viewModel.isEditable
+              ? description
+              : viewModel.actions[_Constants.thirdListItem].description,
         ),
         style: RecordAmountListItemStyles.biggerStyle,
         parent: this,
@@ -312,8 +324,7 @@ class RecordAmountState extends State<RecordAmount> {
                   )
                 : RoundedButton(
                     viewModel: RoundedButtonViewModel(
-                        title: viewModel.buttonTitle,
-                        onTap: widget._viewModel.onTap),
+                        title: viewModel.buttonTitle, onTap: saveData),
                     style: viewModel.type == RecordType.sale
                         ? RoundedButtonStyle.largeRoundedButtonStyle()
                             .copyWith(backgroundColor: Color(0xFF24d900))
@@ -327,8 +338,10 @@ class RecordAmountState extends State<RecordAmount> {
   }
 
   checkIfFilled() {
+    print(amount);
+    print(selectedCrop);
     setState(() {
-      if (_amoundIsFilled && cropIsFilled) {
+      if (amoundIsFilled && cropIsFilled) {
         widget._viewModel.isFilled = true;
       } else {
         widget._viewModel.isFilled = false;
@@ -336,7 +349,16 @@ class RecordAmountState extends State<RecordAmount> {
     });
   }
 
-  saveDate() {
-
+  saveData() {
+      RecordData save = RecordData(
+        amount: amount,
+        date: selectedDate,
+        crop: selectedCrop,
+        description: description,
+      );
+      print(save.amount);
+      print(save.date.toString());
+      print(save.crop);
+      print(save.description);
   }
 }

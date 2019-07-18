@@ -340,6 +340,7 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
                       maxLines: style.maxLines,
                       controller: _textFieldController,
                       onEditingComplete: () => _checkTextField(viewModel),
+                      onChanged: (description) => _saveDescription(description) ,
                       textInputAction: TextInputAction.next,
                       enabled: viewModel.isEditable,
                     )
@@ -353,6 +354,14 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
       onTap: () => _selectDate(context, viewModel),
       enabled: viewModel.isEditable,
     );
+  }
+
+  _saveDescription(String description) {
+    setState(() {
+      if (description != "") {
+        widget.parent.description = description;
+      }
+    });
   }
 
   void showPopUpMenu() {
@@ -397,6 +406,7 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
     setState(() {
       if (_textFieldController.text != null) {
         viewModel.description = _textFieldController.text;
+        widget.parent.description = _textFieldController.text;
       }
     });
   }
