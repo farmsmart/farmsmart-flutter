@@ -4,15 +4,20 @@ import 'package:flutter/material.dart';
 class RecordAmountListItemStyles {
   static RecordAmountListItemStyle _defaultStyle = RecordAmountListItemStyle(
       titleTextStyle: TextStyle(
-          fontSize: 17, fontWeight: FontWeight.w400, color: Color(0xFF1a1b46)),
+        fontSize: 17,
+        fontWeight: FontWeight.w400,
+        color: Color(0xFF1a1b46),
+      ),
       pendingDetailTextStyle: TextStyle(
-          fontSize: 15,
-          fontWeight: FontWeight.normal,
-          color: Color(0x4c767690)),
+        fontSize: 15,
+        fontWeight: FontWeight.normal,
+        color: Color(0x4c767690),
+      ),
       detailTextStyle: TextStyle(
-          fontSize: 15,
-          fontWeight: FontWeight.normal,
-          color: Color(0xff767690)),
+        fontSize: 15,
+        fontWeight: FontWeight.normal,
+        color: Color(0xff767690),
+      ),
       actionItemEdgePadding:
           EdgeInsets.only(left: 32, right: 32, top: 25, bottom: 25),
       cardMargins: EdgeInsets.all(0),
@@ -23,8 +28,14 @@ class RecordAmountListItemStyles {
 
   static RecordAmountListItemStyle biggerStyle = _defaultStyle.copyWith(
     detailTextStyle: TextStyle(
-        fontSize: 17, fontWeight: FontWeight.normal, color: Color(0xff1a1b46)),
+      fontSize: 17,
+      fontWeight: FontWeight.normal,
+      color: Color(0xff1a1b46),
+    ),
     pendingDetailTextStyle: TextStyle(
-        fontSize: 17, fontWeight: FontWeight.normal, color: Color(0x4c1a1b46)),
+      fontSize: 17,
+      fontWeight: FontWeight.normal,
+      color: Color(0x4c1a1b46),
+    ),
   );
 }

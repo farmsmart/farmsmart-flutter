@@ -10,7 +10,7 @@ class _Constants {
 }
 
 class _Strings {
-  static final HINT = Intl.message("00");
+  static final HINT = "00";
   static final EMPTY_STRING = "";
 }
 

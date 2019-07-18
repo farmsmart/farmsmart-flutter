@@ -12,6 +12,9 @@ class _Constants {
   static final int firstListItem = 0;
   static final int secondListItem = 1;
   static final int thirdListItem = 2;
+  static final String navCancelIcon = 'assets/icons/nav_icon_cancel.png';
+  static final String navBackIcon = 'assets/icons/nav_icon_back.png';
+  static final String navOptionsIcon = 'assets/icons/nav_icon_options.png';
 }
 
 class RecordData {
@@ -20,7 +23,12 @@ class RecordData {
   String crop;
   String description;
 
-  RecordData({this.amount, this.date, this.crop, this.description});
+  RecordData({
+    this.amount,
+    this.date,
+    this.crop,
+    this.description,
+  });
 }
 
 enum RecordType {
@@ -135,10 +143,10 @@ class RecordAmount extends StatefulWidget {
 }
 
 class RecordAmountState extends State<RecordAmount> {
-  String description;
-  String selectedCrop;
-  DateTime selectedDate = DateTime.now();
   String amount;
+  DateTime selectedDate = DateTime.now();
+  String selectedCrop;
+  String description;
   bool amoundIsFilled = false;
   bool cropIsFilled = false;
 
@@ -168,15 +176,17 @@ class RecordAmountState extends State<RecordAmount> {
     }
   }
 
-  Widget _buildPage(BuildContext context, RecordAmountViewModel viewModel,
-      RecordAmountStyle style) {
+  Widget _buildPage(
+    BuildContext context,
+    RecordAmountViewModel viewModel,
+    RecordAmountStyle style,
+  ) {
     return Scaffold(
       appBar: viewModel.isEditable
           ? _buildSimpleAppBar(style, context)
           : _buildEditAppBar(style, context),
       body: GestureDetector(
         onTap: () {
-          //FocusScope.of(context).requestFocus(FocusNode());
           FocusScope.of(context).detach();
           checkIfFilled();
         },
@@ -197,7 +207,7 @@ class RecordAmountState extends State<RecordAmount> {
         onPressed: () => Navigator.pop(context, false),
         padding: style.appBarLeftMargin,
         child: Image.asset(
-          'assets/icons/nav_icon_cancel.png',
+          _Constants.navCancelIcon,
           height: style.appBarIconHeight,
           width: style.appBarIconWidth,
         ),
@@ -212,7 +222,7 @@ class RecordAmountState extends State<RecordAmount> {
         onPressed: () => Navigator.of(context).pop(false),
         padding: style.appBarLeftMargin,
         child: Image.asset(
-          'assets/icons/nav_icon_back.png',
+          _Constants.navBackIcon,
           height: style.appBarIconHeight,
           width: style.appBarIconWidth,
         ),
@@ -222,7 +232,7 @@ class RecordAmountState extends State<RecordAmount> {
           onPressed: () => null,
           padding: style.appBarRightMargin,
           child: Image.asset(
-            'assets/icons/nav_icon_options.png',
+            _Constants.navOptionsIcon,
             height: style.appBarIconHeight,
             width: style.appBarIconWidth,
           ),
@@ -237,14 +247,14 @@ class RecordAmountState extends State<RecordAmount> {
 
     listBuilder.add(
       RecordAmountHeader(
-        viewModel: RecordAmountHeaderViewModel(
-          isEditable: viewModel.isEditable,
-          onAmountChanged: viewModel.amount,
-        ),
-        style: viewModel.type == RecordType.sale
-            ? RecordAmountHeaderStyles.defaultSaleStyle
-            : RecordAmountHeaderStyles.defaultCostStyle,
-      parent: this),
+          viewModel: RecordAmountHeaderViewModel(
+            isEditable: viewModel.isEditable,
+            onAmountChanged: viewModel.amount,
+          ),
+          style: viewModel.type == RecordType.sale
+              ? RecordAmountHeaderStyles.defaultSaleStyle
+              : RecordAmountHeaderStyles.defaultCostStyle,
+          parent: this),
     );
 
     listBuilder.add(SizedBox(height: style.headerLineSpace));
@@ -311,17 +321,21 @@ class RecordAmountState extends State<RecordAmount> {
                 ? RoundedButton(
                     viewModel: RoundedButtonViewModel(
                         title: viewModel.buttonTitle, onTap: null),
-                    style: RoundedButtonStyle.largeRoundedButtonStyle()
-                        .copyWith(backgroundColor: Color(0xFFe9eaf2)),
+                    style:
+                        RoundedButtonStyle.largeRoundedButtonStyle().copyWith(
+                      backgroundColor: Color(0xFFe9eaf2),
+                    ),
                   )
                 : RoundedButton(
                     viewModel: RoundedButtonViewModel(
                         title: viewModel.buttonTitle, onTap: saveData),
                     style: viewModel.type == RecordType.sale
-                        ? RoundedButtonStyle.largeRoundedButtonStyle()
-                            .copyWith(backgroundColor: Color(0xFF24d900))
-                        : RoundedButtonStyle.largeRoundedButtonStyle()
-                            .copyWith(backgroundColor: Color(0xFFff8d4f)),
+                        ? RoundedButtonStyle.largeRoundedButtonStyle().copyWith(
+                            backgroundColor: Color(0xFF24d900),
+                          )
+                        : RoundedButtonStyle.largeRoundedButtonStyle().copyWith(
+                            backgroundColor: Color(0xFFff8d4f),
+                          ),
                   ),
           ),
         ],
@@ -330,8 +344,6 @@ class RecordAmountState extends State<RecordAmount> {
   }
 
   checkIfFilled() {
-    print(amount);
-    print(selectedCrop);
     setState(() {
       if (amoundIsFilled && cropIsFilled) {
         widget._viewModel.isFilled = true;
@@ -342,14 +354,20 @@ class RecordAmountState extends State<RecordAmount> {
   }
 
   saveData() {
-      RecordData save = RecordData(
-        amount: amount,
-        date: selectedDate,
-        crop: selectedCrop,
-        description: description,
-      );
+    RecordData save = RecordData(
+      amount: amount,
+      date: selectedDate,
+      crop: selectedCrop,
+      description: description,
+    );
 
-      //TODO: Temporal print
-      print(save.amount+" / "+save.date.toIso8601String()+" / "+save.crop+" / "+save.description);
+    //TODO: Temporal print
+    print(save.amount +
+        " / " +
+        save.date.toIso8601String() +
+        " / " +
+        save.crop +
+        " / " +
+        save.description);
   }
 }
