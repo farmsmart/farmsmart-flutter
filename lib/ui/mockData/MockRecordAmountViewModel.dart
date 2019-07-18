@@ -77,7 +77,6 @@ class MockRecordAmountListItemViewModel {
       type: _celltype[index],
       selectedDate: _mockSelectedDate[index],
       listOfCrops: _mockListOfCrops[index],
-      listener: null,
     );
   }
 
@@ -87,7 +86,6 @@ class MockRecordAmountListItemViewModel {
       selectedDate: _mockSelectedDate[index],
       listOfCrops: _mockListOfCrops[index],
       selectedItem: _mockCrop[index],
-      listener: null,
       isEditable: false,
     );
   }
