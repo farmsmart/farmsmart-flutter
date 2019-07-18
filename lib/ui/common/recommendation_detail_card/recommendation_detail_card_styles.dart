@@ -15,7 +15,7 @@ class RecommendationDetailCardStyles {
       actionStyle: _defaultActionButtonStyle.copyWith(
         backgroundColor: Color(0xffffffff),
         buttonTextStyle: TextStyle(
-          fontSize: 13,
+          fontSize: 15,
           fontWeight: FontWeight.w500,
           color: Color(0xff4c4e6e),
         ),
@@ -37,12 +37,12 @@ class RecommendationDetailCardStyles {
     subtitleTagStyle: _defaultDogTagStyle,
     actionStyle: _defaultActionButtonStyle,
     contentPadding: EdgeInsets.all(32.0),
-    imageSize: 100,
+    imageSize: 80,
     imageRadius: BorderRadius.all(
       Radius.circular(12),
     ),
-    imageOverlayWidth: 25,
-    imageOverlayHeight: 25,
+    imageOverlayWidth: 26,
+    imageOverlayHeight: 26,
     imageOverlayColor: Color(0x1924d900),
   );
 
@@ -50,7 +50,7 @@ class RecommendationDetailCardStyles {
     backgroundColor: Color(0xff24d900),
     borderRadius: BorderRadius.all(Radius.circular(12)),
     buttonTextStyle: TextStyle(
-        fontSize: 13, fontWeight: FontWeight.bold, color: Color(0xffffffff)),
+        fontSize: 15, fontWeight: FontWeight.bold, color: Color(0xffffffff)),
     iconEdgePadding: 5,
     height: 45,
     width: double.infinity,
@@ -62,7 +62,7 @@ class RecommendationDetailCardStyles {
   static DogTagStyle _defaultDogTagStyle = DogTagStyle(
     backgroundColor: Color(0x1624d900),
     titleTextStyle: TextStyle(
-        color: Color(0xff21c400), fontSize: 11, fontWeight: FontWeight.bold),
+        color: Color(0xff21c400), fontSize: 11, fontWeight: FontWeight.w500),
     borderRadius: BorderRadius.all(Radius.circular(20.0)),
     edgePadding: EdgeInsets.only(top: 8.5, right: 12, left: 12, bottom: 8),
     maxLines: 1,

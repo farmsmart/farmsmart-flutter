@@ -4,40 +4,37 @@ import 'package:flutter/widgets.dart';
 import 'recommendation_detail_card.dart';
 
 class MockRecommendationDetailCardViewModel {
-  //TODO change my plot selected png to tick_large when rebase
   static RecommendationDetailCardViewModel buildAddToYourPlotState() {
     return RecommendationDetailCardViewModel(
       title: _mockTitle.random(),
       subtitle: _mockSubtitle.random(),
       action: () {},
       actionText: 'Add To Your Plot',
-      iconAssetOverlay: 'assets/icons/my_plot_selected.png',
+      iconAssetOverlay: 'assets/icons/tick_large.png',
       isAdded: false,
       image: NetworkImage(_mockImageUrl.random()),
     );
   }
 
-  //TODO change my plot selected png to tick_large when rebase
   static RecommendationDetailCardViewModel buildAddedToYourPlot() {
     return RecommendationDetailCardViewModel(
       title: _mockTitle.random(),
       subtitle: _mockSubtitle.random(),
       action: () {},
       actionText: 'Added To Your Plot',
-      iconAssetOverlay: 'assets/icons/my_plot_selected.png',
+      iconAssetOverlay: 'assets/icons/tick_large.png',
       isAdded: true,
       image: NetworkImage(_mockImageUrl.random()),
     );
   }
 
-  //TODO change my plot selected png to tick_large when rebase
   static RecommendationDetailCardViewModel buildWithLargeStrings() {
     return RecommendationDetailCardViewModel(
       title: _mockLargeStrings.random(),
       subtitle: _mockLargeStrings.random(),
       action: () {},
       actionText: _mockLargeStrings.random(),
-      iconAssetOverlay: 'assets/icons/my_plot_selected.png',
+      iconAssetOverlay: 'assets/icons/tick_large.png',
       isAdded: true,
       image: NetworkImage(_mockImageUrl.random()),
     );
@@ -49,7 +46,7 @@ class MockRecommendationDetailCardViewModel {
       subtitle: 'Subtitle',
       action: () {},
       actionText: 'Action Text',
-      iconAssetOverlay: 'assets/icons/app_icon.png',
+      iconAssetOverlay: 'assets/icons/tick_large.png',
       isAdded: true,
       image: AssetImage('assets/raw/placeholder.webp'),
     );
@@ -61,7 +58,7 @@ class MockRecommendationDetailCardViewModel {
       subtitle: 'Subtitle',
       action: () {},
       actionText: 'Action Text',
-      iconAssetOverlay: 'assets/icons/app_icon.png',
+      iconAssetOverlay: 'assets/icons/tick_large.png',
       isAdded: false,
       image: AssetImage('assets/raw/placeholder.webp'),
     );
@@ -84,7 +81,7 @@ MockString _mockSubtitle = MockString(library: [
 
 MockString _mockLargeStrings = MockString(library: [
   "Very large text to test the limits  ",
-  "Large text to test the limits limits limits limits ",
+  "Large text to test ",
 ]);
 
 MockString _mockImageUrl = MockString(library: [

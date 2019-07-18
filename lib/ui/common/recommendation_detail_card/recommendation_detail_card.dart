@@ -11,7 +11,7 @@ class _Constants {
   static final int titleFlexValue = 3;
   static final int imageFlexValue = 2;
   static final int titleMaxLines = 1;
-  static final double titleSpace = 16;
+  static final double titleSpace = 12;
   static final double actionSpace = 36;
   static final double imageSize = 100;
   static final BorderRadius imageRadius =
@@ -100,7 +100,7 @@ class _DefaultStyle extends RecommendationDetailCardStyle {
   final DogTagStyle subtitleTagStyle = const DogTagStyle(
     backgroundColor: Color(0x1624d900),
     titleTextStyle: TextStyle(
-        color: Color(0xff21c400), fontSize: 11, fontWeight: FontWeight.bold),
+        color: Color(0xff21c400), fontSize: 11, fontWeight: FontWeight.w500),
     borderRadius: BorderRadius.all(Radius.circular(20.0)),
     edgePadding: EdgeInsets.only(top: 8.5, right: 12, left: 12, bottom: 8),
     maxLines: 1,
@@ -112,7 +112,7 @@ class _DefaultStyle extends RecommendationDetailCardStyle {
     backgroundColor: Color(0xff24d900),
     borderRadius: BorderRadius.all(Radius.circular(12)),
     buttonTextStyle: TextStyle(
-        fontSize: 13, fontWeight: FontWeight.bold, color: Color(0xffffffff)),
+        fontSize: 15, fontWeight: FontWeight.bold, color: Color(0xffffffff)),
     iconEdgePadding: 5,
     height: 45,
     width: double.infinity,
@@ -123,10 +123,10 @@ class _DefaultStyle extends RecommendationDetailCardStyle {
 
   final EdgeInsets contentPadding = const EdgeInsets.all(32.0);
   final BorderRadius imageRadius = const BorderRadius.all(Radius.circular(12));
-  final double imageSize = 100;
+  final double imageSize = 80;
   final Color imageOverlayColor = const Color(0x1924d900);
-  final double imageOverlayHeight = 25;
-  final double imageOverlayWidth = 25;
+  final double imageOverlayHeight = 26;
+  final double imageOverlayWidth = 26;
 
   const _DefaultStyle({
     TextStyle titleTextStyle,
