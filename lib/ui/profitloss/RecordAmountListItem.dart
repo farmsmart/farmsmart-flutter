@@ -35,7 +35,6 @@ class RecordAmountListItemViewModel {
   List<String> listOfCrops = [];
   String selectedItem;
   String description;
-  final Function(String) listener;
   bool isEditable;
 
   RecordAmountListItemViewModel({
@@ -44,7 +43,6 @@ class RecordAmountListItemViewModel {
     this.listOfCrops,
     this.selectedItem,
     this.description,
-    this.listener,
     this.isEditable: true,
   });
 }
@@ -340,7 +338,7 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
                       maxLines: style.maxLines,
                       controller: _textFieldController,
                       onEditingComplete: () => _checkTextField(viewModel),
-                      onChanged: (description) => _saveDescription(description) ,
+                      onChanged: (description) => _saveDescription(description),
                       textInputAction: TextInputAction.next,
                       enabled: viewModel.isEditable,
                     )

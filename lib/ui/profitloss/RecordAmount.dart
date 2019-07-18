@@ -240,10 +240,6 @@ class RecordAmountState extends State<RecordAmount> {
         viewModel: RecordAmountHeaderViewModel(
           isEditable: viewModel.isEditable,
           onAmountChanged: viewModel.amount,
-          listener: (amount) {
-            amoundIsFilled = true;
-            checkIfFilled();
-          },
         ),
         style: viewModel.type == RecordType.sale
             ? RecordAmountHeaderStyles.defaultSaleStyle
@@ -277,10 +273,6 @@ class RecordAmountState extends State<RecordAmount> {
               ? selectedCrop
               : viewModel.actions[_Constants.secondListItem].selectedItem,
           listOfCrops: viewModel.actions[_Constants.secondListItem].listOfCrops,
-          listener: (crop) {
-            cropIsFilled = true;
-            checkIfFilled();
-          },
         ),
         parent: this,
       ),

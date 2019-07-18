@@ -16,12 +16,10 @@ class _Strings {
 
 class RecordAmountHeaderViewModel {
   String onAmountChanged;
-  final Function(String) listener;
   bool isEditable;
 
   RecordAmountHeaderViewModel({
     this.onAmountChanged,
-    this.listener,
     this.isEditable,
   });
 }
@@ -176,7 +174,6 @@ class _RecordAmountHeaderState extends State<RecordAmountHeader> {
         hint = _Strings.HINT;
         widget.parent.amoundIsFilled = false;
         widget.parent.checkIfFilled();
-
       } else {
         widget.parent.amount = amount;
         widget.parent.amoundIsFilled = true;
@@ -184,7 +181,7 @@ class _RecordAmountHeaderState extends State<RecordAmountHeader> {
       }
     });
   }
-  
+
   cleanField() {
     setState(() {
       if (_textFieldController.text == _Strings.EMPTY_STRING) {
