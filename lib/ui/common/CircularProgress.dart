@@ -7,9 +7,14 @@ class CircularProgress extends StatelessWidget {
   final double _size;
   final double _lineWidth;
   final Color trackColor = Colors.transparent;
-  final EdgeInsets innerPadding = const EdgeInsets.all(4.0);
+  final EdgeInsets innerPadding = const EdgeInsets.all(1.0);
 
-  const CircularProgress({Key key, @required double progress, @required double size, @required double lineWidth, Color lineColor})
+  const CircularProgress(
+      {Key key,
+      @required double progress,
+      @required double size,
+      @required double lineWidth,
+      Color lineColor})
       : this._lineColor = lineColor ?? const Color(0xff24d900),
         this._progress = progress,
         this._size = size,
