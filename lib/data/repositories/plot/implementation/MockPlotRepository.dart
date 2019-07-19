@@ -1,7 +1,5 @@
 
 import 'dart:async';
-
-import 'package:farmsmart_flutter/data/bloc/plot/StageBusinessLogic.dart';
 import 'package:farmsmart_flutter/data/model/EntityCollectionInterface.dart';
 import 'package:farmsmart_flutter/data/model/NewStageEntity.dart';
 import 'package:farmsmart_flutter/data/model/PlotEntity.dart';
@@ -15,7 +13,6 @@ import '../PlotRepositoryInterface.dart';
 final _plotBuilder = MockPlotEntity();
 
 class MockPlotRepository implements PlotRepositoryInterface {
-  final StageBusinessLogic _stageLogic =  StageBusinessLogic() ;
   final _plotStreamController =  StreamController<List<PlotEntity>>.broadcast(); 
   List<PlotEntity> _plots = [];
 

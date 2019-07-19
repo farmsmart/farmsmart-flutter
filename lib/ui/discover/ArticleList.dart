@@ -124,12 +124,11 @@ class ArticleList extends StatelessWidget {
   }
 
   Widget _buildSuccess(BuildContext context, ArticleListViewModel viewModel) {
-    return HeaderAndFooterListView.builder(
-        itemCount: viewModel.articleListItemViewModels.length,
+    return HeaderAndFooterListView(itemCount: viewModel.articleListItemViewModels.length,
         itemBuilder:
             bodyListBuilder(viewModels: viewModel.articleListItemViewModels),
         physics: ScrollPhysics(),
         shrinkWrap: true,
-        header: buildHeader(viewModel: viewModel));
+        headers: [buildHeader(viewModel: viewModel)]);
   }
 }

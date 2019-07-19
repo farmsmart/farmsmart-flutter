@@ -32,12 +32,13 @@ class ArticleDetailViewModelTransformer
   final _dateFormatter = DateFormat(_Strings.publishedDateFormat);
   @override
   ArticleDetailViewModel transform({ArticleEntity from}) {
+    ArticleImageProvider imageProvider = (from.images != null) ? ArticleImageProvider(from) : null;
     ArticleDetailViewModel viewModel = ArticleDetailViewModel(
       LoadingStatus.SUCCESS,
       from.title,
       _subtitle(article: from),
       Intl.message(_Strings.relatedTitle),
-      ArticleImageProvider(from),
+      imageProvider,
       from.content,
       buildArticleDeeplink(from.id),
     );

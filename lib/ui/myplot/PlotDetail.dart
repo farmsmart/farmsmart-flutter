@@ -1,9 +1,12 @@
 import 'package:farmsmart_flutter/data/bloc/ViewModelProvider.dart';
-import 'package:farmsmart_flutter/data/repositories/image/implementation/MockImageEntity.dart';
+
 import 'package:farmsmart_flutter/ui/common/ContextualAppBar.dart';
+import 'package:farmsmart_flutter/ui/common/SectionListView.dart';
 import 'package:farmsmart_flutter/ui/common/carousel_view.dart';
+import 'package:farmsmart_flutter/ui/common/headerAndFooterListView.dart';
 import 'package:farmsmart_flutter/ui/common/stage_card.dart';
 import 'package:farmsmart_flutter/ui/discover/ArticleDetail.dart';
+import 'package:farmsmart_flutter/ui/discover/viewModel/ArticleListItemViewModel.dart';
 import 'package:farmsmart_flutter/ui/myplot/PlotListItem.dart';
 import 'package:farmsmart_flutter/ui/myplot/viewmodel/PlotDetailViewModel.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +28,7 @@ class _DefaultStyle implements PlotDetailStyle {
 class PlotDetail extends StatefulWidget {
   final ViewModelProvider<PlotDetailViewModel> _viewModelProvider;
   final PlotDetailStyle _style;
-
+  ArticleDetail _articleDetail;
   PlotDetail(
       {Key key,
       ViewModelProvider<PlotDetailViewModel> provider,
@@ -63,11 +66,11 @@ class _PlotDetailState extends State<PlotDetail> {
               title: viewModel.title,
               detail: viewModel.detailText,
               progress: viewModel.progress,
-              imageProvider: MockImageEntity().build().urlProvider);
+              imageProvider: viewModel.imageProvider);
           final articleViewModel =
               viewModel.stageArticleViewModels[_selectedStage];
           final header = PlotListItem()
-              .buildListItem(viewModel: headerViewModel, onTap: null);
+              .buildListItem(viewModel: headerViewModel, onTap: null); //TODO: add navigate to crop details
           final stages = Container(
               height: widget._style.stageSectionHeight,
               child: CarouselView(
@@ -75,12 +78,19 @@ class _PlotDetailState extends State<PlotDetail> {
                 initialPage: _selectedStage,
                 onPageChange: _pageChanged,
               ));
-          final article = ArticleDetail(viewModel: articleViewModel)
-              .buildHeader(context, false);
 
-          return Scaffold(
-              appBar: _buildAppBar(context),
-              body: ListView(children: <Widget>[header, stages, article]));
+          
+          widget._articleDetail = ArticleDetail(viewModel: articleViewModel, showHeader: false,);
+          final topSection = HeaderAndFooterListView(headers: <Widget>[header, stages],);
+
+          return FutureBuilder(
+                future: widget._articleDetail.fetchReleated(),
+                builder: (BuildContext context,
+                AsyncSnapshot<List<ArticleListItemViewModel>> relatedArticles) {
+                  final sectionedList = SectionedListView(sections: [topSection, widget._articleDetail],);
+                   return Scaffold(appBar: _buildAppBar(context), body: sectionedList);
+                
+          });
         });
   }
 
