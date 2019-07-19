@@ -10,13 +10,14 @@ class PlaygroundButtonPresentModal extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: RaisedButton(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         child: Text("Press Me"),
-        onPressed: () => _onClick(context),
+        onPressed: () => _onTap(context),
       ),
     );
   }
 
-  _onClick(BuildContext context) {
+  _onTap(BuildContext context) {
     Navigator.of(context).push(
         MaterialPageRoute(
             builder: (BuildContext context) {
