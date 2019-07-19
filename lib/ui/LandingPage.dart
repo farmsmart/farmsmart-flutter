@@ -7,17 +7,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class _Constants {
-  static final EdgeInsets headerEdgePadding =
-  EdgeInsets.only(top: 55, bottom: 20.5);
-  static final EdgeInsets detailTextEdgePadding =
-  const EdgeInsets.only(left: 34.6, right: 34.6, bottom: 41);
-  static final EdgeInsets actionEdgePadding =
-  const EdgeInsets.only(left: 34, right: 34);
-  static final EdgeInsets footerTextEdgePadding =
-  const EdgeInsets.only(left: 30, right: 30, bottom: 17);
-  static final double subtitleLineSpace = 12;
-  static final double detailTextLineSpace = 53;
-  static final double actionLineSpace = 16;
+  static final EdgeInsets generalPadding =
+  EdgeInsets.only(left: 32, right: 32, top: 38);
+  static final double bottomContainerHeight = 400;
+  static final int secondaryPriority = 2;
 }
 
 class LandingPageViewModel {
@@ -98,9 +91,10 @@ class LandingPage extends StatelessWidget {
   final LandingPageViewModel _viewModel;
   final LandingPageStyle _style;
 
-  const LandingPage({Key key,
-    LandingPageViewModel viewModel,
-    LandingPageStyle style = _defaultStyle})
+  const LandingPage(
+      {Key key,
+      LandingPageViewModel viewModel,
+      LandingPageStyle style = _defaultStyle})
       : this._viewModel = viewModel,
         this._style = style,
         super(key: key);
@@ -108,55 +102,51 @@ class LandingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(left: 32, right: 32, top: 38),
+      margin: _Constants.generalPadding,
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
-          Container(
-            child: Image.asset(
-              _viewModel.headerImage,
-              width: double.infinity,
+          Flexible(
+            flex: _Constants.secondaryPriority,
+            fit: FlexFit.loose,
+            child: Container(
+              child: Image.asset(
+                _viewModel.headerImage,
+                width: double.infinity,
+              ),
             ),
           ),
-          Column(
-            children: <Widget>[
-              Image.asset(_viewModel.subtitleImage,
-              ),
-              SizedBox(height: 12,),
-              Text(
-                _viewModel.detailText,
-                style: _style.detailTextStyle,
-                maxLines: _style.detailTextMaxLines,
-                textAlign: TextAlign.center,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ],
-          ),
-          Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          Container(
+            height: _Constants.bottomContainerHeight,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
+                Image.asset(_viewModel.subtitleImage),
+                Text(
+                  _viewModel.detailText,
+                  style: _style.detailTextStyle,
+                  maxLines: _style.detailTextMaxLines,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.center,
+                ),
                 RoundedButton(
                   viewModel: RoundedButtonViewModel(
                       title: _viewModel.actionText, onTap: () {}),
                   style: RoundedButtonStyle.largeRoundedButtonStyle()
                       .copyWith(buttonTextStyle: _style.actionTextStyle),
                 ),
-              ]
-          ),
-          Column(
-            children: <Widget>[
-              FlatButton(
-                onPressed: () => _onMenuPressed(context),
-                child: Text(
-                  _viewModel.footerText,
-                  style: _style.footerTextStyle,
-                  maxLines: _style.footerTextMaxLines,
-                  textAlign: TextAlign.center,
-                  overflow: TextOverflow.ellipsis,
+                GestureDetector(
+                  onTap: () => _onMenuPressed(context),
+                  child: Text(
+                    _viewModel.footerText,
+                    style: _style.footerTextStyle,
+                    maxLines: _style.footerTextMaxLines,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
-              ),
-            ],
-          )
-        //SizedBox(height: 18,)
+              ],
+            ),
+          ),
         ],
       ),
     );
@@ -165,9 +155,8 @@ class LandingPage extends StatelessWidget {
   Future _onMenuPressed(BuildContext context) async {
     showModalBottomSheet(
         context: context,
-        builder: (widgetBuilder) =>
-            ActionSheet(
-                viewModel: MockActionSheetViewModel.buildWithCheckBox(),
-                style: ActionSheetStyle.defaultStyle()));
+        builder: (widgetBuilder) => ActionSheet(
+            viewModel: MockActionSheetViewModel.buildWithCheckBox(),
+            style: ActionSheetStyle.defaultStyle()));
   }
 }
