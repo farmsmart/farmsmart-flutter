@@ -79,6 +79,7 @@ flutter:
     - assets/icons/profit_loss_selected.png
     - assets/icons/profit_loss.png
     - assets/icons/profit_add.png
+    - assets/icons/tick_large.png
 
     - assets/privacy_policy.html
     - assets/icons/flag_kenya.png
