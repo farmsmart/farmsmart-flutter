@@ -20,7 +20,7 @@ class MockEntityCollection<T> implements EntityCollection<T> {
   @override
   Future<List<T>> getEntities({int limit = 0}) {
     if (_library == null) {
-      _library = (limit <= 0) ? _builder.list() : _builder.list(count:limit);
+      _library = (limit <= 0) ? _builder.list() : _builder.list(count: limit);
     }
     return Future.delayed(_delay, () => _library);
   }
