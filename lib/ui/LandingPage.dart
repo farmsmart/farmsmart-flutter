@@ -5,12 +5,15 @@ import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockActionSheetViewModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class _Constants {
   static final EdgeInsets generalPadding =
-  EdgeInsets.only(left: 32, right: 32, top: 38);
-  static final double bottomContainerHeight = 400;
+      EdgeInsets.only(left: 32, right: 32, top: 40, bottom: 18);
+  static final double bottomContainerHeight = 350;
   static final int secondaryPriority = 2;
+  static final double subtitleLineSpace = 10;
+  static final double actionLineSpace = 34;
 }
 
 class LandingPageViewModel {
@@ -104,7 +107,6 @@ class LandingPage extends StatelessWidget {
     return Container(
       margin: _Constants.generalPadding,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
           Flexible(
             flex: _Constants.secondaryPriority,
@@ -119,34 +121,47 @@ class LandingPage extends StatelessWidget {
           Container(
             height: _Constants.bottomContainerHeight,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
-                Image.asset(_viewModel.subtitleImage),
-                Text(
-                  _viewModel.detailText,
-                  style: _style.detailTextStyle,
-                  maxLines: _style.detailTextMaxLines,
-                  overflow: TextOverflow.ellipsis,
-                  textAlign: TextAlign.center,
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    Image.asset(_viewModel.subtitleImage),
+                    SizedBox(height: _Constants.subtitleLineSpace,),
+                    Text(
+                      Intl.message(_viewModel.detailText),
+                      style: _style.detailTextStyle,
+                      maxLines: _style.detailTextMaxLines,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
                 ),
-                RoundedButton(
-                  viewModel: RoundedButtonViewModel(
-                      title: _viewModel.actionText, onTap: () {}),
-                  style: RoundedButtonStyle.largeRoundedButtonStyle()
-                      .copyWith(buttonTextStyle: _style.actionTextStyle),
-                ),
-                GestureDetector(
-                  onTap: () => _onMenuPressed(context),
-                  child: Text(
-                    _viewModel.footerText,
-                    style: _style.footerTextStyle,
-                    maxLines: _style.footerTextMaxLines,
-                    overflow: TextOverflow.ellipsis,
-                  ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    RoundedButton(
+                      viewModel: RoundedButtonViewModel(
+                          title: Intl.message(_viewModel.actionText),
+                          onTap: () {}),
+                      style: RoundedButtonStyle.largeRoundedButtonStyle()
+                          .copyWith(buttonTextStyle: _style.actionTextStyle),
+                    ),
+                    SizedBox(height: _Constants.actionLineSpace,),
+                    GestureDetector(
+                      onTap: () => _onMenuPressed(context),
+                      child: Text(
+                        Intl.message(_viewModel.footerText),
+                        style: _style.footerTextStyle,
+                        maxLines: _style.footerTextMaxLines,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
-          ),
+          )
         ],
       ),
     );
