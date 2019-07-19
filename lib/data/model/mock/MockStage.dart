@@ -17,7 +17,7 @@ class MockStage extends MockEntity<NewStageEntity> {
 
   NewStageEntity build() {
       final start = _mockDate.randomMonthAgo();
-      return NewStageEntity(id: _identifiers.identifier(), article: _articleBuilder.build(), started: start, ended: null);
+      return NewStageEntity(id: _identifiers.identifier(), article: _articleBuilder.buildStage(), started: start, ended: null);
   }
 
   //LH here we generate valid stage sequence starting and ending at the input dates, and ending at the input stage
@@ -40,7 +40,7 @@ class MockStage extends MockEntity<NewStageEntity> {
           startDate = null;
           endDate = null;
         }
-        stages.add(NewStageEntity(id: _identifiers.identifier(), article: _articleBuilder.build(), started: startDate, ended: endDate));
+        stages.add(NewStageEntity(id: _identifiers.identifier(), article: _articleBuilder.buildStage(), started: startDate, ended: endDate));
         current = next;
       }
     return stages;

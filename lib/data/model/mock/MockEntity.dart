@@ -12,7 +12,7 @@ abstract class MockEntity<T> {
 }
 
 class MockEntityCollection<T> implements EntityCollection<T> {
-  final _delay = Duration(seconds: 1);
+  final _delay = Duration(milliseconds: 200);
   final MockEntity<T> _builder;
 
   MockEntityCollection(this._builder);

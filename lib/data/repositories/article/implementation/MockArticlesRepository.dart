@@ -7,7 +7,7 @@ MockArticle _articleBuilder = MockArticle();
 
 class MockArticlesRepository implements ArticleRepositoryInterface {
   final _articles;
-  final _delay = Duration(seconds: 1);
+  final _delay = Duration(milliseconds: 200);
   final _streamEventCount = 50;
 
   MockArticlesRepository({int articleCount = 1000})

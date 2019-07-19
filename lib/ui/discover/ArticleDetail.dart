@@ -73,25 +73,32 @@ class _DefaultStyle implements ArticleDetailStyle {
 class ArticleDetail extends StatelessWidget implements ListViewSection {
   final ArticleDetailViewModel _viewModel;
   final ArticleDetailStyle _style;
-  List<ArticleListItemViewModel> _releatedViewModels = [];
+  final bool _showHeader;
+  List<ArticleListItemViewModel> _relatedViewModels  = [];
 
   ArticleDetail(
       {Key key,
-      ArticleDetailViewModel viewModel,
+      ArticleDetailViewModel viewModel, bool showHeader = true,
       ArticleDetailStyle style = const _DefaultStyle()})
       : this._viewModel = viewModel,
+        this._showHeader = showHeader,
         this._style = style,
         super(key: key);
 
+  Future<List<ArticleListItemViewModel>> fetchReleated() {
+     return _viewModel.getRelated().then((related) {
+       _relatedViewModels = related;
+       return related;
+     });
+  }
+
   @override
   Widget build(BuildContext context) {
+    final related = (_relatedViewModels != null) ? Future.value(_relatedViewModels) : fetchReleated();
     return FutureBuilder(
-      future: _viewModel.getRelated(),
+      future: related,
       builder: (BuildContext context,
           AsyncSnapshot<List<ArticleListItemViewModel>> relatedArticles) {
-        if (relatedArticles.hasData) {
-          _releatedViewModels = relatedArticles.data;
-        }
         return Scaffold(
           appBar: _buildAppBar(context),
           body: Container(
@@ -109,9 +116,9 @@ class ArticleDetail extends StatelessWidget implements ListViewSection {
             ? loadingWidget
             : null;
       return HeaderAndFooterListView(
-                itemCount: _releatedViewModels.length,
+                itemCount: _relatedViewModels.length,
                 itemBuilder: (BuildContext context, int index) {
-                  final viewModel = _releatedViewModels[index];
+                  final viewModel = _relatedViewModels[index];
                   return StandardListItem(
                     viewModel: viewModel,
                     onTap: () => _tappedListItem(
@@ -120,7 +127,7 @@ class ArticleDetail extends StatelessWidget implements ListViewSection {
                 },
                 physics: ScrollPhysics(),
                 shrinkWrap: true,
-                headers: [buildHeader(_releatedViewModels.isNotEmpty)],
+                headers: [buildHeader(_relatedViewModels.isNotEmpty)],
                 footers: [footer]);
   } 
 
@@ -182,7 +189,7 @@ class ArticleDetail extends StatelessWidget implements ListViewSection {
   }
 
   Widget _buildTitle() {
-    return Visibility(visible: _viewModel.title.isNotEmpty, child: Container(
+    return Visibility(visible: _viewModel.title.isNotEmpty && _showHeader, child: Container(
         padding: _style.titlePagePadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -199,7 +206,7 @@ class ArticleDetail extends StatelessWidget implements ListViewSection {
   }
 
   Widget _buildArticlePublishingDate() {
-    return Visibility(visible: _viewModel.subtitle.isNotEmpty, child: Container(
+    return Visibility(visible: _viewModel.subtitle.isNotEmpty && _showHeader, child: Container(
         padding: _style.leftRightPadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -215,11 +222,13 @@ class ArticleDetail extends StatelessWidget implements ListViewSection {
   }
 
   Widget _buildImage() {
-    return Container(
-        child: NetworkImageFromFuture(
+    if (_viewModel.image == null) {
+      return  Container();
+    }
+    return NetworkImageFromFuture(
             _viewModel.image.urlToFit(height: _style.imageHeight),
             fit: BoxFit.cover,
-            height: _style.imageHeight));
+            height: _style.imageHeight);
   }
 
   Widget _buildBody() {
