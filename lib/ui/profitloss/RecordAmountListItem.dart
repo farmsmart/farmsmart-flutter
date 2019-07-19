@@ -55,9 +55,12 @@ class RecordAmountListItemStyle {
   final EdgeInsets actionItemEdgePadding;
   final EdgeInsets cardMargins;
 
+  final Offset pickerPosition;
+
   final double iconHeight;
   final double iconLineSpace;
   final double detailTextSpacing;
+  final double descriptionLineSpace;
 
   final int maxLines;
 
@@ -67,9 +70,11 @@ class RecordAmountListItemStyle {
     this.detailTextStyle,
     this.actionItemEdgePadding,
     this.cardMargins,
+    this.pickerPosition,
     this.iconHeight,
     this.iconLineSpace,
     this.detailTextSpacing,
+    this.descriptionLineSpace,
     this.maxLines,
   });
 
@@ -79,9 +84,11 @@ class RecordAmountListItemStyle {
     TextStyle detailTextStyle,
     EdgeInsets actionItemEdgePadding,
     EdgeInsets cardMargins,
+    Offset pickerPosition,
     double iconHeight,
     double iconLineSpace,
     double detailTextSpacing,
+    double descriptionLineSpace,
     int maxLines,
   }) {
     return RecordAmountListItemStyle(
@@ -92,9 +99,11 @@ class RecordAmountListItemStyle {
       actionItemEdgePadding:
           actionItemEdgePadding ?? this.actionItemEdgePadding,
       cardMargins: cardMargins ?? this.cardMargins,
+      pickerPosition: pickerPosition ?? this.pickerPosition,
       iconHeight: iconHeight ?? this.iconHeight,
       iconLineSpace: iconLineSpace ?? this.iconLineSpace,
       detailTextSpacing: detailTextSpacing ?? this.detailTextSpacing,
+      descriptionLineSpace: descriptionLineSpace ?? this.descriptionLineSpace,
       maxLines: maxLines ?? this.maxLines,
     );
   }
@@ -123,22 +132,28 @@ class _DefaultStyle extends RecordAmountListItemStyle {
       const EdgeInsets.only(left: 32, right: 32, top: 10.5, bottom: 10.5);
   final EdgeInsets cardMargins = const EdgeInsets.all(0);
 
+  final Offset pickerPosition = const Offset(90, 0);
+
   final double iconHeight = 20;
   final double iconLineSpace = 22;
   final double detailTextSpacing = 13;
+  final double descriptionLineSpace = 12;
 
   final int maxLines = 5;
 
-  const _DefaultStyle(
-      {TextStyle titleTextStyle,
-      TextStyle pendingDetailTextStyle,
-      TextStyle detailTextStyle,
-      EdgeInsets actionItemEdgePadding,
-      EdgeInsets cardMargins,
-      double iconHeight,
-      double iconLineSpace,
-      double detailTextSpacing,
-      int maxLines});
+  const _DefaultStyle({
+    TextStyle titleTextStyle,
+    TextStyle pendingDetailTextStyle,
+    TextStyle detailTextStyle,
+    EdgeInsets actionItemEdgePadding,
+    EdgeInsets cardMargins,
+    Offset pickerPosition,
+    double iconHeight,
+    double iconLineSpace,
+    double detailTextSpacing,
+    double descriptionLineSpace,
+    int maxLines,
+  });
 }
 
 const RecordAmountListItemStyle _defaultStyle = const _DefaultStyle();
@@ -170,9 +185,6 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
   @override
   void initState() {
     super.initState();
-    setState(() {
-      //widget._viewModel.selectedDate = DateTime.now();
-    });
   }
 
   @override
@@ -262,7 +274,7 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
       title: viewModel.isEditable
           ? PopupMenuButton(
               key: widget._pickerKey,
-              offset: Offset(90, 0),
+              offset: style.pickerPosition,
               onSelected: (selectedItem) => _changeDropDownItem(selectedItem),
               itemBuilder: (BuildContext context) =>
                   _getDropDownMenuItems(viewModel),
@@ -361,7 +373,7 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
                 _Constants.descriptionIcon,
                 height: style.iconHeight,
               ),
-              SizedBox(width: 20),
+              SizedBox(width: style.iconLineSpace),
               Expanded(
                 child: viewModel.isEditable
                     ? TextField(
@@ -385,7 +397,7 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
               ),
             ],
           ),
-          SizedBox(height: 12)
+          SizedBox(height: style.descriptionLineSpace)
         ],
       ),
       dense: true,
@@ -397,7 +409,7 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
 
   _saveDescription(String description) {
     setState(() {
-      if (description != "") {
+      if (description != _Strings.EMPTY_STRING) {
         widget.parent.description = description;
       }
     });
@@ -422,7 +434,7 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
     if (picked != null) {
       setState(() {
         viewModel.selectedDate = picked;
-        widget.parent.selectedDate = picked;
+        widget.parent.selectedDate = _formatDate(picked);
       });
     }
   }

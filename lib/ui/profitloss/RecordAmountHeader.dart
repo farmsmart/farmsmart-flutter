@@ -172,11 +172,11 @@ class _RecordAmountHeaderState extends State<RecordAmountHeader> {
     setState(() {
       if (amount == "") {
         hint = _Strings.HINT;
-        widget.parent.amoundIsFilled = false;
+        widget.parent.amountIsFilled = false;
         widget.parent.checkIfFilled();
       } else {
         widget.parent.amount = amount;
-        widget.parent.amoundIsFilled = true;
+        widget.parent.amountIsFilled = true;
         widget.parent.checkIfFilled();
       }
     });
@@ -198,7 +198,7 @@ class _RecordAmountHeaderState extends State<RecordAmountHeader> {
         hint = _Strings.HINT;
       } else {
         widget.parent.amount = _textFieldController.text;
-        widget.parent.amoundIsFilled = true;
+        widget.parent.amountIsFilled = true;
         FocusScope.of(context).detach();
       }
     });

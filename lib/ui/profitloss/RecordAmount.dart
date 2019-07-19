@@ -19,7 +19,7 @@ class _Constants {
 
 class RecordData {
   String amount;
-  DateTime date;
+  String date;
   String crop;
   String description;
 
@@ -103,7 +103,6 @@ class RecordAmountStyle {
 
 class _DefaultStyle extends RecordAmountStyle {
   final EdgeInsets buttonEdgePadding = const EdgeInsets.all(32.0);
-
   final EdgeInsets appBarLeftMargin = const EdgeInsets.only(left: 31);
   final EdgeInsets appBarRightMargin = const EdgeInsets.only(right: 0);
 
@@ -144,10 +143,11 @@ class RecordAmount extends StatefulWidget {
 
 class RecordAmountState extends State<RecordAmount> {
   String amount;
-  DateTime selectedDate = DateTime.now();
+  DateTime _initDate = DateTime.now();
+  String selectedDate;
   String selectedCrop;
   String description;
-  bool amoundIsFilled = false;
+  bool amountIsFilled = false;
   bool cropIsFilled = false;
 
   @override
@@ -265,7 +265,7 @@ class RecordAmountState extends State<RecordAmount> {
           type: RecordCellType.pickDate,
           isEditable: viewModel.isEditable,
           selectedDate: viewModel.isEditable
-              ? selectedDate
+              ? _initDate
               : viewModel.actions[_Constants.firstListItem].selectedDate,
         ),
         parent: this,
@@ -345,7 +345,7 @@ class RecordAmountState extends State<RecordAmount> {
 
   checkIfFilled() {
     setState(() {
-      if (amoundIsFilled && cropIsFilled) {
+      if (amountIsFilled && cropIsFilled) {
         widget._viewModel.isFilled = true;
       } else {
         widget._viewModel.isFilled = false;
@@ -364,7 +364,7 @@ class RecordAmountState extends State<RecordAmount> {
     //TODO: Temporal print
     print(save.amount +
         " / " +
-        save.date.toIso8601String() +
+        save.date +
         " / " +
         save.crop +
         " / " +
