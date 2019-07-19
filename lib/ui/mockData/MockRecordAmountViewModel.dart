@@ -67,7 +67,7 @@ class MockRecordAmountViewModel {
         onTap: null,
         type: RecordType.cost,
         isEditable: false,
-        amount: "233.3");
+        amount: "-233.3");
   }
 }
 

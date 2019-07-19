@@ -155,6 +155,7 @@ class _RecordAmountHeaderState extends State<RecordAmountHeader> {
                         controller: _textFieldController,
                         onChanged: (amount) => _checkTextField(amount),
                         focusNode: _focusNode,
+                        autofocus: true,
                         onTap: () => cleanField(),
                         onEditingComplete: () => resetHint(),
                       )
