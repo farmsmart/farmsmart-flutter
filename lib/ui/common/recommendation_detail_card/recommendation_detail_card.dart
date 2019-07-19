@@ -213,7 +213,7 @@ class RecommendationDetailCard extends StatelessWidget {
           imageWidth: _style.imageSize,
           imageBorderRadius: _style.imageRadius,
           image: _viewModel.image,
-          showOverlay: _viewModel.isAdded,
+          showOverlayIcon: _viewModel.isAdded,
           overlayIconWidth: _style.imageOverlayWidth,
           overlayIcon: _viewModel.iconAssetOverlay,
           overlayIconHeight: _style.imageOverlayWidth,
