@@ -14,20 +14,21 @@ class _Constants {
 class UserProfileViewModel {
   String userName;
   int activeCrops;
-  int completed;
+  int completedCrops;
   String picture;
   String buttonTitle;
   List<UserProfileListItemViewModel> actions;
   final Future<String> imageUrl;
 
-  UserProfileViewModel(
-      {this.userName,
-      this.activeCrops,
-      this.completed,
-      this.picture,
-      this.buttonTitle,
-      this.actions,
-      this.imageUrl});
+  UserProfileViewModel({
+    this.userName,
+    this.activeCrops,
+    this.completedCrops,
+    this.picture,
+    this.buttonTitle,
+    this.actions,
+    this.imageUrl,
+  });
 }
 
 class UserProfileStyle {}
@@ -63,10 +64,11 @@ class UserProfile extends StatelessWidget {
       child: Column(
         children: <Widget>[
           Container(
-            padding: const EdgeInsets.only(
-                left: 32.0, top: 27.0, right: 32.0, bottom: 27.0),
+            margin: const EdgeInsets.only(
+                left: 32.0, top: 27.0, right: 32.0, bottom: 25.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 _buildMainTextView(context),
                 SizedBox(width: 20),
@@ -96,7 +98,7 @@ class UserProfile extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(height: 15)
+          SizedBox(height: 25)
         ],
       ),
     );
@@ -128,13 +130,13 @@ class UserProfile extends StatelessWidget {
               color: Color(0xff1a1b46),
             ),
           ),
-          SizedBox(height: 7),
+          SizedBox(height: 0.5),
           Container(
             height: 2,
             width: 121,
             color: Color(0xffe9eaf2),
           ),
-          SizedBox(height: 12),
+          SizedBox(height: 6.5),
           Row(
             children: <Widget>[
               Column(
@@ -158,12 +160,12 @@ class UserProfile extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(width: 24.5),
+              SizedBox(width: 23),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    "6",
+                    "23",
                     style: const TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.w500,
@@ -190,8 +192,8 @@ class UserProfile extends StatelessWidget {
   ClipOval _buildPlotImage() {
     return ClipOval(
         child: Container(
-      height: 80,
-      width: 80,
+      height: 72,
+      width: 72,
       color: Colors.pink,
     ));
   }
