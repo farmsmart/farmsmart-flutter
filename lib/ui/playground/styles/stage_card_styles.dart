@@ -1,4 +1,5 @@
 import 'package:farmsmart_flutter/ui/common/stage_card.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class StageCardStyles {
@@ -18,7 +19,7 @@ class StageCardStyles {
               color: Color(0xffffffff),
               fontSize: 11,
               fontWeight: FontWeight.bold),
-        ));
+        ),);
   }
 
   static StageCardStyle buildUpcomingStageStyle() {
@@ -68,7 +69,7 @@ class StageCardStyles {
               color: Color(0xffffffff),
               fontSize: 11,
               fontWeight: FontWeight.bold),
-        ));
+      ), statusIcon: Icons.check);
   }
 
   static StageCardStyle _defaultStageCardStyle = StageCardStyle(

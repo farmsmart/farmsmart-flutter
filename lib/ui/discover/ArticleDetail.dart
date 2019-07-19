@@ -153,15 +153,13 @@ class ArticleDetail extends StatelessWidget implements ListViewSection {
   }
 
   Widget buildHeader(bool relatedTitle) {
-    final topWidgets = [
-      _buildTitle(),
-      _buildArticlePublishingDate(),
-      SizedBox(height: _style.spaceBetweenDataAndImage),
-      _buildImage(),
-      SizedBox(height: _style.spaceBetweenElements),
-      _buildBody(),
-      SizedBox(height: _style.spaceBetweenElements),
-    ];
+    final List<Widget> titleSection = (_viewModel.title.isNotEmpty && _showHeader) ? [_buildTitle()] : [];
+    final List<Widget> subtitleSection = (_viewModel.subtitle.isNotEmpty && _showHeader) ? [_buildSubtitle()] : [];
+    final image = _buildImage();
+    final body = _buildBody();
+    final List<Widget> imageSection = image != null ? [SizedBox(height: _style.spaceBetweenElements), image,SizedBox(height: _style.spaceBetweenElements)] : [];
+    final List<Widget> bodySection = body != null ? [SizedBox(height: _style.spaceBetweenDataAndImage), body,SizedBox(height: _style.spaceBetweenElements)] : [SizedBox(height: _style.spaceBetweenElements)];
+    final List<Widget> topWidgets = titleSection + subtitleSection + imageSection + bodySection;
     final midWidgets = [
       Container(
         padding: _style.titlePagePadding,
@@ -189,7 +187,7 @@ class ArticleDetail extends StatelessWidget implements ListViewSection {
   }
 
   Widget _buildTitle() {
-    return Visibility(visible: _viewModel.title.isNotEmpty && _showHeader, child: Container(
+    return Container(
         padding: _style.titlePagePadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -202,11 +200,11 @@ class ArticleDetail extends StatelessWidget implements ListViewSection {
               ),
             )
           ],
-        )));
+        ));
   }
 
-  Widget _buildArticlePublishingDate() {
-    return Visibility(visible: _viewModel.subtitle.isNotEmpty && _showHeader, child: Container(
+  Widget _buildSubtitle() {
+    return  Container(
         padding: _style.leftRightPadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -218,12 +216,12 @@ class ArticleDetail extends StatelessWidget implements ListViewSection {
               ),
             )
           ],
-        )));
+        ));
   }
 
   Widget _buildImage() {
     if (_viewModel.image == null) {
-      return  Container();
+      return  null;
     }
     return NetworkImageFromFuture(
             _viewModel.image.urlToFit(height: _style.imageHeight),

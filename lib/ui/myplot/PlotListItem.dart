@@ -94,6 +94,10 @@ class _DefaultStyle implements PlotListItemStyle {
   const _DefaultStyle();
 }
 
+class _Constants{
+  static double dividerThickness = 2;
+}
+
 class PlotListItem {
   Widget buildListItem({PlotListItemViewModel viewModel, Function onTap, PlotListItemStyle itemStyle = const _DefaultStyle()}) {
     return GestureDetector(
@@ -119,7 +123,10 @@ class PlotListItem {
                           ],
                         )
                       ])),
-              ListDivider.build(),
+              Container(
+                  height: _Constants.dividerThickness,
+                  color: itemStyle.dividerColor,
+                  margin: itemStyle.dividerEdgePadding),
             ]
             )
         )

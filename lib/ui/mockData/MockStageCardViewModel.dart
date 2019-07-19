@@ -27,7 +27,6 @@ class MockStageCardViewModel {
     return StageCardViewModel(
         subtitle: _mockStage.random(),
         title: _mockTitle.random(),
-        statusIcon: Icons.check,
         action: () {},
         actionText: 'Revert to In Progress',
         statusTitle: 'Complete'
