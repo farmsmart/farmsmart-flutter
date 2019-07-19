@@ -13,7 +13,8 @@ class _Strings {
   static final upcoming = "Upcoming";
   static final complete = "Complete";
 
-  static final completeAction = "Revert to In Progress";
+  static final completeAction = "Completed";
+  static final revertAction = "Revert to In Progress";
   static final readyAction = "Begin Stage";
   static final upcomingAction = "Please complete previous";
   static final inProgressAction = "Mark as complete";
@@ -63,7 +64,7 @@ class StageToStageCardViewModel
         return Intl.message(_Strings.inProgressAction);
         break;
       case StageStatus.complete:
-        return Intl.message(_Strings.completeAction);
+        return  _logic.canRevert(stage, _plot.stages) ? Intl.message(_Strings.revertAction) : Intl.message(_Strings.completeAction) ;
         break;
       default:
         return _logic.canBegin(stage, _plot.stages) ?  Intl.message(_Strings.readyAction) : Intl.message(_Strings.upcomingAction);
@@ -78,7 +79,7 @@ class StageToStageCardViewModel
       {
         return () => _completeAction(_plot, stage);
       }
-      else if(_logic.isComplete(stage)){
+      else if(_logic.canRevert(stage,_plot.stages)){
          return () => _revertAction(_plot, stage);
       }
       return null;

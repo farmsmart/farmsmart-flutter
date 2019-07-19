@@ -56,16 +56,43 @@ class StageBusinessLogic {
     return StageStatus.upcoming;
   }
 
+  NewStageEntity nextStage(NewStageEntity stage, List<NewStageEntity> stages) {
+    bool next = false;
+    for (var stageEntry in stages) {
+      if(next){
+        return stageEntry;
+      }
+      else if(stageEntry == stage){
+        next = true;
+      }
+    }
+    return null;
+  }
+
+  NewStageEntity prevStage(NewStageEntity stage, List<NewStageEntity> stages) {
+    return nextStage(stage, stages.reversed.toList());
+  }
+
+
   bool isInProgress(NewStageEntity stage) {
+    if (stage == null) {
+      return false;
+    }
     return isStarted(stage) && !isComplete(stage);
   }
 
   bool isStarted(NewStageEntity stage) {
+    if (stage == null) {
+      return false;
+    }
     return (stage.started  != null) && stage.started.isBefore(DateTime.now());
   }
 
   bool isComplete(NewStageEntity stage) {
-    return (stage.ended  != null) && stage.ended.isBefore(DateTime.now());
+    if (stage == null) {
+      return false;
+    }
+    return (stage.ended != null) && stage.ended.isBefore(DateTime.now());
   }
 
   bool canComplete(NewStageEntity stage, List<NewStageEntity> stages) {
@@ -73,13 +100,24 @@ class StageBusinessLogic {
   }
 
   bool canBegin(NewStageEntity stage, List<NewStageEntity> stages) {
-    final index = stages.indexOf(stage);
-    if (index <= 0)
+    if (stage == null) {
+      return false;
+    }
+    if (stage == stages.first)
     {
       return !isStarted(stage);
     }
-    final prevStage = stages[index-1];
-    return isComplete(prevStage) && !isStarted(stage);
+    return isComplete(prevStage(stage, stages)) && !isStarted(stage);
   }
+
+  bool canRevert(NewStageEntity stage, List<NewStageEntity> stages) {
+    final next = nextStage(stage, stages);
+    if (next == null){
+      return isComplete(stage);
+    }
+    return isComplete(stage) && (canBegin(next, stages) || isInProgress(next));
+  }
+
+  
   
 }
