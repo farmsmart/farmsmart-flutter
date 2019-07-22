@@ -89,9 +89,6 @@ flutter:
     - assets/icons/radio_button_default.png
     - assets/icons/radio_button_active.png
     - assets/raw/
-    - assets/raw/illustration_welcome.png
-    - assets/raw/logo_default.png
-
 
   fonts:
   - family: GT-America-Standard

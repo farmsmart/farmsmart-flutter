@@ -11,7 +11,7 @@ class _Constants {
   static final EdgeInsets generalPadding =
       EdgeInsets.only(left: 32, right: 32, top: 40, bottom: 18);
   static final double bottomContainerHeight = 350;
-  static final int secondaryPriority = 2;
+  static final int imageFlexValue = 2;
   static final double subtitleLineSpace = 10;
   static final double actionLineSpace = 34;
 }
