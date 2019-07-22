@@ -1,12 +1,18 @@
 import 'package:farmsmart_flutter/data/bloc/ViewModelProvider.dart';
 import 'package:farmsmart_flutter/model/loading_status.dart';
+import 'package:farmsmart_flutter/ui/common/ErrorRetry.dart';
 import 'package:farmsmart_flutter/ui/common/headerAndFooterListView.dart';
 import 'package:flutter/material.dart';
 import 'PlotDetail.dart';
 import 'PlotListItem.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
-
+import 'package:intl/intl.dart';
 import 'viewmodel/PlotDetailViewModel.dart';
+
+class _Strings {
+  static String loadingError = "Oops, there was a problem!";
+  static String retryAction = "Retry";
+}
 
 class PlotListViewModel {
   final String title;
@@ -25,10 +31,6 @@ abstract class PlotListStyle {
   final EdgeInsets titleEdgePadding;
   final EdgeInsets largeButtonEdgePadding;
 
-  final String buttonText;
-  final String errorButtonText;
-  final String errorText;
-
   final TextStyle titleTextStyle;
 
   PlotListStyle(
@@ -36,10 +38,7 @@ abstract class PlotListStyle {
       this.edgePadding,
       this.titleEdgePadding,
       this.largeButtonEdgePadding,
-      this.titleTextStyle,
-      this.errorText,
-      this.buttonText,
-      this.errorButtonText);
+      this.titleTextStyle);
 }
 
 class _DefaultStyle implements PlotListStyle {
@@ -53,10 +52,6 @@ class _DefaultStyle implements PlotListStyle {
 
   final TextStyle titleTextStyle = const TextStyle(
       fontSize: 27, fontWeight: FontWeight.bold, color: Color(0xFF000000));
-
-  final String errorText = "Something went wrong while loading data";
-  final String buttonText = "Add Another Crop";
-  final String errorButtonText = "Retry";
 
   const _DefaultStyle();
 }
@@ -92,7 +87,7 @@ class PlotList extends StatelessWidget {
             context, viewModel, style, null);
       case LoadingStatus.ERROR:
         return _buildErrorPage(
-            context, viewModel, style); // TODO Check FARM-203
+            context, viewModel, style);
     }
   }
 
@@ -152,18 +147,7 @@ class PlotList extends StatelessWidget {
 
   Widget _buildErrorPage(BuildContext context, PlotListViewModel viewModel,
       PlotListStyle plotStyle) {
-    final String retryButton = "Retry";
-    return Container(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          AlertDialog(title: Text(plotStyle.errorText), actions: <Widget>[
-            FlatButton(child: Text(retryButton), onPressed: viewModel.update)
-          ])
-        ],
-      ),
-    );
+    return ErrorRetry(errorMessage: Intl.message(_Strings.loadingError), retryActionLabel: Intl.message(_Strings.retryAction), retryFunction: viewModel.update);
   }
 
     void _tappedListItem(

@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:farmsmart_flutter/ui/common/network_image_from_future.dart';
 import 'package:farmsmart_flutter/ui/common/CircularProgress.dart';
 import 'package:farmsmart_flutter/ui/common/Dogtag.dart';
-import 'package:farmsmart_flutter/ui/common/ListDivider.dart';
 
 class PlotListItemViewModel {
   final String title;

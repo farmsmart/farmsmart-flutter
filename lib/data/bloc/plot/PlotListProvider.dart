@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:farmsmart_flutter/data/bloc/ViewModelProvider.dart';
 import 'package:farmsmart_flutter/data/bloc/plot/PlotDetailProvider.dart';
-import 'package:farmsmart_flutter/data/model/NewStageEntity.dart';
 import 'package:farmsmart_flutter/data/model/PlotEntity.dart';
 import 'package:farmsmart_flutter/data/repositories/plot/PlotRepositoryInterface.dart';
 import 'package:farmsmart_flutter/model/loading_status.dart';
