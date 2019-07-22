@@ -1,26 +1,24 @@
 import 'package:flutter/material.dart';
 
 class _Constants {
-  String arrowIcon = "";
+  static final String arrowIcon = "assets/icons/chevron.png";
 }
 
 class UserProfileListItemViewModel {
   String icon;
   String title;
-  Function onTa;
+  Function onTap;
   bool isDestructive;
 
   UserProfileListItemViewModel({
     this.icon,
     this.title,
-    this.onTa,
+    this.onTap,
     this.isDestructive,
   });
 }
 
-class UserProfileListItemStyle {
-
-}
+class UserProfileListItemStyle {}
 
 class UserProfileListItem extends StatelessWidget {
   final UserProfileListItemViewModel _viewModel;
@@ -36,6 +34,7 @@ class UserProfileListItem extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(left: 32, right: 25),
       child: ListTile(
+        onTap: _viewModel.onTap,
         contentPadding: EdgeInsets.symmetric(vertical: 10.8),
         dense: true,
         title: Row(
@@ -43,21 +42,42 @@ class UserProfileListItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Row(
+              mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                Image.asset(
-                  "assets/icons/radio_button_default.png",
-                  height: 20,
-                ),
-                SizedBox(
-                  width: 20,
-                ),
+                _viewModel.icon != null
+                    ? Row(
+                        children: <Widget>[
+                          Image.asset(
+                            _viewModel.icon,
+                            height: 20,
+                          ),
+                          SizedBox(
+                            width: 20,
+                          ),
+                        ],
+                      )
+                    : SizedBox(
+                        width: 0,
+                      ),
                 Text(
-                  "Switch Language",
-                  style: TextStyle(fontWeight: FontWeight.normal, fontSize: 17),
+                  _viewModel.title,
+                  style: !_viewModel.isDestructive
+                      ? TextStyle(
+                          fontWeight: FontWeight.normal,
+                          fontSize: 17,
+                        )
+                      : TextStyle(
+                          fontWeight: FontWeight.normal,
+                          color: Color(0xffff6060),
+                          fontSize: 17,
+                        ),
                 ),
               ],
             ),
-            Icon(Icons.keyboard_arrow_right),
+            Image.asset(
+              _Constants.arrowIcon,
+              height: 13,
+            ),
           ],
         ),
       ),

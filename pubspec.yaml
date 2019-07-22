@@ -87,6 +87,12 @@ flutter:
     - assets/icons/detail_icon_cost.png
     - assets/icons/radio_button_default.png
     - assets/icons/radio_button_active.png
+    - assets/icons/chevron.png
+    - assets/icons/detail_icon_best_soil.png
+    - assets/icons/detail_icon_invite.png
+    - assets/icons/detail_icon_language.png
+    - assets/icons/detail_icon_new_profile.png
+    - assets/icons/detail_icon_pin.png
 
 
 

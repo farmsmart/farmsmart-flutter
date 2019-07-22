@@ -1,14 +1,67 @@
+import 'package:farmsmart_flutter/ui/common/ActionSheet.dart';
 import 'package:farmsmart_flutter/ui/common/ListDivider.dart';
 import 'package:farmsmart_flutter/ui/common/network_image_from_future.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
 import 'package:farmsmart_flutter/ui/profile/UserProfileListItem.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class _Constants {
-  static final String ACTIVE_CROPS = "Active crops";
-  static final String COMPLETED = "Completed";
   static final link =
       "https://firebasestorage.googleapis.com/v0/b/farmsmart-20190415.appspot.com/o/flamelink%2Fmedia%2FLxHKKHJPSN3Atvbx1nv3_Cucumber.jpg?alt=media&token=642bb3b7-ac3d-4a6d-8b73-fbebd5c03eaa";
+
+  static final List<UserProfileListItemViewModel> PROFILE_ACTIONS = [
+    UserProfileListItemViewModel(
+      title: Intl.message("Switch Language"),
+      icon: "assets/icons/detail_icon_language.png",
+      isDestructive: false,
+    ),
+    UserProfileListItemViewModel(
+      title: Intl.message("Your Farm Details"),
+      icon: "assets/icons/detail_icon_best_soil.png",
+      onTap: null,
+      isDestructive: false,
+    ),
+    UserProfileListItemViewModel(
+      title: Intl.message("Update Pin"),
+      icon: "assets/icons/detail_icon_pin.png",
+      onTap: null,
+      isDestructive: false,
+    ),
+    UserProfileListItemViewModel(
+      title: Intl.message("Create New Profile"),
+      icon: "assets/icons/detail_icon_new_profile.png",
+      onTap: null,
+      isDestructive: false,
+    ),
+    UserProfileListItemViewModel(
+      title: Intl.message("Invite Friends"),
+      icon: "assets/icons/detail_icon_invite.png",
+      onTap: null,
+      isDestructive: false,
+    ),
+    UserProfileListItemViewModel(
+      title: Intl.message("Privacy Policy"),
+      onTap: null,
+      isDestructive: false,
+    ),
+    UserProfileListItemViewModel(
+      title: Intl.message("Terms of User"),
+      onTap: null,
+      isDestructive: false,
+    ),
+    UserProfileListItemViewModel(
+      title: Intl.message("Delete Profile"),
+      onTap: null,
+      isDestructive: true,
+    ),
+  ];
+}
+
+class _Strings {
+  static final String ACTIVE_CROPS = Intl.message("Active crops");
+  static final String COMPLETED = Intl.message("Completed");
+  static final String SWITCH_PROFILE = Intl.message("Switch Profile");
 }
 
 class UserProfileViewModel {
@@ -17,7 +70,6 @@ class UserProfileViewModel {
   int completedCrops;
   String picture;
   String buttonTitle;
-  List<UserProfileListItemViewModel> actions;
   final Future<String> imageUrl;
 
   UserProfileViewModel({
@@ -26,12 +78,172 @@ class UserProfileViewModel {
     this.completedCrops,
     this.picture,
     this.buttonTitle,
-    this.actions,
     this.imageUrl,
   });
 }
 
-class UserProfileStyle {}
+class UserProfileStyle {
+  final Color buttonColor;
+  final Color dividerColor;
+
+  final TextStyle titleTextStyle;
+  final TextStyle subtitleTextStyle;
+  final TextStyle detailTextStyle;
+  final TextStyle buttonTextStyle;
+
+  final EdgeInsets edgePadding;
+  final EdgeInsets cardEdgePadding;
+  final EdgeInsets headerEdgePadding;
+
+  final double headerElevation;
+  final double titleLineSpace;
+  final double imageSpacing;
+  final double subtitleLineSpace;
+  final double buttonLineSpace;
+
+  final double detailSpacing;
+  final double dividerHeight;
+  final double dividerWidth;
+
+  final double buttonHeight;
+  final int maxLines;
+
+  const UserProfileStyle(
+      {this.buttonColor,
+      this.dividerColor,
+      this.titleTextStyle,
+      this.subtitleTextStyle,
+      this.detailTextStyle,
+      this.buttonTextStyle,
+      this.edgePadding,
+      this.cardEdgePadding,
+      this.headerEdgePadding,
+      this.headerElevation,
+      this.titleLineSpace,
+      this.imageSpacing,
+      this.subtitleLineSpace,
+      this.buttonLineSpace,
+      this.detailSpacing,
+      this.dividerHeight,
+      this.dividerWidth,
+      this.buttonHeight,
+      this.maxLines});
+
+  UserProfileStyle copyWith({
+    Color buttonColor,
+    Color dividerColor,
+    TextStyle titleTextStyle,
+    TextStyle subtitleTextStyle,
+    TextStyle detailTextStyle,
+    TextStyle buttonTextStyle,
+    EdgeInsets edgePadding,
+    EdgeInsets cardEdgePadding,
+    EdgeInsets headerEdgePadding,
+    double headerElevation,
+    double titleLineSpace,
+    double imageSpacing,
+    double subtitleLineSpace,
+    double buttonLineSpace,
+    double detailSpacing,
+    double dividerHeight,
+    double dividerWidth,
+    double buttonHeight,
+    int maxLines,
+  }) {
+    return UserProfileStyle(
+      buttonColor: buttonColor ?? this.buttonColor,
+      dividerColor: dividerColor ?? this.dividerColor,
+      titleTextStyle: titleTextStyle ?? this.titleTextStyle,
+      subtitleTextStyle: subtitleTextStyle ?? this.subtitleTextStyle,
+      detailTextStyle: detailTextStyle ?? this.detailTextStyle,
+      buttonTextStyle: buttonTextStyle ?? this.buttonTextStyle,
+      edgePadding: edgePadding ?? this.edgePadding,
+      cardEdgePadding: cardEdgePadding ?? this.cardEdgePadding,
+      headerEdgePadding: headerEdgePadding ?? this.headerEdgePadding,
+      headerElevation: headerElevation ?? this.headerElevation,
+      titleLineSpace: titleLineSpace ?? this.titleLineSpace,
+      imageSpacing: imageSpacing ?? this.imageSpacing,
+      subtitleLineSpace: subtitleLineSpace ?? this.subtitleLineSpace,
+      buttonLineSpace: buttonLineSpace ?? this.buttonLineSpace,
+      detailSpacing: detailSpacing ?? this.detailSpacing,
+      dividerHeight: dividerHeight ?? this.dividerHeight,
+      dividerWidth: dividerWidth ?? this.dividerWidth,
+      buttonHeight: buttonHeight ?? this.buttonHeight,
+      maxLines: maxLines ?? this.maxLines,
+    );
+  }
+}
+
+class _DefaultStyle extends UserProfileStyle {
+  final Color buttonColor = const Color(0xffe9eaf2);
+  final Color dividerColor = const Color(0xffe9eaf2);
+
+  final TextStyle titleTextStyle = const TextStyle(
+    fontSize: 27,
+    fontWeight: FontWeight.bold,
+    color: Color(0xff1a1b46),
+  );
+
+  final TextStyle subtitleTextStyle = const TextStyle(
+    fontSize: 17,
+    fontWeight: FontWeight.w500,
+    color: Color(0xff4c4e6e),
+  );
+
+  final TextStyle detailTextStyle = const TextStyle(
+    fontSize: 13,
+    fontWeight: FontWeight.normal,
+    color: Color(0xffb7b8c9),
+  );
+
+  final TextStyle buttonTextStyle = const TextStyle(
+    fontSize: 13,
+    fontWeight: FontWeight.w500,
+    color: Color(0xff4c4e6e),
+  );
+
+  final EdgeInsets edgePadding = const EdgeInsets.symmetric(horizontal: 32);
+  final EdgeInsets cardEdgePadding = const EdgeInsets.all(0);
+  final EdgeInsets headerEdgePadding = const EdgeInsets.only(
+    left: 32.0,
+    top: 27.0,
+    right: 32.0,
+    bottom: 25.0,
+  );
+
+  final double headerElevation = 0;
+  final double titleLineSpace = 0.5;
+  final double imageSpacing = 20;
+  final double subtitleLineSpace = 6.5;
+  final double buttonLineSpace = 25;
+  final double dividerHeight = 2;
+  final double dividerWidth = 121;
+  final double detailSpacing = 23;
+  final double buttonHeight = 40;
+
+  final int maxLines = 1;
+
+  const _DefaultStyle({
+    Color buttonColor,
+    TextStyle titleTextStyle,
+    TextStyle subtitleTextStyle,
+    TextStyle detailTextStyle,
+    TextStyle buttonTextStyle,
+    EdgeInsets edgePadding,
+    EdgeInsets cardEdgePadding,
+    EdgeInsets headerEdgePadding,
+    double headerElevation,
+    double titleLineSpace,
+    double imageSpacing,
+    double subtitleLineSpace,
+    double buttonLineSpace,
+    double detailSpacing,
+    double buttonHeight,
+    int maxLines,
+  });
+}
+
+const UserProfileStyle _defaultStyle = const _DefaultStyle();
 
 class UserProfile extends StatelessWidget {
   final UserProfileViewModel _viewModel;
@@ -40,18 +252,29 @@ class UserProfile extends StatelessWidget {
   const UserProfile({
     Key key,
     UserProfileViewModel viewModel,
-    UserProfileStyle style,
+    UserProfileStyle style = _defaultStyle,
   })  : this._viewModel = viewModel,
         this._style = style,
         super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    List<Function> listOfFunctions = [
+      () => ActionSheet.onMenuPressed(context),
+      () => print("2"),
+      () => print("3"),
+      () => print("4"),
+      () => print("5"),
+      () => print("6"),
+      () => print("7"),
+      () => print("8"),
+    ];
+
     return SingleChildScrollView(
       child: Column(
         children: <Widget>[
           _buildHeader(context),
-          _buildListOfActions(_viewModel)
+          _buildListOfActions(_viewModel, listOfFunctions),
         ],
       ),
     );
@@ -59,57 +282,59 @@ class UserProfile extends StatelessWidget {
 
   Widget _buildHeader(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.all(0),
-      elevation: 0,
+      margin: _style.cardEdgePadding,
+      elevation: _style.headerElevation,
       child: Column(
         children: <Widget>[
           Container(
-            margin: const EdgeInsets.only(
-                left: 32.0, top: 27.0, right: 32.0, bottom: 25.0),
+            margin: _style.headerEdgePadding,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 _buildMainTextView(context),
-                SizedBox(width: 20),
+                SizedBox(width: _style.imageSpacing),
                 _buildPlotImage(),
-                SizedBox(height: 25.5),
               ],
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 32),
+            padding: _style.edgePadding,
             child: Column(
               children: <Widget>[
                 RoundedButton(
                   viewModel: RoundedButtonViewModel(
-                      title: "Swiftch Profile",
+                      title: _Strings.SWITCH_PROFILE,
                       onTap: () => Navigator.pop(context)),
                   style: RoundedButtonStyle.largeRoundedButtonStyle().copyWith(
-                    backgroundColor: Color(0xffe9eaf2),
-                    height: 40,
+                    backgroundColor: _style.buttonColor,
+                    height: _style.buttonHeight,
                     borderRadius: BorderRadius.all(Radius.circular(8)),
-                    buttonTextStyle: TextStyle(
-                        fontSize: 13,
-                        fontWeight: FontWeight.w500,
-                        color: Color(0xff4c4e6e)),
+                    buttonTextStyle: _style.buttonTextStyle,
                   ),
                 ),
               ],
             ),
           ),
-          SizedBox(height: 25)
+          SizedBox(height: _style.buttonLineSpace)
         ],
       ),
     );
   }
 
-  Widget _buildListOfActions(UserProfileViewModel viewModel) {
+  Widget _buildListOfActions(
+      UserProfileViewModel viewModel, List<Function> listOfFunctions) {
     return ListView.separated(
       shrinkWrap: true,
       physics: ScrollPhysics(),
-      itemCount: viewModel.actions.length,
-      itemBuilder: (context, index) => UserProfileListItem(),
+      itemCount: _Constants.PROFILE_ACTIONS.length,
+      itemBuilder: (context, index) => UserProfileListItem(
+            viewModel: UserProfileListItemViewModel(
+                icon: _Constants.PROFILE_ACTIONS[index].icon,
+                title: _Constants.PROFILE_ACTIONS[index].title,
+                onTap: listOfFunctions[index],
+                isDestructive: _Constants.PROFILE_ACTIONS[index].isDestructive),
+          ),
       separatorBuilder: (context, index) => ListDivider.build(),
     );
   }
@@ -120,65 +345,47 @@ class UserProfile extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Text(
-            "Ireti Kuta",
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: const TextStyle(
-              fontSize: 27,
-              fontWeight: FontWeight.bold,
-              color: Color(0xff1a1b46),
-            ),
-          ),
-          SizedBox(height: 0.5),
+          Text(_viewModel.userName,
+              maxLines: _style.maxLines,
+              overflow: TextOverflow.ellipsis,
+              style: _style.titleTextStyle),
+          SizedBox(height: _style.titleLineSpace),
           Container(
-            height: 2,
-            width: 121,
-            color: Color(0xffe9eaf2),
+            height: _style.dividerHeight,
+            width: double.infinity,
+            color: _style.dividerColor,
           ),
-          SizedBox(height: 6.5),
+          SizedBox(height: _style.subtitleLineSpace),
           Row(
             children: <Widget>[
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    "6",
-                    style: const TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.w500,
-                        color: Color(0xff4c4e6e)),
+                    _viewModel.activeCrops.toString(),
+                    style: _style.subtitleTextStyle,
                   ),
                   Text(
-                    "Active crops",
-                    maxLines: 1,
+                    _Strings.ACTIVE_CROPS,
+                    maxLines: _style.maxLines,
                     overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                        fontSize: 13,
-                        fontWeight: FontWeight.normal,
-                        color: Color(0xffb7b8c9)),
+                    style: _style.detailTextStyle,
                   ),
                 ],
               ),
-              SizedBox(width: 23),
+              SizedBox(width: _style.detailSpacing),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    "23",
-                    style: const TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.w500,
-                        color: Color(0xff4c4e6e)),
+                    _viewModel.completedCrops.toString(),
+                    style: _style.subtitleTextStyle,
                   ),
                   Text(
-                    "Completed",
-                    maxLines: 1,
+                    _Strings.COMPLETED,
+                    maxLines: _style.maxLines,
                     overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                        fontSize: 13,
-                        fontWeight: FontWeight.normal,
-                        color: Color(0xffb7b8c9)),
+                    style: _style.detailTextStyle,
                   ),
                 ],
               ),

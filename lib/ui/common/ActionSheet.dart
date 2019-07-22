@@ -1,6 +1,7 @@
 import 'package:farmsmart_flutter/ui/common/ActionSheetListItem.dart';
 import 'package:farmsmart_flutter/ui/common/ListDivider.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
+import 'package:farmsmart_flutter/ui/mockData/MockActionSheetViewModel.dart';
 import 'package:flutter/material.dart';
 
 class _Constants {
@@ -115,6 +116,14 @@ class ActionSheet extends StatefulWidget {
 
   @override
   _ActionSheetState createState() => _ActionSheetState();
+
+  //FIXME: To show ActionBottomSheet (need to implement)
+  static Future onMenuPressed(BuildContext context) async {
+    showModalBottomSheet(
+        context: context,
+        builder: (widgetBuilder) =>  ActionSheet(viewModel: MockActionSheetViewModel.buildWithCheckBox(), style: ActionSheetStyle.defaultStyle())
+    );
+  }
 }
 
 class _ActionSheetState extends State<ActionSheet> {
