@@ -122,7 +122,7 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
         ),
       ),
       PlaygroundWidget(
-          title: 'huha',
+          title: 'FARM-63 View Profile',
           child: UserProfile(viewModel: MockUserProfileViewModel.build())),
     ];
   }
