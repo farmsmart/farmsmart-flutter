@@ -109,7 +109,7 @@ class LandingPage extends StatelessWidget {
       child: Column(
         children: <Widget>[
           Flexible(
-            flex: _Constants.secondaryPriority,
+            flex: _Constants.imageFlexValue,
             fit: FlexFit.loose,
             child: Container(
               child: Image.asset(
