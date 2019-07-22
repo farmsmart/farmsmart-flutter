@@ -2,6 +2,7 @@ import 'package:farmsmart_flutter/data/bloc/article/ArticleListProvider.dart';
 import 'package:farmsmart_flutter/data/repositories/article/implementation/MockArticlesRepository.dart';
 import 'package:farmsmart_flutter/ui/bottombar/persistent_bottom_navigation_bar.dart';
 import 'package:farmsmart_flutter/ui/common/ActionSheet.dart';
+import 'package:farmsmart_flutter/ui/common/AlertWidget.dart';
 import 'package:farmsmart_flutter/ui/common/carousel_view.dart';
 import 'package:farmsmart_flutter/ui/discover/ArticleList.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockActionSheetViewModel.dart';
@@ -114,6 +115,9 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
         child: PersistentBottomNavigationBar(
           backgroundColor: Colors.white,
           tabs: PlaygroundPersistentBottomNavigationBar().getList(),),),
+
+      PlaygroundWidget(title: "FARM-432 General Alert Widget",
+      child: AlertWidget(),),
     ];
   }
 }
