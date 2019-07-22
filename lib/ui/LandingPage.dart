@@ -97,7 +97,7 @@ class LandingPage extends StatelessWidget {
   const LandingPage(
       {Key key,
       LandingPageViewModel viewModel,
-      LandingPageStyle style = _defaultStyle})
+      LandingPageStyle style = _defaultStyle,})
       : this._viewModel = viewModel,
         this._style = style,
         super(key: key);
