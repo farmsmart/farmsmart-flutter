@@ -58,7 +58,7 @@ class MockActionSheetListItemViewModel {
     return ActionSheetListItemViewModel(
       title: _mockItemTitleStandard[index],
       type: ActionType.simple,
-      onTap: null,
+      onTap: () => actionTest("Tapped " + _mockItemTitleStandard[index]),
       isDestructive: _mockItemDestructive[index],
     );
   }
@@ -67,7 +67,7 @@ class MockActionSheetListItemViewModel {
     return ActionSheetListItemViewModel(
       title: _mockItemTitleStandardBigger[index],
       type: ActionType.simple,
-      onTap: null,
+      onTap:  () => actionTest("Tapped " + _mockItemTitleStandardBigger[index]),
       isDestructive: _mockItemDestructive[index],
     );
   }
@@ -76,7 +76,7 @@ class MockActionSheetListItemViewModel {
     return ActionSheetListItemViewModel(
       title: _mockItemTitleWithIcon[index],
       type: ActionType.withIcon,
-      onTap: null,
+      onTap: () => actionTest("Tapped " + _mockItemTitleWithIcon[index]),
       isDestructive: _mockItemDestructive[index],
       icon: _mockIcon[index]
     );
@@ -86,11 +86,15 @@ class MockActionSheetListItemViewModel {
     return ActionSheetListItemViewModel(
       title: _mockItemTitleSelectable[index],
       type: ActionType.selectable,
-      onTap: null,
+      onTap: () => actionTest("Tapped " + _mockItemTitleSelectable[index]),
       isDestructive: _mockItemDestructive[index],
       icon: _mockFlagIcon[index],
       checkBoxIcon: _mockCheckBoxIcon[index],
     );
+  }
+
+  static actionTest(String message) {
+    print(message);
   }
 }
 

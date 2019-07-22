@@ -1,24 +1,18 @@
 import 'dart:async';
 
-import 'package:farmsmart_flutter/data/bloc/article/ArticleDetailTransformer.dart';
-import 'package:farmsmart_flutter/data/bloc/article/ArticleListItemViewModelTransformer.dart';
 import 'package:farmsmart_flutter/data/model/NewStageEntity.dart';
 import 'package:farmsmart_flutter/data/model/PlotEntity.dart';
-import 'package:farmsmart_flutter/data/model/crop_entity.dart';
 import 'package:farmsmart_flutter/data/repositories/plot/PlotRepositoryInterface.dart';
-import 'package:farmsmart_flutter/ui/discover/viewModel/ArticleDetailViewModel.dart';
 import 'package:farmsmart_flutter/ui/myplot/viewmodel/PlotDetailViewModel.dart';
 
 import '../ViewModelProvider.dart';
-import 'PlotToPlotListItemViewModel.dart';
+import 'PlotToPlotDetailViewModel.dart';
 import 'StageBusinessLogic.dart';
 import 'StageToStageCardViewModel.dart';
 
 class PlotDetailProvider implements ViewModelProvider<PlotDetailViewModel> {
   PlotDetailViewModel _snapshot;
-  final _articleTransformer =
-      ArticleListItemViewModelTransformer.buildWithDetail(
-          ArticleDetailViewModelTransformer());
+ 
   PlotEntity _plot;
   final PlotRepositoryInterface _repo;
   final StreamController<PlotDetailViewModel> _controller =
@@ -45,26 +39,9 @@ class PlotDetailProvider implements ViewModelProvider<PlotDetailViewModel> {
   }
 
   PlotDetailViewModel _viewModel() {
-    final headerViewModel =
-        PlotToPlotListItemViewModel(null).transform(from: _plot);
-    final stageTransformer = StageToStageCardViewModel(
-        _plot, _beginStageAction, _completeStageAction, _revertStageAction);
-    final stageViewModels = _plot.stages.map((stage) {
-      return stageTransformer.transform(from: stage);
-    }).toList();
-    final List<ArticleDetailViewModel> artcileViewModels =
-        _plot.stages.map((stage) {
-      return _articleTransformer.transform(from: stage.article).detailViewModel;
-    }).toList();
-    final detailViewModel = PlotDetailViewModel(
-        title: headerViewModel.title,
-        detailText: headerViewModel.detail,
-        imageProvider: CropImageProvider(_plot.crop),
-        progress: headerViewModel.progress,
-        stageCardViewModels: stageViewModels,
-        stageArticleViewModels: artcileViewModels,
-        currentStage: _logic.currentStageIndex(_plot.stages));
-    return detailViewModel;
+    final stageTransformer = StageToStageCardViewModel(_plot, _beginStageAction, _completeStageAction, _revertStageAction);
+    final detailTransformer = PlotToPlotDetailViewModel(_plot,stageTransformer,_rename,_remove);
+    return detailTransformer.transform();
   }
 
   //LH here we complete the stage and begin the next if not the last stage, as per business requirements
@@ -92,6 +69,18 @@ class PlotDetailProvider implements ViewModelProvider<PlotDetailViewModel> {
 
   void _revertStageAction(PlotEntity plot, NewStageEntity stage) {
     _repo.revertStage(plot, stage).then((plot) {
+      _plot = plot;
+    });
+  }
+
+  void _remove(PlotEntity plot){
+     _repo.remove(plot).then((success) {
+      //TODO: what if this failed?
+    });
+  }
+
+  void _rename(PlotEntity plot, String name) {
+    _repo.rename(plot, name).then((plot) {
       _plot = plot;
     });
   }

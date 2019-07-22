@@ -1,4 +1,6 @@
 import 'package:farmsmart_flutter/data/bloc/ViewModelProvider.dart';
+import 'package:farmsmart_flutter/ui/common/ActionSheet.dart';
+import 'package:farmsmart_flutter/ui/common/ActionSheetListItem.dart';
 
 import 'package:farmsmart_flutter/ui/common/ContextualAppBar.dart';
 import 'package:farmsmart_flutter/ui/common/SectionListView.dart';
@@ -11,8 +13,14 @@ import 'package:farmsmart_flutter/ui/myplot/PlotListItem.dart';
 import 'package:farmsmart_flutter/ui/myplot/viewmodel/PlotDetailViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-
+import 'package:intl/intl.dart';
 import 'PlotDetailHeaderStyle.dart';
+
+class _Strings {
+  static final renameAction = "Rename Crop";
+  static final removeAction = "Delete Crop";
+  static final cancelAction = "Cancel";    
+}
 
 abstract class PlotDetailStyle {
   final TextStyle titleTextStyle;
@@ -101,7 +109,7 @@ class _PlotDetailState extends State<PlotDetail> {
                   sections: [topSection, widget._articleDetail],
                 );
                 return Scaffold(
-                    appBar: _buildAppBar(context), body: sectionedList);
+                    appBar: _buildAppBar(context, viewModel), body: sectionedList);
               });
         });
   }
@@ -122,13 +130,36 @@ class _PlotDetailState extends State<PlotDetail> {
     );
   }
 
-  Widget _buildAppBar(BuildContext context) {
-    return ContextualAppBar(
-      shareAction: null,
+  Widget _buildAppBar(BuildContext context,PlotDetailViewModel viewModel) {
+    return ContextualAppBar(      
+      moreAction: () => _moreTapped(_moreMenu(viewModel)),
     ).build(context);
+  }
+
+  void _moreTapped(ActionSheet sheet) {
+    ActionSheet.present(sheet, this.context);
   }
 
   void _pageChanged(int index) {
     setState(() => _selectedStage = index);
   }
+
+  void _removeAction(PlotDetailViewModel viewModel) {
+    viewModel.remove();    //TODO: add the confirm when ready
+    Navigator.of(context).pop();
+  }
+
+  void _renameAction(PlotDetailViewModel viewModel) {
+    viewModel.rename("test");   //TODO: add the UI for input when ready
+  }
+
+  ActionSheet _moreMenu(PlotDetailViewModel viewModel) {
+    final actions = [
+      ActionSheetListItemViewModel(title: Intl.message(_Strings.renameAction), type: ActionType.simple, onTap: () => _renameAction(viewModel)),   
+      ActionSheetListItemViewModel(title: Intl.message(_Strings.removeAction), type: ActionType.simple, isDestructive: true, onTap: () => _removeAction(viewModel)),
+    ];
+    final actionSheetViewModel = ActionSheetViewModel(actions, Intl.message(_Strings.cancelAction));
+    return ActionSheet(viewModel: actionSheetViewModel, style: ActionSheetStyle.defaultStyle());
+  } 
 }
+

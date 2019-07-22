@@ -108,8 +108,24 @@ class MockPlotRepository implements PlotRepositoryInterface {
     return Future.value(forPlot);
   }
 
+  @override
+  Future<bool> remove(PlotEntity plot) {
+    _plots.remove(plot);
+    _update();
+    return  Future.value(true);
+  }
 
-   NewStageEntity _stageWithDates(NewStageEntity stage, DateTime start, DateTime end) {
+  @override
+  Future<PlotEntity> rename(PlotEntity plot, String name) {
+     final plotIndex = _plots.indexOf(plot);
+    final newPlot = PlotEntity(id: plot.id ,title: name ,crop: plot.crop ,score: plot.score ,stages: plot.stages);
+    _plots.replaceRange(plotIndex, plotIndex+1, [newPlot]);
+    _update();
+    return  Future.value(newPlot);
+  }
+
+
+  NewStageEntity _stageWithDates(NewStageEntity stage, DateTime start, DateTime end) {
     return  NewStageEntity(id: stage.id, article: stage.article, started: start, ended: end);
   }
 

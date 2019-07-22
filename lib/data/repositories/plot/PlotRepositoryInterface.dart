@@ -13,4 +13,6 @@ abstract class PlotRepositoryInterface implements BasicRepositoryInterface<PlotE
     Future<PlotEntity> completeStage(PlotEntity forPlot, NewStageEntity stage);
     Future<PlotEntity> beginStage(PlotEntity forPlot, NewStageEntity stage);
     Future<PlotEntity> revertStage(PlotEntity forPlot, NewStageEntity stage);
+    Future<bool> remove(PlotEntity plot);
+    Future<PlotEntity> rename(PlotEntity plot, String name);
 }
