@@ -8,16 +8,16 @@ class _Constants {
     bottom: 5.0,
   );
   static final EdgeInsets wrapColorsPadding = const EdgeInsets.only(
-    top: 17.0,
-    left: 9,
+    top: 11.5,
   );
 
   static final EdgeInsets circlePadding = EdgeInsets.only(
     right: 18,
     bottom: 5,
   );
-  static final double wrapSpacing = 10;
-  static final double wrapRunSpacing = 20;
+  static final double circleSize = 20;
+  static final double wrapSpacing = 8;
+  static final double wrapRunSpacing = 8;
 
   static final EdgeInsets leadingPadding = EdgeInsets.only(top: 1);
 }
@@ -151,38 +151,12 @@ class RecommendationDetailListItem extends StatelessWidget {
     );
   }
 
-  List<Container> _buildCircles(List<Color> colors) => colors.map(
+  List<Widget> _buildCircles(List<Color> colors) => colors.map(
         (color) => Container(
-              padding: _Constants.circlePadding,
-              child: CustomPaint(
-                painter: _DrawCircle(color: color),
-              ),
-            ),
+          height: _Constants.circleSize,
+          width:  _Constants.circleSize,
+          decoration: BoxDecoration(color: color, borderRadius: BorderRadius.all(Radius.circular(30))),
+        ),
       ).toList();
-}
 
-class _DrawCircle extends CustomPainter {
-  static const double _defaultRadius = 10;
-
-  final Color color;
-  final double radius;
-  final double _offset = 0.0;
-
-  Paint _paint;
-
-  _DrawCircle({this.color, this.radius = _defaultRadius}) {
-    _paint = Paint()
-      ..color = color
-      ..style = PaintingStyle.fill;
-  }
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    canvas.drawCircle(Offset(_offset, _offset), radius, _paint);
-  }
-
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) {
-    return false;
-  }
 }

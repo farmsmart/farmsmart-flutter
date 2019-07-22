@@ -62,6 +62,13 @@ List<Color> _mockLargeListOfColors = [
   Color(0xff42434d),
   Color(0xff62434d),
   Color(0xff92434d),
+  Color(0xffeac153),
+  Color(0xffb3762e),
+  Color(0xfff28282),
+  Color(0xfff00000),
+  Color(0xffb20000),
+  Color(0xff22434d),
+
 ];
 
 MockString _mockLargeStrings = MockString(library: [
