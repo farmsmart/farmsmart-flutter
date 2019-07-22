@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:farmsmart_flutter/data/bloc/Transformer.dart';
 import 'package:farmsmart_flutter/data/model/article_entity.dart';
-import 'package:farmsmart_flutter/data/model/entities_const.dart';
 import 'package:farmsmart_flutter/data/repositories/image/implementation/ImageRepositoryFlamelink.dart';
 import 'package:farmsmart_flutter/model/enums.dart';
 
@@ -10,11 +9,23 @@ import '../../../FlamelinkMeta.dart';
 import '../ArticlesRepositoryFlamelink.dart';
 import '../FlameLinkMetaTransformer.dart';
 
+class _Fields {
+  static String id = "id";
+  static String content = "content";
+  static String status = "status";
+  static String summary = "summary";
+  static String title = "title";
+  static String name = "name";
+  static String related = "relatedArticles";
+  static String article = "article";
+  static String image = "image";
+}
+
 class FlamelinkArticleTransformer
     implements ObjectTransformer<DocumentSnapshot, ArticleEntity> {
   final ObjectTransformer<DocumentSnapshot, FlamelinkMeta> _metaTransformer;
   final FlameLink _cms;
-  
+
   FlamelinkArticleTransformer(
       {FlameLink cms,
       ObjectTransformer<DocumentSnapshot, FlamelinkMeta> metaTransformer =
@@ -25,12 +36,13 @@ class FlamelinkArticleTransformer
   @override
   ArticleEntity transform({DocumentSnapshot from}) {
     final meta = _metaTransformer.transform(from: from);
-    final id = castOrNull<String>(from.data[ID]);
-    final content = castOrNull<String>(from.data[CONTENT]);
-    final status = castOrNull<String>(from.data[STATUS]);
-    final summary = castOrNull<String>(from.data[SUMMARY]);
-    final title = castOrNull<String>(from.data[TITLE]);
-    final published = (meta.createdDate != null) ? meta.createdDate.toDate() : null;
+    final id = castOrNull<String>(from.data[_Fields.id]);
+    final content = castOrNull<String>(from.data[_Fields.content]);
+    final status = castOrNull<String>(from.data[_Fields.status]);
+    final summary = castOrNull<String>(from.data[_Fields.summary]);
+    final title = castOrNull<String>(from.data[_Fields.title]) ?? castOrNull<String>(from.data[_Fields.name]) ;
+    final published =
+        (meta.createdDate != null) ? meta.createdDate.toDate() : null;
     final entity = ArticleEntity(
         id: id,
         content: content,
@@ -40,13 +52,14 @@ class FlamelinkArticleTransformer
         published: published);
     var relatedRefs = [];
     var imageRefs = [];
-    if (from.data[RELATED_ARTICLES] != null) {
-      relatedRefs = List<String>.from(from.data[RELATED_ARTICLES]
-          .map((article) => article[ARTICLE].path)).toList();
+    if (from.data[_Fields.related] != null) {
+      relatedRefs = List<String>.from(from.data[_Fields.related]
+          .map((article) => article[_Fields.article].path)).toList();
     }
-    if (from.data[IMAGE] != null) {
-      imageRefs = List<String>.from(from.data[IMAGE].map((image) => image.path))
-          .toList();
+    if (from.data[_Fields.image] != null) {
+      imageRefs =
+          List<String>.from(from.data[_Fields.image].map((image) => image.path))
+              .toList();
     }
     final relatedPaths = List<String>.from(relatedRefs);
     final imagePaths = List<String>.from(imageRefs);

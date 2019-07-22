@@ -28,7 +28,7 @@ import 'package:farmsmart_flutter/ui/playground/data/playground_datasource_impl.
 /// like bottom bar or action bar.
 ///
 
-final cms = FlameLink(store: Firestore.instance, environment: Environment.development);
+final cms = FlameLink(store: Firestore.instance, environment: Environment.production);
 final articleRepo = ArticlesRepositoryFlameLink(cms);
 final plotRepo = MockPlotRepository();
 final cropRepo = MockCropRepository();
@@ -91,6 +91,17 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
           return MaterialPageRoute(builder: builder, settings: settings);
         });
 
+  final chatTab = Navigator(
+        initialRoute: "/chat",
+        onGenerateRoute: (RouteSettings settings) {
+          WidgetBuilder builder = (BuildContext _) => ArticleList(
+              viewModelProvider: ArticleListProvider(
+                  title: localizations.communityTab,
+                  repository: articleRepo,
+                  group: ArticleCollectionGroup.chatGroups));
+          return MaterialPageRoute(builder: builder, settings: settings);
+        });
+
     final plotTab = Navigator(
         initialRoute: "/plot",
         onGenerateRoute: (RouteSettings settings) {
@@ -105,7 +116,7 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
       plotTab,
       ProfitLossPage(),
       discoverTab,
-      HomeCommunityChild(),
+      chatTab,
       PlaygroundView(
         widgetList: PlaygroundDataSourceImpl().getList(),
       ),
