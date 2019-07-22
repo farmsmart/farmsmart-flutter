@@ -59,6 +59,7 @@ class RecommendationCardStyles {
     contentPadding: const EdgeInsets.all(32.0),
     overlayIconWidth: 54,
     overlayIconHeight: 54,
+    overlayColor: Color(0x1425df0c),
   );
 
   static RoundedButtonStyle _defaultRoundedButtonStyle = RoundedButtonStyle(
