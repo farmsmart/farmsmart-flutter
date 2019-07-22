@@ -34,6 +34,7 @@ class AlertWidget extends StatelessWidget {
                           fontSize: 27,
                           fontWeight: FontWeight.bold),
                     ),
+                    SizedBox(height: 26,),
                     Column(
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
