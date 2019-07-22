@@ -1,6 +1,5 @@
 import 'package:farmsmart_flutter/data/model/mock/MockString.dart';
 import 'package:farmsmart_flutter/ui/common/stage_card.dart';
-import 'package:flutter/material.dart';
 
 class MockStageCardViewModel {
   static StageCardViewModel buildUpcomingState() {

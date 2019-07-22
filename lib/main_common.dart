@@ -14,8 +14,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'app_routes.dart';
 import 'package:farmsmart_flutter/farmsmart_localizations.dart';
 
-import 'ui/discover/ArticleDetail.dart';
-
 void bootstrap() async {
   // Defines app orientation
   SystemChrome.setPreferredOrientations([

@@ -1,11 +1,13 @@
-import 'package:farmsmart_flutter/ui/common/CircularProgress.dart';
 import 'package:farmsmart_flutter/data/bloc/article/ArticleDetailTransformer.dart';
 import 'package:farmsmart_flutter/data/bloc/article/ArticleListItemViewModelTransformer.dart';
 import 'package:farmsmart_flutter/ui/common/ActionSheetListItem.dart';
 import 'package:farmsmart_flutter/data/model/mock/MockArticle.dart';
+import 'package:farmsmart_flutter/ui/common/CircularProgress.dart';
 import 'package:farmsmart_flutter/ui/common/DogTagStyles.dart';
 import 'package:farmsmart_flutter/ui/common/Dogtag.dart';
+import 'package:farmsmart_flutter/ui/common/recommendation_card/recommendation_card.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
+import 'package:farmsmart_flutter/ui/common/stage_card.dart';
 import 'package:farmsmart_flutter/ui/discover/HeroListItem.dart';
 import 'package:farmsmart_flutter/ui/discover/StandardListItem.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockActionSheetViewModel.dart';
@@ -13,10 +15,12 @@ import 'package:farmsmart_flutter/ui/mockData/MockDogTagViewModel.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockRoundedButtonViewModel.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockStageCardViewModel.dart';
 import 'package:farmsmart_flutter/ui/playground/data/playground_data_source.dart';
+import 'package:farmsmart_flutter/ui/playground/data/playground_recommendation_card_datasource.dart';
+import 'package:farmsmart_flutter/ui/playground/data/playground_recommendation_detail_card_datasource.dart';
 import 'package:farmsmart_flutter/ui/playground/playground_widget.dart';
-import 'package:farmsmart_flutter/ui/common/stage_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import '../playground_view.dart';
 
 MockArticle _articleBuilder = MockArticle();
 
@@ -137,10 +141,13 @@ class PlayGroundAtomDataSource implements PlaygroundDataSource {
       PlaygroundWidget(
         title: 'CircularProgress',
         child: Container(
-          alignment: Alignment.center,
-          padding: EdgeInsets.symmetric(vertical: 20.0),
-          child: CircularProgress(progress: 0.75, lineWidth: 3, size: 87,)
-        ),
+            alignment: Alignment.center,
+            padding: EdgeInsets.symmetric(vertical: 20.0),
+            child: CircularProgress(
+              progress: 0.75,
+              lineWidth: 3,
+              size: 87,
+            )),
       ),
       PlaygroundWidget(
         title: 'Stage Card',
@@ -170,7 +177,19 @@ class PlayGroundAtomDataSource implements PlaygroundDataSource {
       RoundedButton(viewModel: MockRoundedButtonViewModel.buildCompact(), style: RoundedButtonStyle.bigRoundedButton()),
       ActionSheetListItem(viewModel: MockActionSheetViewModel.buildStandard().actions.first),
       ActionSheetListItem(viewModel: MockActionSheetViewModel.buildWithIcon().actions.first),
-      ActionSheetListItem(viewModel: MockActionSheetViewModel.buildWithCheckBox().actions.first)
+      ActionSheetListItem(viewModel: MockActionSheetViewModel.buildWithCheckBox().actions.first),
+      PlaygroundWidget(
+        title: 'Recommendation Card',
+        child: PlaygroundView(
+          widgetList: PlaygroundRecommendationCardDataSource().getList(),
+        ),
+      ),
+      PlaygroundWidget(
+        title: 'Recommendation detail card',
+        child: PlaygroundView(
+          widgetList: PlaygroundRecommendationDetailCardDatasource().getList(),
+        ),
+      )
     ];
   }
 }

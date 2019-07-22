@@ -1,14 +1,9 @@
 import 'package:farmsmart_flutter/data/bloc/Transformer.dart';
-import 'package:farmsmart_flutter/data/bloc/article/ArticleDetailTransformer.dart';
-import 'package:farmsmart_flutter/data/bloc/article/ArticleListItemViewModelTransformer.dart';
 import 'package:farmsmart_flutter/data/bloc/plot/PlotDetailProvider.dart';
 import 'package:farmsmart_flutter/data/bloc/plot/StageBusinessLogic.dart';
-import 'package:farmsmart_flutter/data/bloc/plot/StageToStageCardViewModel.dart';
 import 'package:farmsmart_flutter/data/model/PlotEntity.dart';
 import 'package:farmsmart_flutter/data/model/crop_entity.dart';
-import 'package:farmsmart_flutter/ui/discover/viewModel/ArticleDetailViewModel.dart';
 import 'package:farmsmart_flutter/ui/myplot/PlotListItem.dart';
-import 'package:farmsmart_flutter/ui/myplot/viewmodel/PlotDetailViewModel.dart';
 import 'package:intl/intl.dart';
 
 class _Strings {
