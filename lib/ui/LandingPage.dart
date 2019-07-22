@@ -143,7 +143,7 @@ class LandingPage extends StatelessWidget {
                     RoundedButton(
                       viewModel: RoundedButtonViewModel(
                           title: Intl.message(_viewModel.actionText),
-                          onTap: () {}),
+                          onTap: () {},),
                       style: RoundedButtonStyle.largeRoundedButtonStyle()
                           .copyWith(buttonTextStyle: _style.actionTextStyle),
                     ),
