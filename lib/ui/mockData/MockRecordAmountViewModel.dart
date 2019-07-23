@@ -17,6 +17,7 @@ class MockRecordAmountViewModel {
         loadingStatus: LoadingStatus.SUCCESS,
         actions: list,
         buttonTitle: _mockButtonTitle[1],
+        listener: (data) => _mockTap(data),
         type: RecordType.sale);
   }
 
@@ -31,6 +32,7 @@ class MockRecordAmountViewModel {
         loadingStatus: LoadingStatus.SUCCESS,
         actions: list,
         buttonTitle: _mockButtonTitle[0],
+        listener: (data) => _mockTap(data),
         type: RecordType.cost);
   }
 
@@ -65,6 +67,10 @@ class MockRecordAmountViewModel {
         type: RecordType.cost,
         isEditable: false,
         amount: "-233.3");
+  }
+
+  static _mockTap(RecordData data) {
+    print(data.amount);
   }
 }
 

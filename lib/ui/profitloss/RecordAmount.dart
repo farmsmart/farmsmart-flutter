@@ -45,16 +45,17 @@ class RecordAmountViewModel {
   bool isFilled;
   bool isEditable;
   String buttonTitle;
+  final Function(RecordData) listener;
 
-  RecordAmountViewModel({
-    this.loadingStatus,
-    this.actions,
-    this.amount,
-    this.buttonTitle,
-    this.isFilled: false,
-    this.type,
-    this.isEditable: true,
-  });
+  RecordAmountViewModel(
+      {this.loadingStatus,
+      this.actions,
+      this.amount,
+      this.buttonTitle,
+      this.isFilled: false,
+      this.type,
+      this.isEditable: true,
+      this.listener});
 }
 
 class RecordAmountStyle {
@@ -141,8 +142,6 @@ class RecordAmount extends StatefulWidget {
 
 class RecordAmountState extends State<RecordAmount> {
   String amount;
-
-  //DateTime _initDate = DateTime.now();
   DateTime selectedDate = DateTime.now();
   String selectedCrop;
   String description;
@@ -328,11 +327,7 @@ class RecordAmountState extends State<RecordAmount> {
                 : RoundedButton(
                     viewModel: RoundedButtonViewModel(
                         title: viewModel.buttonTitle,
-                        onTap: () => saveData(RecordData(
-                            amount: amount,
-                            date: selectedDate,
-                            crop: selectedCrop,
-                            description: description ?? ""))),
+                        onTap: (data) => viewModel.listener(data)),
                     style: viewModel.type == RecordType.sale
                         ? RoundedButtonStyle.largeRoundedButtonStyle().copyWith(
                             backgroundColor: Color(0xFF24d900),
@@ -347,12 +342,16 @@ class RecordAmountState extends State<RecordAmount> {
     );
   }
 
-  void saveData(RecordData save) {
+  saveData(RecordData save) {
     final snackBar = SnackBar(
-      content: Text("You recorded:\nAMOUNT: " + save.amount +
-          "\nDATE: " + save.date.toIso8601String() +
-          "\nCROP: " + save.crop +
-          "\nDESC: " + save.description),
+      content: Text("You recorded:\nAMOUNT: " +
+          save.amount +
+          "\nDATE: " +
+          save.date.toIso8601String() +
+          "\nCROP: " +
+          save.crop +
+          "\nDESC: " +
+          save.description),
       duration: Duration(seconds: 2),
     );
     Scaffold.of(context).showSnackBar(snackBar);
