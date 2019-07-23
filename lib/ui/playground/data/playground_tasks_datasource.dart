@@ -103,11 +103,6 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
           ),
         ),
       ),
-      /* Template
-      PlaygroundWidget(
-        title: '#TASK NAME#',
-        child: YourWidget(),
-      ),*/
       PlaygroundWidget(
           title: "FARM-280 Update Discover",
           child: ArticleList(
@@ -122,8 +117,9 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
         ),
       ),
       PlaygroundWidget(
-          title: 'FARM-63 View Profile',
-          child: UserProfile(viewModel: MockUserProfileViewModel.build())),
+        title: 'FARM-63 View Profile',
+        child: UserProfile(viewModel: MockUserProfileViewModel.build()),
+      ),
     ];
   }
 }

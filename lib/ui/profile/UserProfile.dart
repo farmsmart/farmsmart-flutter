@@ -7,8 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class _Constants {
-  static final link =
-      "https://firebasestorage.googleapis.com/v0/b/farmsmart-20190415.appspot.com/o/flamelink%2Fmedia%2FLxHKKHJPSN3Atvbx1nv3_Cucumber.jpg?alt=media&token=642bb3b7-ac3d-4a6d-8b73-fbebd5c03eaa";
+  //static final link =
+    //  "https://firebasestorage.googleapis.com/v0/b/farmsmart-20190415.appspot.com/o/flamelink%2Fmedia%2FLxHKKHJPSN3Atvbx1nv3_Cucumber.jpg?alt=media&token=642bb3b7-ac3d-4a6d-8b73-fbebd5c03eaa";
+  static final link = "https://www.flower-pepper.com/wp-content/uploads/2016/10/Kermit-the-Frog-by-Bartholomew-300x378.jpg";
 
   static final List<UserProfileListItemViewModel> PROFILE_ACTIONS = [
     UserProfileListItemViewModel(
@@ -294,7 +295,7 @@ class UserProfile extends StatelessWidget {
               children: <Widget>[
                 _buildMainTextView(context),
                 SizedBox(width: _style.imageSpacing),
-                _buildPlotImage(),
+                _buildPlotImage(_Constants.link),
               ],
             ),
           ),
@@ -345,15 +346,21 @@ class UserProfile extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Text(_viewModel.userName,
-              maxLines: _style.maxLines,
-              overflow: TextOverflow.ellipsis,
-              style: _style.titleTextStyle),
-          SizedBox(height: _style.titleLineSpace),
-          Container(
-            height: _style.dividerHeight,
-            width: double.infinity,
-            color: _style.dividerColor,
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(_viewModel.userName,
+                  maxLines: _style.maxLines,
+                  overflow: TextOverflow.ellipsis,
+                  style: _style.titleTextStyle),
+              SizedBox(height: _style.titleLineSpace),
+              Container(
+                height: _style.dividerHeight,
+                //width: double.infinity,
+                color: _style.dividerColor,
+              ),
+            ],
           ),
           SizedBox(height: _style.subtitleLineSpace),
           Row(
@@ -396,6 +403,7 @@ class UserProfile extends StatelessWidget {
     );
   }
 
+/*
   ClipOval _buildPlotImage() {
     return ClipOval(
         child: Container(
@@ -403,5 +411,34 @@ class UserProfile extends StatelessWidget {
       width: 72,
       color: Colors.pink,
     ));
+  }*/
+
+  ClipOval _buildPlotImage(String imageUrl) {
+    return ClipOval(
+        child: Stack(children: <Widget>[
+      Image.network(
+        imageUrl,
+        height: 72,
+        width: 72,
+        fit: BoxFit.cover,
+        alignment: Alignment.topCenter,
+      ),
+    ]));
   }
+/*
+  ClipOval _buildPlotImage(
+      Future<String> imageUrl, PlotListItemStyle itemStyle) {
+    return ClipOval(
+        child: Stack(children: <Widget>[
+          NetworkImageFromFuture(imageUrl,
+              height: itemStyle.imageSize,
+              width: itemStyle.imageSize,
+              fit: BoxFit.cover),
+          Positioned.fill(
+              child: Container(
+                color: itemStyle.overlayColor,
+              )),
+        ]));
+  } */
+
 }
