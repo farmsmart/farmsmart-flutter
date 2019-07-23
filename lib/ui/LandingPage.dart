@@ -14,6 +14,7 @@ class _Constants {
   static final int imageFlexValue = 2;
   static final double subtitleLineSpace = 10;
   static final double actionLineSpace = 34;
+  static final EdgeInsets actionTapArea = EdgeInsets.all(10);
 }
 
 class LandingPageViewModel {
@@ -23,6 +24,8 @@ class LandingPageViewModel {
 
   String headerImage;
   String subtitleImage;
+  Function confirmAction;
+  ActionSheetViewModel actionSheetViewModel;
 
   LandingPageViewModel({
     this.detailText,
@@ -30,6 +33,8 @@ class LandingPageViewModel {
     this.headerImage,
     this.subtitleImage,
     this.footerText,
+    this.confirmAction,
+    this.actionSheetViewModel,
   });
 }
 
@@ -68,10 +73,10 @@ class LandingPageStyle {
 
 class _DefaultStyle extends LandingPageStyle {
   final TextStyle detailTextStyle = const TextStyle(
-      fontSize: 17,
-      height: 1.1,
-      fontWeight: FontWeight.normal,
-      color: Color(0xff4c4e6e));
+    fontSize: 17,
+    height: 1.1,
+    fontWeight: FontWeight.normal,
+    color: Color(0xff4c4e6e));
   final TextStyle footerTextStyle = const TextStyle(
       fontWeight: FontWeight.normal, fontSize: 15, color: Color(0xff4c4e6e));
   final TextStyle actionTextStyle = const TextStyle(
@@ -94,10 +99,11 @@ class LandingPage extends StatelessWidget {
   final LandingPageViewModel _viewModel;
   final LandingPageStyle _style;
 
-  const LandingPage(
-      {Key key,
-      LandingPageViewModel viewModel,
-      LandingPageStyle style = _defaultStyle,})
+  const LandingPage({
+    Key key,
+    LandingPageViewModel viewModel,
+    LandingPageStyle style = _defaultStyle,
+  })
       : this._viewModel = viewModel,
         this._style = style,
         super(key: key);
@@ -127,7 +133,9 @@ class LandingPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
                     Image.asset(_viewModel.subtitleImage),
-                    SizedBox(height: _Constants.subtitleLineSpace,),
+                    SizedBox(
+                      height: _Constants.subtitleLineSpace,
+                    ),
                     Text(
                       Intl.message(_viewModel.detailText),
                       style: _style.detailTextStyle,
@@ -142,19 +150,26 @@ class LandingPage extends StatelessWidget {
                   children: <Widget>[
                     RoundedButton(
                       viewModel: RoundedButtonViewModel(
-                          title: Intl.message(_viewModel.actionText),
-                          onTap: () {},),
+                        title: Intl.message(_viewModel.actionText),
+                        onTap: () => _viewModel.confirmAction(),
+                      ),
                       style: RoundedButtonStyle.largeRoundedButtonStyle()
                           .copyWith(buttonTextStyle: _style.actionTextStyle),
                     ),
-                    SizedBox(height: _Constants.actionLineSpace,),
+                    SizedBox(
+                      height: _Constants.actionLineSpace,
+                    ),
                     GestureDetector(
+                      behavior: HitTestBehavior.opaque,
                       onTap: () => _onMenuPressed(context),
-                      child: Text(
-                        Intl.message(_viewModel.footerText),
-                        style: _style.footerTextStyle,
-                        maxLines: _style.footerTextMaxLines,
-                        overflow: TextOverflow.ellipsis,
+                      child: Container(
+                        margin: _Constants.actionTapArea,
+                        child: Text(
+                          Intl.message(_viewModel.footerText),
+                          style: _style.footerTextStyle,
+                          maxLines: _style.footerTextMaxLines,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
                     ),
                   ],
@@ -170,8 +185,10 @@ class LandingPage extends StatelessWidget {
   Future _onMenuPressed(BuildContext context) async {
     showModalBottomSheet(
         context: context,
-        builder: (widgetBuilder) => ActionSheet(
-            viewModel: MockActionSheetViewModel.buildWithCheckBox(),
-            style: ActionSheetStyle.defaultStyle()));
+        builder: (widgetBuilder) =>
+            ActionSheet(
+                viewModel: _viewModel.actionSheetViewModel,
+                style: ActionSheetStyle.defaultStyle()));
   }
 }
+
