@@ -6,37 +6,30 @@ class MockAlertWidgetViewModel {
     return AlertWidgetViewModel(
       titleText: _mockTitle.random(),
       detailText: _mockDetail.random(),
-      cancelButtonTittle: _mockButtonTitle.random(),
-      confirmButtonTittle: _mockButtonTitle.random(),
+      cancelButtonTittle: "Cancel",
+      confirmButtonTittle: "Yes",
       isDestructive: false,
     );
   }
 
   static AlertWidgetViewModel buildDestructive() {
     return AlertWidgetViewModel(
-        titleText: _mockTitle.random(),
-        detailText: _mockDetail.random(),
-        cancelButtonTittle: _mockButtonTitle.random(),
-        confirmButtonTittle: _mockButtonTitle.random(),
+        titleText: "Delete Profile",
+        detailText: "Are you sure you want to delete your profile? Doing so will erase all data and this action cannot be undone.",
+        cancelButtonTittle: "Cancel",
+        confirmButtonTittle: "Delete",
         isDestructive: true,
     );
   }
 }
 
 MockString _mockTitle = MockString(library: [
-  "Begin stge 2",
-  "End stage 3 a bit larger",
-  "Begin stage 56 a way more larger title"
+  "Mark as Complete",
+  "Begin Stage 2",
 ]);
 
 MockString _mockDetail = MockString(library: [
-  "Some detail text",
-  "Some a bit more large detail text",
-  "A way more larger detail text on this field for testing pruproses"
-]);
-
-MockString _mockButtonTitle = MockString(library: [
-  "Yes",
-  "Cancel"
+  "Are you sure you want to mark Stage 2 – Planting as Complete?",
+  "Are you sure you want to beging Stage 2 – Planting?",
 ]);
 
