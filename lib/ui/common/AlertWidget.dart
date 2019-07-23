@@ -11,14 +11,15 @@ class AlertWidgetViewModel {
   String titleText;
   String detailText;
   Function acceptAction;
+  bool isDestructive;
 
-  AlertWidgetViewModel({
-    @required this.cancelButtonTittle,
-    @required this.confirmButtonTittle,
-    @required this.titleText,
-    this.detailText,
-    this.acceptAction,
-  });
+  AlertWidgetViewModel(
+      {@required this.cancelButtonTittle,
+      @required this.confirmButtonTittle,
+      @required this.titleText,
+      this.detailText,
+      this.acceptAction,
+      this.isDestructive});
 }
 
 class AlertWidgetStyle {
@@ -34,25 +35,28 @@ class AlertWidgetStyle {
   final double actionHeight;
   final double actionWidth;
   final BorderRadius actionCornerRadius;
-  final Color primaryColor;
+  final Color actionBackgroundColor;
+  final Color destructiveActionBackgroundColor;
   final double actionLineSpace;
   final TextStyle actionTextStyle;
 
-  const AlertWidgetStyle(
-      {this.alertEdgePadding,
-      this.cornerRadius,
-      this.backgroundColor,
-      this.alertInnerPadding,
-      this.titleTextStyle,
-      this.titleLineSpace,
-      this.detailTextStyle,
-      this.detailLineSpace,
-      this.actionHeight,
-      this.actionWidth,
-      this.actionCornerRadius,
-      this.primaryColor,
-      this.actionLineSpace,
-      this.actionTextStyle,});
+  const AlertWidgetStyle({
+    this.alertEdgePadding,
+    this.cornerRadius,
+    this.backgroundColor,
+    this.alertInnerPadding,
+    this.titleTextStyle,
+    this.titleLineSpace,
+    this.detailTextStyle,
+    this.detailLineSpace,
+    this.actionHeight,
+    this.actionWidth,
+    this.actionCornerRadius,
+    this.actionBackgroundColor,
+    this.destructiveActionBackgroundColor,
+    this.actionLineSpace,
+    this.actionTextStyle,
+  });
 
   AlertWidgetStyle copyWith({
     EdgeInsets alertEdgePadding,
@@ -66,25 +70,28 @@ class AlertWidgetStyle {
     double actionHeight,
     double actionWidth,
     BorderRadius actionCornerRadius,
-    Color primaryColor,
+    Color actionBackgroundColor,
+    Color destructiveActionBackgroundColor,
     double actionLineSpace,
     TextStyle actionTextStyle,
   }) {
     return AlertWidgetStyle(
-        alertEdgePadding: alertEdgePadding ?? this.alertEdgePadding,
-        cornerRadius: cornerRadius ?? this.cornerRadius,
-        backgroundColor: backgroundColor ?? this.backgroundColor,
-        alertInnerPadding: alertInnerPadding ?? this.alertInnerPadding,
-        titleTextStyle: titleTextStyle ?? this.titleTextStyle,
-        titleLineSpace: titleLineSpace ?? this.titleLineSpace,
-        detailTextStyle: detailTextStyle ?? this.detailTextStyle,
-        detailLineSpace: detailLineSpace ?? this.detailLineSpace,
-        actionHeight: actionHeight ?? this.actionHeight,
-        actionWidth: actionWidth ?? this.actionWidth,
-        actionCornerRadius: actionCornerRadius ?? this.actionCornerRadius,
-        primaryColor: primaryColor ?? this.primaryColor,
-        actionLineSpace: actionLineSpace ?? this.actionLineSpace,
-        actionTextStyle: actionTextStyle ?? this.actionTextStyle,);
+      alertEdgePadding: alertEdgePadding ?? this.alertEdgePadding,
+      cornerRadius: cornerRadius ?? this.cornerRadius,
+      backgroundColor: backgroundColor ?? this.backgroundColor,
+      alertInnerPadding: alertInnerPadding ?? this.alertInnerPadding,
+      titleTextStyle: titleTextStyle ?? this.titleTextStyle,
+      titleLineSpace: titleLineSpace ?? this.titleLineSpace,
+      detailTextStyle: detailTextStyle ?? this.detailTextStyle,
+      detailLineSpace: detailLineSpace ?? this.detailLineSpace,
+      actionHeight: actionHeight ?? this.actionHeight,
+      actionWidth: actionWidth ?? this.actionWidth,
+      actionCornerRadius: actionCornerRadius ?? this.actionCornerRadius,
+      actionBackgroundColor: actionBackgroundColor ?? this.actionBackgroundColor,
+      destructiveActionBackgroundColor: destructiveActionBackgroundColor ?? this.destructiveActionBackgroundColor,
+      actionLineSpace: actionLineSpace ?? this.actionLineSpace,
+      actionTextStyle: actionTextStyle ?? this.actionTextStyle,
+    );
   }
 }
 
@@ -106,7 +113,8 @@ class _DefaultStyle extends AlertWidgetStyle {
   final actionHeight = 48;
   final actionWidth = 120;
   final actionCornerRadius = const BorderRadius.all(Radius.circular(14));
-  final primaryColor = const Color(0xff24d900);
+  final actionBackgroundColor = const Color(0xff24d900);
+  final destructiveActionBackgroundColor = const Color(0xffff6060);
   final actionLineSpace = 8;
   final actionTextStyle =
       const TextStyle(color: Color(0xffffffff), fontSize: 15);
@@ -123,7 +131,8 @@ class _DefaultStyle extends AlertWidgetStyle {
     double actionHeight,
     double actionWidth,
     BorderRadius actionCornerRadius,
-    Color primaryColor,
+    Color actionBackgroundColor,
+    Color destructiveActionBackgroundColor,
     double actionLineSpace,
     TextStyle actionTextStyle,
   });
@@ -221,7 +230,9 @@ class AlertWidget extends StatelessWidget {
         style: RoundedButtonStyle.actionSheetLargeRoundedButton().copyWith(
             height: _style.actionHeight,
             width: _style.actionWidth,
-            backgroundColor: _style.primaryColor,
+            backgroundColor: _viewModel.isDestructive
+                ? _style.destructiveActionBackgroundColor
+                : _style.actionBackgroundColor,
             buttonTextStyle: _style.actionTextStyle,
             borderRadius: _style.actionCornerRadius),
       ),

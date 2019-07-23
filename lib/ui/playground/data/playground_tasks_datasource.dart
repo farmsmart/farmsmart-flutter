@@ -113,11 +113,29 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
         title: "FARM-342 Persistent Bottom navigation bar",
         child: PersistentBottomNavigationBar(
           backgroundColor: Colors.white,
-          tabs: PlaygroundPersistentBottomNavigationBar().getList(),),),
+          tabs: PlaygroundPersistentBottomNavigationBar().getList(),
+        ),
+      ),
 
-      PlaygroundWidget(title: "FARM-432 General Alert Widget",
-      child: PlaygroundButtonPresentAlert(
-      child: AlertWidget(viewModel: MockAlertWidgetViewModel.build())),),
+      PlaygroundWidget(
+        title: "FARM-432 General Alert Widget",
+        child: PlaygroundView(
+          widgetList: [
+            PlaygroundWidget(
+              title: "Green case",
+              child: PlaygroundButtonPresentAlert(
+                  child:
+                      AlertWidget(viewModel: MockAlertWidgetViewModel.build())),
+            ),
+            PlaygroundWidget(
+              title: "Red case",
+              child: PlaygroundButtonPresentAlert(
+                  child:
+                      AlertWidget(viewModel: MockAlertWidgetViewModel.buildDestructive())),
+            ),
+          ],
+        ),
+      ),
     ];
   }
 }

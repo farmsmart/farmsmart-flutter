@@ -8,6 +8,17 @@ class MockAlertWidgetViewModel {
       detailText: _mockDetail.random(),
       cancelButtonTittle: _mockButtonTitle.random(),
       confirmButtonTittle: _mockButtonTitle.random(),
+      isDestructive: false,
+    );
+  }
+
+  static AlertWidgetViewModel buildDestructive() {
+    return AlertWidgetViewModel(
+        titleText: _mockTitle.random(),
+        detailText: _mockDetail.random(),
+        cancelButtonTittle: _mockButtonTitle.random(),
+        confirmButtonTittle: _mockButtonTitle.random(),
+        isDestructive: true,
     );
   }
 }
