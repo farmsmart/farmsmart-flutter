@@ -58,19 +58,19 @@ class _DefaultStyle implements PlotListStyle {
 
 class PlotList extends StatelessWidget {
   final ViewModelProvider<PlotListViewModel> _viewModelProvider;
+  final PlotListStyle _style;
 
-  const PlotList({Key key, ViewModelProvider<PlotListViewModel> provider}) : this._viewModelProvider = provider, super(key: key);
+  const PlotList({Key key, ViewModelProvider<PlotListViewModel> provider, PlotListStyle style = const _DefaultStyle()}) : this._viewModelProvider = provider,  this._style = style, super(key: key);
 
   @override
-  Widget build(BuildContext context,
-      {PlotListStyle style = const _DefaultStyle()}) {
+  Widget build(BuildContext context) {
     final controller = _viewModelProvider.observe();
     return StreamBuilder<PlotListViewModel>(
         stream: controller.stream,
         initialData: _viewModelProvider.initial(),
         builder: (BuildContext context,
             AsyncSnapshot<PlotListViewModel> snapshot) {
-          return _buildBody(context,  snapshot.data, style);
+          return _buildBody(context,  snapshot.data, _style);
         });
   }
 
