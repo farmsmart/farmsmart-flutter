@@ -147,8 +147,8 @@ class RecordAmountState extends State<RecordAmount> {
   String selectedDate;
   String selectedCrop;
   String description;
-  bool amountIsFilled = false;
-  bool cropIsFilled = false;
+  bool isAmountFilled = false;
+  bool isCropFilled = false;
 
   @override
   void initState() {
@@ -345,11 +345,7 @@ class RecordAmountState extends State<RecordAmount> {
 
   checkIfFilled() {
     setState(() {
-      if (amountIsFilled && cropIsFilled) {
-        widget._viewModel.isFilled = true;
-      } else {
-        widget._viewModel.isFilled = false;
-      }
+      widget._viewModel.isFilled = isAmountFilled && isCropFilled;
     });
   }
 

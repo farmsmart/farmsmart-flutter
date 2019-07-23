@@ -466,7 +466,7 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
     setState(() {
       widget._viewModel.selectedItem = selectedCrop;
       widget.parent.selectedCrop = selectedCrop;
-      widget.parent.cropIsFilled = true;
+      widget.parent.isCropFilled = true;
       widget.parent.checkIfFilled();
     });
   }
