@@ -10,7 +10,6 @@ class MockUserProfileViewModel {
       userName: _mockUserName.random(),
       activeCrops: Random().nextInt(50),
       completedCrops: Random().nextInt(50),
-      picture: "",
       buttonTitle: "",
     );
   }

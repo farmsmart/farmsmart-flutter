@@ -47,18 +47,11 @@ class UserProfileListItem extends StatelessWidget {
                 _viewModel.icon != null
                     ? Row(
                         children: <Widget>[
-                          Image.asset(
-                            _viewModel.icon,
-                            height: 20,
-                          ),
-                          SizedBox(
-                            width: 20,
-                          ),
+                          Image.asset(_viewModel.icon, height: 20),
+                          SizedBox(width: 20),
                         ],
                       )
-                    : SizedBox(
-                        width: 0,
-                      ),
+                    : SizedBox(width: 0),
                 Text(
                   _viewModel.title,
                   style: !_viewModel.isDestructive

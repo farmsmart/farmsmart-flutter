@@ -7,9 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class _Constants {
-  //static final link =
-    //  "https://firebasestorage.googleapis.com/v0/b/farmsmart-20190415.appspot.com/o/flamelink%2Fmedia%2FLxHKKHJPSN3Atvbx1nv3_Cucumber.jpg?alt=media&token=642bb3b7-ac3d-4a6d-8b73-fbebd5c03eaa";
-  static final link = "https://www.flower-pepper.com/wp-content/uploads/2016/10/Kermit-the-Frog-by-Bartholomew-300x378.jpg";
+  // TODO: temporal image link
+  static final link =
+      "https://www.flower-pepper.com/wp-content/uploads/2016/10/Kermit-the-Frog-by-Bartholomew-300x378.jpg";
 
   static final List<UserProfileListItemViewModel> PROFILE_ACTIONS = [
     UserProfileListItemViewModel(
@@ -20,40 +20,33 @@ class _Constants {
     UserProfileListItemViewModel(
       title: Intl.message("Your Farm Details"),
       icon: "assets/icons/detail_icon_best_soil.png",
-      onTap: null,
       isDestructive: false,
     ),
     UserProfileListItemViewModel(
       title: Intl.message("Update Pin"),
       icon: "assets/icons/detail_icon_pin.png",
-      onTap: null,
       isDestructive: false,
     ),
     UserProfileListItemViewModel(
       title: Intl.message("Create New Profile"),
       icon: "assets/icons/detail_icon_new_profile.png",
-      onTap: null,
       isDestructive: false,
     ),
     UserProfileListItemViewModel(
       title: Intl.message("Invite Friends"),
       icon: "assets/icons/detail_icon_invite.png",
-      onTap: null,
       isDestructive: false,
     ),
     UserProfileListItemViewModel(
       title: Intl.message("Privacy Policy"),
-      onTap: null,
       isDestructive: false,
     ),
     UserProfileListItemViewModel(
       title: Intl.message("Terms of User"),
-      onTap: null,
       isDestructive: false,
     ),
     UserProfileListItemViewModel(
       title: Intl.message("Delete Profile"),
-      onTap: null,
       isDestructive: true,
     ),
   ];
@@ -69,7 +62,6 @@ class UserProfileViewModel {
   String userName;
   int activeCrops;
   int completedCrops;
-  String picture;
   String buttonTitle;
   final Future<String> imageUrl;
 
@@ -77,7 +69,6 @@ class UserProfileViewModel {
     this.userName,
     this.activeCrops,
     this.completedCrops,
-    this.picture,
     this.buttonTitle,
     this.imageUrl,
   });
@@ -258,17 +249,18 @@ class UserProfile extends StatelessWidget {
         this._style = style,
         super(key: key);
 
+  //TODO: Add profile actions
   @override
   Widget build(BuildContext context) {
     List<Function> listOfFunctions = [
       () => ActionSheet.onMenuPressed(context),
-      () => print("2"),
-      () => print("3"),
-      () => print("4"),
-      () => print("5"),
-      () => print("6"),
-      () => print("7"),
-      () => print("8"),
+      () => showSnackBar("Action 2", context),
+      () => showSnackBar("Action 3", context),
+      () => showSnackBar("Action 4", context),
+      () => showSnackBar("Action 5", context),
+      () => showSnackBar("Action 6", context),
+      () => showSnackBar("Action 7", context),
+      () => showSnackBar("Action 8", context),
     ];
 
     return SingleChildScrollView(
@@ -403,16 +395,6 @@ class UserProfile extends StatelessWidget {
     );
   }
 
-/*
-  ClipOval _buildPlotImage() {
-    return ClipOval(
-        child: Container(
-      height: 72,
-      width: 72,
-      color: Colors.pink,
-    ));
-  }*/
-
   ClipOval _buildPlotImage(String imageUrl) {
     return ClipOval(
         child: Stack(children: <Widget>[
@@ -425,6 +407,7 @@ class UserProfile extends StatelessWidget {
       ),
     ]));
   }
+
 /*
   ClipOval _buildPlotImage(
       Future<String> imageUrl, PlotListItemStyle itemStyle) {
@@ -441,4 +424,12 @@ class UserProfile extends StatelessWidget {
         ]));
   } */
 
+  void showSnackBar(String text, BuildContext context) {
+    final snackBar = SnackBar(
+      content: Text(text),
+      duration: Duration(milliseconds: 350),
+    );
+
+    Scaffold.of(context).showSnackBar(snackBar);
+  }
 }
