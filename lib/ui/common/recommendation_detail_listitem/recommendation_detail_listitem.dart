@@ -15,11 +15,12 @@ class _Constants {
     right: 18,
     bottom: 5,
   );
-  static final double circleSize = 20;
   static final double wrapSpacing = 8;
   static final double wrapRunSpacing = 8;
 
   static final EdgeInsets leadingPadding = EdgeInsets.only(top: 1);
+  static final BorderRadius circleBorderRadius =
+      BorderRadius.all(Radius.circular(30));
 }
 
 class RecommendationDetailListItemViewModel {
@@ -40,22 +41,26 @@ class RecommendationDetailListItemStyle {
   final TextStyle titleTextStyle;
   final TextStyle subtitleTextStyle;
   final double iconSize;
+  final double circleSize;
 
   const RecommendationDetailListItemStyle({
     this.titleTextStyle,
     this.subtitleTextStyle,
     this.iconSize,
+    this.circleSize,
   });
 
   RecommendationDetailListItemStyle copyWith({
     TextStyle titleTextStyle,
     TextStyle subtitleTextStyle,
     double iconSize,
+    double circleSize,
   }) {
     return RecommendationDetailListItemStyle(
       titleTextStyle: titleTextStyle ?? this.titleTextStyle,
       subtitleTextStyle: subtitleTextStyle ?? this.subtitleTextStyle,
       iconSize: iconSize ?? this.iconSize,
+      circleSize: circleSize ?? this.circleSize,
     );
   }
 }
@@ -73,11 +78,13 @@ class _DefaultStyle extends RecommendationDetailListItemStyle {
   );
 
   final double iconSize = 20;
+  final double circleSize = 20;
 
   const _DefaultStyle({
     TextStyle titleTextStyle,
     TextStyle subtitleTextStyle,
     double iconSize,
+    double circleSize,
   });
 }
 
@@ -151,12 +158,16 @@ class RecommendationDetailListItem extends StatelessWidget {
     );
   }
 
-  List<Widget> _buildCircles(List<Color> colors) => colors.map(
+  List<Widget> _buildCircles(List<Color> colors) => colors
+      .map(
         (color) => Container(
-          height: _Constants.circleSize,
-          width:  _Constants.circleSize,
-          decoration: BoxDecoration(color: color, borderRadius: BorderRadius.all(Radius.circular(30))),
-        ),
-      ).toList();
-
+              height: _style.circleSize,
+              width: _style.circleSize,
+              decoration: BoxDecoration(
+                color: color,
+                borderRadius: _Constants.circleBorderRadius,
+              ),
+            ),
+      )
+      .toList();
 }

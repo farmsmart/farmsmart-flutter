@@ -15,5 +15,6 @@ class RecommendationDetailListItemStyles {
           color: Color(0xff767690),
         ),
         iconSize: 20,
+        circleSize: 20,
       );
 }
