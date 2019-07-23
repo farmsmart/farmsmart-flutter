@@ -19,7 +19,7 @@ class _Constants {
 
 class RecordData {
   String amount;
-  String date;
+  DateTime date;
   String crop;
   String description;
 
@@ -143,8 +143,8 @@ class RecordAmount extends StatefulWidget {
 
 class RecordAmountState extends State<RecordAmount> {
   String amount;
-  DateTime _initDate = DateTime.now();
-  String selectedDate;
+  //DateTime _initDate = DateTime.now();
+  DateTime selectedDate = DateTime.now();
   String selectedCrop;
   String description;
   bool isAmountFilled = false;
@@ -265,7 +265,7 @@ class RecordAmountState extends State<RecordAmount> {
           type: RecordCellType.pickDate,
           isEditable: viewModel.isEditable,
           selectedDate: viewModel.isEditable
-              ? _initDate
+              ? selectedDate
               : viewModel.actions[_Constants.firstListItem].selectedDate,
         ),
         parent: this,
@@ -360,7 +360,7 @@ class RecordAmountState extends State<RecordAmount> {
     //TODO: Temporal print
     print(save.amount +
         " / " +
-        save.date +
+        save.date.toIso8601String() +
         " / " +
         save.crop +
         " / " +

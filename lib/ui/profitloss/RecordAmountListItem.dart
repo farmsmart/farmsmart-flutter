@@ -434,7 +434,7 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
     if (picked != null) {
       setState(() {
         viewModel.selectedDate = picked;
-        widget.parent.selectedDate = _formatDate(picked);
+        widget.parent.selectedDate = picked;
       });
     }
   }
