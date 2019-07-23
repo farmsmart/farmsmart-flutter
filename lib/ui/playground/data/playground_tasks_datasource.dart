@@ -103,17 +103,14 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
           ),
         ),
       ),
-      /* Template
       PlaygroundWidget(
-        title: '#TASK NAME#',
-        child: YourWidget(),
-      ),*/
-      PlaygroundWidget(title: "FARM-280 Update Discover", child:
-          ArticleList(
-              viewModelProvider: ArticleListProvider( title: "Test",
-                  repository: MockArticlesRepository(articleCount: 2000)))
-      ),
-      PlaygroundWidget(title: "FARM-342 Persistent Bottom navigation bar",
+          title: "FARM-280 Update Discover",
+          child: ArticleList(
+              viewModelProvider: ArticleListProvider(
+                  title: "Test",
+                  repository: MockArticlesRepository(articleCount: 2000)))),
+      PlaygroundWidget(
+        title: "FARM-342 Persistent Bottom navigation bar",
         child: PersistentBottomNavigationBar(
           backgroundColor: Colors.white,
           tabs: PlaygroundPersistentBottomNavigationBar().getList(),),),
