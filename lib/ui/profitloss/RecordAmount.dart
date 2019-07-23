@@ -44,7 +44,6 @@ class RecordAmountViewModel {
   String description;
   bool isFilled;
   bool isEditable;
-  Function onTap;
   String buttonTitle;
 
   RecordAmountViewModel({
@@ -53,7 +52,6 @@ class RecordAmountViewModel {
     this.amount,
     this.buttonTitle,
     this.isFilled: false,
-    this.onTap,
     this.type,
     this.isEditable: true,
   });
@@ -143,6 +141,7 @@ class RecordAmount extends StatefulWidget {
 
 class RecordAmountState extends State<RecordAmount> {
   String amount;
+
   //DateTime _initDate = DateTime.now();
   DateTime selectedDate = DateTime.now();
   String selectedCrop;
@@ -328,7 +327,12 @@ class RecordAmountState extends State<RecordAmount> {
                   )
                 : RoundedButton(
                     viewModel: RoundedButtonViewModel(
-                        title: viewModel.buttonTitle, onTap: saveData),
+                        title: viewModel.buttonTitle,
+                        onTap: () => saveData(RecordData(
+                            amount: amount,
+                            date: selectedDate,
+                            crop: selectedCrop,
+                            description: description ?? ""))),
                     style: viewModel.type == RecordType.sale
                         ? RoundedButtonStyle.largeRoundedButtonStyle().copyWith(
                             backgroundColor: Color(0xFF24d900),
@@ -343,27 +347,20 @@ class RecordAmountState extends State<RecordAmount> {
     );
   }
 
+  void saveData(RecordData save) {
+    final snackBar = SnackBar(
+      content: Text("You recorded:\nAMOUNT: " + save.amount +
+          "\nDATE: " + save.date.toIso8601String() +
+          "\nCROP: " + save.crop +
+          "\nDESC: " + save.description),
+      duration: Duration(seconds: 2),
+    );
+    Scaffold.of(context).showSnackBar(snackBar);
+  }
+
   checkIfFilled() {
     setState(() {
       widget._viewModel.isFilled = isAmountFilled && isCropFilled;
     });
-  }
-
-  saveData() {
-    RecordData save = RecordData(
-      amount: amount,
-      date: selectedDate,
-      crop: selectedCrop,
-      description: description,
-    );
-
-    //TODO: Temporal print
-    print(save.amount +
-        " / " +
-        save.date.toIso8601String() +
-        " / " +
-        save.crop +
-        " / " +
-        save.description);
   }
 }

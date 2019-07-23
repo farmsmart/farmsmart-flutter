@@ -3,6 +3,7 @@ import 'package:farmsmart_flutter/ui/common/MockString.dart';
 import 'package:farmsmart_flutter/ui/profitloss/RecordAmount.dart';
 import 'package:farmsmart_flutter/ui/profitloss/RecordAmountHeader.dart';
 import 'package:farmsmart_flutter/ui/profitloss/RecordAmountListItem.dart';
+import 'package:flutter/material.dart';
 
 class MockRecordAmountViewModel {
   static RecordAmountViewModel buildSale() {
@@ -16,7 +17,6 @@ class MockRecordAmountViewModel {
         loadingStatus: LoadingStatus.SUCCESS,
         actions: list,
         buttonTitle: _mockButtonTitle[1],
-        onTap: null,
         type: RecordType.sale);
   }
 
@@ -31,7 +31,6 @@ class MockRecordAmountViewModel {
         loadingStatus: LoadingStatus.SUCCESS,
         actions: list,
         buttonTitle: _mockButtonTitle[0],
-        onTap: null,
         type: RecordType.cost);
   }
 
@@ -47,7 +46,6 @@ class MockRecordAmountViewModel {
       actions: list,
       amount: "12.48",
       buttonTitle: _mockButtonTitle[1],
-      onTap: null,
       type: RecordType.sale,
       isEditable: false,
     );
@@ -64,7 +62,6 @@ class MockRecordAmountViewModel {
         loadingStatus: LoadingStatus.SUCCESS,
         actions: list,
         buttonTitle: _mockButtonTitle[1],
-        onTap: null,
         type: RecordType.cost,
         isEditable: false,
         amount: "-233.3");
@@ -74,7 +71,7 @@ class MockRecordAmountViewModel {
 class MockRecordAmountListItemViewModel {
   static RecordAmountListItemViewModel build(int index) {
     return RecordAmountListItemViewModel(
-      type: _celltype[index],
+      type: _cellType[index],
       selectedDate: _mockSelectedDate[index],
       listOfCrops: _mockListOfCrops[index],
     );
@@ -91,7 +88,7 @@ class MockRecordAmountListItemViewModel {
   }
 }
 
-List _celltype = [
+List _cellType = [
   RecordCellType.pickDate,
   RecordCellType.pickItem,
   RecordCellType.description
@@ -131,3 +128,4 @@ List _mockListOfCrops = [
   ],
   null
 ];
+
