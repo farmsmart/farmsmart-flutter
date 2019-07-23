@@ -21,7 +21,7 @@ class PlaygroundButtonPresentAlert extends StatelessWidget {
     return showDialog<bool>(
         context: context,
         barrierDismissible: false,
-        builder: (_) => AlertWidget()
+        builder: (_) => child
     );
   }
 }

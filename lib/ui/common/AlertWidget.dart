@@ -1,6 +1,7 @@
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockRoundedButtonViewModel.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 
 class _Constants {}
 
@@ -9,12 +10,15 @@ class AlertWidgetViewModel {
   String confirmButtonTittle;
   String titleText;
   String detailText;
+  Function acceptAction;
 
-  AlertWidgetViewModel(
-      {@required this.cancelButtonTittle,
-      @required this.confirmButtonTittle,
-      @required this.titleText,
-      this.detailText});
+  AlertWidgetViewModel({
+    @required this.cancelButtonTittle,
+    @required this.confirmButtonTittle,
+    @required this.titleText,
+    this.detailText,
+    this.acceptAction,
+  });
 }
 
 class AlertWidgetStyle {
@@ -48,7 +52,7 @@ class AlertWidgetStyle {
       this.actionCornerRadius,
       this.primaryColor,
       this.actionLineSpace,
-      this.actionTextStyle});
+      this.actionTextStyle,});
 
   AlertWidgetStyle copyWith({
     EdgeInsets alertEdgePadding,
@@ -80,7 +84,7 @@ class AlertWidgetStyle {
         actionCornerRadius: actionCornerRadius ?? this.actionCornerRadius,
         primaryColor: primaryColor ?? this.primaryColor,
         actionLineSpace: actionLineSpace ?? this.actionLineSpace,
-        actionTextStyle: actionTextStyle ?? this.actionTextStyle);
+        actionTextStyle: actionTextStyle ?? this.actionTextStyle,);
   }
 }
 
@@ -104,7 +108,8 @@ class _DefaultStyle extends AlertWidgetStyle {
   final actionCornerRadius = const BorderRadius.all(Radius.circular(14));
   final primaryColor = const Color(0xff24d900);
   final actionLineSpace = 8;
-  final actionTextStyle = const TextStyle(color: Color(0xffffffff), fontSize: 15);
+  final actionTextStyle =
+      const TextStyle(color: Color(0xffffffff), fontSize: 15);
 
   const _DefaultStyle({
     EdgeInsets alertEdgePadding,
@@ -132,8 +137,8 @@ class AlertWidget extends StatelessWidget {
 
   const AlertWidget(
       {Key key,
-        AlertWidgetViewModel viewModel,
-        AlertWidgetStyle style = _defaultStyle})
+      AlertWidgetViewModel viewModel,
+      AlertWidgetStyle style = _defaultStyle})
       : this._viewModel = viewModel,
         this._style = style,
         super(key: key);
@@ -156,7 +161,7 @@ class AlertWidget extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 Text(
-                  "Begin Stage 2",
+                  _viewModel.titleText,
                   style: _style.titleTextStyle,
                 ),
                 SizedBox(
@@ -166,14 +171,14 @@ class AlertWidget extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     Text(
-                      "Are you sure you want to beging Stage 2 – Planting?",
+                      _viewModel.detailText,
                       style: _style.detailTextStyle,
                     ),
                     SizedBox(
                       height: _style.detailLineSpace,
                     ),
                     Row(
-                      children: _showBla(),
+                      children: _buildAction(context),
                     )
                   ],
                 )
@@ -192,11 +197,13 @@ class AlertWidget extends StatelessWidget {
         builder: (_) => AlertWidget());
   }
 
-  List<Widget> _showBla() {
+  List<Widget> _buildAction(BuildContext context) {
     List<Widget> listBuilder = [
       Expanded(
         child: RoundedButton(
-          viewModel: RoundedButtonViewModel(title: "Cancel", onTap: () {}),
+          viewModel: RoundedButtonViewModel(
+              title: _viewModel.cancelButtonTittle,
+              onTap: () => Navigator.pop(context)),
           style: RoundedButtonStyle.actionSheetLargeRoundedButton().copyWith(
               height: _style.actionHeight,
               width: _style.actionWidth,
@@ -209,7 +216,8 @@ class AlertWidget extends StatelessWidget {
     ));
     listBuilder.add(Expanded(
       child: RoundedButton(
-        viewModel: RoundedButtonViewModel(title: "Yes", onTap: () {}),
+        viewModel: RoundedButtonViewModel(
+            title: _viewModel.confirmButtonTittle, onTap: () {}),
         style: RoundedButtonStyle.actionSheetLargeRoundedButton().copyWith(
             height: _style.actionHeight,
             width: _style.actionWidth,
