@@ -68,6 +68,7 @@ flutter:
     - assets/raw/community_mock.webp
     - assets/raw/profit_mock.webp
     - assets/raw/placeholder.webp
+    - assets/raw/mock_profile_image.png
 
     - assets/icons/community_selected.png
     - assets/icons/community.png
@@ -83,6 +84,7 @@ flutter:
     - assets/icons/detail_icon_description.png
     - assets/privacy_policy.html
     - assets/icons/profit_add.png
+    - assets/icons/tick_large.png
     - assets/privacy_policy.html
     - assets/icons/flag_kenya.png
     - assets/icons/flag_usa.png

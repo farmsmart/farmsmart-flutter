@@ -6,22 +6,21 @@ import 'package:farmsmart_flutter/ui/profitloss/RecordAmountHeader.dart';
 import 'package:farmsmart_flutter/ui/profitloss/RecordAmountListItem.dart';
 import 'package:farmsmart_flutter/data/bloc/article/ArticleListProvider.dart';
 import 'package:farmsmart_flutter/data/repositories/article/implementation/MockArticlesRepository.dart';
-import 'package:farmsmart_flutter/ui/discover/ArticleList.dart';
+import 'package:farmsmart_flutter/ui/bottombar/persistent_bottom_navigation_bar.dart';
 import 'package:farmsmart_flutter/ui/common/ActionSheet.dart';
-import 'package:farmsmart_flutter/ui/mockData/MockActionSheetViewModel.dart';
 import 'package:farmsmart_flutter/ui/common/carousel_view.dart';
-import 'package:farmsmart_flutter/ui/common/stage_card.dart';
-import 'package:farmsmart_flutter/ui/mockData/MockStageCardViewModel.dart';
+import 'package:farmsmart_flutter/ui/discover/ArticleList.dart';
+import 'package:farmsmart_flutter/ui/mockData/MockActionSheetViewModel.dart';
 import 'package:farmsmart_flutter/ui/playground/data/playground_data_source.dart';
 import 'package:farmsmart_flutter/ui/playground/data/playground_stagecard_datasource.dart';
 import 'package:farmsmart_flutter/ui/playground/playground_widget.dart';
-import 'package:farmsmart_flutter/ui/playground/styles/stage_card_styles.dart';
 import 'package:farmsmart_flutter/ui/profitloss/ProfitLossHeader.dart';
 import 'package:farmsmart_flutter/ui/profitloss/ProfitLossListItem.dart';
 import 'package:farmsmart_flutter/ui/profitloss/mockRepositoryTryout/MockTransactionRepository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import '../playground_view.dart';
+import 'playground_persistent_bottom_navigation_bar_datasource.dart';
 
 class PlayGroundTasksDataSource implements PlaygroundDataSource {
   @override
@@ -144,7 +143,14 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
           child: ArticleList(
               viewModelProvider: ArticleListProvider(
                   title: "Test",
-                  repository: MockArticlesRepository(articleCount: 2000))))
+                  repository: MockArticlesRepository(articleCount: 2000)))),
+      PlaygroundWidget(
+        title: "FARM-342 Persistent Bottom navigation bar",
+        child: PersistentBottomNavigationBar(
+          backgroundColor: Colors.white,
+          tabs: PlaygroundPersistentBottomNavigationBar().getList(),
+        ),
+      ),
     ];
   }
 }

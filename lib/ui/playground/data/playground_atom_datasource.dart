@@ -8,9 +8,12 @@ import 'package:farmsmart_flutter/data/bloc/article/ArticleDetailTransformer.dar
 import 'package:farmsmart_flutter/data/bloc/article/ArticleListItemViewModelTransformer.dart';
 import 'package:farmsmart_flutter/data/repositories/article/implementation/MockArticlesRepository.dart';
 import 'package:farmsmart_flutter/ui/common/ActionSheetListItem.dart';
+import 'package:farmsmart_flutter/ui/common/CircularProgress.dart';
 import 'package:farmsmart_flutter/ui/common/DogTagStyles.dart';
 import 'package:farmsmart_flutter/ui/common/Dogtag.dart';
+import 'package:farmsmart_flutter/ui/common/recommendation_card/recommendation_card.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
+import 'package:farmsmart_flutter/ui/common/stage_card.dart';
 import 'package:farmsmart_flutter/ui/discover/HeroListItem.dart';
 import 'package:farmsmart_flutter/ui/discover/StandardListItem.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockActionSheetViewModel.dart';
@@ -18,10 +21,13 @@ import 'package:farmsmart_flutter/ui/mockData/MockDogTagViewModel.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockRoundedButtonViewModel.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockStageCardViewModel.dart';
 import 'package:farmsmart_flutter/ui/playground/data/playground_data_source.dart';
+import 'package:farmsmart_flutter/ui/playground/data/playground_recommendation_card_datasource.dart';
+import 'package:farmsmart_flutter/ui/playground/data/playground_recommendation_detail_card_datasource.dart';
 import 'package:farmsmart_flutter/ui/playground/playground_widget.dart';
-import 'package:farmsmart_flutter/ui/common/stage_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+
+import '../playground_view.dart';
 
 class PlayGroundAtomDataSource implements PlaygroundDataSource {
   @override
@@ -172,7 +178,6 @@ class PlayGroundAtomDataSource implements PlaygroundDataSource {
           ),
         ),
       ),
-
       PlaygroundWidget(
         title: 'FARM-50 Record a Cost/Sale',
         child: PlaygroundView(
@@ -218,6 +223,18 @@ class PlayGroundAtomDataSource implements PlaygroundDataSource {
           ],
         ),
       ),
+      PlaygroundWidget(
+        title: 'Recommendation Card',
+        child: PlaygroundView(
+          widgetList: PlaygroundRecommendationCardDataSource().getList(),
+        ),
+      ),
+      PlaygroundWidget(
+        title: 'Recommendation detail card',
+        child: PlaygroundView(
+          widgetList: PlaygroundRecommendationDetailCardDatasource().getList(),
+        ),
+      )
     ];
   }
 }
