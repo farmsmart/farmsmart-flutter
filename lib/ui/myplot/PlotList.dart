@@ -64,9 +64,8 @@ class PlotList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = _viewModelProvider.observe();
     return StreamBuilder<PlotListViewModel>(
-        stream: controller.stream,
+        stream: _viewModelProvider.observe().stream,
         initialData: _viewModelProvider.initial(),
         builder: (BuildContext context,
             AsyncSnapshot<PlotListViewModel> snapshot) {

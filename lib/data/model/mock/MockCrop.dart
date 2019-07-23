@@ -9,13 +9,13 @@ import 'MockArticle.dart';
 class MockCrop {
   static CropEntity build() {
     final entity = CropEntity(id: mockPlainText.identifier(),
-    companionPlants: _plants.list(),
+    companionPlants: plants.list(),
     complexity: CropComplexity.BEGINNER,
     content: mockRichText.random(),
-    cropsInRotation: _plants.list(),
+    cropsInRotation: plants.list(),
     cropType: CropType.SINGLE,
-    name: _plants.random(),
-    nonCompanionPlants: _plants.list(),
+    name: plants.random(),
+    nonCompanionPlants: plants.list(),
     profitability: LoHi.MEDIUM,
     setupCost: LoHi.MEDIUM,
     soilType: _soil.list(),
@@ -37,15 +37,6 @@ class MockCrop {
 }
 
 // Mock Strings --------------
-
-MockString _plants = MockString(library: [
-  "Plant A",
-  "Plant B",
-  "Plant C",
-  "Plant D",
-  "Plant E",
-  "Plant F"
-]);
 
 MockString _soil = MockString(library: [
   "Soil A",
