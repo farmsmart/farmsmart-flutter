@@ -6,8 +6,10 @@ import 'package:farmsmart_flutter/ui/common/AlertWidget.dart';
 import 'package:farmsmart_flutter/ui/common/carousel_view.dart';
 import 'package:farmsmart_flutter/ui/discover/ArticleList.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockActionSheetViewModel.dart';
+import 'package:farmsmart_flutter/ui/mockData/MockAlertWidgetViewModel.dart';
 import 'package:farmsmart_flutter/ui/playground/data/playground_data_source.dart';
 import 'package:farmsmart_flutter/ui/playground/data/playground_stagecard_datasource.dart';
+import 'package:farmsmart_flutter/ui/playground/playground_button_present_alert.dart';
 import 'package:farmsmart_flutter/ui/playground/playground_widget.dart';
 import 'package:farmsmart_flutter/ui/profitloss/ProfitLossHeader.dart';
 import 'package:farmsmart_flutter/ui/profitloss/ProfitLossListItem.dart';
@@ -117,7 +119,8 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
           tabs: PlaygroundPersistentBottomNavigationBar().getList(),),),
 
       PlaygroundWidget(title: "FARM-432 General Alert Widget",
-      child: AlertWidget(),),
+      child: PlaygroundButtonPresentAlert(
+      child: AlertWidget(viewModel: MockAlertWidgetViewModel.build())),),
     ];
   }
 }
