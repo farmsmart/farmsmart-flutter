@@ -10,12 +10,15 @@ enum StageStatus {
 
 class StageBusinessLogic {
 
+  static final _emptyProgress = 0.05;
+  static final _fullProgress = 1.0;
+
   double progress(List<NewStageEntity> stages) {
     if (isComplete(stages.last)) {
-      return  1.0;
+      return  _fullProgress;
     }
     final currentIndex = currentStageIndex(stages);
-    return max(0.05,currentIndex.toDouble()  / (stages.length).toDouble());
+    return max(_emptyProgress,currentIndex.toDouble()  / (stages.length).toDouble());
   }
 
   NewStageEntity currentStage(List<NewStageEntity> stages) {

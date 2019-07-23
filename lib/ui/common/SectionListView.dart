@@ -36,12 +36,9 @@ class SectionedListView extends StatelessWidget implements ListViewSection {
   }
 
   _SectionPosition sectionForIndex(int index) {
-    for (var sectionPosition in _sectionPositions.reversed) {
-       if (sectionPosition.relativeOffset(index) >= 0){
-         return sectionPosition;
-       }
-    }
-    return null;
+    return _sectionPositions.reversed.firstWhere((
+        sectionPosition) => sectionPosition.relativeOffset(index) >= 0,
+        orElse: () => null);
   }
 
   @override

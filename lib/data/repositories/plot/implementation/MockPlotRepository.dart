@@ -38,12 +38,8 @@ class MockPlotRepository implements PlotRepositoryInterface {
 
   @override
   Future<PlotEntity> getSingle(String uri) {
-    for (var i = 0; i < _plots.length; i++) {
-      if(_plots[i].id == uri){
-        return Future.value(_plots[i]);
-      }
-    }
-    return Future.error(Error());
+    final plotEntity = _plots.singleWhere((plotEntity) => plotEntity.id == uri, orElse: () => null);
+    return plotEntity != null ? Future.value(plotEntity) : Future.error(Error());
   }
 
   @override

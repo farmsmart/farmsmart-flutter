@@ -12,7 +12,7 @@ import 'StageToStageCardViewModel.dart';
 
 class PlotDetailProvider implements ViewModelProvider<PlotDetailViewModel> {
   PlotDetailViewModel _snapshot;
- 
+
   PlotEntity _plot;
   final PlotRepositoryInterface _repo;
   final StreamController<PlotDetailViewModel> _controller =
@@ -39,8 +39,18 @@ class PlotDetailProvider implements ViewModelProvider<PlotDetailViewModel> {
   }
 
   PlotDetailViewModel _viewModel() {
-    final stageTransformer = StageToStageCardViewModel(_plot, _beginStageAction, _completeStageAction, _revertStageAction);
-    final detailTransformer = PlotToPlotDetailViewModel(_plot,stageTransformer,_rename,_remove);
+    final stageTransformer = StageToStageCardViewModel(
+      _plot,
+      _beginStageAction,
+      _completeStageAction,
+      _revertStageAction,
+    );
+    final detailTransformer = PlotToPlotDetailViewModel(
+      _plot,
+      stageTransformer,
+      _rename,
+      _remove,
+    );
     return detailTransformer.transform();
   }
 
@@ -50,13 +60,11 @@ class PlotDetailProvider implements ViewModelProvider<PlotDetailViewModel> {
     _repo.completeStage(plot, stage).then((plot) {
       final currentStage = _logic.currentStage(plot.stages);
       if (beginNext) {
-          _repo.beginStage(plot, currentStage).then((plot){
-           _plot = plot;
-        });
-      }
-      else
-      {
+        _repo.beginStage(plot, currentStage).then((plot) {
           _plot = plot;
+        });
+      } else {
+        _plot = plot;
       }
     });
   }
@@ -73,8 +81,8 @@ class PlotDetailProvider implements ViewModelProvider<PlotDetailViewModel> {
     });
   }
 
-  void _remove(PlotEntity plot){
-     _repo.remove(plot).then((success) {
+  void _remove(PlotEntity plot) {
+    _repo.remove(plot).then((success) {
       //TODO: what if this failed?
     });
   }
