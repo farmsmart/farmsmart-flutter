@@ -11,12 +11,12 @@ import time
 argparser = argparse.ArgumentParser()
 argparser.add_argument('package_name', help='The package name. Example: com.android.sample')
 argparser.add_argument('version_name', help='The version name for the release.')
-argparser.add_argument('apk_file', help='The apk to upload.')
+argparser.add_argument('app_file', help='The app to upload.')
 
 args = argparser.parse_args()
 package_name = args.package_name
 version_name = args.version_name
-apk_file = args.apk_file
+app_file = args.app_file
 
 # Authorise the publishing API
 service_account_file_path = "secrets/google-play-service-account.json"
@@ -28,32 +28,32 @@ androidPublisher = googleapiclient.discovery.build('androidpublisher', 'v3', cre
 
 # API calls
 
-def upload_apk(package_name, apk_file):
+def upload_app(package_name, app_file):
 
-    apk_upload_request = androidPublisher.internalappsharingartifacts().uploadapk(packageName=package_name, media_body=apk_file, media_mime_type=None)
-    apk_upload_response = apk_upload_request.execute()
-    apk = {
+    app_upload_request = androidPublisher.internalappsharingartifacts().uploadbundle(packageName=package_name, media_body=app_file, media_mime_type='application/octet-stream')
+    app_upload_response = app_upload_request.execute()
+    app = {
         "version_name": version_name,
-        "download_url": apk_upload_response['downloadUrl'],
-        "certificate_fingerprint": apk_upload_response['certificateFingerprint']
+        "download_url": app_upload_response['downloadUrl'],
+        "certificate_fingerprint": app_upload_response['certificateFingerprint']
     }
-    return apk
+    return app
 
-def upload_apk_with_retry(package_name, apk_file, retry_count):
+def upload_app_with_retry(package_name, app_file, retry_count):
 
     for i in range(0, retry_count - 2):
         while True:
             try:
-                apk = upload_apk(package_name, apk_file)
-                return apk
+                app = upload_app(package_name, app_file)
+                return app
             except HttpError as err:
                 if err.resp.status in [403, 500, 503]:
                     time.sleep(5)
                 else: raise
                 continue
             break
-        apk = upload_apk(package_name, apk_file)
-        return apk
+        app = upload_app(package_name, app_file)
+        return app
 
-apk = upload_apk_with_retry(package_name, apk_file, 3)
-print(json.dumps(apk))
+app = upload_app_with_retry(package_name, app_file, 3)
+print(json.dumps(app))
