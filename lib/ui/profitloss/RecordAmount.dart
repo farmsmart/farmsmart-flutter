@@ -153,9 +153,6 @@ class RecordAmountState extends State<RecordAmount> {
   @override
   void initState() {
     super.initState();
-    setState(() {
-      widget._viewModel.isFilled = false;
-    });
   }
 
   Widget build(BuildContext context) {
