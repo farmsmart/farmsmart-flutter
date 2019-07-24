@@ -32,7 +32,7 @@ tracks_res = tracks_req.execute()
 
 releases = tracks_res['releases']
 current_release = next(r for r in releases if r['status'] == 'completed')
-current_version_code = max(current_release['versionCodes']) + 1
+current_version_code = int(max(current_release['versionCodes'])) + 1
 
 # Determine next version
-print("{ version_code : " + current_version_code +"}")
+print("{ version_code : " + current_version_code + "}")
