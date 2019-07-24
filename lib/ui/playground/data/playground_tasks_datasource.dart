@@ -1,9 +1,9 @@
 import 'package:farmsmart_flutter/model/loading_status.dart';
-import 'package:farmsmart_flutter/ui/mockData/MockRecordAmountViewModel.dart';
+import 'package:farmsmart_flutter/ui/mockData/MockRecordTransactionViewModel.dart';
 import 'package:farmsmart_flutter/ui/playground/playground_widget.dart';
-import 'package:farmsmart_flutter/ui/profitloss/RecordAmount.dart';
-import 'package:farmsmart_flutter/ui/profitloss/RecordAmountHeader.dart';
-import 'package:farmsmart_flutter/ui/profitloss/RecordAmountListItem.dart';
+import 'package:farmsmart_flutter/ui/profitloss/RecordTransaction.dart';
+import 'package:farmsmart_flutter/ui/profitloss/RecordTransactionHeader.dart';
+import 'package:farmsmart_flutter/ui/profitloss/RecordTransactionListItem.dart';
 import 'package:farmsmart_flutter/data/bloc/article/ArticleListProvider.dart';
 import 'package:farmsmart_flutter/data/repositories/article/implementation/MockArticlesRepository.dart';
 import 'package:farmsmart_flutter/ui/bottombar/persistent_bottom_navigation_bar.dart';
@@ -114,36 +114,38 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
         child: PlaygroundView(widgetList: [
           PlaygroundWidget(
             title: 'Record a Sale',
-            child: RecordAmount(
-              viewModel: MockRecordAmountViewModel.buildSale(),
+            child: RecordTransaction(
+              viewModel: MockRecordTransactionViewModel.buildSaleTransaction(),
             ),
           ),
           PlaygroundWidget(
             title: 'Record a Cost',
-            child: RecordAmount(
-              viewModel: MockRecordAmountViewModel.buildCost(),
+            child: RecordTransaction(
+              viewModel: MockRecordTransactionViewModel.buildCostTransaction(),
             ),
           ),
           PlaygroundWidget(
             title: 'View a Sale',
-            child: RecordAmount(
-              viewModel: MockRecordAmountViewModel.buildViewSale(),
+            child: RecordTransaction(
+              viewModel: MockRecordTransactionViewModel.buildViewSale(),
             ),
           ),
           PlaygroundWidget(
             title: 'View a Cost',
-            child: RecordAmount(
-              viewModel: MockRecordAmountViewModel.buildViewCost(),
+            child: RecordTransaction(
+              viewModel: MockRecordTransactionViewModel.buildViewCost(),
             ),
           ),
         ]),
       ),
       PlaygroundWidget(
-          title: "FARM-280 Update Discover",
-          child: ArticleList(
-              viewModelProvider: ArticleListProvider(
-                  title: "Test",
-                  repository: MockArticlesRepository(articleCount: 2000)))),
+        title: "FARM-280 Update Discover",
+        child: ArticleList(
+          viewModelProvider: ArticleListProvider(
+              title: "Test",
+              repository: MockArticlesRepository(articleCount: 2000)),
+        ),
+      ),
       PlaygroundWidget(
         title: "FARM-342 Persistent Bottom navigation bar",
         child: PersistentBottomNavigationBar(

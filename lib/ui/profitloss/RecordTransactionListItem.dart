@@ -1,4 +1,4 @@
-import 'package:farmsmart_flutter/ui/profitloss/RecordAmount.dart';
+import 'package:farmsmart_flutter/ui/profitloss/RecordTransaction.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
@@ -29,7 +29,7 @@ enum RecordCellType {
   description,
 }
 
-class RecordAmountListItemViewModel {
+class RecordTransactionListItemViewModel {
   RecordCellType type;
   DateTime selectedDate;
   List<String> listOfCrops = [];
@@ -37,7 +37,7 @@ class RecordAmountListItemViewModel {
   String description;
   bool isEditable;
 
-  RecordAmountListItemViewModel({
+  RecordTransactionListItemViewModel({
     this.type,
     this.selectedDate,
     this.listOfCrops,
@@ -47,7 +47,7 @@ class RecordAmountListItemViewModel {
   });
 }
 
-class RecordAmountListItemStyle {
+class RecordTransactionListItemStyle {
   final TextStyle titleTextStyle;
   final TextStyle pendingDetailTextStyle;
   final TextStyle detailTextStyle;
@@ -64,7 +64,7 @@ class RecordAmountListItemStyle {
 
   final int maxLines;
 
-  const RecordAmountListItemStyle({
+  const RecordTransactionListItemStyle({
     this.titleTextStyle,
     this.pendingDetailTextStyle,
     this.detailTextStyle,
@@ -78,7 +78,7 @@ class RecordAmountListItemStyle {
     this.maxLines,
   });
 
-  RecordAmountListItemStyle copyWith({
+  RecordTransactionListItemStyle copyWith({
     TextStyle titleTextStyle,
     TextStyle pendingDetailTextStyle,
     TextStyle detailTextStyle,
@@ -91,7 +91,7 @@ class RecordAmountListItemStyle {
     double descriptionLineSpace,
     int maxLines,
   }) {
-    return RecordAmountListItemStyle(
+    return RecordTransactionListItemStyle(
       titleTextStyle: titleTextStyle ?? this.titleTextStyle,
       pendingDetailTextStyle:
           pendingDetailTextStyle ?? this.pendingDetailTextStyle,
@@ -109,7 +109,7 @@ class RecordAmountListItemStyle {
   }
 }
 
-class _DefaultStyle extends RecordAmountListItemStyle {
+class _DefaultStyle extends RecordTransactionListItemStyle {
   final TextStyle titleTextStyle = const TextStyle(
     fontSize: 17,
     fontWeight: FontWeight.w400,
@@ -156,30 +156,30 @@ class _DefaultStyle extends RecordAmountListItemStyle {
   });
 }
 
-const RecordAmountListItemStyle _defaultStyle = const _DefaultStyle();
+const RecordTransactionListItemStyle _defaultStyle = const _DefaultStyle();
 
-class RecordAmountListItem extends StatefulWidget {
-  final RecordAmountListItemStyle _style;
-  final RecordAmountListItemViewModel _viewModel;
+class RecordTransactionListItem extends StatefulWidget {
+  final RecordTransactionListItemStyle _style;
+  final RecordTransactionListItemViewModel _viewModel;
   final GlobalKey _pickerKey = new GlobalKey();
 
-  RecordAmountState parent;
+  RecordTransactionState parent;
 
-  RecordAmountListItem(
+  RecordTransactionListItem(
       {Key key,
-      RecordAmountListItemViewModel viewModel,
-      RecordAmountListItemStyle style = _defaultStyle,
-      RecordAmountState parent})
+      RecordTransactionListItemViewModel viewModel,
+      RecordTransactionListItemStyle style = _defaultStyle,
+      RecordTransactionState parent})
       : this._viewModel = viewModel,
         this._style = style,
         this.parent = parent,
         super(key: key);
 
   @override
-  _RecordAmountListItemState createState() => _RecordAmountListItemState();
+  _RecordTransactionListItemState createState() => _RecordTransactionListItemState();
 }
 
-class _RecordAmountListItemState extends State<RecordAmountListItem> {
+class _RecordTransactionListItemState extends State<RecordTransactionListItem> {
   final _textFieldController = TextEditingController();
 
   @override
@@ -194,16 +194,16 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
   }
 
   Widget build(BuildContext context) {
-    RecordAmountListItemViewModel viewModel = widget._viewModel;
-    RecordAmountListItemStyle style = widget._style;
+    RecordTransactionListItemViewModel viewModel = widget._viewModel;
+    RecordTransactionListItemStyle style = widget._style;
 
     return Column(
       children: _buildItemContent(viewModel, style),
     );
   }
 
-  List<Widget> _buildItemContent(RecordAmountListItemViewModel viewModel,
-      RecordAmountListItemStyle style) {
+  List<Widget> _buildItemContent(RecordTransactionListItemViewModel viewModel,
+      RecordTransactionListItemStyle style) {
     List<Widget> listBuilder = [];
 
     switch (viewModel.type) {
@@ -220,8 +220,8 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
     return listBuilder;
   }
 
-  ListTile _buildPickDate(RecordAmountListItemViewModel viewModel,
-      RecordAmountListItemStyle style) {
+  ListTile _buildPickDate(RecordTransactionListItemViewModel viewModel,
+      RecordTransactionListItemStyle style) {
     return ListTile(
       title: Row(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -268,8 +268,8 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
     );
   }
 
-  ListTile _buildPickItem(RecordAmountListItemViewModel viewModel,
-      RecordAmountListItemStyle style) {
+  ListTile _buildPickItem(RecordTransactionListItemViewModel viewModel,
+      RecordTransactionListItemStyle style) {
     return ListTile(
       title: viewModel.isEditable
           ? PopupMenuButton(
@@ -358,8 +358,8 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
     );
   }
 
-  ListTile _buildDescription(RecordAmountListItemViewModel viewModel,
-      RecordAmountListItemStyle style) {
+  ListTile _buildDescription(RecordTransactionListItemViewModel viewModel,
+      RecordTransactionListItemStyle style) {
     return ListTile(
       title: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -422,7 +422,7 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
 
   Future<Null> _selectDate(
     BuildContext context,
-    RecordAmountListItemViewModel viewModel,
+    RecordTransactionListItemViewModel viewModel,
   ) async {
     final DateTime picked = await showDatePicker(
       context: context,
@@ -445,7 +445,7 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
   }
 
   List<PopupMenuItem> _getDropDownMenuItems(
-      RecordAmountListItemViewModel viewModel) {
+      RecordTransactionListItemViewModel viewModel) {
     List<PopupMenuItem> items = [];
     for (String crop in viewModel.listOfCrops) {
       items.add(PopupMenuItem(value: crop, child: Text(crop)));
@@ -453,7 +453,7 @@ class _RecordAmountListItemState extends State<RecordAmountListItem> {
     return items;
   }
 
-  void _checkTextField(RecordAmountListItemViewModel viewModel) {
+  void _checkTextField(RecordTransactionListItemViewModel viewModel) {
     setState(() {
       if (_textFieldController.text != null) {
         viewModel.description = _textFieldController.text;

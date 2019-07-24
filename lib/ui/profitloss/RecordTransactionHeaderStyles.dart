@@ -1,8 +1,8 @@
-import 'package:farmsmart_flutter/ui/profitloss/RecordAmountHeader.dart';
+import 'package:farmsmart_flutter/ui/profitloss/RecordTransactionHeader.dart';
 import 'package:flutter/material.dart';
 
-class RecordAmountHeaderStyles {
-  static RecordAmountHeaderStyle _defaultStyle = RecordAmountHeaderStyle(
+class RecordTransactionHeaderStyles {
+  static RecordTransactionHeaderStyle _defaultStyle = RecordTransactionHeaderStyle(
     hintTextStyle: TextStyle(
       fontSize: 72,
       fontWeight: FontWeight.w500,
@@ -20,9 +20,9 @@ class RecordAmountHeaderStyles {
     maxLines: 1,
   );
 
-  static RecordAmountHeaderStyle defaultSaleStyle = _defaultStyle.copyWith();
+  static RecordTransactionHeaderStyle defaultSaleStyle = _defaultStyle.copyWith();
 
-  static RecordAmountHeaderStyle defaultCostStyle = _defaultStyle.copyWith(
+  static RecordTransactionHeaderStyle defaultCostStyle = _defaultStyle.copyWith(
     hintTextStyle: const TextStyle(
       fontSize: 72,
       fontWeight: FontWeight.w500,

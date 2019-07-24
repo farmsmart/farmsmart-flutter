@@ -1,8 +1,8 @@
-import 'package:farmsmart_flutter/ui/profitloss/RecordAmountListItem.dart';
+import 'package:farmsmart_flutter/ui/profitloss/RecordTransactionListItem.dart';
 import 'package:flutter/material.dart';
 
-class RecordAmountListItemStyles {
-  static RecordAmountListItemStyle _defaultStyle = RecordAmountListItemStyle(
+class RecordTransactionListItemStyles {
+  static RecordTransactionListItemStyle _defaultStyle = RecordTransactionListItemStyle(
       titleTextStyle: TextStyle(
         fontSize: 17,
         fontWeight: FontWeight.w400,
@@ -28,7 +28,7 @@ class RecordAmountListItemStyles {
       descriptionLineSpace: 12,
       maxLines: 5);
 
-  static RecordAmountListItemStyle biggerStyle = _defaultStyle.copyWith(
+  static RecordTransactionListItemStyle biggerStyle = _defaultStyle.copyWith(
     detailTextStyle: TextStyle(
       fontSize: 17,
       fontWeight: FontWeight.normal,

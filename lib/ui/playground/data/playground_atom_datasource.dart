@@ -1,8 +1,8 @@
-import 'package:farmsmart_flutter/ui/mockData/MockRecordAmountViewModel.dart';
+import 'package:farmsmart_flutter/ui/mockData/MockRecordTransactionViewModel.dart';
 import 'package:farmsmart_flutter/ui/playground/playground_view.dart';
-import 'package:farmsmart_flutter/ui/profitloss/RecordAmountHeaderStyles.dart';
-import 'package:farmsmart_flutter/ui/profitloss/RecordAmountListItem.dart';
-import 'package:farmsmart_flutter/ui/profitloss/RecordAmountHeader.dart';
+import 'package:farmsmart_flutter/ui/profitloss/RecordTransactionHeaderStyles.dart';
+import 'package:farmsmart_flutter/ui/profitloss/RecordTransactionListItem.dart';
+import 'package:farmsmart_flutter/ui/profitloss/RecordTransactionHeader.dart';
 import 'package:farmsmart_flutter/ui/common/CircularProgress.dart';
 import 'package:farmsmart_flutter/data/bloc/article/ArticleDetailTransformer.dart';
 import 'package:farmsmart_flutter/data/bloc/article/ArticleListItemViewModelTransformer.dart';
@@ -186,40 +186,40 @@ class PlayGroundAtomDataSource implements PlaygroundDataSource {
           widgetList: [
             PlaygroundWidget(
               title: "Record Cost Header",
-              child: RecordAmountHeader(
-                viewModel: RecordAmountHeaderViewModel(
+              child: RecordTransactionHeader(
+                viewModel: RecordTransactionHeaderViewModel(
                     onAmountChanged:
-                        MockRecordAmountViewModel.buildCost().amount,
+                        MockRecordTransactionViewModel.buildCostTransaction().amount,
                     isEditable: true),
-                style: RecordAmountHeaderStyles.defaultCostStyle,
+                style: RecordTransactionHeaderStyles.defaultCostStyle,
               ),
             ),
             PlaygroundWidget(
               title: "Record Sale Header",
-              child: RecordAmountHeader(
-                viewModel: RecordAmountHeaderViewModel(
+              child: RecordTransactionHeader(
+                viewModel: RecordTransactionHeaderViewModel(
                     onAmountChanged:
-                        MockRecordAmountViewModel.buildCost().amount,
+                        MockRecordTransactionViewModel.buildCostTransaction().amount,
                     isEditable: true),
-                style: RecordAmountHeaderStyles.defaultSaleStyle,
+                style: RecordTransactionHeaderStyles.defaultSaleStyle,
               ),
             ),
             PlaygroundWidget(
               title: "Pick up date",
-              child: RecordAmountListItem(
-                viewModel: MockRecordAmountListItemViewModel.build(0),
+              child: RecordTransactionListItem(
+                viewModel: MockRecordTransactionListItemViewModel.build(0),
               ),
             ),
             PlaygroundWidget(
               title: "Pick up crop",
-              child: RecordAmountListItem(
-                viewModel: MockRecordAmountListItemViewModel.build(1),
+              child: RecordTransactionListItem(
+                viewModel: MockRecordTransactionListItemViewModel.build(1),
               ),
             ),
             PlaygroundWidget(
               title: "Add description cell",
-              child: RecordAmountListItem(
-                viewModel: MockRecordAmountListItemViewModel.build(2),
+              child: RecordTransactionListItem(
+                viewModel: MockRecordTransactionListItemViewModel.build(2),
               ),
             ),
           ],

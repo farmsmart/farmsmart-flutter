@@ -1,77 +1,73 @@
 import 'package:farmsmart_flutter/model/loading_status.dart';
 import 'package:farmsmart_flutter/ui/common/MockString.dart';
-import 'package:farmsmart_flutter/ui/profitloss/RecordAmount.dart';
-import 'package:farmsmart_flutter/ui/profitloss/RecordAmountListItem.dart';
+import 'package:farmsmart_flutter/ui/profitloss/RecordTransaction.dart';
+import 'package:farmsmart_flutter/ui/profitloss/RecordTransactionListItem.dart';
 import 'package:flutter/material.dart';
 
-class MockRecordAmountViewModel {
-  static RecordAmountViewModel buildSale() {
-    List<RecordAmountListItemViewModel> list = [];
+class MockRecordTransactionViewModel {
+  static RecordTransactionViewModel buildSaleTransaction() {
+    List<RecordTransactionListItemViewModel> list = [];
 
     for (var i = 0; i < 3; i++) {
-      list.add(MockRecordAmountListItemViewModel.build(i));
+      list.add(MockRecordTransactionListItemViewModel.build(i));
     }
 
-    return RecordAmountViewModel(
-      loadingStatus: LoadingStatus.SUCCESS,
+    return RecordTransactionViewModel(
       actions: list,
       buttonTitle: _mockButtonTitle[1],
       listener: (data) => _mockRecordTap(data),
-      type: RecordType.sale,
+      type: TransactionType.sale,
     );
   }
 
-  static RecordAmountViewModel buildCost() {
-    List<RecordAmountListItemViewModel> list = [];
+  static RecordTransactionViewModel buildCostTransaction() {
+    List<RecordTransactionListItemViewModel> list = [];
 
     for (var i = 0; i < 3; i++) {
-      list.add(MockRecordAmountListItemViewModel.build(i));
+      list.add(MockRecordTransactionListItemViewModel.build(i));
     }
 
-    return RecordAmountViewModel(
-      loadingStatus: LoadingStatus.SUCCESS,
+    return RecordTransactionViewModel(
       actions: list,
       buttonTitle: _mockButtonTitle[0],
       listener: (data) => _mockRecordTap(data),
-      type: RecordType.cost,
+      type: TransactionType.cost,
     );
   }
 
-  static RecordAmountViewModel buildViewSale() {
-    List<RecordAmountListItemViewModel> list = [];
+  static RecordTransactionViewModel buildViewSale() {
+    List<RecordTransactionListItemViewModel> list = [];
 
     for (var i = 0; i < 3; i++) {
-      list.add(MockRecordAmountListItemViewModel.buildNotEditable(i));
+      list.add(MockRecordTransactionListItemViewModel.buildNotEditable(i));
     }
 
-    return RecordAmountViewModel(
-      loadingStatus: LoadingStatus.SUCCESS,
+    return RecordTransactionViewModel(
       actions: list,
       amount: "12.48",
       buttonTitle: _mockButtonTitle[1],
-      type: RecordType.sale,
+      type: TransactionType.sale,
       isEditable: false,
     );
   }
 
-  static RecordAmountViewModel buildViewCost() {
-    List<RecordAmountListItemViewModel> list = [];
+  static RecordTransactionViewModel buildViewCost() {
+    List<RecordTransactionListItemViewModel> list = [];
 
     for (var i = 0; i < 3; i++) {
-      list.add(MockRecordAmountListItemViewModel.buildNotEditable(i));
+      list.add(MockRecordTransactionListItemViewModel.buildNotEditable(i));
     }
 
-    return RecordAmountViewModel(
-      loadingStatus: LoadingStatus.SUCCESS,
+    return RecordTransactionViewModel(
       actions: list,
       buttonTitle: _mockButtonTitle[1],
-      type: RecordType.cost,
+      type: TransactionType.cost,
       isEditable: false,
       amount: "-233.3",
     );
   }
 
-  static _mockRecordTap(RecordData save) {
+  static _mockRecordTap(RecordTransactionData save) {
     print(
       "You recorded:\nAMOUNT: " +
           save.amount +
@@ -85,17 +81,17 @@ class MockRecordAmountViewModel {
   }
 }
 
-class MockRecordAmountListItemViewModel {
-  static RecordAmountListItemViewModel build(int index) {
-    return RecordAmountListItemViewModel(
+class MockRecordTransactionListItemViewModel {
+  static RecordTransactionListItemViewModel build(int index) {
+    return RecordTransactionListItemViewModel(
       type: _cellType[index],
       selectedDate: _mockSelectedDate[index],
       listOfCrops: _mockListOfCrops[index],
     );
   }
 
-  static RecordAmountListItemViewModel buildNotEditable(int index) {
-    return RecordAmountListItemViewModel(
+  static RecordTransactionListItemViewModel buildNotEditable(int index) {
+    return RecordTransactionListItemViewModel(
       description: _mockDescription.random(),
       selectedDate: _mockSelectedDate[index],
       listOfCrops: _mockListOfCrops[index],

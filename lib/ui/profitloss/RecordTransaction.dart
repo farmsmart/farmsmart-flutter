@@ -1,10 +1,10 @@
 import 'package:farmsmart_flutter/model/loading_status.dart';
 import 'package:farmsmart_flutter/ui/common/ListDivider.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
-import 'package:farmsmart_flutter/ui/profitloss/RecordAmountHeaderStyles.dart';
-import 'package:farmsmart_flutter/ui/profitloss/RecordAmountListItem.dart';
-import 'package:farmsmart_flutter/ui/profitloss/RecordAmountHeader.dart';
-import 'package:farmsmart_flutter/ui/profitloss/RecordAmountListItemStyles.dart';
+import 'package:farmsmart_flutter/ui/profitloss/RecordTransactionHeaderStyles.dart';
+import 'package:farmsmart_flutter/ui/profitloss/RecordTransactionListItem.dart';
+import 'package:farmsmart_flutter/ui/profitloss/RecordTransactionHeader.dart';
+import 'package:farmsmart_flutter/ui/profitloss/RecordTransactionListItemStyles.dart';
 import 'package:farmsmart_flutter/utils/strings.dart';
 import 'package:flutter/material.dart';
 
@@ -18,13 +18,13 @@ class _Constants {
   static final String EMPTY_STRING = "";
 }
 
-class RecordData {
+class RecordTransactionData {
   String amount;
   DateTime date;
   String crop;
   String description;
 
-  RecordData({
+  RecordTransactionData({
     this.amount,
     this.date,
     this.crop,
@@ -32,24 +32,22 @@ class RecordData {
   });
 }
 
-enum RecordType {
+enum TransactionType {
   cost,
   sale,
 }
 
-class RecordAmountViewModel {
-  LoadingStatus loadingStatus;
-  List<RecordAmountListItemViewModel> actions;
-  RecordType type;
+class RecordTransactionViewModel {
+  List<RecordTransactionListItemViewModel> actions;
+  TransactionType type;
   String amount;
   String description;
   bool isFilled;
   bool isEditable;
   String buttonTitle;
-  final Function(RecordData) listener;
+  final Function(RecordTransactionData) listener;
 
-  RecordAmountViewModel({
-    this.loadingStatus,
+  RecordTransactionViewModel({
     this.actions,
     this.amount,
     this.buttonTitle,
@@ -60,7 +58,7 @@ class RecordAmountViewModel {
   });
 }
 
-class RecordAmountStyle {
+class RecordTransactionStyle {
   final EdgeInsets buttonEdgePadding;
 
   final EdgeInsets appBarLeftMargin;
@@ -71,7 +69,7 @@ class RecordAmountStyle {
   final double appBarIconHeight;
   final double appBarIconWidth;
 
-  const RecordAmountStyle({
+  const RecordTransactionStyle({
     this.buttonEdgePadding,
     this.appBarLeftMargin,
     this.appBarRightMargin,
@@ -81,7 +79,7 @@ class RecordAmountStyle {
     this.appBarIconWidth,
   });
 
-  RecordAmountStyle copyWith({
+  RecordTransactionStyle copyWith({
     EdgeInsets buttonEdgePadding,
     EdgeInsets appBarLeftMargin,
     EdgeInsets appBarRightMargin,
@@ -90,7 +88,7 @@ class RecordAmountStyle {
     double appBarIconHeight,
     double appBarIconWidth,
   }) {
-    return RecordAmountStyle(
+    return RecordTransactionStyle(
       buttonEdgePadding: buttonEdgePadding ?? this.buttonEdgePadding,
       appBarLeftMargin: appBarLeftMargin ?? this.appBarLeftMargin,
       appBarRightMargin: appBarRightMargin ?? this.appBarRightMargin,
@@ -102,7 +100,7 @@ class RecordAmountStyle {
   }
 }
 
-class _DefaultStyle extends RecordAmountStyle {
+class _DefaultStyle extends RecordTransactionStyle {
   final EdgeInsets buttonEdgePadding = const EdgeInsets.all(32.0);
   final EdgeInsets appBarLeftMargin = const EdgeInsets.only(left: 31);
   final EdgeInsets appBarRightMargin = const EdgeInsets.only(right: 0);
@@ -124,25 +122,25 @@ class _DefaultStyle extends RecordAmountStyle {
   });
 }
 
-const RecordAmountStyle _defaultStyle = const _DefaultStyle();
+const RecordTransactionStyle _defaultStyle = const _DefaultStyle();
 
-class RecordAmount extends StatefulWidget {
-  final RecordAmountViewModel _viewModel;
-  final RecordAmountStyle _style;
+class RecordTransaction extends StatefulWidget {
+  final RecordTransactionViewModel _viewModel;
+  final RecordTransactionStyle _style;
 
-  RecordAmount({
+  RecordTransaction({
     Key key,
-    RecordAmountViewModel viewModel,
-    RecordAmountStyle style = _defaultStyle,
+    RecordTransactionViewModel viewModel,
+    RecordTransactionStyle style = _defaultStyle,
   })  : this._viewModel = viewModel,
         this._style = style,
         super(key: key);
 
   @override
-  RecordAmountState createState() => RecordAmountState();
+  RecordTransactionState createState() => RecordTransactionState();
 }
 
-class RecordAmountState extends State<RecordAmount> {
+class RecordTransactionState extends State<RecordTransaction> {
   String amount;
   DateTime selectedDate = DateTime.now();
   String selectedCrop;
@@ -156,28 +154,9 @@ class RecordAmountState extends State<RecordAmount> {
   }
 
   Widget build(BuildContext context) {
-    switch (widget._viewModel.loadingStatus) {
-      case LoadingStatus.LOADING:
-        return Container(
-          child: CircularProgressIndicator(),
-          alignment: Alignment.center,
-        );
-      case LoadingStatus.SUCCESS:
-        return _buildPage(
-          context,
-          widget._viewModel,
-          widget._style,
-        );
-      case LoadingStatus.ERROR:
-        return Text(Strings.errorString);
-    }
-  }
+    RecordTransactionViewModel viewModel = widget._viewModel;
+    RecordTransactionStyle style = widget._style;
 
-  Widget _buildPage(
-    BuildContext context,
-    RecordAmountViewModel viewModel,
-    RecordAmountStyle style,
-  ) {
     return Scaffold(
       appBar: viewModel.isEditable
           ? _buildSimpleAppBar(style, context)
@@ -197,7 +176,7 @@ class RecordAmountState extends State<RecordAmount> {
     );
   }
 
-  AppBar _buildSimpleAppBar(RecordAmountStyle style, BuildContext context) {
+  AppBar _buildSimpleAppBar(RecordTransactionStyle style, BuildContext context) {
     return AppBar(
       elevation: style.appBarElevation,
       leading: FlatButton(
@@ -212,7 +191,7 @@ class RecordAmountState extends State<RecordAmount> {
     );
   }
 
-  AppBar _buildEditAppBar(RecordAmountStyle style, BuildContext context) {
+  AppBar _buildEditAppBar(RecordTransactionStyle style, BuildContext context) {
     return AppBar(
       elevation: style.appBarElevation,
       leading: FlatButton(
@@ -239,26 +218,26 @@ class RecordAmountState extends State<RecordAmount> {
   }
 
   List<Widget> _buildContent(
-      RecordAmountViewModel viewModel, RecordAmountStyle style) {
+      RecordTransactionViewModel viewModel, RecordTransactionStyle style) {
     List<Widget> listBuilder = [];
 
     listBuilder.add(
-      RecordAmountHeader(
-          viewModel: RecordAmountHeaderViewModel(
+      RecordTransactionHeader(
+          viewModel: RecordTransactionHeaderViewModel(
             isEditable: viewModel.isEditable,
             onAmountChanged: viewModel.amount,
           ),
-          style: viewModel.type == RecordType.sale
-              ? RecordAmountHeaderStyles.defaultSaleStyle
-              : RecordAmountHeaderStyles.defaultCostStyle,
+          style: viewModel.type == TransactionType.sale
+              ? RecordTransactionHeaderStyles.defaultSaleStyle
+              : RecordTransactionHeaderStyles.defaultCostStyle,
           parent: this),
     );
 
     listBuilder.add(SizedBox(height: style.headerLineSpace));
 
     listBuilder.add(
-      RecordAmountListItem(
-        viewModel: RecordAmountListItemViewModel(
+      RecordTransactionListItem(
+        viewModel: RecordTransactionListItemViewModel(
           type: RecordCellType.pickDate,
           isEditable: viewModel.isEditable,
           selectedDate: viewModel.isEditable
@@ -272,8 +251,8 @@ class RecordAmountState extends State<RecordAmount> {
     listBuilder.add(ListDivider.build());
 
     listBuilder.add(
-      RecordAmountListItem(
-        viewModel: RecordAmountListItemViewModel(
+      RecordTransactionListItem(
+        viewModel: RecordTransactionListItemViewModel(
           type: RecordCellType.pickItem,
           isEditable: viewModel.isEditable,
           selectedItem: viewModel.isEditable
@@ -288,15 +267,15 @@ class RecordAmountState extends State<RecordAmount> {
     listBuilder.add(ListDivider.build());
 
     listBuilder.add(
-      RecordAmountListItem(
-        viewModel: RecordAmountListItemViewModel(
+      RecordTransactionListItem(
+        viewModel: RecordTransactionListItemViewModel(
           type: RecordCellType.description,
           isEditable: viewModel.isEditable,
           description: viewModel.isEditable
               ? description
               : viewModel.actions[_Constants.thirdListItem].description,
         ),
-        style: RecordAmountListItemStyles.biggerStyle,
+        style: RecordTransactionListItemStyles.biggerStyle,
         parent: this,
       ),
     );
@@ -308,7 +287,7 @@ class RecordAmountState extends State<RecordAmount> {
   }
 
   Padding _buildFooter(
-      RecordAmountViewModel viewModel, RecordAmountStyle style) {
+      RecordTransactionViewModel viewModel, RecordTransactionStyle style) {
     return Padding(
       padding: style.buttonEdgePadding,
       child: Row(
@@ -327,7 +306,7 @@ class RecordAmountState extends State<RecordAmount> {
                     viewModel: RoundedButtonViewModel(
                       title: viewModel.buttonTitle,
                       onTap: () => viewModel.listener(
-                            RecordData(
+                            RecordTransactionData(
                               amount: amount,
                               date: selectedDate,
                               crop: selectedCrop,
@@ -336,7 +315,7 @@ class RecordAmountState extends State<RecordAmount> {
                             ),
                           ),
                     ),
-                    style: viewModel.type == RecordType.sale
+                    style: viewModel.type == TransactionType.sale
                         ? RoundedButtonStyle.largeRoundedButtonStyle().copyWith(
                             backgroundColor: Color(0xFF24d900),
                           )
