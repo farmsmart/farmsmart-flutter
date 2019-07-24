@@ -97,8 +97,8 @@ jobs:
           VERSION_NAME="${CIRCLE_BRANCH}_${CIRCLE_SHA1:0:7}"
           echo "Building flutter development appbundle - BUILD_NAME:${VERSION_NAME}"
           flutter build appbundle --build-name="${CIRCLE_SHA1}" --target-platform android-arm,android-arm64 --release --flavor qa -t lib/main.dart
-          APK_BUILD_PATH=$(find ./build -name '*.aab')
-          echo "export APK_BUILD_PATH=${APK_BUILD_PATH}" >> ./env.sh
+          APP_BUILD_PATH=$(find ./build -name '*.aab')
+          echo "export APP_BUILD_PATH=${APP_BUILD_PATH}" >> ./env.sh
           echo "export VERSION_NAME=${VERSION_NAME}" >> ./env.sh
       - *save_workspace
 
@@ -109,10 +109,10 @@ jobs:
       - run: |
           flutter pub get
           VERSION_NAME="RC_${CIRCLE_TAG}_${CIRCLE_SHA1:0:7}"
-          echo "Building flutter development apk - BUILD_NAME:${VERSION_NAME}"
+          echo "Building flutter development app - BUILD_NAME:${VERSION_NAME}"
           flutter build appbundle --build-name="${VERSION_NAME}" --target-platform android-arm,android-arm64 --release --flavor production -t lib/main_production.dart
-          APK_BUILD_PATH=$(find ./build -name '*.aab')
-          echo "export APK_BUILD_PATH=${APK_BUILD_PATH}" >> ./env.sh
+          APP_BUILD_PATH=$(find ./build -name '*.aab')
+          echo "export APP_BUILD_PATH=${APP_BUILD_PATH}" >> ./env.sh
           echo "export VERSION_NAME=${VERSION_NAME}" >> ./env.sh
       - *save_workspace
 
@@ -142,19 +142,19 @@ jobs:
       - run: |
           set -euo pipefail
           source ./env.sh
-          APK_INFO=$(python3 ./ci/playstore/publish_to_internal_app_sharing.py co.farmsmart.app ${VERSION_NAME} ${APK_BUILD_PATH})
-          echo "export APK_INFO='${APK_INFO}'" >> ./env.sh
+          APP_INFO=$(python3 ./ci/playstore/publish_to_internal_app_sharing.py co.farmsmart.app ${VERSION_NAME} ${APP_BUILD_PATH})
+          echo "export APP_INFO='${APP_INFO}'" >> ./env.sh
       - *save_workspace
 
-  promote-apk-to-track:
+  promote-app-to-track:
     executor: utilities
     steps:
       - *restore_workspace
       - run: |
           set -euo pipefail
           source ./env.sh
-          APK_PATHS=$(find /tmp/workspace/build -name "*${VERSION_NAME}*.aab" | sed 'H;1h;$!d;x;y/\n/,/')
-          python3 ./ci/playstore/promote_apk_to_track.py co.farmsmart.app ${TRACK} ${VERSION_NAME} ${VERSION_CODE} ./Release_notes ${APK_PATHS}
+          APP_PATHS=$(find /tmp/workspace/build -name "*${VERSION_NAME}*.aab" | sed 'H;1h;$!d;x;y/\n/,/')
+          python3 ./ci/playstore/promote_app_to_track.py co.farmsmart.app ${TRACK} ${VERSION_NAME} ${VERSION_CODE} ./Release_notes ${APP_PATHS}
       - *save_workspace
 
   slack-notification-prod:
@@ -174,13 +174,13 @@ jobs:
       - run: |
           set -euo pipefail
           source ./env.sh
-          VERSION_NAME=$(echo ${APK_INFO} | jq '.version_name')
-          DOWNLOAD_URL=$(echo ${APK_INFO} | jq '.download_url')
+          VERSION_NAME=$(echo ${APP_INFO} | jq '.version_name')
+          DOWNLOAD_URL=$(echo ${APP_INFO} | jq '.download_url')
           MESSAGE="Test version ${VERSION_NAME} has been uploaded to internal app sharing - ${DOWNLOAD_URL}"
           python3 /farmsmart/utilities/notify.py ${SLACK_FARMSMART_TOKEN} "${MESSAGE}" ${SLACK_CHANNEL}
 
 workflows:
-  android-apk:
+  android-app:
     jobs:
       - prepare:
           context: gcp-kms
@@ -266,12 +266,12 @@ workflows:
             - get-next-version
           context: prod
 
-      - promote-apk-to-track:
+      - promote-app-to-track:
           requires:
             - flutter-build-release
           context: prod
 
       - slack-notification-prod:
           requires:
-            - promote-apk-to-track
+            - promote-app-to-track
           context: prod
