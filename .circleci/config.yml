@@ -22,7 +22,7 @@ executors:
     working_directory: *working_dir
   flutter:
     docker:
-      - image: cirrusci/flutter:v1.7.11
+      - image: cirrusci/flutter:v1.7.8-hotfix.3
     working_directory: *working_dir
   utilities:
     docker:
@@ -78,10 +78,9 @@ jobs:
       - *restore_workspace
       - run: |
           VERSION=$(echo $CIRCLE_BRANCH | sed 's/.*\/v\(.*\)/\1/')
-          VERSION_INFO=$(python3 ./ci/playstore/get_next_version.py co.farmsmart.app ${VERSION} ${TRACK})
-          VERSION_NAME=$(echo ${VERSION_INFO} | jq '.version_name')
+          VERSION_INFO=$(python3 ./ci/playstore/increment_version.py co.farmsmart.app ${VERSION} ${TRACK})
           VERSION_CODE=$(echo ${VERSION_INFO} | jq '.version_code')
-          echo "export VERSION_NAME=${VERSION_NAME}" >> ./env.sh
+          echo "export VERSION_NAME=${VERSION}" >> ./env.sh
           echo "export VERSION_CODE=${VERSION_CODE}" >> ./env.sh
       - *save_workspace
 
@@ -91,11 +90,13 @@ jobs:
       - *restore_workspace
       - run: |
           flutter doctor -v
-          flutter packages get
+          flutter pub get
+      - run: |
+          set -euo pipefail
           VERSION_NAME="${CIRCLE_BRANCH}_${CIRCLE_SHA1:0:7}"
-          echo "Building flutter development apk - BUILD_NAME:${VERSION_NAME}"
-          flutter build apk -v --build-name="${CIRCLE_SHA1}" --release --flavor qa -t lib/main.dart
-          APK_BUILD_PATH=$(find ./build -name '*release.apk')
+          echo "Building flutter development appbundle - BUILD_NAME:${VERSION_NAME}"
+          flutter build appbundle --build-name="${CIRCLE_SHA1}" --target-platform android-arm,android-arm64 --release --flavor qa -t lib/main.dart
+          APK_BUILD_PATH=$(find ./build -name '*.aab')
           echo "export APK_BUILD_PATH=${APK_BUILD_PATH}" >> ./env.sh
           echo "export VERSION_NAME=${VERSION_NAME}" >> ./env.sh
       - *save_workspace
@@ -105,52 +106,33 @@ jobs:
     steps:
       - *restore_workspace
       - run: |
-          flutter packages get
+          flutter pub get
           VERSION_NAME="RC_${CIRCLE_TAG}_${CIRCLE_SHA1:0:7}"
           echo "Building flutter development apk - BUILD_NAME:${VERSION_NAME}"
-          flutter build apk --build-name="${VERSION_NAME}" --release --flavor production -t lib/main_production.dart
-          APK_BUILD_PATH=$(find ./build -name '*release.apk')
+          flutter build appbundle --build-name="${VERSION_NAME}" --target-platform android-arm,android-arm64 --release --flavor production -t lib/main_production.dart
+          APK_BUILD_PATH=$(find ./build -name '*.aab')
           echo "export APK_BUILD_PATH=${APK_BUILD_PATH}" >> ./env.sh
           echo "export VERSION_NAME=${VERSION_NAME}" >> ./env.sh
       - *save_workspace
 
-  flutter-build-32:
+  flutter-build-release:
     executor: flutter
     steps:
       - *restore_workspace
       - run: |
           source ./env.sh
           flutter packages get
-          echo "Building flutter apk  32 bit - BUILD_NAME:${VERSION_NAME}, BUILD_NUMBER=${VERSION_CODE}"
-          flutter build apk --build-name=${VERSION_NAME}_32 --build-number=${VERSION_CODE} --release --flavor production -t lib/main_production.dart
-          BUILD_PATH=$(find ./build -name '*-release.apk')
-          mkdir -p /tmp/workspace/build_32
-          mv ${BUILD_PATH} /tmp/workspace/build_32/${VERSION_NAME}_32.apk
+          echo "Building flutter appbundle - BUILD_NAME:${VERSION_NAME}, BUILD_NUMBER=${VERSION_CODE}"
+          flutter build apk --build-name=${VERSION_NAME} --build-number=${VERSION_CODE} --release --flavor production -t lib/main_production.dart
+          BUILD_PATH=$(find ./build -name '*.aab')
+          mkdir -p /tmp/workspace/build
+          mv ${BUILD_PATH} /tmp/workspace/build/${VERSION_NAME}.aab
       - persist_to_workspace:
           root: *workspace
           paths:
-            - build_32
+            - build
       - store_artifacts:
-          path: /tmp/workspace/build_32
-
-  flutter-build-64:
-    executor: flutter
-    steps:
-      - *restore_workspace
-      - run: |
-          source ./env.sh
-          flutter packages get
-          echo "Building flutter apk  64 bit - BUILD_NAME:${VERSION_NAME}, BUILD_NUMBER=${VERSION_CODE}"
-          flutter build apk --build-name=${VERSION_NAME}_64 --build-number=$[${VERSION_CODE}+1] --release --flavor production --target-platform android-arm64 -t lib/main_production.dart
-          BUILD_PATH=$(find ./build -name '*-release.apk')
-          mkdir -p /tmp/workspace/build_64
-          mv ${BUILD_PATH} /tmp/workspace/build_64/${VERSION_NAME}_64.apk
-      - persist_to_workspace:
-          root: *workspace
-          paths:
-            - build_64
-      - store_artifacts:
-          path: /tmp/workspace/build_64
+          path: /tmp/workspace/build
 
   upload-to-app-sharing:
     executor: utilities
@@ -170,7 +152,7 @@ jobs:
       - run: |
           set -euo pipefail
           source ./env.sh
-          APK_PATHS=$(find /tmp/workspace -name "*${VERSION_NAME}*.apk" | sed 'H;1h;$!d;x;y/\n/,/')
+          APK_PATHS=$(find /tmp/workspace -name "*${VERSION_NAME}*.aab" | sed 'H;1h;$!d;x;y/\n/,/')
           python3 ./ci/playstore/promote_apk_to_track.py co.farmsmart.app ${TRACK} ${VERSION_NAME} ${VERSION_CODE} ./Release_notes ${APK_PATHS}
       - *save_workspace
 
@@ -212,23 +194,24 @@ workflows:
             tags:
               only: /.*/  
 
-      - flutter-build-dev:
-          requires:
-            - test
-          context: dev
-          filters:
-            branches:
-              only: /develop|feature.*/
+
+      # - flutter-build-dev:
+      #     requires:
+      #       - test
+      #     context: dev
+      #     filters:
+      #       branches:
+      #         only: /develop|feature.*/
       
-      - flutter-build-rc:
-          requires:
-            - test
-          context: dev
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /.*/
+      # - flutter-build-rc:
+      #     requires:
+      #       - test
+      #     context: dev
+      #     filters:
+      #       branches:
+      #         ignore: /.*/
+      #       tags:
+      #         only: /.*/
 
       - upload-to-app-sharing:
           requires:
@@ -275,37 +258,19 @@ workflows:
           context: prod
           filters:
             branches:
-              only: /release.*/
+              only: /feature.*/
 
-      - flutter-build-32:
+      - flutter-build-release:
           requires:
             - get-next-version
           context: prod
-          filters:
-            branches:
-              only: /release.*/
-
-      - flutter-build-64:
-          requires:
-            - get-next-version
-          context: prod
-          filters:
-            branches:
-              only: /release.*/
 
       - promote-apk-to-track:
           requires:
-            - flutter-build-32
-            - flutter-build-64
+            - flutter-build-release
           context: prod
-          filters:
-            branches:
-              only: /release.*/
 
       - slack-notification-prod:
           requires:
             - promote-apk-to-track
           context: prod
-          filters:
-            branches:
-              only: /release.*/
