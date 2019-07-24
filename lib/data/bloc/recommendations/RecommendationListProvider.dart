@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:farmsmart_flutter/data/bloc/Basket.dart';
 import 'package:farmsmart_flutter/data/bloc/recommendations/RecommendationEngine.dart';
 import 'package:farmsmart_flutter/data/model/crop_entity.dart';
 import 'package:farmsmart_flutter/data/repositories/crop/CropRepositoryInterface.dart';
@@ -15,21 +16,24 @@ class RecommendationListProvider
   final String _title;
   final double _inputScale;
   final CropRepositoryInterface _cropRepo;
+  Basket<CropEntity> _cropBasket;
+  List<CropEntity> _crops;
   //final UserProfileRepositoryInterface _profileRepo;
   final _controller = StreamController<RecommendationsListViewModel>();
   RecommendationsListViewModel _snapshot;
 
-  RecommendationListProvider(
-    {String title,
+  RecommendationListProvider({
+    String title,
     CropRepositoryInterface cropRepo,
-    double inputScale,}
-  )   : this._title = title,
+    double inputScale,
+  })  : this._title = title,
         this._cropRepo = cropRepo,
         this._inputScale = inputScale;
 
   @override
   RecommendationsListViewModel initial() {
     if (_snapshot == null) {
+      _cropBasket = Basket<CropEntity>(_basketDidChange);
       _snapshot = _viewModel(
         status: LoadingStatus.LOADING,
         items: [],
@@ -67,7 +71,8 @@ class RecommendationListProvider
       weightMatrix: {},
     );
     final transformer = RecommendationCardTransformer(
-      recommendationBusinessLogic,
+      engine: recommendationBusinessLogic,
+      basket: _cropBasket,
     );
     final items = crops.map((crop) {
       return transformer.transform(from: crop);
@@ -75,8 +80,14 @@ class RecommendationListProvider
     return _viewModel(status: LoadingStatus.SUCCESS, items: items);
   }
 
+  void _basketDidChange(List<CropEntity> old) {
+    _snapshot = _modelFromCrops(_controller, _crops);
+    _controller.sink.add(_snapshot);
+  }
+
   void _update(StreamController<RecommendationsListViewModel> controller) {
     _cropRepo.get().then((crops) {
+      _crops = crops;
       _snapshot = _modelFromCrops(controller, crops);
       controller.sink.add(_snapshot);
     });
