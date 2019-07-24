@@ -8,12 +8,12 @@ import 'package:farmsmart_flutter/ui/mockData/MockActionSheetViewModel.dart';
 import 'package:farmsmart_flutter/ui/playground/data/playground_data_source.dart';
 import 'package:farmsmart_flutter/ui/playground/data/playground_stagecard_datasource.dart';
 import 'package:farmsmart_flutter/ui/playground/playground_widget.dart';
+import 'package:farmsmart_flutter/ui/profile/SwitchProfile.dart';
 import 'package:farmsmart_flutter/ui/profitloss/ProfitLossHeader.dart';
 import 'package:farmsmart_flutter/ui/profitloss/ProfitLossListItem.dart';
 import 'package:farmsmart_flutter/ui/profitloss/mockRepositoryTryout/MockTransactionRepository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-
 import '../playground_view.dart';
 import 'playground_persistent_bottom_navigation_bar_datasource.dart';
 
@@ -100,11 +100,6 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
           ),
         ),
       ),
-      /* Template
-      PlaygroundWidget(
-        title: '#TASK NAME#',
-        child: YourWidget(),
-      ),*/
       PlaygroundWidget(
           title: "FARM-280 Update Discover",
           child: ArticleList(
@@ -117,6 +112,10 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
           backgroundColor: Colors.white,
           tabs: PlaygroundPersistentBottomNavigationBar().getList(),
         ),
+      ),
+      PlaygroundWidget(
+        title: "FARM-67 Switch profiles",
+        child: SwitchProfile()
       ),
     ];
   }
