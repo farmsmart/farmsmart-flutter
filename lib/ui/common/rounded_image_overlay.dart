@@ -6,7 +6,7 @@ class RoundedImageOverlay extends StatelessWidget {
   final double imageWidth;
   final BorderRadiusGeometry imageBorderRadius;
   final Color overlayColor;
-  final bool showOverlay;
+  final bool showOverlayIcon;
   final String overlayIcon;
   final double overlayIconHeight;
   final double overlayIconWidth;
@@ -16,8 +16,8 @@ class RoundedImageOverlay extends StatelessWidget {
     this.imageHeight = double.infinity,
     this.imageWidth = double.infinity,
     this.imageBorderRadius = const BorderRadius.all(Radius.circular(12.0)),
-    this.overlayColor = const Color(0x26ffffff),
-    this.showOverlay = false,
+    this.overlayColor = const Color(0x1425df0c),
+    this.showOverlayIcon = false,
     this.overlayIcon,
     this.overlayIconHeight = double.infinity,
     this.overlayIconWidth = double.infinity,
@@ -43,7 +43,7 @@ class RoundedImageOverlay extends StatelessWidget {
   }
 
   Widget _buildOverlay() {
-    if (showOverlay) {
+
       return Container(
         width: double.infinity,
         height: imageHeight,
@@ -53,15 +53,19 @@ class RoundedImageOverlay extends StatelessWidget {
           color: overlayColor,
         ),
         child: Center(
-          child: Image(
-            image: AssetImage(overlayIcon),
-            width: overlayIconWidth,
-            height: overlayIconHeight,
-          ),
+          child:  _buildImage(),
         ),
       );
-    } else {
-      return SizedBox.shrink();
+
+  }
+
+  _buildImage() {
+    if (showOverlayIcon) {
+      return Image(
+        image: AssetImage(overlayIcon),
+        width: overlayIconWidth,
+        height: overlayIconHeight,
+      );
     }
   }
 }

@@ -20,6 +20,7 @@ class RecommendationDetailCardStyles {
           color: Color(0xff4c4e6e),
         ),
       ),
+      imageOverlayColor: Color(0x1924d900),
     );
   }
 
@@ -43,7 +44,7 @@ class RecommendationDetailCardStyles {
     ),
     imageOverlayWidth: 26,
     imageOverlayHeight: 26,
-    imageOverlayColor: Color(0x1924d900),
+    imageOverlayColor: Color(0x1425df0c),
   );
 
   static RoundedButtonStyle _defaultActionButtonStyle = RoundedButtonStyle(

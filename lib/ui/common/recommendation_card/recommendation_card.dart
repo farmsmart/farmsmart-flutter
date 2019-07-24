@@ -208,7 +208,7 @@ class RecommendationCard extends StatelessWidget {
       overlayIconHeight: _style.overlayIconHeight,
       overlayIconWidth: _style.overlayIconWidth,
       overlayColor: _style.overlayColor,
-      showOverlay: _viewModel.isAdded,
+      showOverlayIcon: _viewModel.isAdded,
     );
   }
 
