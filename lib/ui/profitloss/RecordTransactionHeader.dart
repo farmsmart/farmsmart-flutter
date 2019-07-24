@@ -176,7 +176,7 @@ class _RecordTransactionHeaderState extends State<RecordTransactionHeader> {
         widget.parent.isAmountFilled = false;
         widget.parent.checkIfFilled();
       } else {
-        widget.parent.amount = amount;
+        widget.parent.userData.amount = amount;
         widget.parent.isAmountFilled = true;
         widget.parent.checkIfFilled();
       }
@@ -198,7 +198,7 @@ class _RecordTransactionHeaderState extends State<RecordTransactionHeader> {
       if (_textFieldController.text == _Strings.EMPTY_STRING) {
         hint = _Strings.HINT;
       } else {
-        widget.parent.amount = _textFieldController.text;
+        widget.parent.userData.amount = _textFieldController.text;
         widget.parent.isAmountFilled = true;
         FocusScope.of(context).detach();
       }

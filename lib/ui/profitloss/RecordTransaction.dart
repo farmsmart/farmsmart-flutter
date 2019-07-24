@@ -141,10 +141,7 @@ class RecordTransaction extends StatefulWidget {
 }
 
 class RecordTransactionState extends State<RecordTransaction> {
-  String amount;
-  DateTime selectedDate = DateTime.now();
-  String selectedCrop;
-  String description;
+  RecordTransactionData userData = RecordTransactionData(date: DateTime.now());
   bool isAmountFilled = false;
   bool isCropFilled = false;
 
@@ -176,7 +173,8 @@ class RecordTransactionState extends State<RecordTransaction> {
     );
   }
 
-  AppBar _buildSimpleAppBar(RecordTransactionStyle style, BuildContext context) {
+  AppBar _buildSimpleAppBar(
+      RecordTransactionStyle style, BuildContext context) {
     return AppBar(
       elevation: style.appBarElevation,
       leading: FlatButton(
@@ -241,7 +239,7 @@ class RecordTransactionState extends State<RecordTransaction> {
           type: RecordCellType.pickDate,
           isEditable: viewModel.isEditable,
           selectedDate: viewModel.isEditable
-              ? selectedDate
+              ? userData.date
               : viewModel.actions[_Constants.firstListItem].selectedDate,
         ),
         parent: this,
@@ -256,7 +254,7 @@ class RecordTransactionState extends State<RecordTransaction> {
           type: RecordCellType.pickItem,
           isEditable: viewModel.isEditable,
           selectedItem: viewModel.isEditable
-              ? selectedCrop
+              ? userData.crop
               : viewModel.actions[_Constants.secondListItem].selectedItem,
           listOfCrops: viewModel.actions[_Constants.secondListItem].listOfCrops,
         ),
@@ -272,7 +270,7 @@ class RecordTransactionState extends State<RecordTransaction> {
           type: RecordCellType.description,
           isEditable: viewModel.isEditable,
           description: viewModel.isEditable
-              ? description
+              ? userData.description
               : viewModel.actions[_Constants.thirdListItem].description,
         ),
         style: RecordTransactionListItemStyles.biggerStyle,
@@ -305,15 +303,7 @@ class RecordTransactionState extends State<RecordTransaction> {
                 : RoundedButton(
                     viewModel: RoundedButtonViewModel(
                       title: viewModel.buttonTitle,
-                      onTap: () => viewModel.listener(
-                            RecordTransactionData(
-                              amount: amount,
-                              date: selectedDate,
-                              crop: selectedCrop,
-                              description:
-                                  description ?? _Constants.EMPTY_STRING,
-                            ),
-                          ),
+                      onTap: () => viewModel.listener(userData),
                     ),
                     style: viewModel.type == TransactionType.sale
                         ? RoundedButtonStyle.largeRoundedButtonStyle().copyWith(

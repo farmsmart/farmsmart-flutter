@@ -2,6 +2,7 @@ import 'package:farmsmart_flutter/model/loading_status.dart';
 import 'package:farmsmart_flutter/ui/common/MockString.dart';
 import 'package:farmsmart_flutter/ui/profitloss/RecordTransaction.dart';
 import 'package:farmsmart_flutter/ui/profitloss/RecordTransactionListItem.dart';
+import 'dart:math';
 import 'package:flutter/material.dart';
 
 class MockRecordTransactionViewModel {
@@ -74,10 +75,12 @@ class MockRecordTransactionViewModel {
           "\nDATE: " +
           save.date.toIso8601String() +
           "\nCROP: " +
-          save.crop +
-          "\nDESC: " +
-          save.description,
+          save.crop
     );
+
+    if (save.description != null) {
+      print("\nDESC: "+ save.description);
+    }
   }
 }
 

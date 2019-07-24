@@ -410,7 +410,7 @@ class _RecordTransactionListItemState extends State<RecordTransactionListItem> {
   _saveDescription(String description) {
     setState(() {
       if (description != _Strings.EMPTY_STRING) {
-        widget.parent.description = description;
+        widget.parent.userData.description = description;
       }
     });
   }
@@ -434,7 +434,7 @@ class _RecordTransactionListItemState extends State<RecordTransactionListItem> {
     if (picked != null) {
       setState(() {
         viewModel.selectedDate = picked;
-        widget.parent.selectedDate = picked;
+        widget.parent.userData.date = picked;
       });
     }
   }
@@ -457,7 +457,7 @@ class _RecordTransactionListItemState extends State<RecordTransactionListItem> {
     setState(() {
       if (_textFieldController.text != null) {
         viewModel.description = _textFieldController.text;
-        widget.parent.description = _textFieldController.text;
+        widget.parent.userData.description = _textFieldController.text;
       }
     });
   }
@@ -465,7 +465,7 @@ class _RecordTransactionListItemState extends State<RecordTransactionListItem> {
   void _changeDropDownItem(String selectedCrop) {
     setState(() {
       widget._viewModel.selectedItem = selectedCrop;
-      widget.parent.selectedCrop = selectedCrop;
+      widget.parent.userData.crop = selectedCrop;
       widget.parent.isCropFilled = true;
       widget.parent.checkIfFilled();
     });
