@@ -14,8 +14,8 @@ class RecommendationEngine {
       : this._inputFactors = inputFactors,
         this._scoringFactors = scoringFactors;
 
-  factory RecommendationEngine(Map<String, double> inputFactors,
-      double inputScale, Map<String, Map<String, double>> weightMatrix) {
+  factory RecommendationEngine({Map<String, double> inputFactors,
+      double inputScale, Map<String, Map<String, double>> weightMatrix}) {
     final scoringFactors = weightMatrix.map((entity, weights) {
       final totalWeight = weights.values.reduce((a, b) {
         return a + b;

@@ -3,8 +3,10 @@ import 'package:farmsmart_flutter/data/bloc/StaticViewModelProvider.dart';
 import 'package:farmsmart_flutter/data/bloc/article/ArticleListProvider.dart';
 import 'package:farmsmart_flutter/data/bloc/plot/PlotDetailProvider.dart';
 import 'package:farmsmart_flutter/data/bloc/plot/PlotListProvider.dart';
+import 'package:farmsmart_flutter/data/bloc/recommendations/RecommendationListProvider.dart';
 import 'package:farmsmart_flutter/data/model/mock/MockPlot.dart';
 import 'package:farmsmart_flutter/data/repositories/article/implementation/MockArticlesRepository.dart';
+import 'package:farmsmart_flutter/data/repositories/crop/implementation/MockCropRepository.dart';
 import 'package:farmsmart_flutter/ui/bottombar/persistent_bottom_navigation_bar.dart';
 import 'package:farmsmart_flutter/data/repositories/plot/implementation/MockPlotRepository.dart';
 import 'package:farmsmart_flutter/ui/discover/ArticleList.dart';
@@ -129,7 +131,7 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
           tabs: PlaygroundPersistentBottomNavigationBar().getList(),
         ),
       ),
-       PlaygroundWidget(
+      PlaygroundWidget(
           title: 'TASK FARM-365 Plot',
           child: PlaygroundView(widgetList: [
             PlaygroundWidget(
@@ -137,14 +139,35 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
                 child: PlotList(
                     provider: PlotListProvider(
                         title: "Test", repository: MockPlotRepository()))),
-            PlaygroundWidget(title: "FARM-365 Plot Detail", child: PlotDetail(provider: PlotDetailProvider(MockPlotEntity().build(), MockPlotRepository()),))
+            PlaygroundWidget(
+                title: "FARM-365 Plot Detail",
+                child: PlotDetail(
+                  provider: PlotDetailProvider(
+                      MockPlotEntity().build(), MockPlotRepository()),
+                ))
           ])),
-          PlaygroundWidget(
+      PlaygroundWidget(
           title: 'TASK FARM-97 Update Recomentations',
           child: PlaygroundView(widgetList: [
             PlaygroundWidget(
-                title: "TASK FARM-97 View List",
-                child: RecommendationsList(provider: SequencedViewModelProvider<RecommendationsListViewModel>([MockRecommendationsListViewModel.build(),MockRecommendationsListViewModel.build(),MockRecommendationsListViewModel.build(),MockRecommendationsListViewModel.build(),],))),
+                title: "TASK FARM-97 View List states",
+                child: RecommendationsList(
+                    provider: SequencedViewModelProvider<
+                        RecommendationsListViewModel>(
+                  [
+                    MockRecommendationsListViewModel.build(),
+                    MockRecommendationsListViewModel.build(),
+                    MockRecommendationsListViewModel.build(),
+                    MockRecommendationsListViewModel.build(),
+                  ],
+                ))),
+            PlaygroundWidget(
+                title: "TASK FARM-97 Mock repo",
+                child: RecommendationsList(
+                    provider: RecommendationListProvider(
+                        title: "Mock Repo",
+                        cropRepo: MockCropRepository(),
+                        inputScale: 10.0))),
           ])),
     ];
   }

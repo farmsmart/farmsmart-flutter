@@ -32,7 +32,7 @@ final harryWeights = {"Chillies": {
 
 void main() {
   test('Harry Input recommendation', () {
-    final engine = RecommendationEngine(harryInput, inputScale, harryWeights); 
+    final engine = RecommendationEngine(inputFactors: harryInput, inputScale: inputScale, weightMatrix: harryWeights); 
     final chillies = engine.recommend("Chillies");
   //TODO: add harry test data........
     expect(true, true);

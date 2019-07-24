@@ -12,7 +12,7 @@ class MockCropRepository implements CropRepositoryInterface {
 
   @override
   Future<List<CropEntity>> getCollection(EntityCollection<CropEntity> collection) {
-    return Future.delayed(_delay, () => _list);
+    return collection.getEntities();
   }
 
   @override
@@ -30,6 +30,11 @@ class MockCropRepository implements CropRepositoryInterface {
       sequence.add(Future.delayed(_delay, () => MockCrop.build()));
     }
     return Stream.fromFutures(sequence);
+  }
+
+  @override
+  Future<List<CropEntity>> get({CropCollectionGroup group = CropCollectionGroup.all, int limit = 0}) {
+    return  Future.delayed(_delay, () => _list);
   }
 
 }
