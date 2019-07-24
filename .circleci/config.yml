@@ -124,7 +124,7 @@ jobs:
           source ./env.sh
           flutter packages get
           echo "Building flutter appbundle - BUILD_NAME:${VERSION_NAME}, BUILD_NUMBER=${VERSION_CODE}"
-          flutter build apk --build-name=${VERSION_NAME} --build-number=${VERSION_CODE} --release --flavor production -t lib/main_production.dart
+          flutter build appbundle --build-name=${VERSION_NAME} --build-number=${VERSION_CODE} --release --flavor production -t lib/main_production.dart
           BUILD_PATH=$(find ./build -name '*.aab')
           mkdir -p /tmp/workspace/build
           mv ${BUILD_PATH} /tmp/workspace/build/${VERSION_NAME}.aab
@@ -153,7 +153,7 @@ jobs:
       - run: |
           set -euo pipefail
           source ./env.sh
-          APK_PATHS=$(find /tmp/workspace -name "*${VERSION_NAME}*.aab" | sed 'H;1h;$!d;x;y/\n/,/')
+          APK_PATHS=$(find /tmp/workspace/build -name "*${VERSION_NAME}*.aab" | sed 'H;1h;$!d;x;y/\n/,/')
           python3 ./ci/playstore/promote_apk_to_track.py co.farmsmart.app ${TRACK} ${VERSION_NAME} ${VERSION_CODE} ./Release_notes ${APK_PATHS}
       - *save_workspace
 
