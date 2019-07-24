@@ -51,7 +51,6 @@ new_release = tracks_res['releases'][0]
 new_release_notes = []
 new_release_codes = []
 new_release_codes.append(version_code)
-new_release_codes.append(str(int(version_code) + 1))
 
 release_notes = open(release_notes_file,"r+").read()
 release_notes_match = re.findall("<([a-z]{2}-?([A-Z]{2,3})?)>\n(.*?)<\/([a-z]{2}-?([A-Z]{2,3})?)>", release_notes, re.S)
