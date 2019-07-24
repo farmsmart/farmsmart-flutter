@@ -94,7 +94,7 @@ jobs:
           flutter packages get
           VERSION_NAME="${CIRCLE_BRANCH}_${CIRCLE_SHA1:0:7}"
           echo "Building flutter development apk - BUILD_NAME:${VERSION_NAME}"
-          flutter build apk -v --info --build-name="${CIRCLE_SHA1}" --release --flavor qa -t lib/main.dart
+          flutter build apk -v --build-name="${CIRCLE_SHA1}" --release --flavor qa -t lib/main.dart
           APK_BUILD_PATH=$(find ./build -name '*release.apk')
           echo "export APK_BUILD_PATH=${APK_BUILD_PATH}" >> ./env.sh
           echo "export VERSION_NAME=${VERSION_NAME}" >> ./env.sh
