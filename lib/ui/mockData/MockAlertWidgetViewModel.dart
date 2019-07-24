@@ -6,9 +6,10 @@ class MockAlertWidgetViewModel {
     return AlertWidgetViewModel(
       titleText: _mockTitle.random(),
       detailText: _mockDetail.random(),
-      cancelButtonTittle: "Cancel",
-      confirmButtonTittle: "Yes",
+      leftActionText: "Cancel",
+      rightActionText: "Yes",
       isDestructive: false,
+      rightActionFunction: () => _mockAction(),
     );
   }
 
@@ -16,10 +17,15 @@ class MockAlertWidgetViewModel {
     return AlertWidgetViewModel(
         titleText: "Delete Profile",
         detailText: "Are you sure you want to delete your profile? Doing so will erase all data and this action cannot be undone.",
-        cancelButtonTittle: "Cancel",
-        confirmButtonTittle: "Delete",
+        leftActionText: "Cancel",
+        rightActionText: "Delete",
         isDestructive: true,
+        rightActionFunction: () => _mockAction(),
     );
+  }
+
+  static _mockAction() {
+    print("This should be the correct action");
   }
 }
 
