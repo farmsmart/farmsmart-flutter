@@ -85,6 +85,19 @@ jobs:
           echo "export VERSION_CODE=${VERSION_CODE}" >> ./env.sh
       - *save_workspace
 
+  get-next-version-tag:
+    executor: utilities
+    steps:
+      - *restore_workspace
+      - run: |
+          VERSION=$(echo $CIRCLE_TAG | sed 's/.*\/\(.*\)/\1/')
+          VERSION_INFO=$(python3 ./ci/playstore/increment_version.py co.farmsmart.app ${TRACK})
+          echo $VERSION_INFO
+          VERSION_CODE=$(echo ${VERSION_INFO} | jq '.version_code')
+          echo "export VERSION_NAME=${VERSION}" >> ./env.sh
+          echo "export VERSION_CODE=${VERSION_CODE}" >> ./env.sh
+      - *save_workspace
+
   flutter-build-dev:
     executor: flutter
     steps:
@@ -164,7 +177,7 @@ jobs:
       - run: |
           set -euo pipefail
           source ./env.sh
-          MESSAGE="Release version v${VERSION_NAME} is now available on the ${TRACK} track! - ${TRACK_URL}"
+          MESSAGE="Google play version ${VERSION_NAME} is now available on the ${TRACK} track! - ${TRACK_URL}"
           python3 /farmsmart/utilities/notify.py ${SLACK_FARMSMART_TOKEN} "${MESSAGE}" ${SLACK_CHANNEL}
 
   slack-notification-dev:
@@ -259,19 +272,39 @@ workflows:
           context: prod
           filters:
             branches:
-              only: /feature.*/
+              only: /release.*/
+
+      - get-next-version-tag:
+          requires:
+            - test
+          context: prod
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v.*/
 
       - flutter-build-release:
           requires:
             - get-next-version
+            - get-next-version-tag
           context: prod
+          filters:
+            tags:
+              only: /^v.*/
 
       - promote-app-to-track:
           requires:
             - flutter-build-release
           context: prod
+          filters:
+            tags:
+              only: /^v.*/
 
       - slack-notification-prod:
           requires:
             - promote-app-to-track
           context: prod
+          filters:
+            tags:
+              only: /^v.*/
