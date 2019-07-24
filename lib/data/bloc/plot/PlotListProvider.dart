@@ -58,6 +58,10 @@ class PlotListProvider implements ViewModelProvider<PlotListViewModel> {
   StreamController<PlotListViewModel> observe() {
     return _controller;
   }
+   @override
+  PlotListViewModel snapshot() {
+    return _snapshot;
+  }
   
 
   void dispose() {

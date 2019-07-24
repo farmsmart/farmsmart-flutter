@@ -1,3 +1,5 @@
+import 'package:farmsmart_flutter/data/bloc/SequencedViewModelProvider.dart';
+import 'package:farmsmart_flutter/data/bloc/StaticViewModelProvider.dart';
 import 'package:farmsmart_flutter/data/bloc/article/ArticleListProvider.dart';
 import 'package:farmsmart_flutter/data/bloc/plot/PlotDetailProvider.dart';
 import 'package:farmsmart_flutter/data/bloc/plot/PlotListProvider.dart';
@@ -17,6 +19,9 @@ import 'package:farmsmart_flutter/ui/playground/playground_widget.dart';
 import 'package:farmsmart_flutter/ui/profitloss/ProfitLossHeader.dart';
 import 'package:farmsmart_flutter/ui/profitloss/ProfitLossListItem.dart';
 import 'package:farmsmart_flutter/ui/profitloss/mockRepositoryTryout/MockTransactionRepository.dart';
+import 'package:farmsmart_flutter/ui/recommendations/RecommentationsList.dart';
+import 'package:farmsmart_flutter/ui/recommendations/viewmodel/MockRecommendationsListViewModel.dart';
+import 'package:farmsmart_flutter/ui/recommendations/viewmodel/RecommendationsListViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -133,6 +138,13 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
                     provider: PlotListProvider(
                         title: "Test", repository: MockPlotRepository()))),
             PlaygroundWidget(title: "FARM-365 Plot Detail", child: PlotDetail(provider: PlotDetailProvider(MockPlotEntity().build(), MockPlotRepository()),))
+          ])),
+          PlaygroundWidget(
+          title: 'TASK FARM-97 Update Recomentations',
+          child: PlaygroundView(widgetList: [
+            PlaygroundWidget(
+                title: "TASK FARM-97 View List",
+                child: RecommendationsList(provider: SequencedViewModelProvider<RecommendationsListViewModel>([MockRecommendationsListViewModel.build(),MockRecommendationsListViewModel.build(),MockRecommendationsListViewModel.build(),MockRecommendationsListViewModel.build(),],))),
           ])),
     ];
   }

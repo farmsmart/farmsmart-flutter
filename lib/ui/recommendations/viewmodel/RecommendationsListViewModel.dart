@@ -5,16 +5,16 @@ class RecommendationsListViewModel {
   final String title;
   final LoadingStatus loadingStatus;
 
-  final List<RecommendationCardViewModel> itemViewModels;
+  final List<RecommendationCardViewModel> items;
   final Function update;
 
   RecommendationsListViewModel({
     String title,
     LoadingStatus status,
-    List<RecommendationCardViewModel> itemViewModels,
+    List<RecommendationCardViewModel> items,
     Function update,
   })  : this.title = title,
         this.loadingStatus = status,
-        this.itemViewModels = itemViewModels,
+        this.items = items,
         this.update = update;
 }

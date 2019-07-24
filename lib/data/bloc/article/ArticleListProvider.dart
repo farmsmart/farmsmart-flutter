@@ -72,4 +72,9 @@ class ArticleListProvider implements ViewModelProvider<ArticleListViewModel> {
   StreamController<ArticleListViewModel> observe() {
      return _controller;
   }
+
+  @override
+  ArticleListViewModel snapshot() {
+    return _snapshot;
+  }
 }

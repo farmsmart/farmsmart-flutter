@@ -1,12 +1,11 @@
 import 'dart:async';
 
-import 'package:farmsmart_flutter/ui/recommendations/RecommentationsListViewModel.dart';
+import 'package:farmsmart_flutter/ui/recommendations/viewmodel/RecommendationsListViewModel.dart';
 
 import '../ViewModelProvider.dart';
 
 class RecommendationListProvider implements ViewModelProvider<RecommendationsListViewModel> {
-    RecommendationsListViewModel _snapshot;
-
+  
   @override
   RecommendationsListViewModel initial() {
     // TODO: implement initial
@@ -16,6 +15,12 @@ class RecommendationListProvider implements ViewModelProvider<RecommendationsLis
   @override
   StreamController<RecommendationsListViewModel> observe() {
     // TODO: implement observe
+    return null;
+  }
+
+  @override
+  RecommendationsListViewModel snapshot() {
+    // TODO: implement snapshot
     return null;
   }
 }

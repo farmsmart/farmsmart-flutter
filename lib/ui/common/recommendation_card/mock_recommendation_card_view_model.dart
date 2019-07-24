@@ -1,8 +1,26 @@
+import 'dart:math';
+
 import 'package:farmsmart_flutter/data/model/mock/MockString.dart';
 import 'package:farmsmart_flutter/ui/common/recommendation_card/recommendation_card.dart';
 import 'package:flutter/material.dart';
 
 class MockRecommendationCardViewModel {
+
+  static RecommendationCardViewModel buildRandomState() {
+    return RecommendationCardViewModel(
+      title: _mockTitle.random(),
+      subtitle: _mockSubtitle.random(),
+      description: _mockLargeStrings.random(),
+      leftActionText: 'View Details',
+      leftAction: () {},
+      rightActionText: 'Added',
+      rightAction: () {},
+      image: NetworkImage('http://www.freemagebank.com/wp-content/uploads/edd/2015/07/GL0000302LR.jpg'),
+      isAdded: Random().nextBool(),
+      overlayIcon: 'assets/icons/tick_large.png',
+    );
+  }
+
   static RecommendationCardViewModel buildRandomAddToPlotState() {
     return RecommendationCardViewModel(
       title: _mockTitle.random(),

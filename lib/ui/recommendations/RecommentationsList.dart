@@ -1,5 +1,8 @@
 import 'package:farmsmart_flutter/data/bloc/ViewModelProvider.dart';
-import 'package:farmsmart_flutter/ui/recommendations/RecommentationsListViewModel.dart';
+import 'package:farmsmart_flutter/ui/common/SectionListView.dart';
+import 'package:farmsmart_flutter/ui/common/headerAndFooterListView.dart';
+import 'package:farmsmart_flutter/ui/common/recommendation_card/recommendation_card.dart';
+import 'package:farmsmart_flutter/ui/recommendations/viewmodel/RecommendationsListViewModel.dart';
 import 'package:flutter/cupertino.dart';
 
 abstract class RecommendedListStyle {
@@ -44,7 +47,7 @@ class _DefaultStyle implements RecommendedListStyle {
 
 const RecommendedListStyle _defaultStyle = const _DefaultStyle();
 
-class RecommendationsList extends StatelessWidget {
+class RecommendationsList extends StatelessWidget implements ListViewSection {
   final RecommendedListStyle _style;
   final ViewModelProvider<RecommendationsListViewModel> _viewModelProvider;
 
@@ -56,16 +59,6 @@ class RecommendationsList extends StatelessWidget {
         this._viewModelProvider = provider,
         super(key: key);
 
-  Widget _buildHeader({RecommendationsListViewModel viewModel}) {
-    return Container(
-      padding: _style.titleEdgePadding,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[Text(viewModel.title, style: _style.titleTextStyle)],
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<RecommendationsListViewModel>(
@@ -75,7 +68,35 @@ class RecommendationsList extends StatelessWidget {
           BuildContext context,
           AsyncSnapshot<RecommendationsListViewModel> snapshot,
         ) {
-          return _buildHeader(viewModel: snapshot.data);
+          return _buildList(viewModel: snapshot.data);
         });
+  }
+
+  Widget _buildList({RecommendationsListViewModel viewModel}) {
+    final headedList = HeaderAndFooterListView(headers: <Widget>[_buildHeader(viewModel: viewModel)], shrinkWrap: true, physics: ScrollPhysics(), itemBuilder: itemBuilder(), itemCount: length(),);
+    return headedList;
+  }
+
+  Widget _buildHeader({RecommendationsListViewModel viewModel}) {
+    return Container(
+      padding: _style.titleEdgePadding,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[Text(viewModel.title, style: _style.titleTextStyle,)],
+      ),
+    );
+  }
+
+  @override
+  itemBuilder() {
+    final viewModel = _viewModelProvider.snapshot();
+    return (BuildContext context, int index) {
+      return RecommendationCard(viewModel: viewModel.items[index],);
+    };
+  }
+
+  @override
+  int length() {
+    return _viewModelProvider.snapshot().items.length;
   }
 }
