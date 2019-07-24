@@ -79,6 +79,7 @@ jobs:
       - run: |
           VERSION=$(echo $CIRCLE_BRANCH | sed 's/.*\/\(.*\)/\1/')
           VERSION_INFO=$(python3 ./ci/playstore/increment_version.py co.farmsmart.app ${TRACK})
+          echo $VERSION_INFO
           VERSION_CODE=$(echo ${VERSION_INFO} | jq '.version_code')
           echo "export VERSION_NAME=${VERSION}" >> ./env.sh
           echo "export VERSION_CODE=${VERSION_CODE}" >> ./env.sh

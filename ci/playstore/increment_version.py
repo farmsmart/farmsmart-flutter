@@ -32,5 +32,11 @@ releases = tracks_res['releases']
 current_release = next(r for r in releases if r['status'] == 'completed')
 current_version_code = int(max(current_release['versionCodes'])) + 1
 
+
+version = {
+            
+            "version_code": current_version_code
+        }
+
 # Determine next version
-print("{ version_code : " + str(current_version_code) + "}")
+print(json.dumps(version))
