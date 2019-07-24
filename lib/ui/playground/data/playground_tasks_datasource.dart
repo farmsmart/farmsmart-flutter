@@ -122,13 +122,13 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
         child: PlaygroundView(
           widgetList: [
             PlaygroundWidget(
-              title: "Green case",
+              title: "Normal",
               child: PlaygroundButtonPresentAlert(
                   child:
                       AlertWidget(viewModel: MockAlertWidgetViewModel.build())),
             ),
             PlaygroundWidget(
-              title: "Red case",
+              title: "Have Destructive",
               child: PlaygroundButtonPresentAlert(
                   child:
                       AlertWidget(viewModel: MockAlertWidgetViewModel.buildDestructive())),
