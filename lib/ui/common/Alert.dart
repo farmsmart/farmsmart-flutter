@@ -19,25 +19,25 @@ class _Constants {
   static final double actionLineSpace = 8;
 }
 
-class AlertWidgetViewModel {
-  String leftActionText;
-  String rightActionText;
+class AlertViewModel {
+  String cancelActionText;
+  String confirmActionText;
   String titleText;
   String detailText;
-  Function rightActionFunction;
+  Function confirmAction;
   bool isDestructive;
 
-  AlertWidgetViewModel({
-    @required this.leftActionText,
-    @required this.rightActionText,
+  AlertViewModel({
+    @required this.cancelActionText,
+    @required this.confirmActionText,
     @required this.titleText,
     this.detailText,
-    this.rightActionFunction,
+    this.confirmAction,
     this.isDestructive,
   });
 }
 
-class AlertWidgetStyle {
+class AlertStyle {
   final Color backgroundColor;
   final TextStyle titleTextStyle;
   final TextStyle detailTextStyle;
@@ -45,7 +45,7 @@ class AlertWidgetStyle {
   final Color destructiveActionBackgroundColor;
   final TextStyle actionTextStyle;
 
-  const AlertWidgetStyle({
+  const AlertStyle({
     this.backgroundColor,
     this.titleTextStyle,
     this.detailTextStyle,
@@ -54,7 +54,7 @@ class AlertWidgetStyle {
     this.actionTextStyle,
   });
 
-  AlertWidgetStyle copyWith({
+  AlertStyle copyWith({
     Color backgroundColor,
     TextStyle titleTextStyle,
     TextStyle detailTextStyle,
@@ -62,7 +62,7 @@ class AlertWidgetStyle {
     Color destructiveActionBackgroundColor,
     TextStyle actionTextStyle,
   }) {
-    return AlertWidgetStyle(
+    return AlertStyle(
       backgroundColor: backgroundColor ?? this.backgroundColor,
       titleTextStyle: titleTextStyle ?? this.titleTextStyle,
       detailTextStyle: detailTextStyle ?? this.detailTextStyle,
@@ -75,7 +75,7 @@ class AlertWidgetStyle {
   }
 }
 
-class _DefaultStyle extends AlertWidgetStyle {
+class _DefaultStyle extends AlertStyle {
   final backgroundColor = const Color(0xffffffff);
   final titleTextStyle = const TextStyle(
     color: Color(0xff1a1b46),
@@ -105,16 +105,24 @@ class _DefaultStyle extends AlertWidgetStyle {
   });
 }
 
-const AlertWidgetStyle _defaultStyle = const _DefaultStyle();
+const AlertStyle _defaultStyle = const _DefaultStyle();
 
-class AlertWidget extends StatelessWidget {
-  final AlertWidgetViewModel _viewModel;
-  final AlertWidgetStyle _style;
+class Alert extends StatelessWidget {
+  final AlertViewModel _viewModel;
+  final AlertStyle _style;
 
-  const AlertWidget(
+  static present (Alert alert, BuildContext context) {
+    return showDialog<bool>(
+        context: context,
+        barrierDismissible: false,
+        builder: (_) => alert,
+    );
+  }
+
+  const Alert(
       {Key key,
-      AlertWidgetViewModel viewModel,
-      AlertWidgetStyle style = _defaultStyle})
+      AlertViewModel viewModel,
+      AlertStyle style = _defaultStyle})
       : this._viewModel = viewModel,
         this._style = style,
         super(key: key);
@@ -170,7 +178,7 @@ class AlertWidget extends StatelessWidget {
     return showDialog<bool>(
       context: context,
       barrierDismissible: false,
-      builder: (_) => AlertWidget(),
+      builder: (_) => Alert(),
     );
   }
 
@@ -179,7 +187,7 @@ class AlertWidget extends StatelessWidget {
       Expanded(
         child: RoundedButton(
           viewModel: RoundedButtonViewModel(
-            title: _viewModel.leftActionText,
+            title: _viewModel.cancelActionText,
             onTap: () => Navigator.pop(context),
           ),
           style: RoundedButtonStyle.actionSheetLargeRoundedButton().copyWith(
@@ -198,8 +206,8 @@ class AlertWidget extends StatelessWidget {
     listBuilder.add(Expanded(
       child: RoundedButton(
         viewModel: RoundedButtonViewModel(
-            title: _viewModel.rightActionText,
-            onTap: () => _viewModel.rightActionFunction(),
+            title: _viewModel.confirmActionText,
+            onTap: () => _viewModel.confirmAction(),
         ),
         style: RoundedButtonStyle.actionSheetLargeRoundedButton().copyWith(
             height: _Constants.actionHeight,

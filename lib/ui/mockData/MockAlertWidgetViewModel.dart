@@ -1,26 +1,26 @@
-import 'package:farmsmart_flutter/ui/common/AlertWidget.dart';
+import 'package:farmsmart_flutter/ui/common/Alert.dart';
 import 'package:farmsmart_flutter/ui/common/MockString.dart';
 
 class MockAlertWidgetViewModel {
-  static AlertWidgetViewModel build() {
-    return AlertWidgetViewModel(
+  static AlertViewModel build() {
+    return AlertViewModel(
       titleText: _mockTitle.random(),
       detailText: _mockDetail.random(),
-      leftActionText: "Cancel",
-      rightActionText: "Yes",
+      cancelActionText: "Cancel",
+      confirmActionText: "Yes",
       isDestructive: false,
-      rightActionFunction: () => _mockAction(),
+      confirmAction: () => _mockAction(),
     );
   }
 
-  static AlertWidgetViewModel buildDestructive() {
-    return AlertWidgetViewModel(
+  static AlertViewModel buildDestructive() {
+    return AlertViewModel(
         titleText: "Delete Profile",
         detailText: "Are you sure you want to delete your profile? Doing so will erase all data and this action cannot be undone.",
-        leftActionText: "Cancel",
-        rightActionText: "Delete",
+        cancelActionText: "Cancel",
+        confirmActionText: "Delete",
         isDestructive: true,
-        rightActionFunction: () => _mockAction(),
+        confirmAction: () => _mockAction(),
     );
   }
 

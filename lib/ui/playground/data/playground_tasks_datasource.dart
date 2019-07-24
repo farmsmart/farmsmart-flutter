@@ -2,7 +2,7 @@ import 'package:farmsmart_flutter/data/bloc/article/ArticleListProvider.dart';
 import 'package:farmsmart_flutter/data/repositories/article/implementation/MockArticlesRepository.dart';
 import 'package:farmsmart_flutter/ui/bottombar/persistent_bottom_navigation_bar.dart';
 import 'package:farmsmart_flutter/ui/common/ActionSheet.dart';
-import 'package:farmsmart_flutter/ui/common/AlertWidget.dart';
+import 'package:farmsmart_flutter/ui/common/Alert.dart';
 import 'package:farmsmart_flutter/ui/common/carousel_view.dart';
 import 'package:farmsmart_flutter/ui/discover/ArticleList.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockActionSheetViewModel.dart';
@@ -124,14 +124,20 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
             PlaygroundWidget(
               title: "Normal",
               child: PlaygroundButtonPresentAlert(
-                  child:
-                      AlertWidget(viewModel: MockAlertWidgetViewModel.build())),
+                viewModel: PlaygroundButtonPresentAlertViewModel(
+                    alert: Alert(viewModel: MockAlertWidgetViewModel.build()),
+                    listener: (alert, context) =>
+                        Alert.present(alert, context)),
+              ),
             ),
             PlaygroundWidget(
               title: "Have Destructive",
               child: PlaygroundButtonPresentAlert(
-                  child:
-                      AlertWidget(viewModel: MockAlertWidgetViewModel.buildDestructive())),
+                viewModel: PlaygroundButtonPresentAlertViewModel(
+                    alert: Alert(viewModel: MockAlertWidgetViewModel.buildDestructive()),
+                    listener: (alert, context) =>
+                        Alert.present(alert, context)),
+              ),
             ),
           ],
         ),
