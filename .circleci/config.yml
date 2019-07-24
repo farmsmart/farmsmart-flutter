@@ -77,8 +77,8 @@ jobs:
     steps:
       - *restore_workspace
       - run: |
-          VERSION=$(echo $CIRCLE_BRANCH | sed 's/.*\/v\(.*\)/\1/')
-          VERSION_INFO=$(python3 ./ci/playstore/increment_version.py co.farmsmart.app ${VERSION} ${TRACK})
+          VERSION=$(echo $CIRCLE_BRANCH | sed 's/.*\/\(.*\)/\1/')
+          VERSION_INFO=$(python3 ./ci/playstore/increment_version.py co.farmsmart.app ${TRACK})
           VERSION_CODE=$(echo ${VERSION_INFO} | jq '.version_code')
           echo "export VERSION_NAME=${VERSION}" >> ./env.sh
           echo "export VERSION_CODE=${VERSION_CODE}" >> ./env.sh

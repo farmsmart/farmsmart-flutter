@@ -8,12 +8,10 @@ from versionInfo import VersionInfo
 # Declare command-line flags.
 argparser = argparse.ArgumentParser()
 argparser.add_argument('package_name', help='The package name. Example: com.android.sample')
-argparser.add_argument('version_name', help='The version in the format xx.yy.zzz eg 1.2.1')
 argparser.add_argument('track', help='The track name')
 
 args = argparser.parse_args()
 package_name = args.package_name
-version_name = args.version_name
 track = args.track
 
 # Authorise the publishing API
