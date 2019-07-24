@@ -213,43 +213,43 @@ workflows:
       #       tags:
       #         only: /.*/
 
-      - upload-to-app-sharing:
-          requires:
-            - flutter-build-dev
-          context: dev
-          filters:
-            branches:
-              only: /develop|feature.*/
+      # - upload-to-app-sharing:
+      #     requires:
+      #       - flutter-build-dev
+      #     context: dev
+      #     filters:
+      #       branches:
+      #         only: /develop|feature.*/
 
-      - upload-to-app-sharing:
-          name: upload-to-app-sharing-rc
-          requires:
-            - flutter-build-rc
-          context: dev
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /.*/
+      # - upload-to-app-sharing:
+      #     name: upload-to-app-sharing-rc
+      #     requires:
+      #       - flutter-build-rc
+      #     context: dev
+      #     filters:
+      #       branches:
+      #         ignore: /.*/
+      #       tags:
+      #         only: /.*/
 
-      - slack-notification-dev:
-          requires:
-            - upload-to-app-sharing
-          context: dev
-          filters:
-            branches:
-              only: /develop|feature.*/
+      # - slack-notification-dev:
+      #     requires:
+      #       - upload-to-app-sharing
+      #     context: dev
+      #     filters:
+      #       branches:
+      #         only: /develop|feature.*/
 
-      - slack-notification-dev:
-          name: slack-notification-dev-rc
-          requires:
-            - upload-to-app-sharing-rc
-          context: dev
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /.*/
+      # - slack-notification-dev:
+      #     name: slack-notification-dev-rc
+      #     requires:
+      #       - upload-to-app-sharing-rc
+      #     context: dev
+      #     filters:
+      #       branches:
+      #         ignore: /.*/
+      #       tags:
+      #         only: /.*/
 
       # prod
       - get-next-version:
