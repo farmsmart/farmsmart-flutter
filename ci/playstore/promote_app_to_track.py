@@ -39,7 +39,8 @@ for app_file in app_files:
     app_upload_request = androidPublisher.edits().bundles().upload(
         editId=edit_id,
         packageName=package_name,
-        media_body=app_file)
+        media_body=app_file,
+        medit_mime_type='application/octet-stream'),
     app_upload_response = app_upload_request.execute()
 
 tracks_req = androidPublisher.edits().tracks().get(packageName=package_name, editId=edit_id, track=track)
