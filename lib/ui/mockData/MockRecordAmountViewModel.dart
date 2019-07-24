@@ -1,7 +1,6 @@
 import 'package:farmsmart_flutter/model/loading_status.dart';
 import 'package:farmsmart_flutter/ui/common/MockString.dart';
 import 'package:farmsmart_flutter/ui/profitloss/RecordAmount.dart';
-import 'package:farmsmart_flutter/ui/profitloss/RecordAmountHeader.dart';
 import 'package:farmsmart_flutter/ui/profitloss/RecordAmountListItem.dart';
 import 'package:flutter/material.dart';
 
@@ -14,11 +13,12 @@ class MockRecordAmountViewModel {
     }
 
     return RecordAmountViewModel(
-        loadingStatus: LoadingStatus.SUCCESS,
-        actions: list,
-        buttonTitle: _mockButtonTitle[1],
-        listener: (data) => _mockTap(data),
-        type: RecordType.sale);
+      loadingStatus: LoadingStatus.SUCCESS,
+      actions: list,
+      buttonTitle: _mockButtonTitle[1],
+      listener: (data) => _mockRecordTap(data),
+      type: RecordType.sale,
+    );
   }
 
   static RecordAmountViewModel buildCost() {
@@ -29,11 +29,12 @@ class MockRecordAmountViewModel {
     }
 
     return RecordAmountViewModel(
-        loadingStatus: LoadingStatus.SUCCESS,
-        actions: list,
-        buttonTitle: _mockButtonTitle[0],
-        listener: (data) => _mockTap(data),
-        type: RecordType.cost);
+      loadingStatus: LoadingStatus.SUCCESS,
+      actions: list,
+      buttonTitle: _mockButtonTitle[0],
+      listener: (data) => _mockRecordTap(data),
+      type: RecordType.cost,
+    );
   }
 
   static RecordAmountViewModel buildViewSale() {
@@ -61,16 +62,26 @@ class MockRecordAmountViewModel {
     }
 
     return RecordAmountViewModel(
-        loadingStatus: LoadingStatus.SUCCESS,
-        actions: list,
-        buttonTitle: _mockButtonTitle[1],
-        type: RecordType.cost,
-        isEditable: false,
-        amount: "-233.3");
+      loadingStatus: LoadingStatus.SUCCESS,
+      actions: list,
+      buttonTitle: _mockButtonTitle[1],
+      type: RecordType.cost,
+      isEditable: false,
+      amount: "-233.3",
+    );
   }
 
-  static _mockTap(RecordData data) {
-    print(data.amount);
+  static _mockRecordTap(RecordData save) {
+    print(
+      "You recorded:\nAMOUNT: " +
+          save.amount +
+          "\nDATE: " +
+          save.date.toIso8601String() +
+          "\nCROP: " +
+          save.crop +
+          "\nDESC: " +
+          save.description,
+    );
   }
 }
 
@@ -97,7 +108,7 @@ class MockRecordAmountListItemViewModel {
 List _cellType = [
   RecordCellType.pickDate,
   RecordCellType.pickItem,
-  RecordCellType.description
+  RecordCellType.description,
 ];
 
 List _mockCrop = [
@@ -107,12 +118,19 @@ List _mockCrop = [
   "Cowpeas",
   "Sweetcorn",
   "Cucumber",
-  "Beetroot"
+  "Beetroot",
 ];
 
-List _mockSelectedDate = [DateTime.now(), null, null];
+List _mockSelectedDate = [
+  DateTime.now(),
+  null,
+  null,
+];
 
-List _mockButtonTitle = ["Record Cost", "Record Sale"];
+List _mockButtonTitle = [
+  "Record Cost",
+  "Record Sale",
+];
 
 MockString _mockDescription = MockString(library: [
   "Add another description",
@@ -134,4 +152,3 @@ List _mockListOfCrops = [
   ],
   null
 ];
-
