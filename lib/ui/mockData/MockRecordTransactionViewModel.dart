@@ -79,7 +79,7 @@ class MockRecordTransactionViewModel {
     );
 
     if (save.description != null) {
-      print("\nDESC: "+ save.description);
+      print("DESC: "+ save.description);
     }
   }
 }
