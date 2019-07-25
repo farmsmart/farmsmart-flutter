@@ -8,9 +8,9 @@ export 'package:farmsmart_flutter/ui/common/roundedButton.dart';
 
 class _Constants {
   static String textDivider = '- ';
-  static EdgeInsets titlesPadding = const EdgeInsets.only(top: 21.0);
-  static EdgeInsets descriptionPadding = const EdgeInsets.only(top: 12.5);
-  static EdgeInsets actionsPadding = const EdgeInsets.only(top: 15.5);
+  static EdgeInsets titlesPadding = const EdgeInsets.only(left: 21.0);
+  static EdgeInsets descriptionPadding = const EdgeInsets.only(top: 10);
+  static EdgeInsets actionsPadding = const EdgeInsets.only(top: 24);
   static double horizontalActionsSeparation = 12;
   static int titleFlex = 1;
   static int subtitleFlex = 1;
@@ -18,7 +18,7 @@ class _Constants {
   static int subtitleMaxLines = 1;
 }
 
-class RecommendationCardStyle {
+class RecommendationCompactCardStyle {
   final TextStyle titleTextStyle;
   final TextStyle subtitleTextStyle;
   final TextStyle descriptionTextStyle;
@@ -34,7 +34,7 @@ class RecommendationCardStyle {
   final double overlayIconWidth;
   final String overlayIcon;
 
-  const RecommendationCardStyle({
+  const RecommendationCompactCardStyle({
     this.titleTextStyle,
     this.subtitleTextStyle,
     this.descriptionTextStyle,
@@ -51,7 +51,7 @@ class RecommendationCardStyle {
     this.overlayIcon,
   });
 
-  RecommendationCardStyle copyWith({
+  RecommendationCompactCardStyle copyWith({
     TextStyle titleTextStyle,
     TextStyle subtitleTextStyle,
     TextStyle descriptionTextStyle,
@@ -67,7 +67,7 @@ class RecommendationCardStyle {
     double overlayIconWidth,
     String overlayIcon,
   }) {
-    return RecommendationCardStyle(
+    return RecommendationCompactCardStyle(
       titleTextStyle: titleTextStyle ?? this.titleTextStyle,
       subtitleTextStyle: subtitleTextStyle ?? this.subtitleTextStyle,
       descriptionTextStyle: descriptionTextStyle ?? this.descriptionTextStyle,
@@ -89,7 +89,7 @@ class RecommendationCardStyle {
   }
 }
 
-class _DefaultStyle extends RecommendationCardStyle {
+class _DefaultStyle extends RecommendationCompactCardStyle {
   final TextStyle titleTextStyle = const TextStyle(
     color: Color(0xff1a1b46),
     fontSize: 17,
@@ -105,7 +105,7 @@ class _DefaultStyle extends RecommendationCardStyle {
   );
   final RoundedButtonStyle leftActionButtonStyle = defaultRoundedButtonStyle;
   final RoundedButtonStyle rightActionButtonStyle = defaultRoundedButtonStyle;
-  final double imageHeight = 152;
+  final double imageHeight = 80;
   final BorderRadiusGeometry imageBorderRadius =
       const BorderRadius.all(Radius.circular(12.0));
   final int descriptionMaxLines = 2;
@@ -116,7 +116,7 @@ class _DefaultStyle extends RecommendationCardStyle {
   final double overlayIconHeight = 54;
   final double overlayIconWidth = 54;
 
-  final String overlayIcon =  'assets/icons/tick_large.png';
+  final String overlayIcon = 'assets/icons/tick_large.png';
 
   static const defaultRoundedButtonStyle = const RoundedButtonStyle(
     backgroundColor: Color(0xffe9eaf2),
@@ -131,33 +131,32 @@ class _DefaultStyle extends RecommendationCardStyle {
     buttonShape: BoxShape.rectangle,
   );
 
-  const _DefaultStyle({
-    TextStyle titleTextStyle,
-    TextStyle subtitleTextStyle,
-    TextStyle descriptionTextStyle,
-    RoundedButtonStyle leftActionButtonStyle,
-    RoundedButtonStyle rightActionButtonStyle,
-    double imageHeight,
-    BorderRadiusGeometry imageBorderRadius,
-    int descriptionMaxLines,
-    EdgeInsets contentPadding,
-    Color overlayColor,
-    double overlayIconHeight,
-    double overlayIconWidth,
-    String overlayIcon
-  });
+  const _DefaultStyle(
+      {TextStyle titleTextStyle,
+      TextStyle subtitleTextStyle,
+      TextStyle descriptionTextStyle,
+      RoundedButtonStyle leftActionButtonStyle,
+      RoundedButtonStyle rightActionButtonStyle,
+      double imageHeight,
+      BorderRadiusGeometry imageBorderRadius,
+      int descriptionMaxLines,
+      EdgeInsets contentPadding,
+      Color overlayColor,
+      double overlayIconHeight,
+      double overlayIconWidth,
+      String overlayIcon});
 }
 
-const RecommendationCardStyle _defaultStyle = const _DefaultStyle();
+const RecommendationCompactCardStyle _defaultStyle = const _DefaultStyle();
 
-class RecommendationCard extends StatelessWidget {
-  final RecommendationCardStyle _style;
+class RecommendationCompactCard extends StatelessWidget {
+  final RecommendationCompactCardStyle _style;
   final RecommendationCardViewModel _viewModel;
 
-  RecommendationCard({
+  RecommendationCompactCard({
     Key key,
     @required RecommendationCardViewModel viewModel,
-    RecommendationCardStyle style = _defaultStyle,
+    RecommendationCompactCardStyle style = _defaultStyle,
   })  : this._style = style,
         this._viewModel = viewModel,
         super(key: key);
@@ -172,9 +171,7 @@ class RecommendationCard extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            _buildTopRoundedImage(),
-            _buildTitles(),
-            _buildDescription(),
+            _buildTopContent(),
             _buildActions(),
           ],
         ),
@@ -182,53 +179,77 @@ class RecommendationCard extends StatelessWidget {
     );
   }
 
-  Widget _buildTopRoundedImage() {
-    return RoundedImageOverlay(
-      image: _viewModel.image,
-      imageHeight: _style.imageHeight,
-      imageWidth: double.infinity,
-      imageBorderRadius: _style.imageBorderRadius,
-      overlayIcon: _style.overlayIcon,
-      overlayIconHeight: _style.overlayIconHeight,
-      overlayIconWidth: _style.overlayIconWidth,
-      overlayColor: _style.overlayColor,
-      showOverlayIcon: _viewModel.isAdded,
+  _buildTopContent() {
+    return Row(
+      children: <Widget>[
+        _buildTopRoundedImage(),
+        _buildTexts(),
+      ],
     );
   }
 
-  Padding _buildTitles() {
-    return Padding(
-      padding: _Constants.titlesPadding,
-      child: Row(
-        children: <Widget>[
-          Flexible(
-            flex: _Constants.titleFlex,
-            child: Text(
-              _viewModel.title,
-              style: _style.titleTextStyle,
-              maxLines: _Constants.titleMaxLines,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-          Text(
-            _Constants.textDivider,
-            style: _style.subtitleTextStyle,
-          ),
-          Flexible(
-            flex: _Constants.subtitleFlex,
-            child: Text(
-              _viewModel.subtitle,
-              style: _style.subtitleTextStyle,
-              maxLines: _Constants.subtitleMaxLines,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-        ],
+  Widget _buildTopRoundedImage() {
+    return Container(
+      width: _style.imageHeight,
+      height: _style.imageHeight,
+      child: RoundedImageOverlay(
+        image: _viewModel.image,
+        imageHeight: _style.imageHeight,
+        imageWidth: _style.imageHeight,
+        imageBorderRadius: _style.imageBorderRadius,
+        overlayIcon: _style.overlayIcon,
+        overlayIconHeight: _style.overlayIconHeight,
+        overlayIconWidth: _style.overlayIconWidth,
+        overlayColor: _style.overlayColor,
+        showOverlayIcon: _viewModel.isAdded,
       ),
     );
   }
 
-  Padding _buildDescription() {
+  _buildTexts() {
+    return Expanded(
+      child: Padding(
+        padding: _Constants.titlesPadding,
+        child: Column(
+          children: <Widget>[
+            _buildTitle(),
+            _buildDescription(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  _buildTitle() {
+    return Row(
+      children: <Widget>[
+        Flexible(
+          flex: _Constants.titleFlex,
+          child: Text(
+            _viewModel.title,
+            style: _style.titleTextStyle,
+            maxLines: _Constants.titleMaxLines,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
+        Text(
+          _Constants.textDivider,
+          style: _style.subtitleTextStyle,
+        ),
+        Flexible(
+          flex: _Constants.subtitleFlex,
+          child: Text(
+            _viewModel.subtitle,
+            style: _style.subtitleTextStyle,
+            maxLines: _Constants.subtitleMaxLines,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
+      ],
+    );
+  }
+
+  _buildDescription() {
     return Padding(
       padding: _Constants.descriptionPadding,
       child: Text(
@@ -240,7 +261,7 @@ class RecommendationCard extends StatelessWidget {
     );
   }
 
-  Padding _buildActions() {
+  _buildActions() {
     return Padding(
       padding: _Constants.actionsPadding,
       child: Row(
