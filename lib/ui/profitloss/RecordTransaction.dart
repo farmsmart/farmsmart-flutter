@@ -45,7 +45,7 @@ class RecordTransactionViewModel {
   bool isFilled;
   bool isEditable;
   String buttonTitle;
-  final Function(RecordTransactionData) listener;
+  final Function(RecordTransactionData) onTransactionRecorded;
 
   RecordTransactionViewModel({
     this.actions,
@@ -54,7 +54,7 @@ class RecordTransactionViewModel {
     this.isFilled: false,
     this.type,
     this.isEditable: true,
-    this.listener,
+    this.onTransactionRecorded,
   });
 }
 
@@ -303,7 +303,7 @@ class RecordTransactionState extends State<RecordTransaction> {
                 : RoundedButton(
                     viewModel: RoundedButtonViewModel(
                       title: viewModel.buttonTitle,
-                      onTap: () => viewModel.listener(userData),
+                      onTap: () => viewModel.onTransactionRecorded(userData),
                     ),
                     style: viewModel.type == TransactionType.sale
                         ? RoundedButtonStyle.largeRoundedButtonStyle().copyWith(
