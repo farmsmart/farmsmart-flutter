@@ -1,12 +1,18 @@
 import 'package:farmsmart_flutter/data/bloc/ViewModelProvider.dart';
+import 'package:farmsmart_flutter/ui/common/ActionSheet.dart';
+import 'package:farmsmart_flutter/ui/common/ActionSheetListItem.dart';
+import 'package:farmsmart_flutter/ui/common/ContextualAppBar.dart';
 import 'package:farmsmart_flutter/ui/common/SectionListView.dart';
 import 'package:farmsmart_flutter/ui/common/headerAndFooterListView.dart';
 import 'package:farmsmart_flutter/ui/common/recommendation_card/recommendation_card.dart';
 import 'package:farmsmart_flutter/ui/recommendations/viewmodel/RecommendationsListViewModel.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class _Strings {
   static const finish = "Finish";
+  static const clearAction = "Clear Selection";
+  static const cancelAction = "Cancel";
 }
 
 class _Constants {
@@ -99,7 +105,27 @@ class RecommendationsList extends StatelessWidget implements ListViewSection {
           BuildContext context,
           AsyncSnapshot<RecommendationsListViewModel> snapshot,
         ) {
-          return _buildList(context: context, viewModel: snapshot.data);
+          final viewModel = snapshot.data;
+
+          if (viewModel.canApply) {
+            return Scaffold(
+              appBar: _buildAppBar(context, viewModel),
+              body: _buildList(
+                context: context,
+                viewModel: viewModel,
+              ),
+              floatingActionButton: _buildApplyButton(context: context,viewModel: viewModel),
+              floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+            );
+          }
+
+          return Scaffold(
+            appBar: _buildAppBar(context, viewModel),
+            body: _buildList(
+              context: context,
+              viewModel: viewModel,
+            ),
+          );
         });
   }
 
@@ -124,14 +150,19 @@ class RecommendationsList extends StatelessWidget implements ListViewSection {
     Navigator.of(context).pop();
   }
 
+  Widget _buildAppBar(
+      BuildContext context, RecommendationsListViewModel viewModel) {
+    return ContextualAppBar(
+      moreAction: () => _moreTapped(context: context, viewModel: viewModel),
+    ).build(context);
+  }
+
   Widget _buildList(
       {BuildContext context, RecommendationsListViewModel viewModel}) {
-    final footers = viewModel.canApply
-        ? <Widget>[_buildFooter(context: context, viewModel: viewModel)]
-        : <Widget>[];
+      final footerList = viewModel.canApply ? <Widget>[SizedBox(height: _style.applyButtonStyle.height,)] : <Widget>[];
     final headedList = HeaderAndFooterListView(
       headers: <Widget>[_buildHeader(viewModel: viewModel)],
-      footers: footers,
+      footers: footerList,
       shrinkWrap: true,
       physics: ScrollPhysics(),
       itemBuilder: itemBuilder(),
@@ -155,15 +186,27 @@ class RecommendationsList extends StatelessWidget implements ListViewSection {
     );
   }
 
-  Widget _buildFooter(
+  Widget _buildApplyButton(
       {BuildContext context, RecommendationsListViewModel viewModel}) {
-    return Container(
-        padding: _Constants.buttonPadding,
-        child: RoundedButton(
-          viewModel: RoundedButtonViewModel(
-              title: _Strings.finish,
-              onTap: () => _applyAction(context, viewModel)),
-          style: _style.applyButtonStyle,
-        ));
+    return Padding(
+      padding: _Constants.buttonPadding,
+      child: RoundedButton(
+            viewModel: RoundedButtonViewModel(
+                title: _Strings.finish, onTap: () => _applyAction(context, viewModel)),
+            style: _style.applyButtonStyle,
+          ),
+    );
+  }
+
+  ActionSheet _moreMenu(RecommendationsListViewModel viewModel) {
+    final actions = [
+      ActionSheetListItemViewModel(title: Intl.message(_Strings.clearAction), isDestructive: true, type: ActionType.simple, onTap: viewModel.clear),   
+    ];
+    final actionSheetViewModel = ActionSheetViewModel(actions, Intl.message(_Strings.cancelAction));
+    return ActionSheet(viewModel: actionSheetViewModel, style: ActionSheetStyle.defaultStyle());
+  } 
+
+  void _moreTapped({BuildContext context, RecommendationsListViewModel viewModel}) {
+     ActionSheet.present(_moreMenu(viewModel), context);
   }
 }

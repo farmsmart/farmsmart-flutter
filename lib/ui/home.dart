@@ -5,6 +5,7 @@ import 'package:farmsmart_flutter/data/firebase_const.dart';
 import 'package:farmsmart_flutter/data/repositories/FlameLink.dart';
 import 'package:farmsmart_flutter/data/repositories/article/ArticleRepositoryInterface.dart';
 import 'package:farmsmart_flutter/data/repositories/article/implementation/ArticlesRepositoryFlamelink.dart';
+import 'package:farmsmart_flutter/data/repositories/crop/implementation/MockCropRepository.dart';
 import 'package:farmsmart_flutter/data/repositories/plot/implementation/MockPlotRepository.dart';
 import 'package:farmsmart_flutter/farmsmart_localizations.dart';
 import 'package:farmsmart_flutter/redux/app/app_state.dart';
@@ -30,7 +31,7 @@ import 'package:farmsmart_flutter/ui/playground/data/playground_datasource_impl.
 final cms = FlameLink(store: Firestore.instance, environment: Environment.development);
 final articleRepo = ArticlesRepositoryFlameLink(cms);
 final plotRepo = MockPlotRepository();
-
+final cropRepo = MockCropRepository();
 class Home extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -96,7 +97,7 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
           WidgetBuilder builder = (BuildContext _) => PlotList(
               provider: PlotListProvider(
                   title: localizations.myPlotTab,
-                  repository: plotRepo));
+                  plotRepository: plotRepo, cropRepository: cropRepo));
           return MaterialPageRoute(builder: builder, settings: settings);
         });
   

@@ -2,6 +2,8 @@ import 'package:farmsmart_flutter/data/bloc/ViewModelProvider.dart';
 import 'package:farmsmart_flutter/model/loading_status.dart';
 import 'package:farmsmart_flutter/ui/common/ErrorRetry.dart';
 import 'package:farmsmart_flutter/ui/common/headerAndFooterListView.dart';
+import 'package:farmsmart_flutter/ui/recommendations/RecommentationsList.dart';
+import 'package:farmsmart_flutter/ui/recommendations/viewmodel/RecommendationsListViewModel.dart';
 import 'package:flutter/material.dart';
 import 'PlotDetail.dart';
 import 'PlotListItem.dart';
@@ -19,9 +21,21 @@ class PlotListViewModel {
   final String buttonTitle;
   final LoadingStatus status;
   final List<PlotListItemViewModel> items;
-  final Function  update;
-  final Function  add;
-  PlotListViewModel({String title, String buttonTitle, LoadingStatus status, List<PlotListItemViewModel> items, Function update, Function add}) : this.title = title, this.status = status, this.buttonTitle = buttonTitle, this.items = items, this.update = update, this.add = add;
+  final Function update;
+  final ViewModelProvider<RecommendationsListViewModel> recommendationsProvider;
+  PlotListViewModel({
+    String title,
+    String buttonTitle,
+    LoadingStatus status,
+    List<PlotListItemViewModel> items,
+    Function update,
+    ViewModelProvider<RecommendationsListViewModel> recommendationsProvider,
+  })  : this.title = title,
+        this.status = status,
+        this.buttonTitle = buttonTitle,
+        this.items = items,
+        this.update = update,
+        this.recommendationsProvider = recommendationsProvider;
 }
 
 abstract class PlotListStyle {
@@ -34,11 +48,12 @@ abstract class PlotListStyle {
   final TextStyle titleTextStyle;
 
   PlotListStyle(
-      this.primaryColor,
-      this.edgePadding,
-      this.titleEdgePadding,
-      this.largeButtonEdgePadding,
-      this.titleTextStyle);
+    this.primaryColor,
+    this.edgePadding,
+    this.titleEdgePadding,
+    this.largeButtonEdgePadding,
+    this.titleTextStyle,
+  );
 }
 
 class _DefaultStyle implements PlotListStyle {
@@ -60,68 +75,83 @@ class PlotList extends StatelessWidget {
   final ViewModelProvider<PlotListViewModel> _viewModelProvider;
   final PlotListStyle _style;
 
-  const PlotList({Key key, ViewModelProvider<PlotListViewModel> provider, PlotListStyle style = const _DefaultStyle()}) : this._viewModelProvider = provider,  this._style = style, super(key: key);
+  const PlotList(
+      {Key key,
+      ViewModelProvider<PlotListViewModel> provider,
+      PlotListStyle style = const _DefaultStyle()})
+      : this._viewModelProvider = provider,
+        this._style = style,
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<PlotListViewModel>(
         stream: _viewModelProvider.observe().stream,
         initialData: _viewModelProvider.initial(),
-        builder: (BuildContext context,
-            AsyncSnapshot<PlotListViewModel> snapshot) {
-          return _buildBody(context,  snapshot.data, _style);
+        builder:
+            (BuildContext context, AsyncSnapshot<PlotListViewModel> snapshot) {
+          return _buildBody(context, snapshot.data, _style);
         });
   }
 
-  Widget _buildBody(BuildContext context, PlotListViewModel viewModel,
-      PlotListStyle style) {
-            final status =
+  Widget _buildBody(
+      BuildContext context, PlotListViewModel viewModel, PlotListStyle style) {
+    final status =
         (viewModel == null) ? LoadingStatus.LOADING : viewModel.status;
     switch (status) {
       case LoadingStatus.LOADING:
         return Container(
             child: CircularProgressIndicator(), alignment: Alignment.center);
       case LoadingStatus.SUCCESS:
-        return _buildPage(
-            context, viewModel, style, null);
+        return _buildPage(context, viewModel, style, null);
       case LoadingStatus.ERROR:
-        return _buildErrorPage(
-            context, viewModel, style);
+        return _buildErrorPage(context, viewModel, style);
     }
   }
 
   Widget _buildPage(BuildContext context, PlotListViewModel viewModel,
       PlotListStyle plotStyle, Function goToDetail) {
-       
     return HeaderAndFooterListView(
         itemCount: viewModel.items.length,
         itemBuilder: (BuildContext context, int index) {
-           final itemViewModel = viewModel.items[index];
-           final tapFunction = () => _tappedListItem(
-          context: context, provider: itemViewModel.detailViewModelProvider);
-          return PlotListItem().buildListItem(viewModel: viewModel.items[index], onTap: tapFunction);
+          final itemViewModel = viewModel.items[index];
+          final tapFunction = () => _tappedListItem(
+              context: context,
+              provider: itemViewModel.detailViewModelProvider);
+          return PlotListItem().buildListItem(
+              viewModel: viewModel.items[index], onTap: tapFunction);
         },
         physics: ScrollPhysics(),
         shrinkWrap: true,
-        headers: [_buildTitle(viewModel, plotStyle, context: context)],
-        footers: [Padding(
-          padding: plotStyle.largeButtonEdgePadding,
-          child: Row(
-            children: <Widget>[
-              Expanded(
-                child: RoundedButton(
-                    viewModel: RoundedButtonViewModel(
-                        title: viewModel.buttonTitle,
-                        onTap: () => viewModel.add() ),
-                    style: RoundedButtonStyle.largeRoundedButtonStyle()),
-              ),
-            ],
-          ),
-        )]);
+        headers: [
+          _buildTitle(viewModel, plotStyle, context: context)
+        ],
+        footers: [
+          Padding(
+            padding: plotStyle.largeButtonEdgePadding,
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  child: RoundedButton(
+                      viewModel: RoundedButtonViewModel(
+                          title: viewModel.buttonTitle,
+                          onTap: () => _tappedAdd(
+                                context: context,
+                                provider: viewModel.recommendationsProvider,
+                              )),
+                      style: RoundedButtonStyle.largeRoundedButtonStyle()),
+                ),
+              ],
+            ),
+          )
+        ]);
   }
 
-  Widget _buildTitle(PlotListViewModel viewModel, PlotListStyle myPlotStyle,
-      {BuildContext context}) {
+  Widget _buildTitle(
+    PlotListViewModel viewModel,
+    PlotListStyle myPlotStyle, {
+    BuildContext context,
+  }) {
     final String roundedButtonIcon = "assets/icons/profit_add.png";
     return Container(
         padding: myPlotStyle.titleEdgePadding,
@@ -139,23 +169,42 @@ class PlotList extends StatelessWidget {
               RoundedButton(
                   viewModel: RoundedButtonViewModel(
                       icon: roundedButtonIcon,
-                      onTap: () => viewModel.add()),
+                      onTap: () => _tappedAdd(
+                            context: context,
+                            provider: viewModel.recommendationsProvider,
+                          )),
                   style: RoundedButtonStyle.defaultStyle())
             ]));
   }
 
   Widget _buildErrorPage(BuildContext context, PlotListViewModel viewModel,
       PlotListStyle plotStyle) {
-    return ErrorRetry(errorMessage: Intl.message(_Strings.loadingError), retryActionLabel: Intl.message(_Strings.retryAction), retryFunction: viewModel.update);
+    return ErrorRetry(
+      errorMessage: Intl.message(_Strings.loadingError),
+      retryActionLabel: Intl.message(_Strings.retryAction),
+      retryFunction: viewModel.update,
+    );
   }
 
-    void _tappedListItem(
-      {BuildContext context, ViewModelProvider<PlotDetailViewModel> provider}) {
+  void _tappedAdd({
+    BuildContext context,
+    ViewModelProvider<RecommendationsListViewModel> provider,
+  }) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => RecommendationsList(provider: provider),
+      ),
+    );
+  }
+
+  void _tappedListItem({
+    BuildContext context,
+    ViewModelProvider<PlotDetailViewModel> provider,
+  }) {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => PlotDetail(provider: provider),
       ),
     );
   }
-
 }

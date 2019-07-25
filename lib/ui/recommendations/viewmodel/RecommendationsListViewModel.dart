@@ -8,6 +8,7 @@ class RecommendationsListViewModel {
   final List<RecommendationCardViewModel> items;
   final Function update;
   final Function apply; 
+  final Function clear;
   final bool canApply;
 
   RecommendationsListViewModel({
@@ -16,11 +17,13 @@ class RecommendationsListViewModel {
     List<RecommendationCardViewModel> items,
     Function update,
     Function apply,
+    Function clear,
     bool canApply,
   })  : this.title = title,
         this.loadingStatus = status,
         this.items = items,
         this.update = update,
         this.apply = apply,
+        this.clear = clear,
         this.canApply = canApply;
 }

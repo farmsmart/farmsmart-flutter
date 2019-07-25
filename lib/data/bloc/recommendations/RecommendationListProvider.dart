@@ -65,7 +65,8 @@ class RecommendationListProvider
         status: LoadingStatus.LOADING,
         canApply: !_cropBasket.isEmpty(),
         update: () => _update(_controller),
-        apply: () => _add(_controller));
+        apply: () => _add(_controller),
+        clear: () => _clear(_controller));
   }
 
   RecommendationsListViewModel _modelFromCrops(
@@ -104,6 +105,10 @@ class RecommendationListProvider
     for (var crop in cropsToAdd) {
        _plotRepo.addPlot(crop: crop);
     }
+  }
+  void _clear(StreamController<RecommendationsListViewModel> controller) {
+    _cropBasket.empty();
+     _update(controller);
   }
 
   void dispose() {
