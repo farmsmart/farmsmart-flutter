@@ -93,10 +93,13 @@ class RecommendationListProvider
   }
 
   void _update(StreamController<RecommendationsListViewModel> controller) {
+    controller.sink.add(_viewModel(status: LoadingStatus.LOADING, items: []));
     _cropRepo.get().then((crops) {
       _crops = crops;
       _snapshot = _modelFromCrops(controller, crops);
       controller.sink.add(_snapshot);
+    }).catchError((error) {
+      controller.sink.add(_viewModel(status: LoadingStatus.ERROR, items: []));
     });
   }
 

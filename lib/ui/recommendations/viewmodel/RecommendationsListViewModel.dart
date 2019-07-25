@@ -2,6 +2,7 @@ import 'package:farmsmart_flutter/model/loading_status.dart';
 import 'package:farmsmart_flutter/ui/common/recommendation_card/recommendation_card.dart';
 
 class RecommendationsListViewModel {
+  static final error = RecommendationsListViewModel(status: LoadingStatus.ERROR);
   final String title;
   final LoadingStatus loadingStatus;
 
