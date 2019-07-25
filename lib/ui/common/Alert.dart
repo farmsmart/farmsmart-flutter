@@ -119,10 +119,11 @@ class Alert extends StatelessWidget {
     );
   }
 
-  const Alert({Key key,
+  const Alert({
+    Key key,
     AlertViewModel viewModel,
-    AlertStyle style = _defaultStyle})
-      : this._viewModel = viewModel,
+    AlertStyle style = _defaultStyle,
+  })  : this._viewModel = viewModel,
         this._style = style,
         super(key: key);
 
@@ -187,30 +188,30 @@ class Alert extends StatelessWidget {
             borderRadius: _Constants.actionCornerRadius,
           ),
         ),
-      )
+      ),
     ];
     listBuilder.add(
       SizedBox(
         width: _Constants.actionLineSpace,
       ),
     );
-    listBuilder.add(Expanded(
-      child: RoundedButton(
-        viewModel: RoundedButtonViewModel(
-            title: _viewModel.confirmActionText,
-            onTap: () => confirmAndDismiss(context)
-        ),
-        style: RoundedButtonStyle.actionSheetLargeRoundedButton().copyWith(
-          height: _Constants.actionHeight,
-          width: _Constants.actionWidth,
-          backgroundColor: _viewModel.isDestructive
-              ? _style.destructiveActionBackgroundColor
-              : _style.actionBackgroundColor,
-          buttonTextStyle: _style.actionTextStyle,
-          borderRadius: _Constants.actionCornerRadius,
+    listBuilder.add(
+      Expanded(
+        child: RoundedButton(
+          viewModel: RoundedButtonViewModel(
+              title: _viewModel.confirmActionText,
+              onTap: () => confirmAndDismiss(context)),
+          style: RoundedButtonStyle.actionSheetLargeRoundedButton().copyWith(
+            height: _Constants.actionHeight,
+            width: _Constants.actionWidth,
+            backgroundColor: _viewModel.isDestructive
+                ? _style.destructiveActionBackgroundColor
+                : _style.actionBackgroundColor,
+            buttonTextStyle: _style.actionTextStyle,
+            borderRadius: _Constants.actionCornerRadius,
+          ),
         ),
       ),
-    ),
     );
     return listBuilder;
   }
