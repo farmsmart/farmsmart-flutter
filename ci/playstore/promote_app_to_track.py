@@ -12,7 +12,7 @@ argparser.add_argument('track', help='The track to update.')
 argparser.add_argument('version_name', help='The version name for the release.')
 argparser.add_argument('version_code', help='The version_code to promote.')
 argparser.add_argument('release_notes_file', help='The file which contains the release notes.')
-argparser.add_argument('apk_files', help='The paths to the apk\'s to upload seperated by a comma.')
+argparser.add_argument('app_files', help='The paths to the aab\'s to upload seperated by a comma.')
 
 args = argparser.parse_args()
 package_name = args.package_name
@@ -20,7 +20,7 @@ track = args.track
 version_name = args.version_name
 version_code = args.version_code
 release_notes_file = args.release_notes_file
-apk_files = args.apk_files.split(",")
+app_files = args.app_files.split(",")
 
 # Authorise the publishing API
 service_account_file_path = "secrets/google-play-service-account.json"
@@ -35,12 +35,13 @@ edit_request = androidPublisher.edits().insert(body={}, packageName=package_name
 edit_response = edit_request.execute()
 edit_id = edit_response['id']
 
-for apk_file in apk_files:
-    apk_upload_request = androidPublisher.edits().apks().upload(
+for app_file in app_files:
+    app_upload_request = androidPublisher.edits().bundles().upload(
         editId=edit_id,
         packageName=package_name,
-        media_body=apk_file)
-    apk_upload_response = apk_upload_request.execute()
+        media_body=app_file,
+        media_mime_type='application/octet-stream')
+    app_upload_response = app_upload_request.execute()
 
 tracks_req = androidPublisher.edits().tracks().get(packageName=package_name, editId=edit_id, track=track)
 tracks_res = tracks_req.execute()
@@ -50,7 +51,6 @@ new_release = tracks_res['releases'][0]
 new_release_notes = []
 new_release_codes = []
 new_release_codes.append(version_code)
-new_release_codes.append(str(int(version_code) + 1))
 
 release_notes = open(release_notes_file,"r+").read()
 release_notes_match = re.findall("<([a-z]{2}-?([A-Z]{2,3})?)>\n(.*?)<\/([a-z]{2}-?([A-Z]{2,3})?)>", release_notes, re.S)
