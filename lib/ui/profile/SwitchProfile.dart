@@ -1,4 +1,6 @@
+import 'package:farmsmart_flutter/ui/common/ListDivider.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
+import 'package:farmsmart_flutter/ui/profile/SwitchProfileItems.dart';
 import 'package:flutter/material.dart';
 
 class _Constants {
@@ -18,15 +20,30 @@ class SwitchProfile extends StatelessWidget {
   }
 
   _buildBody() {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 32),
-      child: Text("Switch Profile",
-          style: TextStyle(
-            color: Color(0xff1a1b46),
-            fontSize: 27,
-            fontWeight: FontWeight.w700,
-            fontStyle: FontStyle.normal,
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(left: 32, top: 10, bottom: 36),
+            child: Text(
+              "Switch Profile",
+              textAlign: TextAlign.left,
+              style: TextStyle(
+                color: Color(0xff1a1b46),
+                fontSize: 27,
+                fontWeight: FontWeight.w700,
+                fontStyle: FontStyle.normal,
+              ),
+            ),
           ),
+          ListView.separated(
+              shrinkWrap: true,
+              physics: ScrollPhysics(),
+              itemBuilder: (context , index ) => SwitchProfileItems(),
+              separatorBuilder: (context, index) => ListDivider.build(),
+              itemCount: 2),
+        ],
       ),
     );
   }
@@ -35,9 +52,8 @@ class SwitchProfile extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(right: 24, left: 24, bottom: 24),
       child: RoundedButton(
-          viewModel: RoundedButtonViewModel(
-              title: "Switch Profile",
-              onTap: () {}),
+          viewModel:
+              RoundedButtonViewModel(title: "Switch Profile Button", onTap: () {}),
           style: RoundedButtonStyle.largeRoundedButtonStyle()),
     );
   }
@@ -47,11 +63,11 @@ class SwitchProfile extends StatelessWidget {
       elevation: 0,
       leading: FlatButton(
         onPressed: () => Navigator.pop(context, false),
-        padding: EdgeInsets.only(left: 32),
+        padding: EdgeInsets.only(left: 25),
         child: Image.asset(
           _Constants.navCancelIcon,
-          height: 15,
-          width: 15,
+          height: 20,
+          width: 20,
         ),
       ),
       actions: <Widget>[
@@ -60,8 +76,7 @@ class SwitchProfile extends StatelessWidget {
             padding: const EdgeInsets.only(right: 32.0),
             child: RoundedButton(
                 viewModel: RoundedButtonViewModel(
-                    icon: _Constants.roundedButtonIcon,
-                    onTap: () {}),
+                    icon: _Constants.roundedButtonIcon, onTap: () {}),
                 style: RoundedButtonStyle.defaultStyle()),
           ),
         ),
@@ -69,6 +84,3 @@ class SwitchProfile extends StatelessWidget {
     );
   }
 }
-
-
-
