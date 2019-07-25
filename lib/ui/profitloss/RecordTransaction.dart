@@ -160,7 +160,7 @@ class RecordTransactionState extends State<RecordTransaction> {
           : _buildEditAppBar(style, context),
       body: GestureDetector(
         onTap: () {
-          FocusScope.of(context).detach();
+          FocusScope.of(context).unfocus();
           checkIfFilled();
         },
         child: ListView(

@@ -200,7 +200,7 @@ class _RecordTransactionHeaderState extends State<RecordTransactionHeader> {
       } else {
         widget.parent.userData.amount = _textFieldController.text;
         widget.parent.isAmountFilled = true;
-        FocusScope.of(context).detach();
+        FocusScope.of(context).unfocus();
       }
     });
   }
