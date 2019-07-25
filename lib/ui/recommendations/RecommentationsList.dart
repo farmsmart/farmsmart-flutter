@@ -1,7 +1,9 @@
 import 'package:farmsmart_flutter/data/bloc/ViewModelProvider.dart';
+import 'package:farmsmart_flutter/model/loading_status.dart';
 import 'package:farmsmart_flutter/ui/common/ActionSheet.dart';
 import 'package:farmsmart_flutter/ui/common/ActionSheetListItem.dart';
 import 'package:farmsmart_flutter/ui/common/ContextualAppBar.dart';
+import 'package:farmsmart_flutter/ui/common/ErrorRetry.dart';
 import 'package:farmsmart_flutter/ui/common/SectionListView.dart';
 import 'package:farmsmart_flutter/ui/common/headerAndFooterListView.dart';
 import 'package:farmsmart_flutter/ui/common/recommendation_card/recommendation_card.dart';
@@ -13,6 +15,8 @@ class _Strings {
   static const finish = "Finish";
   static const clearAction = "Clear Selection";
   static const cancelAction = "Cancel";
+  static const retry = "Retry";
+  static const error = "Error fetching recommendations";
 }
 
 class _Constants {
@@ -110,21 +114,17 @@ class RecommendationsList extends StatelessWidget implements ListViewSection {
           if (viewModel.canApply) {
             return Scaffold(
               appBar: _buildAppBar(context, viewModel),
-              body: _buildList(
-                context: context,
-                viewModel: viewModel,
-              ),
-              floatingActionButton: _buildApplyButton(context: context,viewModel: viewModel),
-              floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+              body: _buildState(context, viewModel),
+              floatingActionButton:
+                  _buildApplyButton(context: context, viewModel: viewModel),
+              floatingActionButtonLocation:
+                  FloatingActionButtonLocation.centerDocked,
             );
           }
 
           return Scaffold(
             appBar: _buildAppBar(context, viewModel),
-            body: _buildList(
-              context: context,
-              viewModel: viewModel,
-            ),
+            body: _buildState(context, viewModel),
           );
         });
   }
@@ -144,6 +144,33 @@ class RecommendationsList extends StatelessWidget implements ListViewSection {
     return _viewModelProvider.snapshot().items.length;
   }
 
+  Widget _buildSuccess(
+      BuildContext context, RecommendationsListViewModel viewModel) {
+    return _buildList(
+      context: context,
+      viewModel: viewModel,
+    );
+  }
+
+  Widget _buildState(
+      BuildContext context, RecommendationsListViewModel viewModel) {
+    final status =
+        (viewModel == null) ? LoadingStatus.LOADING : viewModel.loadingStatus;
+    switch (status) {
+      case LoadingStatus.LOADING:
+        return Container(
+            child: CircularProgressIndicator(), alignment: Alignment.center);
+      case LoadingStatus.SUCCESS:
+        return _buildSuccess(context, viewModel);
+      case LoadingStatus.ERROR:
+        return ErrorRetry(
+          retryActionLabel: _Strings.retry,
+          errorMessage: _Strings.error,
+          retryFunction: viewModel.update,
+        );
+    }
+  }
+
   void _applyAction(
       BuildContext context, RecommendationsListViewModel viewModel) {
     viewModel.apply();
@@ -159,7 +186,13 @@ class RecommendationsList extends StatelessWidget implements ListViewSection {
 
   Widget _buildList(
       {BuildContext context, RecommendationsListViewModel viewModel}) {
-      final footerList = viewModel.canApply ? <Widget>[SizedBox(height: _style.applyButtonStyle.height,)] : <Widget>[];
+    final footerList = viewModel.canApply
+        ? <Widget>[
+            SizedBox(
+              height: _style.applyButtonStyle.height,
+            )
+          ]
+        : <Widget>[];
     final headedList = HeaderAndFooterListView(
       headers: <Widget>[_buildHeader(viewModel: viewModel)],
       footers: footerList,
@@ -186,27 +219,44 @@ class RecommendationsList extends StatelessWidget implements ListViewSection {
     );
   }
 
-  Widget _buildApplyButton(
-      {BuildContext context, RecommendationsListViewModel viewModel}) {
+  Widget _buildApplyButton({
+    BuildContext context,
+    RecommendationsListViewModel viewModel,
+  }) {
     return Padding(
       padding: _Constants.buttonPadding,
       child: RoundedButton(
-            viewModel: RoundedButtonViewModel(
-                title: _Strings.finish, onTap: () => _applyAction(context, viewModel)),
-            style: _style.applyButtonStyle,
-          ),
+        viewModel: RoundedButtonViewModel(
+            title: _Strings.finish,
+            onTap: () => _applyAction(context, viewModel)),
+        style: _style.applyButtonStyle,
+      ),
     );
   }
 
   ActionSheet _moreMenu(RecommendationsListViewModel viewModel) {
     final actions = [
-      ActionSheetListItemViewModel(title: Intl.message(_Strings.clearAction), isDestructive: true, type: ActionType.simple, onTap: viewModel.clear),   
+      ActionSheetListItemViewModel(
+        title: Intl.message(_Strings.clearAction),
+        isDestructive: true,
+        type: ActionType.simple,
+        onTap: viewModel.clear,
+      ),
     ];
-    final actionSheetViewModel = ActionSheetViewModel(actions, Intl.message(_Strings.cancelAction));
-    return ActionSheet(viewModel: actionSheetViewModel, style: ActionSheetStyle.defaultStyle());
-  } 
+    final actionSheetViewModel = ActionSheetViewModel(
+      actions,
+      Intl.message(_Strings.cancelAction),
+    );
+    return ActionSheet(
+      viewModel: actionSheetViewModel,
+      style: ActionSheetStyle.defaultStyle(),
+    );
+  }
 
-  void _moreTapped({BuildContext context, RecommendationsListViewModel viewModel}) {
-     ActionSheet.present(_moreMenu(viewModel), context);
+  void _moreTapped({
+    BuildContext context,
+    RecommendationsListViewModel viewModel,
+  }) {
+    ActionSheet.present(_moreMenu(viewModel), context);
   }
 }

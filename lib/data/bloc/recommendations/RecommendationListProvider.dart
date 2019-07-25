@@ -62,7 +62,7 @@ class RecommendationListProvider
     return RecommendationsListViewModel(
         title: _title,
         items: items,
-        status: LoadingStatus.LOADING,
+        status: status,
         canApply: !_cropBasket.isEmpty(),
         update: () => _update(_controller),
         apply: () => _add(_controller),
