@@ -5,7 +5,6 @@ import 'package:farmsmart_flutter/ui/profile/UserProfileListItem.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-
 class _Strings {
   static final String ACTIVE_CROPS = Intl.message("Active crops");
   static final String COMPLETED = Intl.message("Completed");
@@ -58,26 +57,27 @@ class UserProfileStyle {
   final double buttonHeight;
   final int maxLines;
 
-  const UserProfileStyle(
-      {this.buttonColor,
-      this.dividerColor,
-      this.titleTextStyle,
-      this.subtitleTextStyle,
-      this.detailTextStyle,
-      this.buttonTextStyle,
-      this.edgePadding,
-      this.cardEdgePadding,
-      this.headerEdgePadding,
-      this.headerElevation,
-      this.titleLineSpace,
-      this.imageSpacing,
-      this.subtitleLineSpace,
-      this.buttonLineSpace,
-      this.detailSpacing,
-      this.dividerHeight,
-      this.dividerWidth,
-      this.buttonHeight,
-      this.maxLines});
+  const UserProfileStyle({
+    this.buttonColor,
+    this.dividerColor,
+    this.titleTextStyle,
+    this.subtitleTextStyle,
+    this.detailTextStyle,
+    this.buttonTextStyle,
+    this.edgePadding,
+    this.cardEdgePadding,
+    this.headerEdgePadding,
+    this.headerElevation,
+    this.titleLineSpace,
+    this.imageSpacing,
+    this.subtitleLineSpace,
+    this.buttonLineSpace,
+    this.detailSpacing,
+    this.dividerHeight,
+    this.dividerWidth,
+    this.buttonHeight,
+    this.maxLines,
+  });
 
   UserProfileStyle copyWith({
     Color buttonColor,
@@ -268,8 +268,8 @@ class UserProfile extends StatelessWidget {
       physics: ScrollPhysics(),
       itemCount: _viewModel.actions.length,
       itemBuilder: (context, index) => UserProfileListItem(
-            viewModel: _viewModel.actions[index],
-          ),
+        viewModel: _viewModel.actions[index],
+      ),
       separatorBuilder: (context, index) => ListDivider.build(),
     );
   }

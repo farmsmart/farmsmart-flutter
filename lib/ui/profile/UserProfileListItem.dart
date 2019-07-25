@@ -7,7 +7,7 @@ class _Constants {
 class UserProfileListItemViewModel {
   String icon;
   String title;
-  Function (String) onTap;
+  Function(String) onTap;
   bool isDestructive;
 
   UserProfileListItemViewModel({
@@ -18,61 +18,125 @@ class UserProfileListItemViewModel {
   });
 }
 
-class UserProfileListItemStyle {}
+class UserProfileListItemStyle {
+  final TextStyle titleTextStyle;
+  final TextStyle destructiveTextStyle;
+
+  final EdgeInsets edgePadding;
+
+  final double leadingWidth;
+  final double leadingIconHeight;
+  final double trailingWidth;
+  final double trailingIconHeight;
+
+  const UserProfileListItemStyle({
+    this.titleTextStyle,
+    this.destructiveTextStyle,
+    this.edgePadding,
+    this.leadingWidth,
+    this.leadingIconHeight,
+    this.trailingWidth,
+    this.trailingIconHeight,
+  });
+
+  UserProfileListItemStyle copyWith({
+    TextStyle titleTextStyle,
+    TextStyle destructiveTextStyle,
+    EdgeInsets edgePadding,
+    double leadingWidth,
+    double leadingIconHeight,
+    double trailingWidth,
+    double trailingIconHeight,
+  }) {
+    return UserProfileListItemStyle(
+      titleTextStyle: titleTextStyle ?? this.titleTextStyle,
+      destructiveTextStyle: destructiveTextStyle ?? this.destructiveTextStyle,
+      edgePadding: edgePadding ?? this.edgePadding,
+      leadingWidth: leadingWidth ?? this.leadingWidth,
+      leadingIconHeight: leadingIconHeight ?? this.leadingIconHeight,
+      trailingWidth: trailingWidth ?? this.trailingWidth,
+      trailingIconHeight: trailingIconHeight ?? this.trailingIconHeight,
+    );
+  }
+}
+
+class _DefaultStyle extends UserProfileListItemStyle {
+  final TextStyle titleTextStyle = const TextStyle(
+    fontWeight: FontWeight.normal,
+    fontSize: 17,
+  );
+
+  final TextStyle destructiveTextStyle = const TextStyle(
+    fontWeight: FontWeight.normal,
+    color: Color(0xffff6060),
+    fontSize: 17,
+  );
+
+  final EdgeInsets edgePadding = const EdgeInsets.only(
+    top: 10.8,
+    bottom: 10.8,
+    left: 13,
+    right: 31.5,
+  );
+
+  final double leadingWidth = 40;
+  final double leadingIconHeight = 20;
+  final double trailingWidth = 7.5;
+  final double trailingIconHeight = 13;
+
+  const _DefaultStyle({
+    TextStyle titleTextStyle,
+    TextStyle destructiveTextStyle,
+    EdgeInsets edgePadding,
+    double leadingWidth,
+    double leadingIconHeight,
+    double trailingWidth,
+    double trailingIconHeight,
+  });
+}
+
+const UserProfileListItemStyle _defaultStyle = const _DefaultStyle();
 
 class UserProfileListItem extends StatelessWidget {
   final UserProfileListItemViewModel _viewModel;
+  final UserProfileListItemStyle _style;
 
   const UserProfileListItem({
     Key key,
     UserProfileListItemViewModel viewModel,
+    UserProfileListItemStyle style = _defaultStyle,
   })  : this._viewModel = viewModel,
+        this._style = style,
         super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(left: 32, right: 25),
-      child: ListTile(
-        onTap: () => _viewModel.onTap(_viewModel.title),
-        contentPadding: EdgeInsets.symmetric(vertical: 10.8),
-        dense: true,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                _viewModel.icon != null
-                    ? Row(
-                        children: <Widget>[
-                          Image.asset(_viewModel.icon, height: 20),
-                          SizedBox(width: 20),
-                        ],
-                      )
-                    : SizedBox(width: 0),
-                Text(
-                  _viewModel.title,
-                  style: !_viewModel.isDestructive
-                      ? TextStyle(
-                          fontWeight: FontWeight.normal,
-                          fontSize: 17,
-                        )
-                      : TextStyle(
-                          fontWeight: FontWeight.normal,
-                          color: Color(0xffff6060),
-                          fontSize: 17,
-                        ),
-                ),
-              ],
-            ),
-            Image.asset(
-              _Constants.arrowIcon,
-              height: 13,
-            ),
-          ],
+    return ListTile(
+      onTap: () => _viewModel.onTap(_viewModel.title),
+      contentPadding: _style.edgePadding,
+      dense: true,
+      leading: _viewModel.icon != null
+          ? Container(
+              alignment: Alignment.centerRight,
+              width: _style.leadingWidth,
+              child: Image.asset(
+                _viewModel.icon,
+                height: _style.leadingIconHeight,
+              ),
+            )
+          : null,
+      trailing: Container(
+        width: _style.trailingWidth,
+        child: Image.asset(
+          _Constants.arrowIcon,
+          height: _style.trailingIconHeight,
         ),
+      ),
+      title: Text(
+        _viewModel.title,
+        style: !_viewModel.isDestructive
+            ? _style.titleTextStyle
+            : _style.destructiveTextStyle,
       ),
     );
   }
