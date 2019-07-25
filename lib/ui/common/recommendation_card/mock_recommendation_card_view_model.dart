@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:farmsmart_flutter/data/model/mock/MockString.dart';
 import 'package:farmsmart_flutter/ui/common/recommendation_card/recommendation_card.dart';
-import 'package:flutter/material.dart';
 
 class MockRecommendationCardViewModel {
 
@@ -11,13 +10,12 @@ class MockRecommendationCardViewModel {
       title: _mockTitle.random(),
       subtitle: _mockSubtitle.random(),
       description: _mockLargeStrings.random(),
-      leftActionText: 'View Details',
-      leftAction: () {},
-      rightActionText: 'Added',
-      rightAction: () {},
-      image: NetworkImage('http://www.freemagebank.com/wp-content/uploads/edd/2015/07/GL0000302LR.jpg'),
+      detailActionText: 'View Details',
+      detailAction: () {},
+      addActionText: 'Added',
+      addAction: () {},
+      image: _mockFutureString('http://www.freemagebank.com/wp-content/uploads/edd/2015/07/GL0000302LR.jpg'),
       isAdded: Random().nextBool(),
-      overlayIcon: 'assets/icons/tick_large.png',
     );
   }
 
@@ -26,12 +24,11 @@ class MockRecommendationCardViewModel {
       title: _mockTitle.random(),
       subtitle: _mockSubtitle.random(),
       description: _mockLargeStrings.random(),
-      leftActionText: 'View Details',
-      leftAction: () {},
-      rightActionText: 'Add to Plot',
-      rightAction: () {},
-      image: NetworkImage(_mockImageUrl.random()),
-      overlayIcon: 'assets/icons/tick_large.png',
+      detailActionText: 'View Details',
+      detailAction: () {},
+      addActionText: 'Add to Plot',
+      addAction: () {},
+      image: _mockFutureString(_mockImageUrl.random()),
     );
   }
 
@@ -40,13 +37,12 @@ class MockRecommendationCardViewModel {
       title: _mockTitle.random(),
       subtitle: _mockSubtitle.random(),
       description: _mockLargeStrings.random(),
-      leftActionText: 'View Details',
-      leftAction: () {},
-      rightActionText: 'Added',
-      rightAction: () {},
-      image: NetworkImage('http://www.freemagebank.com/wp-content/uploads/edd/2015/07/GL0000302LR.jpg'),
+      detailActionText: 'View Details',
+      detailAction: () {},
+      addActionText: 'Added',
+      addAction: () {},
+      image: _mockFutureString('http://www.freemagebank.com/wp-content/uploads/edd/2015/07/GL0000302LR.jpg'),
       isAdded: true,
-      overlayIcon: 'assets/icons/tick_large.png',
     );
   }
 
@@ -57,12 +53,11 @@ class MockRecommendationCardViewModel {
       description:
           'Tomatoes are lorem ipsum dolor sit amet consectetur elit sed'
           ' do eiusmod tempor lorem ipsum dolor sit amet',
-      leftActionText: 'View Details',
-      leftAction: () {},
-      rightActionText: 'Add to Plot',
-      rightAction: () {},
-      image: NetworkImage(_mockImageUrl.random()),
-      overlayIcon: 'assets/icons/tick_large.png',
+      detailActionText: 'View Details',
+      detailAction: () {},
+      addActionText: 'Add to Plot',
+      addAction: () {},
+      image: _mockFutureString(_mockImageUrl.random()),
     );
   }
 
@@ -73,12 +68,11 @@ class MockRecommendationCardViewModel {
       description:
       'Tomatoes are lorem ipsum dolor sit amet consectetur elit sed'
           ' do eiusmod tempor lorem ipsum dolor sit amet',
-      leftActionText: 'View Details',
-      leftAction: () {},
-      rightActionText: 'Add to Plot',
-      rightAction: () {},
-      image: AssetImage('assets/raw/placeholder.webp'),
-      overlayIcon: 'assets/icons/tick_large.png',
+      detailActionText: 'View Details',
+      detailAction: () {},
+      addActionText: 'Add to Plot',
+      addAction: () {},
+      image:_mockFutureString('assets/raw/placeholder.webp'),
     );
   }
 
@@ -89,15 +83,19 @@ class MockRecommendationCardViewModel {
       description:
       'Tomatoes are lorem ipsum dolor sit amet consectetur elit sed'
           ' do eiusmod tempor lorem ipsum dolor sit amet',
-      leftActionText: 'View Details',
-      leftAction: () {},
-      rightActionText: 'Added To Plot',
-      rightAction: () {},
-      image: AssetImage('assets/raw/placeholder.webp'),
-      overlayIcon: 'assets/icons/tick_large.png',
+      detailActionText: 'View Details',
+      detailAction: () {},
+      addActionText: 'Added To Plot',
+      addAction: () {},
+      image: _mockFutureString('assets/raw/placeholder.webp'),
       isAdded: true,
     );
   }
+}
+
+
+Future<String> _mockFutureString(String url) async{
+  return url;
 }
 
 MockString _mockTitle = MockString(library: [

@@ -45,6 +45,7 @@ class RecommendationDetailCardStyles {
     imageOverlayWidth: 26,
     imageOverlayHeight: 26,
     imageOverlayColor: Color(0x1425df0c),
+    iconAssetOverlay: 'assets/icons/tick_large.png',
   );
 
   static RoundedButtonStyle _defaultActionButtonStyle = RoundedButtonStyle(
