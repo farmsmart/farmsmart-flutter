@@ -111,18 +111,17 @@ class Alert extends StatelessWidget {
   final AlertViewModel _viewModel;
   final AlertStyle _style;
 
-  static present (Alert alert, BuildContext context) {
+  static present(Alert alert, BuildContext context) {
     return showDialog<bool>(
-        context: context,
-        barrierDismissible: false,
-        builder: (_) => alert,
+      context: context,
+      barrierDismissible: false,
+      builder: (_) => alert,
     );
   }
 
-  const Alert(
-      {Key key,
-      AlertViewModel viewModel,
-      AlertStyle style = _defaultStyle})
+  const Alert({Key key,
+    AlertViewModel viewModel,
+    AlertStyle style = _defaultStyle})
       : this._viewModel = viewModel,
         this._style = style,
         super(key: key);
@@ -174,14 +173,6 @@ class Alert extends StatelessWidget {
     );
   }
 
-  confirmDialog(BuildContext context) {
-    return showDialog<bool>(
-      context: context,
-      barrierDismissible: false,
-      builder: (_) => Alert(),
-    );
-  }
-
   List<Widget> _buildAction(BuildContext context) {
     List<Widget> listBuilder = [
       Expanded(
@@ -207,20 +198,25 @@ class Alert extends StatelessWidget {
       child: RoundedButton(
         viewModel: RoundedButtonViewModel(
             title: _viewModel.confirmActionText,
-            onTap: () => _viewModel.confirmAction(),
+            onTap: () => confirmAndDismiss(context)
         ),
         style: RoundedButtonStyle.actionSheetLargeRoundedButton().copyWith(
-            height: _Constants.actionHeight,
-            width: _Constants.actionWidth,
-            backgroundColor: _viewModel.isDestructive
-                ? _style.destructiveActionBackgroundColor
-                : _style.actionBackgroundColor,
-            buttonTextStyle: _style.actionTextStyle,
-            borderRadius: _Constants.actionCornerRadius,
+          height: _Constants.actionHeight,
+          width: _Constants.actionWidth,
+          backgroundColor: _viewModel.isDestructive
+              ? _style.destructiveActionBackgroundColor
+              : _style.actionBackgroundColor,
+          buttonTextStyle: _style.actionTextStyle,
+          borderRadius: _Constants.actionCornerRadius,
         ),
       ),
     ),
     );
     return listBuilder;
+  }
+
+  confirmAndDismiss(BuildContext context) {
+    _viewModel.confirmAction();
+    Navigator.pop(context);
   }
 }

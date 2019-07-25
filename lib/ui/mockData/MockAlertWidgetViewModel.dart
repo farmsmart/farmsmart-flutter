@@ -1,5 +1,7 @@
 import 'package:farmsmart_flutter/ui/common/Alert.dart';
 import 'package:farmsmart_flutter/ui/common/MockString.dart';
+import 'package:path/path.dart';
+import 'package:flutter/foundation.dart';
 
 class MockAlertWidgetViewModel {
   static AlertViewModel build() {
@@ -25,7 +27,7 @@ class MockAlertWidgetViewModel {
   }
 
   static _mockAction() {
-    print("This should be the correct action");
+  print("Should be the correct action");
   }
 }
 
