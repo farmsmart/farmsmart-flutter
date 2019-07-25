@@ -1,6 +1,5 @@
 import 'package:farmsmart_flutter/ui/common/ActionSheet.dart';
 import 'package:farmsmart_flutter/ui/common/ListDivider.dart';
-import 'package:farmsmart_flutter/ui/common/network_image_from_future.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
 import 'package:farmsmart_flutter/ui/profile/UserProfileListItem.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +8,7 @@ import 'package:intl/intl.dart';
 class _Constants {
   // TODO: temporal image link
   static final link =
-      "https://www.flower-pepper.com/wp-content/uploads/2016/10/Kermit-the-Frog-by-Bartholomew-300x378.jpg";
+      NetworkImage("https://www.flower-pepper.com/wp-content/uploads/2016/10/Kermit-the-Frog-by-Bartholomew-300x378.jpg");
 
   static final List<UserProfileListItemViewModel> PROFILE_ACTIONS = [
     UserProfileListItemViewModel(
@@ -63,14 +62,14 @@ class UserProfileViewModel {
   int activeCrops;
   int completedCrops;
   String buttonTitle;
-  final Future<String> imageUrl;
+  ImageProvider image;
 
   UserProfileViewModel({
     this.userName,
     this.activeCrops,
     this.completedCrops,
     this.buttonTitle,
-    this.imageUrl,
+    this.image,
   });
 }
 
@@ -287,7 +286,7 @@ class UserProfile extends StatelessWidget {
               children: <Widget>[
                 _buildMainTextView(context),
                 SizedBox(width: _style.imageSpacing),
-                _buildPlotImage(_Constants.link),
+                _buildPlotImage(_viewModel.image),
               ],
             ),
           ),
@@ -395,11 +394,11 @@ class UserProfile extends StatelessWidget {
     );
   }
 
-  ClipOval _buildPlotImage(String imageUrl) {
+  ClipOval _buildPlotImage(ImageProvider image) {
     return ClipOval(
         child: Stack(children: <Widget>[
-      Image.network(
-        imageUrl,
+      Image(
+        image: image,
         height: 72,
         width: 72,
         fit: BoxFit.cover,
@@ -407,22 +406,6 @@ class UserProfile extends StatelessWidget {
       ),
     ]));
   }
-
-/*
-  ClipOval _buildPlotImage(
-      Future<String> imageUrl, PlotListItemStyle itemStyle) {
-    return ClipOval(
-        child: Stack(children: <Widget>[
-          NetworkImageFromFuture(imageUrl,
-              height: itemStyle.imageSize,
-              width: itemStyle.imageSize,
-              fit: BoxFit.cover),
-          Positioned.fill(
-              child: Container(
-                color: itemStyle.overlayColor,
-              )),
-        ]));
-  } */
 
   void showSnackBar(String text, BuildContext context) {
     final snackBar = SnackBar(
