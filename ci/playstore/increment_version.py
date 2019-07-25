@@ -1,0 +1,42 @@
+#!/usr/bin/python
+from google.oauth2 import service_account
+import googleapiclient.discovery
+import argparse
+import json
+from versionInfo import VersionInfo
+
+# Declare command-line flags.
+argparser = argparse.ArgumentParser()
+argparser.add_argument('package_name', help='The package name. Example: com.android.sample')
+argparser.add_argument('track', help='The track name')
+
+args = argparser.parse_args()
+package_name = args.package_name
+track = args.track
+
+# Authorise the publishing API
+service_account_file_path = "secrets/google-play-service-account.json"
+SCOPES = ['https://www.googleapis.com/auth/androidpublisher']
+credentials = service_account.Credentials.from_service_account_file(service_account_file_path, scopes=SCOPES)
+androidPublisher = googleapiclient.discovery.build('androidpublisher', 'v3', credentials=credentials)
+
+# API calls
+edit_request = androidPublisher.edits().insert(body={}, packageName=package_name)
+edit_response = edit_request.execute()
+edit_id = edit_response['id']
+
+tracks_req = androidPublisher.edits().tracks().get(packageName=package_name, editId=edit_id, track=track)
+tracks_res = tracks_req.execute()
+
+releases = tracks_res['releases']
+current_release = next(r for r in releases if r['status'] == 'completed')
+current_version_code = int(max(current_release['versionCodes'])) + 1
+
+
+version = {
+            
+            "version_code": current_version_code
+        }
+
+# Determine next version
+print(json.dumps(version))
