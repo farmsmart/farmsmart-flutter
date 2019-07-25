@@ -56,7 +56,7 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
-      _retrieveDynamicLink(homeViewModel);
+      //_retrieveDynamicLink(homeViewModel);
     }
   }
 
@@ -160,7 +160,7 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
     );
   }
 
-  Future<void> _retrieveDynamicLink(HomeViewmodel viewModel) async {
+  /*Future<void> _retrieveDynamicLink(HomeViewmodel viewModel) async {
     final PendingDynamicLinkData data =
         await FirebaseDynamicLinks.instance.getInitialLink();
     if (data != null) {
@@ -172,5 +172,5 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
         //TODO: LH restore this function
       }
     }
-  }
+  }*/
 }
