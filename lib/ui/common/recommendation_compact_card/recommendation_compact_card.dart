@@ -113,8 +113,8 @@ class _DefaultStyle extends RecommendationCompactCardStyle {
   final EdgeInsets contentPadding = const EdgeInsets.all(32.0);
 
   final Color overlayColor = const Color(0x1924d900);
-  final double overlayIconHeight = 54;
-  final double overlayIconWidth = 54;
+  final double overlayIconHeight = 26;
+  final double overlayIconWidth = 26;
 
   final String overlayIcon = 'assets/icons/tick_large.png';
 

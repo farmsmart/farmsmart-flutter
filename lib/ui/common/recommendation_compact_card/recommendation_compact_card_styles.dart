@@ -32,8 +32,8 @@ class RecommendationCompactCardStyles {
           ),
         ),
         overlayColor: const Color(0x1924d900),
-        overlayIconHeight: 54,
-        overlayIconWidth: 54,
+        overlayIconHeight: 26,
+        overlayIconWidth: 26,
       );
 
   static RecommendationCompactCardStyle _defaultRecommendationCardStyle =
