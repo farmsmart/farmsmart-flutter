@@ -26,6 +26,10 @@ class Basket<T> {
     return _contents.contains(item);
   }
 
+  bool isEmpty() {
+    return _contents.isEmpty;
+  }
+
   List<T> empty() {
     final contents = _contents;
     _contents = [];

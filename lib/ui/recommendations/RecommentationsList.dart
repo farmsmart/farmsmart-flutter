@@ -5,11 +5,21 @@ import 'package:farmsmart_flutter/ui/common/recommendation_card/recommendation_c
 import 'package:farmsmart_flutter/ui/recommendations/viewmodel/RecommendationsListViewModel.dart';
 import 'package:flutter/cupertino.dart';
 
+class _Strings {
+  static const finish = "Finish";
+}
+
+class _Constants {
+  static const buttonPadding = EdgeInsets.all(24.0);
+}
+
 abstract class RecommendedListStyle {
   final TextStyle titleTextStyle;
   final EdgeInsets titleEdgePadding;
+  final RoundedButtonStyle applyButtonStyle;
 
-  RecommendedListStyle(this.titleTextStyle, this.titleEdgePadding);
+  RecommendedListStyle(
+      this.titleTextStyle, this.titleEdgePadding, this.applyButtonStyle);
   RecommendedListStyle copyWith({
     TextStyle titleTextStyle,
     EdgeInsets titleEdgePadding,
@@ -19,8 +29,12 @@ abstract class RecommendedListStyle {
 class _DefaultStyle implements RecommendedListStyle {
   final TextStyle titleTextStyle;
   final EdgeInsets titleEdgePadding;
+  final RoundedButtonStyle applyButtonStyle;
 
-  const _DefaultStyle({TextStyle titleTextStyle, EdgeInsets titleEdgePadding})
+  const _DefaultStyle(
+      {TextStyle titleTextStyle,
+      EdgeInsets titleEdgePadding,
+      RoundedButtonStyle applyButtonStyle})
       : this.titleTextStyle = titleTextStyle ??
             const TextStyle(
                 fontSize: 27,
@@ -32,6 +46,23 @@ class _DefaultStyle implements RecommendedListStyle {
               right: 34.0,
               top: 35.0,
               bottom: 30.0,
+            ),
+        this.applyButtonStyle = applyButtonStyle ??
+            const RoundedButtonStyle(
+              borderRadius: BorderRadius.all(Radius.circular(16)),
+              backgroundColor: Color(0xff24d900),
+              buttonTextStyle: TextStyle(
+                color: Color(0xffffffff),
+                fontSize: 17,
+                fontWeight: FontWeight.w500,
+                fontStyle: FontStyle.normal,
+              ),
+              iconEdgePadding: 5,
+              height: 56,
+              width: double.infinity,
+              buttonIconSize: null,
+              iconButtonColor: Color(0xFFFFFFFF),
+              buttonShape: BoxShape.rectangle,
             );
 
   @override
@@ -68,12 +99,44 @@ class RecommendationsList extends StatelessWidget implements ListViewSection {
           BuildContext context,
           AsyncSnapshot<RecommendationsListViewModel> snapshot,
         ) {
-          return _buildList(viewModel: snapshot.data);
+          return _buildList(context: context, viewModel: snapshot.data);
         });
   }
 
-  Widget _buildList({RecommendationsListViewModel viewModel}) {
-    final headedList = HeaderAndFooterListView(headers: <Widget>[_buildHeader(viewModel: viewModel)], shrinkWrap: true, physics: ScrollPhysics(), itemBuilder: itemBuilder(), itemCount: length(),);
+  @override
+  itemBuilder() {
+    final viewModel = _viewModelProvider.snapshot();
+    return (BuildContext context, int index) {
+      return RecommendationCard(
+        viewModel: viewModel.items[index],
+      );
+    };
+  }
+
+  @override
+  int length() {
+    return _viewModelProvider.snapshot().items.length;
+  }
+
+  void _applyAction(
+      BuildContext context, RecommendationsListViewModel viewModel) {
+    viewModel.apply();
+    Navigator.of(context).pop();
+  }
+
+  Widget _buildList(
+      {BuildContext context, RecommendationsListViewModel viewModel}) {
+    final footers = viewModel.canApply
+        ? <Widget>[_buildFooter(context: context, viewModel: viewModel)]
+        : <Widget>[];
+    final headedList = HeaderAndFooterListView(
+      headers: <Widget>[_buildHeader(viewModel: viewModel)],
+      footers: footers,
+      shrinkWrap: true,
+      physics: ScrollPhysics(),
+      itemBuilder: itemBuilder(),
+      itemCount: length(),
+    );
     return headedList;
   }
 
@@ -82,21 +145,25 @@ class RecommendationsList extends StatelessWidget implements ListViewSection {
       padding: _style.titleEdgePadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[Text(viewModel.title, style: _style.titleTextStyle,)],
+        children: <Widget>[
+          Text(
+            viewModel.title,
+            style: _style.titleTextStyle,
+          )
+        ],
       ),
     );
   }
 
-  @override
-  itemBuilder() {
-    final viewModel = _viewModelProvider.snapshot();
-    return (BuildContext context, int index) {
-      return RecommendationCard(viewModel: viewModel.items[index],);
-    };
-  }
-
-  @override
-  int length() {
-    return _viewModelProvider.snapshot().items.length;
+  Widget _buildFooter(
+      {BuildContext context, RecommendationsListViewModel viewModel}) {
+    return Container(
+        padding: _Constants.buttonPadding,
+        child: RoundedButton(
+          viewModel: RoundedButtonViewModel(
+              title: _Strings.finish,
+              onTap: () => _applyAction(context, viewModel)),
+          style: _style.applyButtonStyle,
+        ));
   }
 }

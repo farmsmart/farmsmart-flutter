@@ -7,14 +7,20 @@ class RecommendationsListViewModel {
 
   final List<RecommendationCardViewModel> items;
   final Function update;
+  final Function apply; 
+  final bool canApply;
 
   RecommendationsListViewModel({
     String title,
     LoadingStatus status,
     List<RecommendationCardViewModel> items,
     Function update,
+    Function apply,
+    bool canApply,
   })  : this.title = title,
         this.loadingStatus = status,
         this.items = items,
-        this.update = update;
+        this.update = update,
+        this.apply = apply,
+        this.canApply = canApply;
 }

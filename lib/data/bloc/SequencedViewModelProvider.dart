@@ -16,6 +16,9 @@ class SequencedViewModelProvider<T> implements ViewModelProvider<T> {
 
   @override
   T initial() {
+    if(_timer != null) {
+      _timer.cancel();
+    }
     _timer = Timer.periodic(_tempo, (timer) {
        _updateToNextViewModel();
     });

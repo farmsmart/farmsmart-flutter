@@ -4,6 +4,7 @@ import 'package:farmsmart_flutter/data/bloc/Basket.dart';
 import 'package:farmsmart_flutter/data/bloc/recommendations/RecommendationEngine.dart';
 import 'package:farmsmart_flutter/data/model/crop_entity.dart';
 import 'package:farmsmart_flutter/data/repositories/crop/CropRepositoryInterface.dart';
+import 'package:farmsmart_flutter/data/repositories/plot/PlotRepositoryInterface.dart';
 import 'package:farmsmart_flutter/model/loading_status.dart';
 import 'package:farmsmart_flutter/ui/common/recommendation_card/recommendation_card.dart';
 import 'package:farmsmart_flutter/ui/recommendations/viewmodel/RecommendationsListViewModel.dart';
@@ -16,6 +17,7 @@ class RecommendationListProvider
   final String _title;
   final double _inputScale;
   final CropRepositoryInterface _cropRepo;
+  final PlotRepositoryInterface _plotRepo;
   Basket<CropEntity> _cropBasket;
   List<CropEntity> _crops;
   //final UserProfileRepositoryInterface _profileRepo; //we need the current input factors from this. 
@@ -25,9 +27,11 @@ class RecommendationListProvider
   RecommendationListProvider({
     String title,
     CropRepositoryInterface cropRepo,
+    PlotRepositoryInterface plotRepo,
     double inputScale,
   })  : this._title = title,
         this._cropRepo = cropRepo,
+        this._plotRepo = plotRepo,
         this._inputScale = inputScale;
 
   @override
@@ -59,7 +63,9 @@ class RecommendationListProvider
         title: _title,
         items: items,
         status: LoadingStatus.LOADING,
-        update: () => _update(_controller));
+        canApply: !_cropBasket.isEmpty(),
+        update: () => _update(_controller),
+        apply: () => _add(_controller));
   }
 
   RecommendationsListViewModel _modelFromCrops(
@@ -91,6 +97,13 @@ class RecommendationListProvider
       _snapshot = _modelFromCrops(controller, crops);
       controller.sink.add(_snapshot);
     });
+  }
+
+  void _add(StreamController<RecommendationsListViewModel> controller) {
+    final cropsToAdd = _cropBasket.empty();
+    for (var crop in cropsToAdd) {
+       _plotRepo.addPlot(crop: crop);
+    }
   }
 
   void dispose() {

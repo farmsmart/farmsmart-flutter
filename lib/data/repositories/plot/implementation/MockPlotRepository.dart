@@ -20,7 +20,7 @@ class MockPlotRepository implements PlotRepositoryInterface {
 
   @override
   Future<PlotEntity> addPlot({ProfileEntity toProfile, PlotInfoEntity plotInfo, CropEntity crop}) {
-    final entity = _plotBuilder.build();
+    final entity = _plotBuilder.buildWith(crop);
     _plots.add(entity);
     _update();
     return Future.value(entity);
@@ -46,8 +46,7 @@ class MockPlotRepository implements PlotRepositoryInterface {
   Stream<PlotEntity> observe(String uri) {
     final controller = _observers[uri];
     if(controller == null){
-      final newController = StreamController<PlotEntity>.broadcast();
-      _observers[uri] = newController;
+      _observers[uri] = StreamController<PlotEntity>.broadcast();
     }
     return _observers[uri].stream;
   }

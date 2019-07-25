@@ -32,6 +32,7 @@ import 'playground_persistent_bottom_navigation_bar_datasource.dart';
 
 class PlayGroundTasksDataSource implements PlaygroundDataSource {
   @override
+  final _mockPlot = MockPlotRepository();
   List<PlaygroundWidget> getList() {
     return [
       //Add Your tasks here
@@ -138,12 +139,12 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
                 title: "FARM-365 Plot Repository",
                 child: PlotList(
                     provider: PlotListProvider(
-                        title: "Test", repository: MockPlotRepository()))),
+                        title: "Test", repository: _mockPlot))),
             PlaygroundWidget(
                 title: "FARM-365 Plot Detail",
                 child: PlotDetail(
                   provider: PlotDetailProvider(
-                      MockPlotEntity().build(), MockPlotRepository()),
+                      MockPlotEntity().build(), _mockPlot),
                 ))
           ])),
       PlaygroundWidget(
@@ -167,6 +168,7 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
                     provider: RecommendationListProvider(
                         title: "Mock Repo",
                         cropRepo: MockCropRepository(),
+                        plotRepo: _mockPlot,
                         inputScale: 10.0))),
           ])),
     ];
