@@ -5,51 +5,6 @@ import 'package:farmsmart_flutter/ui/profile/UserProfileListItem.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class _Constants {
-  // TODO: temporal image link
-  static final link =
-      NetworkImage("https://www.flower-pepper.com/wp-content/uploads/2016/10/Kermit-the-Frog-by-Bartholomew-300x378.jpg");
-
-  static final List<UserProfileListItemViewModel> PROFILE_ACTIONS = [
-    UserProfileListItemViewModel(
-      title: Intl.message("Switch Language"),
-      icon: "assets/icons/detail_icon_language.png",
-      isDestructive: false,
-    ),
-    UserProfileListItemViewModel(
-      title: Intl.message("Your Farm Details"),
-      icon: "assets/icons/detail_icon_best_soil.png",
-      isDestructive: false,
-    ),
-    UserProfileListItemViewModel(
-      title: Intl.message("Update Pin"),
-      icon: "assets/icons/detail_icon_pin.png",
-      isDestructive: false,
-    ),
-    UserProfileListItemViewModel(
-      title: Intl.message("Create New Profile"),
-      icon: "assets/icons/detail_icon_new_profile.png",
-      isDestructive: false,
-    ),
-    UserProfileListItemViewModel(
-      title: Intl.message("Invite Friends"),
-      icon: "assets/icons/detail_icon_invite.png",
-      isDestructive: false,
-    ),
-    UserProfileListItemViewModel(
-      title: Intl.message("Privacy Policy"),
-      isDestructive: false,
-    ),
-    UserProfileListItemViewModel(
-      title: Intl.message("Terms of User"),
-      isDestructive: false,
-    ),
-    UserProfileListItemViewModel(
-      title: Intl.message("Delete Profile"),
-      isDestructive: true,
-    ),
-  ];
-}
 
 class _Strings {
   static final String ACTIVE_CROPS = Intl.message("Active crops");
@@ -58,17 +13,21 @@ class _Strings {
 }
 
 class UserProfileViewModel {
+  List<UserProfileListItemViewModel> actions;
   String userName;
   int activeCrops;
   int completedCrops;
   String buttonTitle;
+  final Function switchProfile;
   ImageProvider image;
 
   UserProfileViewModel({
+    this.actions,
     this.userName,
     this.activeCrops,
     this.completedCrops,
     this.buttonTitle,
+    this.switchProfile,
     this.image,
   });
 }
@@ -251,22 +210,11 @@ class UserProfile extends StatelessWidget {
   //TODO: Add profile actions
   @override
   Widget build(BuildContext context) {
-    List<Function> listOfFunctions = [
-      () => ActionSheet.onMenuPressed(context),
-      () => showSnackBar("Action 2", context),
-      () => showSnackBar("Action 3", context),
-      () => showSnackBar("Action 4", context),
-      () => showSnackBar("Action 5", context),
-      () => showSnackBar("Action 6", context),
-      () => showSnackBar("Action 7", context),
-      () => showSnackBar("Action 8", context),
-    ];
-
     return SingleChildScrollView(
       child: Column(
         children: <Widget>[
           _buildHeader(context),
-          _buildListOfActions(_viewModel, listOfFunctions),
+          _buildListOfActions(),
         ],
       ),
     );
@@ -297,7 +245,7 @@ class UserProfile extends StatelessWidget {
                 RoundedButton(
                   viewModel: RoundedButtonViewModel(
                       title: _Strings.SWITCH_PROFILE,
-                      onTap: () => Navigator.pop(context)),
+                      onTap: () => _viewModel.switchProfile()),
                   style: RoundedButtonStyle.largeRoundedButtonStyle().copyWith(
                     backgroundColor: _style.buttonColor,
                     height: _style.buttonHeight,
@@ -314,18 +262,13 @@ class UserProfile extends StatelessWidget {
     );
   }
 
-  Widget _buildListOfActions(
-      UserProfileViewModel viewModel, List<Function> listOfFunctions) {
+  Widget _buildListOfActions() {
     return ListView.separated(
       shrinkWrap: true,
       physics: ScrollPhysics(),
-      itemCount: _Constants.PROFILE_ACTIONS.length,
+      itemCount: _viewModel.actions.length,
       itemBuilder: (context, index) => UserProfileListItem(
-            viewModel: UserProfileListItemViewModel(
-                icon: _Constants.PROFILE_ACTIONS[index].icon,
-                title: _Constants.PROFILE_ACTIONS[index].title,
-                onTap: listOfFunctions[index],
-                isDestructive: _Constants.PROFILE_ACTIONS[index].isDestructive),
+            viewModel: _viewModel.actions[index],
           ),
       separatorBuilder: (context, index) => ListDivider.build(),
     );

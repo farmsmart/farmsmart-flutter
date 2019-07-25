@@ -7,7 +7,7 @@ class _Constants {
 class UserProfileListItemViewModel {
   String icon;
   String title;
-  Function onTap;
+  Function (String) onTap;
   bool isDestructive;
 
   UserProfileListItemViewModel({
@@ -34,7 +34,7 @@ class UserProfileListItem extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(left: 32, right: 25),
       child: ListTile(
-        onTap: _viewModel.onTap,
+        onTap: () => _viewModel.onTap(_viewModel.title),
         contentPadding: EdgeInsets.symmetric(vertical: 10.8),
         dense: true,
         title: Row(
