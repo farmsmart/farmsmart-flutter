@@ -41,7 +41,6 @@ class UserProfileStyle {
   final TextStyle buttonTextStyle;
 
   final EdgeInsets edgePadding;
-  final EdgeInsets cardEdgePadding;
   final EdgeInsets headerEdgePadding;
 
   final double headerElevation;
@@ -65,7 +64,6 @@ class UserProfileStyle {
     this.detailTextStyle,
     this.buttonTextStyle,
     this.edgePadding,
-    this.cardEdgePadding,
     this.headerEdgePadding,
     this.headerElevation,
     this.titleLineSpace,
@@ -87,7 +85,6 @@ class UserProfileStyle {
     TextStyle detailTextStyle,
     TextStyle buttonTextStyle,
     EdgeInsets edgePadding,
-    EdgeInsets cardEdgePadding,
     EdgeInsets headerEdgePadding,
     double headerElevation,
     double titleLineSpace,
@@ -108,7 +105,6 @@ class UserProfileStyle {
       detailTextStyle: detailTextStyle ?? this.detailTextStyle,
       buttonTextStyle: buttonTextStyle ?? this.buttonTextStyle,
       edgePadding: edgePadding ?? this.edgePadding,
-      cardEdgePadding: cardEdgePadding ?? this.cardEdgePadding,
       headerEdgePadding: headerEdgePadding ?? this.headerEdgePadding,
       headerElevation: headerElevation ?? this.headerElevation,
       titleLineSpace: titleLineSpace ?? this.titleLineSpace,
@@ -153,7 +149,6 @@ class _DefaultStyle extends UserProfileStyle {
   );
 
   final EdgeInsets edgePadding = const EdgeInsets.symmetric(horizontal: 32);
-  final EdgeInsets cardEdgePadding = const EdgeInsets.all(0);
   final EdgeInsets headerEdgePadding = const EdgeInsets.only(
     left: 32.0,
     top: 27.0,
@@ -180,7 +175,6 @@ class _DefaultStyle extends UserProfileStyle {
     TextStyle detailTextStyle,
     TextStyle buttonTextStyle,
     EdgeInsets edgePadding,
-    EdgeInsets cardEdgePadding,
     EdgeInsets headerEdgePadding,
     double headerElevation,
     double titleLineSpace,
@@ -221,44 +215,40 @@ class UserProfile extends StatelessWidget {
   }
 
   Widget _buildHeader(BuildContext context) {
-    return Card(
-      margin: _style.cardEdgePadding,
-      elevation: _style.headerElevation,
-      child: Column(
-        children: <Widget>[
-          Container(
-            margin: _style.headerEdgePadding,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                _buildMainTextView(context),
-                SizedBox(width: _style.imageSpacing),
-                _buildPlotImage(_viewModel.image),
-              ],
-            ),
+    return Column(
+      children: <Widget>[
+        Container(
+          margin: _style.headerEdgePadding,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              _buildMainTextView(context),
+              SizedBox(width: _style.imageSpacing),
+              _buildPlotImage(_viewModel.image),
+            ],
           ),
-          Padding(
-            padding: _style.edgePadding,
-            child: Column(
-              children: <Widget>[
-                RoundedButton(
-                  viewModel: RoundedButtonViewModel(
-                      title: _Strings.SWITCH_PROFILE,
-                      onTap: () => _viewModel.switchProfile()),
-                  style: RoundedButtonStyle.largeRoundedButtonStyle().copyWith(
-                    backgroundColor: _style.buttonColor,
-                    height: _style.buttonHeight,
-                    borderRadius: BorderRadius.all(Radius.circular(8)),
-                    buttonTextStyle: _style.buttonTextStyle,
-                  ),
+        ),
+        Padding(
+          padding: _style.edgePadding,
+          child: Column(
+            children: <Widget>[
+              RoundedButton(
+                viewModel: RoundedButtonViewModel(
+                    title: _Strings.SWITCH_PROFILE,
+                    onTap: () => _viewModel.switchProfile()),
+                style: RoundedButtonStyle.largeRoundedButtonStyle().copyWith(
+                  backgroundColor: _style.buttonColor,
+                  height: _style.buttonHeight,
+                  borderRadius: BorderRadius.all(Radius.circular(8)),
+                  buttonTextStyle: _style.buttonTextStyle,
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-          SizedBox(height: _style.buttonLineSpace)
-        ],
-      ),
+        ),
+        SizedBox(height: _style.buttonLineSpace)
+      ],
     );
   }
 
@@ -281,19 +271,21 @@ class UserProfile extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Column(
-            mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text(_viewModel.userName,
-                  maxLines: _style.maxLines,
-                  overflow: TextOverflow.ellipsis,
-                  style: _style.titleTextStyle),
-              SizedBox(height: _style.titleLineSpace),
               Container(
-                height: _style.dividerHeight,
-                //width: double.infinity,
-                color: _style.dividerColor,
+                padding: EdgeInsets.only(bottom: 2),
+                child: Text(_viewModel.userName,
+                    maxLines: _style.maxLines,
+                    overflow: TextOverflow.ellipsis,
+                    style: _style.titleTextStyle),
+                decoration: BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(color: _style.dividerColor, width: 2),
+                  ),
+                ),
               ),
+              //SizedBox(height: _style.titleLineSpace),
             ],
           ),
           SizedBox(height: _style.subtitleLineSpace),

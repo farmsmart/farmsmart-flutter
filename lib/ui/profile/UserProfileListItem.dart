@@ -75,11 +75,11 @@ class _DefaultStyle extends UserProfileListItemStyle {
   final EdgeInsets edgePadding = const EdgeInsets.only(
     top: 10.8,
     bottom: 10.8,
-    left: 13,
+    left: 12.5,
     right: 31.5,
   );
 
-  final double leadingWidth = 40;
+  final double leadingWidth = 41;
   final double leadingIconHeight = 20;
   final double trailingWidth = 7.5;
   final double trailingIconHeight = 13;
