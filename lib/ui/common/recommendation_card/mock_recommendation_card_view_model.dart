@@ -10,10 +10,10 @@ class MockRecommendationCardViewModel {
       title: _mockTitle.random(),
       subtitle: _mockSubtitle.random(),
       description: _mockLargeStrings.random(),
-      leftActionText: 'View Details',
-      leftAction: () {},
-      rightActionText: 'Added',
-      rightAction: () {},
+      detailActionText: 'View Details',
+      detailAction: () {},
+      addActionText: 'Added',
+      addAction: () {},
       image: _mockFutureString('http://www.freemagebank.com/wp-content/uploads/edd/2015/07/GL0000302LR.jpg'),
       isAdded: Random().nextBool(),
     );
@@ -24,10 +24,10 @@ class MockRecommendationCardViewModel {
       title: _mockTitle.random(),
       subtitle: _mockSubtitle.random(),
       description: _mockLargeStrings.random(),
-      leftActionText: 'View Details',
-      leftAction: () {},
-      rightActionText: 'Add to Plot',
-      rightAction: () {},
+      detailActionText: 'View Details',
+      detailAction: () {},
+      addActionText: 'Add to Plot',
+      addAction: () {},
       image: _mockFutureString(_mockImageUrl.random()),
     );
   }
@@ -37,10 +37,10 @@ class MockRecommendationCardViewModel {
       title: _mockTitle.random(),
       subtitle: _mockSubtitle.random(),
       description: _mockLargeStrings.random(),
-      leftActionText: 'View Details',
-      leftAction: () {},
-      rightActionText: 'Added',
-      rightAction: () {},
+      detailActionText: 'View Details',
+      detailAction: () {},
+      addActionText: 'Added',
+      addAction: () {},
       image: _mockFutureString('http://www.freemagebank.com/wp-content/uploads/edd/2015/07/GL0000302LR.jpg'),
       isAdded: true,
     );
@@ -53,10 +53,10 @@ class MockRecommendationCardViewModel {
       description:
           'Tomatoes are lorem ipsum dolor sit amet consectetur elit sed'
           ' do eiusmod tempor lorem ipsum dolor sit amet',
-      leftActionText: 'View Details',
-      leftAction: () {},
-      rightActionText: 'Add to Plot',
-      rightAction: () {},
+      detailActionText: 'View Details',
+      detailAction: () {},
+      addActionText: 'Add to Plot',
+      addAction: () {},
       image: _mockFutureString(_mockImageUrl.random()),
     );
   }
@@ -68,10 +68,10 @@ class MockRecommendationCardViewModel {
       description:
       'Tomatoes are lorem ipsum dolor sit amet consectetur elit sed'
           ' do eiusmod tempor lorem ipsum dolor sit amet',
-      leftActionText: 'View Details',
-      leftAction: () {},
-      rightActionText: 'Add to Plot',
-      rightAction: () {},
+      detailActionText: 'View Details',
+      detailAction: () {},
+      addActionText: 'Add to Plot',
+      addAction: () {},
       image:_mockFutureString('assets/raw/placeholder.webp'),
     );
   }
@@ -83,10 +83,10 @@ class MockRecommendationCardViewModel {
       description:
       'Tomatoes are lorem ipsum dolor sit amet consectetur elit sed'
           ' do eiusmod tempor lorem ipsum dolor sit amet',
-      leftActionText: 'View Details',
-      leftAction: () {},
-      rightActionText: 'Added To Plot',
-      rightAction: () {},
+      detailActionText: 'View Details',
+      detailAction: () {},
+      addActionText: 'Added To Plot',
+      addAction: () {},
       image: _mockFutureString('assets/raw/placeholder.webp'),
       isAdded: true,
     );

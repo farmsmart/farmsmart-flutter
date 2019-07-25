@@ -22,10 +22,10 @@ class RecommendationCardViewModel {
   String title;
   String subtitle;
   String description;
-  String leftActionText;
-  String rightActionText;
-  Function leftAction;
-  Function rightAction;
+  String detailActionText;
+  String addActionText;
+  Function detailAction;
+  Function addAction;
   bool isAdded;
 
   RecommendationCardViewModel({
@@ -33,10 +33,10 @@ class RecommendationCardViewModel {
     this.title,
     this.subtitle,
     this.description,
-    this.leftActionText,
-    this.rightActionText,
-    this.leftAction,
-    this.rightAction,
+    this.detailActionText,
+    this.addActionText,
+    this.detailAction,
+    this.addAction,
     this.isAdded = false,
   });
 }
@@ -272,8 +272,8 @@ class RecommendationCard extends StatelessWidget {
             child: RoundedButton(
               style: _style.leftActionButtonStyle,
               viewModel: RoundedButtonViewModel(
-                title: _viewModel.leftActionText,
-                onTap: _viewModel.leftAction,
+                title: _viewModel.detailActionText,
+                onTap: _viewModel.detailAction,
               ),
             ),
           ),
@@ -286,8 +286,8 @@ class RecommendationCard extends StatelessWidget {
               child: RoundedButton(
                 style: _style.rightActionButtonStyle,
                 viewModel: RoundedButtonViewModel(
-                  title: _viewModel.rightActionText,
-                  onTap: _viewModel.rightAction,
+                  title: _viewModel.addActionText,
+                  onTap: _viewModel.addAction,
                 ),
               ),
             ),
