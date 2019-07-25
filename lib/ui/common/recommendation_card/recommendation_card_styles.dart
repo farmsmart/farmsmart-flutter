@@ -60,6 +60,7 @@ class RecommendationCardStyles {
     overlayIconWidth: 54,
     overlayIconHeight: 54,
     overlayColor: Color(0x1425df0c),
+    overlayIcon: 'assets/icons/tick_large.png',
   );
 
   static RoundedButtonStyle _defaultRoundedButtonStyle = RoundedButtonStyle(

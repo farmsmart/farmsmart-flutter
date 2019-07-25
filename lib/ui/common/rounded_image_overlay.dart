@@ -1,7 +1,11 @@
 import 'package:flutter/widgets.dart';
 
+class _Constants {
+  static final startWithAssets = 'assets/';
+}
+
 class RoundedImageOverlay extends StatelessWidget {
-  final ImageProvider image;
+  final Future<String> image;
   final double imageHeight;
   final double imageWidth;
   final BorderRadiusGeometry imageBorderRadius;
@@ -26,37 +30,59 @@ class RoundedImageOverlay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(children: <Widget>[
-      Container(
-        width: imageWidth,
-        height: imageHeight,
-        decoration: BoxDecoration(
-          shape: BoxShape.rectangle,
-          borderRadius: imageBorderRadius,
-          image: DecorationImage(
-            fit: BoxFit.cover,
-            image: image,
-          ),
-        ),
-      ),
+      _buildImageWithFutureBuilder(),
       _buildOverlay(),
     ]);
   }
 
+  FutureBuilder<String> _buildImageWithFutureBuilder() {
+    return FutureBuilder(
+      future: image,
+      builder: (BuildContext context, AsyncSnapshot<String> url) {
+        if (!url.hasData) {
+          return SizedBox(
+            height: imageHeight,
+            width: imageWidth,
+          );
+        }
+
+        return Container(
+          width: imageWidth,
+          height: imageHeight,
+          decoration: BoxDecoration(
+            shape: BoxShape.rectangle,
+            borderRadius: imageBorderRadius,
+            image: DecorationImage(
+              fit: BoxFit.cover,
+              image: _buildImageProvider(url),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  ImageProvider _buildImageProvider(AsyncSnapshot<String> url) {
+    if (url.data.startsWith(_Constants.startWithAssets)) {
+      return AssetImage(url.data);
+    } else {
+      return NetworkImage(url.data);
+    }
+  }
+
   Widget _buildOverlay() {
-
-      return Container(
-        width: double.infinity,
-        height: imageHeight,
-        decoration: BoxDecoration(
-          shape: BoxShape.rectangle,
-          borderRadius: imageBorderRadius,
-          color: overlayColor,
-        ),
-        child: Center(
-          child:  _buildImage(),
-        ),
-      );
-
+    return Container(
+      width: double.infinity,
+      height: imageHeight,
+      decoration: BoxDecoration(
+        shape: BoxShape.rectangle,
+        borderRadius: imageBorderRadius,
+        color: overlayColor,
+      ),
+      child: Center(
+        child: _buildImage(),
+      ),
+    );
   }
 
   _buildImage() {

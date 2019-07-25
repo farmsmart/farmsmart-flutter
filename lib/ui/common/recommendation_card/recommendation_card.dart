@@ -18,7 +18,7 @@ class _Constants {
 }
 
 class RecommendationCardViewModel {
-  ImageProvider image;
+  Future image;
   String title;
   String subtitle;
   String description;
@@ -27,19 +27,18 @@ class RecommendationCardViewModel {
   Function leftAction;
   Function rightAction;
   bool isAdded;
-  String overlayIcon;
 
-  RecommendationCardViewModel(
-      {this.image,
-      this.title,
-      this.subtitle,
-      this.description,
-      this.leftActionText,
-      this.rightActionText,
-      this.leftAction,
-      this.rightAction,
-      this.isAdded = false,
-      this.overlayIcon});
+  RecommendationCardViewModel({
+    this.image,
+    this.title,
+    this.subtitle,
+    this.description,
+    this.leftActionText,
+    this.rightActionText,
+    this.leftAction,
+    this.rightAction,
+    this.isAdded = false,
+  });
 }
 
 class RecommendationCardStyle {
@@ -56,21 +55,24 @@ class RecommendationCardStyle {
   final Color overlayColor;
   final double overlayIconHeight;
   final double overlayIconWidth;
+  final String overlayIcon;
 
-  const RecommendationCardStyle(
-      {this.titleTextStyle,
-      this.subtitleTextStyle,
-      this.descriptionTextStyle,
-      this.leftActionButtonStyle,
-      this.rightActionButtonStyle,
-      this.imageHeight,
-      this.imageBorderRadius,
-      this.descriptionMaxLines,
-      this.contentPadding,
-      this.rightActionBoxDecoration,
-      this.overlayColor,
-      this.overlayIconHeight,
-      this.overlayIconWidth});
+  const RecommendationCardStyle({
+    this.titleTextStyle,
+    this.subtitleTextStyle,
+    this.descriptionTextStyle,
+    this.leftActionButtonStyle,
+    this.rightActionButtonStyle,
+    this.imageHeight,
+    this.imageBorderRadius,
+    this.descriptionMaxLines,
+    this.contentPadding,
+    this.rightActionBoxDecoration,
+    this.overlayColor,
+    this.overlayIconHeight,
+    this.overlayIconWidth,
+    this.overlayIcon,
+  });
 
   RecommendationCardStyle copyWith({
     TextStyle titleTextStyle,
@@ -86,6 +88,7 @@ class RecommendationCardStyle {
     Color overlayColor,
     double overlayIconHeight,
     double overlayIconWidth,
+    String overlayIcon,
   }) {
     return RecommendationCardStyle(
       titleTextStyle: titleTextStyle ?? this.titleTextStyle,
@@ -104,6 +107,7 @@ class RecommendationCardStyle {
       overlayColor: overlayColor ?? this.overlayColor,
       overlayIconHeight: overlayIconHeight ?? this.overlayIconHeight,
       overlayIconWidth: overlayIconWidth ?? this.overlayIconWidth,
+      overlayIcon: overlayIcon ?? this.overlayIcon,
     );
   }
 }
@@ -135,6 +139,8 @@ class _DefaultStyle extends RecommendationCardStyle {
   final double overlayIconHeight = 54;
   final double overlayIconWidth = 54;
 
+  final String overlayIcon =  'assets/icons/tick_large.png';
+
   static const defaultRoundedButtonStyle = const RoundedButtonStyle(
     backgroundColor: Color(0xffe9eaf2),
     borderRadius: BorderRadius.all(Radius.circular(8)),
@@ -161,6 +167,7 @@ class _DefaultStyle extends RecommendationCardStyle {
     Color overlayColor,
     double overlayIconHeight,
     double overlayIconWidth,
+    String overlayIcon
   });
 }
 
@@ -204,7 +211,7 @@ class RecommendationCard extends StatelessWidget {
       imageHeight: _style.imageHeight,
       imageWidth: double.infinity,
       imageBorderRadius: _style.imageBorderRadius,
-      overlayIcon: _viewModel.overlayIcon,
+      overlayIcon: _style.overlayIcon,
       overlayIconHeight: _style.overlayIconHeight,
       overlayIconWidth: _style.overlayIconWidth,
       overlayColor: _style.overlayColor,

@@ -38,8 +38,7 @@ class RecommendationCardTransformer
       leftActionText: Intl.message(_Strings.viewDetails),
       rightActionText: inBasket ? Intl.message(_Strings.added) :Intl.message(_Strings.add),
       rightAction: rightAction,
-      image:  NetworkImage('http://www.freemagebank.com/wp-content/uploads/edd/2015/07/GL0000302LR.jpg'),
-      overlayIcon: 'assets/icons/tick_large.png',
+      image:  Future.value('http://www.freemagebank.com/wp-content/uploads/edd/2015/07/GL0000302LR.jpg'),
       isAdded: inBasket,
     );
   }

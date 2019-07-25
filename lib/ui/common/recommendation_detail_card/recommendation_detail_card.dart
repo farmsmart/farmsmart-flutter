@@ -21,11 +21,11 @@ class _Constants {
 class RecommendationDetailCardViewModel {
   String title;
   String subtitle;
-  ImageProvider image;
+  Future<String> image;
   String actionText;
   Function action;
   bool isAdded;
-  String iconAssetOverlay;
+
 
   RecommendationDetailCardViewModel({
     this.title,
@@ -34,7 +34,6 @@ class RecommendationDetailCardViewModel {
     this.action,
     this.image,
     this.isAdded = false,
-    this.iconAssetOverlay,
   });
 }
 
@@ -49,6 +48,7 @@ class RecommendationDetailCardStyle {
   final Color imageOverlayColor;
   final double imageOverlayHeight;
   final double imageOverlayWidth;
+  final String iconAssetOverlay;
 
   const RecommendationDetailCardStyle({
     this.titleTextStyle,
@@ -61,6 +61,7 @@ class RecommendationDetailCardStyle {
     this.imageOverlayColor,
     this.imageOverlayHeight,
     this.imageOverlayWidth,
+    this.iconAssetOverlay,
   });
 
   RecommendationDetailCardStyle copyWith({
@@ -74,6 +75,7 @@ class RecommendationDetailCardStyle {
     Color imageOverlayColor,
     double imageOverlayHeight,
     double imageOverlayWidth,
+    String iconAssetOverlay,
   }) {
     return RecommendationDetailCardStyle(
       titleTextStyle: titleTextStyle ?? this.titleTextStyle,
@@ -86,6 +88,7 @@ class RecommendationDetailCardStyle {
       imageOverlayColor: imageOverlayColor ?? this.imageOverlayColor,
       imageOverlayHeight: imageOverlayHeight ?? this.imageOverlayHeight,
       imageOverlayWidth: imageOverlayHeight ?? this.imageOverlayHeight,
+      iconAssetOverlay: iconAssetOverlay ?? this.iconAssetOverlay,
     );
   }
 }
@@ -127,6 +130,7 @@ class _DefaultStyle extends RecommendationDetailCardStyle {
   final Color imageOverlayColor = const Color(0x1924d900);
   final double imageOverlayHeight = 26;
   final double imageOverlayWidth = 26;
+  final String iconAssetOverlay = 'assets/icons/tick_large.png';
 
   const _DefaultStyle({
     TextStyle titleTextStyle,
@@ -138,6 +142,7 @@ class _DefaultStyle extends RecommendationDetailCardStyle {
     Color imageOverlayColor,
     double imageOverlayHeight,
     double imageOverlayWidth,
+    String iconAssetOverlay,
   });
 }
 
@@ -215,7 +220,7 @@ class RecommendationDetailCard extends StatelessWidget {
           image: _viewModel.image,
           showOverlayIcon: _viewModel.isAdded,
           overlayIconWidth: _style.imageOverlayWidth,
-          overlayIcon: _viewModel.iconAssetOverlay,
+          overlayIcon: _style.iconAssetOverlay,
           overlayIconHeight: _style.imageOverlayWidth,
           overlayColor: _style.imageOverlayColor,
         ),

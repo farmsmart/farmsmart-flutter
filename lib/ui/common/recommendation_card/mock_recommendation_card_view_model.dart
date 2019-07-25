@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:farmsmart_flutter/data/model/mock/MockString.dart';
 import 'package:farmsmart_flutter/ui/common/recommendation_card/recommendation_card.dart';
-import 'package:flutter/material.dart';
 
 class MockRecommendationCardViewModel {
 
@@ -15,9 +14,8 @@ class MockRecommendationCardViewModel {
       leftAction: () {},
       rightActionText: 'Added',
       rightAction: () {},
-      image: NetworkImage('http://www.freemagebank.com/wp-content/uploads/edd/2015/07/GL0000302LR.jpg'),
+      image: _mockFutureString('http://www.freemagebank.com/wp-content/uploads/edd/2015/07/GL0000302LR.jpg'),
       isAdded: Random().nextBool(),
-      overlayIcon: 'assets/icons/tick_large.png',
     );
   }
 
@@ -30,8 +28,7 @@ class MockRecommendationCardViewModel {
       leftAction: () {},
       rightActionText: 'Add to Plot',
       rightAction: () {},
-      image: NetworkImage(_mockImageUrl.random()),
-      overlayIcon: 'assets/icons/tick_large.png',
+      image: _mockFutureString(_mockImageUrl.random()),
     );
   }
 
@@ -44,9 +41,8 @@ class MockRecommendationCardViewModel {
       leftAction: () {},
       rightActionText: 'Added',
       rightAction: () {},
-      image: NetworkImage('http://www.freemagebank.com/wp-content/uploads/edd/2015/07/GL0000302LR.jpg'),
+      image: _mockFutureString('http://www.freemagebank.com/wp-content/uploads/edd/2015/07/GL0000302LR.jpg'),
       isAdded: true,
-      overlayIcon: 'assets/icons/tick_large.png',
     );
   }
 
@@ -61,8 +57,7 @@ class MockRecommendationCardViewModel {
       leftAction: () {},
       rightActionText: 'Add to Plot',
       rightAction: () {},
-      image: NetworkImage(_mockImageUrl.random()),
-      overlayIcon: 'assets/icons/tick_large.png',
+      image: _mockFutureString(_mockImageUrl.random()),
     );
   }
 
@@ -77,8 +72,7 @@ class MockRecommendationCardViewModel {
       leftAction: () {},
       rightActionText: 'Add to Plot',
       rightAction: () {},
-      image: AssetImage('assets/raw/placeholder.webp'),
-      overlayIcon: 'assets/icons/tick_large.png',
+      image:_mockFutureString('assets/raw/placeholder.webp'),
     );
   }
 
@@ -93,11 +87,15 @@ class MockRecommendationCardViewModel {
       leftAction: () {},
       rightActionText: 'Added To Plot',
       rightAction: () {},
-      image: AssetImage('assets/raw/placeholder.webp'),
-      overlayIcon: 'assets/icons/tick_large.png',
+      image: _mockFutureString('assets/raw/placeholder.webp'),
       isAdded: true,
     );
   }
+}
+
+
+Future<String> _mockFutureString(String url) async{
+  return url;
 }
 
 MockString _mockTitle = MockString(library: [
