@@ -24,7 +24,7 @@ class LandingPageViewModel {
 
   String headerImage;
   String subtitleImage;
-  Function confirmAction;
+  Function continueAction;
   ActionSheetViewModel actionSheetViewModel;
 
   LandingPageViewModel({
@@ -33,7 +33,7 @@ class LandingPageViewModel {
     this.headerImage,
     this.subtitleImage,
     this.footerText,
-    this.confirmAction,
+    this.continueAction,
     this.actionSheetViewModel,
   });
 }
@@ -151,7 +151,7 @@ class LandingPage extends StatelessWidget {
                     RoundedButton(
                       viewModel: RoundedButtonViewModel(
                         title: Intl.message(_viewModel.actionText),
-                        onTap: () => _viewModel.confirmAction(),
+                        onTap: () => _viewModel.continueAction(),
                       ),
                       style: RoundedButtonStyle.largeRoundedButtonStyle()
                           .copyWith(buttonTextStyle: _style.actionTextStyle),

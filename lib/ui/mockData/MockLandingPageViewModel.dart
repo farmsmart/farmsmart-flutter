@@ -17,8 +17,8 @@ class MockLandingPageViewModel {
         footerText: Intl.message(_Strings.footerText),
         headerImage: "assets/raw/illustration_welcome.png",
         subtitleImage: "assets/raw/logo_default.png",
-        confirmAction: () => _mockAction(),
-      actionSheetViewModel: MockActionSheetViewModel.buildWithCheckBox()
+        continueAction: () => _mockAction(),
+      actionSheetViewModel: MockActionSheetViewModel.buildWithCheckBox(),
         );
   }
 
