@@ -8,7 +8,7 @@ class SequencedViewModelProvider<T> implements ViewModelProvider<T> {
 
   final Duration _tempo;
   final List<T> _sequence;
-  final StreamController _controller = StreamController<T>();
+  final StreamController _controller = StreamController<T>.broadcast();
   int _index = 1;
   Timer _timer;
 

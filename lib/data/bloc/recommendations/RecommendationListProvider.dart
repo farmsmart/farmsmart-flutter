@@ -18,8 +18,8 @@ class RecommendationListProvider
   final CropRepositoryInterface _cropRepo;
   Basket<CropEntity> _cropBasket;
   List<CropEntity> _crops;
-  //final UserProfileRepositoryInterface _profileRepo;
-  final _controller = StreamController<RecommendationsListViewModel>();
+  //final UserProfileRepositoryInterface _profileRepo; //we need the current input factors from this. 
+  final _controller = StreamController<RecommendationsListViewModel>.broadcast();
   RecommendationsListViewModel _snapshot;
 
   RecommendationListProvider({
