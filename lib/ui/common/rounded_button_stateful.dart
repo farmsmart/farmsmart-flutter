@@ -2,30 +2,30 @@ import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-class RoundedButtonStateFulViewModel {
+class RoundedButtonStatefulViewModel {
   RoundedButtonViewModel roundedButtonViewModel;
   bool isActive;
 
-  RoundedButtonStateFulViewModel({
+  RoundedButtonStatefulViewModel({
     this.roundedButtonViewModel,
     this.isActive = true,
   });
 }
 
-class RoundedButtonStateFulStyle {
+class RoundedButtonStatefulStyle {
   final RoundedButtonStyle activeRoundedButtonStyle;
   final RoundedButtonStyle inactiveRoundedButtonStyle;
 
-  const RoundedButtonStateFulStyle({
+  const RoundedButtonStatefulStyle({
     this.activeRoundedButtonStyle,
     this.inactiveRoundedButtonStyle,
   });
 
-  RoundedButtonStateFulStyle copyWith({
+  RoundedButtonStatefulStyle copyWith({
     RoundedButtonStyle activeRoundedButtonStyle,
     RoundedButtonStyle inactiveRoundedButtonStyle,
   }) {
-    return RoundedButtonStateFulStyle(
+    return RoundedButtonStatefulStyle(
       activeRoundedButtonStyle:
           activeRoundedButtonStyle ?? this.activeRoundedButtonStyle,
       inactiveRoundedButtonStyle:
@@ -34,7 +34,7 @@ class RoundedButtonStateFulStyle {
   }
 }
 
-class _DefaultStyle extends RoundedButtonStateFulStyle {
+class _DefaultStyle extends RoundedButtonStatefulStyle {
   final RoundedButtonStyle activeRoundedButtonStyle = const RoundedButtonStyle(
     backgroundColor: Color(0xff24d900),
     borderRadius: BorderRadius.all(Radius.circular(8)),
@@ -74,25 +74,25 @@ class _DefaultStyle extends RoundedButtonStateFulStyle {
   });
 }
 
-const RoundedButtonStateFulStyle _defaultStyle = const _DefaultStyle();
+const RoundedButtonStatefulStyle _defaultStyle = const _DefaultStyle();
 
-class RoundedButtonStateFul extends StatefulWidget {
-  final RoundedButtonStateFulStyle _style;
-  final RoundedButtonStateFulViewModel _viewModel;
+class RoundedButtonStateful extends StatefulWidget {
+  final RoundedButtonStatefulStyle _style;
+  final RoundedButtonStatefulViewModel _viewModel;
 
-  RoundedButtonStateFul({
+  RoundedButtonStateful({
     Key key,
-    RoundedButtonStateFulViewModel viewModel,
-    RoundedButtonStateFulStyle style = _defaultStyle,
+    RoundedButtonStatefulViewModel viewModel,
+    RoundedButtonStatefulStyle style = _defaultStyle,
   })  : this._viewModel = viewModel,
         this._style = style,
         super(key: key);
 
   @override
-  _RoundedButtonStateFulState createState() => _RoundedButtonStateFulState();
+  _RoundedButtonStatefulState createState() => _RoundedButtonStatefulState();
 }
 
-class _RoundedButtonStateFulState extends State<RoundedButtonStateFul> {
+class _RoundedButtonStatefulState extends State<RoundedButtonStateful> {
   bool _isEnabled;
 
   @override

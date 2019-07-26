@@ -4,7 +4,7 @@ import 'package:farmsmart_flutter/ui/common/rounded_image_overlay.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import '../rounded_button_stateless.dart';
+import '../rounded_button_stateful.dart';
 
 export 'package:farmsmart_flutter/ui/common/Dogtag.dart';
 export 'package:farmsmart_flutter/ui/common/roundedButton.dart';
@@ -41,7 +41,7 @@ class RecommendationDetailCardViewModel {
 class RecommendationDetailCardStyle {
   final TextStyle titleTextStyle;
   final DogTagStyle subtitleTagStyle;
-  final RoundedButtonStateFulStyle actionStyle;
+  final RoundedButtonStatefulStyle actionStyle;
   final EdgeInsets contentPadding;
   final BorderRadius imageRadius;
   final double imageSize;
@@ -112,9 +112,9 @@ class _DefaultStyle extends RecommendationDetailCardStyle {
     spacing: 5.5,
   );
 
-  final RoundedButtonStateFulStyle actionStyle = defaultRoundedButtonStyle;
+  final RoundedButtonStatefulStyle actionStyle = defaultRoundedButtonStyle;
 
-  static const defaultRoundedButtonStyle = RoundedButtonStateFulStyle(
+  static const defaultRoundedButtonStyle = RoundedButtonStatefulStyle(
     activeRoundedButtonStyle: const RoundedButtonStyle(
       backgroundColor: Color(0xff24d900),
       borderRadius: BorderRadius.all(Radius.circular(12)),
@@ -206,9 +206,9 @@ class RecommendationDetailCard extends StatelessWidget {
   Container buildActionButton() {
     return Container(
       decoration: _viewModel.isAdded ? _style.actionBoxDecoration : null,
-      child: RoundedButtonStateFul(
+      child: RoundedButtonStateful(
         style: _style.actionStyle,
-        viewModel: RoundedButtonStateFulViewModel(
+        viewModel: RoundedButtonStatefulViewModel(
           isActive: !_viewModel.isAdded,
           roundedButtonViewModel: RoundedButtonViewModel(
             title: _viewModel.actionText,

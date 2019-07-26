@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../rounded_button_stateless.dart';
+import '../rounded_button_stateful.dart';
 import 'recommendation_detail_card.dart';
 
 class RecommendationDetailCardStyles {
@@ -34,8 +34,8 @@ class RecommendationDetailCardStyles {
             borderRadius: BorderRadius.circular(12),
           ));
 
-  static RoundedButtonStateFulStyle _defaultActionButtonStyle =
-      RoundedButtonStateFulStyle(
+  static RoundedButtonStatefulStyle _defaultActionButtonStyle =
+      RoundedButtonStatefulStyle(
     activeRoundedButtonStyle: const RoundedButtonStyle(
       backgroundColor: Color(0xff24d900),
       borderRadius: BorderRadius.all(Radius.circular(12)),

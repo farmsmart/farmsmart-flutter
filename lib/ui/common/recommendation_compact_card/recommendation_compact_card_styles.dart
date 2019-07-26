@@ -1,7 +1,7 @@
 import 'package:farmsmart_flutter/ui/common/recommendation_compact_card/recommendation_compact_card.dart';
 import 'package:flutter/widgets.dart';
 
-import '../rounded_button_stateless.dart';
+import '../rounded_button_stateful.dart';
 
 class RecommendationCompactCardStyles {
   static RecommendationCompactCardStyle build() =>
@@ -41,8 +41,8 @@ class RecommendationCompactCardStyles {
     ),
   );
 
-  static RoundedButtonStateFulStyle _defaultLeftActionRoundedButtonStyle =
-      const RoundedButtonStateFulStyle(
+  static RoundedButtonStatefulStyle _defaultLeftActionRoundedButtonStyle =
+      const RoundedButtonStatefulStyle(
     activeRoundedButtonStyle: const RoundedButtonStyle(
       backgroundColor: Color(0xffe9eaf2),
       borderRadius: BorderRadius.all(Radius.circular(8)),
@@ -72,8 +72,8 @@ class RecommendationCompactCardStyles {
     ),
   );
 
-  static RoundedButtonStateFulStyle _defaultRightActionRoundedButtonStyle =
-      const RoundedButtonStateFulStyle(
+  static RoundedButtonStatefulStyle _defaultRightActionRoundedButtonStyle =
+      const RoundedButtonStatefulStyle(
     activeRoundedButtonStyle: const RoundedButtonStyle(
       backgroundColor: Color(0xff24d900),
       borderRadius: BorderRadius.all(Radius.circular(8)),

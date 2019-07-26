@@ -1,6 +1,6 @@
 import 'package:farmsmart_flutter/ui/common/recommendation_card/recommendation_card_view_model.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
-import 'package:farmsmart_flutter/ui/common/rounded_button_stateless.dart';
+import 'package:farmsmart_flutter/ui/common/rounded_button_stateful.dart';
 import 'package:farmsmart_flutter/ui/common/rounded_image_overlay.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -23,8 +23,8 @@ class RecommendationCardStyle {
   final TextStyle titleTextStyle;
   final TextStyle subtitleTextStyle;
   final TextStyle descriptionTextStyle;
-  final RoundedButtonStateFulStyle leftActionButtonStyle;
-  final RoundedButtonStateFulStyle rightActionButtonStyle;
+  final RoundedButtonStatefulStyle leftActionButtonStyle;
+  final RoundedButtonStatefulStyle rightActionButtonStyle;
   final double imageHeight;
   final BorderRadiusGeometry imageBorderRadius;
   final int descriptionMaxLines;
@@ -104,9 +104,9 @@ class _DefaultStyle extends RecommendationCardStyle {
     color: Color(0xff767690),
     fontSize: 14,
   );
-  final RoundedButtonStateFulStyle leftActionButtonStyle =
+  final RoundedButtonStatefulStyle leftActionButtonStyle =
       defaultRoundedButtonStyle;
-  final RoundedButtonStateFulStyle rightActionButtonStyle =
+  final RoundedButtonStatefulStyle rightActionButtonStyle =
       defaultRoundedButtonStyle;
   final double imageHeight = 152;
   final BorderRadiusGeometry imageBorderRadius =
@@ -121,7 +121,7 @@ class _DefaultStyle extends RecommendationCardStyle {
 
   final String overlayIcon = 'assets/icons/tick_large.png';
 
-  static const defaultRoundedButtonStyle = RoundedButtonStateFulStyle(
+  static const defaultRoundedButtonStyle = RoundedButtonStatefulStyle(
     activeRoundedButtonStyle: const RoundedButtonStyle(
       backgroundColor: Color(0xff24d900),
       borderRadius: BorderRadius.all(Radius.circular(8)),
@@ -155,8 +155,8 @@ class _DefaultStyle extends RecommendationCardStyle {
     TextStyle titleTextStyle,
     TextStyle subtitleTextStyle,
     TextStyle descriptionTextStyle,
-    RoundedButtonStateFulStyle leftActionButtonStyle,
-    RoundedButtonStateFulStyle rightActionButtonStyle,
+    RoundedButtonStatefulStyle leftActionButtonStyle,
+    RoundedButtonStatefulStyle rightActionButtonStyle,
     double imageHeight,
     BorderRadiusGeometry imageBorderRadius,
     int descriptionMaxLines,
@@ -266,9 +266,9 @@ class RecommendationCard extends StatelessWidget {
       child: Row(
         children: <Widget>[
           Expanded(
-            child: RoundedButtonStateFul(
+            child: RoundedButtonStateful(
               style: _style.leftActionButtonStyle,
-              viewModel: RoundedButtonStateFulViewModel(
+              viewModel: RoundedButtonStatefulViewModel(
                 roundedButtonViewModel: RoundedButtonViewModel(
                   title: _viewModel.detailActionText,
                   onTap: _viewModel.detailAction,
@@ -282,9 +282,9 @@ class RecommendationCard extends StatelessWidget {
           Expanded(
             child: Container(
               decoration: _viewModel.isAdded ? _style.rightActionBoxDecoration : null,
-              child: RoundedButtonStateFul(
+              child: RoundedButtonStateful(
                 style: _style.rightActionButtonStyle,
-                viewModel: RoundedButtonStateFulViewModel(
+                viewModel: RoundedButtonStatefulViewModel(
                   isActive: !_viewModel.isAdded,
                   roundedButtonViewModel: RoundedButtonViewModel(
                     title: _viewModel.addActionText,
