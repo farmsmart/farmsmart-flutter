@@ -162,7 +162,7 @@ class RecordTransactionState extends State<RecordTransaction> {
       body: GestureDetector(
         onTap: () {
           FocusScope.of(context).unfocus();
-          setRequiredFieldsAreFilled();
+          setIfRequiredFieldsAreFilled();
         },
         child: ListView(
           children: _buildContent(
@@ -329,7 +329,7 @@ class RecordTransactionState extends State<RecordTransaction> {
     );
   }
 
-  setRequiredFieldsAreFilled() {
+  setIfRequiredFieldsAreFilled() {
     setState(() {
       widget._viewModel.isFilled = isAmountFilled && isCropFilled;
     });

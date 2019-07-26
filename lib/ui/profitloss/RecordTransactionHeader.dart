@@ -182,11 +182,11 @@ class _RecordTransactionHeaderState extends State<RecordTransactionHeader> {
       if (amount == "") {
         hint = _Strings.hint;
         widget.parent.isAmountFilled = false;
-        widget.parent.setRequiredFieldsAreFilled();
+        widget.parent.setIfRequiredFieldsAreFilled();
       } else {
         widget.parent.userData.amount = amount;
         widget.parent.isAmountFilled = true;
-        widget.parent.setRequiredFieldsAreFilled();
+        widget.parent.setIfRequiredFieldsAreFilled();
       }
     });
   }
