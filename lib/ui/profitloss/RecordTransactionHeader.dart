@@ -1,8 +1,7 @@
-import 'package:farmsmart_flutter/utils/RegExInputFormatter.dart';
 import 'package:farmsmart_flutter/ui/profitloss/RecordTransaction.dart';
+import 'package:farmsmart_flutter/utils/RegExInputFormatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
 
 class _Constants {
   static final amountValidator = RegExInputFormatter.withRegex(
@@ -10,8 +9,8 @@ class _Constants {
 }
 
 class _Strings {
-  static final HINT = "00";
-  static final EMPTY_STRING = "";
+  static final hint = "00";
+  static final emptyString = "";
 }
 
 class RecordTransactionHeaderViewModel {
@@ -104,13 +103,14 @@ class RecordTransactionHeader extends StatefulWidget {
         super(key: key);
 
   @override
-  _RecordTransactionHeaderState createState() => _RecordTransactionHeaderState();
+  _RecordTransactionHeaderState createState() =>
+      _RecordTransactionHeaderState();
 }
 
 class _RecordTransactionHeaderState extends State<RecordTransactionHeader> {
   final _textFieldController = TextEditingController();
   final FocusNode _focusNode = FocusNode();
-  var hint = _Strings.HINT;
+  var hint = _Strings.hint;
 
   @override
   void initState() {
@@ -138,29 +138,8 @@ class _RecordTransactionHeaderState extends State<RecordTransactionHeader> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 viewModel.isEditable
-                    ? TextField(
-                        decoration: InputDecoration(
-                            hintText: hint,
-                            hintStyle: style.hintTextStyle,
-                            border: InputBorder.none,
-                            contentPadding: EdgeInsets.all(0),
-                            counterText: _Strings.EMPTY_STRING),
-                        keyboardType: TextInputType.numberWithOptions(
-                            signed: false, decimal: true),
-                        textAlign: TextAlign.center,
-                        style: style.titleTextStyle,
-                        inputFormatters: [_Constants.amountValidator],
-                        maxLines: style.maxLines,
-                        textInputAction: TextInputAction.next,
-                        controller: _textFieldController,
-                        onChanged: (amount) => _checkTextField(amount),
-                        focusNode: _focusNode,
-                        autofocus: true,
-                        onTap: () => cleanField(),
-                        onEditingComplete: () => resetHint(),
-                      )
-                    : Text(viewModel.onAmountChanged,
-                        style: style.titleTextStyle),
+                    ? _buildAmountEditableTextField(style)
+                    : _buildAmountText(viewModel, style),
               ],
             ),
           ),
@@ -169,34 +148,63 @@ class _RecordTransactionHeaderState extends State<RecordTransactionHeader> {
     );
   }
 
+  _buildAmountText(RecordTransactionHeaderViewModel viewModel,
+      RecordTransactionHeaderStyle style) {
+    return Text(viewModel.onAmountChanged, style: style.titleTextStyle);
+  }
+
+  _buildAmountEditableTextField(RecordTransactionHeaderStyle style) {
+    return TextField(
+      decoration: InputDecoration(
+          hintText: hint,
+          hintStyle: style.hintTextStyle,
+          border: InputBorder.none,
+          contentPadding: EdgeInsets.all(0),
+          counterText: _Strings.emptyString),
+      keyboardType:
+          TextInputType.numberWithOptions(signed: false, decimal: true),
+      textAlign: TextAlign.center,
+      style: style.titleTextStyle,
+      inputFormatters: [_Constants.amountValidator],
+      maxLines: style.maxLines,
+      textInputAction: TextInputAction.next,
+      controller: _textFieldController,
+      onChanged: (amount) => _checkTextField(amount),
+      focusNode: _focusNode,
+      autofocus: true,
+      onTap: () => clearAmountFieldHint(),
+      onEditingComplete: () => resetHint(),
+    );
+  }
+
   _checkTextField(String amount) {
     setState(() {
       if (amount == "") {
-        hint = _Strings.HINT;
+        hint = _Strings.hint;
         widget.parent.isAmountFilled = false;
-        widget.parent.checkIfFilled();
+        widget.parent.setRequiredFieldsAreFilled();
       } else {
         widget.parent.userData.amount = amount;
         widget.parent.isAmountFilled = true;
-        widget.parent.checkIfFilled();
+        widget.parent.setRequiredFieldsAreFilled();
       }
     });
   }
 
-  cleanField() {
+  clearAmountFieldHint() {
     setState(() {
-      if (_textFieldController.text == _Strings.EMPTY_STRING) {
-        hint = _Strings.EMPTY_STRING;
+      if (_textFieldController.text == _Strings.emptyString) {
+        hint = _Strings.emptyString;
       } else {
-        hint = _Strings.HINT;
+        hint = _Strings.hint;
       }
     });
   }
 
   resetHint() {
     setState(() {
-      if (_textFieldController.text == _Strings.EMPTY_STRING) {
-        hint = _Strings.HINT;
+      if (_textFieldController.text == _Strings.emptyString) {
+        hint = _Strings.hint;
       } else {
         widget.parent.userData.amount = _textFieldController.text;
         widget.parent.isAmountFilled = true;

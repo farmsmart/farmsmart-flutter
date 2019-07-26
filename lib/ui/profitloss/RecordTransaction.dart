@@ -1,11 +1,9 @@
-import 'package:farmsmart_flutter/model/loading_status.dart';
 import 'package:farmsmart_flutter/ui/common/ListDivider.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
+import 'package:farmsmart_flutter/ui/profitloss/RecordTransactionHeader.dart';
 import 'package:farmsmart_flutter/ui/profitloss/RecordTransactionHeaderStyles.dart';
 import 'package:farmsmart_flutter/ui/profitloss/RecordTransactionListItem.dart';
-import 'package:farmsmart_flutter/ui/profitloss/RecordTransactionHeader.dart';
 import 'package:farmsmart_flutter/ui/profitloss/RecordTransactionListItemStyles.dart';
-import 'package:farmsmart_flutter/utils/strings.dart';
 import 'package:flutter/material.dart';
 
 class _Constants {
@@ -16,6 +14,9 @@ class _Constants {
   static final String navBackIcon = 'assets/icons/nav_icon_back.png';
   static final String navOptionsIcon = 'assets/icons/nav_icon_options.png';
   static final String EMPTY_STRING = "";
+  static final Color disabledActionColor = Color(0xFFe9eaf2);
+  static final Color enabledActionSaleColor = Color(0xFF24d900);
+  static final Color enabledActionCostColor = Color(0xFFff8d4f);
 }
 
 class RecordTransactionData {
@@ -161,7 +162,7 @@ class RecordTransactionState extends State<RecordTransaction> {
       body: GestureDetector(
         onTap: () {
           FocusScope.of(context).unfocus();
-          checkIfFilled();
+          setRequiredFieldsAreFilled();
         },
         child: ListView(
           children: _buildContent(
@@ -279,12 +280,12 @@ class RecordTransactionState extends State<RecordTransaction> {
     );
 
     if (viewModel.isEditable) {
-      listBuilder.add(_buildFooter(viewModel, style));
+      listBuilder.add(_buildFooterAction(viewModel, style));
     }
     return listBuilder;
   }
 
-  Padding _buildFooter(
+  Padding _buildFooterAction(
       RecordTransactionViewModel viewModel, RecordTransactionStyle style) {
     return Padding(
       padding: style.buttonEdgePadding,
@@ -292,38 +293,45 @@ class RecordTransactionState extends State<RecordTransaction> {
         children: <Widget>[
           Expanded(
             child: !widget._viewModel.isFilled
-                ? RoundedButton(
-                    viewModel: RoundedButtonViewModel(
-                        title: viewModel.buttonTitle, onTap: null),
-                    style:
-                        RoundedButtonStyle.largeRoundedButtonStyle().copyWith(
-                      backgroundColor: Color(0xFFe9eaf2),
-                    ),
-                  )
-                : RoundedButton(
-                    viewModel: RoundedButtonViewModel(
-                      title: viewModel.buttonTitle,
-                      onTap: () => viewModel.onTransactionRecorded(userData),
-                    ),
-                    style: viewModel.type == TransactionType.sale
-                        ? RoundedButtonStyle.largeRoundedButtonStyle().copyWith(
-                            backgroundColor: Color(0xFF24d900),
-                          )
-                        : RoundedButtonStyle.largeRoundedButtonStyle().copyWith(
-                            backgroundColor: Color(0xFFff8d4f),
-                          ),
-                  ),
+                ? _buildDisabledRoundedButton(viewModel)
+                : _buildEnabledRoundedButton(viewModel),
           ),
         ],
       ),
     );
   }
 
-  checkIfFilled() {
+  RoundedButton _buildEnabledRoundedButton(
+      RecordTransactionViewModel viewModel) {
+    return RoundedButton(
+      viewModel: RoundedButtonViewModel(
+        title: viewModel.buttonTitle,
+        onTap: () => viewModel.onTransactionRecorded(userData),
+      ),
+      style: viewModel.type == TransactionType.sale
+          ? RoundedButtonStyle.largeRoundedButtonStyle().copyWith(
+              backgroundColor: _Constants.enabledActionSaleColor,
+            )
+          : RoundedButtonStyle.largeRoundedButtonStyle().copyWith(
+              backgroundColor: _Constants.enabledActionCostColor,
+            ),
+    );
+  }
+
+  RoundedButton _buildDisabledRoundedButton(
+      RecordTransactionViewModel viewModel) {
+    return RoundedButton(
+      viewModel:
+          RoundedButtonViewModel(title: viewModel.buttonTitle, onTap: null),
+      style: RoundedButtonStyle.largeRoundedButtonStyle().copyWith(
+        backgroundColor: _Constants.disabledActionColor,
+      ),
+    );
+  }
+
+  setRequiredFieldsAreFilled() {
     setState(() {
       widget._viewModel.isFilled = isAmountFilled && isCropFilled;
     });
   }
 }
-
-

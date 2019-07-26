@@ -176,7 +176,8 @@ class RecordTransactionListItem extends StatefulWidget {
         super(key: key);
 
   @override
-  _RecordTransactionListItemState createState() => _RecordTransactionListItemState();
+  _RecordTransactionListItemState createState() =>
+      _RecordTransactionListItemState();
 }
 
 class _RecordTransactionListItemState extends State<RecordTransactionListItem> {
@@ -208,7 +209,7 @@ class _RecordTransactionListItemState extends State<RecordTransactionListItem> {
 
     switch (viewModel.type) {
       case RecordCellType.pickDate:
-        listBuilder.add(_buildPickDate(viewModel, style));
+        listBuilder.add(_buildDatePicker(viewModel, style));
         break;
       case RecordCellType.pickItem:
         listBuilder.add(_buildPickItem(viewModel, style));
@@ -220,7 +221,7 @@ class _RecordTransactionListItemState extends State<RecordTransactionListItem> {
     return listBuilder;
   }
 
-  ListTile _buildPickDate(RecordTransactionListItemViewModel viewModel,
+  ListTile _buildDatePicker(RecordTransactionListItemViewModel viewModel,
       RecordTransactionListItemStyle style) {
     return ListTile(
       title: Row(
@@ -263,88 +264,19 @@ class _RecordTransactionListItemState extends State<RecordTransactionListItem> {
           : null,
       dense: true,
       contentPadding: style.actionItemEdgePadding,
-      onTap: () => _selectDate(context, viewModel),
+      onTap: () => _setSelectedDate(context, viewModel),
       enabled: viewModel.isEditable,
     );
   }
 
-  ListTile _buildPickItem(RecordTransactionListItemViewModel viewModel,
-      RecordTransactionListItemStyle style) {
+  ListTile _buildPickItem(
+    RecordTransactionListItemViewModel viewModel,
+    RecordTransactionListItemStyle style,
+  ) {
     return ListTile(
       title: viewModel.isEditable
-          ? PopupMenuButton(
-              key: widget._pickerKey,
-              offset: style.pickerPosition,
-              onSelected: (selectedItem) => _changeDropDownItem(selectedItem),
-              itemBuilder: (BuildContext context) =>
-                  _getDropDownMenuItems(viewModel),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  Image.asset(
-                    _Constants.cropIcon,
-                    height: style.iconHeight,
-                  ),
-                  SizedBox(
-                    width: style.iconLineSpace,
-                  ),
-                  Expanded(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text(
-                          _Strings.CROP,
-                          textAlign: TextAlign.start,
-                          style: style.titleTextStyle,
-                        ),
-                        viewModel.selectedItem == null
-                            ? Text(
-                                _Strings.SELECT,
-                                textAlign: TextAlign.end,
-                                style: style.pendingDetailTextStyle,
-                              )
-                            : Text(
-                                viewModel.selectedItem,
-                                textAlign: TextAlign.end,
-                                style: style.detailTextStyle,
-                              ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            )
-          : Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Image.asset(
-                  _Constants.cropIcon,
-                  height: style.iconHeight,
-                ),
-                SizedBox(
-                  width: style.iconLineSpace,
-                ),
-                Expanded(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Text(
-                        _Strings.CROP,
-                        textAlign: TextAlign.start,
-                        style: style.titleTextStyle,
-                      ),
-                      Text(
-                        viewModel.selectedItem == null
-                            ? _Strings.SELECT
-                            : viewModel.selectedItem,
-                        textAlign: TextAlign.end,
-                        style: style.detailTextStyle,
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
+          ? _buildCropPicker(style, viewModel)
+          : _buildNonEditableCropRow(style, viewModel),
       trailing: viewModel.isEditable
           ? Image.asset(
               _Constants.arrowIcon,
@@ -358,8 +290,94 @@ class _RecordTransactionListItemState extends State<RecordTransactionListItem> {
     );
   }
 
-  ListTile _buildDescription(RecordTransactionListItemViewModel viewModel,
-      RecordTransactionListItemStyle style) {
+  Row _buildNonEditableCropRow(
+    RecordTransactionListItemStyle style,
+    RecordTransactionListItemViewModel viewModel,
+  ) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: <Widget>[
+        Image.asset(
+          _Constants.cropIcon,
+          height: style.iconHeight,
+        ),
+        SizedBox(
+          width: style.iconLineSpace,
+        ),
+        Expanded(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Text(
+                _Strings.CROP,
+                textAlign: TextAlign.start,
+                style: style.titleTextStyle,
+              ),
+              Text(
+                viewModel.selectedItem == null
+                    ? _Strings.SELECT
+                    : viewModel.selectedItem,
+                textAlign: TextAlign.end,
+                style: style.detailTextStyle,
+              ),
+            ],
+          ),
+        )
+      ],
+    );
+  }
+
+  PopupMenuButton _buildCropPicker(
+    RecordTransactionListItemStyle style,
+    RecordTransactionListItemViewModel viewModel,
+  ) {
+    return PopupMenuButton(
+      key: widget._pickerKey,
+      offset: style.pickerPosition,
+      onSelected: (selectedItem) => _setSelectedDropDownItem(selectedItem),
+      itemBuilder: (BuildContext context) => _getDropDownMenuItems(viewModel),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          Image.asset(
+            _Constants.cropIcon,
+            height: style.iconHeight,
+          ),
+          SizedBox(
+            width: style.iconLineSpace,
+          ),
+          Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text(
+                  _Strings.CROP,
+                  textAlign: TextAlign.start,
+                  style: style.titleTextStyle,
+                ),
+                viewModel.selectedItem == null
+                    ? Text(
+                        _Strings.SELECT,
+                        textAlign: TextAlign.end,
+                        style: style.pendingDetailTextStyle,
+                      )
+                    : Text(
+                        viewModel.selectedItem,
+                        textAlign: TextAlign.end,
+                        style: style.detailTextStyle,
+                      ),
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  ListTile _buildDescription(
+    RecordTransactionListItemViewModel viewModel,
+    RecordTransactionListItemStyle style,
+  ) {
     return ListTile(
       title: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -376,24 +394,8 @@ class _RecordTransactionListItemState extends State<RecordTransactionListItem> {
               SizedBox(width: style.iconLineSpace),
               Expanded(
                 child: viewModel.isEditable
-                    ? TextField(
-                        decoration: InputDecoration(
-                            hintText: _Strings.DESCRIPTION,
-                            hintStyle: style.pendingDetailTextStyle,
-                            border: InputBorder.none,
-                            contentPadding: style.cardMargins,
-                            counterText: _Strings.EMPTY_STRING),
-                        textAlign: TextAlign.left,
-                        style: style.detailTextStyle,
-                        maxLines: style.maxLines,
-                        controller: _textFieldController,
-                        onEditingComplete: () => _checkTextField(viewModel),
-                        onChanged: (description) =>
-                            _saveDescription(description),
-                        textInputAction: TextInputAction.next,
-                        enabled: viewModel.isEditable,
-                      )
-                    : Text(viewModel.description, style: style.titleTextStyle),
+                    ? _buildEditableDescription(style, viewModel)
+                    : _buildDescriptionText(viewModel, style),
               ),
             ],
           ),
@@ -402,12 +404,43 @@ class _RecordTransactionListItemState extends State<RecordTransactionListItem> {
       ),
       dense: true,
       contentPadding: style.actionItemEdgePadding,
-      onTap: () => _selectDate(context, viewModel),
+      onTap: () => _setSelectedDate(context, viewModel),
       enabled: viewModel.isEditable,
     );
   }
 
-  _saveDescription(String description) {
+  Text _buildDescriptionText(
+    RecordTransactionListItemViewModel viewModel,
+    RecordTransactionListItemStyle style,
+  ) =>
+      Text(
+        viewModel.description,
+        style: style.titleTextStyle,
+      );
+
+  TextField _buildEditableDescription(
+    RecordTransactionListItemStyle style,
+    RecordTransactionListItemViewModel viewModel,
+  ) {
+    return TextField(
+      decoration: InputDecoration(
+          hintText: _Strings.DESCRIPTION,
+          hintStyle: style.pendingDetailTextStyle,
+          border: InputBorder.none,
+          contentPadding: style.cardMargins,
+          counterText: _Strings.EMPTY_STRING),
+      textAlign: TextAlign.left,
+      style: style.detailTextStyle,
+      maxLines: style.maxLines,
+      controller: _textFieldController,
+      onEditingComplete: () => _setDescription(viewModel),
+      onChanged: (description) => _onDescriptionInputChanged(description),
+      textInputAction: TextInputAction.next,
+      enabled: viewModel.isEditable,
+    );
+  }
+
+  _onDescriptionInputChanged(String description) {
     setState(() {
       if (description != _Strings.EMPTY_STRING) {
         widget.parent.userData.description = description;
@@ -416,11 +449,11 @@ class _RecordTransactionListItemState extends State<RecordTransactionListItem> {
   }
 
   void showPopUpMenu() {
-    dynamic popUpMenustate = widget._pickerKey.currentState;
-    popUpMenustate.showButtonMenu();
+    dynamic popUpMenuState = widget._pickerKey.currentState;
+    popUpMenuState.showButtonMenu();
   }
 
-  Future<Null> _selectDate(
+  Future<Null> _setSelectedDate(
     BuildContext context,
     RecordTransactionListItemViewModel viewModel,
   ) async {
@@ -439,21 +472,18 @@ class _RecordTransactionListItemState extends State<RecordTransactionListItem> {
     }
   }
 
-  String _formatDate(DateTime selectedDate) {
-    String formatted = _Constants.dateFormatter.format(selectedDate);
-    return formatted;
-  }
+  String _formatDate(DateTime selectedDate) =>
+      _Constants.dateFormatter.format(selectedDate);
 
   List<PopupMenuItem> _getDropDownMenuItems(
-      RecordTransactionListItemViewModel viewModel) {
-    List<PopupMenuItem> items = [];
-    for (String crop in viewModel.listOfCrops) {
-      items.add(PopupMenuItem(value: crop, child: Text(crop)));
-    }
-    return items;
+    RecordTransactionListItemViewModel viewModel,
+  ) {
+    return viewModel.listOfCrops
+        .map((crop) => PopupMenuItem(value: crop, child: Text(crop)))
+        .toList();
   }
 
-  void _checkTextField(RecordTransactionListItemViewModel viewModel) {
+  void _setDescription(RecordTransactionListItemViewModel viewModel) {
     setState(() {
       if (_textFieldController.text != null) {
         viewModel.description = _textFieldController.text;
@@ -462,12 +492,12 @@ class _RecordTransactionListItemState extends State<RecordTransactionListItem> {
     });
   }
 
-  void _changeDropDownItem(String selectedCrop) {
+  void _setSelectedDropDownItem(String selectedCrop) {
     setState(() {
       widget._viewModel.selectedItem = selectedCrop;
       widget.parent.userData.crop = selectedCrop;
       widget.parent.isCropFilled = true;
-      widget.parent.checkIfFilled();
+      widget.parent.setRequiredFieldsAreFilled();
     });
   }
 }
