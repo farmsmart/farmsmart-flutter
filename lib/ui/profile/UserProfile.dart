@@ -17,7 +17,7 @@ class UserProfileViewModel {
   int activeCrops;
   int completedCrops;
   String buttonTitle;
-  final Function switchProfile;
+  final Function switchProfileAction;
   ImageProvider image;
 
   UserProfileViewModel({
@@ -26,7 +26,7 @@ class UserProfileViewModel {
     this.activeCrops,
     this.completedCrops,
     this.buttonTitle,
-    this.switchProfile,
+    this.switchProfileAction,
     this.image,
   });
 }
@@ -42,18 +42,18 @@ class UserProfileStyle {
 
   final EdgeInsets edgePadding;
   final EdgeInsets headerEdgePadding;
+  final EdgeInsets titleLineSpace;
+
+  final BorderRadius buttonBorderShape;
 
   final double headerElevation;
-  final double titleLineSpace;
   final double imageSpacing;
   final double subtitleLineSpace;
   final double buttonLineSpace;
-
   final double detailSpacing;
   final double dividerHeight;
-  final double dividerWidth;
-
   final double buttonHeight;
+  final double imageSize;
   final int maxLines;
 
   const UserProfileStyle({
@@ -65,6 +65,7 @@ class UserProfileStyle {
     this.buttonTextStyle,
     this.edgePadding,
     this.headerEdgePadding,
+    this.buttonBorderShape,
     this.headerElevation,
     this.titleLineSpace,
     this.imageSpacing,
@@ -72,8 +73,8 @@ class UserProfileStyle {
     this.buttonLineSpace,
     this.detailSpacing,
     this.dividerHeight,
-    this.dividerWidth,
     this.buttonHeight,
+    this.imageSize,
     this.maxLines,
   });
 
@@ -86,15 +87,16 @@ class UserProfileStyle {
     TextStyle buttonTextStyle,
     EdgeInsets edgePadding,
     EdgeInsets headerEdgePadding,
+    EdgeInsets titleLineSpace,
+    BorderRadius buttonBorderShape,
     double headerElevation,
-    double titleLineSpace,
     double imageSpacing,
     double subtitleLineSpace,
     double buttonLineSpace,
     double detailSpacing,
     double dividerHeight,
-    double dividerWidth,
     double buttonHeight,
+    double imageSize,
     int maxLines,
   }) {
     return UserProfileStyle(
@@ -106,6 +108,7 @@ class UserProfileStyle {
       buttonTextStyle: buttonTextStyle ?? this.buttonTextStyle,
       edgePadding: edgePadding ?? this.edgePadding,
       headerEdgePadding: headerEdgePadding ?? this.headerEdgePadding,
+      buttonBorderShape: buttonBorderShape ?? this.buttonBorderShape,
       headerElevation: headerElevation ?? this.headerElevation,
       titleLineSpace: titleLineSpace ?? this.titleLineSpace,
       imageSpacing: imageSpacing ?? this.imageSpacing,
@@ -113,8 +116,8 @@ class UserProfileStyle {
       buttonLineSpace: buttonLineSpace ?? this.buttonLineSpace,
       detailSpacing: detailSpacing ?? this.detailSpacing,
       dividerHeight: dividerHeight ?? this.dividerHeight,
-      dividerWidth: dividerWidth ?? this.dividerWidth,
       buttonHeight: buttonHeight ?? this.buttonHeight,
+      imageSize: imageSize ?? this.imageSize,
       maxLines: maxLines ?? this.maxLines,
     );
   }
@@ -156,15 +159,20 @@ class _DefaultStyle extends UserProfileStyle {
     bottom: 25.0,
   );
 
+  final EdgeInsets titleLineSpace = const EdgeInsets.only(bottom: 2);
+
+  final BorderRadius buttonBorderShape = const BorderRadius.all(
+    Radius.circular(8),
+  );
+
   final double headerElevation = 0;
-  final double titleLineSpace = 0.5;
   final double imageSpacing = 20;
   final double subtitleLineSpace = 6.5;
   final double buttonLineSpace = 25;
   final double dividerHeight = 2;
-  final double dividerWidth = 121;
   final double detailSpacing = 23;
   final double buttonHeight = 40;
+  final double imageSize = 72;
 
   final int maxLines = 1;
 
@@ -176,13 +184,16 @@ class _DefaultStyle extends UserProfileStyle {
     TextStyle buttonTextStyle,
     EdgeInsets edgePadding,
     EdgeInsets headerEdgePadding,
+    BorderRadius buttonBorderShape,
+    EdgeInsets titleLineSpace,
     double headerElevation,
-    double titleLineSpace,
     double imageSpacing,
     double subtitleLineSpace,
     double buttonLineSpace,
+    double dividerHeight,
     double detailSpacing,
     double buttonHeight,
+    double imageSize,
     int maxLines,
   });
 }
@@ -235,19 +246,20 @@ class UserProfile extends StatelessWidget {
             children: <Widget>[
               RoundedButton(
                 viewModel: RoundedButtonViewModel(
-                    title: _Strings.SWITCH_PROFILE,
-                    onTap: () => _viewModel.switchProfile()),
+                  title: _Strings.SWITCH_PROFILE,
+                  onTap: () => _viewModel.switchProfileAction(),
+                ),
                 style: RoundedButtonStyle.largeRoundedButtonStyle().copyWith(
                   backgroundColor: _style.buttonColor,
                   height: _style.buttonHeight,
-                  borderRadius: BorderRadius.all(Radius.circular(8)),
+                  borderRadius: _style.buttonBorderShape,
                   buttonTextStyle: _style.buttonTextStyle,
                 ),
               ),
             ],
           ),
         ),
-        SizedBox(height: _style.buttonLineSpace)
+        SizedBox(height: _style.buttonLineSpace),
       ],
     );
   }
@@ -274,18 +286,20 @@ class UserProfile extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Container(
-                padding: EdgeInsets.only(bottom: 2),
+                padding: _style.titleLineSpace,
                 child: Text(_viewModel.userName,
                     maxLines: _style.maxLines,
                     overflow: TextOverflow.ellipsis,
                     style: _style.titleTextStyle),
                 decoration: BoxDecoration(
                   border: Border(
-                    bottom: BorderSide(color: _style.dividerColor, width: 2),
+                    bottom: BorderSide(
+                      color: _style.dividerColor,
+                      width: _style.dividerHeight,
+                    ),
                   ),
                 ),
               ),
-              //SizedBox(height: _style.titleLineSpace),
             ],
           ),
           SizedBox(height: _style.subtitleLineSpace),
@@ -334,20 +348,11 @@ class UserProfile extends StatelessWidget {
         child: Stack(children: <Widget>[
       Image(
         image: image,
-        height: 72,
-        width: 72,
+        height: _style.imageSize,
+        width: _style.imageSize,
         fit: BoxFit.cover,
         alignment: Alignment.topCenter,
       ),
     ]));
-  }
-
-  void showSnackBar(String text, BuildContext context) {
-    final snackBar = SnackBar(
-      content: Text(text),
-      duration: Duration(milliseconds: 350),
-    );
-
-    Scaffold.of(context).showSnackBar(snackBar);
   }
 }

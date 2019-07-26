@@ -21,7 +21,7 @@ class MockUserProfileViewModel {
       completedCrops: Random().nextInt(50),
       image: NetworkImage(_mockImage.random()),
       buttonTitle: "Switch Profile",
-      switchProfile: () => _mockSwitchTap(),
+      switchProfileAction: () => _mockSwitchTap(),
     );
   }
 
@@ -80,7 +80,7 @@ MockString _mockUserName = MockString(library: [
   "Name",
   "Mininame",
   "Ireti Kuta",
-  //"Longer User Name",
-  //"A bit Longer User Name",
-  //"Super extra large User Name"
+  "Longer User Name",
+  "A bit Longer User Name",
+  "Super extra large User Name"
 ]);
