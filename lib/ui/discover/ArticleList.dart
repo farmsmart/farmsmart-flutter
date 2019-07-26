@@ -1,12 +1,11 @@
 import 'package:farmsmart_flutter/data/bloc/ViewModelProvider.dart';
-import 'package:farmsmart_flutter/model/loading_status.dart';
+import 'package:farmsmart_flutter/ui/common/ViewModelProviderBuilder.dart';
 import 'package:farmsmart_flutter/ui/common/headerAndFooterListView.dart';
 import 'package:farmsmart_flutter/ui/discover/ArticleDetail.dart';
 import 'package:farmsmart_flutter/ui/discover/viewModel/ArticleDetailViewModel.dart';
 import 'package:farmsmart_flutter/ui/discover/viewModel/ArticleListItemViewModel.dart';
 import 'package:farmsmart_flutter/ui/discover/HeroListItem.dart';
 import 'package:farmsmart_flutter/ui/discover/StandardListItem.dart';
-import 'package:farmsmart_flutter/utils/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:farmsmart_flutter/ui/discover/viewModel/ArticleListViewModel.dart';
 
@@ -58,16 +57,9 @@ class ArticleList extends StatelessWidget {
         this._viewModelProvider = viewModelProvider,
         super(key: key);
 
-  @override
+   @override
   Widget build(BuildContext context) {
-    final controller = _viewModelProvider.observe();
-    return StreamBuilder<ArticleListViewModel>(
-        stream: controller.stream,
-        initialData: _viewModelProvider.initial(),
-        builder: (BuildContext context,
-            AsyncSnapshot<ArticleListViewModel> snapshot) {
-          return _build(context, snapshot.data);
-        });
+   return ViewModelProviderBuilder<ArticleListViewModel>(provider: _viewModelProvider, successBuilder: _buildSuccess);
   }
 
   Widget buildHeader({ArticleListViewModel viewModel}) {
@@ -109,21 +101,8 @@ class ArticleList extends StatelessWidget {
     );
   }
 
-  Widget _build(BuildContext context, ArticleListViewModel viewModel) {
-    final status =
-        (viewModel == null) ? LoadingStatus.LOADING : viewModel.loadingStatus;
-    switch (status) {
-      case LoadingStatus.LOADING:
-        return Container(
-            child: CircularProgressIndicator(), alignment: Alignment.center);
-      case LoadingStatus.SUCCESS:
-        return _buildSuccess(context, viewModel);
-      case LoadingStatus.ERROR:
-        return Text(Strings.errorString);
-    }
-  }
-
-  Widget _buildSuccess(BuildContext context, ArticleListViewModel viewModel) {
+  Widget _buildSuccess({BuildContext context, AsyncSnapshot<ArticleListViewModel> snapshot}) {
+    final viewModel = snapshot.data;
     return HeaderAndFooterListView(itemCount: viewModel.articleListItemViewModels.length,
         itemBuilder:
             bodyListBuilder(viewModels: viewModel.articleListItemViewModels),

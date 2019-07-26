@@ -1,10 +1,9 @@
 import 'package:farmsmart_flutter/data/bloc/ViewModelProvider.dart';
-import 'package:farmsmart_flutter/model/loading_status.dart';
 import 'package:farmsmart_flutter/ui/common/ActionSheet.dart';
 import 'package:farmsmart_flutter/ui/common/ActionSheetListItem.dart';
 import 'package:farmsmart_flutter/ui/common/ContextualAppBar.dart';
-import 'package:farmsmart_flutter/ui/common/ErrorRetry.dart';
 import 'package:farmsmart_flutter/ui/common/SectionListView.dart';
+import 'package:farmsmart_flutter/ui/common/ViewModelProviderBuilder.dart';
 import 'package:farmsmart_flutter/ui/common/headerAndFooterListView.dart';
 import 'package:farmsmart_flutter/ui/common/recommendation_card/recommendation_card.dart';
 import 'package:farmsmart_flutter/ui/recommendations/viewmodel/RecommendationsListViewModel.dart';
@@ -15,8 +14,6 @@ class _Strings {
   static const finish = "Finish";
   static const clearAction = "Clear Selection";
   static const cancelAction = "Cancel";
-  static const retry = "Retry";
-  static const error = "Error fetching recommendations";
 }
 
 class _Constants {
@@ -102,31 +99,10 @@ class RecommendationsList extends StatelessWidget implements ListViewSection {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<RecommendationsListViewModel>(
-        stream: _viewModelProvider.observe().stream,
-        initialData: _viewModelProvider.initial(),
-        builder: (
-          BuildContext context,
-          AsyncSnapshot<RecommendationsListViewModel> snapshot,
-        ) {
-          final viewModel = snapshot.data;
-
-          if (viewModel.canApply) {
-            return Scaffold(
-              appBar: _buildAppBar(context, viewModel),
-              body: _buildState(context, viewModel),
-              floatingActionButton:
-                  _buildApplyButton(context: context, viewModel: viewModel),
-              floatingActionButtonLocation:
-                  FloatingActionButtonLocation.centerDocked,
-            );
-          }
-
-          return Scaffold(
-            appBar: _buildAppBar(context, viewModel),
-            body: _buildState(context, viewModel),
-          );
-        });
+    return ViewModelProviderBuilder(
+      provider: _viewModelProvider,
+      successBuilder: _buildSuccess,
+    );
   }
 
   @override
@@ -145,30 +121,29 @@ class RecommendationsList extends StatelessWidget implements ListViewSection {
   }
 
   Widget _buildSuccess(
-      BuildContext context, RecommendationsListViewModel viewModel) {
-    return _buildList(
-      context: context,
-      viewModel: viewModel,
-    );
-  }
-
-  Widget _buildState(
-      BuildContext context, RecommendationsListViewModel viewModel) {
-    final status =
-        (viewModel == null) ? LoadingStatus.LOADING : viewModel.loadingStatus;
-    switch (status) {
-      case LoadingStatus.LOADING:
-        return Container(
-            child: CircularProgressIndicator(), alignment: Alignment.center);
-      case LoadingStatus.SUCCESS:
-        return _buildSuccess(context, viewModel);
-      case LoadingStatus.ERROR:
-        return ErrorRetry(
-          retryActionLabel: _Strings.retry,
-          errorMessage: _Strings.error,
-          retryFunction: viewModel.update,
-        );
+      {BuildContext context,
+      AsyncSnapshot<RecommendationsListViewModel> snapshot}) {
+    final viewModel = snapshot.data;
+    if (viewModel.canApply) {
+      return Scaffold(
+        appBar: _buildAppBar(context, viewModel),
+        body: _buildList(
+          context: context,
+          viewModel: viewModel,
+        ),
+        floatingActionButton:
+            _buildApplyButton(context: context, viewModel: viewModel),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      );
     }
+
+    return Scaffold(
+      appBar: _buildAppBar(context, viewModel),
+      body: _buildList(
+        context: context,
+        viewModel: viewModel,
+      ),
+    );
   }
 
   void _applyAction(
@@ -180,12 +155,17 @@ class RecommendationsList extends StatelessWidget implements ListViewSection {
   Widget _buildAppBar(
       BuildContext context, RecommendationsListViewModel viewModel) {
     return ContextualAppBar(
-      moreAction: () => _moreTapped(context: context, viewModel: viewModel),
+      moreAction: () => _moreTapped(
+        context: context,
+        viewModel: viewModel,
+      ),
     ).build(context);
   }
 
-  Widget _buildList(
-      {BuildContext context, RecommendationsListViewModel viewModel}) {
+  Widget _buildList({
+    BuildContext context,
+    RecommendationsListViewModel viewModel,
+  }) {
     final footerList = viewModel.canApply
         ? <Widget>[
             SizedBox(

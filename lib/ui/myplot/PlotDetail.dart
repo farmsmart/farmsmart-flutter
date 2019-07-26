@@ -25,13 +25,14 @@ class _Strings {
 abstract class PlotDetailStyle {
   final TextStyle titleTextStyle;
   final double stageSectionHeight;
-  const PlotDetailStyle(this.titleTextStyle, this.stageSectionHeight);
+  final EdgeInsets cardPadding;
+  const PlotDetailStyle(this.titleTextStyle, this.stageSectionHeight, this.cardPadding);
 }
 
 class _DefaultStyle implements PlotDetailStyle {
   final TextStyle titleTextStyle = null;
   final double stageSectionHeight = 162;
-
+  final EdgeInsets cardPadding =  const EdgeInsets.all(8.0);
   const _DefaultStyle();
 }
 

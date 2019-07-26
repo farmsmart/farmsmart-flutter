@@ -7,7 +7,7 @@ class MockRecommendationsListViewModel {
   static RecommendationsListViewModel build() {
     return RecommendationsListViewModel(
         title: "test",
-        status: LoadingStatus.SUCCESS,
+        loadingStatus: LoadingStatus.SUCCESS,
         canApply: false,
         items: [
           MockRecommendationCardViewModel.buildRandomState(),

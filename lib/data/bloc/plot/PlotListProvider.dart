@@ -104,7 +104,7 @@ class PlotListProvider implements ViewModelProvider<PlotListViewModel> {
     return PlotListViewModel(
       title: _title,
       buttonTitle: Intl.message(_Strings.addCrop),
-      status: status,
+      loadingStatus: status,
       items: items,
       update: () => _update(_controller),
       recommendationsProvider: recommendationsProvider,

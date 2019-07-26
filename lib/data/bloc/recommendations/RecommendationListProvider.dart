@@ -42,7 +42,7 @@ class RecommendationListProvider
         status: LoadingStatus.LOADING,
         items: [],
       );
-      _snapshot.update();
+      _snapshot.refresh();
     }
     return _snapshot;
   }
@@ -62,9 +62,9 @@ class RecommendationListProvider
     return RecommendationsListViewModel(
         title: _title,
         items: items,
-        status: status,
+        loadingStatus: status,
         canApply: !_cropBasket.isEmpty(),
-        update: () => _update(_controller),
+        refresh: () => _update(_controller),
         apply: () => _add(_controller),
         clear: () => _clear(_controller));
   }

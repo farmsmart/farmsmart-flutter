@@ -1,6 +1,7 @@
 import 'package:farmsmart_flutter/data/bloc/ViewModelProvider.dart';
 import 'package:farmsmart_flutter/model/loading_status.dart';
-import 'package:farmsmart_flutter/ui/common/ErrorRetry.dart';
+import 'package:farmsmart_flutter/ui/common/LoadableViewModel.dart';
+import 'package:farmsmart_flutter/ui/common/ViewModelProviderBuilder.dart';
 import 'package:farmsmart_flutter/ui/common/headerAndFooterListView.dart';
 import 'package:farmsmart_flutter/ui/recommendations/RecommentationsList.dart';
 import 'package:farmsmart_flutter/ui/recommendations/viewmodel/RecommendationsListViewModel.dart';
@@ -8,34 +9,29 @@ import 'package:flutter/material.dart';
 import 'PlotDetail.dart';
 import 'PlotListItem.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
-import 'package:intl/intl.dart';
 import 'viewmodel/PlotDetailViewModel.dart';
 
-class _Strings {
-  static String loadingError = "Oops, there was a problem!";
-  static String retryAction = "Retry";
-}
-
-class PlotListViewModel {
+class PlotListViewModel implements LoadableViewModel {
   final String title;
   final String buttonTitle;
-  final LoadingStatus status;
+  final LoadingStatus loadingStatus;
   final List<PlotListItemViewModel> items;
   final Function update;
   final ViewModelProvider<RecommendationsListViewModel> recommendationsProvider;
   PlotListViewModel({
     String title,
     String buttonTitle,
-    LoadingStatus status,
+    LoadingStatus loadingStatus,
     List<PlotListItemViewModel> items,
     Function update,
     ViewModelProvider<RecommendationsListViewModel> recommendationsProvider,
   })  : this.title = title,
-        this.status = status,
+        this.loadingStatus = loadingStatus,
         this.buttonTitle = buttonTitle,
         this.items = items,
         this.update = update,
         this.recommendationsProvider = recommendationsProvider;
+
 }
 
 abstract class PlotListStyle {
@@ -85,32 +81,11 @@ class PlotList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<PlotListViewModel>(
-        stream: _viewModelProvider.observe().stream,
-        initialData: _viewModelProvider.initial(),
-        builder:
-            (BuildContext context, AsyncSnapshot<PlotListViewModel> snapshot) {
-          return _buildBody(context, snapshot.data, _style);
-        });
+    return ViewModelProviderBuilder(provider: _viewModelProvider, successBuilder: _buildPage,);
   }
 
-  Widget _buildBody(
-      BuildContext context, PlotListViewModel viewModel, PlotListStyle style) {
-    final status =
-        (viewModel == null) ? LoadingStatus.LOADING : viewModel.status;
-    switch (status) {
-      case LoadingStatus.LOADING:
-        return Container(
-            child: CircularProgressIndicator(), alignment: Alignment.center);
-      case LoadingStatus.SUCCESS:
-        return _buildPage(context, viewModel, style, null);
-      case LoadingStatus.ERROR:
-        return _buildErrorPage(context, viewModel, style);
-    }
-  }
-
-  Widget _buildPage(BuildContext context, PlotListViewModel viewModel,
-      PlotListStyle plotStyle, Function goToDetail) {
+  Widget _buildPage({BuildContext context, AsyncSnapshot<PlotListViewModel> snapshot}) {
+    final viewModel = snapshot.data;
     return HeaderAndFooterListView(
         itemCount: viewModel.items.length,
         itemBuilder: (BuildContext context, int index) {
@@ -124,11 +99,12 @@ class PlotList extends StatelessWidget {
         physics: ScrollPhysics(),
         shrinkWrap: true,
         headers: [
-          _buildTitle(viewModel, plotStyle, context: context)
+          _buildTitle(viewModel, _style, context: context)
         ],
         footers: [
           Padding(
-            padding: plotStyle.largeButtonEdgePadding,
+            padding: 
+            _style.largeButtonEdgePadding,
             child: Row(
               children: <Widget>[
                 Expanded(
@@ -175,15 +151,6 @@ class PlotList extends StatelessWidget {
                           )),
                   style: RoundedButtonStyle.defaultStyle())
             ]));
-  }
-
-  Widget _buildErrorPage(BuildContext context, PlotListViewModel viewModel,
-      PlotListStyle plotStyle) {
-    return ErrorRetry(
-      errorMessage: Intl.message(_Strings.loadingError),
-      retryActionLabel: Intl.message(_Strings.retryAction),
-      retryFunction: viewModel.update,
-    );
   }
 
   void _tappedAdd({

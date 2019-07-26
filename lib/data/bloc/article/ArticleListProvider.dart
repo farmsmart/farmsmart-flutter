@@ -51,7 +51,7 @@ class ArticleListProvider implements ViewModelProvider<ArticleListViewModel> {
         title: _title,
         status: status,
         articleListItemViewModels: items,
-        update: () => _update(_controller));
+        refresh: () => _update(_controller));
   }
 
   void dispose() {
@@ -63,7 +63,7 @@ class ArticleListProvider implements ViewModelProvider<ArticleListViewModel> {
   ArticleListViewModel initial() {
     if (_snapshot == null) {
       _snapshot = _viewModel(status: LoadingStatus.LOADING, items: []);
-      _snapshot.update();
+      _snapshot.refresh();
     }
     return _snapshot;
   }
