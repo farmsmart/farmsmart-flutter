@@ -58,7 +58,7 @@ class PlotListProvider implements ViewModelProvider<PlotListViewModel> {
   PlotListViewModel initial() {
     if (_snapshot == null) {
       _snapshot = _viewModel(status: LoadingStatus.LOADING);
-      _snapshot.update();
+      _snapshot.refresh();
     }
     return _snapshot;
   }
@@ -106,7 +106,7 @@ class PlotListProvider implements ViewModelProvider<PlotListViewModel> {
       buttonTitle: Intl.message(_Strings.addCrop),
       loadingStatus: status,
       items: items,
-      update: () => _update(_controller),
+      refresh: () => _update(_controller),
       recommendationsProvider: recommendationsProvider,
     );
   }

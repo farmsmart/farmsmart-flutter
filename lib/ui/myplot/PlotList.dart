@@ -1,6 +1,7 @@
 import 'package:farmsmart_flutter/data/bloc/ViewModelProvider.dart';
 import 'package:farmsmart_flutter/model/loading_status.dart';
 import 'package:farmsmart_flutter/ui/common/LoadableViewModel.dart';
+import 'package:farmsmart_flutter/ui/common/RefreshableViewModel.dart';
 import 'package:farmsmart_flutter/ui/common/ViewModelProviderBuilder.dart';
 import 'package:farmsmart_flutter/ui/common/headerAndFooterListView.dart';
 import 'package:farmsmart_flutter/ui/recommendations/RecommentationsList.dart';
@@ -11,25 +12,25 @@ import 'PlotListItem.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
 import 'viewmodel/PlotDetailViewModel.dart';
 
-class PlotListViewModel implements LoadableViewModel {
+class PlotListViewModel implements LoadableViewModel, RefreshableViewModel {
   final String title;
   final String buttonTitle;
   final LoadingStatus loadingStatus;
   final List<PlotListItemViewModel> items;
-  final Function update;
+  final Function refresh;
   final ViewModelProvider<RecommendationsListViewModel> recommendationsProvider;
   PlotListViewModel({
     String title,
     String buttonTitle,
     LoadingStatus loadingStatus,
     List<PlotListItemViewModel> items,
-    Function update,
+    Function refresh,
     ViewModelProvider<RecommendationsListViewModel> recommendationsProvider,
   })  : this.title = title,
         this.loadingStatus = loadingStatus,
         this.buttonTitle = buttonTitle,
         this.items = items,
-        this.update = update,
+        this.refresh = refresh,
         this.recommendationsProvider = recommendationsProvider;
 
 }
