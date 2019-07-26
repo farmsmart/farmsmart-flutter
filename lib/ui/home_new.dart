@@ -114,6 +114,7 @@ class Home extends StatelessWidget {
     );
   }
 
+  //TODO Build it properly
   TabNavigator _buildTabNavigatorWithCircleImageWidget(Widget page) {
     return TabNavigator(
       child: page,

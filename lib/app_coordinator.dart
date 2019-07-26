@@ -20,6 +20,7 @@ class _AppCoordinatorState extends State<AppCoordinator> {
     return Home();
   }
 
+
   List<DeepLink> _deepLinks() {
     return [
       DeepLink(

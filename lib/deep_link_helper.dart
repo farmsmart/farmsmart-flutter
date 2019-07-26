@@ -51,7 +51,7 @@ class DeepLinkHelper {
   }
 
   void runPendingDynamicLink(){
-    //TODO
+    //TODO run pending dynamic link
   }
 
   void _parseDeepLink(Uri deepLink) {
