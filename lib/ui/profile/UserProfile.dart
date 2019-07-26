@@ -46,7 +46,6 @@ class UserProfileStyle {
 
   final BorderRadius buttonBorderShape;
 
-  final double headerElevation;
   final double imageSpacing;
   final double subtitleLineSpace;
   final double buttonLineSpace;
@@ -66,7 +65,6 @@ class UserProfileStyle {
     this.edgePadding,
     this.headerEdgePadding,
     this.buttonBorderShape,
-    this.headerElevation,
     this.titleLineSpace,
     this.imageSpacing,
     this.subtitleLineSpace,
@@ -89,7 +87,6 @@ class UserProfileStyle {
     EdgeInsets headerEdgePadding,
     EdgeInsets titleLineSpace,
     BorderRadius buttonBorderShape,
-    double headerElevation,
     double imageSpacing,
     double subtitleLineSpace,
     double buttonLineSpace,
@@ -109,7 +106,6 @@ class UserProfileStyle {
       edgePadding: edgePadding ?? this.edgePadding,
       headerEdgePadding: headerEdgePadding ?? this.headerEdgePadding,
       buttonBorderShape: buttonBorderShape ?? this.buttonBorderShape,
-      headerElevation: headerElevation ?? this.headerElevation,
       titleLineSpace: titleLineSpace ?? this.titleLineSpace,
       imageSpacing: imageSpacing ?? this.imageSpacing,
       subtitleLineSpace: subtitleLineSpace ?? this.subtitleLineSpace,
@@ -154,7 +150,7 @@ class _DefaultStyle extends UserProfileStyle {
   final EdgeInsets edgePadding = const EdgeInsets.symmetric(horizontal: 32);
   final EdgeInsets headerEdgePadding = const EdgeInsets.only(
     left: 32.0,
-    top: 27.0,
+    top: 26.0,
     right: 32.0,
     bottom: 25.0,
   );
@@ -165,7 +161,6 @@ class _DefaultStyle extends UserProfileStyle {
     Radius.circular(8),
   );
 
-  final double headerElevation = 0;
   final double imageSpacing = 20;
   final double subtitleLineSpace = 6.5;
   final double buttonLineSpace = 25;
@@ -212,7 +207,6 @@ class UserProfile extends StatelessWidget {
         this._style = style,
         super(key: key);
 
-  //TODO: Add profile actions
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -345,14 +339,17 @@ class UserProfile extends StatelessWidget {
 
   ClipOval _buildPlotImage(ImageProvider image) {
     return ClipOval(
-        child: Stack(children: <Widget>[
-      Image(
-        image: image,
-        height: _style.imageSize,
-        width: _style.imageSize,
-        fit: BoxFit.cover,
-        alignment: Alignment.topCenter,
+      child: Stack(
+        children: <Widget>[
+          Image(
+            image: image,
+            height: _style.imageSize,
+            width: _style.imageSize,
+            fit: BoxFit.cover,
+            alignment: Alignment.topCenter,
+          ),
+        ],
       ),
-    ]));
+    );
   }
 }
