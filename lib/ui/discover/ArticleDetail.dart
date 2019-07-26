@@ -1,4 +1,3 @@
-import 'package:farmsmart_flutter/model/loading_status.dart';
 import 'package:farmsmart_flutter/ui/common/ContextualAppBar.dart';
 import 'package:farmsmart_flutter/ui/common/SectionListView.dart';
 import 'package:farmsmart_flutter/ui/common/headerAndFooterListView.dart';
@@ -94,7 +93,8 @@ class ArticleDetail extends StatelessWidget implements ListViewSection {
 
   @override
   Widget build(BuildContext context) {
-    final related = (_relatedViewModels != null) ? Future.value(_relatedViewModels) : fetchReleated();
+    
+    final related = _hasRelated() ? Future.value(_relatedViewModels) : fetchReleated();
     return FutureBuilder(
       future: related,
       builder: (BuildContext context,
@@ -109,12 +109,23 @@ class ArticleDetail extends StatelessWidget implements ListViewSection {
     );
   }
 
+  bool _hasRelated() {
+      return ((_relatedViewModels != null) && (_relatedViewModels.isNotEmpty));
+  }
+
   HeaderAndFooterListView _content() {
-     final loadingWidget = Container(
-        child: CircularProgressIndicator(), alignment: Alignment.center);
-    final footer = (_viewModel.loadingStatus == LoadingStatus.LOADING)
-            ? loadingWidget
-            : null;
+      final List<Widget> relatedTitle = _hasRelated() ? [ Container(
+        padding: _style.titlePagePadding,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(_viewModel.relatedTitle, style: _style.titlePageStyle)
+          ],
+        ),
+      ) ] : [];
+
+      final headers = [buildHeader()] + relatedTitle;
+
       return HeaderAndFooterListView(
                 itemCount: _relatedViewModels.length,
                 itemBuilder: (BuildContext context, int index) {
@@ -127,8 +138,8 @@ class ArticleDetail extends StatelessWidget implements ListViewSection {
                 },
                 physics: ScrollPhysics(),
                 shrinkWrap: true,
-                headers: [buildHeader(_relatedViewModels.isNotEmpty)],
-                footers: [footer]);
+                headers: headers,
+                );
   } 
 
   @override
@@ -152,7 +163,7 @@ class ArticleDetail extends StatelessWidget implements ListViewSection {
     ).build(context);
   }
 
-  Widget buildHeader(bool relatedTitle) {
+  Widget buildHeader() {
     final List<Widget> titleSection = (_viewModel.title.isNotEmpty && _showHeader) ? [_buildTitle()] : [];
     final List<Widget> subtitleSection = (_viewModel.subtitle.isNotEmpty && _showHeader) ? [_buildSubtitle()] : [];
     final image = _buildImage();
@@ -160,20 +171,8 @@ class ArticleDetail extends StatelessWidget implements ListViewSection {
     final List<Widget> imageSection = image != null ? [SizedBox(height: _style.spaceBetweenElements), image,SizedBox(height: _style.spaceBetweenElements)] : [];
     final List<Widget> bodySection = body != null ? [SizedBox(height: _style.spaceBetweenDataAndImage), body,SizedBox(height: _style.spaceBetweenElements)] : [SizedBox(height: _style.spaceBetweenElements)];
     final List<Widget> topWidgets = titleSection + subtitleSection + imageSection + bodySection;
-    final midWidgets = [
-      Container(
-        padding: _style.titlePagePadding,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(_viewModel.relatedTitle, style: _style.titlePageStyle)
-          ],
-        ),
-      ),
-    ];
-    final headerWidgets = relatedTitle ? topWidgets + midWidgets : topWidgets;
     return Column(
-      children: headerWidgets,
+      children: topWidgets,
     );
   }
 
