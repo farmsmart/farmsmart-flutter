@@ -44,9 +44,10 @@ class _DefaultStyle implements RecommendedListStyle {
       RoundedButtonStyle applyButtonStyle})
       : this.titleTextStyle = titleTextStyle ??
             const TextStyle(
-                fontSize: 27,
-                fontWeight: FontWeight.bold,
-                color: Color(0xFF1a1b46)),
+              fontSize: 27,
+              fontWeight: FontWeight.bold,
+              color: Color(0xFF1a1b46),
+            ),
         this.titleEdgePadding = titleEdgePadding ??
             const EdgeInsets.only(
               left: 34.0,

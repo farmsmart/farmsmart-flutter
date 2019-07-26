@@ -4,6 +4,7 @@ import 'package:farmsmart_flutter/ui/common/ActionSheetListItem.dart';
 
 import 'package:farmsmart_flutter/ui/common/ContextualAppBar.dart';
 import 'package:farmsmart_flutter/ui/common/SectionListView.dart';
+import 'package:farmsmart_flutter/ui/common/ViewModelProviderBuilder.dart';
 import 'package:farmsmart_flutter/ui/common/carousel_view.dart';
 import 'package:farmsmart_flutter/ui/common/headerAndFooterListView.dart';
 import 'package:farmsmart_flutter/ui/common/stage_card.dart';
@@ -65,15 +66,11 @@ class _PlotDetailState extends State<PlotDetail> {
 
   @override
   Widget build(BuildContext context) {
-    final provider = widget._viewModelProvider;
-    final controller = provider.observe();
+    return ViewModelProviderBuilder(provider: widget._viewModelProvider, successBuilder: _successBuilder,);
+  }
 
-    return StreamBuilder<PlotDetailViewModel>(
-        stream: controller.stream,
-        initialData: provider.initial(),
-        builder: (BuildContext context,
-            AsyncSnapshot<PlotDetailViewModel> snapshot) {
-          final viewModel = snapshot.data;
+  Widget _successBuilder({BuildContext context, AsyncSnapshot<PlotDetailViewModel> snapshot}) {
+      final viewModel = snapshot.data;
           final PlotListItemViewModel headerViewModel = PlotListItemViewModel(
               title: viewModel.title,
               detail: viewModel.detailText,
@@ -112,7 +109,6 @@ class _PlotDetailState extends State<PlotDetail> {
                 return Scaffold(
                     appBar: _buildAppBar(context, viewModel), body: sectionedList);
               });
-        });
   }
 
   List<Widget> _stageCardDataSource(PlotDetailViewModel viewModel) {
