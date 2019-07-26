@@ -3,6 +3,8 @@ import 'package:farmsmart_flutter/ui/common/LoadableViewModel.dart';
 import 'package:farmsmart_flutter/ui/common/RefreshableViewModel.dart';
 import 'package:farmsmart_flutter/ui/common/recommendation_card/recommendation_card_view_model.dart';
 
+typedef BoolforIndexFunction = bool Function(int index);
+
 class RecommendationsListViewModel implements RefreshableViewModel, LoadableViewModel{
   static final error = RecommendationsListViewModel(loadingStatus: LoadingStatus.ERROR);
   final String title;
@@ -12,6 +14,7 @@ class RecommendationsListViewModel implements RefreshableViewModel, LoadableView
   final Function refresh;
   final Function apply; 
   final Function clear;
+  final BoolforIndexFunction isHeroItem;
   final bool canApply;
 
   RecommendationsListViewModel({
@@ -21,12 +24,15 @@ class RecommendationsListViewModel implements RefreshableViewModel, LoadableView
     Function refresh,
     Function apply,
     Function clear,
+    BoolforIndexFunction isHeroItem, 
     bool canApply,
+
   })  : this.title = title,
         this.loadingStatus = loadingStatus,
         this.items = items,
         this.refresh = refresh,
         this.apply = apply,
         this.clear = clear,
+        this.isHeroItem = isHeroItem,
         this.canApply = canApply;
 }

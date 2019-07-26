@@ -1,5 +1,4 @@
 import 'package:farmsmart_flutter/data/bloc/SequencedViewModelProvider.dart';
-import 'package:farmsmart_flutter/data/bloc/StaticViewModelProvider.dart';
 import 'package:farmsmart_flutter/data/bloc/article/ArticleListProvider.dart';
 import 'package:farmsmart_flutter/data/bloc/plot/PlotDetailProvider.dart';
 import 'package:farmsmart_flutter/data/bloc/plot/PlotListProvider.dart';
@@ -31,9 +30,9 @@ import '../playground_view.dart';
 import 'playground_persistent_bottom_navigation_bar_datasource.dart';
 
 class PlayGroundTasksDataSource implements PlaygroundDataSource {
-  @override
   final _mockPlot = MockPlotRepository();
   final _mockCrop = MockCropRepository();
+  @override
   List<PlaygroundWidget> getList() {
     return [
       //Add Your tasks here
@@ -157,10 +156,10 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
                     provider: SequencedViewModelProvider<
                         RecommendationsListViewModel>(
                   [
-                    MockRecommendationsListViewModel.build(),
-                    MockRecommendationsListViewModel.build(),
-                    MockRecommendationsListViewModel.build(),
-                    MockRecommendationsListViewModel.build(),
+                    MockRecommendationsListViewModel().build(),
+                    MockRecommendationsListViewModel().build(),
+                    MockRecommendationsListViewModel().build(),
+                    MockRecommendationsListViewModel().build(),
                   ],
                 ))),
             PlaygroundWidget(

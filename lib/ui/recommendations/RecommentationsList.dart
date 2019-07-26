@@ -7,6 +7,8 @@ import 'package:farmsmart_flutter/ui/common/ViewModelProviderBuilder.dart';
 import 'package:farmsmart_flutter/ui/common/headerAndFooterListView.dart';
 import 'package:farmsmart_flutter/ui/common/recommendation_card/recommendation_card.dart';
 import 'package:farmsmart_flutter/ui/common/recommendation_card/recommendation_card_styles.dart';
+import 'package:farmsmart_flutter/ui/common/recommendation_compact_card/recommendation_compact_card.dart';
+import 'package:farmsmart_flutter/ui/common/recommendation_compact_card/recommendation_compact_card_styles.dart';
 import 'package:farmsmart_flutter/ui/recommendations/viewmodel/RecommendationsListViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -111,9 +113,12 @@ class RecommendationsList extends StatelessWidget implements ListViewSection {
   itemBuilder() {
     final viewModel = _viewModelProvider.snapshot();
     return (BuildContext context, int index) {
-      return RecommendationCard(
-        viewModel: viewModel.items[index],
-      style: RecommendationCardStyles.buildStyle(),);
+      final itemViewModel = viewModel.items[index];
+      final isHero = (viewModel.isHeroItem != null) ? viewModel.isHeroItem(index) : false;
+      final item = isHero ?  RecommendationCard(
+        viewModel: itemViewModel,
+      style: RecommendationCardStyles.buildStyle(),) : RecommendationCompactCard(viewModel: itemViewModel, style: RecommendationCompactCardStyles.build(),);
+      return item;
     };
   }
 

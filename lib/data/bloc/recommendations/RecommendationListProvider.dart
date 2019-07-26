@@ -16,12 +16,16 @@ class RecommendationListProvider
     implements ViewModelProvider<RecommendationsListViewModel> {
   final String _title;
   final double _inputScale;
+  final double _heroThreshold; 
   final CropRepositoryInterface _cropRepo;
   final PlotRepositoryInterface _plotRepo;
   Basket<CropEntity> _cropBasket;
   List<CropEntity> _crops;
   //final UserProfileRepositoryInterface _profileRepo; //we need the current input factors from this. 
   final _controller = StreamController<RecommendationsListViewModel>.broadcast();
+
+  RecommendationEngine _recommendationBusinessLogic;
+    
   RecommendationsListViewModel _snapshot;
 
   RecommendationListProvider({
@@ -29,15 +33,22 @@ class RecommendationListProvider
     CropRepositoryInterface cropRepo,
     PlotRepositoryInterface plotRepo,
     double inputScale,
+    double heroThreshold = 0.8,
   })  : this._title = title,
         this._cropRepo = cropRepo,
         this._plotRepo = plotRepo,
-        this._inputScale = inputScale;
+        this._inputScale = inputScale,
+        this._heroThreshold = heroThreshold;
 
   @override
   RecommendationsListViewModel initial() {
     if (_snapshot == null) {
       _cropBasket = Basket<CropEntity>(_basketDidChange);
+      _recommendationBusinessLogic = RecommendationEngine(
+      inputFactors: {},
+      inputScale: _inputScale,
+      weightMatrix: {},
+    );
       _snapshot = _viewModel(
         status: LoadingStatus.LOADING,
         items: [],
@@ -66,19 +77,15 @@ class RecommendationListProvider
         canApply: !_cropBasket.isEmpty(),
         refresh: () => _update(_controller),
         apply: () => _add(_controller),
-        clear: () => _clear(_controller));
+        clear: () => _clear(_controller),
+        isHeroItem: _isHero );
   }
 
   RecommendationsListViewModel _modelFromCrops(
       StreamController<RecommendationsListViewModel> controller,
       List<CropEntity> crops) {
-    final recommendationBusinessLogic = RecommendationEngine(
-      inputFactors: {},
-      inputScale: _inputScale,
-      weightMatrix: {},
-    );
     final transformer = RecommendationCardTransformer(
-      engine: recommendationBusinessLogic,
+      engine: _recommendationBusinessLogic,
       basket: _cropBasket,
     );
     final items = crops.map((crop) {
@@ -112,6 +119,11 @@ class RecommendationListProvider
   void _clear(StreamController<RecommendationsListViewModel> controller) {
     _cropBasket.empty();
      _update(controller);
+  }
+
+  bool _isHero(int index) {
+    final score = _recommendationBusinessLogic.recommend(_crops[index].name);
+    return score >= _heroThreshold;
   }
 
   void dispose() {
