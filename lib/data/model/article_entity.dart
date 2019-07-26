@@ -13,7 +13,7 @@ class ArticleEntity {
   Status status;
   String summary;
   String title;
-  Timestamp published;
+  DateTime published;
 
   ArticleEntity(
       {this.id,

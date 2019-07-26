@@ -17,7 +17,7 @@ class ActionSheetListItemViewModel {
       this.type,
       this.checkBoxIcon,
       this.isSelected: false,
-      this.isDestructive,
+      this.isDestructive : false,
       this.onTap});
 }
 
@@ -117,15 +117,14 @@ class ActionSheetListItem extends StatelessWidget {
 
   Widget build(BuildContext context) {
     switch (_viewModel.type) {
-      case ActionType.simple:
-        _style = ActionSheetListItemStyle.defaultStyle();
-        break;
       case ActionType.withIcon:
         _style = ActionSheetListItemStyle.defaultStyle();
         break;
       case ActionType.selectable:
         _style = ActionSheetListItemStyle.selectableStyle();
         break;
+      default:
+        _style = ActionSheetListItemStyle.defaultStyle();
     }
 
     return Column(

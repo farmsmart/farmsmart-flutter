@@ -1,10 +1,10 @@
 import 'package:farmsmart_flutter/data/bloc/article/ArticleDetailTransformer.dart';
 import 'package:farmsmart_flutter/data/bloc/article/ArticleListItemViewModelTransformer.dart';
-import 'package:farmsmart_flutter/data/repositories/article/implementation/MockArticlesRepository.dart';
+import 'package:farmsmart_flutter/data/model/mock/MockArticle.dart';
 import 'package:intl/intl.dart';
 import 'package:test/test.dart';
 
-final testArticle = MockArticle.build();
+final testArticle = MockArticle().build();
 
 void main() {
   test('Article detail viewmodel transfomed from article correctly', () {
@@ -13,7 +13,7 @@ void main() {
     detailTransformer.setListItemTransformer(listTransformer);
     
     final articleDetailViewModel = detailTransformer.transform(from: testArticle);
-    final publishedDateString = DateFormat("d MMMM").format(testArticle.published.toDate());
+    final publishedDateString = DateFormat("d MMMM").format(testArticle.published);
 
     expect(articleDetailViewModel.title, testArticle.title);
     expect(articleDetailViewModel.body, testArticle.content);

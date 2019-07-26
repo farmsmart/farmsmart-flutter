@@ -1,8 +1,9 @@
 import 'package:farmsmart_flutter/ui/common/stage_card.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class StageCardStyles {
-  static StageCardStyle builtUpcomingStageStyle() {
+  static StageCardStyle buildReadyToStartStageStyle() {
     return _defaultStageCardStyle.copyWith(
         actionButtonStyle: _defaultRoundedButtonStyle.copyWith(
           backgroundColor: Color(0xff24d900),
@@ -18,7 +19,19 @@ class StageCardStyles {
               color: Color(0xffffffff),
               fontSize: 11,
               fontWeight: FontWeight.bold),
-        ));
+        ),);
+  }
+
+  static StageCardStyle buildUpcomingStageStyle() {
+    return buildReadyToStartStageStyle().copyWith(actionButtonStyle: _defaultRoundedButtonStyle.copyWith(
+          backgroundColor: Color(0xffe9eaf2),
+          buttonTextStyle: TextStyle(
+            fontSize: 13,
+            fontWeight: FontWeight.w500,
+            color: Color(0xff4c4e6e),
+          ),
+        ),
+        );
   }
 
   static StageCardStyle buildInProgressStageStyle() {
@@ -56,7 +69,7 @@ class StageCardStyles {
               color: Color(0xffffffff),
               fontSize: 11,
               fontWeight: FontWeight.bold),
-        ));
+      ), statusIcon: Icons.check);
   }
 
   static StageCardStyle _defaultStageCardStyle = StageCardStyle(

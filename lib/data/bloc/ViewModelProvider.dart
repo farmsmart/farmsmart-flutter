@@ -1,5 +1,8 @@
 import 'dart:async';
 
 abstract class ViewModelProvider<T> {
-  StreamController<T> provide();
+
+  StreamController<T> observe();
+  T initial();
+  
 }

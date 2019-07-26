@@ -6,6 +6,7 @@ import 'package:farmsmart_flutter/data/bloc/article/ArticleListItemViewModelTran
 import 'package:farmsmart_flutter/data/model/article_entity.dart';
 import 'package:farmsmart_flutter/data/repositories/article/ArticleRepositoryInterface.dart';
 import 'package:farmsmart_flutter/model/loading_status.dart';
+import 'package:farmsmart_flutter/ui/discover/viewModel/ArticleListItemViewModel.dart';
 import 'package:farmsmart_flutter/ui/discover/viewModel/ArticleListViewModel.dart';
 
 
@@ -18,6 +19,7 @@ class ArticleListProvider implements ViewModelProvider<ArticleListViewModel> {
   final ArticleRepositoryInterface _repo;
   final ArticleCollectionGroup _group;
   final String _title;
+  ArticleListViewModel _snapshot;
   ArticleListProvider(
       {String title, ArticleRepositoryInterface repository,
       ArticleCollectionGroup group = ArticleCollectionGroup.all})
@@ -30,35 +32,44 @@ class ArticleListProvider implements ViewModelProvider<ArticleListViewModel> {
 
   ArticleListViewModel _modelFromArticles(
       StreamController controller, List<ArticleEntity> articles) {
-    final detailTransformer = ArticleDetailViewModelTransformer();
-    final transformer = ArticleListItemViewModelTransformer(
-        detailTransformer: detailTransformer);
-    detailTransformer.setListItemTransformer(
-        transformer); //LH we add this after as depends on having the list transformer
+    final transformer = ArticleListItemViewModelTransformer.buildWithDetail(ArticleDetailViewModelTransformer());
     final items = articles.map((article) {
       return transformer.transform(from: article);
     }).toList();
-    return ArticleListViewModel(
-        title: _title,
-        status: LoadingStatus.SUCCESS,
-        articleListItemViewModels: items,
-        update: () => _update(controller));
+    return _viewModel(status: LoadingStatus.SUCCESS, items: items);
   }
 
   void _update(StreamController controller) {
     _repo.get(group: _group).then((articles) {
-      controller.sink.add(_modelFromArticles(controller, articles));
+      _snapshot = _modelFromArticles(controller, articles);
+      controller.sink.add(_snapshot);
     });
   }
 
-  @override
-  StreamController<ArticleListViewModel> provide() {
-    _update(_controller);
-    return _controller;
+  ArticleListViewModel _viewModel({ LoadingStatus status , List<ArticleListItemViewModel> items }) {
+    return ArticleListViewModel(
+        title: _title,
+        status: status,
+        articleListItemViewModels: items,
+        update: () => _update(_controller));
   }
 
   void dispose() {
     _controller.sink.close();
     _controller.close();
+  }
+
+  @override
+  ArticleListViewModel initial() {
+    if (_snapshot == null) {
+      _snapshot = _viewModel(status: LoadingStatus.LOADING, items: []);
+      _snapshot.update();
+    }
+    return _snapshot;
+  }
+
+  @override
+  StreamController<ArticleListViewModel> observe() {
+     return _controller;
   }
 }
