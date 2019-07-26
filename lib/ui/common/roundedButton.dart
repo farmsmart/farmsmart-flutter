@@ -114,7 +114,7 @@ class RoundedButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => _viewModel.onTap(),
+      onTap:_viewModel.onTap,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[

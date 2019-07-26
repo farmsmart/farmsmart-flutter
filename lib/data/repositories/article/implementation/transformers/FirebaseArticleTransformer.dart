@@ -30,13 +30,14 @@ class FlamelinkArticleTransformer
     final status = castOrNull<String>(from.data[STATUS]);
     final summary = castOrNull<String>(from.data[SUMMARY]);
     final title = castOrNull<String>(from.data[TITLE]);
+    final published = (meta.createdDate != null) ? meta.createdDate.toDate() : null;
     final entity = ArticleEntity(
         id: id,
         content: content,
         status: statusValues.map[status],
         summary: summary,
         title: title,
-        published: meta.createdDate);
+        published: published);
     var relatedRefs = [];
     var imageRefs = [];
     if (from.data[RELATED_ARTICLES] != null) {

@@ -12,7 +12,7 @@ class StageCardViewModel {
   String actionText;
   String statusTitle;
   Function action;
-  IconData statusIcon;
+  StageCardStyle style;
 
   StageCardViewModel(
       {this.subtitle,
@@ -20,7 +20,7 @@ class StageCardViewModel {
       this.actionText,
       this.statusTitle,
       this.action,
-      this.statusIcon});
+      this.style});
 }
 
 class StageCardStyle {
@@ -31,6 +31,7 @@ class StageCardStyle {
   final TextStyle titleTextStyle;
   final RoundedButtonStyle actionButtonStyle;
   final DogTagStyle statusTagStyle;
+  final IconData statusIcon;
 
   const StageCardStyle({
     this.cornerRadius,
@@ -40,6 +41,7 @@ class StageCardStyle {
     this.titleTextStyle,
     this.actionButtonStyle,
     this.statusTagStyle,
+    this.statusIcon
   });
 
   StageCardStyle copyWith(
@@ -49,7 +51,8 @@ class StageCardStyle {
       TextStyle subtitleTextStyle,
       TextStyle titleTextStyle,
       RoundedButtonStyle actionButtonStyle,
-      DogTagStyle statusTagStyle}) {
+      DogTagStyle statusTagStyle,
+      IconData statusIcon}) {
     return StageCardStyle(
         cornerRadius: cornerRadius ?? this.cornerRadius,
         backgroundColor: backgroundColor ?? this.backgroundColor,
@@ -57,7 +60,8 @@ class StageCardStyle {
         subtitleTextStyle: subtitleTextStyle ?? this.subtitleTextStyle,
         titleTextStyle: titleTextStyle ?? this.titleTextStyle,
         actionButtonStyle: actionButtonStyle ?? this.actionButtonStyle,
-        statusTagStyle: statusTagStyle ?? this.statusTagStyle);
+        statusTagStyle: statusTagStyle ?? this.statusTagStyle,
+         statusIcon: statusIcon ?? this.statusIcon);
   }
 }
 
@@ -165,7 +169,7 @@ class StageCard extends StatelessWidget {
                 DogTag(
                   viewModel: DogTagViewModel(
                       title: _viewModel.statusTitle,
-                      icon: _viewModel.statusIcon),
+                      icon: _style.statusIcon),
                   style: _style.statusTagStyle,
                 ),
               ],

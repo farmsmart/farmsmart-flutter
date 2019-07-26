@@ -42,7 +42,7 @@ packages:
       name: cached_network_image
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.1"
+    version: "1.1.0"
   charcode:
     dependency: transitive
     description:
@@ -131,7 +131,7 @@ packages:
       name: flutter_cache_manager
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.1"
+    version: "1.1.0"
   flutter_html:
     dependency: "direct main"
     description:
@@ -295,7 +295,7 @@ packages:
       name: node_preamble
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.4.5"
+    version: "1.4.4"
   package_config:
     dependency: transitive
     description:
@@ -309,7 +309,7 @@ packages:
       name: package_info
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.4.0+6"
+    version: "0.4.0+4"
   package_resolver:
     dependency: transitive
     description:
@@ -330,7 +330,7 @@ packages:
       name: path_provider
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.2.0"
+    version: "1.1.2"
   pedantic:
     dependency: transitive
     description:
@@ -386,7 +386,7 @@ packages:
       name: share
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.6.2+1"
+    version: "0.6.1+1"
   shared_preferences:
     dependency: "direct main"
     description:
@@ -454,7 +454,7 @@ packages:
       name: sqflite
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.6+2"
+    version: "1.1.6+1"
   stack_trace:
     dependency: transitive
     description:
@@ -559,7 +559,7 @@ packages:
       name: webview_flutter
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.10+3"
+    version: "0.3.10"
   xml:
     dependency: transitive
     description:
@@ -576,4 +576,4 @@ packages:
     version: "2.1.16"
 sdks:
   dart: ">=2.4.0 <3.0.0"
-  flutter: ">=1.6.0 <2.0.0"
+  flutter: ">=1.5.0 <2.0.0"
