@@ -13,21 +13,21 @@ class PlaygroundRecommendationCompactCardDataSource extends PlaygroundDataSource
       PlaygroundWidget(
         title: 'Add to plot style static',
         child: RecommendationCompactCard(
-          style: RecommendationCompactCardStyles.buildAddToPlotStyle(),
+          style: RecommendationCompactCardStyles.build(),
           viewModel: MockRecommendationCardViewModel.buildHardCodedAddToPlotState(),
         ),
       ),
       PlaygroundWidget(
         title: 'Add to plot style',
         child: RecommendationCompactCard(
-          style: RecommendationCompactCardStyles.buildAddToPlotStyle(),
+          style: RecommendationCompactCardStyles.build(),
           viewModel: MockRecommendationCardViewModel.buildRandomAddToPlotState(),
         ),
       ),
       PlaygroundWidget(
         title: 'Added to plot style',
         child: RecommendationCompactCard(
-          style: RecommendationCompactCardStyles.buildAddedToPlotStyle(),
+          style: RecommendationCompactCardStyles.build(),
           viewModel: MockRecommendationCardViewModel.buildRandomAddedToPlotState(),
         ),
       )

@@ -4,6 +4,8 @@ import 'package:farmsmart_flutter/ui/common/rounded_image_overlay.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+import '../rounded_button_stateless.dart';
+
 export 'package:farmsmart_flutter/ui/common/Dogtag.dart';
 export 'package:farmsmart_flutter/ui/common/roundedButton.dart';
 
@@ -26,7 +28,6 @@ class RecommendationDetailCardViewModel {
   Function action;
   bool isAdded;
 
-
   RecommendationDetailCardViewModel({
     this.title,
     this.subtitle,
@@ -40,7 +41,7 @@ class RecommendationDetailCardViewModel {
 class RecommendationDetailCardStyle {
   final TextStyle titleTextStyle;
   final DogTagStyle subtitleTagStyle;
-  final RoundedButtonStyle actionStyle;
+  final RoundedButtonStateFulStyle actionStyle;
   final EdgeInsets contentPadding;
   final BorderRadius imageRadius;
   final double imageSize;
@@ -111,17 +112,36 @@ class _DefaultStyle extends RecommendationDetailCardStyle {
     spacing: 5.5,
   );
 
-  final RoundedButtonStyle actionStyle = const RoundedButtonStyle(
-    backgroundColor: Color(0xff24d900),
-    borderRadius: BorderRadius.all(Radius.circular(12)),
-    buttonTextStyle: TextStyle(
-        fontSize: 15, fontWeight: FontWeight.bold, color: Color(0xffffffff)),
-    iconEdgePadding: 5,
-    height: 45,
-    width: double.infinity,
-    buttonIconSize: null,
-    iconButtonColor: Color(0xFFFFFFFF),
-    buttonShape: BoxShape.rectangle,
+  final RoundedButtonStateFulStyle actionStyle = defaultRoundedButtonStyle;
+
+  static const defaultRoundedButtonStyle = RoundedButtonStateFulStyle(
+    activeRoundedButtonStyle: const RoundedButtonStyle(
+      backgroundColor: Color(0xff24d900),
+      borderRadius: BorderRadius.all(Radius.circular(12)),
+      buttonTextStyle: TextStyle(
+        fontSize: 15,
+        fontWeight: FontWeight.w500,
+        color: Color(0xffffffff),
+      ),
+      iconEdgePadding: 5,
+      height: 45,
+      width: double.infinity,
+      buttonIconSize: null,
+      iconButtonColor: Color(0xFFFFFFFF),
+      buttonShape: BoxShape.rectangle,
+    ),
+    inactiveRoundedButtonStyle: const RoundedButtonStyle(
+      backgroundColor: Color(0xFFFFFFFF),
+      borderRadius: BorderRadius.all(Radius.circular(12)),
+      buttonTextStyle: TextStyle(
+          fontSize: 15, fontWeight: FontWeight.w500, color: Color(0xff4c4e6e)),
+      iconEdgePadding: 5,
+      height: 45,
+      width: double.infinity,
+      buttonIconSize: null,
+      iconButtonColor: Color(0xFFFFFFFF),
+      buttonShape: BoxShape.rectangle,
+    ),
   );
 
   final EdgeInsets contentPadding = const EdgeInsets.all(32.0);
@@ -185,13 +205,16 @@ class RecommendationDetailCard extends StatelessWidget {
 
   Container buildActionButton() {
     return Container(
-      decoration: _style.actionBoxDecoration,
-      child: RoundedButton(
-        viewModel: RoundedButtonViewModel(
-          title: _viewModel.actionText,
-          onTap: _viewModel.action,
-        ),
+      decoration: _viewModel.isAdded ? _style.actionBoxDecoration : null,
+      child: RoundedButtonStateFul(
         style: _style.actionStyle,
+        viewModel: RoundedButtonStateFulViewModel(
+          isActive: !_viewModel.isAdded,
+          roundedButtonViewModel: RoundedButtonViewModel(
+            title: _viewModel.actionText,
+            onTap: _viewModel.action,
+          ),
+        ),
       ),
     );
   }

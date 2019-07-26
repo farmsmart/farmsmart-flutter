@@ -1,5 +1,6 @@
 import 'package:farmsmart_flutter/ui/common/recommendation_card/recommendation_card_view_model.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
+import 'package:farmsmart_flutter/ui/common/rounded_button_stateless.dart';
 import 'package:farmsmart_flutter/ui/common/rounded_image_overlay.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -22,8 +23,8 @@ class RecommendationCompactCardStyle {
   final TextStyle titleTextStyle;
   final TextStyle subtitleTextStyle;
   final TextStyle descriptionTextStyle;
-  final RoundedButtonStyle leftActionButtonStyle;
-  final RoundedButtonStyle rightActionButtonStyle;
+  final RoundedButtonStateFulStyle leftActionButtonStyle;
+  final RoundedButtonStateFulStyle rightActionButtonStyle;
   final double imageHeight;
   final BorderRadiusGeometry imageBorderRadius;
   final int descriptionMaxLines;
@@ -55,8 +56,8 @@ class RecommendationCompactCardStyle {
     TextStyle titleTextStyle,
     TextStyle subtitleTextStyle,
     TextStyle descriptionTextStyle,
-    RoundedButtonStyle leftActionButtonStyle,
-    RoundedButtonStyle rightActionButtonStyle,
+    RoundedButtonStateFulStyle leftActionButtonStyle,
+    RoundedButtonStateFulStyle rightActionButtonStyle,
     double imageHeight,
     BorderRadiusGeometry imageBorderRadius,
     int descriptionMaxLines,
@@ -103,8 +104,8 @@ class _DefaultStyle extends RecommendationCompactCardStyle {
     color: Color(0xff767690),
     fontSize: 14,
   );
-  final RoundedButtonStyle leftActionButtonStyle = defaultRoundedButtonStyle;
-  final RoundedButtonStyle rightActionButtonStyle = defaultRoundedButtonStyle;
+  final RoundedButtonStateFulStyle leftActionButtonStyle = defaultRoundedButtonStyle;
+  final RoundedButtonStateFulStyle rightActionButtonStyle = defaultRoundedButtonStyle;
   final double imageHeight = 80;
   final BorderRadiusGeometry imageBorderRadius =
       const BorderRadius.all(Radius.circular(12.0));
@@ -118,19 +119,35 @@ class _DefaultStyle extends RecommendationCompactCardStyle {
 
   final String overlayIcon = 'assets/icons/tick_large.png';
 
-  static const defaultRoundedButtonStyle = const RoundedButtonStyle(
-    backgroundColor: Color(0xffe9eaf2),
-    borderRadius: BorderRadius.all(Radius.circular(8)),
-    buttonTextStyle: TextStyle(
-        fontSize: 13, fontWeight: FontWeight.w500, color: Color(0xff4c4e6e)),
-    iconEdgePadding: 5,
-    height: 40,
-    width: double.infinity,
-    buttonIconSize: null,
-    iconButtonColor: Color(0xFFFFFFFF),
-    buttonShape: BoxShape.rectangle,
+  static const defaultRoundedButtonStyle = RoundedButtonStateFulStyle(
+    activeRoundedButtonStyle: const RoundedButtonStyle(
+      backgroundColor: Color(0xff24d900),
+      borderRadius: BorderRadius.all(Radius.circular(8)),
+      buttonTextStyle: TextStyle(
+        fontSize: 13,
+        fontWeight: FontWeight.w500,
+        color: Color(0xffffffff),
+      ),
+      iconEdgePadding: 5,
+      height: 40,
+      width: double.infinity,
+      buttonIconSize: null,
+      iconButtonColor: Color(0xFFFFFFFF),
+      buttonShape: BoxShape.rectangle,
+    ),
+    inactiveRoundedButtonStyle: const RoundedButtonStyle(
+      backgroundColor: Color(0xffe9eaf2),
+      borderRadius: BorderRadius.all(Radius.circular(8)),
+      buttonTextStyle: TextStyle(
+          fontSize: 13, fontWeight: FontWeight.w500, color: Color(0xff4c4e6e)),
+      iconEdgePadding: 5,
+      height: 40,
+      width: double.infinity,
+      buttonIconSize: null,
+      iconButtonColor: Color(0xFFFFFFFF),
+      buttonShape: BoxShape.rectangle,
+    ),
   );
-
   const _DefaultStyle(
       {TextStyle titleTextStyle,
       TextStyle subtitleTextStyle,
@@ -267,11 +284,13 @@ class RecommendationCompactCard extends StatelessWidget {
       child: Row(
         children: <Widget>[
           Expanded(
-            child: RoundedButton(
+            child: RoundedButtonStateFul(
               style: _style.leftActionButtonStyle,
-              viewModel: RoundedButtonViewModel(
-                title: _viewModel.detailActionText,
-                onTap: _viewModel.detailAction,
+              viewModel: RoundedButtonStateFulViewModel(
+                roundedButtonViewModel: RoundedButtonViewModel(
+                  title: _viewModel.detailActionText,
+                  onTap: _viewModel.detailAction,
+                ),
               ),
             ),
           ),
@@ -280,12 +299,15 @@ class RecommendationCompactCard extends StatelessWidget {
           ),
           Expanded(
             child: Container(
-              decoration: _style.rightActionBoxDecoration,
-              child: RoundedButton(
+              decoration: _viewModel.isAdded ? _style.rightActionBoxDecoration : null,
+              child: RoundedButtonStateFul(
                 style: _style.rightActionButtonStyle,
-                viewModel: RoundedButtonViewModel(
-                  title: _viewModel.addActionText,
-                  onTap: _viewModel.addAction,
+                viewModel: RoundedButtonStateFulViewModel(
+                  isActive: !_viewModel.isAdded,
+                  roundedButtonViewModel: RoundedButtonViewModel(
+                    title: _viewModel.addActionText,
+                    onTap: _viewModel.addAction,
+                  ),
                 ),
               ),
             ),
