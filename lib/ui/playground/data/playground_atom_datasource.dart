@@ -1,12 +1,12 @@
 import 'package:farmsmart_flutter/data/bloc/article/ArticleDetailTransformer.dart';
 import 'package:farmsmart_flutter/data/bloc/article/ArticleListItemViewModelTransformer.dart';
-import 'package:farmsmart_flutter/ui/common/ActionSheetListItem.dart';
 import 'package:farmsmart_flutter/data/model/mock/MockArticle.dart';
+import 'package:farmsmart_flutter/ui/common/ActionSheetListItem.dart';
 import 'package:farmsmart_flutter/ui/common/CircularProgress.dart';
 import 'package:farmsmart_flutter/ui/common/DogTagStyles.dart';
 import 'package:farmsmart_flutter/ui/common/Dogtag.dart';
 import 'package:farmsmart_flutter/ui/common/recommendation_card/recommendation_card.dart';
-import 'package:farmsmart_flutter/ui/common/recommendation_detail_listitem/recommendation_detail_listitem.dart';
+import 'package:farmsmart_flutter/ui/common/recommendation_compact_card/recommendation_compact_card.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
 import 'package:farmsmart_flutter/ui/common/stage_card.dart';
 import 'package:farmsmart_flutter/ui/discover/HeroListItem.dart';
@@ -17,11 +17,13 @@ import 'package:farmsmart_flutter/ui/mockData/MockRoundedButtonViewModel.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockStageCardViewModel.dart';
 import 'package:farmsmart_flutter/ui/playground/data/playground_data_source.dart';
 import 'package:farmsmart_flutter/ui/playground/data/playground_recommendation_card_datasource.dart';
+import 'package:farmsmart_flutter/ui/playground/data/playground_recommendation_compact_card_datasource.dart';
 import 'package:farmsmart_flutter/ui/playground/data/playground_recommendation_detail_card_datasource.dart';
 import 'package:farmsmart_flutter/ui/playground/data/playground_recommendation_detail_listitem_datasource.dart';
 import 'package:farmsmart_flutter/ui/playground/playground_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+
 import '../playground_view.dart';
 
 MockArticle _articleBuilder = MockArticle();
@@ -195,9 +197,16 @@ class PlayGroundAtomDataSource implements PlaygroundDataSource {
       PlaygroundWidget(
         title: 'Recommendation detail listitem',
         child: PlaygroundView(
-          widgetList: PlaygroundRecommendationDetailListItemDatasource().getList(),
+          widgetList: PlaygroundRecommendationDetailListItemDatasource()
+              .getList(),
         ),
       ),
+      PlaygroundWidget(
+        title: 'Recommendation compact card',
+        child: PlaygroundView(
+          widgetList: PlaygroundRecommendationCompactCardDataSource().getList(),
+        ),
+      )
     ];
   }
 }

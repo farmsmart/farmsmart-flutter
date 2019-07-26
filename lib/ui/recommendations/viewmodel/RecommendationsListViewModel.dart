@@ -1,7 +1,7 @@
 import 'package:farmsmart_flutter/model/loading_status.dart';
 import 'package:farmsmart_flutter/ui/common/LoadableViewModel.dart';
 import 'package:farmsmart_flutter/ui/common/RefreshableViewModel.dart';
-import 'package:farmsmart_flutter/ui/common/recommendation_card/recommendation_card.dart';
+import 'package:farmsmart_flutter/ui/common/recommendation_card/recommendation_card_view_model.dart';
 
 class RecommendationsListViewModel implements RefreshableViewModel, LoadableViewModel{
   static final error = RecommendationsListViewModel(loadingStatus: LoadingStatus.ERROR);

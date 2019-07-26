@@ -1,14 +1,14 @@
-import 'package:farmsmart_flutter/ui/common/recommendation_card/recommendation_card.dart';
+import 'package:farmsmart_flutter/ui/common/recommendation_compact_card/recommendation_compact_card.dart';
 import 'package:flutter/widgets.dart';
 
 import '../rounded_button_stateful.dart';
 
-class RecommendationCardStyles {
-  static RecommendationCardStyle buildStyle() =>
+class RecommendationCompactCardStyles {
+  static RecommendationCompactCardStyle build() =>
       _defaultRecommendationCardStyle;
 
-  static RecommendationCardStyle _defaultRecommendationCardStyle =
-      RecommendationCardStyle(
+  static RecommendationCompactCardStyle _defaultRecommendationCardStyle =
+      RecommendationCompactCardStyle(
     titleTextStyle: const TextStyle(
       color: Color(0xff1a1b46),
       fontSize: 17,
@@ -24,12 +24,12 @@ class RecommendationCardStyles {
     ),
     leftActionButtonStyle: _defaultLeftActionRoundedButtonStyle,
     rightActionButtonStyle: _defaultRightActionRoundedButtonStyle,
-    imageHeight: 152,
+    imageHeight: 80,
     imageBorderRadius: const BorderRadius.all(Radius.circular(12.0)),
     descriptionMaxLines: 2,
     contentPadding: const EdgeInsets.all(32.0),
-    overlayIconWidth: 54,
-    overlayIconHeight: 54,
+    overlayIconWidth: 26,
+    overlayIconHeight: 26,
     overlayColor: Color(0x1425df0c),
     overlayIcon: 'assets/icons/tick_large.png',
     rightActionBoxDecoration: BoxDecoration(

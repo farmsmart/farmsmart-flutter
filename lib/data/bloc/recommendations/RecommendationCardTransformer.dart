@@ -1,6 +1,6 @@
 import 'package:farmsmart_flutter/data/bloc/recommendations/RecommendationEngine.dart';
 import 'package:farmsmart_flutter/data/model/crop_entity.dart';
-import 'package:farmsmart_flutter/ui/common/recommendation_card/recommendation_card.dart';
+import 'package:farmsmart_flutter/ui/common/recommendation_card/recommendation_card_view_model.dart';
 import 'package:intl/intl.dart';
 
 import '../Basket.dart';
