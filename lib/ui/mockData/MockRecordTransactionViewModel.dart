@@ -1,9 +1,6 @@
-import 'package:farmsmart_flutter/model/loading_status.dart';
-import 'package:farmsmart_flutter/ui/common/MockString.dart';
+import 'package:farmsmart_flutter/data/model/mock/MockString.dart';
 import 'package:farmsmart_flutter/ui/profitloss/RecordTransaction.dart';
 import 'package:farmsmart_flutter/ui/profitloss/RecordTransactionListItem.dart';
-import 'dart:math';
-import 'package:flutter/material.dart';
 
 class MockRecordTransactionViewModel {
   static RecordTransactionViewModel buildSaleTransaction() {
