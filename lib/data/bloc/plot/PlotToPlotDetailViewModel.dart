@@ -1,7 +1,7 @@
 import 'package:farmsmart_flutter/data/bloc/StaticViewModelProvider.dart';
 import 'package:farmsmart_flutter/data/bloc/article/ArticleDetailTransformer.dart';
 import 'package:farmsmart_flutter/data/bloc/article/ArticleListItemViewModelTransformer.dart';
-import 'package:farmsmart_flutter/data/bloc/recommendations/CropDetailtransformer.dart';
+import 'package:farmsmart_flutter/data/bloc/crop/CropDetailTransformer.dart';
 import 'package:farmsmart_flutter/data/model/PlotEntity.dart';
 import 'package:farmsmart_flutter/data/model/crop_entity.dart';
 import 'package:farmsmart_flutter/ui/discover/viewModel/ArticleDetailViewModel.dart';

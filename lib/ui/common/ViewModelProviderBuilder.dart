@@ -49,7 +49,6 @@ class ViewModelProviderBuilder<T> extends StatelessWidget {
               ? LoadingStatus.ERROR
               : LoadingStatus.SUCCESS;
           final loadable = castOrNull<LoadableViewModel>(snapshot.data );
-          print("State changed on vm " + snapshot.data.toString());
           if (loadable != null) {
             status = loadable.loadingStatus;
           }

@@ -7,6 +7,8 @@ import 'package:farmsmart_flutter/ui/discover/ArticleDetail.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import 'CropInfoList.dart';
+
 class _Strings {
 
 }
@@ -102,7 +104,8 @@ class CropDetail extends StatelessWidget implements ListViewSection {
       AsyncSnapshot<CropDetailViewModel> snapshot}) {
     final viewModel = snapshot.data;
     final article = ArticleDetail(viewModel: viewModel,);
-    final listBuilder =  SectionedListView(sections: [article]);
+    final infoItems = CropInfoList(items: viewModel.infoItems);
+    final listBuilder =  SectionedListView(sections: [article,infoItems]);
     _listBuilder = listBuilder;
     return Scaffold(
       appBar: _buildAppBar(context),

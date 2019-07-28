@@ -2,9 +2,7 @@ import 'dart:async';
 
 import 'package:farmsmart_flutter/data/bloc/Basket.dart';
 import 'package:farmsmart_flutter/data/bloc/StaticViewModelProvider.dart';
-import 'package:farmsmart_flutter/data/bloc/article/ArticleDetailTransformer.dart';
-import 'package:farmsmart_flutter/data/bloc/article/ArticleListItemViewModelTransformer.dart';
-import 'package:farmsmart_flutter/data/bloc/recommendations/CropDetailtransformer.dart';
+import 'package:farmsmart_flutter/data/bloc/crop/CropDetailTransformer.dart';
 import 'package:farmsmart_flutter/data/bloc/recommendations/RecommendationEngine.dart';
 import 'package:farmsmart_flutter/data/model/crop_entity.dart';
 import 'package:farmsmart_flutter/data/repositories/crop/CropRepositoryInterface.dart';
