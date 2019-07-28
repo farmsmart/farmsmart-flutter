@@ -15,7 +15,7 @@ final _plotBuilder = MockPlotEntity();
 
 class MockPlotRepository implements PlotRepositoryInterface {
   final _rand = Random(0);
-  final _errorOneIn = 10;
+  final _errorOneIn = 100;
   final _plotStreamController =  StreamController<List<PlotEntity>>.broadcast(); 
   List<PlotEntity> _plots = [];
 
@@ -23,10 +23,13 @@ class MockPlotRepository implements PlotRepositoryInterface {
 
   @override
   Future<PlotEntity> addPlot({ProfileEntity toProfile, PlotInfoEntity plotInfo, CropEntity crop}) {
-    final entity = _plotBuilder.buildWith(crop);
-    _plots.add(entity);
-    _update();
-    return Future.value(entity);
+    final entity = _plotBuilder.buildWith(crop).then((newPlot){
+      _plots.add(newPlot);
+      _update();
+      return newPlot;
+    });
+   
+    return entity;
   }
 
   @override

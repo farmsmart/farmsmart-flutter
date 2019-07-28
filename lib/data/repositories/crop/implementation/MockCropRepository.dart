@@ -11,7 +11,7 @@ class MockCropRepository implements CropRepositoryInterface {
   final _list = MockCrop.list();
   final _delay = Duration(milliseconds: 200);
   final _streamEventCount = 50;
-  final _errorOneIn = 10;
+  final _errorOneIn = 100;
 
   @override
   Future<List<CropEntity>> getCollection(EntityCollection<CropEntity> collection) {

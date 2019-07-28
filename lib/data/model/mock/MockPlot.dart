@@ -34,19 +34,21 @@ class MockPlotEntity extends MockEntity<PlotEntity> {
     return entity;
   }
 
-  PlotEntity buildWith(CropEntity crop) {
+  Future<PlotEntity> buildWith(CropEntity crop) {
     if (crop == null) {
-      return build();
+      return Future.value(build());
     }
-    return PlotEntity(
+    return crop.stageArticles.getEntities(limit: 10).then((articles) {
+        final stages = articles.map((article) {
+            return MockStage().buildNewFromArticle(article);
+        }).toList();
+        return PlotEntity(
         id: _identifiers.identifier(),
         title: crop.name,
         crop: crop,
         score: 0.5,
-        stages: _mockStage.sequence(
-          starting: _dates.randomYearAgo(),
-          ending: _dates.randomMonthAgo(),
-          inProgress: _rand.nextBool(),
-        ));
+        stages: stages);
+    });        
+    
   }
 }
