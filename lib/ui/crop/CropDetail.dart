@@ -88,8 +88,8 @@ class CropDetail extends StatelessWidget implements ListViewSection {
   }
 
   @override
-  int length() {
-    return _listBuilder.length();
+  int itemCount() {
+    return _listBuilder.itemCount();
   }
 
   Widget _buildSuccess(

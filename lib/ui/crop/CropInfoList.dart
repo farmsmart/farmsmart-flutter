@@ -9,7 +9,7 @@ class CropInfoList extends StatelessWidget implements  ListViewSection {
   const CropInfoList({Key key, List<RecommendationDetailListItemViewModel> items}) : this._items = items, super(key: key); 
   @override
   Widget build(BuildContext context) {
-    return HeaderAndFooterListView(itemBuilder: itemBuilder(), itemCount: length(),);
+    return HeaderAndFooterListView(itemBuilder: itemBuilder(), itemCount: itemCount(),);
   }
 
   @override
@@ -21,7 +21,7 @@ class CropInfoList extends StatelessWidget implements  ListViewSection {
   }
 
   @override
-  int length() {
+  int itemCount() {
     return _items.length;
   }
 }

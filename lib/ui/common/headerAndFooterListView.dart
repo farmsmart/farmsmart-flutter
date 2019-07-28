@@ -28,13 +28,13 @@ class HeaderAndFooterListView extends StatelessWidget implements ListViewSection
     return ListView.builder(
       physics: _physics,
       shrinkWrap: _shrinkWrap,
-      itemCount: length(),
+      itemCount: itemCount(),
       itemBuilder: itemBuilder(),
     );
   }
 
   @override
-  int length() {
+  int itemCount() {
     int headerLength =  _headers.length;
     int footerLength =  _footers.length;
     return headerLength + _containedItemCount + footerLength;

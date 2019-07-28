@@ -136,7 +136,7 @@ class RecommendationsList extends StatelessWidget implements ListViewSection {
   }
 
   @override
-  int length() {
+  int itemCount() {
     return _viewModelProvider.snapshot().items.length;
   }
 
@@ -199,7 +199,7 @@ class RecommendationsList extends StatelessWidget implements ListViewSection {
       shrinkWrap: true,
       physics: ScrollPhysics(),
       itemBuilder: itemBuilder(),
-      itemCount: length(),
+      itemCount: itemCount(),
     );
     return headedList;
   }

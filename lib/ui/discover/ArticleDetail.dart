@@ -148,8 +148,8 @@ class ArticleDetail extends StatelessWidget implements ListViewSection {
   }
 
   @override
-  int length() {
-    return _content().length();
+  int itemCount() {
+    return _content().itemCount();
   }
 
   void _share() async {
