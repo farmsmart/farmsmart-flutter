@@ -5,17 +5,7 @@ import 'package:farmsmart_flutter/ui/common/ViewModelProviderBuilder.dart';
 import 'package:farmsmart_flutter/ui/crop/viewmodel/CropDetailViewModel.dart';
 import 'package:farmsmart_flutter/ui/discover/ArticleDetail.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-
 import 'CropInfoList.dart';
-
-class _Strings {
-
-}
-
-class _Constants {
-
-}
 
 abstract class CropDetailStyle {
   final TextStyle titleTextStyle;
@@ -66,15 +56,18 @@ const CropDetailStyle _defaultStyle = const _DefaultStyle();
 class CropDetail extends StatelessWidget implements ListViewSection {
   final CropDetailStyle _style;
   final ViewModelProvider<CropDetailViewModel> _viewModelProvider;
+  final Widget _header;
   SectionedListView _listBuilder;
   CropDetail._({
     Key key,
     ViewModelProvider<CropDetailViewModel> provider,
     CropDetailStyle style,
     SectionedListView listBuilder,
+    Widget header,
   })  : this._style = style,
         this._viewModelProvider = provider,
         this._listBuilder = listBuilder,
+        this._header = header,
         super(key: key);
 
   factory CropDetail({ViewModelProvider<CropDetailViewModel> provider,
@@ -103,9 +96,10 @@ class CropDetail extends StatelessWidget implements ListViewSection {
       {BuildContext context,
       AsyncSnapshot<CropDetailViewModel> snapshot}) {
     final viewModel = snapshot.data;
-    final article = ArticleDetail(viewModel: viewModel,);
+    final List<ListViewSection> headers = (_header !=null ) ? [ListViewWidgetSection(_header)] : [];
+    final article = ArticleDetail(viewModel: viewModel, showHeader: (_header == null));
     final infoItems = CropInfoList(items: viewModel.infoItems);
-    final listBuilder =  SectionedListView(sections: [article,infoItems]);
+    final listBuilder =  SectionedListView(sections: headers + [article,infoItems]);
     _listBuilder = listBuilder;
     return Scaffold(
       appBar: _buildAppBar(context),
@@ -118,8 +112,5 @@ class CropDetail extends StatelessWidget implements ListViewSection {
       shareAction: null,
     ).build(context);
   }
-
-
-
   
 }

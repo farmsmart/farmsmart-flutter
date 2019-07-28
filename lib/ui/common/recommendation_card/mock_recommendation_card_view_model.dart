@@ -16,6 +16,7 @@ class MockRecommendationCardViewModel {
       addAction: () {},
       image: _mockFutureString('http://www.freemagebank.com/wp-content/uploads/edd/2015/07/GL0000302LR.jpg'),
       isAdded: Random().nextBool(),
+      isHero: Random().nextBool(),
     );
   }
 

@@ -23,6 +23,10 @@ class _Strings {
   static final addCrop = "Add Another Crop";
 }
 
+class _Constants {
+  static const inputScale = 10.0;
+}
+
 class PlotListProvider implements ViewModelProvider<PlotListViewModel> {
   final PlotRepositoryInterface _plotRepo;
   final CropRepositoryInterface _cropRepo;
@@ -98,6 +102,7 @@ class PlotListProvider implements ViewModelProvider<PlotListViewModel> {
       {LoadingStatus status, List<PlotListItemViewModel> items = const []}) {
     final recommendationsProvider = RecommendationListProvider(
       title: _Strings.recommendations,
+      inputScale: _Constants.inputScale,
       cropRepo: _cropRepo,
       plotRepo: _plotRepo,
     );

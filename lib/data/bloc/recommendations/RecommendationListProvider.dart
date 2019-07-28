@@ -5,6 +5,7 @@ import 'package:farmsmart_flutter/data/bloc/StaticViewModelProvider.dart';
 import 'package:farmsmart_flutter/data/bloc/crop/CropDetailTransformer.dart';
 import 'package:farmsmart_flutter/data/bloc/recommendations/RecommendationEngine.dart';
 import 'package:farmsmart_flutter/data/model/crop_entity.dart';
+import 'package:farmsmart_flutter/data/model/mock/MockRecommendation.dart';
 import 'package:farmsmart_flutter/data/repositories/crop/CropRepositoryInterface.dart';
 import 'package:farmsmart_flutter/data/repositories/plot/PlotRepositoryInterface.dart';
 import 'package:farmsmart_flutter/model/loading_status.dart';
@@ -49,9 +50,9 @@ class RecommendationListProvider
     if (_snapshot == null) {
       _cropBasket = Basket<CropEntity>(_basketDidChange);
       _recommendationBusinessLogic = RecommendationEngine(
-        inputFactors: {},
+        inputFactors: harryInput,
         inputScale: _inputScale,
-        weightMatrix: {},
+        weightMatrix: harryWeights,
       );
       _snapshot = _viewModel(
         status: LoadingStatus.LOADING,
@@ -73,7 +74,7 @@ class RecommendationListProvider
   }
 
   RecommendationsListViewModel _viewModel(
-      {LoadingStatus status, List<RecommendationCardViewModel> items}) {
+      {LoadingStatus status, List<RecommendationCardViewModel> items, Function heroFunction,  ViewModelProvider<CropDetailViewModel> provider }) {
     return RecommendationsListViewModel(
       title: _title,
       items: items,
@@ -82,8 +83,6 @@ class RecommendationListProvider
       refresh: () => _update(_controller),
       apply: () => _add(_controller),
       clear: () => _clear(_controller),
-      isHeroItem: _isHero,
-      detailProvider: _detailProvider,
     );
   }
 
@@ -93,11 +92,16 @@ class RecommendationListProvider
     final transformer = RecommendationCardTransformer(
       engine: _recommendationBusinessLogic,
       basket: _cropBasket,
+      provider: _detailProvider,
+      isHero: _isHero,
     );
-    final items = crops.map((crop) {
+    List<RecommendationCardViewModel> items = crops.map((crop) {
       return transformer.transform(from: crop);
     }).toList();
-    return _viewModel(status: LoadingStatus.SUCCESS, items: items);
+    items.sort((a,b) {
+      return b.score.compareTo(a.score);
+    });
+    return _viewModel(status: LoadingStatus.SUCCESS, items: items,);
   }
 
   void _basketDidChange(List<CropEntity> old) {
@@ -108,13 +112,7 @@ class RecommendationListProvider
   void _update(StreamController<RecommendationsListViewModel> controller) {
     controller.sink.add(_viewModel(status: LoadingStatus.LOADING, items: []));
     _cropRepo.get().then((crops) {
-      var sortedCrops = crops;
-      sortedCrops.sort((a,b) {
-        final aScore = _recommendationBusinessLogic.recommend(a.id);
-        final bScore = _recommendationBusinessLogic.recommend(b.id);
-        return aScore.compareTo(bScore);
-      });
-      _crops = sortedCrops;
+      _crops = crops;
       _snapshot = _modelFromCrops(controller, crops);
       controller.sink.add(_snapshot);
     }).catchError((error) {
@@ -134,13 +132,12 @@ class RecommendationListProvider
     _update(controller);
   }
 
-  bool _isHero(int index) {
-    final score = _recommendationBusinessLogic.recommend(_crops[index].id);
+  bool _isHero(CropEntity crop) {
+    final score = _recommendationBusinessLogic.recommend(crop.id);
     return score >= _heroThreshold;
   }
 
-  ViewModelProvider<CropDetailViewModel> _detailProvider(int index) {
-    final crop = _crops[index];
+  ViewModelProvider<CropDetailViewModel> _detailProvider(CropEntity crop) {
     final transformer = CropDetailTransformer();
     final cropViewModel =transformer.transform(from: crop);
     final provider = StaticViewModelProvider<CropDetailViewModel>(cropViewModel);

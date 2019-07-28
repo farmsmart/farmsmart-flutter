@@ -116,13 +116,11 @@ class RecommendationsList extends StatelessWidget implements ListViewSection {
     final viewModel = _viewModelProvider.snapshot();
     return (BuildContext context, int index) {
       final itemViewModel = viewModel.items[index];
-      final isHero =
-          (viewModel.isHeroItem != null) ? viewModel.isHeroItem(index) : false;
       final detailAction = () => _tappedDetail(
             context: context,
-            provider: viewModel.detailProvider(index),
+            provider: itemViewModel.detailProvider,
           );
-      final item = isHero
+      final item = itemViewModel.isHero
           ? RecommendationCard(
               viewModel: itemViewModel,
               detailAction: detailAction,

@@ -6,13 +6,11 @@ import 'package:farmsmart_flutter/ui/common/recommendation_card/mock_recommendat
 import 'RecommendationsListViewModel.dart';
 
 class MockRecommendationsListViewModel {
-  final Random _rand = Random(0);
   RecommendationsListViewModel build() {
     return RecommendationsListViewModel(
         title: "test",
         loadingStatus: LoadingStatus.SUCCESS,
         canApply: false,
-        isHeroItem: _randomBool,
         items: [
           MockRecommendationCardViewModel.buildRandomState(),
           MockRecommendationCardViewModel.buildRandomState(),
@@ -20,8 +18,5 @@ class MockRecommendationsListViewModel {
           MockRecommendationCardViewModel.buildRandomState(),
           MockRecommendationCardViewModel.buildRandomState()
         ]);
-  }
-  bool _randomBool(int index){
-    return _rand.nextBool();
   }
 }

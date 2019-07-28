@@ -41,9 +41,9 @@ class CropDetailTransformer
   }
 
   RecommendationDetailListItemViewModel _soilType(CropEntity from) {
-    final typesString = from.soilType.reduce((a, b) {
+    final typesString = (from.soilType.isNotEmpty) ? from.soilType.reduce((a, b) {
       return a + _Strings.listSeporator + b;
-    });
+    }) : "";
     return RecommendationDetailListItemViewModel(iconPath: _Icons.soil,
         title: Intl.message(_Strings.bestSoil), subtitle: typesString);
   }

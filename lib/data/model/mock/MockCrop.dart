@@ -9,7 +9,7 @@ import 'MockArticle.dart';
 class MockCrop {
   static CropEntity build() {
     final name =  plants.random();
-    final entity = CropEntity(id: mockPlainText.identifier(),
+    final entity = CropEntity(id: name,
     article: MockArticle().buildCrop(name),
     companionPlants: plants.list(),
     complexity: CropComplexity.BEGINNER,

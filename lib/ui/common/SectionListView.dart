@@ -1,10 +1,57 @@
 
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 abstract class ListViewSection {
     IndexedWidgetBuilder itemBuilder();
     int length();
+}
+
+class ListViewWidgetSection implements ListViewSection {
+  final Widget _child;
+
+  ListViewWidgetSection(Widget child) : this._child = child;
+
+  @override
+  itemBuilder() {
+    return (BuildContext context, int index) {
+        return _child ?? Container();
+    };
+  }
+
+  @override
+  int length() {
+    return 1;
+  }
+}
+
+class ListViewWidgetListSection implements ListViewSection {
+  final List<Widget> _children;
+
+  ListViewWidgetListSection._(List<Widget> children) : this._children = children;
+
+  factory ListViewWidgetListSection(List<Widget> childrenOrNulls) {
+    List<Widget>  noNulls = [];
+    for (var child in childrenOrNulls) {
+      if(child != null) {
+        noNulls.add(child);
+      }
+    }
+    return ListViewWidgetListSection._(noNulls);
+  }
+
+  @override
+  itemBuilder() {
+    return (BuildContext context, int index) {
+        return _children[index];
+    };
+  }
+
+  @override
+  int length() {
+    return _children.length;
+  }
 }
 
 class _SectionPosition {
