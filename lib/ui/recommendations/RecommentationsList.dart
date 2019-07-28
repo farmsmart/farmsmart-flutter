@@ -9,6 +9,8 @@ import 'package:farmsmart_flutter/ui/common/recommendation_card/recommendation_c
 import 'package:farmsmart_flutter/ui/common/recommendation_card/recommendation_card_styles.dart';
 import 'package:farmsmart_flutter/ui/common/recommendation_compact_card/recommendation_compact_card.dart';
 import 'package:farmsmart_flutter/ui/common/recommendation_compact_card/recommendation_compact_card_styles.dart';
+import 'package:farmsmart_flutter/ui/crop/CropDetail.dart';
+import 'package:farmsmart_flutter/ui/crop/viewmodel/CropDetailViewModel.dart';
 import 'package:farmsmart_flutter/ui/recommendations/viewmodel/RecommendationsListViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -114,10 +116,23 @@ class RecommendationsList extends StatelessWidget implements ListViewSection {
     final viewModel = _viewModelProvider.snapshot();
     return (BuildContext context, int index) {
       final itemViewModel = viewModel.items[index];
-      final isHero = (viewModel.isHeroItem != null) ? viewModel.isHeroItem(index) : false;
-      final item = isHero ?  RecommendationCard(
-        viewModel: itemViewModel,
-      style: RecommendationCardStyles.buildStyle(),) : RecommendationCompactCard(viewModel: itemViewModel, style: RecommendationCompactCardStyles.build(),);
+      final isHero =
+          (viewModel.isHeroItem != null) ? viewModel.isHeroItem(index) : false;
+      final detailAction = () => _tappedDetail(
+            context: context,
+            provider: viewModel.detailProvider(index),
+          );
+      final item = isHero
+          ? RecommendationCard(
+              viewModel: itemViewModel,
+              detailAction: detailAction,
+              style: RecommendationCardStyles.buildStyle(),
+            )
+          : RecommendationCompactCard(
+              viewModel: itemViewModel,
+              detailAction: detailAction,
+              style: RecommendationCompactCardStyles.build(),
+            );
       return item;
     };
   }
@@ -217,6 +232,17 @@ class RecommendationsList extends StatelessWidget implements ListViewSection {
             title: _Strings.finish,
             onTap: () => _applyAction(context, viewModel)),
         style: _style.applyButtonStyle,
+      ),
+    );
+  }
+
+  void _tappedDetail({
+    BuildContext context,
+    ViewModelProvider<CropDetailViewModel> provider,
+  }) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => CropDetail(provider: provider),
       ),
     );
   }

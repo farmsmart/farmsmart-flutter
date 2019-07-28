@@ -8,18 +8,18 @@ import 'MockArticle.dart';
 
 class MockCrop {
   static CropEntity build() {
+    final name =  plants.random();
     final entity = CropEntity(id: mockPlainText.identifier(),
+    article: MockArticle().buildCrop(name),
     companionPlants: plants.list(),
     complexity: CropComplexity.BEGINNER,
-    content: mockRichText.random(),
     cropsInRotation: plants.list(),
     cropType: CropType.SINGLE,
-    name: plants.random(),
+    name: name,
     nonCompanionPlants: plants.list(),
     profitability: LoHi.MEDIUM,
     setupCost: LoHi.MEDIUM,
     soilType: _soil.list(),
-    summary: mockPlainText.random(length: 1000),
     waterRequirement: LoHi.MEDIUM,
     );
     entity.stageArticles = MockArticleEntityCollection();

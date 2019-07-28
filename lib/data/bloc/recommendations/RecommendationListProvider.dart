@@ -1,12 +1,17 @@
 import 'dart:async';
 
 import 'package:farmsmart_flutter/data/bloc/Basket.dart';
+import 'package:farmsmart_flutter/data/bloc/StaticViewModelProvider.dart';
+import 'package:farmsmart_flutter/data/bloc/article/ArticleDetailTransformer.dart';
+import 'package:farmsmart_flutter/data/bloc/article/ArticleListItemViewModelTransformer.dart';
+import 'package:farmsmart_flutter/data/bloc/recommendations/CropDetailtransformer.dart';
 import 'package:farmsmart_flutter/data/bloc/recommendations/RecommendationEngine.dart';
 import 'package:farmsmart_flutter/data/model/crop_entity.dart';
 import 'package:farmsmart_flutter/data/repositories/crop/CropRepositoryInterface.dart';
 import 'package:farmsmart_flutter/data/repositories/plot/PlotRepositoryInterface.dart';
 import 'package:farmsmart_flutter/model/loading_status.dart';
 import 'package:farmsmart_flutter/ui/common/recommendation_card/recommendation_card_view_model.dart';
+import 'package:farmsmart_flutter/ui/crop/viewmodel/CropDetailViewModel.dart';
 import 'package:farmsmart_flutter/ui/recommendations/viewmodel/RecommendationsListViewModel.dart';
 
 import '../ViewModelProvider.dart';
@@ -16,16 +21,17 @@ class RecommendationListProvider
     implements ViewModelProvider<RecommendationsListViewModel> {
   final String _title;
   final double _inputScale;
-  final double _heroThreshold; 
+  final double _heroThreshold;
   final CropRepositoryInterface _cropRepo;
   final PlotRepositoryInterface _plotRepo;
   Basket<CropEntity> _cropBasket;
   List<CropEntity> _crops;
-  //final UserProfileRepositoryInterface _profileRepo; //we need the current input factors from this. 
-  final _controller = StreamController<RecommendationsListViewModel>.broadcast();
+  //final UserProfileRepositoryInterface _profileRepo; //we need the current input factors from this.
+  final _controller =
+      StreamController<RecommendationsListViewModel>.broadcast();
 
   RecommendationEngine _recommendationBusinessLogic;
-    
+
   RecommendationsListViewModel _snapshot;
 
   RecommendationListProvider({
@@ -45,10 +51,10 @@ class RecommendationListProvider
     if (_snapshot == null) {
       _cropBasket = Basket<CropEntity>(_basketDidChange);
       _recommendationBusinessLogic = RecommendationEngine(
-      inputFactors: {},
-      inputScale: _inputScale,
-      weightMatrix: {},
-    );
+        inputFactors: {},
+        inputScale: _inputScale,
+        weightMatrix: {},
+      );
       _snapshot = _viewModel(
         status: LoadingStatus.LOADING,
         items: [],
@@ -71,14 +77,16 @@ class RecommendationListProvider
   RecommendationsListViewModel _viewModel(
       {LoadingStatus status, List<RecommendationCardViewModel> items}) {
     return RecommendationsListViewModel(
-        title: _title,
-        items: items,
-        loadingStatus: status,
-        canApply: !_cropBasket.isEmpty(),
-        refresh: () => _update(_controller),
-        apply: () => _add(_controller),
-        clear: () => _clear(_controller),
-        isHeroItem: _isHero );
+      title: _title,
+      items: items,
+      loadingStatus: status,
+      canApply: !_cropBasket.isEmpty(),
+      refresh: () => _update(_controller),
+      apply: () => _add(_controller),
+      clear: () => _clear(_controller),
+      isHeroItem: _isHero,
+      detailProvider: _detailProvider,
+    );
   }
 
   RecommendationsListViewModel _modelFromCrops(
@@ -102,7 +110,13 @@ class RecommendationListProvider
   void _update(StreamController<RecommendationsListViewModel> controller) {
     controller.sink.add(_viewModel(status: LoadingStatus.LOADING, items: []));
     _cropRepo.get().then((crops) {
-      _crops = crops;
+      var sortedCrops = crops;
+      sortedCrops.sort((a,b) {
+        final aScore = _recommendationBusinessLogic.recommend(a.id);
+        final bScore = _recommendationBusinessLogic.recommend(b.id);
+        return aScore.compareTo(bScore);
+      });
+      _crops = sortedCrops;
       _snapshot = _modelFromCrops(controller, crops);
       controller.sink.add(_snapshot);
     }).catchError((error) {
@@ -113,17 +127,26 @@ class RecommendationListProvider
   void _add(StreamController<RecommendationsListViewModel> controller) {
     final cropsToAdd = _cropBasket.empty();
     for (var crop in cropsToAdd) {
-       _plotRepo.addPlot(crop: crop);
+      _plotRepo.addPlot(crop: crop);
     }
   }
+
   void _clear(StreamController<RecommendationsListViewModel> controller) {
     _cropBasket.empty();
-     _update(controller);
+    _update(controller);
   }
 
   bool _isHero(int index) {
-    final score = _recommendationBusinessLogic.recommend(_crops[index].name);
+    final score = _recommendationBusinessLogic.recommend(_crops[index].id);
     return score >= _heroThreshold;
+  }
+
+  ViewModelProvider<CropDetailViewModel> _detailProvider(int index) {
+    final crop = _crops[index];
+    final transformer = CropDetailTransformer();
+    final cropViewModel =transformer.transform(from: crop);
+    final provider = StaticViewModelProvider<CropDetailViewModel>(cropViewModel);
+    return provider;
   }
 
   void dispose() {

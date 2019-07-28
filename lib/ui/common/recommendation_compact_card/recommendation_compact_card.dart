@@ -169,13 +169,16 @@ const RecommendationCompactCardStyle _defaultStyle = const _DefaultStyle();
 class RecommendationCompactCard extends StatelessWidget {
   final RecommendationCompactCardStyle _style;
   final RecommendationCardViewModel _viewModel;
+  final Function _detailAction;
 
   RecommendationCompactCard({
     Key key,
     @required RecommendationCardViewModel viewModel,
+    Function detailAction,
     RecommendationCompactCardStyle style = _defaultStyle,
   })  : this._style = style,
         this._viewModel = viewModel,
+        this._detailAction = detailAction,
         super(key: key);
 
   @override
@@ -289,7 +292,7 @@ class RecommendationCompactCard extends StatelessWidget {
               viewModel: RoundedButtonStatefulViewModel(
                 roundedButtonViewModel: RoundedButtonViewModel(
                   title: _viewModel.detailActionText,
-                  onTap: _viewModel.detailAction,
+                  onTap: _detailAction,
                 ),
               ),
             ),

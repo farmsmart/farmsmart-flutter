@@ -33,7 +33,7 @@ class RecommendationCardTransformer
     return RecommendationCardViewModel(
       title: from.name,
       subtitle: subtitle,
-      description: from.summary,
+      description: from.article.summary,
       detailActionText: Intl.message(_Strings.viewDetails),
       addActionText: inBasket ? Intl.message(_Strings.added) :Intl.message(_Strings.add),
       addAction: rightAction,

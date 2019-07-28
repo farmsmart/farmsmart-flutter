@@ -4,6 +4,7 @@ import 'package:farmsmart_flutter/data/model/mock/MockEntity.dart';
 import 'package:farmsmart_flutter/data/repositories/MockStrings.dart';
 import 'package:farmsmart_flutter/data/repositories/image/implementation/MockImageEntity.dart';
 import 'package:farmsmart_flutter/model/enums.dart';
+import 'package:flutter/cupertino.dart';
 
 final _mockDate = MockDate();
 
@@ -18,6 +19,20 @@ class MockArticle extends MockEntity<ArticleEntity> {
       published: _mockDate.randomYearAgo(),
     );
     entity.related = MockArticleEntityCollection();
+    entity.images = MockImageEntityCollection();
+    return entity;
+  }
+
+  ArticleEntity buildCrop(String title) {
+    final entity = ArticleEntity(
+      id: mockPlainText.identifier(),
+      content: mockRichTextNoImage.random(),
+      status: Status.PUBLISHED,
+      summary: mockPlainText.random(),
+      title: title,
+      published: _mockDate.randomYearAgo(),
+    );
+    entity.related = null;
     entity.images = MockImageEntityCollection();
     return entity;
   }

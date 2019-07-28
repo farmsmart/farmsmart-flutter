@@ -1,3 +1,5 @@
+import 'package:farmsmart_flutter/data/bloc/ViewModelProvider.dart';
+
 class RecommendationCardViewModel {
   Future image;
   String title;
