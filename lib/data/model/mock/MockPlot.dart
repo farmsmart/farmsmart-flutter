@@ -17,6 +17,7 @@ MockDate _dates = MockDate();
 
 class MockPlotEntity extends MockEntity<PlotEntity> {
   final Random _rand;
+  final int _maxStages= 10;
 
   MockPlotEntity({int seed}) : this._rand = Random(seed);
 
@@ -38,7 +39,7 @@ class MockPlotEntity extends MockEntity<PlotEntity> {
     if (crop == null) {
       return Future.value(build());
     }
-    return crop.stageArticles.getEntities(limit: 10).then((articles) {
+    return crop.stageArticles.getEntities(limit: _rand.nextInt(_maxStages)).then((articles) {
         final stages = articles.map((article) {
             return MockStage().buildNewFromArticle(article);
         }).toList();
