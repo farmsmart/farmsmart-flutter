@@ -1,4 +1,4 @@
-import 'package:farmsmart_flutter/ui/common/MockString.dart';
+import 'package:farmsmart_flutter/data/model/mock/MockString.dart';
 import 'package:flutter/widgets.dart';
 
 import 'recommendation_detail_card.dart';

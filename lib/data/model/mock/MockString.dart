@@ -28,8 +28,20 @@ class MockString {
     return libraryString.substring(0, lastIndex);
   }
 
+  String randomIndexed({String text = "index", int limit = 10}) {
+      return indexed(text: text, index: _rand.nextInt(limit));
+  }
+
   String indexed({String text = "index", int index}) {
     return text + " " + index.toString();
+  }
+
+  List<String> indexedList({String text = "index", int count}) {
+    List<String> list = [];
+    for (var i = 0; i < count; i++) {
+      list.add(indexed(text: text, index: i));
+    }
+    return list;
   }
 
   String identifier() {

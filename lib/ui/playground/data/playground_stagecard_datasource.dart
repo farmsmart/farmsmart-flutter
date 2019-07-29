@@ -26,14 +26,14 @@ class PlaygroundStageCardDataSource extends PlaygroundDataSource{
         padding: const EdgeInsets.all(8.0),
         child: StageCard(
           viewModel: MockStageCardViewModel.buildUpcomingState(),
-          style: StageCardStyles.builtUpcomingStageStyle(),
+          style: StageCardStyles.buildUpcomingStageStyle(),
         ),
       ),
       Padding(
         padding: const EdgeInsets.all(8.0),
         child: StageCard(
           viewModel: MockStageCardViewModel.buildRandom(),
-          style: StageCardStyles.builtUpcomingStageStyle(),
+          style: StageCardStyles.buildUpcomingStageStyle(),
         ),
       ),
     ];
