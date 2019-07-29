@@ -1,5 +1,5 @@
 import 'package:farmsmart_flutter/data/repositories/repository_provider.dart';
-import 'package:farmsmart_flutter/ui/home_new.dart';
+import 'package:farmsmart_flutter/ui/home.dart';
 import 'package:flutter/material.dart';
 
 import 'deep_link_helper.dart';
