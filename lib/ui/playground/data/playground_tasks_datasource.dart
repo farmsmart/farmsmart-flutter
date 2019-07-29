@@ -1,3 +1,9 @@
+import 'package:farmsmart_flutter/model/loading_status.dart';
+import 'package:farmsmart_flutter/ui/mockData/MockRecordTransactionViewModel.dart';
+import 'package:farmsmart_flutter/ui/playground/playground_widget.dart';
+import 'package:farmsmart_flutter/ui/profitloss/RecordTransaction.dart';
+import 'package:farmsmart_flutter/ui/profitloss/RecordTransactionHeader.dart';
+import 'package:farmsmart_flutter/ui/profitloss/RecordTransactionListItem.dart';
 import 'package:farmsmart_flutter/data/bloc/article/ArticleListProvider.dart';
 import 'package:farmsmart_flutter/data/bloc/plot/PlotDetailProvider.dart';
 import 'package:farmsmart_flutter/data/bloc/plot/PlotListProvider.dart';
@@ -26,7 +32,6 @@ import 'package:farmsmart_flutter/ui/profitloss/ProfitLossListItem.dart';
 import 'package:farmsmart_flutter/ui/profitloss/mockRepositoryTryout/MockTransactionRepository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-
 import '../playground_view.dart';
 import 'playground_persistent_bottom_navigation_bar_datasource.dart';
 
@@ -40,10 +45,11 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
           child: PlaygroundView(
             widgetList: [
               PlaygroundWidget(
-                  title: 'TASK FARM-62 Profit-Loss Header',
-                  child: ProfitLossHeader(
-                      viewModel: MockProfitLossHeaderViewModel.build(),
-                      style: ProfitLossHeaderStyle.defaultStyle())),
+                title: 'TASK FARM-62 Profit-Loss Header',
+                child: ProfitLossHeader(
+                    viewModel: MockProfitLossHeaderViewModel.build(),
+                    style: ProfitLossHeaderStyle.defaultStyle()),
+              ),
               PlaygroundWidget(
                 title: 'TASK FARM-62 Profit-Loss Item Negative',
                 child: ProfitLossListItem(
@@ -63,22 +69,23 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
           child: PlaygroundView(
             widgetList: [
               PlaygroundWidget(
-                  title: 'FARM-355 Generic Action Sheet - Simple',
-                  child: Container(
-                    height: 350,
-                    child: ActionSheet(
-                        viewModel: MockActionSheetViewModel.buildStandard(),
-                        style: ActionSheetStyle.defaultStyle()),
-                  )),
+                title: 'FARM-355 Generic Action Sheet - Simple',
+                child: Container(
+                  height: 350,
+                  child: ActionSheet(
+                      viewModel: MockActionSheetViewModel.buildStandard(),
+                      style: ActionSheetStyle.defaultStyle()),
+                ),
+              ),
               PlaygroundWidget(
-                  title: 'FARM-355 Generic Action Sheet - Larger',
-                  child: Container(
-                    height: 420,
-                    child: ActionSheet(
-                        viewModel:
-                            MockActionSheetViewModel.buildStandardBigger(),
-                        style: ActionSheetStyle.defaultStyle()),
-                  )),
+                title: 'FARM-355 Generic Action Sheet - Larger',
+                child: Container(
+                  height: 420,
+                  child: ActionSheet(
+                      viewModel: MockActionSheetViewModel.buildStandardBigger(),
+                      style: ActionSheetStyle.defaultStyle()),
+                ),
+              ),
               PlaygroundWidget(
                   title: 'FARM-355 Generic Action Sheet - With icons',
                   child: Container(
@@ -104,6 +111,7 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
               child: ActionSheet(
                   viewModel: MockActionSheetViewModel.buildWithCheckBox(),
                   style: ActionSheetStyle.defaultStyle()))),
+
       PlaygroundWidget(
         title: 'TASK FARM-278 State carousel view',
         child: Container(
@@ -126,11 +134,42 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
         ),
       ),
       PlaygroundWidget(
-          title: "FARM-280 Update Discover",
-          child: ArticleList(
-              viewModelProvider: ArticleListProvider(
-                  title: "Test",
-                  repository: MockArticlesRepository(articleCount: 2000)))),
+        title: 'FARM-59 Record a Cost/Sale',
+        child: PlaygroundView(widgetList: [
+          PlaygroundWidget(
+            title: 'Record a Sale',
+            child: RecordTransaction(
+              viewModel: MockRecordTransactionViewModel.buildSaleTransaction(),
+            ),
+          ),
+          PlaygroundWidget(
+            title: 'Record a Cost',
+            child: RecordTransaction(
+              viewModel: MockRecordTransactionViewModel.buildCostTransaction(),
+            ),
+          ),
+          PlaygroundWidget(
+            title: 'View a Sale',
+            child: RecordTransaction(
+              viewModel: MockRecordTransactionViewModel.buildViewSale(),
+            ),
+          ),
+          PlaygroundWidget(
+            title: 'View a Cost',
+            child: RecordTransaction(
+              viewModel: MockRecordTransactionViewModel.buildViewCost(),
+            ),
+          ),
+        ]),
+      ),
+      PlaygroundWidget(
+        title: "FARM-280 Update Discover",
+        child: ArticleList(
+          viewModelProvider: ArticleListProvider(
+              title: "Test",
+              repository: MockArticlesRepository(articleCount: 2000)),
+        ),
+      ),
       PlaygroundWidget(
         title: "FARM-342 Persistent Bottom navigation bar",
         child: PersistentBottomNavigationBar(
@@ -138,7 +177,7 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
           tabs: PlaygroundPersistentBottomNavigationBar().getList(),
         ),
       ),
-       PlaygroundWidget(
+      PlaygroundWidget(
           title: 'TASK FARM-365 Plot',
           child: PlaygroundView(widgetList: [
             PlaygroundWidget(
@@ -146,7 +185,12 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
                 child: PlotList(
                     provider: PlotListProvider(
                         title: "Test", repository: MockPlotRepository()))),
-            PlaygroundWidget(title: "FARM-365 Plot Detail", child: PlotDetail(provider: PlotDetailProvider(MockPlotEntity().build(), MockPlotRepository()),))
+            PlaygroundWidget(
+                title: "FARM-365 Plot Detail",
+                child: PlotDetail(
+                  provider: PlotDetailProvider(
+                      MockPlotEntity().build(), MockPlotRepository()),
+                ))
           ])),
     ];
   }

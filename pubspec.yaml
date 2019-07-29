@@ -78,9 +78,13 @@ flutter:
     - assets/icons/my_plot.png
     - assets/icons/profit_loss_selected.png
     - assets/icons/profit_loss.png
+    - assets/icons/chevron.png
+    - assets/icons/detail_icon_best_soil.png
+    - assets/icons/detail_icon_date.png
+    - assets/icons/detail_icon_description.png
+    - assets/privacy_policy.html
     - assets/icons/profit_add.png
     - assets/icons/tick_large.png
-    - assets/icons/detail_icon_best_soil.png
     - assets/icons/detail_icon_companion.png
     - assets/icons/detail_icon_complexity.png
     - assets/icons/detail_icon_crop_type.png
@@ -88,7 +92,6 @@ flutter:
     - assets/icons/detail_icon_profitability.png
     - assets/icons/detail_icon_setup_costs.png
     - assets/icons/detail_icon_water.png
-
     - assets/privacy_policy.html
     - assets/icons/flag_kenya.png
     - assets/icons/flag_usa.png
@@ -97,6 +100,9 @@ flutter:
     - assets/icons/radio_button_default.png
     - assets/icons/radio_button_active.png
     - assets/raw/
+    - assets/icons/nav_icon_back.png
+    - assets/icons/nav_icon_options.png
+    - assets/icons/nav_icon_cancel.png
 
   fonts:
   - family: GT-America-Standard

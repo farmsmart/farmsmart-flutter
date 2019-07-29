@@ -1,3 +1,9 @@
+import 'package:farmsmart_flutter/ui/mockData/MockRecordTransactionViewModel.dart';
+import 'package:farmsmart_flutter/ui/playground/playground_view.dart';
+import 'package:farmsmart_flutter/ui/profitloss/RecordTransactionHeaderStyles.dart';
+import 'package:farmsmart_flutter/ui/profitloss/RecordTransactionListItem.dart';
+import 'package:farmsmart_flutter/ui/profitloss/RecordTransactionHeader.dart';
+import 'package:farmsmart_flutter/ui/common/CircularProgress.dart';
 import 'package:farmsmart_flutter/data/bloc/article/ArticleDetailTransformer.dart';
 import 'package:farmsmart_flutter/data/bloc/article/ArticleListItemViewModelTransformer.dart';
 import 'package:farmsmart_flutter/ui/common/ActionSheetListItem.dart';
@@ -180,6 +186,51 @@ class PlayGroundAtomDataSource implements PlaygroundDataSource {
       ActionSheetListItem(viewModel: MockActionSheetViewModel.buildStandard().actions.first),
       ActionSheetListItem(viewModel: MockActionSheetViewModel.buildWithIcon().actions.first),
       ActionSheetListItem(viewModel: MockActionSheetViewModel.buildWithCheckBox().actions.first),
+      PlaygroundWidget(
+        title: 'FARM-50 Record a Cost/Sale',
+        child: PlaygroundView(
+          widgetList: [
+            PlaygroundWidget(
+              title: "Record Cost Header",
+              child: RecordTransactionHeader(
+                viewModel: RecordTransactionHeaderViewModel(
+                    onAmountChanged:
+                        MockRecordTransactionViewModel.buildCostTransaction().amount,
+                    isEditable: true),
+                style: RecordTransactionHeaderStyles.defaultCostStyle,
+              ),
+            ),
+            PlaygroundWidget(
+              title: "Record Sale Header",
+              child: RecordTransactionHeader(
+                viewModel: RecordTransactionHeaderViewModel(
+                    onAmountChanged:
+                        MockRecordTransactionViewModel.buildCostTransaction().amount,
+                    isEditable: true),
+                style: RecordTransactionHeaderStyles.defaultSaleStyle,
+              ),
+            ),
+            PlaygroundWidget(
+              title: "Pick up date",
+              child: RecordTransactionListItem(
+                viewModel: MockRecordTransactionListItemViewModel.build(0),
+              ),
+            ),
+            PlaygroundWidget(
+              title: "Pick up crop",
+              child: RecordTransactionListItem(
+                viewModel: MockRecordTransactionListItemViewModel.build(1),
+              ),
+            ),
+            PlaygroundWidget(
+              title: "Add description cell",
+              child: RecordTransactionListItem(
+                viewModel: MockRecordTransactionListItemViewModel.build(2),
+              ),
+            ),
+          ],
+        ),
+      ),
       PlaygroundWidget(
         title: 'Recommendation Card',
         child: PlaygroundView(
