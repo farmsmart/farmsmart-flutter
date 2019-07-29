@@ -1,12 +1,9 @@
-import 'dart:math';
-
+import 'package:farmsmart_flutter/data/model/mock/MockString.dart';
 import 'package:farmsmart_flutter/model/loading_status.dart';
 import 'package:farmsmart_flutter/ui/profitloss/ProfitLossHeader.dart';
 import 'package:farmsmart_flutter/ui/profitloss/ProfitLossListItem.dart';
-import 'package:farmsmart_flutter/ui/common/Dogtag.dart';
 import 'package:farmsmart_flutter/ui/common/DogTagStyles.dart';
 import '../ProfitLossList.dart';
-import 'MockString.dart';
 
 class MockProfitLossListViewModel {
   static ProfitLossListViewModel build() {

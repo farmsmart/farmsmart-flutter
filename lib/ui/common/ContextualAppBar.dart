@@ -20,8 +20,9 @@ const ContextualAppBarStyle _defaultStyle = const _DefaultStyle();
 class ContextualAppBar extends StatelessWidget {
   final ContextualAppBarStyle _style;
   final _shareAction;
+  final _moreAction;
 
-  const ContextualAppBar({Key key, Function shareAction, ContextualAppBarStyle style = _defaultStyle}) : this._style = style, this._shareAction = shareAction, super(key: key);
+  const ContextualAppBar({Key key, Function shareAction, ContextualAppBarStyle style = _defaultStyle, Function moreAction}) : this._style = style, this._shareAction = shareAction, this._moreAction = moreAction, super(key: key);
   
   @override
   Widget build(BuildContext context) {
@@ -30,7 +31,16 @@ class ContextualAppBar extends StatelessWidget {
     final share = Container(
       margin: EdgeInsets.only(right:_style.insets.right),
       child:IconButton(icon: Icon(Icons.share, color: _style.iconColor), onPressed: _shareAction,));
-    final actions = (_shareAction == null) ? [] : [share]; 
+    final more = Container(
+      margin: EdgeInsets.only(right:_style.insets.right),
+      child:IconButton(icon: Icon(Icons.more_horiz, color: _style.iconColor), onPressed: _moreAction,));
+    List<Widget> actions = [];
+    if (_shareAction != null) {
+      actions.add(share);
+    }
+    if (_moreAction != null) {
+      actions.add(more);
+    }
     return AppBar(
       leading: isRoot ? _buildDismissIcon(context) : _buildBackIcon(),
       backgroundColor: theme.primaryColor,
