@@ -124,19 +124,19 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
             PlaygroundWidget(
               title: "Normal",
               child: PlaygroundButtonPresentAlert(
-                viewModel: PlaygroundButtonPresentAlertViewModel(
-                    alert: Alert(viewModel: MockAlertWidgetViewModel.build()),
-                    listener: (alert, context) =>
-                        Alert.present(alert, context)),
+                alert: Alert(
+                  viewModel: MockAlertWidgetViewModel.build(),
+                ),
+                listener: (alert, context) => Alert.present(alert, context),
               ),
             ),
             PlaygroundWidget(
               title: "Have Destructive",
               child: PlaygroundButtonPresentAlert(
-                viewModel: PlaygroundButtonPresentAlertViewModel(
-                    alert: Alert(viewModel: MockAlertWidgetViewModel.buildDestructive()),
-                    listener: (alert, context) =>
-                        Alert.present(alert, context)),
+                alert: Alert(
+                  viewModel: MockAlertWidgetViewModel.buildDestructive(),
+                ),
+                listener: (alert, context) => Alert.present(alert, context),
               ),
             ),
           ],

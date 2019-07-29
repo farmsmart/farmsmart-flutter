@@ -2,24 +2,18 @@ import 'package:farmsmart_flutter/ui/common/Alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-class PlaygroundButtonPresentAlertViewModel {
-  Function(Alert, BuildContext) listener;
-  Alert alert;
-
-  PlaygroundButtonPresentAlertViewModel({
-    this.listener,
-    this.alert,
-  });
-}
-
 class PlaygroundButtonPresentAlert extends StatelessWidget {
-  final PlaygroundButtonPresentAlertViewModel _viewModel;
+  final Alert alert;
+  final Function(Alert, BuildContext) listener;
+
 
   const PlaygroundButtonPresentAlert({
     Key key,
-    PlaygroundButtonPresentAlertViewModel viewModel,
+    Alert alert,
+    Function(Alert, BuildContext) listener,
     Widget child,
-  })  : this._viewModel = viewModel,
+  })  : this.listener = listener,
+  this.alert = alert,
         super(key: key);
 
   @override
@@ -28,8 +22,8 @@ class PlaygroundButtonPresentAlert extends StatelessWidget {
       child: RaisedButton(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         child: Text("Press to Show Alert"),
-        onPressed: () => _viewModel.listener(
-          _viewModel.alert,
+        onPressed: () => listener(
+          alert,
           context),
       ),
     );
