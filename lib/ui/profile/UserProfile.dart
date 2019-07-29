@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class _Strings {
-  static final String ACTIVE_CROPS = Intl.message("Active crops");
-  static final String COMPLETED = Intl.message("Completed");
-  static final String SWITCH_PROFILE = Intl.message("Switch Profile");
+  static final String activeCrops = Intl.message("Active crops");
+  static final String completedCrops = Intl.message("Completed");
+  static final String buttonTitle = Intl.message("Switch Profile");
 }
 
 class UserProfileViewModel {
@@ -16,7 +16,6 @@ class UserProfileViewModel {
   String username;
   int activeCrops;
   int completedCrops;
-  String buttonTitle;
   final Function switchProfileAction;
   ImageProvider image;
 
@@ -25,7 +24,6 @@ class UserProfileViewModel {
     this.username,
     this.activeCrops,
     this.completedCrops,
-    this.buttonTitle,
     this.switchProfileAction,
     this.image,
   });
@@ -240,7 +238,7 @@ class UserProfile extends StatelessWidget {
             children: <Widget>[
               RoundedButton(
                 viewModel: RoundedButtonViewModel(
-                  title: _Strings.SWITCH_PROFILE,
+                  title: _Strings.buttonTitle,
                   onTap: () => _viewModel.switchProfileAction(),
                 ),
                 style: RoundedButtonStyle.largeRoundedButtonStyle().copyWith(
@@ -307,7 +305,7 @@ class UserProfile extends StatelessWidget {
                     style: _style.subtitleTextStyle,
                   ),
                   Text(
-                    _Strings.ACTIVE_CROPS,
+                    _Strings.activeCrops,
                     maxLines: _style.maxLines,
                     overflow: TextOverflow.ellipsis,
                     style: _style.detailTextStyle,
@@ -323,7 +321,7 @@ class UserProfile extends StatelessWidget {
                     style: _style.subtitleTextStyle,
                   ),
                   Text(
-                    _Strings.COMPLETED,
+                    _Strings.completedCrops,
                     maxLines: _style.maxLines,
                     overflow: TextOverflow.ellipsis,
                     style: _style.detailTextStyle,
