@@ -1,5 +1,5 @@
+import 'package:farmsmart_flutter/data/model/mock/MockString.dart';
 import 'package:farmsmart_flutter/ui/common/Alert.dart';
-import 'package:farmsmart_flutter/ui/common/MockString.dart';
 import 'package:path/path.dart';
 import 'package:flutter/foundation.dart';
 
