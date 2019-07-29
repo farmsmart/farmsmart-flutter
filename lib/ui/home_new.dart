@@ -29,6 +29,7 @@ final cms = FlameLink(
     store: Firestore.instance, environment: Environment.development);
 final articleRepo = ArticlesRepositoryFlameLink(cms);
 
+//TODO rename file to home.dart when removed all the old stuff
 class Home extends StatelessWidget {
 
   FarmsmartLocalizations localizations;
