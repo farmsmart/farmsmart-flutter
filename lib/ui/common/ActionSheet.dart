@@ -220,8 +220,10 @@ class _ActionSheetState extends State<ActionSheet> {
   }
 
   void _confirmAction(Function action) {
+    if (action != null) {
       action();
-      dismissActionSheet();
+    }
+    dismissActionSheet();
   }
 
   void select(int index) {
