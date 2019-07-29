@@ -1,9 +1,10 @@
 import 'package:farmsmart_flutter/data/repositories/FlameLink.dart';
+import 'package:farmsmart_flutter/data/repositories/repository_provider.dart';
 import 'package:flutter/material.dart';
 
 class AppConfig extends InheritedWidget{
   final Environment environment;
-  final bool isMockData;
+  final RepositoryProvider repositoryProvider;
   final String buildFlavor;
   final Widget child;
 
@@ -11,7 +12,7 @@ class AppConfig extends InheritedWidget{
     @required this.environment,
     @required this.buildFlavor,
     @required this.child,
-    @required this.isMockData,
+    @required this.repositoryProvider,
   });
 
   static AppConfig of(BuildContext context){

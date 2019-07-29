@@ -1,4 +1,6 @@
+import 'package:farmsmart_flutter/data/repositories/flamelink_repository_provider.dart';
 import 'package:farmsmart_flutter/data/repositories/repository_provider.dart';
+import 'package:farmsmart_flutter/flavors/app_config.dart';
 import 'package:farmsmart_flutter/ui/home.dart';
 import 'package:flutter/material.dart';
 
@@ -17,13 +19,12 @@ class _AppCoordinatorState extends State<AppCoordinator> {
   void initState() {
     super.initState();
     DeepLinkHelper(deepLinks: _deepLinks()).init();
-
-    repositoryProvider = RepositoryProvider(context: context);
   }
 
   @override
   Widget build(BuildContext context) {
-    repositoryProvider.init();
+    repositoryProvider = AppConfig.of(context).repositoryProvider;
+    repositoryProvider.init(context);
 
     //TODO Replace by appEntryManagement
     return Home(repositoryProvider: repositoryProvider,);
