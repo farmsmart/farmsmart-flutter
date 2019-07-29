@@ -2,10 +2,9 @@ import 'dart:math';
 
 import 'package:farmsmart_flutter/ui/profile/UserProfile.dart';
 import 'package:farmsmart_flutter/ui/profile/UserProfileListItem.dart';
-import 'package:farmsmart_flutter/ui/profitloss/mockRepositoryTryout/MockString.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
+import 'package:farmsmart_flutter/data/model/mock/MockString.dart';
 
 class MockUserProfileViewModel {
   static UserProfileViewModel build() {
@@ -67,7 +66,6 @@ List<String> _mockActionIcon = [
 ];
 
 MockString _mockImage = MockString(library: [
-  "https://qph.fs.quoracdn.net/main-qimg-41f4a796c09d0c605df5d6fedf4ad980"
   "https://i.pinimg.com/originals/29/01/c9/2901c94b5a24c2f69d827e1755b5257e.jpg",
   "https://occ-0-1722-1723.1.nflxso.net/art/d2938/a54bf5710e24e03aed993f1597454a46699d2938.jpg",
   "https://www.flower-pepper.com/wp-content/uploads/2016/10/Kermit-the-Frog-by-Bartholomew-300x378.jpg",

@@ -1,7 +1,13 @@
+import 'package:farmsmart_flutter/ui/mockData/MockRecordTransactionViewModel.dart';
+import 'package:farmsmart_flutter/ui/playground/playground_view.dart';
+import 'package:farmsmart_flutter/ui/profitloss/RecordTransactionHeaderStyles.dart';
+import 'package:farmsmart_flutter/ui/profitloss/RecordTransactionListItem.dart';
+import 'package:farmsmart_flutter/ui/profitloss/RecordTransactionHeader.dart';
+import 'package:farmsmart_flutter/ui/common/CircularProgress.dart';
 import 'package:farmsmart_flutter/data/bloc/article/ArticleDetailTransformer.dart';
 import 'package:farmsmart_flutter/data/bloc/article/ArticleListItemViewModelTransformer.dart';
-import 'package:farmsmart_flutter/data/repositories/article/implementation/MockArticlesRepository.dart';
 import 'package:farmsmart_flutter/ui/common/ActionSheetListItem.dart';
+import 'package:farmsmart_flutter/data/model/mock/MockArticle.dart';
 import 'package:farmsmart_flutter/ui/common/CircularProgress.dart';
 import 'package:farmsmart_flutter/ui/common/DogTagStyles.dart';
 import 'package:farmsmart_flutter/ui/common/Dogtag.dart';
@@ -22,8 +28,9 @@ import 'package:farmsmart_flutter/ui/playground/data/playground_recommendation_d
 import 'package:farmsmart_flutter/ui/playground/playground_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-
 import '../playground_view.dart';
+
+MockArticle _articleBuilder = MockArticle();
 
 class PlayGroundAtomDataSource implements PlaygroundDataSource {
   @override
@@ -138,22 +145,7 @@ class PlayGroundAtomDataSource implements PlaygroundDataSource {
                   MockActionSheetViewModel.buildWithCheckBox().actions.first),
         ),
       ),
-      StandardListItem(
-        viewModel: ArticleListItemViewModelTransformer(
-                detailTransformer: ArticleDetailViewModelTransformer(
-                    listItemTransformer: ArticleListItemViewModelTransformer()))
-            .transform(
-          from: MockArticle.build(),
-        ),
-      ),
-      HeroListItem(
-        viewModel: ArticleListItemViewModelTransformer(
-                detailTransformer: ArticleDetailViewModelTransformer(
-                    listItemTransformer: ArticleListItemViewModelTransformer()))
-            .transform(
-          from: MockArticle.build(),
-        ),
-      ),
+
       PlaygroundWidget(
         title: 'CircularProgress',
         child: Container(
@@ -172,6 +164,71 @@ class PlayGroundAtomDataSource implements PlaygroundDataSource {
           child: StageCard(
             viewModel: MockStageCardViewModel.buildCompleteState(),
           ),
+        ),
+      ),
+      StandardListItem(
+              viewModel: ArticleListItemViewModelTransformer(
+                      detailTransformer:
+                          ArticleDetailViewModelTransformer(
+                              listItemTransformer:
+                                  ArticleListItemViewModelTransformer()))
+                  .transform(from: _articleBuilder.build())),
+          HeroListItem(
+              viewModel: ArticleListItemViewModelTransformer(
+                      detailTransformer:
+                          ArticleDetailViewModelTransformer(
+                              listItemTransformer:
+                                  ArticleListItemViewModelTransformer()))
+                  .transform(from: _articleBuilder.build())),
+      RoundedButton(viewModel: MockRoundedButtonViewModel.buildLarge(), style: RoundedButtonStyle.largeRoundedButtonStyle()),
+      RoundedButton(viewModel: MockRoundedButtonViewModel.buildCompact(), style: RoundedButtonStyle.defaultStyle()),
+      RoundedButton(viewModel: MockRoundedButtonViewModel.buildCompact(), style: RoundedButtonStyle.bigRoundedButton()),
+      ActionSheetListItem(viewModel: MockActionSheetViewModel.buildStandard().actions.first),
+      ActionSheetListItem(viewModel: MockActionSheetViewModel.buildWithIcon().actions.first),
+      ActionSheetListItem(viewModel: MockActionSheetViewModel.buildWithCheckBox().actions.first),
+      PlaygroundWidget(
+        title: 'FARM-50 Record a Cost/Sale',
+        child: PlaygroundView(
+          widgetList: [
+            PlaygroundWidget(
+              title: "Record Cost Header",
+              child: RecordTransactionHeader(
+                viewModel: RecordTransactionHeaderViewModel(
+                    onAmountChanged:
+                        MockRecordTransactionViewModel.buildCostTransaction().amount,
+                    isEditable: true),
+                style: RecordTransactionHeaderStyles.defaultCostStyle,
+              ),
+            ),
+            PlaygroundWidget(
+              title: "Record Sale Header",
+              child: RecordTransactionHeader(
+                viewModel: RecordTransactionHeaderViewModel(
+                    onAmountChanged:
+                        MockRecordTransactionViewModel.buildCostTransaction().amount,
+                    isEditable: true),
+                style: RecordTransactionHeaderStyles.defaultSaleStyle,
+              ),
+            ),
+            PlaygroundWidget(
+              title: "Pick up date",
+              child: RecordTransactionListItem(
+                viewModel: MockRecordTransactionListItemViewModel.build(0),
+              ),
+            ),
+            PlaygroundWidget(
+              title: "Pick up crop",
+              child: RecordTransactionListItem(
+                viewModel: MockRecordTransactionListItemViewModel.build(1),
+              ),
+            ),
+            PlaygroundWidget(
+              title: "Add description cell",
+              child: RecordTransactionListItem(
+                viewModel: MockRecordTransactionListItemViewModel.build(2),
+              ),
+            ),
+          ],
         ),
       ),
       PlaygroundWidget(

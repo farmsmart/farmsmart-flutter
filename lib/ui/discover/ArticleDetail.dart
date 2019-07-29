@@ -1,5 +1,6 @@
 import 'package:farmsmart_flutter/model/loading_status.dart';
 import 'package:farmsmart_flutter/ui/common/ContextualAppBar.dart';
+import 'package:farmsmart_flutter/ui/common/SectionListView.dart';
 import 'package:farmsmart_flutter/ui/common/headerAndFooterListView.dart';
 import 'package:farmsmart_flutter/ui/common/network_image_from_future.dart';
 import 'package:farmsmart_flutter/ui/discover/viewModel/ArticleDetailViewModel.dart';
@@ -69,48 +70,55 @@ class _DefaultStyle implements ArticleDetailStyle {
   const _DefaultStyle();
 }
 
-class ArticleDetail extends StatelessWidget {
+class ArticleDetail extends StatelessWidget implements ListViewSection {
   final ArticleDetailViewModel _viewModel;
   final ArticleDetailStyle _style;
+  final bool _showHeader;
+  List<ArticleListItemViewModel> _relatedViewModels  = [];
 
-  const ArticleDetail(
+  ArticleDetail(
       {Key key,
-      ArticleDetailViewModel viewModel,
+      ArticleDetailViewModel viewModel, bool showHeader = true,
       ArticleDetailStyle style = const _DefaultStyle()})
       : this._viewModel = viewModel,
+        this._showHeader = showHeader,
         this._style = style,
         super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return _build(context: context, viewModel: _viewModel, style: _style);
+  Future<List<ArticleListItemViewModel>> fetchReleated() {
+     return _viewModel.getRelated().then((related) {
+       _relatedViewModels = related;
+       return related;
+     });
   }
 
-  Widget _build(
-      {BuildContext context,
-      ArticleDetailViewModel viewModel,
-      ArticleDetailStyle style}) {
-    var releatedViewModels = [];
-    final loadingWidget = Container(
-        child: CircularProgressIndicator(), alignment: Alignment.center);
-
+  @override
+  Widget build(BuildContext context) {
+    final related = (_relatedViewModels != null) ? Future.value(_relatedViewModels) : fetchReleated();
     return FutureBuilder(
-      future: viewModel.getRelated(),
+      future: related,
       builder: (BuildContext context,
           AsyncSnapshot<List<ArticleListItemViewModel>> relatedArticles) {
-        if (relatedArticles.hasData) {
-          releatedViewModels = relatedArticles.data;
-        }
-        final footer = (viewModel.loadingStatus == LoadingStatus.LOADING)
-            ? loadingWidget
-            : null;
         return Scaffold(
           appBar: _buildAppBar(context),
           body: Container(
-            child: HeaderAndFooterListView.builder(
-                itemCount: releatedViewModels.length,
+            child: _content(),
+          ),
+        );
+      },
+    );
+  }
+
+  HeaderAndFooterListView _content() {
+     final loadingWidget = Container(
+        child: CircularProgressIndicator(), alignment: Alignment.center);
+    final footer = (_viewModel.loadingStatus == LoadingStatus.LOADING)
+            ? loadingWidget
+            : null;
+      return HeaderAndFooterListView(
+                itemCount: _relatedViewModels.length,
                 itemBuilder: (BuildContext context, int index) {
-                  final viewModel = releatedViewModels[index];
+                  final viewModel = _relatedViewModels[index];
                   return StandardListItem(
                     viewModel: viewModel,
                     onTap: () => _tappedListItem(
@@ -119,13 +127,18 @@ class ArticleDetail extends StatelessWidget {
                 },
                 physics: ScrollPhysics(),
                 shrinkWrap: true,
-                header: _buildHeader(
-                    context, releatedViewModels.isNotEmpty, viewModel, style),
-                footer: footer),
-          ),
-        );
-      },
-    );
+                headers: [buildHeader(_relatedViewModels.isNotEmpty)],
+                footers: [footer]);
+  } 
+
+  @override
+  itemBuilder() {
+    return _content().itemBuilder();
+  }
+
+  @override
+  int length() {
+    return _content().length();
   }
 
   void _share() async {
@@ -139,24 +152,21 @@ class ArticleDetail extends StatelessWidget {
     ).build(context);
   }
 
-  Widget _buildHeader(BuildContext context, bool relatedTitle,
-      ArticleDetailViewModel viewModel, ArticleDetailStyle style) {
-    final topWidgets = [
-      _buildTitle(),
-      _buildArticlePublishingDate(),
-      SizedBox(height: style.spaceBetweenDataAndImage),
-      _buildImage(),
-      SizedBox(height: style.spaceBetweenElements),
-      _buildBody(),
-      SizedBox(height: style.spaceBetweenElements),
-    ];
+  Widget buildHeader(bool relatedTitle) {
+    final List<Widget> titleSection = (_viewModel.title.isNotEmpty && _showHeader) ? [_buildTitle()] : [];
+    final List<Widget> subtitleSection = (_viewModel.subtitle.isNotEmpty && _showHeader) ? [_buildSubtitle()] : [];
+    final image = _buildImage();
+    final body = _buildBody();
+    final List<Widget> imageSection = image != null ? [SizedBox(height: _style.spaceBetweenElements), image,SizedBox(height: _style.spaceBetweenElements)] : [];
+    final List<Widget> bodySection = body != null ? [SizedBox(height: _style.spaceBetweenDataAndImage), body,SizedBox(height: _style.spaceBetweenElements)] : [SizedBox(height: _style.spaceBetweenElements)];
+    final List<Widget> topWidgets = titleSection + subtitleSection + imageSection + bodySection;
     final midWidgets = [
       Container(
-        padding: style.titlePagePadding,
+        padding: _style.titlePagePadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(_viewModel.relatedTitle, style: style.titlePageStyle)
+            Text(_viewModel.relatedTitle, style: _style.titlePageStyle)
           ],
         ),
       ),
@@ -193,8 +203,8 @@ class ArticleDetail extends StatelessWidget {
         ));
   }
 
-  Widget _buildArticlePublishingDate() {
-    return Container(
+  Widget _buildSubtitle() {
+    return  Container(
         padding: _style.leftRightPadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -210,11 +220,13 @@ class ArticleDetail extends StatelessWidget {
   }
 
   Widget _buildImage() {
-    return Container(
-        child: NetworkImageFromFuture(
+    if (_viewModel.image == null) {
+      return  null;
+    }
+    return NetworkImageFromFuture(
             _viewModel.image.urlToFit(height: _style.imageHeight),
             fit: BoxFit.cover,
-            height: _style.imageHeight));
+            height: _style.imageHeight);
   }
 
   Widget _buildBody() {
