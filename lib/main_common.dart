@@ -14,6 +14,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'app_routes.dart';
 import 'package:farmsmart_flutter/farmsmart_localizations.dart';
 
+@Deprecated('Not used anymore')
 void bootstrap() async {
   // Defines app orientation
   SystemChrome.setPreferredOrientations([
@@ -26,6 +27,7 @@ void bootstrap() async {
   runApp(new FarmsmartApp(store));
 }
 
+@Deprecated('Use main.dart')
 class FarmsmartApp extends StatefulWidget {
   final Store<AppState> store;
   FarmsmartApp(this.store);

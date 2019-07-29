@@ -1,7 +1,10 @@
+import 'package:farmsmart_flutter/repository_provider.dart';
 import 'package:farmsmart_flutter/ui/home_new.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'deep_link_helper.dart';
+import 'utils/shared_preferences_helper.dart';
 
 class AppCoordinator extends StatefulWidget {
   @override
@@ -9,18 +12,44 @@ class AppCoordinator extends StatefulWidget {
 }
 
 class _AppCoordinatorState extends State<AppCoordinator> {
+  RepositoryProvider repositoryProvider;
+
   @override
   void initState() {
     super.initState();
     DeepLinkHelper(deepLinks: _deepLinks()).init();
+
+    repositoryProvider = RepositoryProvider(context: context);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Home();
+    repositoryProvider.init();
+
+    return appEntryManagement();
   }
 
+  //TODO Should be implemented when the landing page is merged
+  FutureBuilder<bool> appEntryManagement(){
+    return FutureBuilder<bool>(
+      future: SharedPreferencesHelper.getIsFirstLaunch(),
+      builder: (BuildContext context, AsyncSnapshot<bool> snapshot){
+        if(snapshot.hasData){
+          SharedPreferencesHelper.setIsFirstLaunch(false);
 
+          //TODO Replace Text widget by LandingPage if snapshot.data is true
+          return snapshot.data ? Text('FIRST LAUNCH') : Home(repositoryProvider: repositoryProvider,);
+        }else{
+          return Container();
+        }
+      },
+    );
+  }
+
+  /*
+    TODO Implement the right action and the right deep link parameter,
+    This is just an example
+   */
   List<DeepLink> _deepLinks() {
     return [
       DeepLink(
@@ -30,7 +59,8 @@ class _AppCoordinatorState extends State<AppCoordinator> {
             MaterialPageRoute(
               builder: (context) => Center(
                 child: Container(
-                    child: Text('Opened article dynamic link with $deepLinkResult')),
+                    child: Text(
+                        'Opened article dynamic link with $deepLinkResult')),
               ),
             ),
           );
@@ -43,7 +73,8 @@ class _AppCoordinatorState extends State<AppCoordinator> {
             MaterialPageRoute(
               builder: (context) => Center(
                 child: Container(
-                    child: Text('Opened crop dynamic link with $deepLinkResult')),
+                    child:
+                        Text('Opened crop dynamic link with $deepLinkResult')),
               ),
             ),
           );
