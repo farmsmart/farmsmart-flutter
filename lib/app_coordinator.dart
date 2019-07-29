@@ -32,7 +32,7 @@ class _AppCoordinatorState extends State<AppCoordinator> {
   //TODO Should be implemented when the landing page is merged
   FutureBuilder<bool> appEntryManagement(){
     return FutureBuilder<bool>(
-      future: SharedPreferencesHelper.getIsFirstLaunch(),
+      future: SharedPreferencesHelper.isFirstLaunch(),
       builder: (BuildContext context, AsyncSnapshot<bool> snapshot){
         if(snapshot.hasData){
           SharedPreferencesHelper.setIsFirstLaunch(false);

@@ -29,7 +29,6 @@ class _Constants {
   static final communityIcon = 'assets/icons/community.png';
 }
 
-//TODO rename file to home_old.dart when removed all the old stuff
 class Home extends StatelessWidget {
   FarmsmartLocalizations localizations;
   final RepositoryProvider repositoryProvider;
@@ -63,7 +62,7 @@ class Home extends StatelessWidget {
         _Constants.profitLossIcon,
       ),
       _buildTabNavigator(
-        //TODO Check Discover screen after rebase LH's opened PR
+        //TODO Check Discover screen after rebase LH's opened PR (white screen)
         _buildDiscover(),
         _Constants.discoverSelectedIcon,
         _Constants.discoverIcon,
