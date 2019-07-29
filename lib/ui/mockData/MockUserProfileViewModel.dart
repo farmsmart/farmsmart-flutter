@@ -15,8 +15,8 @@ class MockUserProfileViewModel {
     }
 
     return UserProfileViewModel(
-      actions: list,
-      userName: _mockUserName.random(),
+      items: list,
+      username: _mockUserName.random(),
       activeCrops: Random().nextInt(50),
       completedCrops: Random().nextInt(50),
       image: NetworkImage(_mockImage.random()),
@@ -35,13 +35,13 @@ class MockUserProfileListItemViewModel {
     return UserProfileListItemViewModel(
       title: Intl.message(_mockActionTitle[index]),
       icon: _mockActionIcon[index],
-      onTap: (title) => _mockItemTap(title),
+      onTap: () => _mockItemTap(),
       isDestructive: index != 7 ? false : true,
     );
   }
 
-  static _mockItemTap(String title) {
-    print(title + " was tapped");
+  static _mockItemTap() {
+    print("Was tapped");
   }
 }
 

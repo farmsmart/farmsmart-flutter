@@ -7,7 +7,7 @@ class _Constants {
 class UserProfileListItemViewModel {
   String icon;
   String title;
-  Function(String) onTap;
+  Function onTap;
   bool isDestructive;
 
   UserProfileListItemViewModel({
@@ -124,7 +124,7 @@ class UserProfileListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      onTap: () => _viewModel.onTap(_viewModel.title),
+      onTap: () => _viewModel.onTap(),
       contentPadding: _viewModel.icon != null
           ? _style.edgePadding
           : _style.simpleEdgePadding,

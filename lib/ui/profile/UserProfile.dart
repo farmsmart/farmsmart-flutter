@@ -12,8 +12,8 @@ class _Strings {
 }
 
 class UserProfileViewModel {
-  List<UserProfileListItemViewModel> actions;
-  String userName;
+  List<UserProfileListItemViewModel> items;
+  String username;
   int activeCrops;
   int completedCrops;
   String buttonTitle;
@@ -21,8 +21,8 @@ class UserProfileViewModel {
   ImageProvider image;
 
   UserProfileViewModel({
-    this.actions,
-    this.userName,
+    this.items,
+    this.username,
     this.activeCrops,
     this.completedCrops,
     this.buttonTitle,
@@ -213,7 +213,7 @@ class UserProfile extends StatelessWidget {
       child: Column(
         children: <Widget>[
           _buildHeader(context),
-          _buildListOfActions(),
+          _buildItemList(),
         ],
       ),
     );
@@ -258,13 +258,13 @@ class UserProfile extends StatelessWidget {
     );
   }
 
-  Widget _buildListOfActions() {
+  Widget _buildItemList() {
     return ListView.separated(
       shrinkWrap: true,
       physics: ScrollPhysics(),
-      itemCount: _viewModel.actions.length,
+      itemCount: _viewModel.items.length,
       itemBuilder: (context, index) => UserProfileListItem(
-        viewModel: _viewModel.actions[index],
+        viewModel: _viewModel.items[index],
       ),
       separatorBuilder: (context, index) => ListDivider.build(),
     );
@@ -281,7 +281,7 @@ class UserProfile extends StatelessWidget {
             children: <Widget>[
               Container(
                 padding: _style.titleLineSpace,
-                child: Text(_viewModel.userName,
+                child: Text(_viewModel.username,
                     maxLines: _style.maxLines,
                     overflow: TextOverflow.ellipsis,
                     style: _style.titleTextStyle),
