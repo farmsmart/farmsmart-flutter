@@ -180,7 +180,7 @@ class Alert extends StatelessWidget {
         child: RoundedButton(
           viewModel: RoundedButtonViewModel(
             title: _viewModel.cancelActionText,
-            onTap: () => Navigator.pop(context),
+            onTap: () => Navigator.of(context).pop(),
           ),
           style: RoundedButtonStyle.actionSheetLargeRoundedButton().copyWith(
             height: _Constants.actionHeight,
