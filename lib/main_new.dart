@@ -17,7 +17,7 @@ class _Constants {
     const Locale('sw'),
   ];
 }
-
+//TODO rename file to main.dart when removed all the old stuff
 class FarmSmartApp extends StatefulWidget {
   @override
   _FarmSmartAppState createState() => _FarmSmartAppState();

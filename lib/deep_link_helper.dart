@@ -47,11 +47,11 @@ class DeepLinkHelper {
   }
 
   void _saveDynamicLink(){
-    //TODO save to disk
+    //TODO Implement save to disk pending deep link
   }
 
   void runPendingDynamicLink(){
-    //TODO run pending dynamic link
+    //TODO Implement run pending dynamic link (saved on the disk
   }
 
   void _parseDeepLink(Uri deepLink) {
