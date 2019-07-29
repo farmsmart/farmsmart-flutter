@@ -12,6 +12,14 @@ class _Strings {
   static final swahiliAction = "Swahili";
   static final confirmAction = "Confirm";
   static final cancelAction = "Cancel";
+}
+
+class _Languages {
+  static final english = "en";
+  static final swahili = "sw";
+}
+
+class _Icons {
   static final englishIcon = "assets/icons/flag_usa.png";
   static final swahiliIcon = "assets/icons/flag_kenya.png";
   static final checkBoxIcon = "assets/icons/radio_button_default.png";
@@ -36,6 +44,7 @@ class LandingPageViewModel {
   String subtitleImage;
   Function continueAction;
   ActionSheetViewModel actionSheetViewModel;
+  Function (String) switchLanguageTapped;
 
   LandingPageViewModel({
     this.detailText,
@@ -45,6 +54,7 @@ class LandingPageViewModel {
     this.footerText,
     this.continueAction,
     this.actionSheetViewModel,
+    this.switchLanguageTapped,
   });
 }
 
@@ -200,14 +210,16 @@ class LandingPage extends StatelessWidget {
       ActionSheetListItemViewModel(
         title: Intl.message(_Strings.englishAction),
         type: ActionType.selectable,
-        icon: _Strings.englishIcon,
-        checkBoxIcon: _Strings.checkBoxIcon,
+        icon: _Icons.englishIcon,
+        checkBoxIcon: _Icons.checkBoxIcon,
+        onTap: () => _viewModel.switchLanguageTapped(_Languages.english),
       ),
       ActionSheetListItemViewModel(
         title: Intl.message(_Strings.swahiliAction),
         type: ActionType.selectable,
-        icon: _Strings.swahiliIcon,
-        checkBoxIcon: _Strings.checkBoxIcon,
+        icon: _Icons.swahiliIcon,
+        checkBoxIcon: _Icons.checkBoxIcon,
+        onTap: () => _viewModel.switchLanguageTapped(_Languages.swahili),
       ),
     ];
 

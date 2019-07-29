@@ -12,17 +12,22 @@ class _Strings {
 class MockLandingPageViewModel {
   static LandingPageViewModel build() {
     return LandingPageViewModel(
-        detailText: Intl.message(_Strings.detailText),
-        actionText: Intl.message(_Strings.actionText),
-        footerText: Intl.message(_Strings.footerText),
-        headerImage: "assets/raw/illustration_welcome.png",
-        subtitleImage: "assets/raw/logo_default.png",
-        continueAction: () => _mockAction(),
+      detailText: Intl.message(_Strings.detailText),
+      actionText: Intl.message(_Strings.actionText),
+      footerText: Intl.message(_Strings.footerText),
+      headerImage: "assets/raw/illustration_welcome.png",
+      subtitleImage: "assets/raw/logo_default.png",
+      continueAction: () => _mockAction(),
       actionSheetViewModel: MockActionSheetViewModel.buildWithCheckBox(),
-        );
+      switchLanguageTapped: (language) => _mockSwitchLanguage(language),
+    );
   }
 
   static void _mockAction() {
     return print("This should be a Navigator for chat route");
+  }
+
+  static _mockSwitchLanguage(String language) {
+    print(language);
   }
 }
