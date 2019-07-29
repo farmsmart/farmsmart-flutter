@@ -20,7 +20,6 @@ class MockUserProfileViewModel {
       activeCrops: Random().nextInt(50),
       completedCrops: Random().nextInt(50),
       image: NetworkImage(_mockImage.random()),
-      buttonTitle: "Switch Profile",
       switchProfileAction: () => _mockSwitchTap(),
     );
   }
