@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:farmsmart_flutter/data/bloc/article/ArticleListProvider.dart';
+import 'package:farmsmart_flutter/data/bloc/plot/PlotListProvider.dart';
 import 'package:farmsmart_flutter/data/repositories/FlameLink.dart';
 import 'package:farmsmart_flutter/data/repositories/article/ArticleRepositoryInterface.dart';
 import 'package:farmsmart_flutter/data/repositories/article/implementation/ArticlesRepositoryFlamelink.dart';
+import 'package:farmsmart_flutter/data/repositories/plot/implementation/MockPlotRepository.dart';
 import 'package:farmsmart_flutter/farmsmart_localizations.dart';
 import 'package:farmsmart_flutter/ui/bottombar/persistent_bottom_navigation_bar.dart';
 import 'package:farmsmart_flutter/ui/bottombar/tab_navigator.dart';
@@ -10,6 +12,9 @@ import 'package:farmsmart_flutter/ui/discover/ArticleList.dart';
 import 'package:farmsmart_flutter/ui/playground/data/playground_datasource_impl.dart';
 import 'package:farmsmart_flutter/ui/playground/playground_view.dart';
 import 'package:flutter/material.dart';
+
+import '../repository_provider.dart';
+import 'myplot/PlotList.dart';
 
 class _Constants {
   static final double bottomBarIconSize = 25;
@@ -24,15 +29,15 @@ class _Constants {
   static final communityIcon = 'assets/icons/community.png';
 }
 
-
-final cms = FlameLink(
-    store: Firestore.instance, environment: Environment.development);
-final articleRepo = ArticlesRepositoryFlameLink(cms);
-
 //TODO rename file to home.dart when removed all the old stuff
 class Home extends StatelessWidget {
-
   FarmsmartLocalizations localizations;
+  final RepositoryProvider repositoryProvider;
+
+  Home({
+    Key key,
+    this.repositoryProvider,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -47,8 +52,7 @@ class Home extends StatelessWidget {
   List<TabNavigator> tabs() {
     return [
       _buildTabNavigator(
-        //TODO Add My plot screen without redux
-        Text('My Plot'),
+        _buildMyPlot(),
         _Constants.myPlotSelectedIcon,
         _Constants.myPlotIcon,
       ),
@@ -82,23 +86,31 @@ class Home extends StatelessWidget {
     ];
   }
 
+  _buildMyPlot() {
+    return PlotList(
+        provider: PlotListProvider(
+            title: localizations.myPlotTab, repository: repositoryProvider.getMyPlotRepository()));
+  }
+
   _buildDiscover() {
     return ArticleList(
         viewModelProvider: ArticleListProvider(
             title: localizations.discoverTab,
-            repository: articleRepo,
+            repository: repositoryProvider.getDiscoverRepository(),
             group: ArticleCollectionGroup.discovery));
   }
 
-  _buildPlayground(){
+  _buildPlayground() {
     return PlaygroundView(
       widgetList: PlaygroundDataSourceImpl().getList(),
     );
   }
 
-  TabNavigator _buildTabNavigator(Widget page,
-      String activeIconPath,
-      String iconPath,) {
+  TabNavigator _buildTabNavigator(
+    Widget page,
+    String activeIconPath,
+    String iconPath,
+  ) {
     return TabNavigator(
       child: page,
       barItem: BottomNavigationBarItem(

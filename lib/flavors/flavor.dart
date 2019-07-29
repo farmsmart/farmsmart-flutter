@@ -1,3 +1,4 @@
+@Deprecated('Use app_config.dart instead')
 class AppSettings {
   static final AppSettings _settingsManager =
   new AppSettings._internal();
