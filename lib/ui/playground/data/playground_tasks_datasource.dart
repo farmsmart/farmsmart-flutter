@@ -14,6 +14,7 @@ import 'package:farmsmart_flutter/ui/myplot/PlotList.dart';
 import 'package:farmsmart_flutter/ui/playground/data/playground_data_source.dart';
 import 'package:farmsmart_flutter/ui/playground/data/playground_stagecard_datasource.dart';
 import 'package:farmsmart_flutter/ui/playground/playground_widget.dart';
+import 'package:farmsmart_flutter/ui/profile/FarmDetails.dart';
 import 'package:farmsmart_flutter/ui/profitloss/ProfitLossHeader.dart';
 import 'package:farmsmart_flutter/ui/profitloss/ProfitLossListItem.dart';
 import 'package:farmsmart_flutter/ui/profitloss/mockRepositoryTryout/MockTransactionRepository.dart';
@@ -133,6 +134,13 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
                     provider: PlotListProvider(
                         title: "Test", repository: MockPlotRepository()))),
             PlaygroundWidget(title: "FARM-365 Plot Detail", child: PlotDetail(provider: PlotDetailProvider(MockPlotEntity().build(), MockPlotRepository()),))
+          ])),
+      PlaygroundWidget(
+          title: 'TASK FARM-443 Farm Details',
+          child: PlaygroundView(widgetList: [
+            PlaygroundWidget(
+                title: "FARM-443 Show farm details",
+                child: FarmDetails()),
           ])),
     ];
   }
