@@ -1,7 +1,6 @@
-import 'package:farmsmart_flutter/repository_provider.dart';
+import 'package:farmsmart_flutter/data/repositories/repository_provider.dart';
 import 'package:farmsmart_flutter/ui/home_new.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'deep_link_helper.dart';
 import 'utils/shared_preferences_helper.dart';
@@ -26,7 +25,8 @@ class _AppCoordinatorState extends State<AppCoordinator> {
   Widget build(BuildContext context) {
     repositoryProvider.init();
 
-    return appEntryManagement();
+    //TODO Replace by appEntryManagement
+    return Home(repositoryProvider: repositoryProvider,);
   }
 
   //TODO Should be implemented when the landing page is merged
