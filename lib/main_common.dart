@@ -1,7 +1,7 @@
 import 'package:farmsmart_flutter/redux/app/app_state.dart';
 import 'package:farmsmart_flutter/redux/keys.dart';
 import 'package:farmsmart_flutter/redux/store.dart';
-import 'package:farmsmart_flutter/ui/home.dart';
+import 'package:farmsmart_flutter/ui/home_old.dart';
 import 'package:farmsmart_flutter/ui/privacy_policies_screen.dart';
 import 'package:farmsmart_flutter/utils/colors.dart';
 import 'package:flutter/foundation.dart';
