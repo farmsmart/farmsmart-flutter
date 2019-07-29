@@ -1,46 +1,13 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:farmsmart_flutter/data/model/EntityCollectionInterface.dart';
 import 'package:farmsmart_flutter/data/model/article_entity.dart';
-import 'package:farmsmart_flutter/data/repositories/MockStrings.dart';
-import 'package:farmsmart_flutter/data/repositories/implementation/MockImageEntity.dart';
-import 'package:farmsmart_flutter/model/enums.dart';
+import 'package:farmsmart_flutter/data/model/mock/MockArticle.dart';
 import '../ArticleRepositoryInterface.dart';
 
-class MockArticle {
-  static ArticleEntity build() {
-    final entity = ArticleEntity(
-      id: mockPlainText.identifier(),
-      content: mockRichText.random(),
-      status: Status.PUBLISHED,
-      summary: mockPlainText.random(),
-      title: mockTitleText.random(),
-      published: Timestamp.now(),
-    );
-    entity.related = MockArticleEntityCollection();
-    entity.images = MockImageEntityCollection();
-    return entity;
-  }
-  
-  static List<ArticleEntity> list({int count = 50}) {
-    List<ArticleEntity> articles = [];
-    for (var i = 0; i < count; i++) {
-      articles.add(build());
-    }
-    return articles;
-  }
-}
-
-class MockArticleEntityCollection implements EntityCollection<ArticleEntity> {
-  final _delay = Duration(seconds: 1);
-  @override
-  Future<List<ArticleEntity>> getEntities({int limit = 0}) {
-    return Future.delayed(_delay, () => MockArticle.list());
-  }
-}
+MockArticle _articleBuilder = MockArticle();
 
 class MockArticlesRepository implements ArticleRepositoryInterface {
   final _articles;
-  final _delay = Duration(seconds: 1);
+  final _delay = Duration(milliseconds: 200);
   final _streamEventCount = 50;
 
   MockArticlesRepository({int articleCount = 1000})
@@ -49,7 +16,7 @@ class MockArticlesRepository implements ArticleRepositoryInterface {
   static List<ArticleEntity> _generateArticles({int count = 1000}) {
     var articles = <ArticleEntity>[];
     for (var i = 0; i < count; i++) {
-      articles.add(MockArticle.build());
+      articles.add(_articleBuilder.build());
     }
     return articles;
   }
@@ -63,7 +30,7 @@ class MockArticlesRepository implements ArticleRepositoryInterface {
 
   @override
   Future<ArticleEntity> getArticle(String uri) {
-    return Future.delayed(_delay, () => MockArticle.build());
+    return Future.delayed(_delay, () => _articleBuilder.build());
   }
 
   @override
@@ -75,7 +42,7 @@ class MockArticlesRepository implements ArticleRepositoryInterface {
   Stream<ArticleEntity> observeArticle(String uri) {
     var sequence;
     for (var i = 0; i < _streamEventCount; i++) {
-      sequence.add(Future.delayed(_delay, () => MockArticle.build()));
+      sequence.add(Future.delayed(_delay, () => _articleBuilder.build()));
     }
     return Stream.fromFutures(sequence);
   }

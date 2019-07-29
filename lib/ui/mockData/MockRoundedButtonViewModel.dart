@@ -1,5 +1,5 @@
+import 'package:farmsmart_flutter/data/model/mock/MockString.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
-import 'package:farmsmart_flutter/ui/common/MockString.dart';
 
 
 class MockRoundedButtonViewModel {

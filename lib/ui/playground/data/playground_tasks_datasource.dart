@@ -1,4 +1,7 @@
 import 'package:farmsmart_flutter/data/bloc/article/ArticleListProvider.dart';
+import 'package:farmsmart_flutter/data/bloc/plot/PlotDetailProvider.dart';
+import 'package:farmsmart_flutter/data/bloc/plot/PlotListProvider.dart';
+import 'package:farmsmart_flutter/data/model/mock/MockPlot.dart';
 import 'package:farmsmart_flutter/data/repositories/article/implementation/MockArticlesRepository.dart';
 import 'package:farmsmart_flutter/ui/LandingPage.dart';
 import 'package:farmsmart_flutter/ui/discover/ArticleList.dart';
@@ -7,10 +10,13 @@ import 'package:farmsmart_flutter/ui/mockData/MockActionSheetViewModel.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockLandingPageViewModel.dart';
 import 'package:farmsmart_flutter/ui/playground/data/playground_atom_datasource.dart';
 import 'package:farmsmart_flutter/ui/bottombar/persistent_bottom_navigation_bar.dart';
+import 'package:farmsmart_flutter/data/repositories/plot/implementation/MockPlotRepository.dart';
+import 'package:farmsmart_flutter/ui/discover/ArticleList.dart';
 import 'package:farmsmart_flutter/ui/common/ActionSheet.dart';
 import 'package:farmsmart_flutter/ui/common/carousel_view.dart';
-import 'package:farmsmart_flutter/ui/discover/ArticleList.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockActionSheetViewModel.dart';
+import 'package:farmsmart_flutter/ui/myplot/PlotDetail.dart';
+import 'package:farmsmart_flutter/ui/myplot/PlotList.dart';
 import 'package:farmsmart_flutter/ui/playground/data/playground_data_source.dart';
 import 'package:farmsmart_flutter/ui/playground/data/playground_stagecard_datasource.dart';
 import 'package:farmsmart_flutter/ui/playground/playground_button_present_modal.dart';
@@ -132,6 +138,16 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
           tabs: PlaygroundPersistentBottomNavigationBar().getList(),
         ),
       ),
+       PlaygroundWidget(
+          title: 'TASK FARM-365 Plot',
+          child: PlaygroundView(widgetList: [
+            PlaygroundWidget(
+                title: "FARM-365 Plot Repository",
+                child: PlotList(
+                    provider: PlotListProvider(
+                        title: "Test", repository: MockPlotRepository()))),
+            PlaygroundWidget(title: "FARM-365 Plot Detail", child: PlotDetail(provider: PlotDetailProvider(MockPlotEntity().build(), MockPlotRepository()),))
+          ])),
     ];
   }
 }

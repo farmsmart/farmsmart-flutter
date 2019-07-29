@@ -6,22 +6,14 @@ PODS:
     - BoringSSL-GRPC/Interface (= 0.0.3)
   - BoringSSL-GRPC/Interface (0.0.3)
   - cloud_firestore (0.0.1):
-    - Firebase/Auth
     - Firebase/Core
-    - Firebase/Database
-    - Firebase/Firestore
+    - Firebase/Firestore (~> 6.0)
     - Flutter
-  - Firebase/Auth (6.0.0):
-    - Firebase/CoreOnly
-    - FirebaseAuth (~> 6.0.0)
   - Firebase/Core (6.0.0):
     - Firebase/CoreOnly
     - FirebaseAnalytics (= 6.0.0)
   - Firebase/CoreOnly (6.0.0):
     - FirebaseCore (= 6.0.0)
-  - Firebase/Database (6.0.0):
-    - Firebase/CoreOnly
-    - FirebaseDatabase (~> 6.0.0)
   - Firebase/DynamicLinks (6.0.0):
     - Firebase/CoreOnly
     - FirebaseDynamicLinks (~> 4.0.0)
@@ -50,20 +42,10 @@ PODS:
     - "GoogleUtilities/NSData+zlib (~> 6.0)"
     - nanopb (~> 0.3)
   - FirebaseAnalyticsInterop (1.2.0)
-  - FirebaseAuth (6.0.0):
-    - FirebaseAuthInterop (~> 1.0)
-    - FirebaseCore (~> 6.0)
-    - GoogleUtilities/AppDelegateSwizzler (~> 6.0)
-    - GoogleUtilities/Environment (~> 6.0)
-    - GTMSessionFetcher/Core (~> 1.1)
   - FirebaseAuthInterop (1.0.0)
   - FirebaseCore (6.0.0):
     - GoogleUtilities/Environment (~> 6.0)
     - GoogleUtilities/Logger (~> 6.0)
-  - FirebaseDatabase (6.0.0):
-    - FirebaseAuthInterop (~> 1.0)
-    - FirebaseCore (~> 6.0)
-    - leveldb-library (~> 1.18)
   - FirebaseDynamicLinks (4.0.0):
     - FirebaseAnalyticsInterop (~> 1.0)
     - FirebaseCore (~> 6.0)
@@ -175,10 +157,8 @@ SPEC REPOS:
     - Firebase
     - FirebaseAnalytics
     - FirebaseAnalyticsInterop
-    - FirebaseAuth
     - FirebaseAuthInterop
     - FirebaseCore
-    - FirebaseDatabase
     - FirebaseDynamicLinks
     - FirebaseFirestore
     - FirebaseInstanceID
@@ -219,17 +199,15 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   BoringSSL-GRPC: db8764df3204ccea016e1c8dd15d9a9ad63ff318
-  cloud_firestore: cd6e849ecb8ab43e5a7a5f1f169304ca65436c03
+  cloud_firestore: d1c0e6903eb554e2882d5519baa950201f101d14
   Firebase: fa80b9d987ca014a1ba9357496ef2a0178b28b12
-  firebase_core: ce5006bb48508ee4e71e0f429a3f519bb8ee2961
-  firebase_dynamic_links: 4a583047b253e5914d5e3c3891cca337ec087d48
-  firebase_storage: 2543f377090a6e219caab9224dead5bbcb30ef33
+  firebase_core: b3b02d0b5e9d01aab5e50ba7cbcf84c73cb6883c
+  firebase_dynamic_links: de8575bb5e9f2bb42a6c71c842d84aec82c45f35
+  firebase_storage: 52033ea2e6ad58bfa852de92002598850d325c36
   FirebaseAnalytics: 1743c5f4de3687d0745709dfdc4b1dea1484f44c
   FirebaseAnalyticsInterop: efbe45c8385ec626e29f9525e5ebd38520dfb6c1
-  FirebaseAuth: efc72b0f6fe075d2a6de8d81a6d9de83ef2b47eb
   FirebaseAuthInterop: 0ffa57668be100582bb7643d4fcb7615496c41fc
   FirebaseCore: e38f025287b413255a53acc1945d048a112047f7
-  FirebaseDatabase: f48e067716864be2b855cf716b927ef375d6cfa0
   FirebaseDynamicLinks: 25fc45fdf2557ee2ee630999c301245d8911792e
   FirebaseFirestore: 0537b2a960a4819fae2834e688e5daeb571c81d6
   FirebaseInstanceID: 0e0348a3c00a734fa376a070f5ad4533ad975cb5

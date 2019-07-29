@@ -1,6 +1,5 @@
-import 'package:farmsmart_flutter/ui/common/MockString.dart';
+import 'package:farmsmart_flutter/data/model/mock/MockString.dart';
 import 'package:farmsmart_flutter/ui/common/stage_card.dart';
-import 'package:flutter/material.dart';
 
 class MockStageCardViewModel {
   static StageCardViewModel buildUpcomingState() {
@@ -27,7 +26,6 @@ class MockStageCardViewModel {
     return StageCardViewModel(
         subtitle: _mockStage.random(),
         title: _mockTitle.random(),
-        statusIcon: Icons.check,
         action: () {},
         actionText: 'Revert to In Progress',
         statusTitle: 'Complete'

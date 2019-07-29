@@ -6,21 +6,24 @@ class _DefaultConstants {
 }
 
 class CarouselView extends StatelessWidget {
-  final List<Widget> children;
-  final double viewPortFraction;
-  final int initialPage;
+  final List<Widget> _children;
+  final double _viewPortFraction;
+  final int _initialPage;
+  final Function _onPageChange; 
 
   const CarouselView({
-    @required this.children,
-    this.viewPortFraction = _DefaultConstants._viewPortFraction,
-    this.initialPage = _DefaultConstants._initialPage,
-  });
+    @required List<Widget> children,
+    Function onPageChange,
+    double viewPortFraction = _DefaultConstants._viewPortFraction,
+    int initialPage = _DefaultConstants._initialPage,
+  }) : this._children = children, this._onPageChange = onPageChange, this._viewPortFraction = viewPortFraction, this._initialPage = initialPage;
 
   @override
   Widget build(BuildContext context) {
     return PageView(
-      children: children,
-      controller: PageController(viewportFraction: viewPortFraction, initialPage: initialPage),
+      children: _children,
+      onPageChanged: _onPageChange,
+      controller: PageController(viewportFraction: _viewPortFraction, initialPage: _initialPage),
     );
   }
 }
