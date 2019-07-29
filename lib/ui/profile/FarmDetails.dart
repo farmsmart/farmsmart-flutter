@@ -1,6 +1,9 @@
 import 'package:farmsmart_flutter/ui/common/ListDivider.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
 import 'package:farmsmart_flutter/ui/profile/FarmDetailsListItem.dart';
+import 'package:farmsmart_flutter/ui/common/ContextualAppBar.dart';
+import 'package:farmsmart_flutter/ui/common/ActionSheet.dart';
+import 'package:farmsmart_flutter/ui/common/ActionSheetListItem.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -16,8 +19,10 @@ class _Strings {
 
 class FarmDetailsViewModel {
   List<FarmDetailsListItemViewModel> items;
+  final Function editProfile;
+  final Function removeProfile;
 
-  FarmDetailsViewModel({this.items});
+  FarmDetailsViewModel({this.items, this.removeProfile, this.editProfile});
 }
 
 class FarmDetailsStyle {}
@@ -35,7 +40,7 @@ class FarmDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //appBar: ,
+      appBar: _buildAppBar(context, _viewModel),
       body: buildPage(context),
       floatingActionButton: Padding(
         padding: const EdgeInsets.all(32),
@@ -58,7 +63,7 @@ class FarmDetails extends StatelessWidget {
 
   Widget _buildHeader() {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 32, vertical: 38),
+      margin: EdgeInsets.symmetric(horizontal: 32, vertical: 20),
       child: Row(
         children: <Widget>[
           Expanded(
@@ -85,5 +90,35 @@ class FarmDetails extends StatelessWidget {
       separatorBuilder: (context, index) => ListDivider.build(),
       itemCount: _viewModel.items.length,
     );
+  }
+
+
+
+  Widget _buildAppBar(BuildContext context, FarmDetailsViewModel viewModel) {
+    return ContextualAppBar(
+      moreAction: () => _moreTapped(_moreMenu(viewModel, context), context),
+    ).build(context);
+  }
+
+  void _moreTapped(ActionSheet sheet, BuildContext context) {
+    ActionSheet.present(sheet, context);
+  }
+
+  void _removeAction(FarmDetailsViewModel viewModel, BuildContext context) {
+    viewModel.removeProfile();    //TODO: add the confirm when ready
+    Navigator.of(context).pop();
+  }
+
+  void _editAction(FarmDetailsViewModel viewModel) {
+    viewModel.editProfile();   //TODO: add the UI for input when ready
+  }
+
+  ActionSheet _moreMenu(FarmDetailsViewModel viewModel, BuildContext context) {
+    final actions = [
+      ActionSheetListItemViewModel(title: Intl.message("Edit profile"), type: ActionType.simple, onTap: () => _editAction(viewModel)),
+      ActionSheetListItemViewModel(title: Intl.message("Delete profile"), type: ActionType.simple, isDestructive: true, onTap: () => _removeAction(viewModel, context)),
+    ];
+    final actionSheetViewModel = ActionSheetViewModel(actions, Intl.message("Cancel"));
+    return ActionSheet(viewModel: actionSheetViewModel, style: ActionSheetStyle.defaultStyle());
   }
 }
