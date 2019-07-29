@@ -6,6 +6,15 @@ class _Constants {
   static final String navCancelIcon = "assets/raw/nav_icon_cancel.png";
 }
 
+class SwitchProfileItemsViewModel {
+  final String title;
+  final String image;
+  final String icon;
+
+  SwitchProfileItemsViewModel(this.title, this.image, this.icon);
+
+}
+
 class SwitchProfileItems extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

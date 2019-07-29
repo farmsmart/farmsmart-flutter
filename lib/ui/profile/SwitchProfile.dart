@@ -5,10 +5,84 @@ import 'package:flutter/material.dart';
 
 class _Constants {
   static final String navCancelIcon = "assets/raw/nav_icon_cancel.png";
-  static final String roundedButtonIcon = "assets/icons/profit_add.png";
+  static final String topButtonIcon = "assets/icons/profit_add.png";
+  static final double appBarElevation = 0;
+  static final EdgeInsets appBarEdgePadding = EdgeInsets.only(left: 25);
+  static final double appBarIconSize = 20;
+  static final EdgeInsets topButtonEdgePadding =
+      const EdgeInsets.only(right: 32.0);
+  static final EdgeInsets generalEdgePadding =
+      const EdgeInsets.only(left: 32, top: 10, bottom: 36);
+  static final EdgeInsets bottomButtonEdgePadding =
+      const EdgeInsets.only(right: 24, left: 24, bottom: 24);
+
+  //TODO: remove when mockData ready
+  static bool isVisible = false;
 }
 
-class SwitchProfile extends StatelessWidget {
+class SwitchProfileViewModel {
+  String title;
+  String actionTitle;
+  bool isVisible;
+  List<SwitchProfileItems> actions;
+
+
+  SwitchProfileViewModel(
+      {this.title,
+      this.actionTitle,
+      this.isVisible = false,
+      this.actions,
+      });
+}
+
+class SwitchProfileStyle {
+  final TextStyle titleTextStyle;
+
+  const SwitchProfileStyle({
+    this.titleTextStyle,
+  });
+
+  SwitchProfileStyle copyWith({
+    TextStyle titleTextStyle,
+  }) {
+    return SwitchProfileStyle(
+      titleTextStyle: titleTextStyle ?? this.titleTextStyle,
+    );
+  }
+}
+
+class _DefaultStyle extends SwitchProfileStyle {
+  final TextStyle titleTextStyle = const TextStyle(
+    color: Color(0xff1a1b46),
+    fontSize: 27,
+    fontWeight: FontWeight.w700,
+    fontStyle: FontStyle.normal,
+  );
+
+  const _DefaultStyle({
+    TextStyle titleTextStyle,
+  });
+}
+
+const SwitchProfileStyle _defaultStyle = const _DefaultStyle();
+
+class SwitchProfile extends StatefulWidget {
+  final SwitchProfileViewModel _viewModel;
+  final SwitchProfileStyle _style;
+
+  SwitchProfile({
+    Key key,
+    SwitchProfileViewModel viewModel,
+    SwitchProfileStyle style = _defaultStyle,
+  })  : this._viewModel = viewModel,
+        this._style = style,
+        super(key: key);
+
+  @override
+  SwitchProfileState createState() => SwitchProfileState();
+}
+
+class SwitchProfileState extends State<SwitchProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,24 +99,21 @@ class SwitchProfile extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.only(left: 32, top: 10, bottom: 36),
+            padding: _Constants.generalEdgePadding,
             child: Text(
-              "Switch Profile",
+              widget._viewModel.title,
               textAlign: TextAlign.left,
-              style: TextStyle(
-                color: Color(0xff1a1b46),
-                fontSize: 27,
-                fontWeight: FontWeight.w700,
-                fontStyle: FontStyle.normal,
-              ),
+              style: widget._style.titleTextStyle,
             ),
           ),
           ListView.separated(
-              shrinkWrap: true,
-              physics: ScrollPhysics(),
-              itemBuilder: (context , index ) => SwitchProfileItems(),
-              separatorBuilder: (context, index) => ListDivider.build(),
-              itemCount: 2),
+            shrinkWrap: true,
+            physics: ScrollPhysics(),
+            itemBuilder: (context, index) => SwitchProfileItems(),
+            separatorBuilder: (context, index) => ListDivider.build(),
+            //TODO: this should be in viewModel
+            itemCount: widget._viewModel.actions.length,
+          ),
         ],
       ),
     );
@@ -50,37 +121,46 @@ class SwitchProfile extends StatelessWidget {
 
   _buildFloatingButton() {
     return Padding(
-      padding: const EdgeInsets.only(right: 24, left: 24, bottom: 24),
-      child: RoundedButton(
-          viewModel:
-              RoundedButtonViewModel(title: "Switch Profile Button", onTap: () {}),
-          style: RoundedButtonStyle.largeRoundedButtonStyle()),
+      padding: _Constants.bottomButtonEdgePadding,
+      child: Visibility(
+        visible: _Constants.isVisible,
+        child: RoundedButton(
+            viewModel: RoundedButtonViewModel(
+                title: widget._viewModel.title, onTap: () {}),
+            style: RoundedButtonStyle.largeRoundedButtonStyle()),
+      ),
     );
   }
 
   AppBar _buildSimpleAppBar(BuildContext context) {
     return AppBar(
-      elevation: 0,
+      elevation: _Constants.appBarElevation,
       leading: FlatButton(
         onPressed: () => Navigator.pop(context, false),
-        padding: EdgeInsets.only(left: 25),
+        padding: _Constants.appBarEdgePadding,
         child: Image.asset(
           _Constants.navCancelIcon,
-          height: 20,
-          width: 20,
+          height: _Constants.appBarIconSize,
+          width: _Constants.appBarIconSize,
         ),
       ),
       actions: <Widget>[
         Center(
           child: Padding(
-            padding: const EdgeInsets.only(right: 32.0),
+            padding: _Constants.topButtonEdgePadding,
             child: RoundedButton(
                 viewModel: RoundedButtonViewModel(
-                    icon: _Constants.roundedButtonIcon, onTap: () {}),
+                    icon: _Constants.topButtonIcon, onTap: () => _bla()),
                 style: RoundedButtonStyle.defaultStyle()),
           ),
         ),
       ],
     );
+  }
+
+  _bla() {
+    setState(() {
+      _Constants.isVisible = !_Constants.isVisible;
+    });
   }
 }
