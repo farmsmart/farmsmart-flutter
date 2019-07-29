@@ -1,11 +1,21 @@
 import 'dart:ui';
 
 import 'package:farmsmart_flutter/ui/common/ActionSheet.dart';
+import 'package:farmsmart_flutter/ui/common/ActionSheetListItem.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
-import 'package:farmsmart_flutter/ui/mockData/MockActionSheetViewModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+
+class _Strings {
+  static final englishAction = "English";
+  static final swahiliAction = "Swahili";
+  static final confirmAction = "Confirm";
+  static final cancelAction = "Cancel";
+  static final englishIcon = "assets/icons/flag_usa.png";
+  static final swahiliIcon = "assets/icons/flag_kenya.png";
+  static final checkBoxIcon = "assets/icons/radio_button_default.png";
+}
 
 class _Constants {
   static final EdgeInsets generalPadding =
@@ -73,10 +83,10 @@ class LandingPageStyle {
 
 class _DefaultStyle extends LandingPageStyle {
   final TextStyle detailTextStyle = const TextStyle(
-    fontSize: 17,
-    height: 1.1,
-    fontWeight: FontWeight.normal,
-    color: Color(0xff4c4e6e));
+      fontSize: 17,
+      height: 1.1,
+      fontWeight: FontWeight.normal,
+      color: Color(0xff4c4e6e));
   final TextStyle footerTextStyle = const TextStyle(
       fontWeight: FontWeight.normal, fontSize: 15, color: Color(0xff4c4e6e));
   final TextStyle actionTextStyle = const TextStyle(
@@ -103,8 +113,7 @@ class LandingPage extends StatelessWidget {
     Key key,
     LandingPageViewModel viewModel,
     LandingPageStyle style = _defaultStyle,
-  })
-      : this._viewModel = viewModel,
+  })  : this._viewModel = viewModel,
         this._style = style,
         super(key: key);
 
@@ -161,7 +170,7 @@ class LandingPage extends StatelessWidget {
                     ),
                     GestureDetector(
                       behavior: HitTestBehavior.opaque,
-                      onTap: () => _onMenuPressed(context),
+                      onTap: () => _languageTapped(_languageMenu(), context),
                       child: Container(
                         margin: _Constants.actionTapArea,
                         child: Text(
@@ -182,13 +191,34 @@ class LandingPage extends StatelessWidget {
     );
   }
 
-  Future _onMenuPressed(BuildContext context) async {
-    showModalBottomSheet(
-        context: context,
-        builder: (widgetBuilder) =>
-            ActionSheet(
-                viewModel: _viewModel.actionSheetViewModel,
-                style: ActionSheetStyle.defaultStyle()));
+  void _languageTapped(ActionSheet sheet, BuildContext context) {
+    ActionSheet.present(sheet, context);
+  }
+
+  ActionSheet _languageMenu() {
+    final actions = [
+      ActionSheetListItemViewModel(
+        title: Intl.message(_Strings.englishAction),
+        type: ActionType.selectable,
+        icon: _Strings.englishIcon,
+        checkBoxIcon: _Strings.checkBoxIcon,
+      ),
+      ActionSheetListItemViewModel(
+        title: Intl.message(_Strings.swahiliAction),
+        type: ActionType.selectable,
+        icon: _Strings.swahiliIcon,
+        checkBoxIcon: _Strings.checkBoxIcon,
+      ),
+    ];
+
+    final actionSheetViewModel = ActionSheetViewModel(
+      actions,
+      Intl.message(_Strings.cancelAction),
+      confirmButtonTitle: _Strings.confirmAction,
+    );
+    return ActionSheet(
+      viewModel: actionSheetViewModel,
+      style: ActionSheetStyle.defaultStyle(),
+    );
   }
 }
-
