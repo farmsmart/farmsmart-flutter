@@ -1,37 +1,23 @@
+import 'package:farmsmart_flutter/ui/common/ListDivider.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
+import 'package:farmsmart_flutter/ui/profile/FarmDetailsListItem.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class _Strings {
-  static final String YOUR_NAME = Intl.message("Your Name");
-  static final String COUNTRY = Intl.message("Country");
-  static final String LAND_SIZE = Intl.message("Land Size");
-  static final String SEASON = Intl.message("Season");
-  static final String MOTIVATION = Intl.message("Motivation");
-  static final String SOIL_TYPE = Intl.message("Soil Type");
-
+  static final String yourName = Intl.message("Your Name");
+  static final String country = Intl.message("Country");
+  static final String landSize = Intl.message("Land Size");
+  static final String season = Intl.message("Season");
+  static final String motivation = Intl.message("Motivation");
+  static final String soilType = Intl.message("Soil Type");
+  static final String farmDetailsTitle = Intl.message("Your Farm Details");
 }
 
 class FarmDetailsViewModel {
-  String userName;
-  String country;
-  String landSize;
-  String season;
-  String motivation;
-  String soilType;
-  String irrigation;
-  String buttonTitle;
+  List<FarmDetailsListItemViewModel> items;
 
-  FarmDetailsViewModel({
-    this.userName,
-    this.country,
-    this.landSize,
-    this.season,
-    this.motivation,
-    this.soilType,
-    this.irrigation,
-    this.buttonTitle,
-  });
+  FarmDetailsViewModel({this.items});
 }
 
 class FarmDetailsStyle {}
@@ -53,7 +39,9 @@ class FarmDetails extends StatelessWidget {
       body: buildPage(context),
       floatingActionButton: Padding(
         padding: const EdgeInsets.all(32),
-        child: RoundedButton(viewModel: RoundedButtonViewModel(title: "Confirm Details"), style: RoundedButtonStyle.largeRoundedButtonStyle()),
+        child: RoundedButton(
+            viewModel: RoundedButtonViewModel(title: "Confirm Details"),
+            style: RoundedButtonStyle.largeRoundedButtonStyle()),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
@@ -62,20 +50,40 @@ class FarmDetails extends StatelessWidget {
   Widget buildPage(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
-        children: <Widget>[
-          Text("ds"),
-        ],
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[_buildHeader(), _buildList()],
       ),
     );
   }
 
   Widget _buildHeader() {
-    return Text(
-        "Your Farm Details"
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 32, vertical: 38),
+      child: Row(
+        children: <Widget>[
+          Expanded(
+            child: Text(
+              _Strings.farmDetailsTitle,
+              style: TextStyle(
+                color: Color(0xff1a1b46),
+                fontSize: 27,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
   Widget _buildList() {
-
+    return ListView.separated(
+      primary: false,
+      itemBuilder: (context, index) =>
+          FarmDetailsListItem(viewModel: _viewModel.items[index]),
+      shrinkWrap: true,
+      separatorBuilder: (context, index) => ListDivider.build(),
+      itemCount: _viewModel.items.length,
+    );
   }
 }

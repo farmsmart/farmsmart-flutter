@@ -9,12 +9,14 @@ import 'package:farmsmart_flutter/ui/discover/ArticleList.dart';
 import 'package:farmsmart_flutter/ui/common/ActionSheet.dart';
 import 'package:farmsmart_flutter/ui/common/carousel_view.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockActionSheetViewModel.dart';
+import 'package:farmsmart_flutter/ui/mockData/MockFarmDetailsViewModel.dart';
 import 'package:farmsmart_flutter/ui/myplot/PlotDetail.dart';
 import 'package:farmsmart_flutter/ui/myplot/PlotList.dart';
 import 'package:farmsmart_flutter/ui/playground/data/playground_data_source.dart';
 import 'package:farmsmart_flutter/ui/playground/data/playground_stagecard_datasource.dart';
 import 'package:farmsmart_flutter/ui/playground/playground_widget.dart';
 import 'package:farmsmart_flutter/ui/profile/FarmDetails.dart';
+import 'package:farmsmart_flutter/ui/profile/FarmDetailsListItem.dart';
 import 'package:farmsmart_flutter/ui/profitloss/ProfitLossHeader.dart';
 import 'package:farmsmart_flutter/ui/profitloss/ProfitLossListItem.dart';
 import 'package:farmsmart_flutter/ui/profitloss/mockRepositoryTryout/MockTransactionRepository.dart';
@@ -125,7 +127,7 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
           tabs: PlaygroundPersistentBottomNavigationBar().getList(),
         ),
       ),
-       PlaygroundWidget(
+      PlaygroundWidget(
           title: 'TASK FARM-365 Plot',
           child: PlaygroundView(widgetList: [
             PlaygroundWidget(
@@ -133,15 +135,26 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
                 child: PlotList(
                     provider: PlotListProvider(
                         title: "Test", repository: MockPlotRepository()))),
-            PlaygroundWidget(title: "FARM-365 Plot Detail", child: PlotDetail(provider: PlotDetailProvider(MockPlotEntity().build(), MockPlotRepository()),))
+            PlaygroundWidget(
+                title: "FARM-365 Plot Detail",
+                child: PlotDetail(
+                  provider: PlotDetailProvider(
+                      MockPlotEntity().build(), MockPlotRepository()),
+                ))
           ])),
       PlaygroundWidget(
-          title: 'TASK FARM-443 Farm Details',
-          child: PlaygroundView(widgetList: [
+        title: 'TASK FARM-443 Farm Details',
+        child: PlaygroundView(
+          widgetList: [
             PlaygroundWidget(
-                title: "FARM-443 Show farm details",
-                child: FarmDetails()),
-          ])),
+              title: "FARM-443 Show farm details",
+              child: FarmDetails(
+                viewModel: MockFarmDetailsViewModel.build(),
+              ),
+            ),
+          ],
+        ),
+      ),
     ];
   }
 }
