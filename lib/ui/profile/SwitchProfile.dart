@@ -15,9 +15,6 @@ class _Constants {
       const EdgeInsets.only(left: 32, top: 10, bottom: 36);
   static final EdgeInsets bottomButtonEdgePadding =
       const EdgeInsets.only(right: 24, left: 24, bottom: 24);
-
-  //TODO: remove when mockData ready
-  static bool isVisible = false;
 }
 
 class SwitchProfileViewModel {
@@ -111,7 +108,6 @@ class SwitchProfileState extends State<SwitchProfile> {
             physics: ScrollPhysics(),
             itemBuilder: (context, index) => SwitchProfileItems(),
             separatorBuilder: (context, index) => ListDivider.build(),
-            //TODO: this should be in viewModel
             itemCount: widget._viewModel.actions.length,
           ),
         ],
@@ -123,7 +119,7 @@ class SwitchProfileState extends State<SwitchProfile> {
     return Padding(
       padding: _Constants.bottomButtonEdgePadding,
       child: Visibility(
-        visible: _Constants.isVisible,
+        visible: widget._viewModel.isVisible,
         child: RoundedButton(
             viewModel: RoundedButtonViewModel(
                 title: widget._viewModel.title, onTap: () {}),
@@ -158,9 +154,10 @@ class SwitchProfileState extends State<SwitchProfile> {
     );
   }
 
+  //TODO: REname this function please
   _bla() {
     setState(() {
-      _Constants.isVisible = !_Constants.isVisible;
+      widget._viewModel.isVisible = !widget._viewModel.isVisible;
     });
   }
 }
