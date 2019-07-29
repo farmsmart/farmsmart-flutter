@@ -47,7 +47,7 @@ class DeepLinkHelper {
   }
 
   void _saveDynamicLink(){
-    //TODO Implement save to disk pending deep link
+    //TODO: we need to implement this to be able to support opening deep links on very first open (no account created)
   }
 
   void runPendingDynamicLink(){
