@@ -217,6 +217,6 @@ class Alert extends StatelessWidget {
 
   confirmAndDismiss(BuildContext context) {
     _viewModel.confirmAction();
-    Navigator.pop(context);
+    Navigator.of(context).pop();
   }
 }
