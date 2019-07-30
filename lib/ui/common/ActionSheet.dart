@@ -3,10 +3,6 @@ import 'package:farmsmart_flutter/ui/common/ListDivider.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
 import 'package:flutter/material.dart';
 
-class _Constants {
-  static final Color cornersColor = const Color(0xFF737373);
-}
-
 class ActionSheetViewModel {
   List<ActionSheetListItemViewModel> actions;
   String cancelButtonTitle;
@@ -107,6 +103,12 @@ class ActionSheet extends StatefulWidget {
   final ActionSheetViewModel _viewModel;
   final ActionSheetStyle _style;
 
+  static present(ActionSheet sheet, BuildContext context) {
+    showModalBottomSheet(backgroundColor: Colors.transparent,
+        context: context,
+        builder: (widgetBuilder) =>  sheet );
+  }
+
   const ActionSheet(
       {Key key, ActionSheetViewModel viewModel, ActionSheetStyle style})
       : this._viewModel = viewModel,
@@ -124,14 +126,11 @@ class _ActionSheetState extends State<ActionSheet> {
   }
 
   Widget build(BuildContext context) {
-    return Container(
-        color: _Constants.cornersColor, //TODO: check the real corners color
+    return ClipRRect(
+        borderRadius: BorderRadius.only(topLeft: widget._style.cornerRadius, topRight: widget._style.cornerRadius),
         child: Container(
             decoration: BoxDecoration(
-                color: widget._style.backgroundColor,
-                borderRadius: BorderRadius.only(
-                    topLeft: widget._style.cornerRadius,
-                    topRight: widget._style.cornerRadius)),
+                color: widget._style.backgroundColor),
             child: Column(
               children: <Widget>[
                 _buildIndicatorLine(widget._style),
@@ -200,13 +199,12 @@ class _ActionSheetState extends State<ActionSheet> {
         child: RoundedButton(
             viewModel: RoundedButtonViewModel(
                 title: viewModel.cancelButtonTitle,
-                onTap: () => dismissActionSheet()),
+                onTap: dismissActionSheet),
             style: RoundedButtonStyle.actionSheetLargeRoundedButton()),
       ));
       listBuilder.add(SizedBox(width: style.buttonSpacing));
       listBuilder.add(Expanded(child: hasSelectedItem(context, style)));
     }
-
     return listBuilder;
   }
 
@@ -221,6 +219,13 @@ class _ActionSheetState extends State<ActionSheet> {
     }
   }
 
+  void _confirmAction(Function action) {
+    if (action != null) {
+      action();
+    }
+    dismissActionSheet();
+  }
+
   void select(int index) {
     if (widget._viewModel.actions[index].type == ActionType.selectable) {
       setState(() {
@@ -228,7 +233,8 @@ class _ActionSheetState extends State<ActionSheet> {
         widget._viewModel.actions[index].isSelected = true;
       });
     } else {
-      widget._viewModel.actions[index].onTap;
+      widget._viewModel.actions[index].onTap();
+      dismissActionSheet();
     }
   }
 
@@ -237,7 +243,7 @@ class _ActionSheetState extends State<ActionSheet> {
       if (action.isSelected != false) {
         return RoundedButton(
             viewModel: RoundedButtonViewModel(
-                title: widget._viewModel.confirmButtonTitle),
+                title: widget._viewModel.confirmButtonTitle, onTap: () => _confirmAction(action.onTap)),
             style: RoundedButtonStyle.actionSheetLargeRoundedButton().copyWith(
                 backgroundColor: style.confirmButtonBackgroundColor,
                 buttonTextStyle: style.confirmButtonTextStyle));
