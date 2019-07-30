@@ -30,7 +30,7 @@ class MockSwitchProfile {
 class MockSwitchProfileItemsViewModel {
   static SwitchProfileItemsViewModel build(index) {
     return SwitchProfileItemsViewModel(
-      title: "MockTitle",
+      title: _mockTitle.random(),
       icon: "assets/icons/radio_button_default.png",
       image: NetworkImage(_mockImage.random()),
       isSelected: index == 0 ? true : false,
@@ -44,3 +44,10 @@ MockString _mockImage = MockString(library: [
   "http://4.bp.blogspot.com/-2v3fdX2Y_-g/T04JTMAyX5I/AAAAAAAAAW4/AcYdf9Xwxho/s1600/GUSTAVO.jpg",
 ]);
 
+MockString _mockTitle = MockString(library: [
+  "Isioma Adegoke",
+  "Ndubuisi Ajayi",
+  "Temitope Aliero",
+  "Safinatu Adegoke",
+  "Ireti Kuta",
+]);
