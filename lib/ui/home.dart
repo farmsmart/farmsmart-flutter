@@ -102,7 +102,7 @@ class Home extends StatelessWidget {
     return ArticleList(
         viewModelProvider: ArticleListProvider(
             title: localizations.discoverTab,
-            repository: repositoryProvider.getDiscoverRepository(),
+            repository: repositoryProvider.getArticleRepository(),
             group: ArticleCollectionGroup.discovery));
   }
 
@@ -110,7 +110,7 @@ class Home extends StatelessWidget {
     return ArticleList(
         viewModelProvider: ArticleListProvider(
             title: localizations.communityTab,
-            repository: repositoryProvider.getDiscoverRepository(),
+            repository: repositoryProvider.getArticleRepository(),
             group: ArticleCollectionGroup.chatGroups));
   }
 

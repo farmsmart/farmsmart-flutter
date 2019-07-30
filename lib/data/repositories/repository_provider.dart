@@ -8,7 +8,7 @@ abstract class RepositoryProvider {
 
   init(BuildContext context);
 
-  ArticleRepositoryInterface getDiscoverRepository();
+  ArticleRepositoryInterface getArticleRepository();
 
   PlotRepositoryInterface getMyPlotRepository();
 
