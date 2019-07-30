@@ -2,6 +2,25 @@ import 'package:flutter/material.dart';
 
 class _Constants {
   static final String arrowIcon = "assets/icons/chevron.png";
+
+  static final EdgeInsets edgePadding = const EdgeInsets.only(
+    top: 10.8,
+    bottom: 10.8,
+    left: 12.5,
+    right: 31.5,
+  );
+
+  static final EdgeInsets simpleEdgePadding = const EdgeInsets.only(
+    top: 10.8,
+    bottom: 10.8,
+    left: 33.5,
+    right: 31.5,
+  );
+
+  static final double leadingWidth = 41;
+  static final double leadingIconHeight = 20;
+  static final double trailingWidth = 7.5;
+  static final double trailingIconHeight = 13;
 }
 
 class UserProfileListItemViewModel {
@@ -22,44 +41,23 @@ class UserProfileListItemStyle {
   final TextStyle titleTextStyle;
   final TextStyle destructiveTextStyle;
 
-  final EdgeInsets edgePadding;
-  final EdgeInsets simpleEdgePadding;
-
-  final double leadingWidth;
-  final double leadingIconHeight;
-  final double trailingWidth;
-  final double trailingIconHeight;
+  final int maxLines;
 
   const UserProfileListItemStyle({
     this.titleTextStyle,
     this.destructiveTextStyle,
-    this.edgePadding,
-    this.simpleEdgePadding,
-    this.leadingWidth,
-    this.leadingIconHeight,
-    this.trailingWidth,
-    this.trailingIconHeight,
+    this.maxLines,
   });
 
   UserProfileListItemStyle copyWith({
     TextStyle titleTextStyle,
     TextStyle destructiveTextStyle,
-    EdgeInsets edgePadding,
-    EdgeInsets simpleEdgePadding,
-    double leadingWidth,
-    double leadingIconHeight,
-    double trailingWidth,
-    double trailingIconHeight,
+    int maxLines,
   }) {
     return UserProfileListItemStyle(
       titleTextStyle: titleTextStyle ?? this.titleTextStyle,
       destructiveTextStyle: destructiveTextStyle ?? this.destructiveTextStyle,
-      edgePadding: edgePadding ?? this.edgePadding,
-      simpleEdgePadding: simpleEdgePadding ?? this.simpleEdgePadding,
-      leadingWidth: leadingWidth ?? this.leadingWidth,
-      leadingIconHeight: leadingIconHeight ?? this.leadingIconHeight,
-      trailingWidth: trailingWidth ?? this.trailingWidth,
-      trailingIconHeight: trailingIconHeight ?? this.trailingIconHeight,
+      maxLines: maxLines ?? this.maxLines,
     );
   }
 }
@@ -76,34 +74,12 @@ class _DefaultStyle extends UserProfileListItemStyle {
     fontSize: 17,
   );
 
-  final EdgeInsets edgePadding = const EdgeInsets.only(
-    top: 10.8,
-    bottom: 10.8,
-    left: 12.5,
-    right: 31.5,
-  );
-
-  final EdgeInsets simpleEdgePadding = const EdgeInsets.only(
-    top: 10.8,
-    bottom: 10.8,
-    left: 33.5,
-    right: 31.5,
-  );
-
-  final double leadingWidth = 41;
-  final double leadingIconHeight = 20;
-  final double trailingWidth = 7.5;
-  final double trailingIconHeight = 13;
+  final int maxLines = 1;
 
   const _DefaultStyle({
     TextStyle titleTextStyle,
     TextStyle destructiveTextStyle,
-    EdgeInsets edgePadding,
-    EdgeInsets simpleEdgePadding,
-    double leadingWidth,
-    double leadingIconHeight,
-    double trailingWidth,
-    double trailingIconHeight,
+    int maxLines,
   });
 }
 
@@ -126,24 +102,24 @@ class UserProfileListItem extends StatelessWidget {
     return ListTile(
       onTap: () => _viewModel.onTap(),
       contentPadding: _viewModel.icon != null
-          ? _style.edgePadding
-          : _style.simpleEdgePadding,
+          ? _Constants.edgePadding
+          : _Constants.simpleEdgePadding,
       dense: true,
       leading: _viewModel.icon != null
           ? Container(
               alignment: Alignment.centerRight,
-              width: _style.leadingWidth,
+              width: _Constants.leadingWidth,
               child: Image.asset(
                 _viewModel.icon,
-                height: _style.leadingIconHeight,
+                height: _Constants.leadingIconHeight,
               ),
             )
           : null,
       trailing: Container(
-        width: _style.trailingWidth,
+        width: _Constants.trailingWidth,
         child: Image.asset(
           _Constants.arrowIcon,
-          height: _style.trailingIconHeight,
+          height: _Constants.trailingIconHeight,
         ),
       ),
       title: Text(
@@ -151,6 +127,8 @@ class UserProfileListItem extends StatelessWidget {
         style: !_viewModel.isDestructive
             ? _style.titleTextStyle
             : _style.destructiveTextStyle,
+        maxLines: _style.maxLines,
+        overflow: TextOverflow.ellipsis,
       ),
     );
   }

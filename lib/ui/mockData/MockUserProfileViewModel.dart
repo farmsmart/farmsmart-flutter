@@ -23,6 +23,22 @@ class MockUserProfileViewModel {
     );
   }
 
+  static UserProfileViewModel buildLarger() {
+    List<UserProfileListItemViewModel> list = [];
+    for (var i = 0; i < 8; i++) {
+      list.add(MockUserProfileListItemViewModel.buildLarger(i));
+    }
+
+    return UserProfileViewModel(
+      items: list,
+      username: _mockUserName.random(),
+      activeCrops: Random().nextInt(150),
+      completedCrops: Random().nextInt(150),
+      image: NetworkImage(_mockImage.random()),
+      switchProfileAction: () => _mockSwitchTap(),
+    );
+  }
+
   static _mockSwitchTap() {
     print("Profile switched");
   }
@@ -38,11 +54,31 @@ class MockUserProfileListItemViewModel {
     );
   }
 
+  static UserProfileListItemViewModel buildLarger(index) {
+    return UserProfileListItemViewModel(
+      title: Intl.message(_mockActionTitleLarger[index]),
+      icon: _mockActionIcon[index],
+      onTap: () => _mockItemTap(),
+      isDestructive: index != 7 ? false : true,
+    );
+  }
+
   static _mockItemTap() {
     print("Was tapped");
   }
 }
 
+
+List<String> _mockActionTitleLarger = [
+  "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+  "Maecenas vitae risus vitae nulla euismod viverra ut eu lacus.",
+  "Duis at dolor posuere, iaculis diam a, dictum urna.",
+  "Mauris a turpis sem. Cras eleifend semper lorem id feugiat.",
+  "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+  "Donec a magna a ipsum aliquet fringilla.",
+  "Mauris elementum arcu turpis, ac imperdiet sem rutrum vel.",
+  "Sed eu fermentum nisi. Fusce dui velit, dictum nec dictum eget, varius at felis.",
+];
 
 List<String> _mockActionTitle = [
   "Switch Language",

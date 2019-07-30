@@ -11,6 +11,29 @@ class _Strings {
   static final String buttonTitle = "Switch Profile";
 }
 
+class _Constants {
+  static final Color dividerColor = const Color(0xffe9eaf2);
+
+  static final EdgeInsets edgePadding = const EdgeInsets.symmetric(horizontal: 32);
+  static final EdgeInsets headerEdgePadding = const EdgeInsets.only(
+    left: 32.0,
+    top: 26.0,
+    right: 32.0,
+    bottom: 25.0,
+  );
+  static final EdgeInsets titleLineSpace = const EdgeInsets.only(bottom: 2);
+
+  static final BorderRadius buttonBorderShape = const BorderRadius.all(
+    Radius.circular(8),
+  );
+
+  static final double imageSpacing = 20;
+  static final double subtitleLineSpace = 6.5;
+  static final double buttonLineSpace = 25;
+  static final double dividerHeight = 2;
+  static final double detailSpacing = 23;
+}
+
 class UserProfileViewModel {
   List<UserProfileListItemViewModel> items;
   String username;
@@ -31,44 +54,23 @@ class UserProfileViewModel {
 
 class UserProfileStyle {
   final Color buttonColor;
-  final Color dividerColor;
 
   final TextStyle titleTextStyle;
   final TextStyle subtitleTextStyle;
   final TextStyle detailTextStyle;
   final TextStyle buttonTextStyle;
 
-  final EdgeInsets edgePadding;
-  final EdgeInsets headerEdgePadding;
-  final EdgeInsets titleLineSpace;
-
-  final BorderRadius buttonBorderShape;
-
-  final double imageSpacing;
-  final double subtitleLineSpace;
-  final double buttonLineSpace;
-  final double detailSpacing;
-  final double dividerHeight;
   final double buttonHeight;
   final double imageSize;
+
   final int maxLines;
 
   const UserProfileStyle({
     this.buttonColor,
-    this.dividerColor,
     this.titleTextStyle,
     this.subtitleTextStyle,
     this.detailTextStyle,
     this.buttonTextStyle,
-    this.edgePadding,
-    this.headerEdgePadding,
-    this.buttonBorderShape,
-    this.titleLineSpace,
-    this.imageSpacing,
-    this.subtitleLineSpace,
-    this.buttonLineSpace,
-    this.detailSpacing,
-    this.dividerHeight,
     this.buttonHeight,
     this.imageSize,
     this.maxLines,
@@ -76,40 +78,20 @@ class UserProfileStyle {
 
   UserProfileStyle copyWith({
     Color buttonColor,
-    Color dividerColor,
     TextStyle titleTextStyle,
     TextStyle subtitleTextStyle,
     TextStyle detailTextStyle,
     TextStyle buttonTextStyle,
-    EdgeInsets edgePadding,
-    EdgeInsets headerEdgePadding,
-    EdgeInsets titleLineSpace,
-    BorderRadius buttonBorderShape,
-    double imageSpacing,
-    double subtitleLineSpace,
-    double buttonLineSpace,
-    double detailSpacing,
-    double dividerHeight,
     double buttonHeight,
     double imageSize,
     int maxLines,
   }) {
     return UserProfileStyle(
       buttonColor: buttonColor ?? this.buttonColor,
-      dividerColor: dividerColor ?? this.dividerColor,
       titleTextStyle: titleTextStyle ?? this.titleTextStyle,
       subtitleTextStyle: subtitleTextStyle ?? this.subtitleTextStyle,
       detailTextStyle: detailTextStyle ?? this.detailTextStyle,
       buttonTextStyle: buttonTextStyle ?? this.buttonTextStyle,
-      edgePadding: edgePadding ?? this.edgePadding,
-      headerEdgePadding: headerEdgePadding ?? this.headerEdgePadding,
-      buttonBorderShape: buttonBorderShape ?? this.buttonBorderShape,
-      titleLineSpace: titleLineSpace ?? this.titleLineSpace,
-      imageSpacing: imageSpacing ?? this.imageSpacing,
-      subtitleLineSpace: subtitleLineSpace ?? this.subtitleLineSpace,
-      buttonLineSpace: buttonLineSpace ?? this.buttonLineSpace,
-      detailSpacing: detailSpacing ?? this.detailSpacing,
-      dividerHeight: dividerHeight ?? this.dividerHeight,
       buttonHeight: buttonHeight ?? this.buttonHeight,
       imageSize: imageSize ?? this.imageSize,
       maxLines: maxLines ?? this.maxLines,
@@ -119,7 +101,6 @@ class UserProfileStyle {
 
 class _DefaultStyle extends UserProfileStyle {
   final Color buttonColor = const Color(0xffe9eaf2);
-  final Color dividerColor = const Color(0xffe9eaf2);
 
   final TextStyle titleTextStyle = const TextStyle(
     fontSize: 27,
@@ -145,25 +126,6 @@ class _DefaultStyle extends UserProfileStyle {
     color: Color(0xff4c4e6e),
   );
 
-  final EdgeInsets edgePadding = const EdgeInsets.symmetric(horizontal: 32);
-  final EdgeInsets headerEdgePadding = const EdgeInsets.only(
-    left: 32.0,
-    top: 26.0,
-    right: 32.0,
-    bottom: 25.0,
-  );
-
-  final EdgeInsets titleLineSpace = const EdgeInsets.only(bottom: 2);
-
-  final BorderRadius buttonBorderShape = const BorderRadius.all(
-    Radius.circular(8),
-  );
-
-  final double imageSpacing = 20;
-  final double subtitleLineSpace = 6.5;
-  final double buttonLineSpace = 25;
-  final double dividerHeight = 2;
-  final double detailSpacing = 23;
   final double buttonHeight = 40;
   final double imageSize = 72;
 
@@ -175,16 +137,6 @@ class _DefaultStyle extends UserProfileStyle {
     TextStyle subtitleTextStyle,
     TextStyle detailTextStyle,
     TextStyle buttonTextStyle,
-    EdgeInsets edgePadding,
-    EdgeInsets headerEdgePadding,
-    BorderRadius buttonBorderShape,
-    EdgeInsets titleLineSpace,
-    double headerElevation,
-    double imageSpacing,
-    double subtitleLineSpace,
-    double buttonLineSpace,
-    double dividerHeight,
-    double detailSpacing,
     double buttonHeight,
     double imageSize,
     int maxLines,
@@ -221,19 +173,19 @@ class UserProfile extends StatelessWidget {
     return Column(
       children: <Widget>[
         Container(
-          margin: _style.headerEdgePadding,
+          margin: _Constants.headerEdgePadding,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               _buildMainTextView(context),
-              SizedBox(width: _style.imageSpacing),
+              SizedBox(width: _Constants.imageSpacing),
               _buildPlotImage(_viewModel.image),
             ],
           ),
         ),
         Padding(
-          padding: _style.edgePadding,
+          padding: _Constants.edgePadding,
           child: Column(
             children: <Widget>[
               RoundedButton(
@@ -244,14 +196,14 @@ class UserProfile extends StatelessWidget {
                 style: RoundedButtonStyle.largeRoundedButtonStyle().copyWith(
                   backgroundColor: _style.buttonColor,
                   height: _style.buttonHeight,
-                  borderRadius: _style.buttonBorderShape,
+                  borderRadius: _Constants.buttonBorderShape,
                   buttonTextStyle: _style.buttonTextStyle,
                 ),
               ),
             ],
           ),
         ),
-        SizedBox(height: _style.buttonLineSpace),
+        SizedBox(height: _Constants.buttonLineSpace),
       ],
     );
   }
@@ -278,7 +230,7 @@ class UserProfile extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Container(
-                padding: _style.titleLineSpace,
+                padding: _Constants.titleLineSpace,
                 child: Text(_viewModel.username,
                     maxLines: _style.maxLines,
                     overflow: TextOverflow.ellipsis,
@@ -286,15 +238,15 @@ class UserProfile extends StatelessWidget {
                 decoration: BoxDecoration(
                   border: Border(
                     bottom: BorderSide(
-                      color: _style.dividerColor,
-                      width: _style.dividerHeight,
+                      color: _Constants.dividerColor,
+                      width: _Constants.dividerHeight,
                     ),
                   ),
                 ),
               ),
             ],
           ),
-          SizedBox(height: _style.subtitleLineSpace),
+          SizedBox(height: _Constants.subtitleLineSpace),
           Row(
             children: <Widget>[
               Column(
@@ -312,7 +264,7 @@ class UserProfile extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(width: _style.detailSpacing),
+              SizedBox(width: _Constants.detailSpacing),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[

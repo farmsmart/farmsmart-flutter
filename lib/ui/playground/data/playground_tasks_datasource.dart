@@ -181,10 +181,19 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
         ),
       ),
       PlaygroundWidget(
-        title: 'FARM-63 View Profile',
-        child: UserProfile(viewModel: MockUserProfileViewModel.build()),
-      ),
-       PlaygroundWidget(
+          title: 'FARM-63 View Profile',
+          child: PlaygroundView(widgetList: [
+            PlaygroundWidget(
+              title: 'Simple view',
+              child: UserProfile(viewModel: MockUserProfileViewModel.build()),
+            ),
+            PlaygroundWidget(
+              title: 'Larger titles view',
+              child: UserProfile(
+                  viewModel: MockUserProfileViewModel.buildLarger()),
+            ),
+          ])),
+      PlaygroundWidget(
           title: 'TASK FARM-365 Plot',
           child: PlaygroundView(widgetList: [
             PlaygroundWidget(
