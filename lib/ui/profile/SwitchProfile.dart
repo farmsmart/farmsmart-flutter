@@ -21,15 +21,18 @@ class SwitchProfileViewModel {
   String title;
   String actionTitle;
   bool isVisible;
-  List<SwitchProfileItems> actions;
+  List<SwitchProfileItemsViewModel> actions;
+  int selectedIndex;
+  int currentIndex;
 
-
-  SwitchProfileViewModel(
-      {this.title,
-      this.actionTitle,
-      this.isVisible = false,
-      this.actions,
-      });
+  SwitchProfileViewModel({
+    this.title,
+    this.actionTitle,
+    this.isVisible = false,
+    this.actions,
+    this.selectedIndex,
+    this.currentIndex
+  });
 }
 
 class SwitchProfileStyle {
@@ -106,7 +109,15 @@ class SwitchProfileState extends State<SwitchProfile> {
           ListView.separated(
             shrinkWrap: true,
             physics: ScrollPhysics(),
-            itemBuilder: (context, index) => SwitchProfileItems(),
+            itemBuilder: (context, index) => SwitchProfileItems(
+              viewModel: SwitchProfileItemsViewModel(
+                title: widget._viewModel.actions[index].title,
+                image: widget._viewModel.actions[index].image,
+                icon: widget._viewModel.actions[index].icon,
+                isSelected: widget._viewModel.actions[index].isSelected,
+                itemAction: () => _select(index),
+              ),
+            ),
             separatorBuilder: (context, index) => ListDivider.build(),
             itemCount: widget._viewModel.actions.length,
           ),
@@ -122,7 +133,7 @@ class SwitchProfileState extends State<SwitchProfile> {
         visible: widget._viewModel.isVisible,
         child: RoundedButton(
             viewModel: RoundedButtonViewModel(
-                title: widget._viewModel.title, onTap: () {}),
+                title: widget._viewModel.title, onTap: () => _switchProfileTapped()),
             style: RoundedButtonStyle.largeRoundedButtonStyle()),
       ),
     );
@@ -154,10 +165,36 @@ class SwitchProfileState extends State<SwitchProfile> {
     );
   }
 
+  void _select(int index) {
+    print(index.toString() + " This is the index");
+    print(widget._viewModel.currentIndex.toString() + " This is the currentIndex");
+    print(widget._viewModel.selectedIndex.toString() + " This is the selectedIndex");
+    if(widget._viewModel.currentIndex != index) {
+      _bla();
+    }
+    setState(() {
+      widget._viewModel.currentIndex = index;
+      _clearSelection();
+      widget._viewModel.actions[index].isSelected = true;
+    });
+  }
+
+  void _clearSelection() {
+    for (var actions in widget._viewModel.actions) {
+      actions.isSelected = false;
+    }
+  }
+
   //TODO: REname this function please
   _bla() {
     setState(() {
       widget._viewModel.isVisible = !widget._viewModel.isVisible;
+    });
+  }
+
+  _switchProfileTapped() {
+    setState(() {
+      widget._viewModel.selectedIndex = widget._viewModel.currentIndex;
     });
   }
 }

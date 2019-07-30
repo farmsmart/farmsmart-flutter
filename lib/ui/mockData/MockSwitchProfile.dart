@@ -1,12 +1,38 @@
+import 'package:farmsmart_flutter/data/model/mock/MockString.dart';
 import 'package:farmsmart_flutter/ui/profile/SwitchProfile.dart';
+import 'package:farmsmart_flutter/ui/profile/SwitchProfileItems.dart';
+import 'package:flutter/material.dart';
 
 class MockSwitchProfile {
   static SwitchProfileViewModel build() {
+    List<SwitchProfileItemsViewModel> list = [];
+
+    for (var i = 0; i < 10; i++) {
+      list.add(MockSwitchProfileItemsViewModel.build(i));
+    }
+
     return SwitchProfileViewModel(
-      //TODO:Needs to return a list of SwitchProfilesItems when created VM and Style
-        actions: [],
-        title: "Switch Profile",
-        actionTitle: "Switch Profile",
-        isVisible: false);
+      actions: list,
+      title: "Switch Profile",
+      actionTitle: "Switch Profile",
+      isVisible: false,
+    );
   }
 }
+
+class MockSwitchProfileItemsViewModel {
+  static SwitchProfileItemsViewModel build(index) {
+    return SwitchProfileItemsViewModel(
+      title: "MockTitle",
+      icon: "assets/icons/radio_button_default.png",
+      image: NetworkImage(_mockImage.random()),
+      isSelected: false,
+    );
+  }
+}
+
+MockString _mockImage = MockString(library: [
+  "https://media.licdn.com/dms/image/C4E0BAQEGKInje62bpg/company-logo_200_200/0?e=2159024400&v=beta&t=A2kD-9n-JWDfBqUwPdz7UQ581seMvVp2-m0o-eiGg_Y",
+  "https://statictest.amido.com/wp-content/uploads/2016/02/02100213/Amido-1.png",
+  "http://4.bp.blogspot.com/-2v3fdX2Y_-g/T04JTMAyX5I/AAAAAAAAAW4/AcYdf9Xwxho/s1600/GUSTAVO.jpg",
+]);
