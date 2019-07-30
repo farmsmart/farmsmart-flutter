@@ -99,10 +99,10 @@ flutter:
     - assets/icons/detail_icon_cost.png
     - assets/icons/radio_button_default.png
     - assets/icons/radio_button_active.png
+    - assets/raw/
     - assets/icons/nav_icon_back.png
     - assets/icons/nav_icon_options.png
     - assets/icons/nav_icon_cancel.png
-
 
   fonts:
   - family: GT-America-Standard

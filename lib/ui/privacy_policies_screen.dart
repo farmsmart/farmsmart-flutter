@@ -1,5 +1,3 @@
-
-
 import 'dart:convert';
 
 import 'package:farmsmart_flutter/ui/app_bar.dart';
