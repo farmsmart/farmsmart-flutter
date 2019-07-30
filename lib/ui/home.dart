@@ -1,10 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:farmsmart_flutter/data/bloc/article/ArticleListProvider.dart';
 import 'package:farmsmart_flutter/data/bloc/plot/PlotListProvider.dart';
-import 'package:farmsmart_flutter/data/repositories/FlameLink.dart';
 import 'package:farmsmart_flutter/data/repositories/article/ArticleRepositoryInterface.dart';
-import 'package:farmsmart_flutter/data/repositories/article/implementation/ArticlesRepositoryFlamelink.dart';
-import 'package:farmsmart_flutter/data/repositories/plot/implementation/MockPlotRepository.dart';
 import 'package:farmsmart_flutter/data/repositories/repository_provider.dart';
 import 'package:farmsmart_flutter/farmsmart_localizations.dart';
 import 'package:farmsmart_flutter/ui/bottombar/persistent_bottom_navigation_bar.dart';
@@ -14,11 +10,11 @@ import 'package:farmsmart_flutter/ui/playground/data/playground_datasource_impl.
 import 'package:farmsmart_flutter/ui/playground/playground_view.dart';
 import 'package:flutter/material.dart';
 
-import 'package:farmsmart_flutter/data/repositories/flamelink_repository_provider.dart';
 import 'myplot/PlotList.dart';
 
 class _Constants {
   static final double bottomBarIconSize = 25;
+  static final Color bottomBarColor = Colors.white;
 
   static final myPlotSelectedIcon = 'assets/icons/my_plot_selected.png';
   static final myPlotIcon = 'assets/icons/my_plot.png';
@@ -44,7 +40,7 @@ class Home extends StatelessWidget {
     localizations = FarmsmartLocalizations.of(context);
 
     return PersistentBottomNavigationBar(
-      backgroundColor: Colors.white,
+      backgroundColor: _Constants.bottomBarColor,
       tabs: tabs(),
     );
   }
@@ -89,7 +85,8 @@ class Home extends StatelessWidget {
   _buildMyPlot() {
     return PlotList(
         provider: PlotListProvider(
-            title: localizations.myPlotTab, repository: repositoryProvider.getMyPlotRepository()));
+            title: localizations.myPlotTab,
+            repository: repositoryProvider.getMyPlotRepository()));
   }
 
   _buildDiscover() {

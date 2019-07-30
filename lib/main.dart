@@ -8,7 +8,7 @@ class _Constants {
   static final String fontFamily = 'GT-America-Standard';
 
   static final backgroundColor = Color(0xFFFFFFFF);
-  static final primaryGrey = Color(0xFF757575);
+  static final accentColor = Color(0xFF757575);
 
   static final List<Locale> supportedLocales = [
     const Locale('en'),
@@ -38,7 +38,7 @@ class _FarmSmartAppState extends State<FarmSmartApp> {
         brightness: Brightness.light,
         scaffoldBackgroundColor: _Constants.backgroundColor,
         primaryColor: _Constants.backgroundColor,
-        accentColor: _Constants.primaryGrey,
+        accentColor: _Constants.accentColor,
       ),
       home: AppCoordinator(),
     );
