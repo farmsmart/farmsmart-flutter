@@ -111,7 +111,7 @@ class Alert extends StatelessWidget {
   final AlertViewModel _viewModel;
   final AlertStyle _style;
 
-  static present(Alert alert, BuildContext context) {
+  static present(Widget alert, BuildContext context) {
     return showDialog<bool>(
       context: context,
       barrierDismissible: false,

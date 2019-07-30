@@ -27,8 +27,7 @@ import 'package:farmsmart_flutter/ui/myplot/PlotDetail.dart';
 import 'package:farmsmart_flutter/ui/myplot/PlotList.dart';
 import 'package:farmsmart_flutter/ui/playground/data/playground_data_source.dart';
 import 'package:farmsmart_flutter/ui/playground/data/playground_stagecard_datasource.dart';
-import 'package:farmsmart_flutter/ui/playground/playground_button_present_alert.dart';
-import 'package:farmsmart_flutter/ui/playground/playground_button_present_modal.dart';
+import 'package:farmsmart_flutter/ui/playground/playground_present_button.dart';
 import 'package:farmsmart_flutter/ui/playground/playground_widget.dart';
 import 'package:farmsmart_flutter/ui/profitloss/ProfitLossHeader.dart';
 import 'package:farmsmart_flutter/ui/profitloss/ProfitLossListItem.dart';
@@ -132,8 +131,12 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
                   repository: MockArticlesRepository(articleCount: 2000)))),
       PlaygroundWidget(
         title: "FARM-48 Landing Page",
-        child: PlaygroundButtonPresentModal(
-          child: LandingPage(viewModel: MockLandingPageViewModel.build()),
+        child: PlaygroundButtonPresentAlert(
+          child: LandingPage(
+            viewModel: MockLandingPageViewModel.build(),
+          ),
+          listener: (widget, context) =>
+              PlaygroundButtonPresentAlert.presentModal(widget, context),
         ),
       ),
       PlaygroundWidget(
@@ -187,7 +190,7 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
             PlaygroundWidget(
               title: "Normal",
               child: PlaygroundButtonPresentAlert(
-                alert: Alert(
+                child: Alert(
                   viewModel: MockAlertWidgetViewModel.build(),
                 ),
                 listener: (alert, context) => Alert.present(alert, context),
@@ -196,7 +199,7 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
             PlaygroundWidget(
               title: "Have Destructive",
               child: PlaygroundButtonPresentAlert(
-                alert: Alert(
+                child: Alert(
                   viewModel: MockAlertWidgetViewModel.buildDestructive(),
                 ),
                 listener: (alert, context) => Alert.present(alert, context),
@@ -205,7 +208,7 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
           ],
         ),
       ),
-       PlaygroundWidget(
+      PlaygroundWidget(
           title: 'TASK FARM-365 Plot',
           child: PlaygroundView(widgetList: [
             PlaygroundWidget(
