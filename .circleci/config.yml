@@ -109,7 +109,7 @@ jobs:
           set -euo pipefail
           VERSION_NAME="${CIRCLE_BRANCH}_${CIRCLE_SHA1:0:7}"
           echo "Building flutter development appbundle - BUILD_NAME:${VERSION_NAME}"
-          flutter build appbundle --build-name="${CIRCLE_SHA1}" --target-platform android-arm,android-arm64 --release --flavor qa -t lib/main.dart
+          flutter build appbundle --build-name="${CIRCLE_SHA1}" --target-platform android-arm,android-arm64 --release --flavor qa -t lib/main_dev.dart
           APP_BUILD_PATH=$(find ./build -name '*.aab')
           echo "export APP_BUILD_PATH=${APP_BUILD_PATH}" >> ./env.sh
           echo "export VERSION_NAME=${VERSION_NAME}" >> ./env.sh
@@ -123,7 +123,7 @@ jobs:
           flutter pub get
           VERSION_NAME="RC_${CIRCLE_TAG}_${CIRCLE_SHA1:0:7}"
           echo "Building flutter development app - BUILD_NAME:${VERSION_NAME}"
-          flutter build appbundle --build-name="${VERSION_NAME}" --target-platform android-arm,android-arm64 --release --flavor production -t lib/main_production.dart
+          flutter build appbundle --build-name="${VERSION_NAME}" --target-platform android-arm,android-arm64 --release --flavor production -t lib/main_prod.dart
           APP_BUILD_PATH=$(find ./build -name '*.aab')
           echo "export APP_BUILD_PATH=${APP_BUILD_PATH}" >> ./env.sh
           echo "export VERSION_NAME=${VERSION_NAME}" >> ./env.sh
@@ -137,7 +137,7 @@ jobs:
           source ./env.sh
           flutter packages get
           echo "Building flutter appbundle - BUILD_NAME:${VERSION_NAME}, BUILD_NUMBER=${VERSION_CODE}"
-          flutter build appbundle --build-name=${VERSION_NAME} --build-number=${VERSION_CODE} --release --flavor production -t lib/main_production.dart
+          flutter build appbundle --build-name=${VERSION_NAME} --build-number=${VERSION_CODE} --release --flavor production -t lib/main_prod.dart
           BUILD_PATH=$(find ./build -name '*.aab')
           mkdir -p /tmp/workspace/build
           mv ${BUILD_PATH} /tmp/workspace/build/${VERSION_NAME}.aab
