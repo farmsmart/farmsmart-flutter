@@ -16,9 +16,12 @@ class _Fields {
   static String summary = "summary";
   static String title = "title";
   static String name = "name";
-  static String related = "relatedArticles";
+  static String relatedArticles = "relatedArticles";
   static String article = "article";
+  static String relatedChatGroups = "relatedChatGroups";
+  static String chatGroup = "chatGroup";
   static String image = "image";
+  static String externalLink = "contentLink";
 }
 
 class FlamelinkArticleTransformer
@@ -40,7 +43,9 @@ class FlamelinkArticleTransformer
     final content = castOrNull<String>(from.data[_Fields.content]);
     final status = castOrNull<String>(from.data[_Fields.status]);
     final summary = castOrNull<String>(from.data[_Fields.summary]);
-    final title = castOrNull<String>(from.data[_Fields.title]) ?? castOrNull<String>(from.data[_Fields.name]) ;
+    final title = castOrNull<String>(from.data[_Fields.title]) ??
+        castOrNull<String>(from.data[_Fields.name]);
+    final externalLink = castOrNull(from.data[_Fields.externalLink]);
     final published =
         (meta.createdDate != null) ? meta.createdDate.toDate() : null;
     final entity = ArticleEntity(
@@ -49,13 +54,10 @@ class FlamelinkArticleTransformer
         status: statusValues.map[status],
         summary: summary,
         title: title,
-        published: published);
-    var relatedRefs = [];
+        published: published,
+        externalLink: externalLink);
+    var relatedRefs = _relatedRefs(from);
     var imageRefs = [];
-    if (from.data[_Fields.related] != null) {
-      relatedRefs = List<String>.from(from.data[_Fields.related]
-          .map((article) => article[_Fields.article].path)).toList();
-    }
     if (from.data[_Fields.image] != null) {
       imageRefs =
           List<String>.from(from.data[_Fields.image].map((image) => image.path))
@@ -72,5 +74,35 @@ class FlamelinkArticleTransformer
         ArticleEntityCollectionFlamelink(collection: articleCollection);
     entity.images = ImageEntityCollectionFlamelink(collection: imageCollection);
     return entity;
+  }
+
+  List<String> _relatedRefs(DocumentSnapshot from) {
+    final related = _related(
+          from,
+          _Fields.relatedArticles,
+          _Fields.article,
+        ) ??
+        _related(
+          from,
+          _Fields.relatedChatGroups,
+          _Fields.chatGroup,
+        );
+    return related ?? [];
+  }
+
+  List<String> _related(
+      DocumentSnapshot from, String collectionName, String itemName) {
+    if (from.data[collectionName] != null) {
+      return List<String>.from(from.data[collectionName].map((item) {
+        final documentRef = castOrNull<DocumentReference>(item[itemName]);
+        if (documentRef != null) {
+          return documentRef.path;
+        }
+        return null;
+      })).where((item) {
+        return (item != null);
+      }).toList();
+    }
+    return null;
   }
 }

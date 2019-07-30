@@ -98,7 +98,7 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
               viewModelProvider: ArticleListProvider(
                   title: localizations.communityTab,
                   repository: articleRepo,
-                  group: ArticleCollectionGroup.chatGroups));
+                  group: ArticleCollectionGroup.chatGroups),);
           return MaterialPageRoute(builder: builder, settings: settings);
         });
 

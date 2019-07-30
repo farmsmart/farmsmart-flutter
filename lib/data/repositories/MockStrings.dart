@@ -2,6 +2,12 @@
 
 import 'package:farmsmart_flutter/data/model/mock/MockString.dart';
 
+MockString mockExternalLinks = MockString(library: [
+  "https://chat.whatsapp.com/BwzNV2WEFAqLDdvTFUljte",
+  "https://www.tripadvisor.com/Attractions-g294206-Activities-c47-t122-Kenya.html",
+  "https://en.wikipedia.org/wiki/Agriculture_in_Kenya",
+]);
+
 MockString mockTitleText = MockString(library: [
   "Title example",
   "Average title",

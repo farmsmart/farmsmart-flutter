@@ -96,10 +96,9 @@ class CropDetail extends StatelessWidget implements ListViewSection {
       {BuildContext context,
       AsyncSnapshot<CropDetailViewModel> snapshot}) {
     final viewModel = snapshot.data;
-    final List<ListViewSection> headers = (_header !=null ) ? [ListViewWidgetSection(_header)] : [];
-    final article = ArticleDetail(viewModel: viewModel, showHeader: (_header == null));
+    final article = ArticleDetail(viewModel: viewModel, articleHeader: _header,);
     final infoItems = CropInfoList(items: viewModel.infoItems);
-    final listBuilder =  SectionedListView(sections: headers + [article,infoItems]);
+    final listBuilder =  SectionedListView(sections:[article,infoItems]);
     _listBuilder = listBuilder;
     return Scaffold(
       appBar: _buildAppBar(context),
