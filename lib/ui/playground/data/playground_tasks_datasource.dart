@@ -19,13 +19,15 @@ import 'package:farmsmart_flutter/ui/bottombar/persistent_bottom_navigation_bar.
 import 'package:farmsmart_flutter/data/repositories/plot/implementation/MockPlotRepository.dart';
 import 'package:farmsmart_flutter/ui/discover/ArticleList.dart';
 import 'package:farmsmart_flutter/ui/common/ActionSheet.dart';
+import 'package:farmsmart_flutter/ui/common/Alert.dart';
 import 'package:farmsmart_flutter/ui/common/carousel_view.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockActionSheetViewModel.dart';
+import 'package:farmsmart_flutter/ui/mockData/MockAlertWidgetViewModel.dart';
 import 'package:farmsmart_flutter/ui/myplot/PlotDetail.dart';
 import 'package:farmsmart_flutter/ui/myplot/PlotList.dart';
 import 'package:farmsmart_flutter/ui/playground/data/playground_data_source.dart';
 import 'package:farmsmart_flutter/ui/playground/data/playground_stagecard_datasource.dart';
-import 'package:farmsmart_flutter/ui/playground/playground_button_present_modal.dart';
+import 'package:farmsmart_flutter/ui/playground/playground_present_button.dart';
 import 'package:farmsmart_flutter/ui/playground/playground_widget.dart';
 import 'package:farmsmart_flutter/ui/profitloss/ProfitLossHeader.dart';
 import 'package:farmsmart_flutter/ui/profitloss/ProfitLossListItem.dart';
@@ -129,8 +131,12 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
                   repository: MockArticlesRepository(articleCount: 2000)))),
       PlaygroundWidget(
         title: "FARM-48 Landing Page",
-        child: PlaygroundButtonPresentModal(
-          child: LandingPage(viewModel: MockLandingPageViewModel.build()),
+        child: PlaygroundPresentButton(
+          child: LandingPage(
+            viewModel: MockLandingPageViewModel.build(),
+          ),
+          listener: (widget, context) =>
+              PlaygroundPresentButton.presentModal(widget, context),
         ),
       ),
       PlaygroundWidget(
@@ -175,6 +181,31 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
         child: PersistentBottomNavigationBar(
           backgroundColor: Colors.white,
           tabs: PlaygroundPersistentBottomNavigationBar().getList(),
+        ),
+      ),
+      PlaygroundWidget(
+        title: "FARM-432 General Alert Widget",
+        child: PlaygroundView(
+          widgetList: [
+            PlaygroundWidget(
+              title: "Normal",
+              child: PlaygroundPresentButton(
+                child: Alert(
+                  viewModel: MockAlertWidgetViewModel.build(),
+                ),
+                listener: (alert, context) => Alert.present(alert, context),
+              ),
+            ),
+            PlaygroundWidget(
+              title: "Have Destructive",
+              child: PlaygroundPresentButton(
+                child: Alert(
+                  viewModel: MockAlertWidgetViewModel.buildDestructive(),
+                ),
+                listener: (alert, context) => Alert.present(alert, context),
+              ),
+            ),
+          ],
         ),
       ),
       PlaygroundWidget(
