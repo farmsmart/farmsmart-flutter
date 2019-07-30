@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:farmsmart_flutter/data/model/mock/MockString.dart';
 import 'package:farmsmart_flutter/ui/profile/SwitchProfile.dart';
 import 'package:farmsmart_flutter/ui/profile/SwitchProfileItems.dart';
@@ -6,7 +7,6 @@ import 'package:flutter/material.dart';
 class MockSwitchProfile {
   static SwitchProfileViewModel build() {
     List<SwitchProfileItemsViewModel> list = [];
-
     for (var i = 0; i < 10; i++) {
       list.add(MockSwitchProfileItemsViewModel.build(i));
     }
@@ -16,7 +16,14 @@ class MockSwitchProfile {
       title: "Switch Profile",
       actionTitle: "Switch Profile",
       isVisible: false,
+      selectedIndex: 0,
+      confirmedIndex: 0,
+      addProfileAction: () => _mockAddProfile(),
     );
+  }
+
+  static _mockAddProfile() {
+    print("This should be a add Profile Screen");
   }
 }
 
@@ -26,7 +33,7 @@ class MockSwitchProfileItemsViewModel {
       title: "MockTitle",
       icon: "assets/icons/radio_button_default.png",
       image: NetworkImage(_mockImage.random()),
-      isSelected: false,
+      isSelected: index == 0 ? true : false,
     );
   }
 }
@@ -36,3 +43,4 @@ MockString _mockImage = MockString(library: [
   "https://statictest.amido.com/wp-content/uploads/2016/02/02100213/Amido-1.png",
   "http://4.bp.blogspot.com/-2v3fdX2Y_-g/T04JTMAyX5I/AAAAAAAAAW4/AcYdf9Xwxho/s1600/GUSTAVO.jpg",
 ]);
+

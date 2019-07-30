@@ -3,9 +3,12 @@ import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
 import 'package:farmsmart_flutter/ui/profile/SwitchProfileItems.dart';
 import 'package:flutter/material.dart';
 
+class _Icons {
+  static final String dismissModal = "assets/raw/nav_icon_cancel.png";
+  static final String topButton = "assets/icons/profit_add.png";
+}
+
 class _Constants {
-  static final String navCancelIcon = "assets/raw/nav_icon_cancel.png";
-  static final String topButtonIcon = "assets/icons/profit_add.png";
   static final double appBarElevation = 0;
   static final EdgeInsets appBarEdgePadding = EdgeInsets.only(left: 25);
   static final double appBarIconSize = 20;
@@ -22,16 +25,18 @@ class SwitchProfileViewModel {
   String actionTitle;
   bool isVisible;
   List<SwitchProfileItemsViewModel> actions;
+  int confirmedIndex;
   int selectedIndex;
-  int currentIndex;
+  Function addProfileAction;
 
   SwitchProfileViewModel({
-    this.title,
-    this.actionTitle,
+    @required this.title,
+    @required this.actionTitle,
     this.isVisible = false,
     this.actions,
+    this.confirmedIndex,
     this.selectedIndex,
-    this.currentIndex
+    @required this.addProfileAction,
   });
 }
 
@@ -133,7 +138,8 @@ class SwitchProfileState extends State<SwitchProfile> {
         visible: widget._viewModel.isVisible,
         child: RoundedButton(
             viewModel: RoundedButtonViewModel(
-                title: widget._viewModel.title, onTap: () => _switchProfileTapped()),
+                title: widget._viewModel.title,
+                onTap: () => _switchProfileTapped()),
             style: RoundedButtonStyle.largeRoundedButtonStyle()),
       ),
     );
@@ -146,7 +152,7 @@ class SwitchProfileState extends State<SwitchProfile> {
         onPressed: () => Navigator.pop(context, false),
         padding: _Constants.appBarEdgePadding,
         child: Image.asset(
-          _Constants.navCancelIcon,
+          _Icons.dismissModal,
           height: _Constants.appBarIconSize,
           width: _Constants.appBarIconSize,
         ),
@@ -157,7 +163,8 @@ class SwitchProfileState extends State<SwitchProfile> {
             padding: _Constants.topButtonEdgePadding,
             child: RoundedButton(
                 viewModel: RoundedButtonViewModel(
-                    icon: _Constants.topButtonIcon, onTap: () => _bla()),
+                    icon: _Icons.topButton,
+                    onTap: () => widget._viewModel.addProfileAction()),
                 style: RoundedButtonStyle.defaultStyle()),
           ),
         ),
@@ -166,17 +173,24 @@ class SwitchProfileState extends State<SwitchProfile> {
   }
 
   void _select(int index) {
-    print(index.toString() + " This is the index");
-    print(widget._viewModel.currentIndex.toString() + " This is the currentIndex");
-    print(widget._viewModel.selectedIndex.toString() + " This is the selectedIndex");
-    if(widget._viewModel.currentIndex != index) {
-      _bla();
-    }
     setState(() {
-      widget._viewModel.currentIndex = index;
+      widget._viewModel.selectedIndex = index;
       _clearSelection();
       widget._viewModel.actions[index].isSelected = true;
     });
+    _checkSelection();
+  }
+
+  void _checkSelection() {
+    if (widget._viewModel.confirmedIndex != widget._viewModel.selectedIndex) {
+      setState(() {
+        widget._viewModel.isVisible = true;
+      });
+    } else {
+      setState(() {
+        widget._viewModel.isVisible = false;
+      });
+    }
   }
 
   void _clearSelection() {
@@ -185,16 +199,10 @@ class SwitchProfileState extends State<SwitchProfile> {
     }
   }
 
-  //TODO: REname this function please
-  _bla() {
-    setState(() {
-      widget._viewModel.isVisible = !widget._viewModel.isVisible;
-    });
-  }
-
   _switchProfileTapped() {
     setState(() {
-      widget._viewModel.selectedIndex = widget._viewModel.currentIndex;
+      widget._viewModel.confirmedIndex = widget._viewModel.selectedIndex;
+      widget._viewModel.isVisible = false;
     });
   }
 }

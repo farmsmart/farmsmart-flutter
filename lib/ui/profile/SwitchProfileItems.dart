@@ -34,7 +34,9 @@ class SwitchProfileItemsViewModel {
 class SwitchProfileItemsStyle {
   final TextStyle titleTextStyle;
 
-  const SwitchProfileItemsStyle({this.titleTextStyle});
+  const SwitchProfileItemsStyle({
+    this.titleTextStyle,
+  });
 
   SwitchProfileItemsStyle copyWith({
     TextStyle titleTextStyle,
@@ -63,11 +65,11 @@ class SwitchProfileItems extends StatelessWidget {
   final SwitchProfileItemsViewModel _viewModel;
   final SwitchProfileItemsStyle _style;
 
-  const SwitchProfileItems(
-      {Key key,
-      SwitchProfileItemsViewModel viewModel,
-      SwitchProfileItemsStyle style = _defaultStyle})
-      : this._viewModel = viewModel,
+  const SwitchProfileItems({
+    Key key,
+    SwitchProfileItemsViewModel viewModel,
+    SwitchProfileItemsStyle style = _defaultStyle,
+  })  : this._viewModel = viewModel,
         this._style = style,
         super(key: key);
 

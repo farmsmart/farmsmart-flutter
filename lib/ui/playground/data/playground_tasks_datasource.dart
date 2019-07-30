@@ -181,11 +181,13 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
       ),
       PlaygroundWidget(
         title: "FARM-67 Switch profiles",
-        child: SwitchProfile(
-          viewModel: MockSwitchProfile.build(),
-        )
+        child: PlaygroundButtonPresentModal(
+          child: SwitchProfile(
+            viewModel: MockSwitchProfile.build(),
+          ),
+        ),
       ),
-       PlaygroundWidget(
+      PlaygroundWidget(
           title: 'TASK FARM-365 Plot',
           child: PlaygroundView(widgetList: [
             PlaygroundWidget(
