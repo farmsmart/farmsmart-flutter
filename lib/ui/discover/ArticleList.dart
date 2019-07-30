@@ -97,7 +97,7 @@ class ArticleList extends StatelessWidget {
             viewModel: viewModel.detailViewModel,
           );
       if (index == 0) {
-        return HeroListItem(
+        return StandardListItem(
           viewModel: viewModel,
           onTap: tapFunction,
         );

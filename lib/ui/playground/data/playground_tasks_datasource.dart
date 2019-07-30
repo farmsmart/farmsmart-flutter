@@ -5,22 +5,24 @@ import 'package:farmsmart_flutter/ui/mockData/MockRecordTransactionViewModel.dar
 import 'package:farmsmart_flutter/ui/playground/playground_widget.dart';
 import 'package:farmsmart_flutter/ui/profitloss/RecordTransaction.dart';
 import 'package:farmsmart_flutter/data/bloc/article/ArticleListProvider.dart';
-import 'package:farmsmart_flutter/data/bloc/plot/PlotDetailProvider.dart';
-import 'package:farmsmart_flutter/data/bloc/plot/PlotListProvider.dart';
 import 'package:farmsmart_flutter/data/bloc/recommendations/RecommendationListProvider.dart';
-import 'package:farmsmart_flutter/data/model/mock/MockPlot.dart';
 import 'package:farmsmart_flutter/data/repositories/article/implementation/MockArticlesRepository.dart';
 import 'package:farmsmart_flutter/data/repositories/crop/implementation/MockCropRepository.dart';
-import 'package:farmsmart_flutter/ui/bottombar/persistent_bottom_navigation_bar.dart';
-import 'package:farmsmart_flutter/data/repositories/plot/implementation/MockPlotRepository.dart';
+import 'package:farmsmart_flutter/ui/LandingPage.dart';
 import 'package:farmsmart_flutter/ui/discover/ArticleList.dart';
 import 'package:farmsmart_flutter/ui/common/ActionSheet.dart';
-import 'package:farmsmart_flutter/ui/common/carousel_view.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockActionSheetViewModel.dart';
-import 'package:farmsmart_flutter/ui/myplot/PlotDetail.dart';
-import 'package:farmsmart_flutter/ui/myplot/PlotList.dart';
+import 'package:farmsmart_flutter/ui/mockData/MockLandingPageViewModel.dart';
+import 'package:farmsmart_flutter/ui/bottombar/persistent_bottom_navigation_bar.dart';
+import 'package:farmsmart_flutter/data/repositories/plot/implementation/MockPlotRepository.dart';
+import 'package:farmsmart_flutter/ui/common/Alert.dart';
+import 'package:farmsmart_flutter/ui/common/carousel_view.dart';
+import 'package:farmsmart_flutter/ui/mockData/MockUserProfileViewModel.dart';
+import 'package:farmsmart_flutter/ui/mockData/MockAlertWidgetViewModel.dart';
 import 'package:farmsmart_flutter/ui/playground/data/playground_data_source.dart';
 import 'package:farmsmart_flutter/ui/playground/data/playground_stagecard_datasource.dart';
+import 'package:farmsmart_flutter/ui/playground/playground_present_button.dart';
+import 'package:farmsmart_flutter/ui/profile/UserProfile.dart';
 import 'package:farmsmart_flutter/ui/profitloss/ProfitLossHeader.dart';
 import 'package:farmsmart_flutter/ui/profitloss/ProfitLossListItem.dart';
 import 'package:farmsmart_flutter/ui/profitloss/mockRepositoryTryout/MockTransactionRepository.dart';
@@ -106,7 +108,7 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
                       height: 350,
                       child: ActionSheet(
                           viewModel:
-                              MockActionSheetViewModel.buildWithCheckBox(),
+                          MockActionSheetViewModel.buildWithCheckBox(),
                           style: ActionSheetStyle.defaultStyle()))),
             ],
           )),
@@ -127,7 +129,22 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
           ),
         ),
       ),
-
+      PlaygroundWidget(
+          title: "FARM-280 Update Discover",
+          child: ArticleList(
+              viewModelProvider: ArticleListProvider(
+                  title: "Test",
+                  repository: MockArticlesRepository(articleCount: 2000)))),
+      PlaygroundWidget(
+        title: "FARM-48 Landing Page",
+        child: PlaygroundPresentButton(
+          child: LandingPage(
+            viewModel: MockLandingPageViewModel.build(),
+          ),
+          listener: (widget, context) =>
+              PlaygroundPresentButton.presentModal(widget, context),
+        ),
+      ),
       PlaygroundWidget(
         title: 'FARM-59 Record a Cost/Sale',
         child: PlaygroundView(widgetList: [
@@ -173,25 +190,44 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
         ),
       ),
       PlaygroundWidget(
-          title: 'TASK FARM-365 Plot',
+          title: 'FARM-63 View Profile',
           child: PlaygroundView(widgetList: [
             PlaygroundWidget(
-                title: "FARM-365 Plot Repository",
-                child: PlotList(
-                    provider: PlotListProvider(
-                  title: "Test",
-                  plotRepository: _mockPlot,
-                  cropRepository: _mockCrop,
-                  engine: _engine,
-                ))),
+              title: 'Simple view',
+              child: UserProfile(viewModel: MockUserProfileViewModel.build()),
+            ),
             PlaygroundWidget(
-                title: "FARM-365 Plot Detail",
-                child: PlotDetail(
-                  provider:
-                      PlotDetailProvider(MockPlotEntity().build(), _mockPlot),
-                ))
+              title: 'Larger titles view',
+              child: UserProfile(
+                  viewModel: MockUserProfileViewModel.buildLarger()),
+            ),
           ])),
       PlaygroundWidget(
+        title: "FARM-432 General Alert Widget",
+        child: PlaygroundView(
+          widgetList: [
+            PlaygroundWidget(
+              title: "Normal",
+              child: PlaygroundPresentButton(
+                child: Alert(
+                  viewModel: MockAlertWidgetViewModel.build(),
+                ),
+                listener: (alert, context) => Alert.present(alert, context),
+              ),
+            ),
+            PlaygroundWidget(
+              title: "Have Destructive",
+              child: PlaygroundPresentButton(
+                child: Alert(
+                  viewModel: MockAlertWidgetViewModel.buildDestructive(),
+                ),
+                listener: (alert, context) => Alert.present(alert, context),
+              ),
+            ),
+          ],
+        ),
+      ),
+       PlaygroundWidget(
           title: 'TASK FARM-97 Update Recomentations',
           child: PlaygroundView(widgetList: [
             PlaygroundWidget(
@@ -214,8 +250,7 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
                   cropRepo: _mockCrop,
                   plotRepo: _mockPlot,
                   engine: _engine,
-                ))),
-          ])),
+                ))),]))
     ];
   }
 }

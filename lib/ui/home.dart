@@ -1,189 +1,163 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:farmsmart_flutter/data/bloc/article/ArticleListProvider.dart';
 import 'package:farmsmart_flutter/data/bloc/plot/PlotListProvider.dart';
 import 'package:farmsmart_flutter/data/bloc/recommendations/RecommendationEngine.dart';
-import 'package:farmsmart_flutter/data/firebase_const.dart';
 import 'package:farmsmart_flutter/data/model/mock/MockRecommendation.dart';
-import 'package:farmsmart_flutter/data/repositories/FlameLink.dart';
 import 'package:farmsmart_flutter/data/repositories/article/ArticleRepositoryInterface.dart';
-import 'package:farmsmart_flutter/data/repositories/article/implementation/ArticlesRepositoryFlamelink.dart';
-import 'package:farmsmart_flutter/data/repositories/crop/implementation/MockCropRepository.dart';
-import 'package:farmsmart_flutter/data/repositories/plot/implementation/MockPlotRepository.dart';
+import 'package:farmsmart_flutter/data/repositories/repository_provider.dart';
 import 'package:farmsmart_flutter/farmsmart_localizations.dart';
-import 'package:farmsmart_flutter/redux/app/app_state.dart';
-import 'package:farmsmart_flutter/ui/community/community_child.dart';
+import 'package:farmsmart_flutter/ui/bottombar/persistent_bottom_navigation_bar.dart';
+import 'package:farmsmart_flutter/ui/bottombar/tab_navigator.dart';
 import 'package:farmsmart_flutter/ui/discover/ArticleList.dart';
-import 'package:farmsmart_flutter/ui/home_viewmodel.dart';
-import 'package:farmsmart_flutter/ui/myplot/PlotList.dart';
-import 'package:farmsmart_flutter/ui/playground/playground_view.dart';
-import 'package:farmsmart_flutter/utils/assets.dart';
-import 'package:farmsmart_flutter/utils/colors.dart';
-import 'package:farmsmart_flutter/utils/dimens.dart';
-import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'profitloss/ProfitLossList.dart';
 import 'package:farmsmart_flutter/ui/playground/data/playground_datasource_impl.dart';
+import 'package:farmsmart_flutter/ui/playground/playground_view.dart';
+import 'package:flutter/material.dart';
 
-/// Home "screen" route. Scaffold has all the app subcomponents available inside,
-/// like bottom bar or action bar.
-///
+import 'myplot/PlotList.dart';
 
-final cms =
-    FlameLink(store: Firestore.instance, environment: Environment.development);
-final articleRepo = ArticlesRepositoryFlameLink(cms);
-final plotRepo = MockPlotRepository();
-final cropRepo = MockCropRepository();
+class _Constants {
+  static final double bottomBarIconSize = 25;
+  static final Color bottomBarColor = Colors.white;
 
-final engine = RecommendationEngine(
-  inputFactors: harryInput,
-  inputScale: 10.0,
-  weightMatrix: harryWeights,
-); //TODO: LH get input from User profile.
-
-class Home extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return _HomeState();
-  }
+  static final myPlotSelectedIcon = 'assets/icons/my_plot_selected.png';
+  static final myPlotIcon = 'assets/icons/my_plot.png';
+  static final profitLossSelectedIcon = 'assets/icons/profit_loss_selected.png';
+  static final profitLossIcon = 'assets/icons/profit_loss.png';
+  static final discoverSelectedIcon = 'assets/icons/discover_selected.png';
+  static final discoverIcon = 'assets/icons/discover.png';
+  static final communitySelectedIcon = 'assets/icons/community_selected.png';
+  static final communityIcon = 'assets/icons/community.png';
 }
 
-class _HomeState extends State<Home> with WidgetsBindingObserver {
-  HomeViewmodel homeViewModel;
+  final engine = RecommendationEngine(
+    inputFactors: harryInput,
+    inputScale: 10.0,
+    weightMatrix: harryWeights,
+  );
 
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addObserver(this);
-  }
+class Home extends StatelessWidget {
+  FarmsmartLocalizations localizations;
+  final RepositoryProvider repositoryProvider;
 
-  @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    super.dispose();
-  }
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) {
-      _retrieveDynamicLink(homeViewModel);
-    }
-  }
+  Home({
+    Key key,
+    this.repositoryProvider,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: LayoutBuilder(
-        builder: (context, constraints) => SafeArea(
-          child: Container(
-            color: Color(black),
-            child: StoreConnector<AppState, HomeViewmodel>(
-                builder: (_, viewModel) => content(context, viewModel),
-                converter: (store) => HomeViewmodel.fromStore(store)),
-          ),
-        ),
-      ),
+    localizations = FarmsmartLocalizations.of(context);
+
+    return PersistentBottomNavigationBar(
+      backgroundColor: _Constants.bottomBarColor,
+      tabs: tabs(),
     );
   }
 
-  Widget content(BuildContext context, HomeViewmodel viewModel) {
-    homeViewModel = viewModel;
-    FarmsmartLocalizations localizations = FarmsmartLocalizations.of(context);
-    final discoverTab = Navigator(
-        initialRoute: "/discover",
-        onGenerateRoute: (RouteSettings settings) {
-          WidgetBuilder builder = (BuildContext _) => ArticleList(
-              viewModelProvider: ArticleListProvider(
-                  title: localizations.discoverTab,
-                  repository: articleRepo,
-                  group: ArticleCollectionGroup.discovery));
-          return MaterialPageRoute(builder: builder, settings: settings);
-        });
-
-    final plotTab = Navigator(
-        initialRoute: "/plot",
-        onGenerateRoute: (RouteSettings settings) {
-          WidgetBuilder builder = (BuildContext _) => PlotList(
-                  provider: PlotListProvider(
-                title: localizations.myPlotTab,
-                plotRepository: plotRepo,
-                cropRepository: cropRepo,
-                engine: engine,
-              ));
-          return MaterialPageRoute(builder: builder, settings: settings);
-        });
-
-    final List<Widget> _children = [
-      plotTab,
-      ProfitLossPage(),
-      discoverTab,
-      HomeCommunityChild(),
-      PlaygroundView(
-        widgetList: PlaygroundDataSourceImpl().getList(),
+  List<TabNavigator> tabs() {
+    return [
+      _buildTabNavigator(
+        _buildMyPlot(),
+        _Constants.myPlotSelectedIcon,
+        _Constants.myPlotIcon,
+      ),
+      _buildTabNavigator(
+        //TODO Add Profit Loss screen without redux
+        Text('Profit Loss'),
+        _Constants.profitLossSelectedIcon,
+        _Constants.profitLossIcon,
+      ),
+      _buildTabNavigator(
+        //TODO Check Discover screen after rebase LH's opened PR (white screen)
+        _buildDiscover(),
+        _Constants.discoverSelectedIcon,
+        _Constants.discoverIcon,
+      ),
+      _buildTabNavigator(
+        //TODO Add Community screen without redux
+        Text('Community'),
+        _Constants.communitySelectedIcon,
+        _Constants.communityIcon,
+      ),
+      _buildTabNavigatorWithCircleImageWidget(
+        //TODO Add profile screen
+        Text('Profile'),
+      ),
+      _buildTabNavigator(
+        _buildPlayground(),
+        _Constants.communitySelectedIcon,
+        _Constants.communityIcon,
       ),
     ];
-    return Scaffold(
-      // We could share a list of pre defined actions for the app bar.
-      body: _children[viewModel.currentTab],
-      bottomNavigationBar: Theme(
-        data: Theme.of(context).copyWith(primaryColor: Color(primaryGreen)),
-        child: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          onTap: viewModel.changeTab,
-          currentIndex: viewModel.currentTab,
-          items: [
-            BottomNavigationBarItem(
-              activeIcon: Image.asset(Assets.BOTTOM_BAR_MY_PLOT_SELECTED,
-                  height: bottomBarIconSize),
-              icon: Image.asset(Assets.BOTTOM_BAR_MY_PLOT_UNSELECTED,
-                  height: bottomBarIconSize),
-              title: Text(localizations.myPlotTab),
-            ),
-            BottomNavigationBarItem(
-              activeIcon: Image.asset(Assets.BOTTOM_BAR_PROFIT_LOSS_SELECTED,
-                  height: bottomBarIconSize),
-              icon: Image.asset(Assets.BOTTOM_BAR_PROFIT_LOSS_UNSELECTED,
-                  height: bottomBarIconSize),
-              title: Text(localizations.profitLossTab),
-            ),
-            BottomNavigationBarItem(
-              activeIcon: Image.asset(Assets.BOTTOM_BAR_DISCOVER_SELECTED,
-                  height: bottomBarIconSize),
-              icon: Image.asset(Assets.BOTTOM_BAR_DISCOVER_UNSELECTED,
-                  height: bottomBarIconSize),
-              title: Text(localizations.discoverTab),
-            ),
-            BottomNavigationBarItem(
-              activeIcon: Image.asset(Assets.BOTTOM_BAR_COMMUNITY_SELECTED,
-                  height: bottomBarIconSize),
-              icon: Image.asset(Assets.BOTTOM_BAR_COMMUNITY_UNSELECTED,
-                  height: bottomBarIconSize),
-              title: Text(localizations.communityTab),
-            ),
-            BottomNavigationBarItem(
-              activeIcon: Image.asset(Assets.BOTTOM_BAR_COMMUNITY_SELECTED,
-                  height: bottomBarIconSize),
-              icon: Image.asset(Assets.BOTTOM_BAR_COMMUNITY_UNSELECTED,
-                  height: bottomBarIconSize),
-              title: Text(localizations.playgroundTab),
-            ),
-          ],
+  }
+
+  _buildMyPlot() {
+    return PlotList(
+        provider: PlotListProvider(
+            title: localizations.myPlotTab,
+            engine: engine,
+            plotRepository: repositoryProvider.getMyPlotRepository(),
+            cropRepository: repositoryProvider.getCropRepository()));
+  }
+
+  _buildDiscover() {
+    return ArticleList(
+        viewModelProvider: ArticleListProvider(
+            title: localizations.discoverTab,
+            repository: repositoryProvider.getDiscoverRepository(),
+            group: ArticleCollectionGroup.discovery));
+  }
+
+  _buildPlayground() {
+    return PlaygroundView(
+      widgetList: PlaygroundDataSourceImpl().getList(),
+    );
+  }
+
+  TabNavigator _buildTabNavigator(
+    Widget page,
+    String activeIconPath,
+    String iconPath,
+  ) {
+    return TabNavigator(
+      child: page,
+      barItem: BottomNavigationBarItem(
+        activeIcon: Image.asset(
+          activeIconPath,
+          height: _Constants.bottomBarIconSize,
         ),
+        icon: Image.asset(
+          iconPath,
+          height: _Constants.bottomBarIconSize,
+        ),
+        title: SizedBox.shrink(),
       ),
     );
   }
 
-  Future<void> _retrieveDynamicLink(HomeViewmodel viewModel) async {
-    final PendingDynamicLinkData data =
-        await FirebaseDynamicLinks.instance.getInitialLink();
-    if (data != null) {
-      var decodedDynamicLink = Uri.decodeComponent(data.link.toString());
-      var stringURLtoURI = Uri.parse(decodedDynamicLink);
-      if (stringURLtoURI != null) {
-        String articleId = stringURLtoURI.queryParameters[DeepLink.ParameterID];
-        debugPrint('Fetching id=${articleId}');
-        //TODO: LH restore this function
-      }
-    }
+  //TODO Build it properly
+  TabNavigator _buildTabNavigatorWithCircleImageWidget(Widget page) {
+    return TabNavigator(
+      child: page,
+      barItem: BottomNavigationBarItem(
+        activeIcon: Container(
+          decoration: BoxDecoration(
+            color: Color(0xff24d900),
+            shape: BoxShape.circle,
+          ),
+          padding: EdgeInsets.all(2.0),
+          height: 27,
+          child: CircleAvatar(
+            child: Image.asset('assets/raw/mock_profile_image.png'),
+          ),
+        ),
+        icon: Container(
+          height: 27,
+          child: CircleAvatar(
+            child: Image.asset('assets/raw/mock_profile_image.png'),
+          ),
+        ),
+        title: SizedBox.shrink(),
+      ),
+    );
   }
 }

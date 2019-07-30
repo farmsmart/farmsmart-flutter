@@ -41,7 +41,8 @@ class PlotListProvider implements ViewModelProvider<PlotListViewModel> {
     RecommendationEngine engine,
   })  : this._title = title,
         this._plotRepo = plotRepository,
-        this._cropRepo = cropRepository, this._engine = engine;
+        this._cropRepo = cropRepository,
+        this._engine = engine;
 
   final StreamController<PlotListViewModel> _controller =
       StreamController<PlotListViewModel>.broadcast();
@@ -64,6 +65,10 @@ class PlotListProvider implements ViewModelProvider<PlotListViewModel> {
   @override
   PlotListViewModel initial() {
     if (_snapshot == null) {
+      _plotRepo.observeFarm(null).listen((articles) {
+        _snapshot = _modelFromPlots(_controller, articles);
+          _controller.sink.add(_snapshot);
+      });
       _snapshot = _viewModel(status: LoadingStatus.LOADING);
       _snapshot.refresh();
     }
@@ -85,12 +90,7 @@ class PlotListProvider implements ViewModelProvider<PlotListViewModel> {
 
   void _update(StreamController controller) {
     _signalLoading(controller);
-    _plotRepo.getFarm(null).then((articles) {
-      _snapshot = _modelFromPlots(controller, articles);
-      controller.sink.add(_snapshot);
-    }).catchError((error) {
-      _signalError(controller);
-    });
+    _plotRepo.getFarm(null);
   }
 
   void _signalLoading(StreamController controller) {
@@ -104,11 +104,10 @@ class PlotListProvider implements ViewModelProvider<PlotListViewModel> {
   PlotListViewModel _viewModel(
       {LoadingStatus status, List<PlotListItemViewModel> items = const []}) {
     final recommendationsProvider = RecommendationListProvider(
-      title: _Strings.recommendations,
-      cropRepo: _cropRepo,
-      plotRepo: _plotRepo,
-      engine: _engine
-    );
+        title: _Strings.recommendations,
+        cropRepo: _cropRepo,
+        plotRepo: _plotRepo,
+        engine: _engine);
     return PlotListViewModel(
       title: _title,
       buttonTitle: Intl.message(_Strings.addCrop),
