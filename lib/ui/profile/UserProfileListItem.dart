@@ -105,31 +105,43 @@ class UserProfileListItem extends StatelessWidget {
           ? _Constants.edgePadding
           : _Constants.simpleEdgePadding,
       dense: true,
-      leading: _viewModel.icon != null
-          ? Container(
-              alignment: Alignment.centerRight,
-              width: _Constants.leadingWidth,
-              child: Image.asset(
-                _viewModel.icon,
-                height: _Constants.leadingIconHeight,
-              ),
-            )
-          : null,
-      trailing: Container(
-        width: _Constants.trailingWidth,
-        child: Image.asset(
-          _Constants.arrowIcon,
-          height: _Constants.trailingIconHeight,
-        ),
+      leading: _buildLeading(),
+      trailing: _buildTrailing(),
+      title: _buildTitle(),
+    );
+  }
+
+  Widget _buildLeading() {
+    return _viewModel.icon != null
+        ? Container(
+            alignment: Alignment.centerRight,
+            width: _Constants.leadingWidth,
+            child: Image.asset(
+              _viewModel.icon,
+              height: _Constants.leadingIconHeight,
+            ),
+          )
+        : null;
+  }
+
+  Widget _buildTrailing() {
+    return Container(
+      width: _Constants.trailingWidth,
+      child: Image.asset(
+        _Constants.arrowIcon,
+        height: _Constants.trailingIconHeight,
       ),
-      title: Text(
-        _viewModel.title,
-        style: !_viewModel.isDestructive
-            ? _style.titleTextStyle
-            : _style.destructiveTextStyle,
-        maxLines: _style.maxLines,
-        overflow: TextOverflow.ellipsis,
-      ),
+    );
+  }
+
+  Widget _buildTitle() {
+    return Text(
+      _viewModel.title,
+      style: !_viewModel.isDestructive
+          ? _style.titleTextStyle
+          : _style.destructiveTextStyle,
+      maxLines: _style.maxLines,
+      overflow: TextOverflow.ellipsis,
     );
   }
 }

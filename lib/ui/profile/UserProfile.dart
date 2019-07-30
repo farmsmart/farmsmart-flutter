@@ -184,25 +184,7 @@ class UserProfile extends StatelessWidget {
             ],
           ),
         ),
-        Padding(
-          padding: _Constants.edgePadding,
-          child: Column(
-            children: <Widget>[
-              RoundedButton(
-                viewModel: RoundedButtonViewModel(
-                  title: Intl.message(_Strings.buttonTitle),
-                  onTap: () => _viewModel.switchProfileAction(),
-                ),
-                style: RoundedButtonStyle.largeRoundedButtonStyle().copyWith(
-                  backgroundColor: _style.buttonColor,
-                  height: _style.buttonHeight,
-                  borderRadius: _Constants.buttonBorderShape,
-                  buttonTextStyle: _style.buttonTextStyle,
-                ),
-              ),
-            ],
-          ),
-        ),
+        _buildButton(),
         SizedBox(height: _Constants.buttonLineSpace),
       ],
     );
@@ -220,67 +202,101 @@ class UserProfile extends StatelessWidget {
     );
   }
 
-  _buildMainTextView(BuildContext context) {
+  Widget _buildMainTextView(BuildContext context) {
     return Expanded(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Container(
-                padding: _Constants.titleLineSpace,
-                child: Text(_viewModel.username,
-                    maxLines: _style.maxLines,
-                    overflow: TextOverflow.ellipsis,
-                    style: _style.titleTextStyle),
-                decoration: BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(
-                      color: _Constants.dividerColor,
-                      width: _Constants.dividerHeight,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
+          _buildUsername(),
           SizedBox(height: _Constants.subtitleLineSpace),
           Row(
             children: <Widget>[
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    _viewModel.activeCrops.toString(),
-                    style: _style.subtitleTextStyle,
-                  ),
-                  Text(
-                    Intl.message(_Strings.activeCrops),
-                    maxLines: _style.maxLines,
-                    overflow: TextOverflow.ellipsis,
-                    style: _style.detailTextStyle,
-                  ),
-                ],
-              ),
+              _buildActiveCrops(),
               SizedBox(width: _Constants.detailSpacing),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    _viewModel.completedCrops.toString(),
-                    style: _style.subtitleTextStyle,
-                  ),
-                  Text(
-                    Intl.message(_Strings.completedCrops),
-                    maxLines: _style.maxLines,
-                    overflow: TextOverflow.ellipsis,
-                    style: _style.detailTextStyle,
-                  ),
-                ],
-              ),
+              _buildCompletedCrops(),
             ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Column _buildUsername() {
+    return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Container(
+              padding: _Constants.titleLineSpace,
+              child: Text(_viewModel.username,
+                  maxLines: _style.maxLines,
+                  overflow: TextOverflow.ellipsis,
+                  style: _style.titleTextStyle),
+              decoration: BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(
+                    color: _Constants.dividerColor,
+                    width: _Constants.dividerHeight,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        );
+  }
+
+  Widget _buildActiveCrops() {
+    return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  _viewModel.activeCrops.toString(),
+                  style: _style.subtitleTextStyle,
+                ),
+                Text(
+                  Intl.message(_Strings.activeCrops),
+                  maxLines: _style.maxLines,
+                  overflow: TextOverflow.ellipsis,
+                  style: _style.detailTextStyle,
+                ),
+              ],
+            );
+  }
+
+  Widget _buildCompletedCrops() {
+    return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  _viewModel.completedCrops.toString(),
+                  style: _style.subtitleTextStyle,
+                ),
+                Text(
+                  Intl.message(_Strings.completedCrops),
+                  maxLines: _style.maxLines,
+                  overflow: TextOverflow.ellipsis,
+                  style: _style.detailTextStyle,
+                ),
+              ],
+            );
+  }
+
+  Widget _buildButton() {
+    return Padding(
+      padding: _Constants.edgePadding,
+      child: Column(
+        children: <Widget>[
+          RoundedButton(
+            viewModel: RoundedButtonViewModel(
+              title: Intl.message(_Strings.buttonTitle),
+              onTap: () => _viewModel.switchProfileAction(),
+            ),
+            style: RoundedButtonStyle.largeRoundedButtonStyle().copyWith(
+              backgroundColor: _style.buttonColor,
+              height: _style.buttonHeight,
+              borderRadius: _Constants.buttonBorderShape,
+              buttonTextStyle: _style.buttonTextStyle,
+            ),
           ),
         ],
       ),
