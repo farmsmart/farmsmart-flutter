@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class _Strings {
-  static final String activeCrops = Intl.message("Active crops");
-  static final String completedCrops = Intl.message("Completed");
-  static final String buttonTitle = Intl.message("Switch Profile");
+  static final String activeCrops = "Active crops";
+  static final String completedCrops = "Completed";
+  static final String buttonTitle = "Switch Profile";
 }
 
 class UserProfileViewModel {
@@ -238,7 +238,7 @@ class UserProfile extends StatelessWidget {
             children: <Widget>[
               RoundedButton(
                 viewModel: RoundedButtonViewModel(
-                  title: _Strings.buttonTitle,
+                  title: Intl.message(_Strings.buttonTitle),
                   onTap: () => _viewModel.switchProfileAction(),
                 ),
                 style: RoundedButtonStyle.largeRoundedButtonStyle().copyWith(
@@ -305,7 +305,7 @@ class UserProfile extends StatelessWidget {
                     style: _style.subtitleTextStyle,
                   ),
                   Text(
-                    _Strings.activeCrops,
+                    Intl.message(_Strings.activeCrops),
                     maxLines: _style.maxLines,
                     overflow: TextOverflow.ellipsis,
                     style: _style.detailTextStyle,
@@ -321,7 +321,7 @@ class UserProfile extends StatelessWidget {
                     style: _style.subtitleTextStyle,
                   ),
                   Text(
-                    _Strings.completedCrops,
+                    Intl.message(_Strings.completedCrops),
                     maxLines: _style.maxLines,
                     overflow: TextOverflow.ellipsis,
                     style: _style.detailTextStyle,
