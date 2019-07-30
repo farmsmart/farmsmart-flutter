@@ -201,8 +201,10 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
           widgetList: [
             PlaygroundWidget(
               title: "FARM-443 Show farm details",
-              child: FarmDetails(
-                viewModel: MockFarmDetailsViewModel.build(),
+              child: PlaygroundButtonPresentModal(
+                child: FarmDetails(
+                  viewModel: MockFarmDetailsViewModel.build(),
+                ),
               ),
             ),
           ],
