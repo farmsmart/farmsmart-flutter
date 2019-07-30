@@ -22,6 +22,7 @@ import 'package:farmsmart_flutter/ui/common/ActionSheet.dart';
 import 'package:farmsmart_flutter/ui/common/Alert.dart';
 import 'package:farmsmart_flutter/ui/common/carousel_view.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockActionSheetViewModel.dart';
+import 'package:farmsmart_flutter/ui/mockData/MockUserProfileViewModel.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockAlertWidgetViewModel.dart';
 import 'package:farmsmart_flutter/ui/myplot/PlotDetail.dart';
 import 'package:farmsmart_flutter/ui/myplot/PlotList.dart';
@@ -29,6 +30,8 @@ import 'package:farmsmart_flutter/ui/playground/data/playground_data_source.dart
 import 'package:farmsmart_flutter/ui/playground/data/playground_stagecard_datasource.dart';
 import 'package:farmsmart_flutter/ui/playground/playground_present_button.dart';
 import 'package:farmsmart_flutter/ui/playground/playground_widget.dart';
+import 'package:farmsmart_flutter/ui/profile/UserProfile.dart';
+import 'package:farmsmart_flutter/ui/profile/UserProfileListItem.dart';
 import 'package:farmsmart_flutter/ui/profitloss/ProfitLossHeader.dart';
 import 'package:farmsmart_flutter/ui/profitloss/ProfitLossListItem.dart';
 import 'package:farmsmart_flutter/ui/profitloss/mockRepositoryTryout/MockTransactionRepository.dart';
@@ -102,7 +105,7 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
                       height: 350,
                       child: ActionSheet(
                           viewModel:
-                              MockActionSheetViewModel.buildWithCheckBox(),
+                          MockActionSheetViewModel.buildWithCheckBox(),
                           style: ActionSheetStyle.defaultStyle()))),
             ],
           )),
@@ -184,6 +187,19 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
         ),
       ),
       PlaygroundWidget(
+          title: 'FARM-63 View Profile',
+          child: PlaygroundView(widgetList: [
+            PlaygroundWidget(
+              title: 'Simple view',
+              child: UserProfile(viewModel: MockUserProfileViewModel.build()),
+            ),
+            PlaygroundWidget(
+              title: 'Larger titles view',
+              child: UserProfile(
+                  viewModel: MockUserProfileViewModel.buildLarger()),
+            ),
+          ])),
+      PlaygroundWidget(
         title: "FARM-432 General Alert Widget",
         child: PlaygroundView(
           widgetList: [
@@ -212,10 +228,14 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
           title: 'TASK FARM-365 Plot',
           child: PlaygroundView(widgetList: [
             PlaygroundWidget(
-                title: "FARM-365 Plot Repository",
-                child: PlotList(
-                    provider: PlotListProvider(
-                        title: "Test", repository: MockPlotRepository()))),
+              title: "FARM-365 Plot Repository",
+              child: PlotList(
+                provider: PlotListProvider(
+                  title: "Test",
+                  repository: MockPlotRepository(),
+                ),
+              ),
+            ),
             PlaygroundWidget(
                 title: "FARM-365 Plot Detail",
                 child: PlotDetail(
