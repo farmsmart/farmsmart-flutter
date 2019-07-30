@@ -68,7 +68,8 @@ class FarmDetails extends StatelessWidget {
         children: <Widget>[
           _buildHeader(),
           _buildList(),
-          SizedBox(height: 200,)
+          ListDivider.build(),
+          SizedBox(height: 120,)
         ],
       ),
     );

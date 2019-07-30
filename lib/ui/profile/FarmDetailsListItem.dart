@@ -13,15 +13,13 @@ class _Strings {
 }
 
 class _Constants {
-  static final EdgeInsets wrapColorsPadding = const EdgeInsets.only(
-    top: 11.5,
-  );
-
-  static final double wrapSpacing = 8;
-  static final double wrapRunSpacing = 8;
+  static final double wrapSpacing = 5;
+  static final double wrapRunSpacing = 5;
+  static final int maxCircles = 6;
+  static final int minCircles = 0;
 
   static final BorderRadius circleBorderRadius =
-  BorderRadius.all(Radius.circular(30));
+      BorderRadius.all(Radius.circular(30));
 }
 
 class FarmDetailsListItemViewModel {
@@ -42,9 +40,10 @@ class FarmDetailsListItem extends StatelessWidget {
   final FarmDetailsListItemViewModel _viewModel;
   final FarmDetailsListItemStyle _style;
 
-  const FarmDetailsListItem({Key key,
-    FarmDetailsListItemViewModel viewModel,
-    FarmDetailsListItemStyle style})
+  const FarmDetailsListItem(
+      {Key key,
+      FarmDetailsListItemViewModel viewModel,
+      FarmDetailsListItemStyle style})
       : this._viewModel = viewModel,
         this._style = style,
         super(key: key);
@@ -52,10 +51,10 @@ class FarmDetailsListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      contentPadding: EdgeInsets.symmetric(horizontal: 32),
+      contentPadding: EdgeInsets.symmetric(horizontal: 32, vertical: 10),
       title: _buildTitle(),
       trailing: Container(
-        width: 150,
+        width: 160,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.end,
@@ -70,10 +69,13 @@ class FarmDetailsListItem extends StatelessWidget {
   }
 
   Widget _buildDetail() {
-    return Expanded(
+    return Flexible(
+      flex: 2,
       child: Text(
         _viewModel.detail,
+        textAlign: TextAlign.right,
         maxLines: 3,
+        overflow: TextOverflow.ellipsis,
         style: TextStyle(
           color: Color(0xff767690),
           fontSize: 15,
@@ -94,31 +96,33 @@ class FarmDetailsListItem extends StatelessWidget {
     );
   }
 
-
   _buildCirclesWrap() {
-    return Padding(
-      padding: _Constants.wrapColorsPadding,
+    return Flexible(
+      flex: 1,
       child: Wrap(
-        direction: _viewModel.colors.length > 2 ? Axis.vertical : Axis.horizontal,
+        direction: Axis.vertical,
+        verticalDirection: VerticalDirection.down,
         spacing: _Constants.wrapSpacing,
         runSpacing: _Constants.wrapRunSpacing,
-        children: _buildCircles(_viewModel.colors),
+        children: _viewModel.colors.length > 9
+            ? _buildCircles(_viewModel.colors).sublist(0, 9)
+            : _buildCircles(_viewModel.colors),
       ),
     );
   }
 
-  List<Widget> _buildCircles(List<Color> colors) =>
-      colors
-          .map(
-            (color) =>
-            Container(
-              height: 20,
-              width: 20,
-              decoration: BoxDecoration(
-                color: color,
-                borderRadius: _Constants.circleBorderRadius,
-              ),
+  List<Widget> _buildCircles(List<Color> colors) {
+    return colors
+        .map(
+          (color) => Container(
+            height: 12,
+            width: 12,
+            decoration: BoxDecoration(
+              color: color,
+              borderRadius: _Constants.circleBorderRadius,
             ),
-      )
-          .toList();
+          ),
+        )
+        .toList();
+  }
 }
