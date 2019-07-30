@@ -32,13 +32,7 @@ class ListViewWidgetListSection implements ListViewSection {
   ListViewWidgetListSection._(List<Widget> children) : this._children = children;
 
   factory ListViewWidgetListSection(List<Widget> childrenOrNulls) {
-    List<Widget>  noNulls = [];
-    for (var child in childrenOrNulls) {
-      if(child != null) {
-        noNulls.add(child);
-      }
-    }
-    return ListViewWidgetListSection._(noNulls);
+    return ListViewWidgetListSection._(childrenOrNulls.where((child) => child != null).toList());
   }
 
   @override

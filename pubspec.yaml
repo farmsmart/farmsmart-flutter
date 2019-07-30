@@ -66,11 +66,6 @@ flutter:
   uses-material-design: true
   assets:
     - assets/icons/app_icon.png
-    - assets/raw/community_mock.webp
-    - assets/raw/profit_mock.webp
-    - assets/raw/placeholder.webp
-    - assets/raw/mock_profile_image.png
-
     - assets/icons/community_selected.png
     - assets/icons/community.png
     - assets/icons/discover_selected.png
@@ -79,8 +74,6 @@ flutter:
     - assets/icons/my_plot.png
     - assets/icons/profit_loss_selected.png
     - assets/icons/profit_loss.png
-    - assets/icons/chevron.png
-    - assets/icons/detail_icon_best_soil.png
     - assets/icons/detail_icon_date.png
     - assets/icons/detail_icon_description.png
     - assets/privacy_policy.html
@@ -100,10 +93,16 @@ flutter:
     - assets/icons/detail_icon_cost.png
     - assets/icons/radio_button_default.png
     - assets/icons/radio_button_active.png
+    - assets/icons/chevron.png
+    - assets/icons/detail_icon_best_soil.png
+    - assets/icons/detail_icon_invite.png
+    - assets/icons/detail_icon_language.png
+    - assets/icons/detail_icon_new_profile.png
+    - assets/icons/detail_icon_pin.png
+    - assets/raw/
     - assets/icons/nav_icon_back.png
     - assets/icons/nav_icon_options.png
     - assets/icons/nav_icon_cancel.png
-
 
   fonts:
   - family: GT-America-Standard

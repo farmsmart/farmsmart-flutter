@@ -102,7 +102,6 @@ class ArticleList extends StatelessWidget {
             context: context,
             viewModel: viewModel.detailViewModel,
           );
-
       final shouldBuildHero = _style.heroEnabled && (index == 0);
 
       if (shouldBuildHero) {

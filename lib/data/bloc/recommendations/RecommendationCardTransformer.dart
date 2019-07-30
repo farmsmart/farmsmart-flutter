@@ -34,7 +34,7 @@ class RecommendationCardTransformer
     final subtitle =
         percent.toInt().toString() + "% " + Intl.message(_Strings.match);
     final inBasket = _basket.contains(from);
-    final rightAction = inBasket ? () => {} : () => _basket.addItem(from);
+    final addAction = inBasket ? () => {} : () => _basket.addItem(from);
 
     return RecommendationCardViewModel(
       title: from.name,
@@ -43,7 +43,7 @@ class RecommendationCardTransformer
       detailActionText: Intl.message(_Strings.viewDetails),
       detailProvider: _detailProvider(from),
       addActionText: inBasket ? Intl.message(_Strings.added) :Intl.message(_Strings.add),
-      addAction: rightAction,
+      addAction: addAction,
       image:  CropImageProvider(from).urlToFit(),
       isAdded: inBasket,
       isHero: _isHero(from),

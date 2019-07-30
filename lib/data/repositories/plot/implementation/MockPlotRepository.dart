@@ -40,6 +40,7 @@ class MockPlotRepository implements PlotRepositoryInterface {
   @override
   Future<List<PlotEntity>> getFarm(ProfileEntity forProfile) {
     int errorChance = _rand.nextInt(_errorOneIn);
+    _update();
     return (errorChance == 0) ? Future.error(Error()) : Future.value(_plots);
   }
 

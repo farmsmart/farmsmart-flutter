@@ -41,7 +41,7 @@ class PlotToPlotDetailViewModel
     final stageViewModels = _plot.stages.map((stage) {
       return _stageTransformer.transform(from: stage);
     }).toList();
-    final List<ArticleDetailViewModel> artcileViewModels =
+    final List<ArticleDetailViewModel> articleViewModels =
         _plot.stages.map((stage) {
       return _articleTransformer.transform(from: stage.article).detailViewModel;
     }).toList();
@@ -54,7 +54,7 @@ class PlotToPlotDetailViewModel
         imageProvider: CropImageProvider(_plot.crop),
         progress: headerViewModel.progress,
         stageCardViewModels: stageViewModels,
-        stageArticleViewModels: artcileViewModels,
+        stageArticleViewModels: articleViewModels,
         currentStage: _logic.currentStageIndex(_plot.stages),
         remove: () => _removeAction(_plot),
         rename: _rename, 
