@@ -5,6 +5,11 @@
   It will output a normalised value in unit terms (0-1)
 */
 
+class _Constants {
+  static const unit = 1.0;
+  static const defaultScore = 0.0; 
+}
+
 class RecommendationEngine {
   final Map<String, double> _inputFactors;
   final Map<String, Map<String, double>> _scoringFactors;
@@ -28,11 +33,11 @@ class RecommendationEngine {
   }
 
   double recommend(String entity) {
-    double score = 0;
+    double score = _Constants.defaultScore;
     final scoringMatrix = _scoringFactors[entity];
     if (scoringMatrix != null) {
       for (var key in _inputFactors.keys) {
-        score += _inputFactors[key] * scoringMatrix[key] ?? 0;
+        score += _inputFactors[key] * scoringMatrix[key] ?? _Constants.defaultScore;
       }
     }
     return score;
@@ -44,7 +49,7 @@ class RecommendationEngine {
       return null;
     }
     return values.map((key, value) {
-      return MapEntry(key, (1.0 / scale) * value);
+      return MapEntry(key, (_Constants.unit / scale) * value);
     });
   }
 }

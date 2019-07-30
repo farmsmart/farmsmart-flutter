@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:farmsmart_flutter/data/bloc/article/ArticleListProvider.dart';
 import 'package:farmsmart_flutter/data/bloc/plot/PlotListProvider.dart';
+import 'package:farmsmart_flutter/data/bloc/recommendations/RecommendationEngine.dart';
 import 'package:farmsmart_flutter/data/firebase_const.dart';
+import 'package:farmsmart_flutter/data/model/mock/MockRecommendation.dart';
 import 'package:farmsmart_flutter/data/repositories/FlameLink.dart';
 import 'package:farmsmart_flutter/data/repositories/article/ArticleRepositoryInterface.dart';
 import 'package:farmsmart_flutter/data/repositories/article/implementation/ArticlesRepositoryFlamelink.dart';
@@ -23,15 +25,22 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'profitloss/ProfitLossList.dart';
 import 'package:farmsmart_flutter/ui/playground/data/playground_datasource_impl.dart';
 
-
 /// Home "screen" route. Scaffold has all the app subcomponents available inside,
 /// like bottom bar or action bar.
 ///
 
-final cms = FlameLink(store: Firestore.instance, environment: Environment.development);
+final cms =
+    FlameLink(store: Firestore.instance, environment: Environment.development);
 final articleRepo = ArticlesRepositoryFlameLink(cms);
 final plotRepo = MockPlotRepository();
 final cropRepo = MockCropRepository();
+
+final engine = RecommendationEngine(
+  inputFactors: harryInput,
+  inputScale: 10.0,
+  weightMatrix: harryWeights,
+); //TODO: LH get input from User profile.
+
 class Home extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -66,13 +75,13 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
     return Scaffold(
       body: LayoutBuilder(
         builder: (context, constraints) => SafeArea(
-              child: Container(
-                color: Color(black),
-                child: StoreConnector<AppState, HomeViewmodel>(
-                    builder: (_, viewModel) => content(context, viewModel),
-                    converter: (store) => HomeViewmodel.fromStore(store)),
-              ),
-            ),
+          child: Container(
+            color: Color(black),
+            child: StoreConnector<AppState, HomeViewmodel>(
+                builder: (_, viewModel) => content(context, viewModel),
+                converter: (store) => HomeViewmodel.fromStore(store)),
+          ),
+        ),
       ),
     );
   }
@@ -95,12 +104,15 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
         initialRoute: "/plot",
         onGenerateRoute: (RouteSettings settings) {
           WidgetBuilder builder = (BuildContext _) => PlotList(
-              provider: PlotListProvider(
-                  title: localizations.myPlotTab,
-                  plotRepository: plotRepo, cropRepository: cropRepo));
+                  provider: PlotListProvider(
+                title: localizations.myPlotTab,
+                plotRepository: plotRepo,
+                cropRepository: cropRepo,
+                engine: engine,
+              ));
           return MaterialPageRoute(builder: builder, settings: settings);
         });
-  
+
     final List<Widget> _children = [
       plotTab,
       ProfitLossPage(),

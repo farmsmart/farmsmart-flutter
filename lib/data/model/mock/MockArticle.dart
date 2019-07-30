@@ -4,7 +4,6 @@ import 'package:farmsmart_flutter/data/model/mock/MockEntity.dart';
 import 'package:farmsmart_flutter/data/repositories/MockStrings.dart';
 import 'package:farmsmart_flutter/data/repositories/image/implementation/MockImageEntity.dart';
 import 'package:farmsmart_flutter/model/enums.dart';
-import 'package:flutter/cupertino.dart';
 
 final _mockDate = MockDate();
 

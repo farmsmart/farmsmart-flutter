@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:farmsmart_flutter/data/bloc/ViewModelProvider.dart';
 import 'package:farmsmart_flutter/data/bloc/plot/PlotDetailProvider.dart';
+import 'package:farmsmart_flutter/data/bloc/recommendations/RecommendationEngine.dart';
 import 'package:farmsmart_flutter/data/bloc/recommendations/RecommendationListProvider.dart';
 import 'package:farmsmart_flutter/data/model/PlotEntity.dart';
 import 'package:farmsmart_flutter/data/repositories/crop/CropRepositoryInterface.dart';
@@ -30,15 +31,17 @@ class _Constants {
 class PlotListProvider implements ViewModelProvider<PlotListViewModel> {
   final PlotRepositoryInterface _plotRepo;
   final CropRepositoryInterface _cropRepo;
+  final RecommendationEngine _engine;
   final String _title;
   PlotListViewModel _snapshot;
   PlotListProvider({
     String title,
     PlotRepositoryInterface plotRepository,
     CropRepositoryInterface cropRepository,
+    RecommendationEngine engine,
   })  : this._title = title,
         this._plotRepo = plotRepository,
-        this._cropRepo = cropRepository;
+        this._cropRepo = cropRepository, this._engine = engine;
 
   final StreamController<PlotListViewModel> _controller =
       StreamController<PlotListViewModel>.broadcast();
@@ -102,9 +105,9 @@ class PlotListProvider implements ViewModelProvider<PlotListViewModel> {
       {LoadingStatus status, List<PlotListItemViewModel> items = const []}) {
     final recommendationsProvider = RecommendationListProvider(
       title: _Strings.recommendations,
-      inputScale: _Constants.inputScale,
       cropRepo: _cropRepo,
       plotRepo: _plotRepo,
+      engine: _engine
     );
     return PlotListViewModel(
       title: _title,

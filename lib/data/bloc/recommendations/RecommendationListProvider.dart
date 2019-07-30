@@ -19,7 +19,6 @@ import 'RecommendationCardTransformer.dart';
 class RecommendationListProvider
     implements ViewModelProvider<RecommendationsListViewModel> {
   final String _title;
-  final double _inputScale;
   final double _heroThreshold;
   final CropRepositoryInterface _cropRepo;
   final PlotRepositoryInterface _plotRepo;
@@ -35,25 +34,20 @@ class RecommendationListProvider
 
   RecommendationListProvider({
     String title,
+    RecommendationEngine engine,
     CropRepositoryInterface cropRepo,
     PlotRepositoryInterface plotRepo,
-    double inputScale,
     double heroThreshold = 0.8,
   })  : this._title = title,
+      this._recommendationBusinessLogic = engine,
         this._cropRepo = cropRepo,
         this._plotRepo = plotRepo,
-        this._inputScale = inputScale,
         this._heroThreshold = heroThreshold;
 
   @override
   RecommendationsListViewModel initial() {
     if (_snapshot == null) {
       _cropBasket = Basket<CropEntity>(_basketDidChange);
-      _recommendationBusinessLogic = RecommendationEngine(
-        inputFactors: harryInput,
-        inputScale: _inputScale,
-        weightMatrix: harryWeights,
-      );
       _snapshot = _viewModel(
         status: LoadingStatus.LOADING,
         items: [],

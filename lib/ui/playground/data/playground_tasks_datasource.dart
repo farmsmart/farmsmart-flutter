@@ -1,4 +1,6 @@
 import 'package:farmsmart_flutter/data/bloc/SequencedViewModelProvider.dart';
+import 'package:farmsmart_flutter/data/bloc/recommendations/RecommendationEngine.dart';
+import 'package:farmsmart_flutter/data/model/mock/MockRecommendation.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockRecordTransactionViewModel.dart';
 import 'package:farmsmart_flutter/ui/playground/playground_widget.dart';
 import 'package:farmsmart_flutter/ui/profitloss/RecordTransaction.dart';
@@ -33,6 +35,13 @@ import 'playground_persistent_bottom_navigation_bar_datasource.dart';
 class PlayGroundTasksDataSource implements PlaygroundDataSource {
   final _mockPlot = MockPlotRepository();
   final _mockCrop = MockCropRepository();
+
+  final _engine = RecommendationEngine(
+    inputFactors: harryInput,
+    inputScale: 10.0,
+    weightMatrix: harryWeights,
+  );
+
   @override
   List<PlaygroundWidget> getList() {
     return [
@@ -170,12 +179,16 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
                 title: "FARM-365 Plot Repository",
                 child: PlotList(
                     provider: PlotListProvider(
-                        title: "Test", plotRepository: _mockPlot, cropRepository: _mockCrop))),
+                  title: "Test",
+                  plotRepository: _mockPlot,
+                  cropRepository: _mockCrop,
+                  engine: _engine,
+                ))),
             PlaygroundWidget(
                 title: "FARM-365 Plot Detail",
                 child: PlotDetail(
-                  provider: PlotDetailProvider(
-                      MockPlotEntity().build(), _mockPlot),
+                  provider:
+                      PlotDetailProvider(MockPlotEntity().build(), _mockPlot),
                 ))
           ])),
       PlaygroundWidget(
@@ -197,10 +210,11 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
                 title: "TASK FARM-97 Mock repo",
                 child: RecommendationsList(
                     provider: RecommendationListProvider(
-                        title: "Mock Repo",
-                        cropRepo: _mockCrop,
-                        plotRepo: _mockPlot,
-                        inputScale: 10.0))),
+                  title: "Mock Repo",
+                  cropRepo: _mockCrop,
+                  plotRepo: _mockPlot,
+                  engine: _engine,
+                ))),
           ])),
     ];
   }
