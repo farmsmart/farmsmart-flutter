@@ -131,12 +131,12 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
                   repository: MockArticlesRepository(articleCount: 2000)))),
       PlaygroundWidget(
         title: "FARM-48 Landing Page",
-        child: PlaygroundButtonPresentAlert(
+        child: PlaygroundPresentButton(
           child: LandingPage(
             viewModel: MockLandingPageViewModel.build(),
           ),
           listener: (widget, context) =>
-              PlaygroundButtonPresentAlert.presentModal(widget, context),
+              PlaygroundPresentButton.presentModal(widget, context),
         ),
       ),
       PlaygroundWidget(
@@ -189,7 +189,7 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
           widgetList: [
             PlaygroundWidget(
               title: "Normal",
-              child: PlaygroundButtonPresentAlert(
+              child: PlaygroundPresentButton(
                 child: Alert(
                   viewModel: MockAlertWidgetViewModel.build(),
                 ),
@@ -198,7 +198,7 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
             ),
             PlaygroundWidget(
               title: "Have Destructive",
-              child: PlaygroundButtonPresentAlert(
+              child: PlaygroundPresentButton(
                 child: Alert(
                   viewModel: MockAlertWidgetViewModel.buildDestructive(),
                 ),

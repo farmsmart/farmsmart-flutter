@@ -2,11 +2,11 @@ import 'package:farmsmart_flutter/ui/common/Alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-class PlaygroundButtonPresentAlert extends StatelessWidget {
+class PlaygroundPresentButton extends StatelessWidget {
   final Widget child;
   final Function(Widget, BuildContext) present;
 
-  const PlaygroundButtonPresentAlert({
+  const PlaygroundPresentButton({
     Key key,
     Function(Widget, BuildContext) listener,
     Widget child,
