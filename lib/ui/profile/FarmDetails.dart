@@ -28,7 +28,7 @@ class _Constants {
 }
 
 class FarmDetailsViewModel {
-  List<FarmDetailsListItemViewModel> items;
+  final List<FarmDetailsListItemViewModel> items;
   final String buttonTitle;
   final Function onConfirmDetails;
   final Function editProfile;
