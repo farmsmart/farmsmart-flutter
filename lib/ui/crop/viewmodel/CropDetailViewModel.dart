@@ -1,7 +1,7 @@
-import 'package:farmsmart_flutter/data/model/ImageURLProvider.dart';
-import 'package:farmsmart_flutter/model/loading_status.dart';
-import 'package:farmsmart_flutter/ui/common/recommendation_detail_listitem/recommendation_detail_listitem.dart';
-import 'package:farmsmart_flutter/ui/discover/viewModel/ArticleDetailViewModel.dart';
+import 'package:farmsmart_flutter/model/model/ImageURLProvider.dart';
+import 'package:farmsmart_flutter/model/model/loading_status.dart';
+import 'package:farmsmart_flutter/ui/article/viewModel/ArticleDetailViewModel.dart';
+import 'package:farmsmart_flutter/ui/recommendations/recommendation_detail_listitem/recommendation_detail_listitem.dart';
 
 class CropDetailViewModel extends ArticleDetailViewModel {
   

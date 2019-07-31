@@ -1,8 +1,8 @@
-import 'package:farmsmart_flutter/ui/common/recommendation_detail_listitem/mock_recommendation_detail_listitem_view_model.dart';
-import 'package:farmsmart_flutter/ui/common/recommendation_detail_listitem/recommendation_detail_listitem.dart';
-import 'package:farmsmart_flutter/ui/common/recommendation_detail_listitem/recommendation_detail_listitem_styles.dart';
 import 'package:farmsmart_flutter/ui/playground/data/playground_data_source.dart';
 import 'package:farmsmart_flutter/ui/playground/playground_widget.dart';
+import 'package:farmsmart_flutter/ui/recommendations/recommendation_detail_listitem/mock_recommendation_detail_listitem_view_model.dart';
+import 'package:farmsmart_flutter/ui/recommendations/recommendation_detail_listitem/recommendation_detail_listitem.dart';
+import 'package:farmsmart_flutter/ui/recommendations/recommendation_detail_listitem/recommendation_detail_listitem_styles.dart';
 import 'package:flutter/widgets.dart';
 
 class PlaygroundRecommendationDetailListItemDatasource

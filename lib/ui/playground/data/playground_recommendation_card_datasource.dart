@@ -1,8 +1,7 @@
-import 'package:farmsmart_flutter/ui/common/recommendation_card/mock_recommendation_card_view_model.dart';
-import 'package:farmsmart_flutter/ui/common/recommendation_card/recommendation_card.dart';
 import 'package:farmsmart_flutter/ui/playground/playground_widget.dart';
-import 'package:farmsmart_flutter/ui/common/recommendation_card/recommendation_card_styles.dart';
-
+import 'package:farmsmart_flutter/ui/recommendations/recommendation_card/mock_recommendation_card_view_model.dart';
+import 'package:farmsmart_flutter/ui/recommendations/recommendation_card/recommendation_card.dart';
+import 'package:farmsmart_flutter/ui/recommendations/recommendation_card/recommendation_card_styles.dart';
 import 'playground_data_source.dart';
 import 'package:flutter/widgets.dart';
 

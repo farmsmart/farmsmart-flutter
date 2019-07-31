@@ -1,4 +1,3 @@
-import 'package:farmsmart_flutter/utils/assets.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -13,7 +12,7 @@ class NetworkImageFromFuture extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final placeholder = Image.asset(Assets.IMAGE_PLACE_HOLDER);
+    final placeholder = Container();
     return SizedBox(width:width, height: height,
       child: FittedBox(
         fit: fit,
