@@ -8,12 +8,13 @@ import 'package:farmsmart_flutter/farmsmart_localizations.dart';
 import 'package:farmsmart_flutter/ui/bottombar/persistent_bottom_navigation_bar.dart';
 import 'package:farmsmart_flutter/ui/bottombar/tab_navigator.dart';
 import 'package:farmsmart_flutter/ui/discover/ArticleList.dart';
+import 'package:farmsmart_flutter/ui/mockData/MockUserProfileViewModel.dart';
 import 'package:farmsmart_flutter/ui/playground/data/playground_datasource_impl.dart';
 import 'package:farmsmart_flutter/ui/playground/playground_view.dart';
 import 'package:farmsmart_flutter/ui/profitloss/ProfitLossList.dart';
 import 'package:farmsmart_flutter/ui/profitloss/mockRepositoryTryout/MockTransactionRepository.dart';
+import 'package:farmsmart_flutter/ui/profile/UserProfile.dart';
 import 'package:flutter/material.dart';
-
 import 'myplot/PlotList.dart';
 
 class _Constants {
@@ -79,8 +80,7 @@ class Home extends StatelessWidget {
         _Constants.communityIcon,
       ),
       _buildTabNavigatorWithCircleImageWidget(
-        //TODO Add profile screen
-        Text('Profile'),
+        _buildUserProfile(),
       ),
       _buildTabNavigator(
         _buildPlayground(),
@@ -117,6 +117,12 @@ class Home extends StatelessWidget {
             title: localizations.communityTab,
             repository: repositoryProvider.getArticleRepository(),
             group: ArticleCollectionGroup.chatGroups));
+  }
+
+  _buildUserProfile() {
+    return UserProfile(
+      viewModel: MockUserProfileViewModel.build(),
+    );
   }
 
   _buildPlayground() {
