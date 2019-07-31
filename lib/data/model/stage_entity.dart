@@ -1,10 +1,10 @@
 // Maybe we can separate ui and data model with this class.
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:farmsmart_flutter/model/enums.dart';
 import 'package:farmsmart_flutter/data/model/entities_const.dart';
 
 import 'article_entity.dart';
+import 'enums.dart';
 
 class StageEntity {
   String name;

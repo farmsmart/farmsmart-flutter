@@ -2,9 +2,9 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:farmsmart_flutter/data/model/EntityCollectionInterface.dart';
 import 'package:farmsmart_flutter/data/model/article_entity.dart';
+import 'package:farmsmart_flutter/data/model/enums.dart';
 import '../../../firebase_const.dart';
 import '../../FlameLink.dart';
-import 'package:farmsmart_flutter/model/enums.dart';
 import '../ArticleRepositoryInterface.dart';
 import 'transformers/FirebaseArticleTransformer.dart';
 

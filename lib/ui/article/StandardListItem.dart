@@ -1,9 +1,14 @@
 import 'package:farmsmart_flutter/ui/common/ListDivider.dart';
 import 'package:farmsmart_flutter/ui/common/network_image_from_future.dart';
 import 'package:farmsmart_flutter/ui/article/viewModel/ArticleListItemViewModel.dart';
-import 'package:farmsmart_flutter/utils/strings.dart';
 import 'package:flutter/material.dart';
 import 'ArticleListItemStyle.dart';
+
+
+class _Strings{
+  static const titleDefault = "";
+  static const summaryDefault = "";
+}
 
 class _DefaultStyle implements ArticleListItemStyle {
   static const Color titleColor = Color(0xFF1a1b46);
@@ -94,12 +99,12 @@ class StandardListItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Text(viewModel.title ?? Strings.noTitleString,
+          Text(viewModel.title ?? _Strings.titleDefault,
               maxLines: itemStyle.maxLinesPerTitle,
               overflow: TextOverflow.ellipsis,
               style: itemStyle.titleTextStyle),
           SizedBox(height: itemStyle.textLineSpace),
-          Text(viewModel.summary ?? Strings.myPlotItemDefaultTitle,
+          Text(viewModel.summary ?? _Strings.summaryDefault,
               maxLines: itemStyle.maxLinesPerSummary,
               overflow: TextOverflow.ellipsis,
               style: itemStyle.summaryTextStyle),

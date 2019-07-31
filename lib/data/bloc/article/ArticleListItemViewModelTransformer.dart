@@ -2,7 +2,6 @@ import 'package:farmsmart_flutter/data/bloc/Transformer.dart';
 import 'package:farmsmart_flutter/data/model/article_entity.dart';
 import 'package:farmsmart_flutter/ui/article/viewModel/ArticleDetailViewModel.dart';
 import 'package:farmsmart_flutter/ui/article/viewModel/ArticleListItemViewModel.dart';
-import 'package:farmsmart_flutter/utils/strings.dart';
 
 import 'ArticleDetailTransformer.dart';
 
@@ -10,6 +9,11 @@ import 'ArticleDetailTransformer.dart';
       Transform:
       [ArticleEntity] -> [ArticleListItemViewModel]
 */
+
+class _Strings {
+  static const titleDefault = "";
+  static const summaryDefault= "";
+}
 
 class ArticleListItemViewModelTransformer
     implements ObjectTransformer<ArticleEntity, ArticleListItemViewModel> {
@@ -25,8 +29,8 @@ class ArticleListItemViewModelTransformer
     ArticleDetailViewModel detailViewModel =
         _detailTransformer.transform(from: from);
     return ArticleListItemViewModel(
-        from.title ?? Strings.noTitleString,
-        from.summary ?? "",
+        from.title ?? _Strings.titleDefault,
+        from.summary ?? _Strings.summaryDefault,
         ArticleImageProvider(from),
         detailViewModel);
   }

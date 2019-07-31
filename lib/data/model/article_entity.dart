@@ -1,7 +1,7 @@
 import 'package:farmsmart_flutter/data/model/ImageEntity.dart';
 import 'package:farmsmart_flutter/data/model/ImageURLProvider.dart';
-import 'package:farmsmart_flutter/model/enums.dart';
 import 'EntityCollectionInterface.dart';
+import 'enums.dart';
 
 class ArticleEntity {
   String id;

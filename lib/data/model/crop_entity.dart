@@ -4,8 +4,9 @@ import 'package:farmsmart_flutter/data/model/ImageEntity.dart';
 import 'package:farmsmart_flutter/data/model/ImageURLProvider.dart';
 import 'package:farmsmart_flutter/data/model/article_entity.dart';
 import 'package:farmsmart_flutter/data/model/stage_entity.dart';
-import 'package:farmsmart_flutter/model/enums.dart';
 import 'package:farmsmart_flutter/data/model/entities_const.dart';
+
+import 'enums.dart';
 
 class CropEntity {
   String id;

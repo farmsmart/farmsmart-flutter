@@ -19,16 +19,6 @@ class FarmsmartLocalizations {
 
   String get title => Intl.message("Farmsmart");
 
-  String get shareArticleText => Intl.message("Check out this article from the FarmSmart mobile app \n ");
-
-  String get errorString => Intl.message("Error");
-
-  String get noTitleString => Intl.message("No Title");
-
-  String get appDescription => Intl.message("Farmsmart Flutter App");
-
-  String get appbarPopUpPolicies => Intl.message("Privacy Policies");
-
   String get myPlotTab => Intl.message("My Plot");
 
   String get profitLossTab => Intl.message("Profit/Loss");
@@ -39,35 +29,6 @@ class FarmsmartLocalizations {
 
   String get playgroundTab => Intl.message("Debug");
 
-  String get myPlotCurrentStage => Intl.message("CURRENT STAGE");
-
-  String get myPlotDetails => Intl.message("DETAILS");
-
-  String get myPlotItemDefaultTitle => Intl.message("My Crop");
-
-  String get myPlotDetailPropertiesTitle => Intl.message("Crop Details");
-
-  String get myPlotDetailComplexityTitle => Intl.message("Complexity");
-
-  String get myPlotDetailSoilTypeTitle => Intl.message("Best soil types");
-
-  String get myPlotDetailMaturityLapseTitle => Intl.message("Time until maturity");
-
-  String get myPlotDetailCropsToBeRotatedTitle => Intl.message("Crops in rotation");
-
-  String get myPlotDetailCropTypeTitle => Intl.message("Crop type");
-
-  String get myPlotDetailWaterRequirementTitle => Intl.message("Water requirement");
-
-  String get myPlotDetailSetupCostTitle => Intl.message("Setup Cost");
-
-  String get myPlotDetailProfitabilityTitle => Intl.message("Profitability");
-
-  String get myPlotDetailCompanionPlantsTitle => Intl.message("Companion Plants");
-
-  String get myPlotDetailNonCompanionPlantsTitle => Intl.message("Non-Companion Plants");
-
-  String get myPlotDetailStepByStepTitle => Intl.message("Step-by-step guide");
 }
 
 class FarmsmartLocalizationsDelegate extends LocalizationsDelegate<FarmsmartLocalizations> {

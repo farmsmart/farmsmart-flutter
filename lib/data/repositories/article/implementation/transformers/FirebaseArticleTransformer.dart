@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:farmsmart_flutter/data/bloc/Transformer.dart';
 import 'package:farmsmart_flutter/data/model/article_entity.dart';
+import 'package:farmsmart_flutter/data/model/enums.dart';
 import 'package:farmsmart_flutter/data/repositories/image/implementation/ImageRepositoryFlamelink.dart';
-import 'package:farmsmart_flutter/model/enums.dart';
 
 import '../../../FlameLink.dart';
 import '../../../FlamelinkMeta.dart';

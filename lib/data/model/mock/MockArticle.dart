@@ -3,7 +3,8 @@ import 'package:farmsmart_flutter/data/model/mock/MockDate.dart';
 import 'package:farmsmart_flutter/data/model/mock/MockEntity.dart';
 import 'package:farmsmart_flutter/data/repositories/MockStrings.dart';
 import 'package:farmsmart_flutter/data/repositories/image/implementation/MockImageEntity.dart';
-import 'package:farmsmart_flutter/model/enums.dart';
+
+import '../enums.dart';
 
 final _mockDate = MockDate();
 

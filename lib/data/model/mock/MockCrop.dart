@@ -1,9 +1,8 @@
 import 'package:farmsmart_flutter/data/model/mock/MockString.dart';
 import 'package:farmsmart_flutter/data/repositories/MockStrings.dart';
 import 'package:farmsmart_flutter/data/repositories/image/implementation/MockImageEntity.dart';
-import 'package:farmsmart_flutter/model/enums.dart';
-
 import '../crop_entity.dart';
+import '../enums.dart';
 import 'MockArticle.dart';
 
 class MockCrop {
