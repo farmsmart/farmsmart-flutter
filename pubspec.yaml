@@ -99,6 +99,7 @@ flutter:
     - assets/icons/detail_icon_new_profile.png
     - assets/icons/detail_icon_pin.png
     - assets/raw/
+    - assets/icons/
     - assets/icons/nav_icon_back.png
     - assets/icons/nav_icon_options.png
     - assets/icons/nav_icon_cancel.png

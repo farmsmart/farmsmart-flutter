@@ -5,8 +5,8 @@ class LinkBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Color(0xfff5f8fa),
-        borderRadius: BorderRadius.circular(12)
+          color: Color(0xfff5f8fa),
+          borderRadius: BorderRadius.circular(12)
       ),
       padding: EdgeInsets.only(left: 24, right: 40, top: 20, bottom: 24.5),
       margin: EdgeInsets.only(left: 32, right: 32, top: 38.5),
@@ -19,12 +19,12 @@ class LinkBox extends StatelessWidget {
             child: Container(
               height: 40,
               width: 40,
-              padding: EdgeInsets.all(10),
+              padding: EdgeInsets.all(6),
               color: Color(0xff25d366),
               child: Image.asset(
-                "assets/icons/radio_button_active.png",
-                height: 20,
-                width: 20,
+                "assets/icons/WhatsApp_Logo_short.png",
+                height: 10,
+                width: 10,
               ),
             ),
           ),
