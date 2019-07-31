@@ -1,3 +1,4 @@
+//TODO: remove this mess and have class context constants
 const IMAGE_BASE_PATH = "/flamelink/media/sized";
 
 const FLAME_LINK_CONTENT = 'fl_content';

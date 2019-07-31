@@ -32,17 +32,17 @@ class ActionSheetStyle {
 
   ActionSheetStyle(
       {this.backgroundColor,
-      this.indicatorLineColor,
-      this.confirmButtonBackgroundColor,
-      this.cancelButtonBackgroundColor,
-      this.confirmButtonTextStyle,
-      this.indicatorLineEdgePadding,
-      this.largeButtonEdgePadding,
-      this.cornerRadius,
-      this.indicatorLineRadius,
-      this.indicatorLineThickness,
-      this.indicatorLineWidth,
-      this.buttonSpacing});
+        this.indicatorLineColor,
+        this.confirmButtonBackgroundColor,
+        this.cancelButtonBackgroundColor,
+        this.confirmButtonTextStyle,
+        this.indicatorLineEdgePadding,
+        this.largeButtonEdgePadding,
+        this.cornerRadius,
+        this.indicatorLineRadius,
+        this.indicatorLineThickness,
+        this.indicatorLineWidth,
+        this.buttonSpacing});
 
   factory ActionSheetStyle.defaultStyle() {
     return ActionSheetStyle(
@@ -56,7 +56,7 @@ class ActionSheetStyle {
             color: Color(0xFFffffff)),
         indicatorLineEdgePadding: const EdgeInsets.only(top: 8, bottom: 50),
         largeButtonEdgePadding:
-            const EdgeInsets.only(left: 32, top: 31, right: 32, bottom: 32),
+        const EdgeInsets.only(left: 32, top: 31, right: 32, bottom: 32),
         cornerRadius: const Radius.circular(40),
         indicatorLineRadius: const Radius.circular(2.5),
         indicatorLineThickness: 5,
@@ -66,34 +66,34 @@ class ActionSheetStyle {
 
   ActionSheetStyle copyWith(
       {Color backgroundColor,
-      Color indicatorLineColor,
-      Color confirmButtonBackgroundColor,
-      Color cancelButtonBackgroundColor,
-      TextStyle confirmButtonTextStyle,
-      EdgeInsets indicatorLineEdgePadding,
-      EdgeInsets largeButtonEdgePadding,
-      Radius cornerRadius,
-      Radius indicatorLineRadius,
-      double indicatorLineThickness,
-      double indicatorLineWidth,
-      double buttonSpacing}) {
+        Color indicatorLineColor,
+        Color confirmButtonBackgroundColor,
+        Color cancelButtonBackgroundColor,
+        TextStyle confirmButtonTextStyle,
+        EdgeInsets indicatorLineEdgePadding,
+        EdgeInsets largeButtonEdgePadding,
+        Radius cornerRadius,
+        Radius indicatorLineRadius,
+        double indicatorLineThickness,
+        double indicatorLineWidth,
+        double buttonSpacing}) {
     return ActionSheetStyle(
         backgroundColor: backgroundColor ?? this.backgroundColor,
         indicatorLineColor: indicatorLineColor ?? this.indicatorLineColor,
         confirmButtonBackgroundColor:
-            confirmButtonBackgroundColor ?? this.confirmButtonBackgroundColor,
+        confirmButtonBackgroundColor ?? this.confirmButtonBackgroundColor,
         cancelButtonBackgroundColor:
-            cancelButtonBackgroundColor ?? this.cancelButtonBackgroundColor,
+        cancelButtonBackgroundColor ?? this.cancelButtonBackgroundColor,
         confirmButtonTextStyle:
-            confirmButtonTextStyle ?? this.confirmButtonTextStyle,
+        confirmButtonTextStyle ?? this.confirmButtonTextStyle,
         indicatorLineEdgePadding:
-            indicatorLineEdgePadding ?? this.indicatorLineEdgePadding,
+        indicatorLineEdgePadding ?? this.indicatorLineEdgePadding,
         largeButtonEdgePadding:
-            largeButtonEdgePadding ?? this.largeButtonEdgePadding,
+        largeButtonEdgePadding ?? this.largeButtonEdgePadding,
         cornerRadius: cornerRadius ?? this.cornerRadius,
         indicatorLineRadius: indicatorLineRadius ?? this.indicatorLineRadius,
         indicatorLineThickness:
-            indicatorLineThickness ?? this.indicatorLineThickness,
+        indicatorLineThickness ?? this.indicatorLineThickness,
         indicatorLineWidth: indicatorLineWidth ?? this.indicatorLineWidth,
         buttonSpacing: buttonSpacing ?? this.buttonSpacing);
   }
@@ -105,8 +105,8 @@ class ActionSheet extends StatefulWidget {
 
   static present(ActionSheet sheet, BuildContext context) {
     showModalBottomSheet(backgroundColor: Colors.transparent,
-       context: context,
-       builder: (widgetBuilder) =>  sheet );
+        context: context,
+        builder: (widgetBuilder) =>  sheet );
   }
 
   const ActionSheet(
@@ -166,17 +166,17 @@ class _ActionSheetState extends State<ActionSheet> {
     return ListView.separated(
       itemCount: viewModel.actions.length,
       itemBuilder: (context, index) => ListTile(
-            title: ActionSheetListItem(
-                viewModel: ActionSheetListItemViewModel(
-                    title: viewModel.actions[index].title,
-                    icon: viewModel.actions[index].icon,
-                    type: viewModel.actions[index].type,
-                    checkBoxIcon: viewModel.actions[index].checkBoxIcon,
-                    isSelected: viewModel.actions[index].isSelected,
-                    isDestructive: viewModel.actions[index].isDestructive,
-                    onTap: viewModel.actions[index].onTap)),
-            onTap: () => select(index),
-          ),
+        title: ActionSheetListItem(
+            viewModel: ActionSheetListItemViewModel(
+                title: viewModel.actions[index].title,
+                icon: viewModel.actions[index].icon,
+                type: viewModel.actions[index].type,
+                checkBoxIcon: viewModel.actions[index].checkBoxIcon,
+                isSelected: viewModel.actions[index].isSelected,
+                isDestructive: viewModel.actions[index].isDestructive,
+                onTap: viewModel.actions[index].onTap)),
+        onTap: () => select(index),
+      ),
       separatorBuilder: (context, index) => ListDivider.build(),
     );
   }

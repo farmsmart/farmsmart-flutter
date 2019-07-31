@@ -4,6 +4,8 @@ import 'package:farmsmart_flutter/ui/common/rounded_image_overlay.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+import '../rounded_button_stateful.dart';
+
 export 'package:farmsmart_flutter/ui/common/Dogtag.dart';
 export 'package:farmsmart_flutter/ui/common/roundedButton.dart';
 
@@ -21,11 +23,10 @@ class _Constants {
 class RecommendationDetailCardViewModel {
   String title;
   String subtitle;
-  ImageProvider image;
+  Future<String> image;
   String actionText;
   Function action;
   bool isAdded;
-  String iconAssetOverlay;
 
   RecommendationDetailCardViewModel({
     this.title,
@@ -34,14 +35,13 @@ class RecommendationDetailCardViewModel {
     this.action,
     this.image,
     this.isAdded = false,
-    this.iconAssetOverlay,
   });
 }
 
 class RecommendationDetailCardStyle {
   final TextStyle titleTextStyle;
   final DogTagStyle subtitleTagStyle;
-  final RoundedButtonStyle actionStyle;
+  final RoundedButtonStatefulStyle actionStyle;
   final EdgeInsets contentPadding;
   final BorderRadius imageRadius;
   final double imageSize;
@@ -49,6 +49,7 @@ class RecommendationDetailCardStyle {
   final Color imageOverlayColor;
   final double imageOverlayHeight;
   final double imageOverlayWidth;
+  final String iconAssetOverlay;
 
   const RecommendationDetailCardStyle({
     this.titleTextStyle,
@@ -61,6 +62,7 @@ class RecommendationDetailCardStyle {
     this.imageOverlayColor,
     this.imageOverlayHeight,
     this.imageOverlayWidth,
+    this.iconAssetOverlay,
   });
 
   RecommendationDetailCardStyle copyWith({
@@ -74,6 +76,7 @@ class RecommendationDetailCardStyle {
     Color imageOverlayColor,
     double imageOverlayHeight,
     double imageOverlayWidth,
+    String iconAssetOverlay,
   }) {
     return RecommendationDetailCardStyle(
       titleTextStyle: titleTextStyle ?? this.titleTextStyle,
@@ -86,6 +89,7 @@ class RecommendationDetailCardStyle {
       imageOverlayColor: imageOverlayColor ?? this.imageOverlayColor,
       imageOverlayHeight: imageOverlayHeight ?? this.imageOverlayHeight,
       imageOverlayWidth: imageOverlayHeight ?? this.imageOverlayHeight,
+      iconAssetOverlay: iconAssetOverlay ?? this.iconAssetOverlay,
     );
   }
 }
@@ -108,17 +112,36 @@ class _DefaultStyle extends RecommendationDetailCardStyle {
     spacing: 5.5,
   );
 
-  final RoundedButtonStyle actionStyle = const RoundedButtonStyle(
-    backgroundColor: Color(0xff24d900),
-    borderRadius: BorderRadius.all(Radius.circular(12)),
-    buttonTextStyle: TextStyle(
-        fontSize: 15, fontWeight: FontWeight.bold, color: Color(0xffffffff)),
-    iconEdgePadding: 5,
-    height: 45,
-    width: double.infinity,
-    buttonIconSize: null,
-    iconButtonColor: Color(0xFFFFFFFF),
-    buttonShape: BoxShape.rectangle,
+  final RoundedButtonStatefulStyle actionStyle = defaultRoundedButtonStyle;
+
+  static const defaultRoundedButtonStyle = RoundedButtonStatefulStyle(
+    activeRoundedButtonStyle: const RoundedButtonStyle(
+      backgroundColor: Color(0xff24d900),
+      borderRadius: BorderRadius.all(Radius.circular(12)),
+      buttonTextStyle: TextStyle(
+        fontSize: 15,
+        fontWeight: FontWeight.w500,
+        color: Color(0xffffffff),
+      ),
+      iconEdgePadding: 5,
+      height: 45,
+      width: double.infinity,
+      buttonIconSize: null,
+      iconButtonColor: Color(0xFFFFFFFF),
+      buttonShape: BoxShape.rectangle,
+    ),
+    inactiveRoundedButtonStyle: const RoundedButtonStyle(
+      backgroundColor: Color(0xFFFFFFFF),
+      borderRadius: BorderRadius.all(Radius.circular(12)),
+      buttonTextStyle: TextStyle(
+          fontSize: 15, fontWeight: FontWeight.w500, color: Color(0xff4c4e6e)),
+      iconEdgePadding: 5,
+      height: 45,
+      width: double.infinity,
+      buttonIconSize: null,
+      iconButtonColor: Color(0xFFFFFFFF),
+      buttonShape: BoxShape.rectangle,
+    ),
   );
 
   final EdgeInsets contentPadding = const EdgeInsets.all(32.0);
@@ -127,6 +150,7 @@ class _DefaultStyle extends RecommendationDetailCardStyle {
   final Color imageOverlayColor = const Color(0x1924d900);
   final double imageOverlayHeight = 26;
   final double imageOverlayWidth = 26;
+  final String iconAssetOverlay = 'assets/icons/tick_large.png';
 
   const _DefaultStyle({
     TextStyle titleTextStyle,
@@ -138,6 +162,7 @@ class _DefaultStyle extends RecommendationDetailCardStyle {
     Color imageOverlayColor,
     double imageOverlayHeight,
     double imageOverlayWidth,
+    String iconAssetOverlay,
   });
 }
 
@@ -180,13 +205,16 @@ class RecommendationDetailCard extends StatelessWidget {
 
   Container buildActionButton() {
     return Container(
-      decoration: _style.actionBoxDecoration,
-      child: RoundedButton(
-        viewModel: RoundedButtonViewModel(
-          title: _viewModel.actionText,
-          onTap: _viewModel.action,
-        ),
+      decoration: _viewModel.isAdded ? _style.actionBoxDecoration : null,
+      child: RoundedButtonStateful(
         style: _style.actionStyle,
+        viewModel: RoundedButtonStatefulViewModel(
+          isActive: !_viewModel.isAdded,
+          roundedButtonViewModel: RoundedButtonViewModel(
+            title: _viewModel.actionText,
+            onTap: _viewModel.action,
+          ),
+        ),
       ),
     );
   }
@@ -215,7 +243,7 @@ class RecommendationDetailCard extends StatelessWidget {
           image: _viewModel.image,
           showOverlayIcon: _viewModel.isAdded,
           overlayIconWidth: _style.imageOverlayWidth,
-          overlayIcon: _viewModel.iconAssetOverlay,
+          overlayIcon: _style.iconAssetOverlay,
           overlayIconHeight: _style.imageOverlayWidth,
           overlayColor: _style.imageOverlayColor,
         ),

@@ -149,7 +149,7 @@ class SwitchProfileState extends State<SwitchProfile> {
     return AppBar(
       elevation: _Constants.appBarElevation,
       leading: FlatButton(
-        onPressed: () => Navigator.pop(context, false),
+        onPressed: () => Navigator.of(context).pop(),
         padding: _Constants.appBarEdgePadding,
         child: Image.asset(
           _Icons.dismissModal,

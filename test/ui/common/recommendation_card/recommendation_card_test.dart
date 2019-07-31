@@ -10,7 +10,7 @@ void main() {
   testWidgets('Recommendation Card Widget add to plot style',
       (WidgetTester tester) async {
     var recommendationCard = RecommendationCard(
-      style: RecommendationCardStyles.buildAddToPlotStyle(),
+      style: RecommendationCardStyles.buildStyle(),
       viewModel: MockRecommendationCardViewModel.buildForTestAddToPlotState(),
     );
 
@@ -27,7 +27,7 @@ void main() {
   testWidgets('Recommendation Card Widget added to plot style',
       (WidgetTester tester) async {
     var recommendationCard = RecommendationCard(
-      style: RecommendationCardStyles.buildAddedToPlotStyle(),
+      style: RecommendationCardStyles.buildStyle(),
       viewModel: MockRecommendationCardViewModel.buildForTestAddedToPlotState(),
     );
 

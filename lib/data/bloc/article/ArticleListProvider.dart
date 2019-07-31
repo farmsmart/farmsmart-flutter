@@ -19,11 +19,15 @@ class ArticleListProvider implements ViewModelProvider<ArticleListViewModel> {
   final ArticleRepositoryInterface _repo;
   final ArticleCollectionGroup _group;
   final String _title;
+  final String _relatedTitle;
+  final String _contentLinkTitle;
   ArticleListViewModel _snapshot;
   ArticleListProvider(
-      {String title, ArticleRepositoryInterface repository,
+      {String title, String relatedTitle, String contentLinkTitle, ArticleRepositoryInterface repository,
       ArticleCollectionGroup group = ArticleCollectionGroup.all})
       : this._title = title, 
+        this._relatedTitle = relatedTitle,
+        this._contentLinkTitle = contentLinkTitle,
         this._repo = repository,
         this._group = group;
 
@@ -32,7 +36,7 @@ class ArticleListProvider implements ViewModelProvider<ArticleListViewModel> {
 
   ArticleListViewModel _modelFromArticles(
       StreamController controller, List<ArticleEntity> articles) {
-    final transformer = ArticleListItemViewModelTransformer.buildWithDetail(ArticleDetailViewModelTransformer());
+    final transformer = ArticleListItemViewModelTransformer.buildWithDetail(ArticleDetailViewModelTransformer(relatedTitle: _relatedTitle, contentLinkTitle: _contentLinkTitle));
     final items = articles.map((article) {
       return transformer.transform(from: article);
     }).toList();
@@ -51,7 +55,7 @@ class ArticleListProvider implements ViewModelProvider<ArticleListViewModel> {
         title: _title,
         status: status,
         articleListItemViewModels: items,
-        update: () => _update(_controller));
+        refresh: () => _update(_controller));
   }
 
   void dispose() {
@@ -63,7 +67,7 @@ class ArticleListProvider implements ViewModelProvider<ArticleListViewModel> {
   ArticleListViewModel initial() {
     if (_snapshot == null) {
       _snapshot = _viewModel(status: LoadingStatus.LOADING, items: []);
-      _snapshot.update();
+      _snapshot.refresh();
     }
     return _snapshot;
   }
@@ -71,5 +75,10 @@ class ArticleListProvider implements ViewModelProvider<ArticleListViewModel> {
   @override
   StreamController<ArticleListViewModel> observe() {
      return _controller;
+  }
+
+  @override
+  ArticleListViewModel snapshot() {
+    return _snapshot;
   }
 }

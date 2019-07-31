@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:farmsmart_flutter/data/model/article_entity.dart';
 import 'package:farmsmart_flutter/data/model/entities_const.dart';
-
+//TODO: deprecated remove when not referenced 
 class ArticlesDirectoryEntity {
   List<ArticleEntity> articles;
   List<String> articlesPathReference;

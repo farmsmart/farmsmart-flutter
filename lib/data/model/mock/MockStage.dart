@@ -1,6 +1,8 @@
 import 'dart:math';
 
 import 'package:farmsmart_flutter/data/model/NewStageEntity.dart';
+import 'package:farmsmart_flutter/data/model/article_entity.dart';
+import 'package:farmsmart_flutter/data/model/crop_entity.dart';
 import 'package:farmsmart_flutter/data/model/mock/MockDate.dart';
 import 'package:farmsmart_flutter/data/model/mock/MockString.dart';
 import 'MockArticle.dart';
@@ -18,6 +20,10 @@ class MockStage extends MockEntity<NewStageEntity> {
   NewStageEntity build() {
       final start = _mockDate.randomMonthAgo();
       return NewStageEntity(id: _identifiers.identifier(), article: _articleBuilder.buildStage(), started: start, ended: null);
+  }
+
+  NewStageEntity buildNewFromArticle(ArticleEntity article){
+    return NewStageEntity(id: _identifiers.identifier(), article: article);
   }
 
   //LH here we generate valid stage sequence starting and ending at the input dates, and ending at the input stage

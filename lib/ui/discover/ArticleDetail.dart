@@ -1,18 +1,21 @@
-import 'package:farmsmart_flutter/model/loading_status.dart';
 import 'package:farmsmart_flutter/ui/common/ContextualAppBar.dart';
 import 'package:farmsmart_flutter/ui/common/SectionListView.dart';
 import 'package:farmsmart_flutter/ui/common/headerAndFooterListView.dart';
 import 'package:farmsmart_flutter/ui/common/network_image_from_future.dart';
+import 'package:farmsmart_flutter/ui/common/stage_card.dart';
 import 'package:farmsmart_flutter/ui/discover/viewModel/ArticleDetailViewModel.dart';
 import 'package:farmsmart_flutter/ui/discover/viewModel/ArticleListItemViewModel.dart';
 import 'package:farmsmart_flutter/ui/discover/StandardListItem.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:share/share.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:intl/intl.dart';
 
 class _Strings {
   static const String shareText =
       "Check out this article from the FarmSmart mobile app \n ";
+  static const String viewMore = "View more on the web";
 }
 
 abstract class ArticleDetailStyle {
@@ -73,28 +76,33 @@ class _DefaultStyle implements ArticleDetailStyle {
 class ArticleDetail extends StatelessWidget implements ListViewSection {
   final ArticleDetailViewModel _viewModel;
   final ArticleDetailStyle _style;
-  final bool _showHeader;
-  List<ArticleListItemViewModel> _relatedViewModels  = [];
+  final Widget _articleHeader;
+  final Widget _articleFooter;
+  List<ArticleListItemViewModel> _relatedViewModels = [];
 
   ArticleDetail(
       {Key key,
-      ArticleDetailViewModel viewModel, bool showHeader = true,
-      ArticleDetailStyle style = const _DefaultStyle()})
+      ArticleDetailViewModel viewModel,
+      ArticleDetailStyle style = const _DefaultStyle(),
+      Widget articleHeader,
+      Widget articleFooter})
       : this._viewModel = viewModel,
-        this._showHeader = showHeader,
+        this._articleHeader = articleHeader,
+        this._articleFooter = articleFooter,
         this._style = style,
         super(key: key);
 
   Future<List<ArticleListItemViewModel>> fetchReleated() {
-     return _viewModel.getRelated().then((related) {
-       _relatedViewModels = related;
-       return related;
-     });
+    return _viewModel.getRelated().then((related) {
+      _relatedViewModels = related;
+      return related;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    final related = (_relatedViewModels != null) ? Future.value(_relatedViewModels) : fetchReleated();
+    final related =
+        _hasRelated() ? Future.value(_relatedViewModels) : fetchReleated();
     return FutureBuilder(
       future: related,
       builder: (BuildContext context,
@@ -109,27 +117,76 @@ class ArticleDetail extends StatelessWidget implements ListViewSection {
     );
   }
 
+  bool _hasRelated() {
+    return ((_relatedViewModels != null) && (_relatedViewModels.isNotEmpty));
+  }
+
+  Widget _relatedHeader() {
+    return Container(
+      padding: _style.titlePagePadding,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(_viewModel.relatedTitle ?? "", style: _style.titlePageStyle)
+        ],
+      ),
+    );
+  }
+
+  void _launchURL(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    }
+
+    //TODO: LH add error popp up (when we have the widget)
+  }
+
+  Widget _externLinkSection() {
+    final buttonViewModel = RoundedButtonViewModel(
+        title: _viewModel.contentLinkTitle ?? Intl.message(_Strings.viewMore),
+        onTap: () {
+          _launchURL(_viewModel.contentLink);
+        });
+    return Padding(
+      padding: _style.bodyPadding,
+      child: RoundedButton(
+        viewModel: buttonViewModel,
+        style: RoundedButtonStyle.actionSheetLargeRoundedButton(),
+      ),
+    );
+  }
+
   HeaderAndFooterListView _content() {
-     final loadingWidget = Container(
-        child: CircularProgressIndicator(), alignment: Alignment.center);
-    final footer = (_viewModel.loadingStatus == LoadingStatus.LOADING)
-            ? loadingWidget
-            : null;
-      return HeaderAndFooterListView(
-                itemCount: _relatedViewModels.length,
-                itemBuilder: (BuildContext context, int index) {
-                  final viewModel = _relatedViewModels[index];
-                  return StandardListItem(
-                    viewModel: viewModel,
-                    onTap: () => _tappedListItem(
-                        context: context, viewModel: viewModel.detailViewModel),
-                  ).build(context);
-                },
-                physics: ScrollPhysics(),
-                shrinkWrap: true,
-                headers: [buildHeader(_relatedViewModels.isNotEmpty)],
-                footers: [footer]);
-  } 
+    final List<Widget> relatedTitle = _hasRelated() ? [_relatedHeader()] : [];
+    final List<Widget> contentLink =
+        (_viewModel.contentLink != null) ? [_externLinkSection()] : [];
+
+    final List<Widget> articleHeaders =
+        (_articleHeader != null) ? [_articleHeader] : [_buildDefaultHeader()];
+    final List<Widget> articleFooters =
+        (_articleFooter != null) ? [_articleFooter] : [];
+
+    final headers = articleHeaders +
+        [buildArticle()] +
+        contentLink +
+        articleFooters +
+        relatedTitle;
+
+    return HeaderAndFooterListView(
+      itemCount: _relatedViewModels.length,
+      itemBuilder: (BuildContext context, int index) {
+        final viewModel = _relatedViewModels[index];
+        return StandardListItem(
+          viewModel: viewModel,
+          onTap: () => _tappedListItem(
+              context: context, viewModel: viewModel.detailViewModel),
+        ).build(context);
+      },
+      physics: ScrollPhysics(),
+      shrinkWrap: true,
+      headers: headers,
+    );
+  }
 
   @override
   itemBuilder() {
@@ -137,8 +194,8 @@ class ArticleDetail extends StatelessWidget implements ListViewSection {
   }
 
   @override
-  int length() {
-    return _content().length();
+  int itemCount() {
+    return _content().itemCount();
   }
 
   void _share() async {
@@ -152,28 +209,37 @@ class ArticleDetail extends StatelessWidget implements ListViewSection {
     ).build(context);
   }
 
-  Widget buildHeader(bool relatedTitle) {
-    final List<Widget> titleSection = (_viewModel.title.isNotEmpty && _showHeader) ? [_buildTitle()] : [];
-    final List<Widget> subtitleSection = (_viewModel.subtitle.isNotEmpty && _showHeader) ? [_buildSubtitle()] : [];
-    final image = _buildImage();
-    final body = _buildBody();
-    final List<Widget> imageSection = image != null ? [SizedBox(height: _style.spaceBetweenElements), image,SizedBox(height: _style.spaceBetweenElements)] : [];
-    final List<Widget> bodySection = body != null ? [SizedBox(height: _style.spaceBetweenDataAndImage), body,SizedBox(height: _style.spaceBetweenElements)] : [SizedBox(height: _style.spaceBetweenElements)];
-    final List<Widget> topWidgets = titleSection + subtitleSection + imageSection + bodySection;
-    final midWidgets = [
-      Container(
-        padding: _style.titlePagePadding,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(_viewModel.relatedTitle, style: _style.titlePageStyle)
-          ],
-        ),
-      ),
-    ];
-    final headerWidgets = relatedTitle ? topWidgets + midWidgets : topWidgets;
+  Widget _buildDefaultHeader() {
+    final List<Widget> titleSection =
+        (_viewModel.title.isNotEmpty) ? [_buildTitle()] : [];
+    final List<Widget> subtitleSection =
+        (_viewModel.subtitle.isNotEmpty) ? [_buildSubtitle()] : [];
+    final List<Widget> headerWidgets = titleSection + subtitleSection;
     return Column(
       children: headerWidgets,
+    );
+  }
+
+  Widget buildArticle() {
+    final image = _buildImage();
+    final body = _buildBody();
+    final List<Widget> imageSection = image != null
+        ? [
+            SizedBox(height: _style.spaceBetweenElements),
+            image,
+            SizedBox(height: _style.spaceBetweenElements)
+          ]
+        : [];
+    final List<Widget> bodySection = body != null
+        ? [
+            SizedBox(height: _style.spaceBetweenDataAndImage),
+            body,
+            SizedBox(height: _style.spaceBetweenElements)
+          ]
+        : [SizedBox(height: _style.spaceBetweenElements)];
+    final List<Widget> articleWidgets = imageSection + bodySection;
+    return Column(
+      children: articleWidgets,
     );
   }
 
@@ -204,7 +270,7 @@ class ArticleDetail extends StatelessWidget implements ListViewSection {
   }
 
   Widget _buildSubtitle() {
-    return  Container(
+    return Container(
         padding: _style.leftRightPadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -221,12 +287,12 @@ class ArticleDetail extends StatelessWidget implements ListViewSection {
 
   Widget _buildImage() {
     if (_viewModel.image == null) {
-      return  null;
+      return null;
     }
     return NetworkImageFromFuture(
-            _viewModel.image.urlToFit(height: _style.imageHeight),
-            fit: BoxFit.cover,
-            height: _style.imageHeight);
+        _viewModel.image.urlToFit(height: _style.imageHeight),
+        fit: BoxFit.cover,
+        height: _style.imageHeight);
   }
 
   Widget _buildBody() {
