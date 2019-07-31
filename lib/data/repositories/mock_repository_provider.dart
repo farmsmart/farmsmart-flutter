@@ -18,7 +18,7 @@ class MockRepositoryProvider implements RepositoryProvider{
   }
   
   @override
-  ArticleRepositoryInterface getDiscoverRepository() => MockArticlesRepository();
+  ArticleRepositoryInterface getArticleRepository() => MockArticlesRepository();
 
   @override
   PlotRepositoryInterface getMyPlotRepository() => _plot;

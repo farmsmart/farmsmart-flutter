@@ -19,11 +19,15 @@ class ArticleListProvider implements ViewModelProvider<ArticleListViewModel> {
   final ArticleRepositoryInterface _repo;
   final ArticleCollectionGroup _group;
   final String _title;
+  final String _relatedTitle;
+  final String _contentLinkTitle;
   ArticleListViewModel _snapshot;
   ArticleListProvider(
-      {String title, ArticleRepositoryInterface repository,
+      {String title, String relatedTitle, String contentLinkTitle, ArticleRepositoryInterface repository,
       ArticleCollectionGroup group = ArticleCollectionGroup.all})
       : this._title = title, 
+        this._relatedTitle = relatedTitle,
+        this._contentLinkTitle = contentLinkTitle,
         this._repo = repository,
         this._group = group;
 
@@ -32,7 +36,7 @@ class ArticleListProvider implements ViewModelProvider<ArticleListViewModel> {
 
   ArticleListViewModel _modelFromArticles(
       StreamController controller, List<ArticleEntity> articles) {
-    final transformer = ArticleListItemViewModelTransformer.buildWithDetail(ArticleDetailViewModelTransformer());
+    final transformer = ArticleListItemViewModelTransformer.buildWithDetail(ArticleDetailViewModelTransformer(relatedTitle: _relatedTitle, contentLinkTitle: _contentLinkTitle));
     final items = articles.map((article) {
       return transformer.transform(from: article);
     }).toList();

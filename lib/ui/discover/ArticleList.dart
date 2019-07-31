@@ -12,24 +12,29 @@ import 'package:farmsmart_flutter/ui/discover/viewModel/ArticleListViewModel.dar
 abstract class ArticleListStyle {
   final TextStyle titleTextStyle;
   final EdgeInsets titleEdgePadding;
+  final bool heroEnabled;
 
   ArticleListStyle(
     this.titleTextStyle,
-    this.titleEdgePadding,
+    this.titleEdgePadding, 
+    this.heroEnabled,
   );
   ArticleListStyle copyWith({
     TextStyle titleTextStyle,
     EdgeInsets titleEdgePadding,
+    bool heroEnabled
   });
 }
 
 class _DefaultStyle implements ArticleListStyle {
   final TextStyle titleTextStyle;
   final EdgeInsets titleEdgePadding;
+  final bool heroEnabled;
 
   const _DefaultStyle({
     TextStyle titleTextStyle,
     EdgeInsets titleEdgePadding,
+    bool heroEnabled,
   })  : this.titleTextStyle = titleTextStyle ??
             const TextStyle(
                 fontSize: 27,
@@ -37,16 +42,17 @@ class _DefaultStyle implements ArticleListStyle {
                 color: Color(0xFF1a1b46)),
         this.titleEdgePadding = titleEdgePadding ??
             const EdgeInsets.only(
-                left: 34.0, right: 34.0, top: 35.0, bottom: 30.0);
+                left: 34.0, right: 34.0, top: 35.0, bottom: 30.0), this.heroEnabled = heroEnabled  ?? false;
 
   @override
   ArticleListStyle copyWith({
     TextStyle titleTextStyle,
     EdgeInsets titleEdgePadding,
+    bool heroEnabled,
   }) {
     return _DefaultStyle(
         titleTextStyle: titleTextStyle ?? this.titleTextStyle,
-        titleEdgePadding: titleEdgePadding ?? this.titleEdgePadding);
+        titleEdgePadding: titleEdgePadding ?? this.titleEdgePadding, heroEnabled: heroEnabled ?? this.heroEnabled);
   }
 }
 
@@ -96,8 +102,10 @@ class ArticleList extends StatelessWidget {
             context: context,
             viewModel: viewModel.detailViewModel,
           );
-      if (index == 0) {
-        return StandardListItem(
+      final shouldBuildHero = _style.heroEnabled && (index == 0);
+
+      if (shouldBuildHero) {
+        return HeroListItem(
           viewModel: viewModel,
           onTap: tapFunction,
         );

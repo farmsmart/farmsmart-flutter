@@ -13,7 +13,6 @@ import 'package:package_info/package_info.dart';
       [ArticleEntity] -> [ArticleDetailViewModel]
 */
 class _Strings {
-  static const relatedTitle = "Related Articles";
   static const readTime = "minute read";
   static const divider = " - ";
   static const lessThanMin = "<1";
@@ -24,11 +23,12 @@ class ArticleDetailViewModelTransformer
     implements ObjectTransformer<ArticleEntity, ArticleDetailViewModel> {
   ObjectTransformer<ArticleEntity, ArticleListItemViewModel>
       _listItemTransformer;
-
+  final String _contentLinkTitle;
+  final String _relatedTitle;
   ArticleDetailViewModelTransformer(
       {ObjectTransformer<ArticleEntity, ArticleListItemViewModel>
-          listItemTransformer})
-      : this._listItemTransformer = listItemTransformer;
+          listItemTransformer,String relatedTitle, String contentLinkTitle,})
+      : this._listItemTransformer = listItemTransformer, this._relatedTitle = relatedTitle, this._contentLinkTitle = contentLinkTitle;
   final _dateFormatter = DateFormat(_Strings.publishedDateFormat);
   @override
   ArticleDetailViewModel transform({ArticleEntity from}) {
@@ -37,10 +37,12 @@ class ArticleDetailViewModelTransformer
       LoadingStatus.SUCCESS,
       from.title,
       _subtitle(article: from),
-      Intl.message(_Strings.relatedTitle),
+      _relatedTitle,
+      _contentLinkTitle,
       imageProvider,
       from.content,
       buildArticleDeeplink(from.id),
+      from.externalLink
     );
     viewModel.getRelated = () {
       if (from.related == null) {

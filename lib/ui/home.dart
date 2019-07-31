@@ -73,8 +73,7 @@ class Home extends StatelessWidget {
         _Constants.discoverIcon,
       ),
       _buildTabNavigator(
-        //TODO Add Community screen without redux
-        Text('Community'),
+        _buildCommunity(),
         _Constants.communitySelectedIcon,
         _Constants.communityIcon,
       ),
@@ -103,8 +102,16 @@ class Home extends StatelessWidget {
     return ArticleList(
         viewModelProvider: ArticleListProvider(
             title: localizations.discoverTab,
-            repository: repositoryProvider.getDiscoverRepository(),
+            repository: repositoryProvider.getArticleRepository(),
             group: ArticleCollectionGroup.discovery));
+  }
+
+  _buildCommunity() {
+    return ArticleList(
+        viewModelProvider: ArticleListProvider(
+            title: localizations.communityTab,
+            repository: repositoryProvider.getArticleRepository(),
+            group: ArticleCollectionGroup.chatGroups));
   }
 
   _buildPlayground() {

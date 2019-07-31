@@ -16,6 +16,7 @@ class MockArticle extends MockEntity<ArticleEntity> {
       summary: mockPlainText.random(),
       title: mockTitleText.random(),
       published: _mockDate.randomYearAgo(),
+      externalLink: mockExternalLinks.random(),
     );
     entity.related = MockArticleEntityCollection();
     entity.images = MockImageEntityCollection();

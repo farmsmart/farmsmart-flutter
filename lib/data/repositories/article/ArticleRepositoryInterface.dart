@@ -3,7 +3,8 @@ import 'package:farmsmart_flutter/data/model/article_entity.dart';
 
 enum ArticleCollectionGroup {
   all,
-  discovery
+  discovery,
+  chatGroups
 }
 
 abstract class ArticleRepositoryInterface {

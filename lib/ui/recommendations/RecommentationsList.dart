@@ -240,7 +240,7 @@ class RecommendationsList extends StatelessWidget implements ListViewSection {
   }) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => CropDetail(provider: provider),
+        builder: (context) => CropDetail(provider: provider), //TODO: LH add the recommedations detail header here (add to plot function) 
       ),
     );
   }

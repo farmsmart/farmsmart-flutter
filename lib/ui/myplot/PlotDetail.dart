@@ -102,7 +102,7 @@ class _PlotDetailState extends State<PlotDetail> {
 
     widget._articleDetail = ArticleDetail(
       viewModel: articleViewModel,
-      showHeader: false,
+      articleHeader: Container(),
     );
     final topSection = HeaderAndFooterListView(
       headers: <Widget>[header, stages],
