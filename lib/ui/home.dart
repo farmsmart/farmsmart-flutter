@@ -10,6 +10,8 @@ import 'package:farmsmart_flutter/ui/bottombar/tab_navigator.dart';
 import 'package:farmsmart_flutter/ui/discover/ArticleList.dart';
 import 'package:farmsmart_flutter/ui/playground/data/playground_datasource_impl.dart';
 import 'package:farmsmart_flutter/ui/playground/playground_view.dart';
+import 'package:farmsmart_flutter/ui/profitloss/ProfitLossList.dart';
+import 'package:farmsmart_flutter/ui/profitloss/mockRepositoryTryout/MockTransactionRepository.dart';
 import 'package:flutter/material.dart';
 
 import 'myplot/PlotList.dart';
@@ -61,8 +63,7 @@ class Home extends StatelessWidget {
         _Constants.myPlotIcon,
       ),
       _buildTabNavigator(
-        //TODO Add Profit Loss screen without redux
-        Text('Profit Loss'),
+        _buildProfitAndLoss(),
         _Constants.profitLossSelectedIcon,
         _Constants.profitLossIcon,
       ),
@@ -96,6 +97,10 @@ class Home extends StatelessWidget {
             engine: engine,
             plotRepository: repositoryProvider.getMyPlotRepository(),
             cropRepository: repositoryProvider.getCropRepository()));
+  }
+
+  _buildProfitAndLoss(){
+    return ProfitLossPage(viewModel: MockProfitLossListViewModel.build(),);
   }
 
   _buildDiscover() {
