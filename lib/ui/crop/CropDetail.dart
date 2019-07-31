@@ -3,7 +3,7 @@ import 'package:farmsmart_flutter/ui/common/ContextualAppBar.dart';
 import 'package:farmsmart_flutter/ui/common/SectionListView.dart';
 import 'package:farmsmart_flutter/ui/common/ViewModelProviderBuilder.dart';
 import 'package:farmsmart_flutter/ui/crop/viewmodel/CropDetailViewModel.dart';
-import 'package:farmsmart_flutter/ui/discover/ArticleDetail.dart';
+import 'package:farmsmart_flutter/ui/article/ArticleDetail.dart';
 import 'package:flutter/material.dart';
 import 'CropInfoList.dart';
 

@@ -1,7 +1,7 @@
 import 'package:farmsmart_flutter/model/loading_status.dart';
 import 'package:farmsmart_flutter/ui/common/LoadableViewModel.dart';
 import 'package:farmsmart_flutter/ui/common/RefreshableViewModel.dart';
-import 'package:farmsmart_flutter/ui/discover/viewModel/ArticleListItemViewModel.dart';
+import 'package:farmsmart_flutter/ui/article/viewModel/ArticleListItemViewModel.dart';
 
 class ArticleListViewModel implements LoadableViewModel, RefreshableViewModel {
   final String title;

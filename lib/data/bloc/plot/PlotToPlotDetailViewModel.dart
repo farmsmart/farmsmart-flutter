@@ -4,7 +4,7 @@ import 'package:farmsmart_flutter/data/bloc/article/ArticleListItemViewModelTran
 import 'package:farmsmart_flutter/data/bloc/crop/CropDetailTransformer.dart';
 import 'package:farmsmart_flutter/data/model/PlotEntity.dart';
 import 'package:farmsmart_flutter/data/model/crop_entity.dart';
-import 'package:farmsmart_flutter/ui/discover/viewModel/ArticleDetailViewModel.dart';
+import 'package:farmsmart_flutter/ui/article/viewModel/ArticleDetailViewModel.dart';
 import 'package:farmsmart_flutter/ui/myplot/viewmodel/PlotDetailViewModel.dart';
 
 import '../Transformer.dart';

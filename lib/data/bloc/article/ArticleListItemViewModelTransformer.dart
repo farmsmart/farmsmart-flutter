@@ -1,7 +1,7 @@
 import 'package:farmsmart_flutter/data/bloc/Transformer.dart';
 import 'package:farmsmart_flutter/data/model/article_entity.dart';
-import 'package:farmsmart_flutter/ui/discover/viewModel/ArticleDetailViewModel.dart';
-import 'package:farmsmart_flutter/ui/discover/viewModel/ArticleListItemViewModel.dart';
+import 'package:farmsmart_flutter/ui/article/viewModel/ArticleDetailViewModel.dart';
+import 'package:farmsmart_flutter/ui/article/viewModel/ArticleListItemViewModel.dart';
 import 'package:farmsmart_flutter/utils/strings.dart';
 
 import 'ArticleDetailTransformer.dart';

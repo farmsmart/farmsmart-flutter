@@ -1,13 +1,13 @@
 import 'package:farmsmart_flutter/data/bloc/ViewModelProvider.dart';
 import 'package:farmsmart_flutter/ui/common/ViewModelProviderBuilder.dart';
 import 'package:farmsmart_flutter/ui/common/headerAndFooterListView.dart';
-import 'package:farmsmart_flutter/ui/discover/ArticleDetail.dart';
-import 'package:farmsmart_flutter/ui/discover/viewModel/ArticleDetailViewModel.dart';
-import 'package:farmsmart_flutter/ui/discover/viewModel/ArticleListItemViewModel.dart';
-import 'package:farmsmart_flutter/ui/discover/HeroListItem.dart';
-import 'package:farmsmart_flutter/ui/discover/StandardListItem.dart';
+import 'package:farmsmart_flutter/ui/article/ArticleDetail.dart';
+import 'package:farmsmart_flutter/ui/article/viewModel/ArticleDetailViewModel.dart';
+import 'package:farmsmart_flutter/ui/article/viewModel/ArticleListItemViewModel.dart';
+import 'package:farmsmart_flutter/ui/article/HeroListItem.dart';
+import 'package:farmsmart_flutter/ui/article/StandardListItem.dart';
 import 'package:flutter/material.dart';
-import 'package:farmsmart_flutter/ui/discover/viewModel/ArticleListViewModel.dart';
+import 'package:farmsmart_flutter/ui/article/viewModel/ArticleListViewModel.dart';
 
 abstract class ArticleListStyle {
   final TextStyle titleTextStyle;

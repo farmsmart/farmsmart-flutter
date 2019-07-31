@@ -1,6 +1,6 @@
 import 'package:farmsmart_flutter/data/model/ImageURLProvider.dart';
 import 'package:farmsmart_flutter/model/loading_status.dart';
-import 'package:farmsmart_flutter/ui/discover/viewModel/ArticleListItemViewModel.dart';
+import 'package:farmsmart_flutter/ui/article/viewModel/ArticleListItemViewModel.dart';
 
 typedef GetList<T> = Future<List<T>> Function();
 

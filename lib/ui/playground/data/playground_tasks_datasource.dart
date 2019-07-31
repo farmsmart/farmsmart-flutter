@@ -9,7 +9,7 @@ import 'package:farmsmart_flutter/data/bloc/recommendations/RecommendationListPr
 import 'package:farmsmart_flutter/data/repositories/article/implementation/MockArticlesRepository.dart';
 import 'package:farmsmart_flutter/data/repositories/crop/implementation/MockCropRepository.dart';
 import 'package:farmsmart_flutter/ui/LandingPage.dart';
-import 'package:farmsmart_flutter/ui/discover/ArticleList.dart';
+import 'package:farmsmart_flutter/ui/article/ArticleList.dart';
 import 'package:farmsmart_flutter/ui/common/ActionSheet.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockActionSheetViewModel.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockLandingPageViewModel.dart';

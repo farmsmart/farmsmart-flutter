@@ -8,15 +8,14 @@ import 'package:farmsmart_flutter/data/bloc/article/ArticleDetailTransformer.dar
 import 'package:farmsmart_flutter/data/bloc/article/ArticleListItemViewModelTransformer.dart';
 import 'package:farmsmart_flutter/data/model/mock/MockArticle.dart';
 import 'package:farmsmart_flutter/ui/common/ActionSheetListItem.dart';
-import 'package:farmsmart_flutter/ui/common/CircularProgress.dart';
 import 'package:farmsmart_flutter/ui/common/DogTagStyles.dart';
 import 'package:farmsmart_flutter/ui/common/Dogtag.dart';
 import 'package:farmsmart_flutter/ui/common/recommendation_card/recommendation_card.dart';
 import 'package:farmsmart_flutter/ui/common/recommendation_compact_card/recommendation_compact_card.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
 import 'package:farmsmart_flutter/ui/common/stage_card.dart';
-import 'package:farmsmart_flutter/ui/discover/HeroListItem.dart';
-import 'package:farmsmart_flutter/ui/discover/StandardListItem.dart';
+import 'package:farmsmart_flutter/ui/article/HeroListItem.dart';
+import 'package:farmsmart_flutter/ui/article/StandardListItem.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockActionSheetViewModel.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockDogTagViewModel.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockRoundedButtonViewModel.dart';
