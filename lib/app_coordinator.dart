@@ -1,4 +1,3 @@
-import 'package:farmsmart_flutter/data/repositories/flamelink_repository_provider.dart';
 import 'package:farmsmart_flutter/data/repositories/repository_provider.dart';
 import 'package:farmsmart_flutter/flavors/app_config.dart';
 import 'package:farmsmart_flutter/ui/home.dart';

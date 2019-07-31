@@ -15,8 +15,6 @@ class _Strings {
 class _Constants {
   static final double wrapSpacing = 5;
   static final double wrapRunSpacing = 5;
-  static final int maxCircles = 6;
-  static final int minCircles = 0;
 
   static final BorderRadius circleBorderRadius =
       BorderRadius.all(Radius.circular(30));
@@ -25,12 +23,12 @@ class _Constants {
 class FarmDetailsListItemViewModel {
   String title;
   String detail;
-  List<Color> colors;
+  Color color;
 
   FarmDetailsListItemViewModel({
     this.title,
     this.detail,
-    this.colors = const <Color>[],
+    this.color,
   });
 }
 
@@ -59,7 +57,7 @@ class FarmDetailsListItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
-            _viewModel.colors != null ? _buildCirclesWrap() : Wrap(),
+            _viewModel.color != null ? _buildCirclesWrap() : Wrap(),
             SizedBox(width: 7.5),
             _buildDetail(),
           ],
@@ -104,25 +102,21 @@ class FarmDetailsListItem extends StatelessWidget {
         verticalDirection: VerticalDirection.down,
         spacing: _Constants.wrapSpacing,
         runSpacing: _Constants.wrapRunSpacing,
-        children: _viewModel.colors.length > 9
-            ? _buildCircles(_viewModel.colors).sublist(0, 9)
-            : _buildCircles(_viewModel.colors),
+        children: <Widget>[
+          _buildCircles(_viewModel.color),
+        ],
       ),
     );
   }
 
-  List<Widget> _buildCircles(List<Color> colors) {
-    return colors
-        .map(
-          (color) => Container(
-            height: 12,
-            width: 12,
-            decoration: BoxDecoration(
-              color: color,
-              borderRadius: _Constants.circleBorderRadius,
-            ),
-          ),
-        )
-        .toList();
+  Widget _buildCircles(Color color) {
+    return Container(
+      height: 12,
+      width: 12,
+      decoration: BoxDecoration(
+        color: color,
+        borderRadius: _Constants.circleBorderRadius,
+      ),
+    );
   }
 }

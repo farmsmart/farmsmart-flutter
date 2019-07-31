@@ -1,5 +1,7 @@
+import 'package:farmsmart_flutter/data/bloc/StaticViewModelProvider.dart';
 import 'package:farmsmart_flutter/data/bloc/article/ArticleDetailTransformer.dart';
 import 'package:farmsmart_flutter/data/bloc/article/ArticleListItemViewModelTransformer.dart';
+import 'package:farmsmart_flutter/data/bloc/crop/CropDetailTransformer.dart';
 import 'package:farmsmart_flutter/data/model/PlotEntity.dart';
 import 'package:farmsmart_flutter/data/model/crop_entity.dart';
 import 'package:farmsmart_flutter/ui/discover/viewModel/ArticleDetailViewModel.dart';
@@ -15,6 +17,7 @@ class PlotToPlotDetailViewModel
   final _articleTransformer =
       ArticleListItemViewModelTransformer.buildWithDetail(
           ArticleDetailViewModelTransformer());
+  final _cropTransformer = CropDetailTransformer();
   final StageToStageCardViewModel _stageTransformer;
   final Function _renameAction;
   final Function _removeAction;
@@ -38,20 +41,24 @@ class PlotToPlotDetailViewModel
     final stageViewModels = _plot.stages.map((stage) {
       return _stageTransformer.transform(from: stage);
     }).toList();
-    final List<ArticleDetailViewModel> artcileViewModels =
+    final List<ArticleDetailViewModel> articleViewModels =
         _plot.stages.map((stage) {
       return _articleTransformer.transform(from: stage.article).detailViewModel;
     }).toList();
+
+    final cropDetailModel =_cropTransformer.transform(from: _plot.crop);
+    final detailProvider = StaticViewModelProvider(cropDetailModel);
     return PlotDetailViewModel(
         title: headerViewModel.title,
         detailText: headerViewModel.detail,
         imageProvider: CropImageProvider(_plot.crop),
         progress: headerViewModel.progress,
         stageCardViewModels: stageViewModels,
-        stageArticleViewModels: artcileViewModels,
+        stageArticleViewModels: articleViewModels,
         currentStage: _logic.currentStageIndex(_plot.stages),
         remove: () => _removeAction(_plot),
-        rename: _rename);
+        rename: _rename, 
+        detailProvider: detailProvider);
   }
 
   _rename(String name) {

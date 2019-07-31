@@ -1,5 +1,7 @@
+import 'package:farmsmart_flutter/data/bloc/ViewModelProvider.dart';
 import 'package:farmsmart_flutter/data/model/ImageURLProvider.dart';
 import 'package:farmsmart_flutter/ui/common/stage_card.dart';
+import 'package:farmsmart_flutter/ui/crop/viewmodel/CropDetailViewModel.dart';
 import 'package:farmsmart_flutter/ui/discover/viewModel/ArticleDetailViewModel.dart';
 
 class PlotDetailViewModel
@@ -13,6 +15,7 @@ class PlotDetailViewModel
     final int currentStage;
     final Function rename;
     final Function remove;
+    final ViewModelProvider<CropDetailViewModel> detailProvider;
 
   PlotDetailViewModel({String title, 
   String detailText, 
@@ -22,7 +25,8 @@ class PlotDetailViewModel
   List<ArticleDetailViewModel> stageArticleViewModels, 
   int currentStage, 
   Function rename, 
-  Function remove}) : this.title = title, 
+  Function remove,
+  ViewModelProvider<CropDetailViewModel> detailProvider,}) : this.title = title, 
   this.detailText = detailText, 
   this.progress = progress, 
   this.imageProvider = imageProvider,
@@ -30,5 +34,6 @@ class PlotDetailViewModel
   this.stageArticleViewModels = stageArticleViewModels, 
   this.currentStage = currentStage,
   this.rename = rename,
-  this.remove = remove;
+  this.remove = remove,
+  this.detailProvider = detailProvider;
 }

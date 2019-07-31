@@ -13,21 +13,21 @@ class PlaygroundRecommendationCardDataSource extends PlaygroundDataSource{
       PlaygroundWidget(
         title: 'Add to plot style static',
         child: RecommendationCard(
-          style: RecommendationCardStyles.buildAddToPlotStyle(),
+          style: RecommendationCardStyles.buildStyle(),
           viewModel: MockRecommendationCardViewModel.buildHardCodedAddToPlotState(),
         ),
       ),
       PlaygroundWidget(
         title: 'Add to plot style',
         child: RecommendationCard(
-          style: RecommendationCardStyles.buildAddToPlotStyle(),
+          style: RecommendationCardStyles.buildStyle(),
           viewModel: MockRecommendationCardViewModel.buildRandomAddToPlotState(),
         ),
       ),
       PlaygroundWidget(
         title: 'Added to plot style',
         child: RecommendationCard(
-          style: RecommendationCardStyles.buildAddedToPlotStyle(),
+          style: RecommendationCardStyles.buildStyle(),
           viewModel: MockRecommendationCardViewModel.buildRandomAddedToPlotState(),
         ),
       )

@@ -9,15 +9,17 @@ class ArticleDetailViewModel {
   final String title;
   final String subtitle;
   final String relatedTitle;
+  final String contentLinkTitle;
   final ImageURLProvider image;
   final String body;
-  final Future <String> shareLink;
+  final Future<String> shareLink;
+  final String contentLink;
   GetList<ArticleListItemViewModel> getRelated;
   /*
           String deepLink = await buildArticleDeeplink(articleID);
           var response = await FlutterShareMe().shareToSystem(msg: Strings.shareArticleText + deepLink);
   */
 
-  ArticleDetailViewModel(this.loadingStatus, this.title, this.subtitle, this.relatedTitle,
-      this.image, this.body, this.shareLink);
+  ArticleDetailViewModel(this.loadingStatus, this.title, this.subtitle,
+      this.relatedTitle, this.contentLinkTitle, this.image, this.body, this.shareLink, this.contentLink);
 }

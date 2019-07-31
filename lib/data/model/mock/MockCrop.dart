@@ -8,18 +8,18 @@ import 'MockArticle.dart';
 
 class MockCrop {
   static CropEntity build() {
-    final entity = CropEntity(id: mockPlainText.identifier(),
-    companionPlants: _plants.list(),
+    final name =  plants.random();
+    final entity = CropEntity(id: name,
+    article: MockArticle().buildCrop(name),
+    companionPlants: plants.list(),
     complexity: CropComplexity.BEGINNER,
-    content: mockRichText.random(),
-    cropsInRotation: _plants.list(),
+    cropsInRotation: plants.list(),
     cropType: CropType.SINGLE,
-    name: _plants.random(),
-    nonCompanionPlants: _plants.list(),
+    name: name,
+    nonCompanionPlants: plants.list(),
     profitability: LoHi.MEDIUM,
     setupCost: LoHi.MEDIUM,
     soilType: _soil.list(),
-    summary: mockPlainText.random(length: 1000),
     waterRequirement: LoHi.MEDIUM,
     );
     entity.stageArticles = MockArticleEntityCollection();
@@ -37,15 +37,6 @@ class MockCrop {
 }
 
 // Mock Strings --------------
-
-MockString _plants = MockString(library: [
-  "Plant A",
-  "Plant B",
-  "Plant C",
-  "Plant D",
-  "Plant E",
-  "Plant F"
-]);
 
 MockString _soil = MockString(library: [
   "Soil A",

@@ -33,7 +33,7 @@ class MockFarmDetailsListItemViewModel {
     return FarmDetailsListItemViewModel(
       title: _mockTitle[index],
       detail: _mockDetail[index],
-      colors: index == 5 ?  _mockLargeListOfColors.sublist(0, Random().nextInt(12)) : null,
+      color: index == 5 ? _mockLargeListOfColors[Random().nextInt(12)] : null,
     );
   }
 }
@@ -53,7 +53,7 @@ List _mockDetail = [
   "Urban garden",
   "Short rains",
   "Myself",
-  "Sandy, Black Cotton, Loamy",
+  "Sandy",
   "Yes"
 ];
 

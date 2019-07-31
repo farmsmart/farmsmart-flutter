@@ -26,7 +26,7 @@ class MockPlotDetailViewModel {
     progress: 0.5, 
     imageProvider: MockImageEntity().build().urlProvider, 
     stageCardViewModels: cardViewModels, 
-    stageArticleViewModels: articleViewModels, currentStage: 1);
+    stageArticleViewModels: articleViewModels, currentStage: 1,);
   }
 }
 

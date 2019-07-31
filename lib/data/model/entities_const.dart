@@ -1,3 +1,4 @@
+//TODO: LH get rid of this mess and have class context.
 // General
 const CONTENT = "content";
 const IMAGE = "image";

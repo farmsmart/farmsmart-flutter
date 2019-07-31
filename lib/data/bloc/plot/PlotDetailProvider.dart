@@ -37,6 +37,11 @@ class PlotDetailProvider implements ViewModelProvider<PlotDetailViewModel> {
   StreamController<PlotDetailViewModel> observe() {
     return _controller;
   }
+  
+  @override
+  PlotDetailViewModel snapshot() {
+    return _snapshot;
+  }
 
   PlotDetailViewModel _viewModel() {
     final stageTransformer = StageToStageCardViewModel(

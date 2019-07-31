@@ -1,45 +1,58 @@
 import 'package:farmsmart_flutter/data/bloc/ViewModelProvider.dart';
-import 'package:farmsmart_flutter/model/loading_status.dart';
+import 'package:farmsmart_flutter/ui/common/ViewModelProviderBuilder.dart';
 import 'package:farmsmart_flutter/ui/common/headerAndFooterListView.dart';
 import 'package:farmsmart_flutter/ui/discover/ArticleDetail.dart';
 import 'package:farmsmart_flutter/ui/discover/viewModel/ArticleDetailViewModel.dart';
 import 'package:farmsmart_flutter/ui/discover/viewModel/ArticleListItemViewModel.dart';
 import 'package:farmsmart_flutter/ui/discover/HeroListItem.dart';
 import 'package:farmsmart_flutter/ui/discover/StandardListItem.dart';
-import 'package:farmsmart_flutter/utils/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:farmsmart_flutter/ui/discover/viewModel/ArticleListViewModel.dart';
 
 abstract class ArticleListStyle {
   final TextStyle titleTextStyle;
   final EdgeInsets titleEdgePadding;
+  final bool heroEnabled;
 
-  ArticleListStyle(this.titleTextStyle, this.titleEdgePadding);
-  ArticleListStyle copyWith(
-      {TextStyle titleTextStyle, EdgeInsets titleEdgePadding});
-
+  ArticleListStyle(
+    this.titleTextStyle,
+    this.titleEdgePadding, 
+    this.heroEnabled,
+  );
+  ArticleListStyle copyWith({
+    TextStyle titleTextStyle,
+    EdgeInsets titleEdgePadding,
+    bool heroEnabled
+  });
 }
 
 class _DefaultStyle implements ArticleListStyle {
   final TextStyle titleTextStyle;
   final EdgeInsets titleEdgePadding;
+  final bool heroEnabled;
 
-  const _DefaultStyle({TextStyle titleTextStyle, EdgeInsets titleEdgePadding})
-      : this.titleTextStyle = titleTextStyle ??
+  const _DefaultStyle({
+    TextStyle titleTextStyle,
+    EdgeInsets titleEdgePadding,
+    bool heroEnabled,
+  })  : this.titleTextStyle = titleTextStyle ??
             const TextStyle(
                 fontSize: 27,
                 fontWeight: FontWeight.bold,
                 color: Color(0xFF1a1b46)),
         this.titleEdgePadding = titleEdgePadding ??
             const EdgeInsets.only(
-                left: 34.0, right: 34.0, top: 35.0, bottom: 30.0);
+                left: 34.0, right: 34.0, top: 35.0, bottom: 30.0), this.heroEnabled = heroEnabled  ?? false;
 
   @override
-  ArticleListStyle copyWith(
-      {TextStyle titleTextStyle, EdgeInsets titleEdgePadding}) {
+  ArticleListStyle copyWith({
+    TextStyle titleTextStyle,
+    EdgeInsets titleEdgePadding,
+    bool heroEnabled,
+  }) {
     return _DefaultStyle(
         titleTextStyle: titleTextStyle ?? this.titleTextStyle,
-        titleEdgePadding: titleEdgePadding ?? this.titleEdgePadding);
+        titleEdgePadding: titleEdgePadding ?? this.titleEdgePadding, heroEnabled: heroEnabled ?? this.heroEnabled);
   }
 }
 
@@ -60,14 +73,10 @@ class ArticleList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = _viewModelProvider.observe();
-    return StreamBuilder<ArticleListViewModel>(
-        stream: controller.stream,
-        initialData: _viewModelProvider.initial(),
-        builder: (BuildContext context,
-            AsyncSnapshot<ArticleListViewModel> snapshot) {
-          return _build(context, snapshot.data);
-        });
+    return ViewModelProviderBuilder<ArticleListViewModel>(
+      provider: _viewModelProvider,
+      successBuilder: _buildSuccess,
+    );
   }
 
   Widget buildHeader({ArticleListViewModel viewModel}) {
@@ -75,7 +84,12 @@ class ArticleList extends StatelessWidget {
       padding: _style.titleEdgePadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[Text(viewModel.title, style: _style.titleTextStyle)],
+        children: <Widget>[
+          Text(
+            viewModel.title,
+            style: _style.titleTextStyle,
+          )
+        ],
       ),
     );
   }
@@ -85,8 +99,12 @@ class ArticleList extends StatelessWidget {
     return (BuildContext context, int index) {
       final viewModel = viewModels[index];
       final tapFunction = () => _tappedListItem(
-          context: context, viewModel: viewModel.detailViewModel);
-      if (index == 0) {
+            context: context,
+            viewModel: viewModel.detailViewModel,
+          );
+      final shouldBuildHero = _style.heroEnabled && (index == 0);
+
+      if (shouldBuildHero) {
         return HeroListItem(
           viewModel: viewModel,
           onTap: tapFunction,
@@ -100,8 +118,10 @@ class ArticleList extends StatelessWidget {
     };
   }
 
-  void _tappedListItem(
-      {BuildContext context, ArticleDetailViewModel viewModel}) {
+  void _tappedListItem({
+    BuildContext context,
+    ArticleDetailViewModel viewModel,
+  }) {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => ArticleDetail(viewModel: viewModel),
@@ -109,22 +129,13 @@ class ArticleList extends StatelessWidget {
     );
   }
 
-  Widget _build(BuildContext context, ArticleListViewModel viewModel) {
-    final status =
-        (viewModel == null) ? LoadingStatus.LOADING : viewModel.loadingStatus;
-    switch (status) {
-      case LoadingStatus.LOADING:
-        return Container(
-            child: CircularProgressIndicator(), alignment: Alignment.center);
-      case LoadingStatus.SUCCESS:
-        return _buildSuccess(context, viewModel);
-      case LoadingStatus.ERROR:
-        return Text(Strings.errorString);
-    }
-  }
-
-  Widget _buildSuccess(BuildContext context, ArticleListViewModel viewModel) {
-    return HeaderAndFooterListView(itemCount: viewModel.articleListItemViewModels.length,
+  Widget _buildSuccess({
+    BuildContext context,
+    AsyncSnapshot<ArticleListViewModel> snapshot,
+  }) {
+    final viewModel = snapshot.data;
+    return HeaderAndFooterListView(
+        itemCount: viewModel.articleListItemViewModels.length,
         itemBuilder:
             bodyListBuilder(viewModels: viewModel.articleListItemViewModels),
         physics: ScrollPhysics(),
