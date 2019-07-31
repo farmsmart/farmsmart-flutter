@@ -1,14 +1,10 @@
 import 'package:farmsmart_flutter/model/loading_status.dart';
-import 'package:farmsmart_flutter/redux/app/app_state.dart';
+import 'package:farmsmart_flutter/ui/common/headerAndFooterListView.dart';
+import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
+import 'package:farmsmart_flutter/ui/profitloss/ProfitLossHeader.dart';
 import 'package:farmsmart_flutter/ui/profitloss/ProfitLossListItem.dart';
 import 'package:farmsmart_flutter/utils/strings.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:farmsmart_flutter/ui/common/headerAndFooterListView.dart';
-import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
-import 'package:redux/redux.dart';
-import 'mockRepositoryTryout/MockTransactionRepository.dart';
-import 'package:farmsmart_flutter/ui/profitloss/ProfitLossHeader.dart';
 
 class ProfitLossListViewModel {
   LoadingStatus loadingStatus;
@@ -17,12 +13,12 @@ class ProfitLossListViewModel {
 
   final List<ProfitLossListItemViewModel> transactions;
 
-  ProfitLossListViewModel(
-      {this.title, this.detailText, this.loadingStatus, this.transactions});
-
-  static ProfitLossListViewModel fromStore(Store<AppState> store) {
-    return MockProfitLossListViewModel.build();
-  }
+  ProfitLossListViewModel({
+    this.title,
+    this.detailText,
+    this.loadingStatus,
+    this.transactions,
+  });
 }
 
 abstract class ProfitLossStyle {
@@ -51,18 +47,20 @@ class _DefaultStyle implements ProfitLossStyle {
 }
 
 class ProfitLossPage extends StatefulWidget {
-  State<StatefulWidget> createState() {
-    return _ProfitLossState();
-  }
+  final ProfitLossListViewModel _viewModel;
+
+  const ProfitLossPage({Key key, ProfitLossListViewModel viewModel})
+      : this._viewModel = viewModel,
+        super(key: key);
+
+  State<StatefulWidget> createState() => _ProfitLossState();
 }
 
 class _ProfitLossState extends State<ProfitLossPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: StoreConnector<AppState, ProfitLossListViewModel>(
-          builder: (_, viewModel) => _buildBody(context, viewModel),
-          converter: (store) => ProfitLossListViewModel.fromStore(store)),
+      body: _buildBody(context, widget._viewModel),
     );
   }
 
@@ -90,13 +88,17 @@ class _ProfitLossState extends State<ProfitLossPage> {
         },
         physics: ScrollPhysics(),
         shrinkWrap: true,
-        headers: [ProfitLossHeader(
-            viewModel: ProfitLossHeaderViewModel(
-                viewModel.title, viewModel.detailText),
-            style: ProfitLossHeaderStyle.defaultStyle())],
-        footers: [SizedBox(
-          height: profitStyle.bottomEdgePadding,
-        )]);
+        headers: [
+          ProfitLossHeader(
+              viewModel: ProfitLossHeaderViewModel(
+                  viewModel.title, viewModel.detailText),
+              style: ProfitLossHeaderStyle.defaultStyle())
+        ],
+        footers: [
+          SizedBox(
+            height: profitStyle.bottomEdgePadding,
+          )
+        ]);
   }
 
   Widget _buildPageWithFloatingButton(BuildContext context,
@@ -107,8 +109,7 @@ class _ProfitLossState extends State<ProfitLossPage> {
         body: _buildPage(context, viewModel, profitStyle),
         floatingActionButton: RoundedButton(
             viewModel: RoundedButtonViewModel(
-                icon: roundedButtonIcon,
-                onTap: () => _showToast(context)),
+                icon: roundedButtonIcon, onTap: () => _showToast(context)),
             style: RoundedButtonStyle.bigRoundedButton()));
   }
 
