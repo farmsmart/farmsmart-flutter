@@ -10,9 +10,8 @@ class MockRecommendationDetailCardViewModel {
       subtitle: _mockSubtitle.random(),
       action: () {},
       actionText: 'Add To Your Plot',
-      iconAssetOverlay: 'assets/icons/tick_large.png',
       isAdded: false,
-      image: NetworkImage(_mockImageUrl.random()),
+      image: _mockFutureString(_mockImageUrl.random()),
     );
   }
 
@@ -22,9 +21,8 @@ class MockRecommendationDetailCardViewModel {
       subtitle: _mockSubtitle.random(),
       action: () {},
       actionText: 'Added To Your Plot',
-      iconAssetOverlay: 'assets/icons/tick_large.png',
       isAdded: true,
-      image: NetworkImage(_mockImageUrl.random()),
+      image: _mockFutureString(_mockImageUrl.random()),
     );
   }
 
@@ -34,9 +32,8 @@ class MockRecommendationDetailCardViewModel {
       subtitle: _mockLargeStrings.random(),
       action: () {},
       actionText: _mockLargeStrings.random(),
-      iconAssetOverlay: 'assets/icons/tick_large.png',
       isAdded: true,
-      image: NetworkImage(_mockImageUrl.random()),
+      image: _mockFutureString(_mockImageUrl.random()),
     );
   }
 
@@ -46,9 +43,8 @@ class MockRecommendationDetailCardViewModel {
       subtitle: 'Subtitle',
       action: () {},
       actionText: 'Action Text',
-      iconAssetOverlay: 'assets/icons/tick_large.png',
       isAdded: true,
-      image: AssetImage('assets/raw/placeholder.webp'),
+      image: _mockFutureString('assets/raw/placeholder.webp'),
     );
   }
 
@@ -58,11 +54,14 @@ class MockRecommendationDetailCardViewModel {
       subtitle: 'Subtitle',
       action: () {},
       actionText: 'Action Text',
-      iconAssetOverlay: 'assets/icons/tick_large.png',
       isAdded: false,
-      image: AssetImage('assets/raw/placeholder.webp'),
+      image: _mockFutureString('assets/raw/placeholder.webp'),
     );
   }
+}
+
+Future<String> _mockFutureString(String url) async{
+  return url;
 }
 
 MockString _mockTitle = MockString(library: [

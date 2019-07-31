@@ -1,4 +1,6 @@
+import 'package:farmsmart_flutter/ui/common/recommendation_card/recommendation_card_view_model.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
+import 'package:farmsmart_flutter/ui/common/rounded_button_stateful.dart';
 import 'package:farmsmart_flutter/ui/common/rounded_image_overlay.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -17,37 +19,12 @@ class _Constants {
   static int subtitleMaxLines = 1;
 }
 
-class RecommendationCardViewModel {
-  ImageProvider image;
-  String title;
-  String subtitle;
-  String description;
-  String leftActionText;
-  String rightActionText;
-  Function leftAction;
-  Function rightAction;
-  bool isAdded;
-  String overlayIcon;
-
-  RecommendationCardViewModel(
-      {this.image,
-      this.title,
-      this.subtitle,
-      this.description,
-      this.leftActionText,
-      this.rightActionText,
-      this.leftAction,
-      this.rightAction,
-      this.isAdded = false,
-      this.overlayIcon});
-}
-
 class RecommendationCardStyle {
   final TextStyle titleTextStyle;
   final TextStyle subtitleTextStyle;
   final TextStyle descriptionTextStyle;
-  final RoundedButtonStyle leftActionButtonStyle;
-  final RoundedButtonStyle rightActionButtonStyle;
+  final RoundedButtonStatefulStyle leftActionButtonStyle;
+  final RoundedButtonStatefulStyle rightActionButtonStyle;
   final double imageHeight;
   final BorderRadiusGeometry imageBorderRadius;
   final int descriptionMaxLines;
@@ -56,21 +33,24 @@ class RecommendationCardStyle {
   final Color overlayColor;
   final double overlayIconHeight;
   final double overlayIconWidth;
+  final String overlayIcon;
 
-  const RecommendationCardStyle(
-      {this.titleTextStyle,
-      this.subtitleTextStyle,
-      this.descriptionTextStyle,
-      this.leftActionButtonStyle,
-      this.rightActionButtonStyle,
-      this.imageHeight,
-      this.imageBorderRadius,
-      this.descriptionMaxLines,
-      this.contentPadding,
-      this.rightActionBoxDecoration,
-      this.overlayColor,
-      this.overlayIconHeight,
-      this.overlayIconWidth});
+  const RecommendationCardStyle({
+    this.titleTextStyle,
+    this.subtitleTextStyle,
+    this.descriptionTextStyle,
+    this.leftActionButtonStyle,
+    this.rightActionButtonStyle,
+    this.imageHeight,
+    this.imageBorderRadius,
+    this.descriptionMaxLines,
+    this.contentPadding,
+    this.rightActionBoxDecoration,
+    this.overlayColor,
+    this.overlayIconHeight,
+    this.overlayIconWidth,
+    this.overlayIcon,
+  });
 
   RecommendationCardStyle copyWith({
     TextStyle titleTextStyle,
@@ -86,6 +66,7 @@ class RecommendationCardStyle {
     Color overlayColor,
     double overlayIconHeight,
     double overlayIconWidth,
+    String overlayIcon,
   }) {
     return RecommendationCardStyle(
       titleTextStyle: titleTextStyle ?? this.titleTextStyle,
@@ -104,6 +85,7 @@ class RecommendationCardStyle {
       overlayColor: overlayColor ?? this.overlayColor,
       overlayIconHeight: overlayIconHeight ?? this.overlayIconHeight,
       overlayIconWidth: overlayIconWidth ?? this.overlayIconWidth,
+      overlayIcon: overlayIcon ?? this.overlayIcon,
     );
   }
 }
@@ -122,8 +104,10 @@ class _DefaultStyle extends RecommendationCardStyle {
     color: Color(0xff767690),
     fontSize: 14,
   );
-  final RoundedButtonStyle leftActionButtonStyle = defaultRoundedButtonStyle;
-  final RoundedButtonStyle rightActionButtonStyle = defaultRoundedButtonStyle;
+  final RoundedButtonStatefulStyle leftActionButtonStyle =
+      defaultRoundedButtonStyle;
+  final RoundedButtonStatefulStyle rightActionButtonStyle =
+      defaultRoundedButtonStyle;
   final double imageHeight = 152;
   final BorderRadiusGeometry imageBorderRadius =
       const BorderRadius.all(Radius.circular(12.0));
@@ -135,25 +119,44 @@ class _DefaultStyle extends RecommendationCardStyle {
   final double overlayIconHeight = 54;
   final double overlayIconWidth = 54;
 
-  static const defaultRoundedButtonStyle = const RoundedButtonStyle(
-    backgroundColor: Color(0xffe9eaf2),
-    borderRadius: BorderRadius.all(Radius.circular(8)),
-    buttonTextStyle: TextStyle(
-        fontSize: 13, fontWeight: FontWeight.w500, color: Color(0xff4c4e6e)),
-    iconEdgePadding: 5,
-    height: 40,
-    width: double.infinity,
-    buttonIconSize: null,
-    iconButtonColor: Color(0xFFFFFFFF),
-    buttonShape: BoxShape.rectangle,
+  final String overlayIcon = 'assets/icons/tick_large.png';
+
+  static const defaultRoundedButtonStyle = RoundedButtonStatefulStyle(
+    activeRoundedButtonStyle: const RoundedButtonStyle(
+      backgroundColor: Color(0xff24d900),
+      borderRadius: BorderRadius.all(Radius.circular(8)),
+      buttonTextStyle: TextStyle(
+        fontSize: 13,
+        fontWeight: FontWeight.w500,
+        color: Color(0xffffffff),
+      ),
+      iconEdgePadding: 5,
+      height: 40,
+      width: double.infinity,
+      buttonIconSize: null,
+      iconButtonColor: Color(0xFFFFFFFF),
+      buttonShape: BoxShape.rectangle,
+    ),
+    inactiveRoundedButtonStyle: const RoundedButtonStyle(
+      backgroundColor: Color(0xffe9eaf2),
+      borderRadius: BorderRadius.all(Radius.circular(8)),
+      buttonTextStyle: TextStyle(
+          fontSize: 13, fontWeight: FontWeight.w500, color: Color(0xff4c4e6e)),
+      iconEdgePadding: 5,
+      height: 40,
+      width: double.infinity,
+      buttonIconSize: null,
+      iconButtonColor: Color(0xFFFFFFFF),
+      buttonShape: BoxShape.rectangle,
+    ),
   );
 
   const _DefaultStyle({
     TextStyle titleTextStyle,
     TextStyle subtitleTextStyle,
     TextStyle descriptionTextStyle,
-    RoundedButtonStyle leftActionButtonStyle,
-    RoundedButtonStyle rightActionButtonStyle,
+    RoundedButtonStatefulStyle leftActionButtonStyle,
+    RoundedButtonStatefulStyle rightActionButtonStyle,
     double imageHeight,
     BorderRadiusGeometry imageBorderRadius,
     int descriptionMaxLines,
@@ -161,6 +164,7 @@ class _DefaultStyle extends RecommendationCardStyle {
     Color overlayColor,
     double overlayIconHeight,
     double overlayIconWidth,
+    String overlayIcon,
   });
 }
 
@@ -168,14 +172,17 @@ const RecommendationCardStyle _defaultStyle = const _DefaultStyle();
 
 class RecommendationCard extends StatelessWidget {
   final RecommendationCardStyle _style;
+  final Function _detailAction;
   final RecommendationCardViewModel _viewModel;
 
   RecommendationCard({
     Key key,
     @required RecommendationCardViewModel viewModel,
+    Function detailAction,
     RecommendationCardStyle style = _defaultStyle,
   })  : this._style = style,
         this._viewModel = viewModel,
+        this._detailAction = detailAction,
         super(key: key);
 
   @override
@@ -204,7 +211,7 @@ class RecommendationCard extends StatelessWidget {
       imageHeight: _style.imageHeight,
       imageWidth: double.infinity,
       imageBorderRadius: _style.imageBorderRadius,
-      overlayIcon: _viewModel.overlayIcon,
+      overlayIcon: _style.overlayIcon,
       overlayIconHeight: _style.overlayIconHeight,
       overlayIconWidth: _style.overlayIconWidth,
       overlayColor: _style.overlayColor,
@@ -262,11 +269,13 @@ class RecommendationCard extends StatelessWidget {
       child: Row(
         children: <Widget>[
           Expanded(
-            child: RoundedButton(
+            child: RoundedButtonStateful(
               style: _style.leftActionButtonStyle,
-              viewModel: RoundedButtonViewModel(
-                title: _viewModel.leftActionText,
-                onTap: _viewModel.leftAction,
+              viewModel: RoundedButtonStatefulViewModel(
+                roundedButtonViewModel: RoundedButtonViewModel(
+                  title: _viewModel.detailActionText,
+                  onTap: _detailAction,
+                ),
               ),
             ),
           ),
@@ -275,12 +284,15 @@ class RecommendationCard extends StatelessWidget {
           ),
           Expanded(
             child: Container(
-              decoration: _style.rightActionBoxDecoration,
-              child: RoundedButton(
+              decoration: _viewModel.isAdded ? _style.rightActionBoxDecoration : null,
+              child: RoundedButtonStateful(
                 style: _style.rightActionButtonStyle,
-                viewModel: RoundedButtonViewModel(
-                  title: _viewModel.rightActionText,
-                  onTap: _viewModel.rightAction,
+                viewModel: RoundedButtonStatefulViewModel(
+                  isActive: !_viewModel.isAdded,
+                  roundedButtonViewModel: RoundedButtonViewModel(
+                    title: _viewModel.addActionText,
+                    onTap: _viewModel.addAction,
+                  ),
                 ),
               ),
             ),

@@ -7,5 +7,10 @@ class ArticleListItemViewModel {
   final ImageURLProvider image;
   final ArticleDetailViewModel detailViewModel;
 
-  ArticleListItemViewModel(this.title, this.summary, this.image, this.detailViewModel);
+  ArticleListItemViewModel(
+    this.title,
+    this.summary,
+    this.image,
+    this.detailViewModel,
+  );
 }

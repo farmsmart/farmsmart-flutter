@@ -1,5 +1,6 @@
 
 import 'dart:async';
+import 'dart:math';
 import 'package:farmsmart_flutter/data/model/EntityCollectionInterface.dart';
 import 'package:farmsmart_flutter/data/model/NewStageEntity.dart';
 import 'package:farmsmart_flutter/data/model/PlotEntity.dart';
@@ -13,6 +14,8 @@ import '../PlotRepositoryInterface.dart';
 final _plotBuilder = MockPlotEntity();
 
 class MockPlotRepository implements PlotRepositoryInterface {
+  final _rand = Random(0);
+  final _errorOneIn = 100;
   final _plotStreamController =  StreamController<List<PlotEntity>>.broadcast(); 
   List<PlotEntity> _plots = [];
 
@@ -20,10 +23,13 @@ class MockPlotRepository implements PlotRepositoryInterface {
 
   @override
   Future<PlotEntity> addPlot({ProfileEntity toProfile, PlotInfoEntity plotInfo, CropEntity crop}) {
-    final entity = _plotBuilder.build();
-    _plots.add(entity);
-    _update();
-    return Future.value(entity);
+    final entity = _plotBuilder.buildWith(crop).then((newPlot){
+      _plots.add(newPlot);
+      _update();
+      return newPlot;
+    });
+   
+    return entity;
   }
 
   @override
@@ -33,7 +39,9 @@ class MockPlotRepository implements PlotRepositoryInterface {
 
   @override
   Future<List<PlotEntity>> getFarm(ProfileEntity forProfile) {
-    return Future.value(_plots);
+    int errorChance = _rand.nextInt(_errorOneIn);
+    _update();
+    return (errorChance == 0) ? Future.error(Error()) : Future.value(_plots);
   }
 
   @override
@@ -46,8 +54,7 @@ class MockPlotRepository implements PlotRepositoryInterface {
   Stream<PlotEntity> observe(String uri) {
     final controller = _observers[uri];
     if(controller == null){
-      final newController = StreamController<PlotEntity>.broadcast();
-      _observers[uri] = newController;
+      _observers[uri] = StreamController<PlotEntity>.broadcast();
     }
     return _observers[uri].stream;
   }
@@ -59,7 +66,6 @@ class MockPlotRepository implements PlotRepositoryInterface {
 
   void _update() {
     _plotStreamController.sink.add(_plots);
-
     //LH update any observers of the plots 
     for (var plot in _plots) {
       final controller = _observers[plot.id];

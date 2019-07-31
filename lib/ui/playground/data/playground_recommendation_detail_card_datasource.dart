@@ -13,7 +13,7 @@ class PlaygroundRecommendationDetailCardDatasource
       PlaygroundWidget(
         title: 'Add to Your Plot',
         child: RecommendationDetailCard(
-          style: RecommendationDetailCardStyles.buildAddToYourPlot(),
+          style: RecommendationDetailCardStyles.build(),
           viewModel:
               MockRecommendationDetailCardViewModel.buildAddToYourPlotState(),
         ),
@@ -21,7 +21,7 @@ class PlaygroundRecommendationDetailCardDatasource
       PlaygroundWidget(
         title: 'Added to Your Plot',
         child: RecommendationDetailCard(
-          style: RecommendationDetailCardStyles.buildAddedToYourPlot(),
+          style: RecommendationDetailCardStyles.build(),
           viewModel:
               MockRecommendationDetailCardViewModel.buildAddedToYourPlot(),
         ),
@@ -29,7 +29,7 @@ class PlaygroundRecommendationDetailCardDatasource
       PlaygroundWidget(
         title: 'Add to Your Plot with large strings',
         child: RecommendationDetailCard(
-          style: RecommendationDetailCardStyles.buildAddToYourPlot(),
+          style: RecommendationDetailCardStyles.build(),
           viewModel:
               MockRecommendationDetailCardViewModel.buildWithLargeStrings(),
         ),

@@ -21,6 +21,20 @@ class MockArticle extends MockEntity<ArticleEntity> {
     entity.images = MockImageEntityCollection();
     return entity;
   }
+
+  ArticleEntity buildCrop(String title) {
+    final entity = ArticleEntity(
+      id: mockPlainText.identifier(),
+      content: mockRichTextNoImage.random(),
+      status: Status.PUBLISHED,
+      summary: mockPlainText.random(),
+      title: title,
+      published: _mockDate.randomYearAgo(),
+    );
+    entity.related = null;
+    entity.images = MockImageEntityCollection();
+    return entity;
+  }
   
   ArticleEntity buildStage() {
     final entity = ArticleEntity(

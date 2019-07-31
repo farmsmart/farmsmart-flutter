@@ -11,46 +11,38 @@ class CropEntity {
   String id;
   List<String> companionPlants;
   CropComplexity complexity;
-  String content;
   List<String> cropsInRotation;
   CropType cropType;
-  String imagePathReference;
-  Future<String> imageUrl;
   String name;
   List<String> nonCompanionPlants;
   LoHi profitability;
   LoHi setupCost;
   List<String> soilType;
   List<StageEntity> stages;
-  List<String> stagesPathReference;
   Status status;
-  String summary;
   LoHi waterRequirement;
+  ArticleEntity article;
   EntityCollection<ArticleEntity> stageArticles;
   EntityCollection<ImageEntity> images;
 
   CropEntity({
     this.id,
+    this.article,
     this.companionPlants,
     this.complexity,
-    this.content,
     this.cropsInRotation,
     this.cropType,
-    this.imagePathReference,
-    this.imageUrl,
     this.name,
     this.nonCompanionPlants,
     this.profitability,
     this.setupCost,
     this.soilType,
     this.stages,
-    this.stagesPathReference,
     this.status,
-    this.summary,
     this.waterRequirement,
   });
 
-  factory CropEntity.cropFromDocument(DocumentSnapshot cropDocument) =>
+  /*factory CropEntity.cropFromDocument(DocumentSnapshot cropDocument) =>
       CropEntity(
         id: cropDocument.documentID,
         companionPlants: extractListOfString(cropDocument, COMPANION_PLANTS),
@@ -78,7 +70,7 @@ class CropEntity {
    */
   void setImageUrl(Future<String> imageUrl) {
     this.imageUrl = imageUrl;
-  }
+  }*/
 
   void addStage(StageEntity stage) {
     this.stages.add(stage);

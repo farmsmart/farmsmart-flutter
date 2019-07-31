@@ -2,6 +2,8 @@ import 'package:farmsmart_flutter/data/repositories/article/ArticleRepositoryInt
 import 'package:farmsmart_flutter/data/repositories/plot/PlotRepositoryInterface.dart';
 import 'package:flutter/material.dart';
 
+import 'crop/CropRepositoryInterface.dart';
+
 abstract class RepositoryProvider {
 
   init(BuildContext context);
@@ -9,4 +11,6 @@ abstract class RepositoryProvider {
   ArticleRepositoryInterface getDiscoverRepository();
 
   PlotRepositoryInterface getMyPlotRepository();
+
+  CropRepositoryInterface  getCropRepository();
 }

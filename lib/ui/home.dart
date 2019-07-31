@@ -1,5 +1,7 @@
 import 'package:farmsmart_flutter/data/bloc/article/ArticleListProvider.dart';
 import 'package:farmsmart_flutter/data/bloc/plot/PlotListProvider.dart';
+import 'package:farmsmart_flutter/data/bloc/recommendations/RecommendationEngine.dart';
+import 'package:farmsmart_flutter/data/model/mock/MockRecommendation.dart';
 import 'package:farmsmart_flutter/data/repositories/article/ArticleRepositoryInterface.dart';
 import 'package:farmsmart_flutter/data/repositories/repository_provider.dart';
 import 'package:farmsmart_flutter/farmsmart_localizations.dart';
@@ -25,6 +27,12 @@ class _Constants {
   static final communitySelectedIcon = 'assets/icons/community_selected.png';
   static final communityIcon = 'assets/icons/community.png';
 }
+
+  final engine = RecommendationEngine(
+    inputFactors: harryInput,
+    inputScale: 10.0,
+    weightMatrix: harryWeights,
+  );
 
 class Home extends StatelessWidget {
   FarmsmartLocalizations localizations;
@@ -86,7 +94,9 @@ class Home extends StatelessWidget {
     return PlotList(
         provider: PlotListProvider(
             title: localizations.myPlotTab,
-            repository: repositoryProvider.getMyPlotRepository()));
+            engine: engine,
+            plotRepository: repositoryProvider.getMyPlotRepository(),
+            cropRepository: repositoryProvider.getCropRepository()));
   }
 
   _buildDiscover() {

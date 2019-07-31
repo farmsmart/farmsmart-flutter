@@ -1,5 +1,5 @@
 import 'package:farmsmart_flutter/data/model/article_entity.dart';
-
+//TODO: rename to StageEntity when we can remove old stuff
 class NewStageEntity {
   final String id;
   final ArticleEntity article;
