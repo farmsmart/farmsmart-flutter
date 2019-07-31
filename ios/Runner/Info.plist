@@ -45,6 +45,5 @@
 	<string>Take profile picture</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Take profile picture</string>
-	<key>NSMicrophoneUsageDescription</key>
 </dict>
 </plist>

@@ -115,7 +115,7 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
                       height: 350,
                       child: ActionSheet(
                           viewModel:
-                          MockActionSheetViewModel.buildWithCheckBox(),
+                              MockActionSheetViewModel.buildWithCheckBox(),
                           style: ActionSheetStyle.defaultStyle()))),
             ],
           )),
@@ -263,36 +263,47 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
       ),
       PlaygroundWidget(
         title: 'TASK FARM-97 Update Recomentations',
-        child: PlaygroundView(widgetList: [
-          PlaygroundWidget(
+        child: PlaygroundView(
+          widgetList: [
+            PlaygroundWidget(
               title: "TASK FARM-97 View List states",
               child: RecommendationsList(
-                  provider: SequencedViewModelProvider<
-                      RecommendationsListViewModel>(
-                    [
-                      MockRecommendationsListViewModel().build(),
-                      MockRecommendationsListViewModel().build(),
-                      MockRecommendationsListViewModel().build(),
-                      MockRecommendationsListViewModel().build(),
-                    ],
-                  ))),
-          PlaygroundWidget(
-            title: "TASK FARM-97 Mock repo",
-            child: RecommendationsList(
-              provider: RecommendationListProvider(
-                title: "Mock Repo",
-                cropRepo: _mockCrop,
-                plotRepo: _mockPlot,
-                engine: _engine,
-              ),),),
-        ],),),
+                provider:
+                    SequencedViewModelProvider<RecommendationsListViewModel>(
+                  [
+                    MockRecommendationsListViewModel().build(),
+                    MockRecommendationsListViewModel().build(),
+                    MockRecommendationsListViewModel().build(),
+                    MockRecommendationsListViewModel().build(),
+                  ],
+                ),
+              ),
+            ),
+            PlaygroundWidget(
+              title: "TASK FARM-97 Mock repo",
+              child: RecommendationsList(
+                provider: RecommendationListProvider(
+                  title: "Mock Repo",
+                  cropRepo: _mockCrop,
+                  plotRepo: _mockPlot,
+                  engine: _engine,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
       PlaygroundWidget(
         title: 'TASK-318 Take picture camera',
-        child: PlaygroundTakeImageTester(imageSource: ImageSource.camera,),
+        child: PlaygroundTakeImageTester(
+          imageSource: ImageSource.camera,
+        ),
       ),
       PlaygroundWidget(
         title: 'TASK-318 Take picture gallery',
-        child: PlaygroundTakeImageTester(imageSource: ImageSource.gallery,),
+        child: PlaygroundTakeImageTester(
+          imageSource: ImageSource.gallery,
+        ),
       ),
     ];
   }

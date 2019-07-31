@@ -1,16 +1,16 @@
 import 'dart:io';
 
-import 'package:farmsmart_flutter/ui/common/take_image.dart';
+import 'package:farmsmart_flutter/ui/common/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:image_picker/image_picker.dart' as ImagePickerLib;
 
-class _Strings{
+class _Strings {
   static final noImage = 'No image';
 }
 
 class PlaygroundTakeImageTester extends StatefulWidget {
-  final ImageSource imageSource;
+  final ImagePickerLib.ImageSource imageSource;
 
   PlaygroundTakeImageTester({Key key, this.imageSource});
 
@@ -26,14 +26,17 @@ class _PlaygroundTakeImageTesterState extends State<PlaygroundTakeImageTester> {
   void initState() {
     super.initState();
 
-    TakeImage(
+    ImagePicker.pickImage(
       imageSource: widget.imageSource,
       imageMaxHeight: 500,
       imageMaxWidth: 500,
-      onImageTaken: (imageFile) {
+      onSuccess: (imageFile) {
         setState(() {
           _file = imageFile;
         });
+      },
+      onError: (message) {
+        print(message);
       },
     );
   }

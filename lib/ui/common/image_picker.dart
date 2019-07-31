@@ -2,7 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:image_picker/image_picker.dart' as ImagePickerLib
+    show ImagePicker, ImageSource;
 import 'package:intl/intl.dart';
 
 class _Constants {
@@ -15,35 +16,26 @@ class _Constants {
 
 class _Strings {
   static final editPhoto = 'Edit Photo';
+  static final noImagePickedError = 'No image picked';
+  static final noCroppedImageError = 'No cropped image';
 }
 
-class TakeImage {
-
-  final ImageSource imageSource;
-  final int imageMaxHeight;
-  final int imageMaxWidth;
-  final void Function(File) onImageTaken;
-  final bool circleShapeOnCrop;
-  final double imageRatioX;
-  final double imageRatioY;
-
-
-  TakeImage({
-    @required this.imageSource,
-    @required this.imageMaxHeight,
-    @required this.imageMaxWidth,
-    @required this.onImageTaken,
-    this.circleShapeOnCrop = true,
-    this.imageRatioX = _Constants.defaultImageRatioX,
-    this.imageRatioY = _Constants.defaultImageRatioY,
-  }) {
-    _takeImage();
-  }
-
-  Future<void> _takeImage() async {
-    final file = await ImagePicker.pickImage(source: imageSource);
+class ImagePicker {
+  static Future<void> pickImage({
+    @required Function(File) onSuccess,
+    @required Function(String) onError,
+    @required ImagePickerLib.ImageSource imageSource,
+    @required int imageMaxHeight,
+    @required int imageMaxWidth,
+    bool circleShapeOnCrop = true,
+    double imageRatioX = _Constants.defaultImageRatioX,
+    double imageRatioY = _Constants.defaultImageRatioY,
+  }) async {
+    final file =
+        await ImagePickerLib.ImagePicker.pickImage(source: imageSource);
 
     if (file == null) {
+      onError(_Strings.noImagePickedError);
       return;
     }
 
@@ -61,9 +53,10 @@ class TakeImage {
     );
 
     if (croppedFile == null) {
+      onError(_Strings.noCroppedImageError);
       return;
     }
 
-    onImageTaken(croppedFile);
+    onSuccess(croppedFile);
   }
 }
