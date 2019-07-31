@@ -4,6 +4,7 @@ import 'package:farmsmart_flutter/model/bloc/recommendations/RecommendationEngin
 import 'package:farmsmart_flutter/model/model/mock/MockPlot.dart';
 import 'package:farmsmart_flutter/model/model/mock/MockRecommendation.dart';
 import 'package:farmsmart_flutter/ui/community/LinkBox.dart';
+import 'package:farmsmart_flutter/ui/community/MockLinkBox.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockRecordTransactionViewModel.dart';
 import 'package:farmsmart_flutter/ui/myplot/PlotDetail.dart';
 import 'package:farmsmart_flutter/ui/playground/playground_widget.dart';
@@ -331,8 +332,23 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
                 )),
       PlaygroundWidget(
         title: 'TASK FARM-445-UI-Join-Chat-Widget',
-        child: LinkBox(),
-      )
+        child: PlaygroundView(
+          widgetList: [
+            PlaygroundWidget(
+              title: "With WhatsApp Image",
+              child: LinkBox(
+                viewModel: MockLinkBoxViewModel.buildWithImage(),
+              ),
+            ),
+            PlaygroundWidget(
+              title: "With Browser Icon",
+              child: LinkBox(
+                viewModel: MockLinkBoxViewModel.buildWithIcon(),
+              ),
+            ),
+          ],
+        ),
+      ),
     ];
   }
 }
