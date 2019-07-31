@@ -17,6 +17,15 @@ import 'package:farmsmart_flutter/ui/bottombar/persistent_bottom_navigation_bar.
 import 'package:farmsmart_flutter/data/repositories/plot/implementation/MockPlotRepository.dart';
 import 'package:farmsmart_flutter/ui/common/Alert.dart';
 import 'package:farmsmart_flutter/ui/common/carousel_view.dart';
+import 'package:farmsmart_flutter/ui/mockData/MockActionSheetViewModel.dart';
+import 'package:farmsmart_flutter/ui/mockData/MockSwitchProfile.dart';
+import 'package:farmsmart_flutter/ui/myplot/PlotDetail.dart';
+import 'package:farmsmart_flutter/ui/myplot/PlotList.dart';
+import 'package:farmsmart_flutter/ui/playground/data/playground_data_source.dart';
+import 'package:farmsmart_flutter/ui/playground/data/playground_stagecard_datasource.dart';
+import 'package:farmsmart_flutter/ui/playground/playground_present_button.dart';
+import 'package:farmsmart_flutter/ui/playground/playground_widget.dart';
+import 'package:farmsmart_flutter/ui/profile/SwitchProfile.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockUserProfileViewModel.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockAlertWidgetViewModel.dart';
 import 'package:farmsmart_flutter/ui/playground/data/playground_data_source.dart';
@@ -187,6 +196,16 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
         child: PersistentBottomNavigationBar(
           backgroundColor: Colors.white,
           tabs: PlaygroundPersistentBottomNavigationBar().getList(),
+        ),
+      ),
+      PlaygroundWidget(
+        title: "FARM-67 Switch profiles",
+        child: PlaygroundPresentButton(
+          child: SwitchProfile(
+            viewModel: MockSwitchProfile.build(),
+          ),
+          listener: (widget, context) =>
+              PlaygroundPresentButton.presentModal(widget, context),
         ),
       ),
       PlaygroundWidget(
