@@ -1,3 +1,4 @@
+import 'package:farmsmart_flutter/ui/playground/data/AtomicPlayground.dart';
 import 'package:farmsmart_flutter/ui/playground/data/playground_tasks_datasource.dart';
 import 'package:farmsmart_flutter/ui/playground/data/playground_atom_datasource.dart';
 import 'package:farmsmart_flutter/ui/playground/playground_view.dart';
@@ -12,6 +13,12 @@ class PlaygroundDataSourceImpl implements PlaygroundDataSource {
             title: 'Atoms',
             child: PlaygroundView(
               widgetList: PlayGroundAtomDataSource().getList(),
+            ),
+          ),
+          PlaygroundWidget(
+            title: 'Atomic playground',
+            child: PlaygroundView(
+              widgetList: AtomicPlaygroundDatasource().getList(),
             ),
           ),
         ] +
