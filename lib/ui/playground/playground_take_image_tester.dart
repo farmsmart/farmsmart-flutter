@@ -36,7 +36,11 @@ class _PlaygroundTakeImageTesterState extends State<PlaygroundTakeImageTester> {
         });
       },
       onError: (message) {
-        print(message);
+        Scaffold.of(context).showSnackBar(
+          SnackBar(
+            content: Text(message),
+          ),
+        );
       },
     );
   }
