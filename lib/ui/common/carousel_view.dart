@@ -23,7 +23,6 @@ class CarouselView extends StatelessWidget {
     return PageView(
       children: _children,
       onPageChanged: _onPageChange,
-      
       controller: PageController(viewportFraction: _viewPortFraction, initialPage: _initialPage),
     );
   }
