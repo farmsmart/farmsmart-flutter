@@ -1,7 +1,8 @@
-import 'package:farmsmart_flutter/ui/common/recommendation_compact_card/recommendation_compact_card.dart';
+import 'package:farmsmart_flutter/ui/common/rounded_button_stateful.dart';
 import 'package:flutter/widgets.dart';
 
-import '../rounded_button_stateful.dart';
+import 'recommendation_compact_card.dart';
+
 
 class RecommendationCompactCardStyles {
   static RecommendationCompactCardStyle build() =>

@@ -2,8 +2,8 @@ import 'package:farmsmart_flutter/data/bloc/ViewModelProvider.dart';
 import 'package:farmsmart_flutter/model/loading_status.dart';
 import 'package:farmsmart_flutter/ui/common/LoadableViewModel.dart';
 import 'package:farmsmart_flutter/ui/common/RefreshableViewModel.dart';
-import 'package:farmsmart_flutter/ui/common/recommendation_card/recommendation_card_view_model.dart';
 import 'package:farmsmart_flutter/ui/crop/viewmodel/CropDetailViewModel.dart';
+import 'package:farmsmart_flutter/ui/recommendations/recommendation_card/recommendation_card_view_model.dart';
 
 typedef BoolFunction = bool Function();
 typedef DetailProviderFunction = ViewModelProvider<CropDetailViewModel> Function();

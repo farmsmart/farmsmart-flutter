@@ -5,12 +5,11 @@ import 'package:farmsmart_flutter/data/bloc/StaticViewModelProvider.dart';
 import 'package:farmsmart_flutter/data/bloc/crop/CropDetailTransformer.dart';
 import 'package:farmsmart_flutter/data/bloc/recommendations/RecommendationEngine.dart';
 import 'package:farmsmart_flutter/data/model/crop_entity.dart';
-import 'package:farmsmart_flutter/data/model/mock/MockRecommendation.dart';
 import 'package:farmsmart_flutter/data/repositories/crop/CropRepositoryInterface.dart';
 import 'package:farmsmart_flutter/data/repositories/plot/PlotRepositoryInterface.dart';
 import 'package:farmsmart_flutter/model/loading_status.dart';
-import 'package:farmsmart_flutter/ui/common/recommendation_card/recommendation_card_view_model.dart';
 import 'package:farmsmart_flutter/ui/crop/viewmodel/CropDetailViewModel.dart';
+import 'package:farmsmart_flutter/ui/recommendations/recommendation_card/recommendation_card_view_model.dart';
 import 'package:farmsmart_flutter/ui/recommendations/viewmodel/RecommendationsListViewModel.dart';
 
 import '../ViewModelProvider.dart';

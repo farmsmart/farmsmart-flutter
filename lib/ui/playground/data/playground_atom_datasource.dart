@@ -10,8 +10,6 @@ import 'package:farmsmart_flutter/data/model/mock/MockArticle.dart';
 import 'package:farmsmart_flutter/ui/common/ActionSheetListItem.dart';
 import 'package:farmsmart_flutter/ui/common/DogTagStyles.dart';
 import 'package:farmsmart_flutter/ui/common/Dogtag.dart';
-import 'package:farmsmart_flutter/ui/common/recommendation_card/recommendation_card.dart';
-import 'package:farmsmart_flutter/ui/common/recommendation_compact_card/recommendation_compact_card.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
 import 'package:farmsmart_flutter/ui/common/stage_card.dart';
 import 'package:farmsmart_flutter/ui/article/HeroListItem.dart';

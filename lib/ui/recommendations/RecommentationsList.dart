@@ -5,15 +5,16 @@ import 'package:farmsmart_flutter/ui/common/ContextualAppBar.dart';
 import 'package:farmsmart_flutter/ui/common/SectionListView.dart';
 import 'package:farmsmart_flutter/ui/common/ViewModelProviderBuilder.dart';
 import 'package:farmsmart_flutter/ui/common/headerAndFooterListView.dart';
-import 'package:farmsmart_flutter/ui/common/recommendation_card/recommendation_card.dart';
-import 'package:farmsmart_flutter/ui/common/recommendation_card/recommendation_card_styles.dart';
-import 'package:farmsmart_flutter/ui/common/recommendation_compact_card/recommendation_compact_card.dart';
-import 'package:farmsmart_flutter/ui/common/recommendation_compact_card/recommendation_compact_card_styles.dart';
 import 'package:farmsmart_flutter/ui/crop/CropDetail.dart';
 import 'package:farmsmart_flutter/ui/crop/viewmodel/CropDetailViewModel.dart';
 import 'package:farmsmart_flutter/ui/recommendations/viewmodel/RecommendationsListViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+
+import 'recommendation_card/recommendation_card.dart';
+import 'recommendation_card/recommendation_card_styles.dart';
+import 'recommendation_compact_card/recommendation_compact_card.dart';
+import 'recommendation_compact_card/recommendation_compact_card_styles.dart';
 
 class _Strings {
   static const finish = "Finish";

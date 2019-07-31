@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:farmsmart_flutter/data/model/mock/MockString.dart';
-import 'package:farmsmart_flutter/ui/common/recommendation_card/recommendation_card_view_model.dart';
+import 'package:farmsmart_flutter/ui/recommendations/recommendation_card/recommendation_card_view_model.dart';
 
 class MockRecommendationCardViewModel {
 

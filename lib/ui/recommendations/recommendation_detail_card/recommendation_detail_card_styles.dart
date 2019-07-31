@@ -1,6 +1,6 @@
+import 'package:farmsmart_flutter/ui/common/rounded_button_stateful.dart';
 import 'package:flutter/material.dart';
 
-import '../rounded_button_stateful.dart';
 import 'recommendation_detail_card.dart';
 
 class RecommendationDetailCardStyles {
