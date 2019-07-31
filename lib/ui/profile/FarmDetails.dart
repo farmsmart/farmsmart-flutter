@@ -15,34 +15,72 @@ class _Strings {
   static final String motivation = Intl.message("Motivation");
   static final String soilType = Intl.message("Soil Type");
   static final String farmDetailsTitle = "Your Farm Details";
+
+  static final String actionSheetButtonTitle = "Cancel";
+  static final String actionSheetEdit = "Edit Profile";
+  static final String actionSheetDelete = "Delete Profile";
 }
 
 class _Constants {
   static final EdgeInsets floatingButtonEdgePadding = const EdgeInsets.all(32);
   static final EdgeInsets headerEdgePadding =
       const EdgeInsets.symmetric(horizontal: 32, vertical: 20);
+  static final double bottomMargin = 120;
 }
 
 class FarmDetailsViewModel {
   List<FarmDetailsListItemViewModel> items;
   final String buttonTitle;
-
   final Function editProfile;
   final Function removeProfile;
 
-  FarmDetailsViewModel(
-      {this.items, this.buttonTitle, this.removeProfile, this.editProfile});
+  FarmDetailsViewModel({
+    this.items,
+    this.buttonTitle,
+    this.removeProfile,
+    this.editProfile,
+  });
 }
 
-class FarmDetailsStyle {}
+class FarmDetailsStyle {
+  final TextStyle titleTextStyle;
+
+  const FarmDetailsStyle({
+    this.titleTextStyle,
+  });
+
+  FarmDetailsStyle copyWith({
+    TextStyle titleTextStyle,
+  }) {
+    return FarmDetailsStyle(
+      titleTextStyle: titleTextStyle ?? this.titleTextStyle,
+    );
+  }
+}
+
+class _DefaultStyle extends FarmDetailsStyle {
+  final TextStyle titleTextStyle = const TextStyle(
+    color: Color(0xff1a1b46),
+    fontSize: 27,
+    fontWeight: FontWeight.w700,
+  );
+
+  const _DefaultStyle({
+    TextStyle titleTextStyle,
+  });
+}
+
+const FarmDetailsStyle _defaultStyle = const _DefaultStyle();
 
 class FarmDetails extends StatelessWidget {
   final FarmDetailsViewModel _viewModel;
   final FarmDetailsStyle _style;
 
-  const FarmDetails(
-      {Key key, FarmDetailsViewModel viewModel, FarmDetailsStyle style})
-      : this._viewModel = viewModel,
+  const FarmDetails({
+    Key key,
+    FarmDetailsViewModel viewModel,
+    FarmDetailsStyle style = _defaultStyle,
+  })  : this._viewModel = viewModel,
         this._style = style,
         super(key: key);
 
@@ -54,8 +92,9 @@ class FarmDetails extends StatelessWidget {
       floatingActionButton: Padding(
         padding: _Constants.floatingButtonEdgePadding,
         child: RoundedButton(
-            viewModel: RoundedButtonViewModel(title: _viewModel.buttonTitle),
-            style: RoundedButtonStyle.largeRoundedButtonStyle()),
+          viewModel: RoundedButtonViewModel(title: _viewModel.buttonTitle),
+          style: RoundedButtonStyle.largeRoundedButtonStyle(),
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
@@ -69,7 +108,9 @@ class FarmDetails extends StatelessWidget {
           _buildHeader(),
           _buildList(),
           ListDivider.build(),
-          SizedBox(height: 120,)
+          SizedBox(
+            height: _Constants.bottomMargin,
+          )
         ],
       ),
     );
@@ -83,11 +124,7 @@ class FarmDetails extends StatelessWidget {
           Expanded(
             child: Text(
               Intl.message(_Strings.farmDetailsTitle),
-              style: TextStyle(
-                color: Color(0xff1a1b46),
-                fontSize: 27,
-                fontWeight: FontWeight.w700,
-              ),
+              style: _style.titleTextStyle,
             ),
           ),
         ],
@@ -98,8 +135,9 @@ class FarmDetails extends StatelessWidget {
   Widget _buildList() {
     return ListView.separated(
       primary: false,
-      itemBuilder: (context, index) =>
-          FarmDetailsListItem(viewModel: _viewModel.items[index]),
+      itemBuilder: (context, index) => FarmDetailsListItem(
+        viewModel: _viewModel.items[index],
+      ),
       shrinkWrap: true,
       separatorBuilder: (context, index) => ListDivider.build(),
       itemCount: _viewModel.items.length,
@@ -131,18 +169,20 @@ class FarmDetails extends StatelessWidget {
   ActionSheet _moreMenu(FarmDetailsViewModel viewModel, BuildContext context) {
     final actions = [
       ActionSheetListItemViewModel(
-          title: Intl.message("Edit profile"),
-          type: ActionType.simple,
-          onTap: () => _editAction(viewModel)),
+        title: Intl.message(_Strings.actionSheetEdit),
+        type: ActionType.simple,
+        onTap: () => _editAction(viewModel),
+      ),
       ActionSheetListItemViewModel(
-          title: Intl.message("Delete profile"),
-          type: ActionType.simple,
-          isDestructive: true,
-          onTap: () => _removeAction(viewModel, context)),
+        title: Intl.message(_Strings.actionSheetDelete),
+        type: ActionType.simple,
+        isDestructive: true,
+        onTap: () => _removeAction(viewModel, context),
+      ),
     ];
     final actionSheetViewModel = ActionSheetViewModel(
       actions,
-      Intl.message("Cancel"),
+      Intl.message(_Strings.actionSheetButtonTitle),
     );
     return ActionSheet(
       viewModel: actionSheetViewModel,
