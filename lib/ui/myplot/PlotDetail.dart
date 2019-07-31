@@ -1,4 +1,4 @@
-import 'package:farmsmart_flutter/data/bloc/ViewModelProvider.dart';
+import 'package:farmsmart_flutter/model/bloc/ViewModelProvider.dart';
 import 'package:farmsmart_flutter/ui/common/ActionSheet.dart';
 import 'package:farmsmart_flutter/ui/common/ActionSheetListItem.dart';
 
@@ -10,8 +10,8 @@ import 'package:farmsmart_flutter/ui/common/headerAndFooterListView.dart';
 import 'package:farmsmart_flutter/ui/common/stage_card.dart';
 import 'package:farmsmart_flutter/ui/crop/CropDetail.dart';
 import 'package:farmsmart_flutter/ui/crop/viewmodel/CropDetailViewModel.dart';
-import 'package:farmsmart_flutter/ui/discover/ArticleDetail.dart';
-import 'package:farmsmart_flutter/ui/discover/viewModel/ArticleListItemViewModel.dart';
+import 'package:farmsmart_flutter/ui/article/ArticleDetail.dart';
+import 'package:farmsmart_flutter/ui/article/viewModel/ArticleListItemViewModel.dart';
 import 'package:farmsmart_flutter/ui/myplot/PlotListItem.dart';
 import 'package:farmsmart_flutter/ui/myplot/viewmodel/PlotDetailViewModel.dart';
 import 'package:flutter/material.dart';

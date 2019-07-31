@@ -1,4 +1,3 @@
-import 'package:farmsmart_flutter/ui/common/recommendation_detail_listitem/recommendation_detail_listitem.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 

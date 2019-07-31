@@ -116,6 +116,7 @@ class RoundedButton extends StatelessWidget {
     return GestureDetector(
       onTap:_viewModel.onTap,
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
           Container(

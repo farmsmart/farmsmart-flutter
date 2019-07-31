@@ -4,7 +4,7 @@ import 'package:farmsmart_flutter/ui/profile/UserProfile.dart';
 import 'package:farmsmart_flutter/ui/profile/UserProfileListItem.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:farmsmart_flutter/data/model/mock/MockString.dart';
+import 'package:farmsmart_flutter/model/model/mock/MockString.dart';
 
 class MockUserProfileViewModel {
   static UserProfileViewModel build() {

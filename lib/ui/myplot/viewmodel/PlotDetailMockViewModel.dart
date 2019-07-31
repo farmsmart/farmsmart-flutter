@@ -1,9 +1,9 @@
-import 'package:farmsmart_flutter/data/bloc/article/ArticleDetailTransformer.dart';
-import 'package:farmsmart_flutter/data/bloc/plot/StageToStageCardViewModel.dart';
-import 'package:farmsmart_flutter/data/model/mock/MockPlot.dart';
-import 'package:farmsmart_flutter/data/model/mock/MockString.dart';
-import 'package:farmsmart_flutter/data/repositories/MockStrings.dart';
-import 'package:farmsmart_flutter/data/repositories/image/implementation/MockImageEntity.dart';
+import 'package:farmsmart_flutter/model/bloc/article/ArticleDetailTransformer.dart';
+import 'package:farmsmart_flutter/model/bloc/plot/StageToStageCardViewModel.dart';
+import 'package:farmsmart_flutter/model/model/mock/MockPlot.dart';
+import 'package:farmsmart_flutter/model/model/mock/MockString.dart';
+import 'package:farmsmart_flutter/model/repositories/MockStrings.dart';
+import 'package:farmsmart_flutter/model/repositories/image/implementation/MockImageEntity.dart';
 import 'package:farmsmart_flutter/ui/common/stage_card.dart';
 import 'package:farmsmart_flutter/ui/myplot/viewmodel/PlotDetailViewModel.dart';
 

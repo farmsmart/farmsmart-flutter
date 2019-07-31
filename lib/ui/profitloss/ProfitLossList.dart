@@ -1,9 +1,8 @@
-import 'package:farmsmart_flutter/model/loading_status.dart';
+import 'package:farmsmart_flutter/model/model/loading_status.dart';
 import 'package:farmsmart_flutter/ui/common/headerAndFooterListView.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
 import 'package:farmsmart_flutter/ui/profitloss/ProfitLossHeader.dart';
 import 'package:farmsmart_flutter/ui/profitloss/ProfitLossListItem.dart';
-import 'package:farmsmart_flutter/utils/strings.dart';
 import 'package:flutter/material.dart';
 
 class ProfitLossListViewModel {
@@ -73,7 +72,7 @@ class _ProfitLossState extends State<ProfitLossPage> {
       case LoadingStatus.SUCCESS:
         return _buildPageWithFloatingButton(context, viewModel, profitStyle);
       case LoadingStatus.ERROR:
-        return Text(Strings.errorString);
+        return Text("This will be refactored with view model provider next PR");
     }
   }
 

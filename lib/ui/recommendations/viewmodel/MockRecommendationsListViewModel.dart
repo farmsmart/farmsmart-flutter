@@ -1,7 +1,5 @@
-import 'dart:math';
-
-import 'package:farmsmart_flutter/model/loading_status.dart';
-import 'package:farmsmart_flutter/ui/common/recommendation_card/mock_recommendation_card_view_model.dart';
+import 'package:farmsmart_flutter/model/model/loading_status.dart';
+import 'package:farmsmart_flutter/ui/recommendations/recommendation_card/mock_recommendation_card_view_model.dart';
 
 import 'RecommendationsListViewModel.dart';
 
