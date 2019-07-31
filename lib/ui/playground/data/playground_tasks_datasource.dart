@@ -1,47 +1,43 @@
 import 'package:farmsmart_flutter/model/bloc/SequencedViewModelProvider.dart';
-import 'package:farmsmart_flutter/model/bloc/recommendations/RecommendationEngine.dart';
-import 'package:farmsmart_flutter/model/model/mock/MockRecommendation.dart';
-import 'package:farmsmart_flutter/ui/mockData/MockRecordTransactionViewModel.dart';
-import 'package:farmsmart_flutter/ui/playground/playground_widget.dart';
-import 'package:farmsmart_flutter/ui/profitloss/RecordTransaction.dart';
 import 'package:farmsmart_flutter/model/bloc/article/ArticleListProvider.dart';
+import 'package:farmsmart_flutter/model/bloc/recommendations/RecommendationEngine.dart';
 import 'package:farmsmart_flutter/model/bloc/recommendations/RecommendationListProvider.dart';
+import 'package:farmsmart_flutter/model/model/mock/MockRecommendation.dart';
 import 'package:farmsmart_flutter/model/repositories/article/implementation/MockArticlesRepository.dart';
 import 'package:farmsmart_flutter/model/repositories/crop/implementation/MockCropRepository.dart';
+import 'package:farmsmart_flutter/model/repositories/plot/implementation/MockPlotRepository.dart';
 import 'package:farmsmart_flutter/ui/LandingPage.dart';
 import 'package:farmsmart_flutter/ui/article/ArticleList.dart';
-import 'package:farmsmart_flutter/ui/common/ActionSheet.dart';
-import 'package:farmsmart_flutter/ui/mockData/MockActionSheetViewModel.dart';
-import 'package:farmsmart_flutter/ui/mockData/MockLandingPageViewModel.dart';
 import 'package:farmsmart_flutter/ui/bottombar/persistent_bottom_navigation_bar.dart';
-import 'package:farmsmart_flutter/model/repositories/plot/implementation/MockPlotRepository.dart';
+import 'package:farmsmart_flutter/ui/common/ActionSheet.dart';
 import 'package:farmsmart_flutter/ui/common/Alert.dart';
 import 'package:farmsmart_flutter/ui/common/carousel_view.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockActionSheetViewModel.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockFarmDetailsViewModel.dart';
+import 'package:farmsmart_flutter/ui/mockData/MockAlertWidgetViewModel.dart';
+import 'package:farmsmart_flutter/ui/mockData/MockLandingPageViewModel.dart';
+import 'package:farmsmart_flutter/ui/mockData/MockRecordTransactionViewModel.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockSwitchProfile.dart';
-import 'package:farmsmart_flutter/ui/myplot/PlotDetail.dart';
-import 'package:farmsmart_flutter/ui/myplot/PlotList.dart';
+import 'package:farmsmart_flutter/ui/mockData/MockUserProfileViewModel.dart';
 import 'package:farmsmart_flutter/ui/playground/data/playground_data_source.dart';
 import 'package:farmsmart_flutter/ui/playground/data/playground_stagecard_datasource.dart';
 import 'package:farmsmart_flutter/ui/playground/playground_present_button.dart';
+import 'package:farmsmart_flutter/ui/playground/playground_take_image_tester.dart';
 import 'package:farmsmart_flutter/ui/playground/playground_widget.dart';
 import 'package:farmsmart_flutter/ui/profile/FarmDetails.dart';
 import 'package:farmsmart_flutter/ui/profile/SwitchProfile.dart';
-import 'package:farmsmart_flutter/ui/mockData/MockUserProfileViewModel.dart';
-import 'package:farmsmart_flutter/ui/mockData/MockAlertWidgetViewModel.dart';
-import 'package:farmsmart_flutter/ui/playground/data/playground_data_source.dart';
-import 'package:farmsmart_flutter/ui/playground/data/playground_stagecard_datasource.dart';
-import 'package:farmsmart_flutter/ui/playground/playground_present_button.dart';
 import 'package:farmsmart_flutter/ui/profile/UserProfile.dart';
 import 'package:farmsmart_flutter/ui/profitloss/ProfitLossHeader.dart';
 import 'package:farmsmart_flutter/ui/profitloss/ProfitLossListItem.dart';
+import 'package:farmsmart_flutter/ui/profitloss/RecordTransaction.dart';
 import 'package:farmsmart_flutter/ui/profitloss/mockRepositoryTryout/MockTransactionRepository.dart';
 import 'package:farmsmart_flutter/ui/recommendations/RecommentationsList.dart';
 import 'package:farmsmart_flutter/ui/recommendations/viewmodel/MockRecommendationsListViewModel.dart';
 import 'package:farmsmart_flutter/ui/recommendations/viewmodel/RecommendationsListViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:image_picker/image_picker.dart';
+
 import '../playground_view.dart';
 import 'playground_persistent_bottom_navigation_bar_datasource.dart';
 
@@ -248,7 +244,6 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
           ],
         ),
       ),
-
       PlaygroundWidget(
         title: 'TASK FARM-443 Farm Details',
         child: PlaygroundView(
@@ -267,30 +262,38 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
         ),
       ),
       PlaygroundWidget(
-          title: 'TASK FARM-97 Update Recomentations',
-          child: PlaygroundView(widgetList: [
-            PlaygroundWidget(
-                title: "TASK FARM-97 View List states",
-                child: RecommendationsList(
-                    provider: SequencedViewModelProvider<
-                        RecommendationsListViewModel>(
-                      [
-                        MockRecommendationsListViewModel().build(),
-                        MockRecommendationsListViewModel().build(),
-                        MockRecommendationsListViewModel().build(),
-                        MockRecommendationsListViewModel().build(),
-                      ],
-                    ))),
-            PlaygroundWidget(
-                title: "TASK FARM-97 Mock repo",
-                child: RecommendationsList(
-                    provider: RecommendationListProvider(
-                      title: "Mock Repo",
-                      cropRepo: _mockCrop,
-                      plotRepo: _mockPlot,
-                      engine: _engine,
-                    ))),
-          ]))
+        title: 'TASK FARM-97 Update Recomentations',
+        child: PlaygroundView(widgetList: [
+          PlaygroundWidget(
+              title: "TASK FARM-97 View List states",
+              child: RecommendationsList(
+                  provider: SequencedViewModelProvider<
+                      RecommendationsListViewModel>(
+                    [
+                      MockRecommendationsListViewModel().build(),
+                      MockRecommendationsListViewModel().build(),
+                      MockRecommendationsListViewModel().build(),
+                      MockRecommendationsListViewModel().build(),
+                    ],
+                  ))),
+          PlaygroundWidget(
+            title: "TASK FARM-97 Mock repo",
+            child: RecommendationsList(
+              provider: RecommendationListProvider(
+                title: "Mock Repo",
+                cropRepo: _mockCrop,
+                plotRepo: _mockPlot,
+                engine: _engine,
+              ),),),
+        ],),),
+      PlaygroundWidget(
+        title: 'TASK-318 Take picture camera',
+        child: PlaygroundTakeImageTester(imageSource: ImageSource.camera,),
+      ),
+      PlaygroundWidget(
+        title: 'TASK-318 Take picture gallery',
+        child: PlaygroundTakeImageTester(imageSource: ImageSource.gallery,),
+      ),
     ];
   }
 }
