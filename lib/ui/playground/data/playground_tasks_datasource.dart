@@ -1,4 +1,13 @@
 import 'package:farmsmart_flutter/model/bloc/SequencedViewModelProvider.dart';
+import 'package:farmsmart_flutter/model/bloc/plot/PlotDetailProvider.dart';
+import 'package:farmsmart_flutter/model/bloc/recommendations/RecommendationEngine.dart';
+import 'package:farmsmart_flutter/model/model/mock/MockPlot.dart';
+import 'package:farmsmart_flutter/model/model/mock/MockRecommendation.dart';
+import 'package:farmsmart_flutter/ui/community/LinkBox.dart';
+import 'package:farmsmart_flutter/ui/mockData/MockRecordTransactionViewModel.dart';
+import 'package:farmsmart_flutter/ui/myplot/PlotDetail.dart';
+import 'package:farmsmart_flutter/ui/playground/playground_widget.dart';
+import 'package:farmsmart_flutter/ui/profitloss/RecordTransaction.dart';
 import 'package:farmsmart_flutter/model/bloc/article/ArticleListProvider.dart';
 import 'package:farmsmart_flutter/model/bloc/recommendations/RecommendationEngine.dart';
 import 'package:farmsmart_flutter/model/bloc/recommendations/RecommendationListProvider.dart';
@@ -305,6 +314,25 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
           imageSource: ImageSource.gallery,
         ),
       ),
+    PlaygroundWidget(
+                title: "TASK FARM-97 Mock repo",
+                child: RecommendationsList(
+                    provider: RecommendationListProvider(
+                      title: "Mock Repo",
+                      cropRepo: _mockCrop,
+                      plotRepo: _mockPlot,
+                      engine: _engine,
+                    ))),
+      PlaygroundWidget(
+                title: "FARM-365 Plot Detail",
+                child: PlotDetail(
+                  provider: PlotDetailProvider(
+                      MockPlotEntity().build(), MockPlotRepository()),
+                )),
+      PlaygroundWidget(
+        title: 'TASK FARM-445-UI-Join-Chat-Widget',
+        child: LinkBox(),
+      )
     ];
   }
 }
