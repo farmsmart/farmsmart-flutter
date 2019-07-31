@@ -2,20 +2,10 @@ import 'package:farmsmart_flutter/ui/common/recommendation_detail_listitem/recom
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class _Strings {
-  static final String yourName = Intl.message("Your Name");
-  static final String country = Intl.message("Country");
-  static final String landSize = Intl.message("Land Size");
-  static final String season = Intl.message("Season");
-  static final String motivation = Intl.message("Motivation");
-  static final String soilType = Intl.message("Soil Type");
-  static final String farmDetailsTitle = Intl.message("Your Farm Details");
-}
-
 class _Constants {
   static final EdgeInsets edgePadding = EdgeInsets.symmetric(
     horizontal: 32,
-    vertical: 10,
+    vertical: 7.1,
   );
 
   static final double wrapSpacing = 5;

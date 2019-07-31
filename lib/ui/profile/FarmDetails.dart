@@ -8,14 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class _Strings {
-  static final String yourName = Intl.message("Your Name");
-  static final String country = Intl.message("Country");
-  static final String landSize = Intl.message("Land Size");
-  static final String season = Intl.message("Season");
-  static final String motivation = Intl.message("Motivation");
-  static final String soilType = Intl.message("Soil Type");
   static final String farmDetailsTitle = "Your Farm Details";
-
   static final String actionSheetButtonTitle = "Cancel";
   static final String actionSheetEdit = "Edit Profile";
   static final String actionSheetDelete = "Delete Profile";
@@ -24,19 +17,27 @@ class _Strings {
 class _Constants {
   static final EdgeInsets floatingButtonEdgePadding = const EdgeInsets.all(32);
   static final EdgeInsets headerEdgePadding =
-      const EdgeInsets.symmetric(horizontal: 32, vertical: 20);
-  static final double bottomMargin = 120;
+      const EdgeInsets.only(left: 32, right: 32, top: 10.5, bottom: 16);
+
+  static final double bottomMargin = 112;
+  static final double buttonHeight = 48;
+
+  static final BorderRadius buttonRadius = BorderRadius.all(
+    Radius.circular(12),
+  );
 }
 
 class FarmDetailsViewModel {
   List<FarmDetailsListItemViewModel> items;
   final String buttonTitle;
+  final Function onConfirmDetails;
   final Function editProfile;
   final Function removeProfile;
 
   FarmDetailsViewModel({
     this.items,
     this.buttonTitle,
+    this.onConfirmDetails,
     this.removeProfile,
     this.editProfile,
   });
@@ -44,16 +45,20 @@ class FarmDetailsViewModel {
 
 class FarmDetailsStyle {
   final TextStyle titleTextStyle;
+  final TextStyle buttonTextStyle;
 
   const FarmDetailsStyle({
     this.titleTextStyle,
+    this.buttonTextStyle,
   });
 
   FarmDetailsStyle copyWith({
     TextStyle titleTextStyle,
+    TextStyle buttonTextStyle,
   }) {
     return FarmDetailsStyle(
       titleTextStyle: titleTextStyle ?? this.titleTextStyle,
+      buttonTextStyle: buttonTextStyle ?? this.buttonTextStyle,
     );
   }
 }
@@ -63,6 +68,12 @@ class _DefaultStyle extends FarmDetailsStyle {
     color: Color(0xff1a1b46),
     fontSize: 27,
     fontWeight: FontWeight.w700,
+  );
+
+  final TextStyle buttonTextStyle = const TextStyle(
+    color: Color(0xffffffff),
+    fontSize: 15,
+    fontWeight: FontWeight.w500,
   );
 
   const _DefaultStyle({
@@ -92,8 +103,15 @@ class FarmDetails extends StatelessWidget {
       floatingActionButton: Padding(
         padding: _Constants.floatingButtonEdgePadding,
         child: RoundedButton(
-          viewModel: RoundedButtonViewModel(title: _viewModel.buttonTitle),
-          style: RoundedButtonStyle.largeRoundedButtonStyle(),
+          viewModel: RoundedButtonViewModel(
+            title: _viewModel.buttonTitle,
+            onTap: () => _viewModel.onConfirmDetails(),
+          ),
+          style: RoundedButtonStyle.largeRoundedButtonStyle().copyWith(
+            height: _Constants.buttonHeight,
+            borderRadius: _Constants.buttonRadius,
+            buttonTextStyle: _style.buttonTextStyle,
+          ),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
