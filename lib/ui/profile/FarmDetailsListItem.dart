@@ -21,9 +21,9 @@ class _Constants {
 }
 
 class FarmDetailsListItemViewModel {
-  String title;
-  String detail;
-  Color color;
+  final String title;
+  final String detail;
+  final Color color;
 
   FarmDetailsListItemViewModel({
     this.title,
@@ -136,13 +136,13 @@ class FarmDetailsListItem extends StatelessWidget {
         spacing: _Constants.wrapSpacing,
         runSpacing: _Constants.wrapRunSpacing,
         children: <Widget>[
-          _buildCircles(_viewModel.color),
+          _buildCircle(_viewModel.color),
         ],
       ),
     );
   }
 
-  Widget _buildCircles(Color color) {
+  Widget _buildCircle(Color color) {
     return Container(
       height: _Constants.circleSize,
       width: _Constants.circleSize,
