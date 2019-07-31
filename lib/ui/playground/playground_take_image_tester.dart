@@ -5,6 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:image_picker/image_picker.dart';
 
+class _Strings{
+  static final noImage = 'No image';
+}
+
 class PlaygroundTakeImageTester extends StatefulWidget {
   final ImageSource imageSource;
 
@@ -43,7 +47,7 @@ class _PlaygroundTakeImageTesterState extends State<PlaygroundTakeImageTester> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: _file != null ? Image.file(_file) : SizedBox.shrink(),
+      child: _file != null ? Image.file(_file) : Text(_Strings.noImage),
     );
   }
 }
