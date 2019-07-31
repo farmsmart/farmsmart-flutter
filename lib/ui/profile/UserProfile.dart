@@ -159,12 +159,14 @@ class UserProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: <Widget>[
-          _buildHeader(context),
-          _buildItemList(),
-        ],
+    return SafeArea(
+      child: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            _buildHeader(context),
+            _buildItemList(),
+          ],
+        ),
       ),
     );
   }
