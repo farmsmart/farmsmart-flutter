@@ -103,14 +103,10 @@ List<String> _mockActionIcon = [
 
 MockString _mockImage = MockString(library: [
   "https://i.pinimg.com/originals/29/01/c9/2901c94b5a24c2f69d827e1755b5257e.jpg",
-  "https://occ-0-1722-1723.1.nflxso.net/art/d2938/a54bf5710e24e03aed993f1597454a46699d2938.jpg",
-  "https://www.flower-pepper.com/wp-content/uploads/2016/10/Kermit-the-Frog-by-Bartholomew-300x378.jpg",
   "https://vignette.wikia.nocookie.net/rugratseries/images/1/1a/Tommy.jpg/revision/latest?cb=20110202050218",
+  "https://www.flower-pepper.com/wp-content/uploads/2016/10/Kermit-the-Frog-by-Bartholomew-300x378.jpg",
 ]);
 
 MockString _mockUserName = MockString(library: [
-  "Name",
-  "Mininame",
   "Ireti Kuta",
-  "Longer User Name",
 ]);
