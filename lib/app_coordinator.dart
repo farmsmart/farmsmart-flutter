@@ -1,4 +1,4 @@
-import 'package:farmsmart_flutter/data/repositories/repository_provider.dart';
+import 'package:farmsmart_flutter/model/repositories/repository_provider.dart';
 import 'package:farmsmart_flutter/flavors/app_config.dart';
 import 'package:farmsmart_flutter/ui/home.dart';
 import 'package:flutter/material.dart';

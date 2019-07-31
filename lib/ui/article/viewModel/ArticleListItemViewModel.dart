@@ -1,4 +1,4 @@
-import 'package:farmsmart_flutter/data/model/ImageURLProvider.dart';
+import 'package:farmsmart_flutter/model/model/ImageURLProvider.dart';
 import 'package:farmsmart_flutter/ui/article/viewModel/ArticleDetailViewModel.dart';
 
 class ArticleListItemViewModel {

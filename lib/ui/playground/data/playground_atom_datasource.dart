@@ -4,9 +4,9 @@ import 'package:farmsmart_flutter/ui/profitloss/RecordTransactionHeaderStyles.da
 import 'package:farmsmart_flutter/ui/profitloss/RecordTransactionListItem.dart';
 import 'package:farmsmart_flutter/ui/profitloss/RecordTransactionHeader.dart';
 import 'package:farmsmart_flutter/ui/common/CircularProgress.dart';
-import 'package:farmsmart_flutter/data/bloc/article/ArticleDetailTransformer.dart';
-import 'package:farmsmart_flutter/data/bloc/article/ArticleListItemViewModelTransformer.dart';
-import 'package:farmsmart_flutter/data/model/mock/MockArticle.dart';
+import 'package:farmsmart_flutter/model/bloc/article/ArticleDetailTransformer.dart';
+import 'package:farmsmart_flutter/model/bloc/article/ArticleListItemViewModelTransformer.dart';
+import 'package:farmsmart_flutter/model/model/mock/MockArticle.dart';
 import 'package:farmsmart_flutter/ui/common/ActionSheetListItem.dart';
 import 'package:farmsmart_flutter/ui/common/DogTagStyles.dart';
 import 'package:farmsmart_flutter/ui/common/Dogtag.dart';

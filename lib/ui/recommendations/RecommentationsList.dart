@@ -1,4 +1,4 @@
-import 'package:farmsmart_flutter/data/bloc/ViewModelProvider.dart';
+import 'package:farmsmart_flutter/model/bloc/ViewModelProvider.dart';
 import 'package:farmsmart_flutter/ui/common/ActionSheet.dart';
 import 'package:farmsmart_flutter/ui/common/ActionSheetListItem.dart';
 import 'package:farmsmart_flutter/ui/common/ContextualAppBar.dart';

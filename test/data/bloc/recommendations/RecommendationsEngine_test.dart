@@ -1,5 +1,5 @@
 
-import 'package:farmsmart_flutter/data/bloc/recommendations/RecommendationEngine.dart';
+import 'package:farmsmart_flutter/model/bloc/recommendations/RecommendationEngine.dart';
 import 'package:test/test.dart';
 
 final inputScale = 10.0;

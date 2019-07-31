@@ -1,5 +1,5 @@
-import 'package:farmsmart_flutter/data/bloc/ViewModelProvider.dart';
-import 'package:farmsmart_flutter/data/model/ImageURLProvider.dart';
+import 'package:farmsmart_flutter/model/bloc/ViewModelProvider.dart';
+import 'package:farmsmart_flutter/model/model/ImageURLProvider.dart';
 import 'package:farmsmart_flutter/ui/common/stage_card.dart';
 import 'package:farmsmart_flutter/ui/crop/viewmodel/CropDetailViewModel.dart';
 import 'package:farmsmart_flutter/ui/article/viewModel/ArticleDetailViewModel.dart';

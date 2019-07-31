@@ -1,7 +1,7 @@
 
-import 'package:farmsmart_flutter/data/bloc/article/ArticleDetailTransformer.dart';
-import 'package:farmsmart_flutter/data/bloc/article/ArticleListItemViewModelTransformer.dart';
-import 'package:farmsmart_flutter/data/model/mock/MockArticle.dart';
+import 'package:farmsmart_flutter/model/bloc/article/ArticleDetailTransformer.dart';
+import 'package:farmsmart_flutter/model/bloc/article/ArticleListItemViewModelTransformer.dart';
+import 'package:farmsmart_flutter/model/model/mock/MockArticle.dart';
 import 'package:test/test.dart';
 
 final testArticle = MockArticle().build();

@@ -1,5 +1,5 @@
-import 'package:farmsmart_flutter/data/repositories/FlameLink.dart';
-import 'package:farmsmart_flutter/data/repositories/repository_provider.dart';
+import 'package:farmsmart_flutter/model/repositories/FlameLink.dart';
+import 'package:farmsmart_flutter/model/repositories/repository_provider.dart';
 import 'package:flutter/material.dart';
 
 class AppConfig extends InheritedWidget{

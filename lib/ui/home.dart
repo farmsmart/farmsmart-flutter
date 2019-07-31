@@ -1,9 +1,9 @@
-import 'package:farmsmart_flutter/data/bloc/article/ArticleListProvider.dart';
-import 'package:farmsmart_flutter/data/bloc/plot/PlotListProvider.dart';
-import 'package:farmsmart_flutter/data/bloc/recommendations/RecommendationEngine.dart';
-import 'package:farmsmart_flutter/data/model/mock/MockRecommendation.dart';
-import 'package:farmsmart_flutter/data/repositories/article/ArticleRepositoryInterface.dart';
-import 'package:farmsmart_flutter/data/repositories/repository_provider.dart';
+import 'package:farmsmart_flutter/model/bloc/article/ArticleListProvider.dart';
+import 'package:farmsmart_flutter/model/bloc/plot/PlotListProvider.dart';
+import 'package:farmsmart_flutter/model/bloc/recommendations/RecommendationEngine.dart';
+import 'package:farmsmart_flutter/model/model/mock/MockRecommendation.dart';
+import 'package:farmsmart_flutter/model/repositories/article/ArticleRepositoryInterface.dart';
+import 'package:farmsmart_flutter/model/repositories/repository_provider.dart';
 import 'package:farmsmart_flutter/farmsmart_localizations.dart';
 import 'package:farmsmart_flutter/ui/bottombar/persistent_bottom_navigation_bar.dart';
 import 'package:farmsmart_flutter/ui/bottombar/tab_navigator.dart';

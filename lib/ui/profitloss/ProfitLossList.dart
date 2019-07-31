@@ -1,4 +1,4 @@
-import 'package:farmsmart_flutter/model/loading_status.dart';
+import 'package:farmsmart_flutter/model/model/loading_status.dart';
 import 'package:farmsmart_flutter/ui/common/headerAndFooterListView.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
 import 'package:farmsmart_flutter/ui/profitloss/ProfitLossHeader.dart';
