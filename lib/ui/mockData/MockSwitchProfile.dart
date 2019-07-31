@@ -1,5 +1,4 @@
-import 'dart:math';
-import 'package:farmsmart_flutter/data/model/mock/MockString.dart';
+import 'package:farmsmart_flutter/model/model/mock/MockString.dart';
 import 'package:farmsmart_flutter/ui/profile/SwitchProfile.dart';
 import 'package:farmsmart_flutter/ui/profile/SwitchProfileItems.dart';
 import 'package:flutter/material.dart';
