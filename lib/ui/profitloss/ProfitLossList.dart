@@ -1,5 +1,7 @@
 import 'package:farmsmart_flutter/model/bloc/ViewModelProvider.dart';
 import 'package:farmsmart_flutter/model/model/loading_status.dart';
+import 'package:farmsmart_flutter/ui/common/ActionSheet.dart';
+import 'package:farmsmart_flutter/ui/common/ActionSheetListItem.dart';
 import 'package:farmsmart_flutter/ui/common/RefreshableViewModel.dart';
 import 'package:farmsmart_flutter/ui/common/ViewModelProviderBuilder.dart';
 import 'package:farmsmart_flutter/ui/common/headerAndFooterListView.dart';
@@ -7,6 +9,19 @@ import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
 import 'package:farmsmart_flutter/ui/profitloss/ProfitLossHeader.dart';
 import 'package:farmsmart_flutter/ui/profitloss/ProfitLossListItem.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
+
+class _Strings {
+    static const costText = "Record a new Cost";
+    static const saleText = "Record a new Sale";
+    static const cancel= "Cancel"; 
+}
+
+class _Icons {
+  static const costIcon ="assets/icons/detail_icon_cost.png";
+  static const saleIcon ="assets/icons/detail_icon_sale.png";
+}
 
 class ProfitLossListViewModel implements RefreshableViewModel {
   LoadingStatus loadingStatus;
@@ -95,8 +110,40 @@ class ProfitLossPage extends StatelessWidget {
         body: _buildPage(context: context, viewModel: viewModel),
         floatingActionButton: RoundedButton(
           viewModel:
-              RoundedButtonViewModel(icon: roundedButtonIcon, onTap: () => {}),
+              RoundedButtonViewModel(icon: roundedButtonIcon, onTap: () => _moreTapped(context: context,viewModel: viewModel,)),
           style: RoundedButtonStyle.bigRoundedButton(),
         ));
+  }
+
+  ActionSheet _moreMenu(ProfitLossListViewModel viewModel) {
+    final actions = [
+      ActionSheetListItemViewModel(
+        title: Intl.message(_Strings.saleText),
+        isDestructive: false,
+        type: ActionType.simple,
+        icon: _Icons.saleIcon,
+        onTap: () => {}),
+      ActionSheetListItemViewModel(
+        title: Intl.message(_Strings.costText),
+        isDestructive: false,
+        icon: _Icons.costIcon,
+        type: ActionType.simple,
+        onTap: () => {}),
+    ];
+    final actionSheetViewModel = ActionSheetViewModel(
+      actions,
+      Intl.message(_Strings.cancel),
+    );
+    return ActionSheet(
+      viewModel: actionSheetViewModel,
+      style: ActionSheetStyle.defaultStyle(),
+    );
+  }
+
+  void _moreTapped({
+    BuildContext context,
+    ProfitLossListViewModel viewModel,
+  }) {
+    ActionSheet.present(_moreMenu(viewModel), context);
   }
 }
