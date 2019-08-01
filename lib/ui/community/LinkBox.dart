@@ -28,11 +28,11 @@ class _Constants {
 }
 
 class LinkBoxViewModel {
-  String titleText;
-  String detailText;
-  IconData icon;
-  Function onTap;
-  String image;
+  final String titleText;
+  final String detailText;
+  final IconData icon;
+  final Function onTap;
+  final String image;
 
   LinkBoxViewModel({
     @required this.titleText,
@@ -100,7 +100,7 @@ class LinkBox extends StatelessWidget {
     );
   }
 
-  Widget _buildImage() {
+  _buildImage() {
     if (_viewModel.image != null) {
       return Image.asset(
         _viewModel.image,
@@ -113,7 +113,10 @@ class LinkBox extends StatelessWidget {
   }
 
   Text _buildTitleText() {
-    return Text(_viewModel.titleText, style: _Constants.titleTextStyle);
+    return Text(
+      _viewModel.titleText,
+      style: _Constants.titleTextStyle,
+    );
   }
 
   Text _buildDetailText() {
