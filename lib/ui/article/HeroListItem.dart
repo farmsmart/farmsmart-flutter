@@ -85,6 +85,8 @@ class HeroListItem extends StatelessWidget {
     return NetworkImageFromFuture(
       articleData.image.urlToFit(),
       imageBorderRadius: articleListStyle.imageBorderRadius,
+      height: articleListStyle.imageHeight,
+
     );
   }
 }

@@ -1,6 +1,10 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+
+class _Constants {
+  static final placeholderAsset = 'assets/raw/placeholder.webp';
+  static final defaultBorderRadius = BorderRadius.all(Radius.circular(0));
+}
 
 class NetworkImageFromFuture extends StatelessWidget {
   final Future<String> futureUrl;
@@ -17,39 +21,34 @@ class NetworkImageFromFuture extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final placeholder = Container();
     return FutureBuilder(
       future: futureUrl,
       builder: (BuildContext context, AsyncSnapshot<String> url) {
-        if (!url.hasData) {
+        if (!url.hasData || url.data == null) {
           return SizedBox(
             height: height,
             width: width,
           );
         }
-
-        return Container(
-          width: width,
-          height: height,
-          decoration: BoxDecoration(
-            shape: BoxShape.rectangle,
-            borderRadius: imageBorderRadius,
-            image: DecorationImage(
-              fit: BoxFit.cover,
-              image: NetworkImage(url.data),
-            ),
-          ),
-        );
-
-        if (!url.hasData) {
-          return placeholder;
-        }
-        return CachedNetworkImage(
-          imageUrl: url.data,
-          placeholder: (context, url) => placeholder,
-          errorWidget: (context, url, error) => placeholder,
-        );
+        return buildImage(url.data);
       },
+    );
+  }
+
+  buildImage(String url) {
+    return ClipRRect(
+      borderRadius: imageBorderRadius ?? _Constants.defaultBorderRadius,
+      child: FadeInImage(
+        width: width,
+        height: height,
+        fit: BoxFit.cover,
+        fadeOutDuration: Duration(milliseconds: 200),
+        fadeInDuration: Duration(milliseconds: 200),
+        fadeInCurve: Curves.linear,
+        fadeOutCurve: Curves.linear,
+        placeholder: AssetImage(_Constants.placeholderAsset),
+        image: NetworkImage(url),
+      ),
     );
   }
 }
