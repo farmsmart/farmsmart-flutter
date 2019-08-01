@@ -35,7 +35,7 @@ class ImagePicker {
         await ImagePickerLib.ImagePicker.pickImage(source: imageSource);
 
     if (file == null) {
-      onError(_Strings.noImagePickedError);
+      onError(Intl.message(_Strings.noImagePickedError));
       return false;
     }
 
@@ -55,7 +55,7 @@ class ImagePicker {
     file.delete();
 
     if (croppedFile == null) {
-      onError(_Strings.noCroppedImageError);
+      onError(Intl.message(_Strings.noCroppedImageError));
       return false;
     }
 
