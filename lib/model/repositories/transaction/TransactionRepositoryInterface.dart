@@ -4,6 +4,7 @@ import 'package:farmsmart_flutter/model/repositories/BasicRepositoryInterface.da
 
 abstract class TransactionRepositoryInterface implements BasicRepositoryInterface<TransactionEntity> {
     Future<List<TransactionEntity>> get(ProfileEntity forProfile);
-    //Stream<List<PlotEntity>> observe(ProfileEntity forProfile);
-
+    Stream<List<TransactionEntity>> observeProfile(ProfileEntity forProfile);
+    Future<TransactionEntity> add(TransactionEntity transaction);
+    Future<bool> remove(TransactionEntity transaction);
 }

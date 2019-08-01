@@ -1,23 +1,27 @@
+import 'package:farmsmart_flutter/model/bloc/ViewModelProvider.dart';
 import 'package:farmsmart_flutter/model/model/loading_status.dart';
+import 'package:farmsmart_flutter/ui/common/RefreshableViewModel.dart';
+import 'package:farmsmart_flutter/ui/common/ViewModelProviderBuilder.dart';
 import 'package:farmsmart_flutter/ui/common/headerAndFooterListView.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
 import 'package:farmsmart_flutter/ui/profitloss/ProfitLossHeader.dart';
 import 'package:farmsmart_flutter/ui/profitloss/ProfitLossListItem.dart';
 import 'package:flutter/material.dart';
 
-class ProfitLossListViewModel {
+class ProfitLossListViewModel implements RefreshableViewModel {
   LoadingStatus loadingStatus;
   final String title;
   final String detailText;
+  Function refresh;
 
   final List<ProfitLossListItemViewModel> transactions;
 
-  ProfitLossListViewModel({
-    this.title,
-    this.detailText,
-    this.loadingStatus,
-    this.transactions,
-  });
+  ProfitLossListViewModel(
+      {this.title,
+      this.detailText,
+      this.loadingStatus,
+      this.transactions,
+      this.refresh});
 }
 
 abstract class ProfitLossStyle {
@@ -45,39 +49,21 @@ class _DefaultStyle implements ProfitLossStyle {
   const _DefaultStyle();
 }
 
-class ProfitLossPage extends StatefulWidget {
-  final ProfitLossListViewModel _viewModel;
+class ProfitLossPage extends StatelessWidget {
+  final ViewModelProvider<ProfitLossListViewModel> _viewModelProvider;
+  final ProfitLossStyle _style;
 
-  const ProfitLossPage({Key key, ProfitLossListViewModel viewModel})
-      : this._viewModel = viewModel,
-        super(key: key);
+  const ProfitLossPage({Key key, ViewModelProvider<ProfitLossListViewModel> viewModelProvider, ProfitLossStyle style = const _DefaultStyle()}) : this._viewModelProvider = viewModelProvider, this._style = style, super(key: key);
 
-  State<StatefulWidget> createState() => _ProfitLossState();
-}
-
-class _ProfitLossState extends State<ProfitLossPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: _buildBody(context, widget._viewModel),
+    return ViewModelProviderBuilder(
+      provider: _viewModelProvider,
+      successBuilder: _buildPageWithFloatingButton,
     );
   }
 
-  Widget _buildBody(BuildContext context, ProfitLossListViewModel viewModel,
-      {ProfitLossStyle profitStyle = const _DefaultStyle()}) {
-    switch (viewModel.loadingStatus) {
-      case LoadingStatus.LOADING:
-        return Container(
-            child: CircularProgressIndicator(), alignment: Alignment.center);
-      case LoadingStatus.SUCCESS:
-        return _buildPageWithFloatingButton(context, viewModel, profitStyle);
-      case LoadingStatus.ERROR:
-        return Text("This will be refactored with view model provider next PR");
-    }
-  }
-
-  Widget _buildPage(BuildContext context, ProfitLossListViewModel viewModel,
-      ProfitLossStyle profitStyle) {
+  Widget _buildPage({BuildContext context, ProfitLossListViewModel viewModel}) {
     return HeaderAndFooterListView(
         itemCount: viewModel.transactions.length,
         itemBuilder: (BuildContext context, int index) {
@@ -95,32 +81,22 @@ class _ProfitLossState extends State<ProfitLossPage> {
         ],
         footers: [
           SizedBox(
-            height: profitStyle.bottomEdgePadding,
+            height: _style.bottomEdgePadding,
           )
         ]);
   }
 
-  Widget _buildPageWithFloatingButton(BuildContext context,
-      ProfitLossListViewModel viewModel, ProfitLossStyle profitStyle) {
+  Widget _buildPageWithFloatingButton(
+      {BuildContext context, AsyncSnapshot<ProfitLossListViewModel> snapshot}) {
+    final viewModel = snapshot.data;
     final String roundedButtonIcon = "assets/icons/profit_add.png";
     return Scaffold(
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        body: _buildPage(context, viewModel, profitStyle),
+        body: _buildPage(context: context, viewModel: viewModel),
         floatingActionButton: RoundedButton(
-            viewModel: RoundedButtonViewModel(
-                icon: roundedButtonIcon, onTap: () => _showToast(context)),
-            style: RoundedButtonStyle.bigRoundedButton()));
-  }
-
-  //FIXME: Only is built for show that this buttons are not functional yet
-  static void _showToast(BuildContext context) {
-    final String toastText = "Not Implemented Yet";
-    final String toastButtonText = "BACK";
-    final scaffold = Scaffold.of(context);
-    scaffold.showSnackBar(SnackBar(
-      content: Text(toastText),
-      action: SnackBarAction(
-          label: toastButtonText, onPressed: scaffold.hideCurrentSnackBar),
-    ));
+          viewModel:
+              RoundedButtonViewModel(icon: roundedButtonIcon, onTap: () => {}),
+          style: RoundedButtonStyle.bigRoundedButton(),
+        ));
   }
 }
