@@ -1,3 +1,6 @@
+import 'package:farmsmart_flutter/ui/community/LinkBox.dart';
+import 'package:farmsmart_flutter/ui/community/LinkBoxStyles.dart';
+import 'package:farmsmart_flutter/ui/community/MockLinkBox.dart';
 import 'package:farmsmart_flutter/model/bloc/SequencedViewModelProvider.dart';
 import 'package:farmsmart_flutter/model/bloc/plot/PlotDetailProvider.dart';
 import 'package:farmsmart_flutter/model/bloc/recommendations/RecommendationEngine.dart';
@@ -338,12 +341,14 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
               title: "With WhatsApp Image",
               child: LinkBox(
                 viewModel: MockLinkBoxViewModel.buildWithImage(),
+                style: LinkBoxStyles.buildWhatsAppStyle(),
               ),
             ),
             PlaygroundWidget(
               title: "With Browser Icon",
               child: LinkBox(
                 viewModel: MockLinkBoxViewModel.buildWithIcon(),
+                style: LinkBoxStyles.buildBrowserStyle(),
               ),
             ),
           ],

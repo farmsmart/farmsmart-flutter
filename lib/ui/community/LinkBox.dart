@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class _Constants {
-  static final Color cardBackgroundColor = Color(0xfff5f8fa);
+  static const Color defaultCardBackgroundColor = Color(0xfff5f8fa);
   static final BorderRadius cardBorderRadius = BorderRadius.circular(12);
   static final EdgeInsets cardInnerPadding =
       EdgeInsets.only(left: 24, right: 30, top: 20, bottom: 22.5);
@@ -23,7 +23,7 @@ class _Constants {
   );
   static final double imageContainerSize = 40;
   static final EdgeInsets imageEdgePadding = EdgeInsets.all(6);
-  static final Color imageContainerColor = Color(0xff25d366);
+  static const Color imageContainerColor = Color(0xff25d366);
   static final double imageSize = 10;
 }
 
@@ -43,13 +43,54 @@ class LinkBoxViewModel {
   });
 }
 
+class LinkBoxStyle {
+  final Color iconColor;
+  final Color cardBackgroundColor;
+  final Color imageContainerColor;
+
+  const LinkBoxStyle({
+    this.iconColor,
+    this.cardBackgroundColor,
+    this.imageContainerColor,
+  });
+
+  LinkBoxStyle copyWith({
+    Color iconColor,
+    Color cardBackgroundColor,
+    Color imageContainerColor,
+  }) {
+    return LinkBoxStyle(
+      iconColor: iconColor ?? this.iconColor,
+      cardBackgroundColor: cardBackgroundColor ?? this.cardBackgroundColor,
+      imageContainerColor: imageContainerColor ?? this.imageContainerColor,
+    );
+  }
+}
+
+class _DefaultStyle extends LinkBoxStyle {
+  final Color iconColor = Colors.white;
+  final Color cardBackgroundColor = _Constants.defaultCardBackgroundColor;
+  final Color imageContainerColor = _Constants.imageContainerColor;
+
+  const _DefaultStyle({
+    Color iconColor,
+    Color cardBackgroundColor,
+    Color imageContainerColor,
+  });
+}
+
+const LinkBoxStyle _defaultStyle = const _DefaultStyle();
+
 class LinkBox extends StatelessWidget {
   final LinkBoxViewModel _viewModel;
+  final LinkBoxStyle _style;
 
   const LinkBox({
     Key key,
     LinkBoxViewModel viewModel,
+    LinkBoxStyle style = _defaultStyle,
   })  : this._viewModel = viewModel,
+        this._style = style,
         super(key: key);
 
   @override
@@ -58,7 +99,7 @@ class LinkBox extends StatelessWidget {
       onTap: () => _viewModel.onTap,
       child: Container(
         decoration: BoxDecoration(
-          color: _Constants.cardBackgroundColor,
+          color: _style.cardBackgroundColor,
           borderRadius: _Constants.cardBorderRadius,
         ),
         padding: _Constants.cardInnerPadding,
@@ -74,7 +115,7 @@ class LinkBox extends StatelessWidget {
                 height: _Constants.imageContainerSize,
                 width: _Constants.imageContainerSize,
                 padding: _Constants.imageEdgePadding,
-                color: _Constants.imageContainerColor,
+                color: _style.imageContainerColor,
                 child: _buildImage(),
               ),
             ),
@@ -108,7 +149,10 @@ class LinkBox extends StatelessWidget {
         width: _Constants.imageSize,
       );
     } else if (_viewModel.icon != null) {
-      return Icon(_viewModel.icon);
+      return Icon(
+        _viewModel.icon,
+        color: _style.iconColor,
+      );
     }
   }
 

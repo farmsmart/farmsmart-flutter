@@ -17,10 +17,10 @@ class MockLinkBoxViewModel {
 
   static LinkBoxViewModel buildWithIcon() {
     return LinkBoxViewModel(
-        titleText: "Farming Tech",
-        detailText: "Join the WhatsApp group and discuss with fellow farmers",
-        icon: Icons.open_in_browser,
-        onTap: () => _mockAction(),
+      titleText: "Farming Tech",
+      detailText: "Join the WhatsApp group and discuss with fellow farmers",
+      icon: Icons.open_in_browser,
+      onTap: () => _mockAction(),
     );
   }
 
