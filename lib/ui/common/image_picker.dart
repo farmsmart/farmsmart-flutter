@@ -21,7 +21,7 @@ class _Strings {
 }
 
 class ImagePicker {
-  static Future<void> pickImage({
+  static Future<bool> pickImage({
     @required Function(File) onSuccess,
     @required Function(String) onError,
     @required ImagePickerLib.ImageSource imageSource,
@@ -36,7 +36,7 @@ class ImagePicker {
 
     if (file == null) {
       onError(_Strings.noImagePickedError);
-      return;
+      return false;
     }
 
     File croppedFile = await ImageCropper.cropImage(
@@ -52,11 +52,14 @@ class ImagePicker {
       toolbarWidgetColor: Colors.black,
     );
 
+    file.delete();
+
     if (croppedFile == null) {
       onError(_Strings.noCroppedImageError);
-      return;
+      return false;
     }
 
     onSuccess(croppedFile);
+    return true;
   }
 }
