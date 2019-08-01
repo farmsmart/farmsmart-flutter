@@ -291,7 +291,6 @@ class ArticleDetail extends StatelessWidget implements ListViewSection {
     }
     return NetworkImageFromFuture(
         _viewModel.image.urlToFit(height: _style.imageHeight),
-        fit: BoxFit.cover,
         height: _style.imageHeight);
   }
 

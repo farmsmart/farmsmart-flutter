@@ -1,11 +1,11 @@
+import 'package:farmsmart_flutter/ui/article/viewModel/ArticleListItemViewModel.dart';
 import 'package:farmsmart_flutter/ui/common/ListDivider.dart';
 import 'package:farmsmart_flutter/ui/common/network_image_from_future.dart';
-import 'package:farmsmart_flutter/ui/article/viewModel/ArticleListItemViewModel.dart';
 import 'package:flutter/material.dart';
+
 import 'ArticleListItemStyle.dart';
 
-
-class _Strings{
+class _Strings {
   static const titleDefault = "";
   static const summaryDefault = "";
 }
@@ -83,13 +83,17 @@ class StandardListItem extends StatelessWidget {
   _buildListItemImage(
       ArticleListItemViewModel viewModel, ArticleListItemStyle itemStyle) {
     return ClipRRect(
-        borderRadius: itemStyle.imageBorderRadius,
-        child: NetworkImageFromFuture(
-            viewModel.image.urlToFit(
-                width: itemStyle.imageHeight, height: itemStyle.imageHeight),
-            height: itemStyle.imageHeight,
-            width: itemStyle.imageHeight,
-            fit: BoxFit.cover));
+      borderRadius: itemStyle.imageBorderRadius,
+      child: NetworkImageFromFuture(
+        viewModel.image.urlToFit(
+          width: itemStyle.imageHeight,
+          height: itemStyle.imageHeight,
+        ),
+        height: itemStyle.imageHeight,
+        width: itemStyle.imageHeight,
+        imageBorderRadius: itemStyle.imageBorderRadius,
+      ),
+    );
   }
 
   _buildArticleInformation(
