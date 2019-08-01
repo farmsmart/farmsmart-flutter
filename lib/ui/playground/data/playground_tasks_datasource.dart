@@ -1,7 +1,9 @@
 import 'package:farmsmart_flutter/model/bloc/SequencedViewModelProvider.dart';
 import 'package:farmsmart_flutter/model/bloc/article/ArticleListProvider.dart';
+import 'package:farmsmart_flutter/model/bloc/plot/PlotDetailProvider.dart';
 import 'package:farmsmart_flutter/model/bloc/recommendations/RecommendationEngine.dart';
 import 'package:farmsmart_flutter/model/bloc/recommendations/RecommendationListProvider.dart';
+import 'package:farmsmart_flutter/model/model/mock/MockPlot.dart';
 import 'package:farmsmart_flutter/model/model/mock/MockRecommendation.dart';
 import 'package:farmsmart_flutter/model/repositories/article/implementation/MockArticlesRepository.dart';
 import 'package:farmsmart_flutter/model/repositories/crop/implementation/MockCropRepository.dart';
@@ -12,13 +14,17 @@ import 'package:farmsmart_flutter/ui/bottombar/persistent_bottom_navigation_bar.
 import 'package:farmsmart_flutter/ui/common/ActionSheet.dart';
 import 'package:farmsmart_flutter/ui/common/Alert.dart';
 import 'package:farmsmart_flutter/ui/common/carousel_view.dart';
+import 'package:farmsmart_flutter/ui/community/LinkBox.dart';
+import 'package:farmsmart_flutter/ui/community/LinkBoxStyles.dart';
+import 'package:farmsmart_flutter/ui/community/MockLinkBox.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockActionSheetViewModel.dart';
-import 'package:farmsmart_flutter/ui/mockData/MockFarmDetailsViewModel.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockAlertWidgetViewModel.dart';
+import 'package:farmsmart_flutter/ui/mockData/MockFarmDetailsViewModel.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockLandingPageViewModel.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockRecordTransactionViewModel.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockSwitchProfile.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockUserProfileViewModel.dart';
+import 'package:farmsmart_flutter/ui/myplot/PlotDetail.dart';
 import 'package:farmsmart_flutter/ui/playground/data/playground_data_source.dart';
 import 'package:farmsmart_flutter/ui/playground/data/playground_stagecard_datasource.dart';
 import 'package:farmsmart_flutter/ui/playground/playground_present_button.dart';
@@ -303,6 +309,47 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
         title: 'TASK-318 Take picture gallery',
         child: PlaygroundTakeImageTester(
           imageSource: ImageSource.gallery,
+        ),
+      ),
+      PlaygroundWidget(
+        title: "TASK FARM-97 Mock repo",
+        child: RecommendationsList(
+          provider: RecommendationListProvider(
+            title: "Mock Repo",
+            cropRepo: _mockCrop,
+            plotRepo: _mockPlot,
+            engine: _engine,
+          ),
+        ),
+      ),
+      PlaygroundWidget(
+        title: "FARM-365 Plot Detail",
+        child: PlotDetail(
+          provider: PlotDetailProvider(
+            MockPlotEntity().build(),
+            MockPlotRepository(),
+          ),
+        ),
+      ),
+      PlaygroundWidget(
+        title: 'TASK FARM-445-UI-Join-Chat-Widget',
+        child: PlaygroundView(
+          widgetList: [
+            PlaygroundWidget(
+              title: "With WhatsApp Image",
+              child: LinkBox(
+                viewModel: MockLinkBoxViewModel.buildWithImage(),
+                style: LinkBoxStyles.buildWhatsAppStyle(),
+              ),
+            ),
+            PlaygroundWidget(
+              title: "With Browser Icon",
+              child: LinkBox(
+                viewModel: MockLinkBoxViewModel.buildWithIcon(),
+                style: LinkBoxStyles.buildBrowserStyle(),
+              ),
+            ),
+          ],
         ),
       ),
     ];
