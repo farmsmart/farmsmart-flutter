@@ -18,6 +18,7 @@ import 'package:farmsmart_flutter/model/repositories/plot/implementation/MockPlo
 import 'package:farmsmart_flutter/ui/common/Alert.dart';
 import 'package:farmsmart_flutter/ui/common/carousel_view.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockActionSheetViewModel.dart';
+import 'package:farmsmart_flutter/ui/mockData/MockFarmDetailsViewModel.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockSwitchProfile.dart';
 import 'package:farmsmart_flutter/ui/myplot/PlotDetail.dart';
 import 'package:farmsmart_flutter/ui/myplot/PlotList.dart';
@@ -25,6 +26,7 @@ import 'package:farmsmart_flutter/ui/playground/data/playground_data_source.dart
 import 'package:farmsmart_flutter/ui/playground/data/playground_stagecard_datasource.dart';
 import 'package:farmsmart_flutter/ui/playground/playground_present_button.dart';
 import 'package:farmsmart_flutter/ui/playground/playground_widget.dart';
+import 'package:farmsmart_flutter/ui/profile/FarmDetails.dart';
 import 'package:farmsmart_flutter/ui/profile/SwitchProfile.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockUserProfileViewModel.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockAlertWidgetViewModel.dart';
@@ -246,7 +248,25 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
           ],
         ),
       ),
-       PlaygroundWidget(
+
+      PlaygroundWidget(
+        title: 'TASK FARM-443 Farm Details',
+        child: PlaygroundView(
+          widgetList: [
+            PlaygroundWidget(
+              title: "FARM-443 Show farm details",
+              child: PlaygroundPresentButton(
+                child: FarmDetails(
+                  viewModel: MockFarmDetailsViewModel.build(),
+                ),
+                listener: (widget, context) =>
+                    PlaygroundPresentButton.presentModal(widget, context),
+              ),
+            ),
+          ],
+        ),
+      ),
+      PlaygroundWidget(
           title: 'TASK FARM-97 Update Recomentations',
           child: PlaygroundView(widgetList: [
             PlaygroundWidget(
@@ -254,22 +274,23 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
                 child: RecommendationsList(
                     provider: SequencedViewModelProvider<
                         RecommendationsListViewModel>(
-                  [
-                    MockRecommendationsListViewModel().build(),
-                    MockRecommendationsListViewModel().build(),
-                    MockRecommendationsListViewModel().build(),
-                    MockRecommendationsListViewModel().build(),
-                  ],
-                ))),
+                      [
+                        MockRecommendationsListViewModel().build(),
+                        MockRecommendationsListViewModel().build(),
+                        MockRecommendationsListViewModel().build(),
+                        MockRecommendationsListViewModel().build(),
+                      ],
+                    ))),
             PlaygroundWidget(
                 title: "TASK FARM-97 Mock repo",
                 child: RecommendationsList(
                     provider: RecommendationListProvider(
-                  title: "Mock Repo",
-                  cropRepo: _mockCrop,
-                  plotRepo: _mockPlot,
-                  engine: _engine,
-                ))),]))
+                      title: "Mock Repo",
+                      cropRepo: _mockCrop,
+                      plotRepo: _mockPlot,
+                      engine: _engine,
+                    ))),
+          ]))
     ];
   }
 }
