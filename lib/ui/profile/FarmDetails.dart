@@ -1,17 +1,22 @@
+import 'package:farmsmart_flutter/ui/common/ActionSheet.dart';
+import 'package:farmsmart_flutter/ui/common/ActionSheetListItem.dart';
+import 'package:farmsmart_flutter/ui/common/Alert.dart';
+import 'package:farmsmart_flutter/ui/common/ContextualAppBar.dart';
 import 'package:farmsmart_flutter/ui/common/ListDivider.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
 import 'package:farmsmart_flutter/ui/profile/FarmDetailsListItem.dart';
-import 'package:farmsmart_flutter/ui/common/ContextualAppBar.dart';
-import 'package:farmsmart_flutter/ui/common/ActionSheet.dart';
-import 'package:farmsmart_flutter/ui/common/ActionSheetListItem.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class _Strings {
-  static final String farmDetailsTitle = "Your Farm Details";
-  static final String actionSheetButtonTitle = "Cancel";
-  static final String actionSheetEdit = "Edit Profile";
-  static final String actionSheetDelete = "Delete Profile";
+  static final String yourFarmDetails = 'Your Farm Details';
+  static final String cancel = 'Cancel';
+  static final String editProfile = 'Edit Profile';
+  static final String deleteProfile = 'Delete Profile';
+  static final String delete = 'Delete';
+  static final String deleteProfileDescription =
+      'Are you sure you want to delete your profile? Doing so will erase '
+      'all data and this action cannot be undone.';
 }
 
 class _Constants {
@@ -30,14 +35,14 @@ class _Constants {
 class FarmDetailsViewModel {
   final List<FarmDetailsListItemViewModel> items;
   final String buttonTitle;
-  final Function onConfirmDetails;
+  final Function confirm;
   final Function editProfile;
   final Function removeProfile;
 
   FarmDetailsViewModel({
     this.items,
     this.buttonTitle,
-    this.onConfirmDetails,
+    this.confirm,
     this.removeProfile,
     this.editProfile,
   });
@@ -105,7 +110,7 @@ class FarmDetails extends StatelessWidget {
         child: RoundedButton(
           viewModel: RoundedButtonViewModel(
             title: _viewModel.buttonTitle,
-            onTap: () => _viewModel.onConfirmDetails(),
+            onTap: () => _viewModel.confirm(),
           ),
           style: RoundedButtonStyle.largeRoundedButtonStyle().copyWith(
             height: _Constants.buttonHeight,
@@ -141,7 +146,7 @@ class FarmDetails extends StatelessWidget {
         children: <Widget>[
           Expanded(
             child: Text(
-              Intl.message(_Strings.farmDetailsTitle),
+              Intl.message(_Strings.yourFarmDetails),
               style: _style.titleTextStyle,
             ),
           ),
@@ -176,23 +181,37 @@ class FarmDetails extends StatelessWidget {
   }
 
   void _removeAction(FarmDetailsViewModel viewModel, BuildContext context) {
-    viewModel.removeProfile(); //TODO: add the confirm when ready
-    Navigator.of(context).pop();
+    Alert.present(
+      Alert(
+        viewModel: AlertViewModel(
+          cancelActionText: Intl.message(_Strings.cancel),
+          confirmActionText: Intl.message(_Strings.delete),
+          titleText: Intl.message(_Strings.deleteProfile),
+          detailText: Intl.message(_Strings.deleteProfileDescription),
+          isDestructive: true,
+          confirmAction: () {
+            viewModel.removeProfile();
+            Navigator.of(context).pop();
+          },
+        ),
+      ),
+      context,
+    );
   }
 
   void _editAction(FarmDetailsViewModel viewModel) {
-    viewModel.editProfile(); //TODO: add the UI for input when ready
+    viewModel.editProfile(); //TODO: add the UI for input when ready (Chat)
   }
 
   ActionSheet _moreMenu(FarmDetailsViewModel viewModel, BuildContext context) {
     final actions = [
       ActionSheetListItemViewModel(
-        title: Intl.message(_Strings.actionSheetEdit),
+        title: Intl.message(_Strings.editProfile),
         type: ActionType.simple,
         onTap: () => _editAction(viewModel),
       ),
       ActionSheetListItemViewModel(
-        title: Intl.message(_Strings.actionSheetDelete),
+        title: Intl.message(_Strings.deleteProfile),
         type: ActionType.simple,
         isDestructive: true,
         onTap: () => _removeAction(viewModel, context),
@@ -200,7 +219,7 @@ class FarmDetails extends StatelessWidget {
     ];
     final actionSheetViewModel = ActionSheetViewModel(
       actions,
-      Intl.message(_Strings.actionSheetButtonTitle),
+      Intl.message(_Strings.cancel),
     );
     return ActionSheet(
       viewModel: actionSheetViewModel,
