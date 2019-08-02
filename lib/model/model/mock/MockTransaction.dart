@@ -1,10 +1,13 @@
+import 'dart:math';
+
 import 'package:farmsmart_flutter/model/model/TransactionAmount.dart';
 import 'package:farmsmart_flutter/model/model/TransactionEntity.dart';
 import 'package:farmsmart_flutter/model/model/mock/MockDate.dart';
 
 class MockTransaction {
   static TransactionEntity build() {
-    final entity = TransactionEntity("",TransactionAmount("100.00"),"General","description of the thing", MockDate().randomMonthAgo());
+    final random = Random();
+    final entity = TransactionEntity("",TransactionAmount("100.00",random.nextBool()),"General","description of the thing", MockDate().randomMonthAgo());
     return entity;
   }
 

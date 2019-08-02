@@ -6,7 +6,6 @@ import 'package:farmsmart_flutter/model/model/loading_status.dart';
 import 'package:farmsmart_flutter/model/repositories/transaction/TransactionRepositoryInterface.dart';
 import 'package:farmsmart_flutter/ui/profitloss/ProfitLossList.dart';
 import 'package:farmsmart_flutter/ui/profitloss/ProfitLossListItem.dart';
-import 'package:farmsmart_flutter/ui/profitloss/RecordTransaction.dart';
 
 import '../ViewModelProvider.dart';
 import 'TransactionToRecordTransactionViewModel.dart';
@@ -17,7 +16,8 @@ class ProfitLossListProvider
   ProfitLossListViewModel _snapshot;
   final StreamController<ProfitLossListViewModel> _controller =
       StreamController<ProfitLossListViewModel>.broadcast();
-  final _taglist = ["General","Plant A"];
+  final _taglist = ["General", "Plant A"]; //TODO: grab from crop repo
+  String _title = "";
 
   ProfitLossListProvider({
     TransactionRepositoryInterface transactionsRepository,
@@ -37,8 +37,11 @@ class ProfitLossListProvider
   ProfitLossListViewModel initial() {
     if (_snapshot == null) {
       _transactionsRepository.observeProfile(null).listen((transactions) {
-        _snapshot = _viewModelFromModel(_controller, transactions);
-        _controller.sink.add(_snapshot);
+        _transactionsRepository.allTimeBalance().then((balance) {
+          _title = balance.toString();
+          _snapshot = _viewModelFromModel(_controller, transactions);
+          _controller.sink.add(_snapshot);
+        });
       });
       _snapshot = _viewModel(status: LoadingStatus.LOADING);
       _snapshot.refresh();
@@ -48,10 +51,13 @@ class ProfitLossListProvider
 
   ProfitLossListViewModel _viewModelFromModel(
       StreamController controller, List<TransactionEntity> transactions) {
-    final items = transactions.map((transaction) {
-      final transformer = TransactionToProfitLossListItemViewModel(TransactionToRecordTransactionViewModel(_transactionsRepository,_taglist));
-      return transformer.transform(from: transaction);
-    }).toList();
+    final items = transactions?.map((transaction) {
+          final transformer = TransactionToProfitLossListItemViewModel(
+              TransactionToRecordTransactionViewModel(
+                  _transactionsRepository, _taglist));
+          return transformer.transform(from: transaction);
+        })?.toList() ??
+        _snapshot.transactions;
     return _viewModel(
       status: LoadingStatus.SUCCESS,
       items: items,
@@ -62,11 +68,12 @@ class ProfitLossListProvider
     LoadingStatus status,
     List<ProfitLossListItemViewModel> items = const [],
   }) {
-    final transformer = TransactionToRecordTransactionViewModel(_transactionsRepository,_taglist);
+    final transformer = TransactionToRecordTransactionViewModel(
+        _transactionsRepository, _taglist);
     final costViewModel = transformer.costViewModel();
     final saleViewModel = transformer.saleViewModel();
     return ProfitLossListViewModel(
-      title: "1000",
+      title: _title,
       detailText: "KSh",
       loadingStatus: status,
       transactions: items,

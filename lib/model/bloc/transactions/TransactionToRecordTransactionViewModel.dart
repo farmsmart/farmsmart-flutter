@@ -31,8 +31,8 @@ class TransactionToRecordTransactionViewModel implements ObjectTransformer<Trans
   RecordTransactionViewModel costViewModel({TransactionEntity from}) {
    return RecordTransactionViewModel(
       actions: _actions(from: from),
-      buttonTitle: _Strings.recordSale,
-      recordTransaction: (data) => _record(data),
+      buttonTitle: _Strings.recordCost,
+      recordTransaction: (data) => _record(data, TransactionType.cost),
       type: TransactionType.cost,
     );
   }
@@ -41,7 +41,7 @@ class TransactionToRecordTransactionViewModel implements ObjectTransformer<Trans
     return RecordTransactionViewModel(
       actions: _actions(from: from),
       buttonTitle: _Strings.recordSale,
-      recordTransaction: (data) => _record(data),
+      recordTransaction: (data) => _record(data, TransactionType.sale),
       type: TransactionType.sale,
     );
   }
@@ -71,8 +71,9 @@ class TransactionToRecordTransactionViewModel implements ObjectTransformer<Trans
   ];
   }
 
-  void _record(RecordTransactionData data) {
-    final amount = TransactionAmount(data.amount);
+  void _record(RecordTransactionData data, TransactionType type) {
+    final isCost = (type == TransactionType.cost);
+    final amount = TransactionAmount(data.amount, isCost);
     final newTransaction = TransactionEntity(null,amount,data.crop, data.description,data.date);
       _repo.add(newTransaction);
   }

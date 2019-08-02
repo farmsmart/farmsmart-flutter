@@ -33,9 +33,11 @@ class MockListRepository<T> implements BasicRepositoryInterface<T> {
     return _observers[uri].stream;
   }
 
-  Future<List<T>> getList() {
+  Future<List<T>> getList({bool update = true}) {
     final list =  Future.value(_objects);
-    _update();
+    if(update){
+       _update();
+    }
     return list;
   }
 
