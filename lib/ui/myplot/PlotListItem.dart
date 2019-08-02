@@ -3,7 +3,7 @@ import 'package:farmsmart_flutter/model/model/ImageURLProvider.dart';
 import 'package:farmsmart_flutter/ui/common/CircularProgress.dart';
 import 'package:farmsmart_flutter/ui/common/DogTagStyles.dart';
 import 'package:farmsmart_flutter/ui/common/Dogtag.dart';
-import 'package:farmsmart_flutter/ui/common/network_image_from_future.dart';
+import 'package:farmsmart_flutter/ui/common/image_provider_view.dart';
 import 'package:farmsmart_flutter/ui/myplot/viewmodel/PlotDetailViewModel.dart';
 import 'package:flutter/material.dart';
 
@@ -142,7 +142,7 @@ class PlotListItem {
                           alignment: AlignmentDirectional.center,
                           children: <Widget>[
                             _buildPlotImage(
-                                viewModel.imageProvider.urlToFit(), itemStyle),
+                                viewModel.imageProvider, itemStyle),
                             CircularProgress(
                               progress: viewModel.progress,
                               lineWidth: itemStyle.circularLineWidth,
@@ -194,12 +194,12 @@ class PlotListItem {
   }
 
   ClipOval _buildPlotImage(
-      Future<String> imageUrl, PlotListItemStyle itemStyle) {
+      ImageURLProvider imageProvider, PlotListItemStyle itemStyle) {
     return ClipOval(
       child: Stack(
         children: <Widget>[
-          NetworkImageFromFuture(
-            imageUrl,
+          ImageProviderView(
+            imageURLProvider: imageProvider,
             height: itemStyle.imageSize,
             width: itemStyle.imageSize,
           ),

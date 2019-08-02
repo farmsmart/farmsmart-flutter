@@ -1,3 +1,4 @@
+import 'package:farmsmart_flutter/model/model/ImageURLProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -6,14 +7,14 @@ class _Constants {
   static final defaultBorderRadius = BorderRadius.all(Radius.circular(0));
 }
 
-class NetworkImageFromFuture extends StatelessWidget {
-  final Future<String> futureUrl;
+class ImageProviderView extends StatelessWidget {
+  final ImageURLProvider imageURLProvider;
   final double height;
   final double width;
   final BorderRadius imageBorderRadius;
 
-  NetworkImageFromFuture(
-    this.futureUrl, {
+  ImageProviderView({
+    this.imageURLProvider,
     this.height,
     this.width = double.infinity,
     this.imageBorderRadius,
@@ -22,7 +23,7 @@ class NetworkImageFromFuture extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: futureUrl,
+      future: imageURLProvider.urlToFit(width: width, height: height),
       builder: (BuildContext context, AsyncSnapshot<String> url) {
         if (!url.hasData || url.data == null) {
           return SizedBox(

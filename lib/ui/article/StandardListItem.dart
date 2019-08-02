@@ -1,6 +1,6 @@
 import 'package:farmsmart_flutter/ui/article/viewModel/ArticleListItemViewModel.dart';
 import 'package:farmsmart_flutter/ui/common/ListDivider.dart';
-import 'package:farmsmart_flutter/ui/common/network_image_from_future.dart';
+import 'package:farmsmart_flutter/ui/common/image_provider_view.dart';
 import 'package:flutter/material.dart';
 
 import 'ArticleListItemStyle.dart';
@@ -84,11 +84,8 @@ class StandardListItem extends StatelessWidget {
       ArticleListItemViewModel viewModel, ArticleListItemStyle itemStyle) {
     return ClipRRect(
       borderRadius: itemStyle.imageBorderRadius,
-      child: NetworkImageFromFuture(
-        viewModel.image.urlToFit(
-          width: itemStyle.imageHeight,
-          height: itemStyle.imageHeight,
-        ),
+      child: ImageProviderView(
+        imageURLProvider: viewModel.image,
         height: itemStyle.imageHeight,
         width: itemStyle.imageHeight,
         imageBorderRadius: itemStyle.imageBorderRadius,

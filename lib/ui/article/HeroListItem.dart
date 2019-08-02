@@ -1,6 +1,6 @@
 import 'package:farmsmart_flutter/ui/article/viewModel/ArticleListItemViewModel.dart';
 import 'package:farmsmart_flutter/ui/common/ListDivider.dart';
-import 'package:farmsmart_flutter/ui/common/network_image_from_future.dart';
+import 'package:farmsmart_flutter/ui/common/image_provider_view.dart';
 import 'package:flutter/material.dart';
 
 import 'ArticleListItemStyle.dart';
@@ -82,11 +82,10 @@ class HeroListItem extends StatelessWidget {
 
   Widget _buildHeroArticleImage(ArticleListItemViewModel articleData,
       ArticleListItemStyle articleListStyle) {
-    return NetworkImageFromFuture(
-      articleData.image.urlToFit(),
+    return ImageProviderView(
+      imageURLProvider: articleData.image,
       imageBorderRadius: articleListStyle.imageBorderRadius,
       height: articleListStyle.imageHeight,
-
     );
   }
 }
