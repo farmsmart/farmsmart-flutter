@@ -30,7 +30,7 @@ class PlaygroundPresentButton extends StatelessWidget {
     return showDialog<bool>(
       context: context,
       barrierDismissible: false,
-      builder: (_) => ModalNavigator(child: modal),
+      builder: (_) => NavigationScope(child: modal),
     );
   }
 }

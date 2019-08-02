@@ -188,7 +188,7 @@ class _ActionSheetState extends State<ActionSheet> {
         child: RoundedButton(
             viewModel: RoundedButtonViewModel(
                 title: viewModel.cancelButtonTitle,
-                onTap: () => Navigator.pop(context)),
+                onTap: () => Navigator.of(context).pop()),
             style: RoundedButtonStyle.actionSheetLargeRoundedButton()),
       )
     ];
@@ -210,7 +210,7 @@ class _ActionSheetState extends State<ActionSheet> {
 
   void dismissActionSheet() {
     clearSelection();
-    Navigator.pop(context);
+    Navigator.of(context).pop();
   }
 
   void clearSelection() {
@@ -220,10 +220,11 @@ class _ActionSheetState extends State<ActionSheet> {
   }
 
   void _confirmAction(Function action) {
+    dismissActionSheet();
     if (action != null) {
       action();
     }
-    dismissActionSheet();
+    
   }
 
   void select(int index) {
@@ -233,8 +234,8 @@ class _ActionSheetState extends State<ActionSheet> {
         widget._viewModel.actions[index].isSelected = true;
       });
     } else {
-      widget._viewModel.actions[index].onTap();
       dismissActionSheet();
+      widget._viewModel.actions[index].onTap();
     }
   }
 

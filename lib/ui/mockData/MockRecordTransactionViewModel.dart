@@ -13,7 +13,7 @@ class MockRecordTransactionViewModel {
     return RecordTransactionViewModel(
       actions: list,
       buttonTitle: _mockButtonTitle[1],
-      onTransactionRecorded: (data) => _mockRecordTap(data),
+      recordTransaction: (data) => _mockRecordTap(data),
       type: TransactionType.sale,
     );
   }
@@ -28,7 +28,7 @@ class MockRecordTransactionViewModel {
     return RecordTransactionViewModel(
       actions: list,
       buttonTitle: _mockButtonTitle[0],
-      onTransactionRecorded: (data) => _mockRecordTap(data),
+      recordTransaction: (data) => _mockRecordTap(data),
       type: TransactionType.cost,
     );
   }

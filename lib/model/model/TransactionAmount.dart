@@ -16,4 +16,12 @@ class TransactionAmount {
     return _decimal.toString();
   }
 
+  bool isSale() {
+    return !_decimal.isNegative;
+  }
+
+  bool isCost() {
+    return _decimal.isNegative;
+  }
+
 }

@@ -1,4 +1,5 @@
 import 'package:farmsmart_flutter/ui/common/ListDivider.dart';
+import 'package:farmsmart_flutter/ui/profitloss/RecordTransaction.dart';
 import 'package:flutter/material.dart';
 import 'package:farmsmart_flutter/ui/common/Dogtag.dart';
 
@@ -7,11 +8,11 @@ class ProfitLossListItemViewModel {
   final String subtitle;
   final String detail;
 
-  final Function onTap;
+  final RecordTransactionViewModel detailViewModel;
   final DogTagStyle style;
 
   ProfitLossListItemViewModel(
-      {this.title, this.subtitle, this.detail, this.style, this.onTap});
+      {this.title, this.subtitle, this.detail, this.style, this.detailViewModel});
 }
 
 class ProfitLossItemStyle {
@@ -84,7 +85,7 @@ class ProfitLossListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        onTap: _viewModel.onTap,
+        onTap: ()=> _navigateToDetail(context,_viewModel.detailViewModel),
         child: Card(
           margin: EdgeInsets.all(0),
             elevation: _style.elevation,
@@ -104,6 +105,13 @@ class ProfitLossListItem extends StatelessWidget {
               ListDivider.build(),
             ])));
   }
+}
+_navigateToDetail(BuildContext context, RecordTransactionViewModel viewModel) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => RecordTransaction(viewModel: viewModel),
+      ),
+    );
 }
 
 _buildMainTextView(

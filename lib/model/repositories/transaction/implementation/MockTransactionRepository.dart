@@ -12,7 +12,7 @@ class MockTransactionRepository extends MockListRepository<TransactionEntity> im
     final identifyEntity = (TransactionEntity transaction) {
       return transaction.id;
     };
-    return MockTransactionRepository._(identifyEntity, MockTransaction.list());
+    return MockTransactionRepository._(identifyEntity, MockTransaction.list(count: 5));
   }
   
   @override
