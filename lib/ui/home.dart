@@ -99,8 +99,13 @@ class Home extends StatelessWidget {
             cropRepository: repositoryProvider.getCropRepository()));
   }
 
-  _buildProfitAndLoss(){
-    return ProfitLossPage(viewModelProvider: ProfitLossListProvider(transactionsRepository: repositoryProvider.getTransactionRepository()),);
+  _buildProfitAndLoss() {
+    return ProfitLossPage(
+      viewModelProvider: ProfitLossListProvider(
+        transactionsRepository: repositoryProvider.getTransactionRepository(),
+        cropRepository: repositoryProvider.getCropRepository(),
+      ),
+    );
   }
 
   _buildDiscover() {
@@ -132,10 +137,10 @@ class Home extends StatelessWidget {
   }
 
   TabNavigator _buildTabNavigator(
-      Widget page,
-      String activeIconPath,
-      String iconPath,
-      ) {
+    Widget page,
+    String activeIconPath,
+    String iconPath,
+  ) {
     return TabNavigator(
       child: page,
       barItem: BottomNavigationBarItem(

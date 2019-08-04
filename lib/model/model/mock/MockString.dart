@@ -35,6 +35,10 @@ class MockString {
   String indexed({String text = "index", int index}) {
     return text + " " + index.toString();
   }
+  
+  List<String> libarary(){
+    return _library;
+  }
 
   List<String> indexedList({String text = "index", int count}) {
     List<String> list = [];

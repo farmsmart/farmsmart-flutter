@@ -12,8 +12,12 @@ class TransactionAmount {
     return TransactionAmount._(forceNegative ? -decimal : decimal);
   }
 
-  String toString() {
-    return _decimal.toString();
+  String toString({bool allowNegative = false}) {
+    //LH this is a transaction amount, which is never displayed as negative number.
+    if(allowNegative) {
+      return _decimal.toString();
+    }
+    return _decimal.isNegative ? (-_decimal).toString():_decimal.toString();
   }
 
   bool isSale() {

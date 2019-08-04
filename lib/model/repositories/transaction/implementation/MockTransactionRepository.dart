@@ -5,6 +5,11 @@ import 'package:farmsmart_flutter/model/model/mock/MockTransaction.dart';
 import 'package:farmsmart_flutter/model/repositories/transaction/TransactionRepositoryInterface.dart';
 import '../../MockListRepository.dart';
 
+
+class _Constants{
+  static const mockCount = 5;
+}
+
 class MockTransactionRepository extends MockListRepository<TransactionEntity> implements TransactionRepositoryInterface {
   
   MockTransactionRepository._(IdentifyEntity<TransactionEntity> identifyEntity, List<TransactionEntity> startData) : super(identifyEntity: identifyEntity, startingData: startData);
@@ -13,7 +18,7 @@ class MockTransactionRepository extends MockListRepository<TransactionEntity> im
     final identifyEntity = (TransactionEntity transaction) {
       return transaction.id;
     };
-    return MockTransactionRepository._(identifyEntity, MockTransaction.list(count: 5));
+    return MockTransactionRepository._(identifyEntity, MockTransaction().list(count: _Constants.mockCount));
   }
   
   @override

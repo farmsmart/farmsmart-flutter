@@ -8,7 +8,7 @@ import 'package:farmsmart_flutter/model/repositories/crop/CropRepositoryInterfac
 
 class MockCropRepository implements CropRepositoryInterface {
   final _rand = Random(0);
-  final _list = MockCrop.list();
+  final _list = MockCrop.uniqueList();
   final _delay = Duration(milliseconds: 200);
   final _streamEventCount = 50;
   final _errorOneIn = 100;
