@@ -3,11 +3,15 @@
 import 'dart:async';
 
 abstract class ObjectTransformer<A,B> {
-    B transform({A from}) { return null;}
+    B transform({A from});
 
-    StreamTransformer<A,B> streamTransformer() {
+    StreamTransformer<A,B> streamTransformer({Function(B) didTransform}) {
      return StreamTransformer<A,B>.fromHandlers(handleData: (input, sink) {
-        return sink.add(transform(from: input));
+        final transformedObject = transform(from: input);
+        if(didTransform !=null) {
+             didTransform(transformedObject);
+        }
+        return sink.add(transformedObject);
       }); 
     }
 }

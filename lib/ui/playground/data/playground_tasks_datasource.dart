@@ -1,4 +1,5 @@
 import 'package:farmsmart_flutter/model/bloc/SequencedViewModelProvider.dart';
+import 'package:farmsmart_flutter/model/bloc/StaticViewModelProvider.dart';
 import 'package:farmsmart_flutter/model/bloc/article/ArticleListProvider.dart';
 import 'package:farmsmart_flutter/model/bloc/plot/PlotDetailProvider.dart';
 import 'package:farmsmart_flutter/model/bloc/recommendations/RecommendationListProvider.dart';
@@ -213,13 +214,13 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
           child: PlaygroundView(widgetList: [
             PlaygroundWidget(
               title: 'Simple view',
-              child: UserProfile(viewModel: MockUserProfileViewModel.build()),
+              child: UserProfile(provider: StaticViewModelProvider<UserProfileViewModel>(MockUserProfileViewModel.build())),
             ),
             PlaygroundWidget(
               title: 'Larger titles view',
               child: UserProfile(
-                  viewModel: MockUserProfileViewModel.buildLarger()),
-            ),
+                  provider: StaticViewModelProvider<UserProfileViewModel>(MockUserProfileViewModel.buildLarger()),
+            )),
           ])),
       PlaygroundWidget(
         title: "FARM-432 General Alert Widget",

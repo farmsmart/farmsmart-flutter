@@ -1,6 +1,7 @@
 import 'package:farmsmart_flutter/farmsmart_localizations.dart';
 import 'package:farmsmart_flutter/model/bloc/article/ArticleListProvider.dart';
 import 'package:farmsmart_flutter/model/bloc/plot/PlotListProvider.dart';
+import 'package:farmsmart_flutter/model/bloc/profile/ProfileDetailProvider.dart';
 import 'package:farmsmart_flutter/model/bloc/recommendations/RecommendationEngine.dart';
 import 'package:farmsmart_flutter/model/bloc/recommendations/RecommendationListProvider.dart';
 import 'package:farmsmart_flutter/model/bloc/transactions/ProfitLossListProvider.dart';
@@ -130,7 +131,7 @@ class Home extends StatelessWidget {
 
   _buildUserProfile() {
     return UserProfile(
-      viewModel: MockUserProfileViewModel.build(),
+      provider: ProfileDetailProvider(profileRepo: repositoryProvider.getProfileRepository()),
     );
   }
 
