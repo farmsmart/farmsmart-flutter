@@ -11,7 +11,7 @@ class _Strings {
   static const upcoming = "Upcoming";
 }
 
-class PlotToPlotListItemViewModel implements ObjectTransformer<PlotEntity, PlotListItemViewModel> {
+class PlotToPlotListItemViewModel extends ObjectTransformer<PlotEntity, PlotListItemViewModel> {
 
   final _logic = StageBusinessLogic();
   final PlotDetailProvider _detailProvider;

@@ -18,7 +18,7 @@ class _Constants {
 }
 
 class TransactionToProfitLossListItemViewModel
-    implements
+    extends
         ObjectTransformer<TransactionEntity, ProfitLossListItemViewModel> {
   final TransactionToRecordTransactionViewModel _detailTransformer;
   final _dateFormatter = DateFormat(_Constants.transactionDateFormat);

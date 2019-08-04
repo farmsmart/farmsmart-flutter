@@ -21,7 +21,7 @@ class _Strings {
 }
 
 class StageToStageCardViewModel
-    implements ObjectTransformer<StageEntity, StageCardViewModel> {
+    extends ObjectTransformer<StageEntity, StageCardViewModel> {
   final PlotEntity _plot;
   final Function _beginAction;
   final Function _completeAction;

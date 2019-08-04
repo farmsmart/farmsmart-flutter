@@ -20,7 +20,7 @@ class _Strings {
 }
 
 class ArticleDetailViewModelTransformer
-    implements ObjectTransformer<ArticleEntity, ArticleDetailViewModel> {
+    extends ObjectTransformer<ArticleEntity, ArticleDetailViewModel> {
   ObjectTransformer<ArticleEntity, ArticleListItemViewModel>
       _listItemTransformer;
   final String _contentLinkTitle;

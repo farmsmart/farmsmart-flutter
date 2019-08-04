@@ -18,7 +18,7 @@ class ProfileDetailProvider
 
   @override
   Stream<UserProfileViewModel> stream() {
-    return null; //_profileRepository.observeCurrent();
+    return _profileRepository.observeCurrent().transform(null);
   }
 
   @override

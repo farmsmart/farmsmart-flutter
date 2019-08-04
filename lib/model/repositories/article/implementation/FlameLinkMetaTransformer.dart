@@ -13,8 +13,7 @@ class _Fields {
 }
 
 class FlamelinkMetaTransformer
-    implements ObjectTransformer<DocumentSnapshot, FlamelinkMeta> {
-      const FlamelinkMetaTransformer();
+    extends ObjectTransformer<DocumentSnapshot, FlamelinkMeta> {
   @override
   FlamelinkMeta transform({DocumentSnapshot from}) {
     final metaData = from[FlamelinkMeta.metaFieldName];

@@ -1,7 +1,15 @@
 //typedef Transformer<A,B> = B Function(A);
 
+import 'dart:async';
+
 abstract class ObjectTransformer<A,B> {
-    B transform({A from});
+    B transform({A from}) { return null;}
+
+    StreamTransformer<A,B> streamTransformer() {
+     return StreamTransformer<A,B>.fromHandlers(handleData: (input, sink) {
+        return sink.add(transform(from: input));
+      }); 
+    }
 }
 
 //Helper functions for safe casting when transforming 
