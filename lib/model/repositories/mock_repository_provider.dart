@@ -4,6 +4,10 @@ import 'package:farmsmart_flutter/model/repositories/crop/CropRepositoryInterfac
 import 'package:farmsmart_flutter/model/repositories/crop/implementation/MockCropRepository.dart';
 import 'package:farmsmart_flutter/model/repositories/plot/PlotRepositoryInterface.dart';
 import 'package:farmsmart_flutter/model/repositories/plot/implementation/MockPlotRepository.dart';
+import 'package:farmsmart_flutter/model/repositories/profile/ProfileRepositoryInterface.dart';
+import 'package:farmsmart_flutter/model/repositories/profile/implementation/MockProfileRepository.dart';
+import 'package:farmsmart_flutter/model/repositories/ratingEngine/RatingEngineRepositoryInterface.dart';
+import 'package:farmsmart_flutter/model/repositories/ratingEngine/implementation/MockRatingEngineRepository.dart';
 import 'package:flutter/widgets.dart';
 import 'repository_provider.dart';
 import 'transaction/TransactionRepositoryInterface.dart';
@@ -15,6 +19,8 @@ class MockRepositoryProvider implements RepositoryProvider{
   PlotRepositoryInterface _plot = MockPlotRepository();
   CropRepositoryInterface _crop = MockCropRepository();
   TransactionRepositoryInterface _trans = MockTransactionRepository();
+  ProfileRepositoryInterface _profile = MockProfileRepository();
+  RatingEngineRepositoryInterface _ratings = MockRatingEngineRepository();
 
   init(BuildContext context){
     //ignore
@@ -31,5 +37,11 @@ class MockRepositoryProvider implements RepositoryProvider{
 
     @override
   TransactionRepositoryInterface getTransactionRepository() => _trans;
+
+  @override
+  ProfileRepositoryInterface getProfileRepository() => _profile;
+
+  @override
+  RatingEngineRepositoryInterface getRatingsRepository() => _ratings;
 
 }

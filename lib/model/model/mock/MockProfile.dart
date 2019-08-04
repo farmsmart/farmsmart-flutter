@@ -1,13 +1,18 @@
-
-import 'dart:math';
+import 'package:farmsmart_flutter/model/model/mock/MockFactor.dart';
+import 'package:farmsmart_flutter/model/model/mock/MockString.dart';
+import 'package:farmsmart_flutter/model/repositories/MockStrings.dart';
+import 'package:farmsmart_flutter/model/repositories/image/implementation/MockImageEntity.dart';
 
 import '../ProfileEntity.dart';
 
 class MockProfile {
-  final _random = Random(0);
-  
   ProfileEntity build() {
-    final entity = ProfileEntity();
+    final entity = ProfileEntity(
+      mockPlainText.identifier(),
+      _names.random(),
+      MockImageEntity().build().urlProvider,
+      MockFactor().build(),
+    );
     return entity;
   }
 
@@ -18,4 +23,10 @@ class MockProfile {
     }
     return entities;
   }
+
+  final _names = MockString(library: [
+    "Lee Higgins",
+    "Emma Higgins",
+    "Bruna Higgins",
+  ]);
 }

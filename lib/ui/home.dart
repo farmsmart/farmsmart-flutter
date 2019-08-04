@@ -2,6 +2,7 @@ import 'package:farmsmart_flutter/farmsmart_localizations.dart';
 import 'package:farmsmart_flutter/model/bloc/article/ArticleListProvider.dart';
 import 'package:farmsmart_flutter/model/bloc/plot/PlotListProvider.dart';
 import 'package:farmsmart_flutter/model/bloc/recommendations/RecommendationEngine.dart';
+import 'package:farmsmart_flutter/model/bloc/recommendations/RecommendationListProvider.dart';
 import 'package:farmsmart_flutter/model/bloc/transactions/ProfitLossListProvider.dart';
 import 'package:farmsmart_flutter/model/model/mock/MockRecommendation.dart';
 import 'package:farmsmart_flutter/model/repositories/article/ArticleRepositoryInterface.dart';
@@ -32,12 +33,6 @@ class _Constants {
   static final communitySelectedIcon = 'assets/icons/community_selected.png';
   static final communityIcon = 'assets/icons/community.png';
 }
-
-final engine = RecommendationEngine(
-  inputFactors: harryInput,
-  inputScale: 10.0,
-  weightMatrix: harryWeights,
-);
 
 class Home extends StatelessWidget {
   FarmsmartLocalizations localizations;
@@ -92,12 +87,18 @@ class Home extends StatelessWidget {
   }
 
   _buildMyPlot() {
+    final recommendationsProvider = RecommendationListProvider( title:"Recommendations",
+      heroThreshold: 0.8,
+      plotRepo: repositoryProvider.getMyPlotRepository(),
+      cropRepo: repositoryProvider.getCropRepository(),
+      profileRepo: repositoryProvider.getProfileRepository(),
+      ratingRepo: repositoryProvider.getRatingsRepository(),
+    );
     return PlotList(
         provider: PlotListProvider(
             title: localizations.myPlotTab,
-            engine: engine,
             plotRepository: repositoryProvider.getMyPlotRepository(),
-            cropRepository: repositoryProvider.getCropRepository()));
+            recommendationsProvider: recommendationsProvider));
   }
 
   _buildProfitAndLoss() {

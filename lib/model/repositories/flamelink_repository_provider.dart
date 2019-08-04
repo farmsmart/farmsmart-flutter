@@ -11,6 +11,10 @@ import 'package:farmsmart_flutter/model/repositories/transaction/TransactionRepo
 import 'package:farmsmart_flutter/model/repositories/transaction/implementation/MockTransactionRepository.dart';
 import 'package:flutter/material.dart';
 
+import 'profile/ProfileRepositoryInterface.dart';
+import 'profile/implementation/MockProfileRepository.dart';
+import 'ratingEngine/RatingEngineRepositoryInterface.dart';
+import 'ratingEngine/implementation/MockRatingEngineRepository.dart';
 import 'repository_provider.dart';
 
 class FlameLinkRepositoryProvider implements RepositoryProvider {
@@ -19,6 +23,8 @@ class FlameLinkRepositoryProvider implements RepositoryProvider {
   PlotRepositoryInterface _plot = MockPlotRepository();
   CropRepositoryInterface _crop = MockCropRepository();
   TransactionRepositoryInterface _trans = MockTransactionRepository();
+  ProfileRepositoryInterface _profile = MockProfileRepository();
+  RatingEngineRepositoryInterface _ratings = MockRatingEngineRepository();
 
   init(BuildContext context) {
     this.cms = FlameLink(
@@ -41,4 +47,10 @@ class FlameLinkRepositoryProvider implements RepositoryProvider {
 
   @override
   TransactionRepositoryInterface getTransactionRepository() => _trans;
+
+  @override
+  ProfileRepositoryInterface getProfileRepository() => _profile;
+
+  @override
+  RatingEngineRepositoryInterface getRatingsRepository() => _ratings;
 }

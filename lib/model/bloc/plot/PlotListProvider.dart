@@ -2,11 +2,9 @@ import 'dart:async';
 
 import 'package:farmsmart_flutter/model/bloc/ViewModelProvider.dart';
 import 'package:farmsmart_flutter/model/bloc/plot/PlotDetailProvider.dart';
-import 'package:farmsmart_flutter/model/bloc/recommendations/RecommendationEngine.dart';
 import 'package:farmsmart_flutter/model/bloc/recommendations/RecommendationListProvider.dart';
 import 'package:farmsmart_flutter/model/model/PlotEntity.dart';
 import 'package:farmsmart_flutter/model/model/loading_status.dart';
-import 'package:farmsmart_flutter/model/repositories/crop/CropRepositoryInterface.dart';
 import 'package:farmsmart_flutter/model/repositories/plot/PlotRepositoryInterface.dart';
 import 'package:farmsmart_flutter/ui/myplot/PlotList.dart';
 import 'package:farmsmart_flutter/ui/myplot/PlotListItem.dart';
@@ -30,19 +28,16 @@ class _Constants {
 
 class PlotListProvider implements ViewModelProvider<PlotListViewModel> {
   final PlotRepositoryInterface _plotRepo;
-  final CropRepositoryInterface _cropRepo;
-  final RecommendationEngine _engine;
+  final RecommendationListProvider _recommendationsProvider;
   final String _title;
   PlotListViewModel _snapshot;
   PlotListProvider({
     String title,
     PlotRepositoryInterface plotRepository,
-    CropRepositoryInterface cropRepository,
-    RecommendationEngine engine,
+    RecommendationListProvider  recommendationsProvider,
   })  : this._title = title,
         this._plotRepo = plotRepository,
-        this._cropRepo = cropRepository,
-        this._engine = engine;
+        this._recommendationsProvider = recommendationsProvider;
 
   final StreamController<PlotListViewModel> _controller =
       StreamController<PlotListViewModel>.broadcast();
@@ -103,18 +98,14 @@ class PlotListProvider implements ViewModelProvider<PlotListViewModel> {
 
   PlotListViewModel _viewModel(
       {LoadingStatus status, List<PlotListItemViewModel> items = const []}) {
-    final recommendationsProvider = RecommendationListProvider(
-        title: _Strings.recommendations,
-        cropRepo: _cropRepo,
-        plotRepo: _plotRepo,
-        engine: _engine);
+    
     return PlotListViewModel(
       title: _title,
       buttonTitle: Intl.message(_Strings.addCrop),
       loadingStatus: status,
       items: items,
       refresh: () => _update(_controller),
-      recommendationsProvider: recommendationsProvider,
+      recommendationsProvider: _recommendationsProvider,
     );
   }
 }

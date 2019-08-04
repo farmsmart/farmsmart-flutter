@@ -1,13 +1,13 @@
 import 'package:farmsmart_flutter/model/bloc/SequencedViewModelProvider.dart';
 import 'package:farmsmart_flutter/model/bloc/article/ArticleListProvider.dart';
 import 'package:farmsmart_flutter/model/bloc/plot/PlotDetailProvider.dart';
-import 'package:farmsmart_flutter/model/bloc/recommendations/RecommendationEngine.dart';
 import 'package:farmsmart_flutter/model/bloc/recommendations/RecommendationListProvider.dart';
 import 'package:farmsmart_flutter/model/model/mock/MockPlot.dart';
-import 'package:farmsmart_flutter/model/model/mock/MockRecommendation.dart';
 import 'package:farmsmart_flutter/model/repositories/article/implementation/MockArticlesRepository.dart';
 import 'package:farmsmart_flutter/model/repositories/crop/implementation/MockCropRepository.dart';
 import 'package:farmsmart_flutter/model/repositories/plot/implementation/MockPlotRepository.dart';
+import 'package:farmsmart_flutter/model/repositories/profile/implementation/MockProfileRepository.dart';
+import 'package:farmsmart_flutter/model/repositories/ratingEngine/implementation/MockRatingEngineRepository.dart';
 import 'package:farmsmart_flutter/ui/LandingPage.dart';
 import 'package:farmsmart_flutter/ui/article/ArticleList.dart';
 import 'package:farmsmart_flutter/ui/bottombar/persistent_bottom_navigation_bar.dart';
@@ -50,12 +50,8 @@ import 'playground_persistent_bottom_navigation_bar_datasource.dart';
 class PlayGroundTasksDataSource implements PlaygroundDataSource {
   final _mockPlot = MockPlotRepository();
   final _mockCrop = MockCropRepository();
-
-  final _engine = RecommendationEngine(
-    inputFactors: harryInput,
-    inputScale: 10.0,
-    weightMatrix: harryWeights,
-  );
+  final _mockProfile = MockProfileRepository();
+  final _mockRatingRepo = MockRatingEngineRepository();
 
   @override
   List<PlaygroundWidget> getList() {
@@ -292,7 +288,8 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
                   title: "Mock Repo",
                   cropRepo: _mockCrop,
                   plotRepo: _mockPlot,
-                  engine: _engine,
+                  profileRepo: _mockProfile,
+                  ratingRepo: _mockRatingRepo
                 ),
               ),
             ),
@@ -318,7 +315,8 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
             title: "Mock Repo",
             cropRepo: _mockCrop,
             plotRepo: _mockPlot,
-            engine: _engine,
+            profileRepo: _mockProfile,
+            ratingRepo: _mockRatingRepo,
           ),
         ),
       ),
