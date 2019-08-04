@@ -11,7 +11,7 @@ class MockSwitchProfile {
     }
 
     return SwitchProfileViewModel(
-      actions: list,
+      items: list,
       title: "Switch Profile",
       actionTitle: "Switch Profile",
       isVisible: false,

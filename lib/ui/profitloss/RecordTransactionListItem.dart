@@ -21,7 +21,7 @@ class _Strings {
   static final SELECT = Intl.message("Select...");
   static final DESCRIPTION = Intl.message("Description (optional)...");
   static final EMPTY_STRING = Intl.message("");
-}
+} // TODO: fix this mess. Strings will not change if local changes.....
 
 enum RecordCellType {
   pickDate,
@@ -31,7 +31,7 @@ enum RecordCellType {
 
 class RecordTransactionListItemViewModel {
   RecordCellType type;
-  DateTime selectedDate;
+  DateTime selectedDate = DateTime.now();
   List<String> listOfCrops = [];
   String selectedItem;
   String description;

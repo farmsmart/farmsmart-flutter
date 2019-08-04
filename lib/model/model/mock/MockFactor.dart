@@ -2,6 +2,10 @@ import 'package:farmsmart_flutter/model/model/FactorEntity.dart';
 import 'package:farmsmart_flutter/model/repositories/MockStrings.dart';
 import 'MockEntity.dart';
 
+class _Constants {
+  static const inputScale = 10.0;
+}
+
 class MockFactor extends MockEntity<FactorEntity> {
   final _values = {
     "Skill Level": 4.0,
@@ -15,6 +19,6 @@ class MockFactor extends MockEntity<FactorEntity> {
   };
 
   FactorEntity build() {
-    return FactorEntity(factors.random(),10.0, _values);
+    return FactorEntity(factors.random(),_Constants.inputScale, _values);
   }
 }

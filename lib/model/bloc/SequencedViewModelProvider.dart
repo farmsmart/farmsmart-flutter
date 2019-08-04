@@ -26,8 +26,8 @@ class SequencedViewModelProvider<T> implements ViewModelProvider<T> {
   }
 
   @override
-  StreamController<T> observe() {
-    return _controller;
+  Stream<T> stream() {
+    return _controller.stream;
   }
 
   @override

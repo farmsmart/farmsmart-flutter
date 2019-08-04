@@ -40,7 +40,7 @@ class ViewModelProviderBuilder<T> extends StatelessWidget {
     final loadingBuilder = _loadingBuilder ?? _defaultLoadingBuilder;
 
     return StreamBuilder<T>(
-        stream: _provider.observe().stream,
+        stream: _provider.stream(),
         initialData: _provider.initial(),
         builder: (
           BuildContext context,

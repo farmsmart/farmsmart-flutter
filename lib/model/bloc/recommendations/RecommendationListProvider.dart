@@ -65,8 +65,8 @@ class RecommendationListProvider
   }
 
   @override
-  StreamController<RecommendationsListViewModel> observe() {
-    return _controller;
+  Stream<RecommendationsListViewModel> stream() {
+    return _controller.stream;
   }
 
   @override

@@ -39,8 +39,8 @@ class PlotListProvider implements ViewModelProvider<PlotListViewModel> {
       StreamController<PlotListViewModel>.broadcast();
 
   @override
-  StreamController<PlotListViewModel> observe() {
-    return _controller;
+  Stream<PlotListViewModel> stream() {
+    return _controller.stream;
   }
 
   @override

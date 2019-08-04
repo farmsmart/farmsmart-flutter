@@ -2,7 +2,7 @@ import 'dart:async';
 
 abstract class ViewModelProvider<T> {
 
-  StreamController<T> observe();
+  Stream<T> stream();
   T initial();
   T snapshot();
   

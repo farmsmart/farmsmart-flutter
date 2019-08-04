@@ -24,7 +24,7 @@ class SwitchProfileViewModel {
   String title;
   String actionTitle;
   bool isVisible;
-  List<SwitchProfileItemsViewModel> actions;
+  List<SwitchProfileItemsViewModel> items;
   int confirmedIndex;
   int selectedIndex;
   Function addProfileAction;
@@ -33,7 +33,7 @@ class SwitchProfileViewModel {
     @required this.title,
     @required this.actionTitle,
     this.isVisible = false,
-    this.actions,
+    this.items,
     this.confirmedIndex,
     this.selectedIndex,
     @required this.addProfileAction,
@@ -116,15 +116,15 @@ class SwitchProfileState extends State<SwitchProfile> {
             physics: ScrollPhysics(),
             itemBuilder: (context, index) => SwitchProfileItems(
               viewModel: SwitchProfileItemsViewModel(
-                title: widget._viewModel.actions[index].title,
-                image: widget._viewModel.actions[index].image,
-                icon: widget._viewModel.actions[index].icon,
-                isSelected: widget._viewModel.actions[index].isSelected,
+                title: widget._viewModel.items[index].title,
+                image: widget._viewModel.items[index].image,
+                icon: widget._viewModel.items[index].icon,
+                isSelected: widget._viewModel.items[index].isSelected,
                 itemAction: () => _select(index),
               ),
             ),
             separatorBuilder: (context, index) => ListDivider.build(),
-            itemCount: widget._viewModel.actions.length,
+            itemCount: widget._viewModel.items.length,
           ),
         ],
       ),
@@ -176,7 +176,7 @@ class SwitchProfileState extends State<SwitchProfile> {
     setState(() {
       widget._viewModel.selectedIndex = index;
       _clearSelection();
-      widget._viewModel.actions[index].isSelected = true;
+      widget._viewModel.items[index].isSelected = true;
     });
     _checkSelection();
   }
@@ -194,7 +194,7 @@ class SwitchProfileState extends State<SwitchProfile> {
   }
 
   void _clearSelection() {
-    for (var actions in widget._viewModel.actions) {
+    for (var actions in widget._viewModel.items) {
       actions.isSelected = false;
     }
   }

@@ -1,4 +1,3 @@
-import 'package:farmsmart_flutter/ui/common/ActionSheet.dart';
 import 'package:farmsmart_flutter/ui/common/ListDivider.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
 import 'package:farmsmart_flutter/ui/profile/UserProfileListItem.dart';
@@ -41,6 +40,7 @@ class UserProfileViewModel {
   int completedCrops;
   final Function switchProfileAction;
   ImageProvider image;
+  Function refresh;
 
   UserProfileViewModel({
     this.items,

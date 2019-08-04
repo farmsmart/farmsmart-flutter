@@ -34,8 +34,8 @@ class ProfitLossListProvider
   }) : this._transactionsRepository = transactionsRepository, this._cropRepository = cropRepository;
 
   @override
-  StreamController<ProfitLossListViewModel> observe() {
-    return _controller;
+  Stream<ProfitLossListViewModel> stream() {
+    return _controller.stream;
   }
 
   @override

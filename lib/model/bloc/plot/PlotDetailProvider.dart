@@ -34,8 +34,8 @@ class PlotDetailProvider implements ViewModelProvider<PlotDetailViewModel> {
   }
 
   @override
-  StreamController<PlotDetailViewModel> observe() {
-    return _controller;
+  Stream<PlotDetailViewModel> stream() {
+    return _controller.stream;
   }
   
   @override
