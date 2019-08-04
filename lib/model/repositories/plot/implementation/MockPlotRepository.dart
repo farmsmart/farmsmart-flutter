@@ -14,7 +14,7 @@ final _plotBuilder = MockPlotEntity();
 
 class MockPlotRepository extends MockListRepository<PlotEntity> implements PlotRepositoryInterface {
 
-  MockPlotRepository._(IdentifyEntity<PlotEntity> identifyEntity, List<PlotEntity> startData) : super(identifyEntity: identifyEntity, startingData: startData);
+  MockPlotRepository._(IdentifyEntity<PlotEntity> identifyEntity, List<PlotEntity> startData,) : super(identifyEntity: identifyEntity, startingData: startData);
 
   factory MockPlotRepository() {
     final identifyEntity = (PlotEntity plot) {
