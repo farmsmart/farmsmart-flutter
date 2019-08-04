@@ -234,7 +234,7 @@ class RecordTransactionState extends State<RecordTransaction> {
       RecordTransactionHeader(
           viewModel: RecordTransactionHeaderViewModel(
             isEditable: viewModel.isEditable,
-            onAmountChanged: viewModel.amount,
+            amount: viewModel.amount,
           ),
           style: viewModel.type == TransactionType.sale
               ? RecordTransactionHeaderStyles.defaultSaleStyle
