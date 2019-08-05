@@ -94,7 +94,10 @@ class MessageBubbleStyles {
           left: 12.0,
           right: 40.0,
         ),
-        textContainerPadding: const EdgeInsets.all(12.0),
+        textContainerPadding: const EdgeInsets.symmetric(
+          horizontal: 16.0,
+          vertical: 17.0,
+        ),
       );
 
   static const _defaultMolecule = MessageBubbleStyle(

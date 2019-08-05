@@ -3,9 +3,10 @@ import 'package:farmsmart_flutter/chat/bloc/transformer/implementation/ChatMessa
 import 'package:farmsmart_flutter/chat/model/form/form_entity.dart';
 import 'package:farmsmart_flutter/chat/model/form/form_item_entity.dart';
 import 'package:farmsmart_flutter/chat/ui/widgets/bubble_message.dart';
-import 'package:farmsmart_flutter/chat/ui/widgets/message_circle_avatar.dart';
 import 'package:farmsmart_flutter/chat/ui/widgets/fading_dots.dart';
 import 'package:farmsmart_flutter/chat/ui/widgets/header_message.dart';
+import 'package:farmsmart_flutter/chat/ui/widgets/message_circle_avatar.dart';
+import 'package:farmsmart_flutter/chat/ui/widgets/styles/fading_dots_styles.dart';
 import 'package:farmsmart_flutter/chat/ui/widgets/styles/header_message_styles.dart';
 
 import '../ChatMessageProviderHelper.dart';
@@ -64,12 +65,13 @@ class ChatMessageProviderHelperImpl
 
   MessageBubbleViewModel _getMessageAsLoading() {
     return MessageBubbleViewModel(
-      message: null,
       avatar: MessageCircleAvatar(
         messageCircleAvatarViewModel: MessageCircleAvatarViewModel(
             backgroundAssetImageSource: _Constants.defaultEmptyString),
       ),
-      messageChild: FadingDots(),
+      messageChild: FadingDots(
+        style: FadingDotsStyles.buildDefaultStyle(),
+      ),
       messageType: MessageType.loading,
     );
   }

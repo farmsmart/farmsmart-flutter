@@ -1,26 +1,68 @@
 import 'package:farmsmart_flutter/chat/utils/delay_tween.dart';
 import 'package:flutter/material.dart';
 
-class FadingDots extends StatefulWidget {
-  static const int _defaultMilliseconds = 1400;
-  static const Duration _defaultDuration =
-      Duration(milliseconds: _defaultMilliseconds);
-  static const double _defaultSize = 20.0;
+class _Constants {
+  static const _defaultMilliseconds = 1400;
+  static const _defaultDuration = Duration(
+    milliseconds: _defaultMilliseconds,
+  );
+  static const _defaultSize = 6.0;
+  static const _defaultSpaceBetweenDots = 5.0;
+  static const _defaultDotColor = Color(0xFF767690);
+}
 
-  FadingDots({
-    Key key,
-    this.color = Colors.grey,
-    this.size = _defaultSize,
-    this.duration = _defaultDuration,
-  })  : assert(color != null, 'You should specify a color'),
-        assert(size != null),
-        assert(duration.inMilliseconds >= 0.0,
-            'The duration should be greater than 0'),
-        super(key: key);
-
+class FadingDotsStyle {
   final Color color;
   final double size;
+  final double spaceBetweenDots;
   final Duration duration;
+
+  const FadingDotsStyle({
+    this.spaceBetweenDots,
+    this.size,
+    this.color,
+    this.duration,
+  });
+
+  FadingDotsStyle copyWith({
+    Color color,
+    double size,
+    double spaceBetweenDots,
+    Duration duration,
+  }) {
+    return FadingDotsStyle(
+      color: color ?? this.color,
+      duration: duration ?? this.duration,
+      size: size ?? this.size,
+      spaceBetweenDots: spaceBetweenDots ?? this.spaceBetweenDots,
+    );
+  }
+}
+
+class _DefaultFadingDotsStyle extends FadingDotsStyle {
+  final Color color = _Constants._defaultDotColor;
+  final double size = _Constants._defaultSize;
+  final double spaceBetweenDots = _Constants._defaultSpaceBetweenDots;
+  final Duration duration = _Constants._defaultDuration;
+
+  const _DefaultFadingDotsStyle({
+    Color color,
+    double size,
+    double spaceBetweenDots,
+    Duration duration,
+  });
+}
+
+const FadingDotsStyle _defaultStyle = const _DefaultFadingDotsStyle();
+
+class FadingDots extends StatefulWidget {
+  FadingDots({
+    Key key,
+    FadingDotsStyle style = _defaultStyle,
+  })  : this._style = style,
+        super(key: key);
+
+  final FadingDotsStyle _style;
 
   @override
   _FadingDotsState createState() => _FadingDotsState();
@@ -28,13 +70,11 @@ class FadingDots extends StatefulWidget {
 
 class _FadingDotsState extends State<FadingDots>
     with SingleTickerProviderStateMixin {
-  static const double _halfSizeFactor = .5;
   static const double _delayFactorZero = .0;
   static const double _delayFactorTwo = .2;
   static const double _delayFactorFour = .4;
   static const double _beginAlpha = 0.0;
   static const double _endAlpha = 1.0;
-  static const int _doubleSizeFactor = 2;
   static const int _firstIndex = 0;
   static const int _secondIndex = 1;
   static const int _thirdIndex = 2;
@@ -45,7 +85,8 @@ class _FadingDotsState extends State<FadingDots>
   void initState() {
     super.initState();
     _fadeController =
-        AnimationController(vsync: this, duration: widget.duration)..repeat();
+        AnimationController(vsync: this, duration: widget._style.duration)
+          ..repeat();
   }
 
   @override
@@ -56,23 +97,24 @@ class _FadingDotsState extends State<FadingDots>
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: SizedBox.fromSize(
-        size: Size(widget.size * _doubleSizeFactor, widget.size),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            _circle(_firstIndex, _delayFactorZero),
-            _circle(_secondIndex, _delayFactorTwo),
-            _circle(_thirdIndex, _delayFactorFour),
-          ],
-        ),
-      ),
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: <Widget>[
+        _circle(_firstIndex, _delayFactorZero),
+        _sizedBox(),
+        _circle(_secondIndex, _delayFactorTwo),
+        _sizedBox(),
+        _circle(_thirdIndex, _delayFactorFour),
+      ],
     );
   }
 
+  Widget _sizedBox() {
+    return SizedBox(width: widget._style.spaceBetweenDots);
+  }
+
   Widget _circle(int index, double delay) {
-    final _size = widget.size * _halfSizeFactor;
     return FadeTransition(
       opacity: DelayTween(
         begin: _beginAlpha,
@@ -80,7 +122,7 @@ class _FadingDotsState extends State<FadingDots>
         delay: delay,
       ).animate(_fadeController),
       child: SizedBox.fromSize(
-        size: Size.square(_size),
+        size: Size.square(widget._style.size),
         child: _itemBuilder(index),
       ),
     );
@@ -89,7 +131,7 @@ class _FadingDotsState extends State<FadingDots>
   Widget _itemBuilder(int index) {
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: widget.color,
+        color: widget._style.color,
         shape: BoxShape.circle,
       ),
     );
