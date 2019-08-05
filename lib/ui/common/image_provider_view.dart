@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 class _Constants {
   static final placeholderAsset = 'assets/raw/placeholder.webp';
   static final defaultBorderRadius = BorderRadius.all(Radius.circular(0));
+  static final defaultFadeDuration = 200;
 }
 
 class ImageProviderView extends StatelessWidget {
@@ -43,8 +44,8 @@ class ImageProviderView extends StatelessWidget {
         width: width,
         height: height,
         fit: BoxFit.cover,
-        fadeOutDuration: Duration(milliseconds: 200),
-        fadeInDuration: Duration(milliseconds: 200),
+        fadeOutDuration: Duration(milliseconds: _Constants.defaultFadeDuration),
+        fadeInDuration: Duration(milliseconds: _Constants.defaultFadeDuration),
         fadeInCurve: Curves.linear,
         fadeOutCurve: Curves.linear,
         placeholder: AssetImage(_Constants.placeholderAsset),

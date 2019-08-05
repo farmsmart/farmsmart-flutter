@@ -80,10 +80,10 @@ class HeroListItem extends StatelessWidget {
     );
   }
 
-  Widget _buildHeroArticleImage(ArticleListItemViewModel articleData,
+  Widget _buildHeroArticleImage(ArticleListItemViewModel viewModel,
       ArticleListItemStyle articleListStyle) {
     return ImageProviderView(
-      imageURLProvider: articleData.image,
+      imageURLProvider: viewModel.image,
       imageBorderRadius: articleListStyle.imageBorderRadius,
       height: articleListStyle.imageHeight,
     );
