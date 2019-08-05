@@ -51,6 +51,11 @@ class MockProfileRepository extends MockListRepository<ProfileEntity> implements
     _streamController.close();
   }
 
+  @override
+  Future<List<ProfileEntity>> getAll() {
+    return getList();
+  }
+
 
   
 

@@ -2,19 +2,16 @@ import 'package:farmsmart_flutter/farmsmart_localizations.dart';
 import 'package:farmsmart_flutter/model/bloc/article/ArticleListProvider.dart';
 import 'package:farmsmart_flutter/model/bloc/plot/PlotListProvider.dart';
 import 'package:farmsmart_flutter/model/bloc/profile/ProfileDetailProvider.dart';
-import 'package:farmsmart_flutter/model/bloc/recommendations/RecommendationEngine.dart';
 import 'package:farmsmart_flutter/model/bloc/recommendations/RecommendationListProvider.dart';
 import 'package:farmsmart_flutter/model/bloc/transactions/ProfitLossListProvider.dart';
-import 'package:farmsmart_flutter/model/model/mock/MockRecommendation.dart';
 import 'package:farmsmart_flutter/model/repositories/article/ArticleRepositoryInterface.dart';
 import 'package:farmsmart_flutter/model/repositories/repository_provider.dart';
 import 'package:farmsmart_flutter/ui/article/ArticleList.dart';
 import 'package:farmsmart_flutter/ui/bottombar/persistent_bottom_navigation_bar.dart';
 import 'package:farmsmart_flutter/ui/bottombar/tab_navigator.dart';
-import 'package:farmsmart_flutter/ui/mockData/MockUserProfileViewModel.dart';
 import 'package:farmsmart_flutter/ui/playground/data/playground_datasource_impl.dart';
 import 'package:farmsmart_flutter/ui/playground/playground_view.dart';
-import 'package:farmsmart_flutter/ui/profile/UserProfile.dart';
+import 'package:farmsmart_flutter/ui/profile/Profile.dart';
 import 'package:farmsmart_flutter/ui/profitloss/ProfitLossList.dart';
 import 'package:flutter/material.dart';
 
@@ -130,7 +127,7 @@ class Home extends StatelessWidget {
   }
 
   _buildUserProfile() {
-    return UserProfile(
+    return Profile(
       provider: ProfileDetailProvider(profileRepo: repositoryProvider.getProfileRepository()),
     );
   }

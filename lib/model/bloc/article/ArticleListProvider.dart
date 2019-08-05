@@ -9,7 +9,6 @@ import 'package:farmsmart_flutter/model/repositories/article/ArticleRepositoryIn
 import 'package:farmsmart_flutter/ui/article/viewModel/ArticleListItemViewModel.dart';
 import 'package:farmsmart_flutter/ui/article/viewModel/ArticleListViewModel.dart';
 
-
 /*
        [Model]    ->               [Bloc]             -> [View]  
    [repo , model] -> [ViewModelProvider, Transformer] -> [viewModel, widget]
@@ -23,9 +22,12 @@ class ArticleListProvider implements ViewModelProvider<ArticleListViewModel> {
   final String _contentLinkTitle;
   ArticleListViewModel _snapshot;
   ArticleListProvider(
-      {String title, String relatedTitle, String contentLinkTitle, ArticleRepositoryInterface repository,
+      {String title,
+      String relatedTitle,
+      String contentLinkTitle,
+      ArticleRepositoryInterface repository,
       ArticleCollectionGroup group = ArticleCollectionGroup.all})
-      : this._title = title, 
+      : this._title = title,
         this._relatedTitle = relatedTitle,
         this._contentLinkTitle = contentLinkTitle,
         this._repo = repository,
@@ -36,11 +38,18 @@ class ArticleListProvider implements ViewModelProvider<ArticleListViewModel> {
 
   ArticleListViewModel _modelFromArticles(
       StreamController controller, List<ArticleEntity> articles) {
-    final transformer = ArticleListItemViewModelTransformer.buildWithDetail(ArticleDetailViewModelTransformer(relatedTitle: _relatedTitle, contentLinkTitle: _contentLinkTitle));
+    final transformer = ArticleListItemViewModelTransformer.buildWithDetail(
+        ArticleDetailViewModelTransformer(
+      relatedTitle: _relatedTitle,
+      contentLinkTitle: _contentLinkTitle,
+    ));
     final items = articles.map((article) {
       return transformer.transform(from: article);
     }).toList();
-    return _viewModel(status: LoadingStatus.SUCCESS, items: items);
+    return _viewModel(
+      status: LoadingStatus.SUCCESS,
+      items: items,
+    );
   }
 
   void _update(StreamController controller) {
@@ -50,7 +59,10 @@ class ArticleListProvider implements ViewModelProvider<ArticleListViewModel> {
     });
   }
 
-  ArticleListViewModel _viewModel({ LoadingStatus status , List<ArticleListItemViewModel> items }) {
+  ArticleListViewModel _viewModel({
+    LoadingStatus status,
+    List<ArticleListItemViewModel> items,
+  }) {
     return ArticleListViewModel(
         title: _title,
         status: status,
@@ -66,7 +78,10 @@ class ArticleListProvider implements ViewModelProvider<ArticleListViewModel> {
   @override
   ArticleListViewModel initial() {
     if (_snapshot == null) {
-      _snapshot = _viewModel(status: LoadingStatus.LOADING, items: []);
+      _snapshot = _viewModel(
+        status: LoadingStatus.LOADING,
+        items: [],
+      );
       _snapshot.refresh();
     }
     return _snapshot;
@@ -74,7 +89,7 @@ class ArticleListProvider implements ViewModelProvider<ArticleListViewModel> {
 
   @override
   Stream<ArticleListViewModel> stream() {
-     return _controller.stream;
+    return _controller.stream;
   }
 
   @override

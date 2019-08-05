@@ -1,12 +1,15 @@
 import 'package:farmsmart_flutter/model/bloc/ViewModelProvider.dart';
+import 'package:farmsmart_flutter/model/bloc/profile/SwitchProfileListProvider.dart';
 import 'package:farmsmart_flutter/model/model/loading_status.dart';
 import 'package:farmsmart_flutter/ui/common/ListDivider.dart';
 import 'package:farmsmart_flutter/ui/common/RefreshableViewModel.dart';
 import 'package:farmsmart_flutter/ui/common/ViewModelProviderBuilder.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
-import 'package:farmsmart_flutter/ui/profile/UserProfileListItem.dart';
+import 'package:farmsmart_flutter/ui/profile/ProfileListItem.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+
+import 'SwitchProfileList.dart';
 
 class _Strings {
   static final String activeCrops = "Active crops";
@@ -37,29 +40,29 @@ class _Constants {
   static final double detailSpacing = 23;
 }
 
-class UserProfileViewModel implements RefreshableViewModel {
-  final List<UserProfileListItemViewModel> items;
+class ProfileViewModel implements RefreshableViewModel {
+  final List<ProfileListItemViewModel> items;
   final String username;
   final int activeCrops;
   final int completedCrops;
-  final Function switchProfileAction;
+  final ViewModelProvider<SwitchProfileListViewModel> switchProfileProvider;
   final ImageProvider image;
   final Function refresh;
   final LoadingStatus status;
 
-  UserProfileViewModel({
+  ProfileViewModel({
     this.status,
     this.items,
     this.username,
     this.activeCrops,
     this.completedCrops,
-    this.switchProfileAction,
+    this.switchProfileProvider,
     this.image,
     this.refresh,
   });
 }
 
-class UserProfileStyle {
+class ProfileStyle {
   final Color buttonColor;
 
   final TextStyle titleTextStyle;
@@ -72,7 +75,7 @@ class UserProfileStyle {
 
   final int maxLines;
 
-  const UserProfileStyle({
+  const ProfileStyle({
     this.buttonColor,
     this.titleTextStyle,
     this.subtitleTextStyle,
@@ -83,7 +86,7 @@ class UserProfileStyle {
     this.maxLines,
   });
 
-  UserProfileStyle copyWith({
+  ProfileStyle copyWith({
     Color buttonColor,
     TextStyle titleTextStyle,
     TextStyle subtitleTextStyle,
@@ -93,7 +96,7 @@ class UserProfileStyle {
     double imageSize,
     int maxLines,
   }) {
-    return UserProfileStyle(
+    return ProfileStyle(
       buttonColor: buttonColor ?? this.buttonColor,
       titleTextStyle: titleTextStyle ?? this.titleTextStyle,
       subtitleTextStyle: subtitleTextStyle ?? this.subtitleTextStyle,
@@ -106,7 +109,7 @@ class UserProfileStyle {
   }
 }
 
-class _DefaultStyle extends UserProfileStyle {
+class _DefaultStyle extends ProfileStyle {
   final Color buttonColor = const Color(0xffe9eaf2);
 
   final TextStyle titleTextStyle = const TextStyle(
@@ -150,16 +153,16 @@ class _DefaultStyle extends UserProfileStyle {
   });
 }
 
-const UserProfileStyle _defaultStyle = const _DefaultStyle();
+const ProfileStyle _defaultStyle = const _DefaultStyle();
 
-class UserProfile extends StatelessWidget {
-  final ViewModelProvider<UserProfileViewModel> _viewModelProvider;
-  final UserProfileStyle _style;
+class Profile extends StatelessWidget {
+  final ViewModelProvider<ProfileViewModel> _viewModelProvider;
+  final ProfileStyle _style;
 
-  const UserProfile({
+  const Profile({
     Key key,
-    ViewModelProvider<UserProfileViewModel> provider,
-    UserProfileStyle style = _defaultStyle,
+    ViewModelProvider<ProfileViewModel> provider,
+    ProfileStyle style = _defaultStyle,
   })  : this._viewModelProvider = provider,
         this._style = style,
         super(key: key);
@@ -170,7 +173,7 @@ class UserProfile extends StatelessWidget {
     return ViewModelProviderBuilder(provider: _viewModelProvider, successBuilder: _buildPage,);
   }
 
-  Widget _buildPage({BuildContext context, AsyncSnapshot<UserProfileViewModel> snapshot}) {
+  Widget _buildPage({BuildContext context, AsyncSnapshot<ProfileViewModel> snapshot}) {
     final viewModel = snapshot.data;
     return SafeArea(
       child: SingleChildScrollView(
@@ -184,7 +187,7 @@ class UserProfile extends StatelessWidget {
     );
   }
 
-  Widget _buildHeader(BuildContext context, UserProfileViewModel viewModel) {
+  Widget _buildHeader(BuildContext context, ProfileViewModel viewModel) {
     return Column(
       children: <Widget>[
         Container(
@@ -199,25 +202,25 @@ class UserProfile extends StatelessWidget {
             ],
           ),
         ),
-        _buildButton(viewModel),
+        _buildButton(context, viewModel),
         SizedBox(height: _Constants.buttonLineSpace),
       ],
     );
   }
 
-  Widget _buildItemList(UserProfileViewModel viewModel) {
+  Widget _buildItemList(ProfileViewModel viewModel) {
     return ListView.separated(
       shrinkWrap: true,
       physics: ScrollPhysics(),
       itemCount: viewModel.items.length,
-      itemBuilder: (context, index) => UserProfileListItem(
+      itemBuilder: (context, index) => ProfileListItem(
         viewModel: viewModel.items[index],
       ),
       separatorBuilder: (context, index) => ListDivider.build(),
     );
   }
 
-  Widget _buildMainTextView(BuildContext context,UserProfileViewModel viewModel) {
+  Widget _buildMainTextView(BuildContext context,ProfileViewModel viewModel) {
     return Expanded(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -237,7 +240,7 @@ class UserProfile extends StatelessWidget {
     );
   }
 
-  Column _buildUsername(UserProfileViewModel viewModel) {
+  Column _buildUsername(ProfileViewModel viewModel) {
     return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -260,7 +263,7 @@ class UserProfile extends StatelessWidget {
         );
   }
 
-  Widget _buildActiveCrops(UserProfileViewModel viewModel) {
+  Widget _buildActiveCrops(ProfileViewModel viewModel) {
     return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -278,7 +281,7 @@ class UserProfile extends StatelessWidget {
             );
   }
 
-  Widget _buildCompletedCrops(UserProfileViewModel viewModel) {
+  Widget _buildCompletedCrops(ProfileViewModel viewModel) {
     return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -296,7 +299,7 @@ class UserProfile extends StatelessWidget {
             );
   }
 
-  Widget _buildButton(UserProfileViewModel viewModel) {
+  Widget _buildButton(BuildContext context, ProfileViewModel viewModel) {
     return Padding(
       padding: _Constants.edgePadding,
       child: Column(
@@ -304,7 +307,7 @@ class UserProfile extends StatelessWidget {
           RoundedButton(
             viewModel: RoundedButtonViewModel(
               title: Intl.message(_Strings.buttonTitle),
-              onTap: () => viewModel.switchProfileAction(),
+              onTap: () => _tappedSwitchProfile(context: context, provider: viewModel.switchProfileProvider),
             ),
             style: RoundedButtonStyle.largeRoundedButtonStyle().copyWith(
               backgroundColor: _style.buttonColor,
@@ -324,6 +327,17 @@ class UserProfile extends StatelessWidget {
         children: <Widget>[
           SizedBox(width:_style.imageSize, height:_style.imageSize ,),
         ],
+      ),
+    );
+  }
+
+  void _tappedSwitchProfile({
+    BuildContext context,
+    ViewModelProvider<SwitchProfileListViewModel> provider,
+  }) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => SwitchProfileList(provider: provider),
       ),
     );
   }

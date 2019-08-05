@@ -32,8 +32,8 @@ import 'package:farmsmart_flutter/ui/playground/playground_present_button.dart';
 import 'package:farmsmart_flutter/ui/playground/playground_take_image_tester.dart';
 import 'package:farmsmart_flutter/ui/playground/playground_widget.dart';
 import 'package:farmsmart_flutter/ui/profile/FarmDetails.dart';
-import 'package:farmsmart_flutter/ui/profile/SwitchProfile.dart';
-import 'package:farmsmart_flutter/ui/profile/UserProfile.dart';
+import 'package:farmsmart_flutter/ui/profile/SwitchProfileList.dart';
+import 'package:farmsmart_flutter/ui/profile/Profile.dart';
 import 'package:farmsmart_flutter/ui/profitloss/ProfitLossHeader.dart';
 import 'package:farmsmart_flutter/ui/profitloss/ProfitLossListItem.dart';
 import 'package:farmsmart_flutter/ui/profitloss/RecordTransaction.dart';
@@ -202,8 +202,8 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
       PlaygroundWidget(
         title: "FARM-67 Switch profiles",
         child: PlaygroundPresentButton(
-          child: SwitchProfile(
-            viewModel: MockSwitchProfile.build(),
+          child: SwitchProfileList(
+            provider: StaticViewModelProvider(MockSwitchProfile.build()),
           ),
           listener: (widget, context) =>
               PlaygroundPresentButton.presentModal(widget, context),
@@ -214,12 +214,12 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
           child: PlaygroundView(widgetList: [
             PlaygroundWidget(
               title: 'Simple view',
-              child: UserProfile(provider: StaticViewModelProvider<UserProfileViewModel>(MockUserProfileViewModel.build())),
+              child: Profile(provider: StaticViewModelProvider<ProfileViewModel>(MockProfileViewModel.build())),
             ),
             PlaygroundWidget(
               title: 'Larger titles view',
-              child: UserProfile(
-                  provider: StaticViewModelProvider<UserProfileViewModel>(MockUserProfileViewModel.buildLarger()),
+              child: Profile(
+                  provider: StaticViewModelProvider<ProfileViewModel>(MockProfileViewModel.buildLarger()),
             )),
           ])),
       PlaygroundWidget(

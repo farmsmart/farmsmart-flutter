@@ -1,41 +1,44 @@
 import 'dart:math';
 
-import 'package:farmsmart_flutter/ui/profile/UserProfile.dart';
-import 'package:farmsmart_flutter/ui/profile/UserProfileListItem.dart';
+import 'package:farmsmart_flutter/model/bloc/StaticViewModelProvider.dart';
+import 'package:farmsmart_flutter/ui/mockData/MockSwitchProfile.dart';
+import 'package:farmsmart_flutter/ui/profile/Profile.dart';
+import 'package:farmsmart_flutter/ui/profile/ProfileListItem.dart';
+import 'package:farmsmart_flutter/ui/profile/SwitchProfileList.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:farmsmart_flutter/model/model/mock/MockString.dart';
 
-class MockUserProfileViewModel {
-  static UserProfileViewModel build() {
-    List<UserProfileListItemViewModel> list = [];
+class MockProfileViewModel {
+  static ProfileViewModel build() {
+    List<ProfileListItemViewModel> list = [];
     for (var i = 0; i < 8; i++) {
       list.add(MockUserProfileListItemViewModel.build(i));
     }
 
-    return UserProfileViewModel(
+    return ProfileViewModel(
       items: list,
       username: _mockUserName.random(),
       activeCrops: Random().nextInt(50),
       completedCrops: Random().nextInt(50),
       image: NetworkImage(_mockImage.random()),
-      switchProfileAction: () => _mockSwitchTap(),
+      switchProfileProvider: StaticViewModelProvider<SwitchProfileListViewModel>(MockSwitchProfile.build()),
     );
   }
 
-  static UserProfileViewModel buildLarger() {
-    List<UserProfileListItemViewModel> list = [];
+  static ProfileViewModel buildLarger() {
+    List<ProfileListItemViewModel> list = [];
     for (var i = 0; i < 8; i++) {
       list.add(MockUserProfileListItemViewModel.buildLarger(i));
     }
 
-    return UserProfileViewModel(
+    return ProfileViewModel(
       items: list,
       username: _mockUserName.random(),
       activeCrops: Random().nextInt(150),
       completedCrops: Random().nextInt(150),
       image: NetworkImage(_mockImage.random()),
-      switchProfileAction: () => _mockSwitchTap(),
+      switchProfileProvider: StaticViewModelProvider<SwitchProfileListViewModel>(MockSwitchProfile.build()),
     );
   }
 
@@ -45,8 +48,8 @@ class MockUserProfileViewModel {
 }
 
 class MockUserProfileListItemViewModel {
-  static UserProfileListItemViewModel build(index) {
-    return UserProfileListItemViewModel(
+  static ProfileListItemViewModel build(index) {
+    return ProfileListItemViewModel(
       title: Intl.message(_mockActionTitle[index]),
       icon: _mockActionIcon[index],
       onTap: () => _mockItemTap(),
@@ -54,8 +57,8 @@ class MockUserProfileListItemViewModel {
     );
   }
 
-  static UserProfileListItemViewModel buildLarger(index) {
-    return UserProfileListItemViewModel(
+  static ProfileListItemViewModel buildLarger(index) {
+    return ProfileListItemViewModel(
       title: Intl.message(_mockActionTitleLarger[index]),
       icon: _mockActionIcon[index],
       onTap: () => _mockItemTap(),

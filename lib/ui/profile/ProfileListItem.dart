@@ -23,13 +23,13 @@ class _Constants {
   static final double trailingIconHeight = 13;
 }
 
-class UserProfileListItemViewModel {
+class ProfileListItemViewModel {
   String icon;
   String title;
   Function onTap;
   bool isDestructive;
 
-  UserProfileListItemViewModel({
+  ProfileListItemViewModel({
     this.icon,
     this.title,
     this.onTap,
@@ -37,24 +37,24 @@ class UserProfileListItemViewModel {
   });
 }
 
-class UserProfileListItemStyle {
+class ProfileListItemStyle {
   final TextStyle titleTextStyle;
   final TextStyle destructiveTextStyle;
 
   final int maxLines;
 
-  const UserProfileListItemStyle({
+  const ProfileListItemStyle({
     this.titleTextStyle,
     this.destructiveTextStyle,
     this.maxLines,
   });
 
-  UserProfileListItemStyle copyWith({
+  ProfileListItemStyle copyWith({
     TextStyle titleTextStyle,
     TextStyle destructiveTextStyle,
     int maxLines,
   }) {
-    return UserProfileListItemStyle(
+    return ProfileListItemStyle(
       titleTextStyle: titleTextStyle ?? this.titleTextStyle,
       destructiveTextStyle: destructiveTextStyle ?? this.destructiveTextStyle,
       maxLines: maxLines ?? this.maxLines,
@@ -62,7 +62,7 @@ class UserProfileListItemStyle {
   }
 }
 
-class _DefaultStyle extends UserProfileListItemStyle {
+class _DefaultStyle extends ProfileListItemStyle {
   final TextStyle titleTextStyle = const TextStyle(
     fontWeight: FontWeight.normal,
     fontSize: 17,
@@ -83,16 +83,16 @@ class _DefaultStyle extends UserProfileListItemStyle {
   });
 }
 
-const UserProfileListItemStyle _defaultStyle = const _DefaultStyle();
+const ProfileListItemStyle _defaultStyle = const _DefaultStyle();
 
-class UserProfileListItem extends StatelessWidget {
-  final UserProfileListItemViewModel _viewModel;
-  final UserProfileListItemStyle _style;
+class ProfileListItem extends StatelessWidget {
+  final ProfileListItemViewModel _viewModel;
+  final ProfileListItemStyle _style;
 
-  const UserProfileListItem({
+  const ProfileListItem({
     Key key,
-    UserProfileListItemViewModel viewModel,
-    UserProfileListItemStyle style = _defaultStyle,
+    ProfileListItemViewModel viewModel,
+    ProfileListItemStyle style = _defaultStyle,
   })  : this._viewModel = viewModel,
         this._style = style,
         super(key: key);

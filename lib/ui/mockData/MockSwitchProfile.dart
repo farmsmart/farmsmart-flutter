@@ -1,16 +1,16 @@
 import 'package:farmsmart_flutter/model/model/mock/MockString.dart';
-import 'package:farmsmart_flutter/ui/profile/SwitchProfile.dart';
-import 'package:farmsmart_flutter/ui/profile/SwitchProfileItems.dart';
+import 'package:farmsmart_flutter/ui/profile/SwitchProfileList.dart';
+import 'package:farmsmart_flutter/ui/profile/SwitchProfileListItem.dart';
 import 'package:flutter/material.dart';
 
 class MockSwitchProfile {
-  static SwitchProfileViewModel build() {
-    List<SwitchProfileItemsViewModel> list = [];
+  static SwitchProfileListViewModel build() {
+    List<SwitchProfileListItemViewModel> list = [];
     for (var i = 0; i < 10; i++) {
       list.add(MockSwitchProfileItemsViewModel.build(i));
     }
 
-    return SwitchProfileViewModel(
+    return SwitchProfileListViewModel(
       items: list,
       title: "Switch Profile",
       actionTitle: "Switch Profile",
@@ -27,8 +27,8 @@ class MockSwitchProfile {
 }
 
 class MockSwitchProfileItemsViewModel {
-  static SwitchProfileItemsViewModel build(index) {
-    return SwitchProfileItemsViewModel(
+  static SwitchProfileListItemViewModel build(index) {
+    return SwitchProfileListItemViewModel(
       title: _mockTitle.random(),
       icon: "assets/icons/radio_button_default.png",
       image: NetworkImage(_mockImage.random()),

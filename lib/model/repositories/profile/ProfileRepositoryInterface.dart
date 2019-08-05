@@ -7,4 +7,5 @@ abstract class ProfileRepositoryInterface implements BasicRepositoryInterface<Pr
     Future<bool> switchTo(ProfileEntity profile);
     Future<ProfileEntity> add(ProfileEntity profile);
     Future<bool> remove(ProfileEntity profile);
+    Future<List<ProfileEntity>> getAll();
 }
