@@ -33,11 +33,15 @@ class _Constants {
   static const String typeValueMultiChoice = "com.wearemobilefirst.MultiChoice";
 }
 
-class _Strings {
-  static const String summaryTitleValue = "Chat summary value";
-  static const String summaryTitleLabel = "Chat summary";
-  static const String summaryActionButtonText = "Confirm";
-  static const String summaryError = "Provided summary is not correct";
+class _LocalisedStrings {
+  static String summaryTitleValue() => Intl.message('Chat summary value');
+
+  static String summaryTitleLabel() => Intl.message('Chat summary');
+
+  static String summaryActionButtonText() => Intl.message('Confirm');
+
+  static String summaryError() =>
+      Intl.message('Provided summary is not correct');
 }
 
 class ChatProvider implements ViewModelProvider<ChatViewModel> {
@@ -149,9 +153,10 @@ class ChatProvider implements ViewModelProvider<ChatViewModel> {
       child: Summary(
         viewModel: _chatSummaryProviderHelper.getSummary(
           inputModel: _responseMap,
-          titleValue: Intl.message(_Strings.summaryTitleValue),
-          titleText: Intl.message(_Strings.summaryTitleLabel.toUpperCase()),
-          actionText: Intl.message(_Strings.summaryActionButtonText),
+          titleValue: Intl.message(_LocalisedStrings.summaryTitleValue()),
+          titleText:
+              Intl.message(_LocalisedStrings.summaryTitleLabel().toUpperCase()),
+          actionText: Intl.message(_LocalisedStrings.summaryActionButtonText()),
         ),
         onTap: _onSummaryWidgetActionButtonTap,
       ),
@@ -161,7 +166,7 @@ class ChatProvider implements ViewModelProvider<ChatViewModel> {
   void _onSummaryWidgetActionButtonTap() {
     (_responseMap != null && _responseMap.isNotEmpty)
         ? _onSuccess(_responseMap)
-        : _onError(Intl.message(_Strings.summaryError));
+        : _onError(Intl.message(_LocalisedStrings.summaryError()));
   }
 
   void _setInteractiveWidget(InputRequestEntity entity) {
