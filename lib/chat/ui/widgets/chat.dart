@@ -95,3 +95,4 @@ class ChatViewModel {
         this.interactiveWidget = interactiveWidget,
         this.scrollController = scrollController ?? ScrollController();
 }
+
