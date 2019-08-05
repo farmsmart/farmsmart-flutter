@@ -6,15 +6,17 @@ import 'package:farmsmart_flutter/model/model/crop_entity.dart';
 import 'package:farmsmart_flutter/ui/myplot/PlotListItem.dart';
 import 'package:intl/intl.dart';
 
-class _Strings {
-  static const day = "Day";
-  static const upcoming = "Upcoming";
+class _LocalisedStrings {
+  static String day() => Intl.message('Day');
+
+  static String upcoming() => Intl.message('Upcoming');
 }
 
-class PlotToPlotListItemViewModel implements ObjectTransformer<PlotEntity, PlotListItemViewModel> {
-
+class PlotToPlotListItemViewModel
+    implements ObjectTransformer<PlotEntity, PlotListItemViewModel> {
   final _logic = StageBusinessLogic();
   final PlotDetailProvider _detailProvider;
+
   PlotToPlotListItemViewModel(this._detailProvider);
 
   @override
@@ -22,7 +24,13 @@ class PlotToPlotListItemViewModel implements ObjectTransformer<PlotEntity, PlotL
     final title = from.title;
     final detailText = _detailString(from: from);
     final progress = _logic.progress(from.stages);
-    return PlotListItemViewModel(title: title, subtitle:_subtitleString(from: from), detail: detailText, progress: progress, provider: _detailProvider, imageProvider: CropImageProvider(from.crop) );
+    return PlotListItemViewModel(
+        title: title,
+        subtitle: _subtitleString(from: from),
+        detail: detailText,
+        progress: progress,
+        provider: _detailProvider,
+        imageProvider: CropImageProvider(from.crop));
   }
 
   String _subtitleString({PlotEntity from}) {
@@ -33,9 +41,9 @@ class PlotToPlotListItemViewModel implements ObjectTransformer<PlotEntity, PlotL
     final firstStage = from.stages.first;
     final started = firstStage.started;
     if (started != null) {
-       final daysSinceStarted = _logic.daysSinceStarted(from.stages);
-      return Intl.message(_Strings.day) + " " + daysSinceStarted.toString();
+      final daysSinceStarted = _logic.daysSinceStarted(from.stages);
+      return _LocalisedStrings.day() + " " + daysSinceStarted.toString();
     }
-    return Intl.message(_Strings.upcoming) ;
+    return _LocalisedStrings.upcoming();
   }
 }
