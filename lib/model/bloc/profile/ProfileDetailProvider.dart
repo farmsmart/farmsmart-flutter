@@ -35,7 +35,8 @@ class ProfileDetailProvider extends ObjectTransformer<ProfileEntity,UserProfileV
   UserProfileViewModel initial() {
     if (_snapshot == null) {
       _profileRepository.observeCurrent().listen((currentProfile){
-        _controller.sink.add(transform(from: currentProfile));
+        _snapshot = transform(from:currentProfile);
+        _controller.sink.add(_snapshot);
       });
       _snapshot = transform(from: null);
       _snapshot.refresh();
