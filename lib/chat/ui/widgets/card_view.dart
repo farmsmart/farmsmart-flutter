@@ -55,9 +55,11 @@ class CardView extends StatelessWidget {
   final CardViewStyle _style;
   final Widget _child;
 
-  CardView({CardViewStyle style, Widget child})
-      : this._child = child,
-        this._style = style ?? _defaultStyle;
+  CardView({
+    CardViewStyle style = _defaultStyle,
+    Widget child,
+  })  : this._child = child,
+        this._style = style;
 
   @override
   Widget build(BuildContext context) {

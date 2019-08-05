@@ -71,9 +71,9 @@ class HeaderMessage extends StatelessWidget {
 
   HeaderMessage({
     HeaderMessageViewModel viewModel,
-    HeaderMessageStyle style,
+    HeaderMessageStyle style = _defaultStyle,
   })  : this._viewModel = viewModel,
-        this._style = style ?? _defaultStyle;
+        this._style = style;
 
   @override
   Widget build(BuildContext context) {

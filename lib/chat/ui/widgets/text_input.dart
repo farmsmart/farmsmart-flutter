@@ -108,7 +108,7 @@ class TextInputState extends State<TextInput> {
     Function onSendPressed,
     Function(String) formFieldValidatorFunction,
     String buttonText,
-    TextInputStyle style,
+    TextInputStyle style = _defaultStyle,
     bool isFocusedOnBuild,
   })  : this._controller = controller ?? TextEditingController(),
         this._decoration = decoration ?? InputDecoration(),
@@ -116,7 +116,7 @@ class TextInputState extends State<TextInput> {
         this._formFieldValidatorFunction = formFieldValidatorFunction,
         this._buttonText = buttonText ?? "",
         this._isFocusedOnBuild = isFocusedOnBuild ?? false,
-        this._style = style ?? _defaultStyle;
+        this._style = style;
 
   @override
   Widget build(BuildContext context) {

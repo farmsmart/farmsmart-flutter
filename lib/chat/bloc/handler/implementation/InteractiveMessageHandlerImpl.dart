@@ -5,6 +5,7 @@ import 'package:farmsmart_flutter/chat/ui/viewmodel/SelectableOptionViewModel.da
 import 'package:farmsmart_flutter/chat/ui/viewmodel/SelectableOptionsViewModel.dart';
 import 'package:farmsmart_flutter/chat/ui/widgets/selectable_options.dart';
 import 'package:farmsmart_flutter/chat/ui/widgets/text_input.dart';
+import 'package:intl/intl.dart';
 
 import '../InteractiveMessageHandler.dart';
 
@@ -58,7 +59,7 @@ class InteractiveMessageHandlerImpl implements InteractiveMessageHandler {
     bool isFocusedOnBuild,
   }) {
     return TextInput(
-      buttonText: _Strings.sendText,
+      buttonText: Intl.message(_Strings.sendText),
       formFieldValidatorFunction: _getValidationFunction(
         regex: inputRequestEntity.validationRegex,
         type: type,
@@ -106,7 +107,7 @@ class InteractiveMessageHandlerImpl implements InteractiveMessageHandler {
   }
 
   InputDecoration _getInputDecoration() {
-    return InputDecoration(hintText: _Strings.inputHint);
+    return InputDecoration(hintText: Intl.message(_Strings.inputHint));
   }
 
   String _getFormFieldValidatorValue({
@@ -116,7 +117,7 @@ class InteractiveMessageHandlerImpl implements InteractiveMessageHandler {
     Function(String) onValidationPassed,
   }) {
     if (value.isEmpty) {
-      return _Strings.messageNotEmpty;
+      return Intl.message(_Strings.messageNotEmpty);
     } else if (_isRegexProvided(regex: regex) &&
         !_isRegexValidationPassed(value: value, regex: regex)) {
       return _getErrorMessageByType(type: type);
@@ -128,11 +129,11 @@ class InteractiveMessageHandlerImpl implements InteractiveMessageHandler {
   String _getErrorMessageByType({InteractiveMessageType type}) {
     switch (type) {
       case InteractiveMessageType.inputString:
-        return _Strings.notValidString;
+        return Intl.message(_Strings.notValidString);
       case InteractiveMessageType.inputEmail:
-        return _Strings.notValidEmail;
+        return Intl.message(_Strings.notValidEmail);
       case InteractiveMessageType.inputPhoneNumber:
-        return _Strings.notValidPhone;
+        return Intl.message(_Strings.notValidPhone);
       case InteractiveMessageType.inputImage:
         return null;
       case InteractiveMessageType.multiChoice:

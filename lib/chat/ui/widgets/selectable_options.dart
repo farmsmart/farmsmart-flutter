@@ -100,10 +100,10 @@ class SelectableOptions extends StatelessWidget {
   SelectableOptions({
     @required SelectableOptionsViewModel viewModel,
     Function(SelectableOptionViewModel) onTap,
-    SelectableOptionsStyle style,
+    SelectableOptionsStyle style = _defaultStyle,
   })  : this._viewModel = viewModel,
         this._onTap = onTap ?? (() => {}),
-        this._style = style ?? _defaultStyle;
+        this._style = style;
 
   @override
   Widget build(BuildContext context) {

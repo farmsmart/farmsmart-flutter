@@ -14,6 +14,7 @@ import 'package:farmsmart_flutter/chat/repository/form/ChatRepository.dart';
 import 'package:farmsmart_flutter/chat/ui/widgets/bubble_message.dart';
 import 'package:farmsmart_flutter/chat/ui/widgets/chat.dart';
 import 'package:farmsmart_flutter/chat/ui/widgets/summary.dart';
+import 'package:intl/intl.dart';
 
 class _Constants {
   static const currentMessageIndex = 0;
@@ -148,9 +149,9 @@ class ChatProvider implements ViewModelProvider<ChatViewModel> {
       child: Summary(
         viewModel: _chatSummaryProviderHelper.getSummary(
           inputModel: _responseMap,
-          titleValue: _Strings.summaryTitleValue,
-          titleText: _Strings.summaryTitleLabel.toUpperCase(),
-          actionText: _Strings.summaryActionButtonText,
+          titleValue: Intl.message(_Strings.summaryTitleValue),
+          titleText: Intl.message(_Strings.summaryTitleLabel.toUpperCase()),
+          actionText: Intl.message(_Strings.summaryActionButtonText),
         ),
         onTap: _onSummaryWidgetActionButtonTap,
       ),
@@ -160,7 +161,7 @@ class ChatProvider implements ViewModelProvider<ChatViewModel> {
   void _onSummaryWidgetActionButtonTap() {
     (_responseMap != null && _responseMap.isNotEmpty)
         ? _onSuccess(_responseMap)
-        : _onError(_Strings.summaryError);
+        : _onError(Intl.message(_Strings.summaryError));
   }
 
   void _setInteractiveWidget(InputRequestEntity entity) {

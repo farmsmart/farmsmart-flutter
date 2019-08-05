@@ -41,9 +41,9 @@ class Chat extends StatelessWidget {
 
   Chat({
     @required ChatProvider chatProvider,
-    ChatStyle style,
+    ChatStyle style = _defaultStyle,
   })  : this._chatProvider = chatProvider,
-        this._style = style ?? _defaultStyle;
+        this._style = style;
 
   @override
   Widget build(BuildContext context) {

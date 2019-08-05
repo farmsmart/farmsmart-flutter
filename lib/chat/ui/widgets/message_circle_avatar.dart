@@ -38,9 +38,9 @@ class MessageCircleAvatar extends StatelessWidget {
 
   MessageCircleAvatar({
     @required MessageCircleAvatarViewModel messageCircleAvatarViewModel,
-    MessageCircleAvatarStyle style,
+    MessageCircleAvatarStyle style = _defaultStyle,
   })  : this._messageCircleAvatarViewModel = messageCircleAvatarViewModel,
-        this._style = style ?? _defaultStyle;
+        this._style = style;
 
   @override
   Widget build(BuildContext context) {
