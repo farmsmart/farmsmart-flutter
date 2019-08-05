@@ -71,7 +71,6 @@ class Home extends StatelessWidget {
         _Constants.profitLossIcon,
       ),
       _buildTabNavigator(
-        //TODO Check Discover screen after rebase LH's opened PR (white screen)
         _buildDiscover(),
         _Constants.discoverSelectedIcon,
         _Constants.discoverIcon,
