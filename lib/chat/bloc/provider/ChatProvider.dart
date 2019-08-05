@@ -43,11 +43,11 @@ class _Strings {
 class ChatProvider implements ViewModelProvider<ChatViewModel> {
   final ChatRepository _repo;
   final ChatMessageProviderHelper _chatMessageHandler =
-  ChatMessageProviderHelperImpl();
+      ChatMessageProviderHelperImpl();
   final ChatSummaryProviderHelper _chatSummaryProviderHelper =
-  ChatSummaryProviderHelperImpl();
+      ChatSummaryProviderHelperImpl();
   final InteractiveMessageHandler _interactiveMessageHandler =
-  InteractiveMessageHandlerImpl();
+      InteractiveMessageHandlerImpl();
   final TextEditingController _textEditingController = TextEditingController();
   final Function(Map<String, String>) _onSuccess;
   final Function(String) _onError;
@@ -65,7 +65,7 @@ class ChatProvider implements ViewModelProvider<ChatViewModel> {
         this._onError = onError ?? (() => {});
 
   final StreamController<ChatViewModel> _controller =
-  StreamController<ChatViewModel>.broadcast();
+      StreamController<ChatViewModel>.broadcast();
 
   void dispose() {
     _controller.sink.close();
@@ -166,39 +166,32 @@ class ChatProvider implements ViewModelProvider<ChatViewModel> {
 
   void _setInteractiveWidget(InputRequestEntity entity) {
     if (entity != null && entity.type != null) {
-      switch (entity.type) {
-        case _Constants.typeValueString:
-          _chatViewModel.interactiveWidget = _buildInputTextWidget(
-            entity: entity,
-            inputType: InteractiveMessageType.inputString,
-          );
-          break;
-        case _Constants.typeValueEmail:
-          _chatViewModel.interactiveWidget = _buildInputTextWidget(
-            entity: entity,
-            inputType: InteractiveMessageType.inputEmail,
-          );
-          break;
-        case _Constants.typeValuePhoneNumber:
-          _chatViewModel.interactiveWidget = _buildInputTextWidget(
-            entity: entity,
-            inputType: InteractiveMessageType.inputPhoneNumber,
-          );
-          break;
-        case _Constants.typeValueImage:
-          _chatViewModel.interactiveWidget = _buildInputTextWidget(
-            entity: entity,
-            inputType: InteractiveMessageType.inputImage,
-          );
-          break;
-        case _Constants.typeValueMultiChoice:
-          _chatViewModel.interactiveWidget =
+      InteractiveMessageType inputType = _getInputType(entity);
+      inputType != null
+          ? _chatViewModel.interactiveWidget = _buildInputTextWidget(
+              entity: entity,
+              inputType: inputType,
+            )
+          : _chatViewModel.interactiveWidget =
               _buildSelectableOptionsWidget(entity: entity);
-          break;
-      }
     } else {
       _cleanInteractiveWidget();
       _showMessageWithDelay();
+    }
+  }
+
+  InteractiveMessageType _getInputType(InputRequestEntity entity) {
+    switch (entity.type) {
+      case _Constants.typeValueString:
+        return InteractiveMessageType.inputString;
+      case _Constants.typeValueEmail:
+        return InteractiveMessageType.inputEmail;
+      case _Constants.typeValuePhoneNumber:
+        return InteractiveMessageType.inputPhoneNumber;
+      case _Constants.typeValueImage:
+        return InteractiveMessageType.inputImage;
+      default:
+        return null;
     }
   }
 
@@ -283,7 +276,7 @@ class ChatProvider implements ViewModelProvider<ChatViewModel> {
       _Constants.scrollAnimationOffset,
       curve: Curves.easeOut,
       duration:
-      const Duration(milliseconds: _Constants.scrollAnimationDuration),
+          const Duration(milliseconds: _Constants.scrollAnimationDuration),
     );
   }
 
@@ -292,9 +285,9 @@ class ChatProvider implements ViewModelProvider<ChatViewModel> {
         _chatViewModel.messageViewModels;
     if (messageViewModels.length >= _Constants.minMessagesLengthToUpdate) {
       MessageBubbleViewModel currentViewModel =
-      messageViewModels[_Constants.currentMessageIndex];
+          messageViewModels[_Constants.currentMessageIndex];
       MessageBubbleViewModel previousViewModel =
-      messageViewModels[_Constants.previousMessageIndex];
+          messageViewModels[_Constants.previousMessageIndex];
       if (currentViewModel.messageType == MessageType.received &&
           previousViewModel.messageType == MessageType.received) {
         previousViewModel.avatar = _buildDefaultAvatarEmptyBox();
