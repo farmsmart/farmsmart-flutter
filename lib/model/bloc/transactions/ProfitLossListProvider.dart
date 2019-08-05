@@ -86,9 +86,10 @@ class ProfitLossListProvider
         _transactionsRepository, _taglist);
     final costViewModel = transformer.costViewModel();
     final saleViewModel = transformer.saleViewModel();
+    final currencyName = NumberFormat.simpleCurrency(locale:Intl.getCurrentLocale()).currencyName;
     return ProfitLossListViewModel(
       title: _title,
-      detailText: _Strings.currentcyTag,
+      detailText: currencyName ,
       loadingStatus: status,
       transactions: items,
       costViewModel: costViewModel,

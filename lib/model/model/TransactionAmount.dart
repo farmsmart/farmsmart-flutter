@@ -1,5 +1,10 @@
 // DART HAS NO DECIMAL NUMBER TYPE!!!!!!!!!
 import 'package:decimal/decimal.dart';
+import 'package:intl/intl.dart';
+
+class _Strings {
+  static const negativeSymbol = "-";
+}
 
 class TransactionAmount {
 
@@ -13,11 +18,10 @@ class TransactionAmount {
   }
 
   String toString({bool allowNegative = false}) {
-    //LH this is a transaction amount, which is never displayed as negative number.
-    if(allowNegative) {
-      return _decimal.toString();
-    }
-    return _decimal.isNegative ? (-_decimal).toString():_decimal.toString();
+    final formatter = NumberFormat.compactCurrency(locale:Intl.getCurrentLocale());
+    final absDecimal = _decimal.isNegative ? -_decimal:_decimal;
+    final prefix = (_decimal.isNegative && allowNegative) ? _Strings.negativeSymbol : "";
+    return prefix + formatter.format(absDecimal.toDouble()).replaceAll(formatter.currencyName, "");
   }
 
   bool isSale() {
