@@ -47,7 +47,7 @@ dependencies:
 
   json_serializable: ^2.0.0
 
-
+  mockito: ^4.1.0
 
 
 dev_dependencies:
