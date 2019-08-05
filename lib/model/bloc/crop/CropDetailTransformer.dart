@@ -46,8 +46,8 @@ class CropDetailTransformer
   RecommendationDetailListItemViewModel _soilType(CropEntity from) {
     final typesString = (from.soilType.isNotEmpty)
         ? from.soilType.reduce((a, b) {
-      return a + _Strings.listSeparator + b;
-    })
+            return a + _Strings.listSeparator + b;
+          })
         : "";
     return RecommendationDetailListItemViewModel(
         iconPath: _Icons.soil,
@@ -59,8 +59,8 @@ class CropDetailTransformer
     return RecommendationDetailListItemViewModel(
         iconPath: _Icons.water,
         title: _LocalisedStrings.waterFrequency(),
-    subtitle: _loHiToString(from.waterRequirement);
-    }
+        subtitle: _loHiToString(from.waterRequirement));
+  }
 
   String _loHiToString(LoHi value) {
     switch (value) {

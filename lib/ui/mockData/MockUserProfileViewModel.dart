@@ -47,7 +47,7 @@ class MockUserProfileViewModel {
 class MockUserProfileListItemViewModel {
   static UserProfileListItemViewModel build(index) {
     return UserProfileListItemViewModel(
-      title: Intl.message(_mockActionTitle[index]),
+      title: _mockActionTitle[index],
       icon: _mockActionIcon[index],
       onTap: () => _mockItemTap(),
       isDestructive: index != 7 ? false : true,
@@ -56,7 +56,7 @@ class MockUserProfileListItemViewModel {
 
   static UserProfileListItemViewModel buildLarger(index) {
     return UserProfileListItemViewModel(
-      title: Intl.message(_mockActionTitleLarger[index]),
+      title: _mockActionTitleLarger[index],
       icon: _mockActionIcon[index],
       onTap: () => _mockItemTap(),
       isDestructive: index != 7 ? false : true,
@@ -68,27 +68,68 @@ class MockUserProfileListItemViewModel {
   }
 }
 
+class _LocalisedStrings {
+  static String switchLanguage() => Intl.message("Switch Language");
+
+  static String farmDetails() => Intl.message("Your Farm Details");
+
+  static String updatePin() => Intl.message("Update Pin");
+
+  static String createNewProfile() => Intl.message("Create New Profile");
+
+  static String inviteFriends() => Intl.message("Invite Friends");
+
+  static String privacyPolicy() => Intl.message("Privacy Policy");
+
+  static String termsOfUse() => Intl.message("Terms of Use");
+
+  static String deleteProfile() => Intl.message("Delete Profile");
+
+  static String dummyTitle1() =>
+      Intl.message("Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
+
+  static String dummyTitle2() => Intl.message(
+      "Maecenas vitae risus vitae nulla euismod viverra ut eu lacus.");
+
+  static String dummyTitle3() =>
+      Intl.message("Duis at dolor posuere, iaculis diam a, dictum urna.");
+
+  static String dummyTitle4() => Intl.message(
+      "Mauris a turpis sem. Cras eleifend semper lorem id feugiat.");
+
+  static String dummyTitle5() =>
+      Intl.message("Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
+
+  static String dummyTitle6() =>
+      Intl.message("Donec a magna a ipsum aliquet fringilla.");
+
+  static String dummyTitle7() => Intl.message(
+      "Mauris elementum arcu turpis, ac imperdiet sem rutrum vel.");
+
+  static String dummyTitle8() => Intl.message(
+      "Sed eu fermentum nisi. Fusce dui velit, dictum nec dictum eget, varius at felis.");
+}
 
 List<String> _mockActionTitleLarger = [
-  "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-  "Maecenas vitae risus vitae nulla euismod viverra ut eu lacus.",
-  "Duis at dolor posuere, iaculis diam a, dictum urna.",
-  "Mauris a turpis sem. Cras eleifend semper lorem id feugiat.",
-  "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-  "Donec a magna a ipsum aliquet fringilla.",
-  "Mauris elementum arcu turpis, ac imperdiet sem rutrum vel.",
-  "Sed eu fermentum nisi. Fusce dui velit, dictum nec dictum eget, varius at felis.",
+  _LocalisedStrings.dummyTitle1(),
+  _LocalisedStrings.dummyTitle2(),
+  _LocalisedStrings.dummyTitle3(),
+  _LocalisedStrings.dummyTitle4(),
+  _LocalisedStrings.dummyTitle5(),
+  _LocalisedStrings.dummyTitle6(),
+  _LocalisedStrings.dummyTitle7(),
+  _LocalisedStrings.dummyTitle8(),
 ];
 
 List<String> _mockActionTitle = [
-  "Switch Language",
-  "Your Farm Details",
-  "Update Pin",
-  "Create New Profile",
-  "Invite Friends",
-  "Privacy Policy",
-  "Terms of Use",
-  "Delete Profile",
+  _LocalisedStrings.switchLanguage(),
+  _LocalisedStrings.farmDetails(),
+  _LocalisedStrings.updatePin(),
+  _LocalisedStrings.createNewProfile(),
+  _LocalisedStrings.inviteFriends(),
+  _LocalisedStrings.privacyPolicy(),
+  _LocalisedStrings.termsOfUse(),
+  _LocalisedStrings.deleteProfile(),
 ];
 List<String> _mockActionIcon = [
   "assets/icons/detail_icon_language.png",

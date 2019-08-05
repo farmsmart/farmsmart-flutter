@@ -15,13 +15,19 @@ class _Constants {
 }
 
 class _LocalisedStrings {
-  static String date() => Intl.message('00');
-  static final DATE = Intl.message("Date");
-  static final CROP = Intl.message("Crop");
-  static final TODAY = Intl.message("Today");
-  static final SELECT = Intl.message("Select...");
-  static final DESCRIPTION = Intl.message("Description (optional)...");
-  static final EMPTY_STRING = Intl.message("");
+  static String date() => Intl.message('Date');
+
+  static String crop() => Intl.message('Crop');
+
+  static String today() => Intl.message('Today');
+
+  static String select() => Intl.message('Select...');
+
+  static String description() => Intl.message('Description (optional)...');
+}
+
+class _Strings {
+  static final emptyString = "";
 }
 
 enum RecordCellType {
@@ -240,14 +246,14 @@ class _RecordTransactionListItemState extends State<RecordTransactionListItem> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Text(
-                  _Strings.DATE,
+                  _LocalisedStrings.date(),
                   textAlign: TextAlign.start,
                   style: style.titleTextStyle,
                 ),
                 Text(
                   _formatDate(viewModel.selectedDate) ==
                           _formatDate(_Constants.currentDate)
-                      ? _Strings.TODAY
+                      ? _LocalisedStrings.today()
                       : _formatDate(viewModel.selectedDate),
                   textAlign: TextAlign.end,
                   style: style.detailTextStyle,
@@ -310,13 +316,13 @@ class _RecordTransactionListItemState extends State<RecordTransactionListItem> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Text(
-                _Strings.CROP,
+                _LocalisedStrings.crop(),
                 textAlign: TextAlign.start,
                 style: style.titleTextStyle,
               ),
               Text(
                 viewModel.selectedItem == null
-                    ? _Strings.SELECT
+                    ? _LocalisedStrings.select()
                     : viewModel.selectedItem,
                 textAlign: TextAlign.end,
                 style: style.detailTextStyle,
@@ -352,13 +358,13 @@ class _RecordTransactionListItemState extends State<RecordTransactionListItem> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Text(
-                  _Strings.CROP,
+                  _LocalisedStrings.crop(),
                   textAlign: TextAlign.start,
                   style: style.titleTextStyle,
                 ),
                 viewModel.selectedItem == null
                     ? Text(
-                        _Strings.SELECT,
+                        _LocalisedStrings.select(),
                         textAlign: TextAlign.end,
                         style: style.pendingDetailTextStyle,
                       )
@@ -425,11 +431,11 @@ class _RecordTransactionListItemState extends State<RecordTransactionListItem> {
   ) {
     return TextField(
       decoration: InputDecoration(
-          hintText: _Strings.DESCRIPTION,
+          hintText: _LocalisedStrings.description(),
           hintStyle: style.pendingDetailTextStyle,
           border: InputBorder.none,
           contentPadding: style.cardMargins,
-          counterText: _Strings.EMPTY_STRING),
+          counterText: _Strings.emptyString),
       textAlign: TextAlign.left,
       style: style.detailTextStyle,
       maxLines: style.maxLines,
@@ -443,7 +449,7 @@ class _RecordTransactionListItemState extends State<RecordTransactionListItem> {
 
   _onDescriptionInputChanged(String description) {
     setState(() {
-      if (description != _Strings.EMPTY_STRING) {
+      if (description != _Strings.emptyString) {
         widget.parent.userData.description = description;
       }
     });
