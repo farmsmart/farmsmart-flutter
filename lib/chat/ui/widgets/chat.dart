@@ -5,22 +5,27 @@ import 'package:farmsmart_flutter/chat/ui/widgets/chat_list.dart';
 
 class ChatStyle {
   final Color mainContainerColor;
+  final CrossAxisAlignment crossAxisAlignment;
 
   const ChatStyle({
     this.mainContainerColor,
+    this.crossAxisAlignment,
   });
 
   ChatStyle copyWith({
     Color mainContainerColor,
+    CrossAxisAlignment crossAxisAlignment,
   }) {
     return ChatStyle(
       mainContainerColor: mainContainerColor ?? this.mainContainerColor,
+      crossAxisAlignment: crossAxisAlignment ?? this.crossAxisAlignment,
     );
   }
 }
 
 class _DefaultStyle extends ChatStyle {
   final Color mainContainerColor = const Color(0xFFFFFFFF);
+  final CrossAxisAlignment crossAxisAlignment = CrossAxisAlignment.start;
 
   const _DefaultStyle({
     Color mainContainerColor,
@@ -52,7 +57,7 @@ class Chat extends StatelessWidget {
         return Container(
           color: _style.mainContainerColor,
           child: Column(
-            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: _style.crossAxisAlignment,
             children: <Widget>[
               _buildList(chatProviderSnapshot.data),
               _buildInteractiveWidget(chatProviderSnapshot.data),
