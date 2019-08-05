@@ -5,15 +5,10 @@ import 'package:farmsmart_flutter/chat/model/form/form_item_entity.dart';
 import 'package:farmsmart_flutter/chat/ui/widgets/bubble_message.dart';
 import 'package:farmsmart_flutter/chat/ui/widgets/fading_dots.dart';
 import 'package:farmsmart_flutter/chat/ui/widgets/header_message.dart';
-import 'package:farmsmart_flutter/chat/ui/widgets/message_circle_avatar.dart';
 import 'package:farmsmart_flutter/chat/ui/widgets/styles/fading_dots_styles.dart';
 import 'package:farmsmart_flutter/chat/ui/widgets/styles/header_message_styles.dart';
 
 import '../ChatMessageProviderHelper.dart';
-
-class _Constants {
-  static const defaultEmptyString = "";
-}
 
 class ChatMessageProviderHelperImpl
     implements ChatMessageProviderHelper<MessageBubbleViewModel> {
@@ -65,10 +60,6 @@ class ChatMessageProviderHelperImpl
 
   MessageBubbleViewModel _getMessageAsLoading() {
     return MessageBubbleViewModel(
-      avatar: MessageCircleAvatar(
-        messageCircleAvatarViewModel: MessageCircleAvatarViewModel(
-            backgroundAssetImageSource: _Constants.defaultEmptyString),
-      ),
       messageChild: FadingDots(
         style: FadingDotsStyles.buildDefaultStyle(),
       ),

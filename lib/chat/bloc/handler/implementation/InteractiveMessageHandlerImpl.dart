@@ -1,3 +1,4 @@
+import 'package:farmsmart_flutter/chat/ui/widgets/styles/selectable_options_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:farmsmart_flutter/chat/bloc/transformer/implementation/SelectableOptionsViewModelTransformer.dart';
 import 'package:farmsmart_flutter/chat/model/form/input_request_entity.dart';
@@ -81,6 +82,7 @@ class InteractiveMessageHandlerImpl implements InteractiveMessageHandler {
         inputRequestEntity: inputRequestEntity,
       ),
       onTap: onTap,
+      style: SelectableOptionsStyles.buildDefaultStyle(),
     );
   }
 

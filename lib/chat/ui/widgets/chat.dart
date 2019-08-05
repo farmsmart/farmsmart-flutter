@@ -5,27 +5,22 @@ import 'package:farmsmart_flutter/chat/ui/widgets/chat_list.dart';
 
 class ChatStyle {
   final Color mainContainerColor;
-  final CrossAxisAlignment crossAxisAlignment;
 
   const ChatStyle({
     this.mainContainerColor,
-    this.crossAxisAlignment,
   });
 
   ChatStyle copyWith({
     Color mainContainerColor,
-    CrossAxisAlignment crossAxisAlignment,
   }) {
     return ChatStyle(
       mainContainerColor: mainContainerColor ?? this.mainContainerColor,
-      crossAxisAlignment: crossAxisAlignment ?? this.crossAxisAlignment,
     );
   }
 }
 
 class _DefaultStyle extends ChatStyle {
   final Color mainContainerColor = const Color(0xFFFFFFFF);
-  final CrossAxisAlignment crossAxisAlignment = CrossAxisAlignment.end;
 
   const _DefaultStyle({
     Color mainContainerColor,
@@ -38,6 +33,8 @@ const ChatStyle _defaultStyle = const _DefaultStyle();
 class Chat extends StatelessWidget {
   final ChatProvider _chatProvider;
   final ChatStyle _style;
+
+  bool _notNull(Widget item) => item != null;
 
   Chat({
     @required ChatProvider chatProvider,
@@ -55,7 +52,7 @@ class Chat extends StatelessWidget {
         return Container(
           color: _style.mainContainerColor,
           child: Column(
-            crossAxisAlignment: _style.crossAxisAlignment,
+            mainAxisSize: MainAxisSize.max,
             children: <Widget>[
               _buildList(chatProviderSnapshot.data),
               _buildInteractiveWidget(chatProviderSnapshot.data),
@@ -78,8 +75,6 @@ class Chat extends StatelessWidget {
   _buildInteractiveWidget(ChatViewModel chatViewModel) {
     return chatViewModel.interactiveWidget;
   }
-
-  bool _notNull(Widget item) => item != null;
 }
 
 class ChatViewModel {

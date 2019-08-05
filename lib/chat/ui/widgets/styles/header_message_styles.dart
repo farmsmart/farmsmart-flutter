@@ -11,10 +11,7 @@ class HeaderMessageStyles {
   static HeaderMessageStyle buildDefaultStyle() => _defaultHeaderStyle;
 
   static const _defaultHeaderStyle = HeaderMessageStyle(
-    outerContainerMargin: const EdgeInsets.symmetric(
-      vertical: 10.0,
-      horizontal: 20.0,
-    ),
+    outerContainerMargin: const EdgeInsets.all(0.0),
     titleTextStyle: const TextStyle(
       fontSize: 27.0,
       fontWeight: FontWeight.bold,

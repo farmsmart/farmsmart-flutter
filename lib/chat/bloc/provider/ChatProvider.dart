@@ -288,10 +288,10 @@ class ChatProvider implements ViewModelProvider<ChatViewModel> {
           messageViewModels[_Constants.currentMessageIndex];
       MessageBubbleViewModel previousViewModel =
           messageViewModels[_Constants.previousMessageIndex];
-      _updateAvatarVisibility(
-        currentViewModel: currentViewModel,
-        previousViewModel: previousViewModel,
-      );
+//      _updateAvatarVisibility(
+//        currentViewModel: currentViewModel,
+//        previousViewModel: previousViewModel,
+//      );
       _updateReceivedMessages(
         currentViewModel: currentViewModel,
         previousViewModel: previousViewModel,

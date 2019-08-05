@@ -7,6 +7,8 @@ class _Constants {
   static const sentTextColor = const Color(0xFFFFFFFF);
   static const sentBackgroundColor = const Color(0xFF24D900);
   static const defaultRadius = Radius.circular(20.0);
+
+  static const defaultOuterContainerHorizontalMargin = 32.0;
 }
 
 class MessageBubbleStyles {
@@ -20,10 +22,6 @@ class MessageBubbleStyles {
         textContainerBackgroundColor: _Constants.receivedBackgroundColor,
         rowCrossAxisAlignment: CrossAxisAlignment.start,
         rowMainAxisAlignment: MainAxisAlignment.start,
-        textContainerMargin: const EdgeInsets.only(
-          left: 12.0,
-          right: 40.0,
-        ),
         textContainerBorderRadius:
             const BorderRadius.all(_Constants.defaultRadius),
       );
@@ -38,9 +36,8 @@ class MessageBubbleStyles {
         ),
         outerContainerMargin: EdgeInsets.only(
           bottom: 4.0,
-          right: 20.0,
-          left: 20.0,
-          top: 24.0,
+          right: _Constants.defaultOuterContainerHorizontalMargin,
+          left: _Constants.defaultOuterContainerHorizontalMargin,
         ),
       );
 
@@ -53,9 +50,9 @@ class MessageBubbleStyles {
           bottomRight: _Constants.defaultRadius,
         ),
         outerContainerMargin: EdgeInsets.only(
-          bottom: 20.0,
-          right: 20.0,
-          left: 20.0,
+          bottom: 24.0,
+          right: _Constants.defaultOuterContainerHorizontalMargin,
+          left: _Constants.defaultOuterContainerHorizontalMargin,
           top: 4.0,
         ),
       );
@@ -70,8 +67,8 @@ class MessageBubbleStyles {
         ),
         outerContainerMargin: EdgeInsets.only(
           bottom: 4.0,
-          right: 20.0,
-          left: 20.0,
+          right: _Constants.defaultOuterContainerHorizontalMargin,
+          left: _Constants.defaultOuterContainerHorizontalMargin,
           top: 4.0,
         ),
       );
@@ -80,8 +77,12 @@ class MessageBubbleStyles {
         textContainerBorderRadius: BorderRadius.all(Radius.circular(0)),
         rowCrossAxisAlignment: CrossAxisAlignment.start,
         rowMainAxisAlignment: MainAxisAlignment.start,
-        outerContainerMargin: EdgeInsets.only(bottom: 40),
-        textContainerMargin: EdgeInsets.all(0),
+        outerContainerMargin: EdgeInsets.only(
+          top: 24.0,
+          left: _Constants.defaultOuterContainerHorizontalMargin,
+          right: _Constants.defaultOuterContainerHorizontalMargin,
+          bottom: 44.0,
+        ),
         textContainerPadding: EdgeInsets.all(0),
         textContainerBackgroundColor: Colors.transparent,
       );
@@ -90,10 +91,6 @@ class MessageBubbleStyles {
         textContainerBackgroundColor: _Constants.receivedBackgroundColor,
         rowCrossAxisAlignment: CrossAxisAlignment.start,
         rowMainAxisAlignment: MainAxisAlignment.start,
-        textContainerMargin: const EdgeInsets.only(
-          left: 12.0,
-          right: 40.0,
-        ),
         textContainerPadding: const EdgeInsets.symmetric(
           horizontal: 16.0,
           vertical: 17.0,
@@ -107,14 +104,12 @@ class MessageBubbleStyles {
       horizontal: 16.0,
       vertical: 14.0,
     ),
-    outerContainerMargin: const EdgeInsets.symmetric(
-      vertical: 24.0,
-      horizontal: 20.0,
+    outerContainerMargin: const EdgeInsets.only(
+      left: _Constants.defaultOuterContainerHorizontalMargin,
+      right: _Constants.defaultOuterContainerHorizontalMargin,
+      bottom: 24.0,
     ),
-    textContainerMargin: const EdgeInsets.only(
-      left: 30.0,
-      right: 0.0,
-    ),
+    textContainerMargin: const EdgeInsets.all(0.0),
     textContainerBackgroundColor: _Constants.sentBackgroundColor,
     textStyle: const TextStyle(
       color: _Constants.sentTextColor,
