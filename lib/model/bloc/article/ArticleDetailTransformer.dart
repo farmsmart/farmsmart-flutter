@@ -12,8 +12,11 @@ import 'package:package_info/package_info.dart';
       Transform:
       [ArticleEntity] -> [ArticleDetailViewModel]
 */
+class _LocalisedStrings {
+  static String readTime() => Intl.message('minute read');
+}
+
 class _Strings {
-  static const readTime = "minute read";
   static const divider = " - ";
   static const lessThanMin = "<1";
   static const publishedDateFormat = "d MMMM";
@@ -68,7 +71,7 @@ class ArticleDetailViewModelTransformer
         _Strings.divider +
         minString +
         " " +
-        Intl.message(_Strings.readTime);
+        _LocalisedStrings.readTime();
   }
 
   int _minuteCount(String content) {
