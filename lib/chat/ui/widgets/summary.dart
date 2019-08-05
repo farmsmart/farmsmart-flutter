@@ -132,10 +132,10 @@ class Summary extends StatelessWidget {
 
   Summary({
     @required SummaryViewModel viewModel,
-    SummaryStyle style,
+    SummaryStyle style = _defaultStyle,
     Function onTap,
   })  : this._viewModel = viewModel,
-        this._style = style ?? _defaultStyle,
+        this._style = style,
         this._onTap = onTap ?? (() => {});
 
   @override

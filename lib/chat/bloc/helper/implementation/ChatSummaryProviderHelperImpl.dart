@@ -28,7 +28,7 @@ class ChatSummaryProviderHelperImpl
   String _getInputModelAsString({Map<String, String> inputModel}) {
     String response = "";
     inputModel.forEach((key, value) {
-      response = response + key + " : " + value + "\n";
+      response = "$response$key : $value\n";
     });
     return response;
   }

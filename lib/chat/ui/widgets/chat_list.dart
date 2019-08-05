@@ -42,11 +42,11 @@ class ChatList extends StatelessWidget {
   final List<MessageBubbleViewModel> _messages;
 
   ChatList({
-    ChatListStyle style,
+    ChatListStyle style = _defaultStyle,
     Function onTapMessage,
     @required List<MessageBubbleViewModel> messages,
     @required ScrollController scrollController,
-  })  : this._style = style ?? _defaultStyle,
+  })  : this._style = style,
         this._onTapMessage = onTapMessage ?? (() => {}),
         this._messages = messages,
         this._scrollController = scrollController;

@@ -92,12 +92,14 @@ class MessageBubble extends StatelessWidget {
   final MessageBubbleStyle _style;
   final Function _onTap;
 
+  bool _notNull(Widget item) => item != null;
+
   MessageBubble({
     @required MessageBubbleViewModel viewModel,
-    MessageBubbleStyle style,
+    MessageBubbleStyle style = _defaultStyle,
     Function onTap,
   })  : this._viewModel = viewModel,
-        this._style = style ?? _defaultStyle,
+        this._style = style,
         this._onTap = onTap ?? (() => {});
 
   @override
@@ -117,8 +119,6 @@ class MessageBubble extends StatelessWidget {
           ),
         ));
   }
-
-  bool _notNull(Widget item) => item != null;
 
   _buildAvatar() {
     return _viewModel.avatar;
