@@ -1,10 +1,9 @@
 import 'package:farmsmart_flutter/model/model/TransactionAmount.dart';
 import 'package:farmsmart_flutter/model/model/TransactionEntity.dart';
-import 'package:farmsmart_flutter/model/model/mock/MockTransaction.dart';
 import 'package:farmsmart_flutter/model/repositories/transaction/TransactionRepositoryInterface.dart';
 import 'package:farmsmart_flutter/ui/profitloss/RecordTransaction.dart';
 import 'package:farmsmart_flutter/ui/profitloss/RecordTransactionListItem.dart';
-
+import 'package:intl/intl.dart';
 import '../Transformer.dart';
 
 class _Strings {
@@ -34,7 +33,7 @@ class TransactionToRecordTransactionViewModel
     return RecordTransactionViewModel(
         amount: amount,
         actions: _actions(from: from),
-        buttonTitle: _Strings.recordCost,
+        buttonTitle: Intl.message(_Strings.recordCost),
         recordTransaction: (data) => _record(data, TransactionType.cost),
         type: TransactionType.cost,
         isEditable: editable);
@@ -46,7 +45,7 @@ class TransactionToRecordTransactionViewModel
     return RecordTransactionViewModel(
         amount: amount,
         actions: _actions(from: from),
-        buttonTitle: _Strings.recordSale,
+        buttonTitle: Intl.message(_Strings.recordSale),
         recordTransaction: (data) => _record(data, TransactionType.sale),
         type: TransactionType.sale,
         isEditable: editable);
