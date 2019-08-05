@@ -14,7 +14,8 @@ class _Constants {
   static final arrowIcon = "assets/icons/chevron.png";
 }
 
-class _Strings {
+class _LocalisedStrings {
+  static String date() => Intl.message('00');
   static final DATE = Intl.message("Date");
   static final CROP = Intl.message("Crop");
   static final TODAY = Intl.message("Today");

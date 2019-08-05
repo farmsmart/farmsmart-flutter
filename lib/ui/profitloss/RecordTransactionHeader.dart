@@ -2,14 +2,18 @@ import 'package:farmsmart_flutter/ui/profitloss/RecordTransaction.dart';
 import 'package:farmsmart_flutter/utils/RegExInputFormatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 
 class _Constants {
   static final amountValidator = RegExInputFormatter.withRegex(
       '^\$|^(0|([1-9][0-9]{0,3}))(\\.[0-9]{0,2})?\$');
 }
 
+class _LocalisedStrings {
+  static String hint() => Intl.message('00');
+}
+
 class _Strings {
-  static final hint = "00";
   static final emptyString = "";
 }
 
@@ -110,7 +114,7 @@ class RecordTransactionHeader extends StatefulWidget {
 class _RecordTransactionHeaderState extends State<RecordTransactionHeader> {
   final _textFieldController = TextEditingController();
   final FocusNode _focusNode = FocusNode();
-  var hint = _Strings.hint;
+  var hint = _LocalisedStrings.hint();
 
   @override
   void initState() {
@@ -180,7 +184,7 @@ class _RecordTransactionHeaderState extends State<RecordTransactionHeader> {
   _checkTextField(String amount) {
     setState(() {
       if (amount == "") {
-        hint = _Strings.hint;
+        hint = _LocalisedStrings.hint();
         widget.parent.isAmountFilled = false;
         widget.parent.setIfRequiredFieldsAreFilled();
       } else {
@@ -196,7 +200,7 @@ class _RecordTransactionHeaderState extends State<RecordTransactionHeader> {
       if (_textFieldController.text == _Strings.emptyString) {
         hint = _Strings.emptyString;
       } else {
-        hint = _Strings.hint;
+        hint = _LocalisedStrings.hint();
       }
     });
   }
@@ -204,7 +208,7 @@ class _RecordTransactionHeaderState extends State<RecordTransactionHeader> {
   resetHint() {
     setState(() {
       if (_textFieldController.text == _Strings.emptyString) {
-        hint = _Strings.hint;
+        hint = _LocalisedStrings.hint();
       } else {
         widget.parent.userData.amount = _textFieldController.text;
         widget.parent.isAmountFilled = true;
