@@ -135,7 +135,7 @@ class ChatProvider implements ViewModelProvider<ChatViewModel> {
         _insertNewMessageToList(
             _chatMessageHandler.getMessageFromEntity(formItem));
         _increaseMessageCount();
-        _updateAvatarVisibility();
+        _updatePreviousMessages();
         _setInteractiveWidget(formItem.inputRequest);
         _notifyController();
       } else {
@@ -280,7 +280,7 @@ class ChatProvider implements ViewModelProvider<ChatViewModel> {
     );
   }
 
-  void _updateAvatarVisibility() {
+  void _updatePreviousMessages() {
     List<MessageBubbleViewModel> messageViewModels =
         _chatViewModel.messageViewModels;
     if (messageViewModels.length >= _Constants.minMessagesLengthToUpdate) {
@@ -288,10 +288,74 @@ class ChatProvider implements ViewModelProvider<ChatViewModel> {
           messageViewModels[_Constants.currentMessageIndex];
       MessageBubbleViewModel previousViewModel =
           messageViewModels[_Constants.previousMessageIndex];
-      if (currentViewModel.messageType == MessageType.received &&
-          previousViewModel.messageType == MessageType.received) {
-        previousViewModel.avatar = _buildDefaultAvatarEmptyBox();
-      }
+      _updateAvatarVisibility(
+        currentViewModel: currentViewModel,
+        previousViewModel: previousViewModel,
+      );
+      _updateReceivedMessages(
+        currentViewModel: currentViewModel,
+        previousViewModel: previousViewModel,
+      );
+    }
+  }
+
+  void _updateAvatarVisibility({
+    MessageBubbleViewModel currentViewModel,
+    MessageBubbleViewModel previousViewModel,
+  }) {
+    if (currentViewModel.messageType == MessageType.received &&
+        _isMessageHasReceivedType(previousViewModel)) {
+      previousViewModel.avatar = _buildDefaultAvatarEmptyBox();
+    }
+  }
+
+  void _updateReceivedMessages({
+    MessageBubbleViewModel currentViewModel,
+    MessageBubbleViewModel previousViewModel,
+  }) {
+    switch (previousViewModel.messageType) {
+      case MessageType.sent:
+        currentViewModel.messageType = MessageType.received;
+        break;
+      case MessageType.received:
+        _updateFromReceived(
+          currentViewModel: currentViewModel,
+          previousViewModel: previousViewModel,
+        );
+        break;
+      case MessageType.receivedStackBottom:
+        _updateFromReceivedStackBottom(
+          previousViewModel: previousViewModel,
+          currentViewModel: currentViewModel,
+        );
+        break;
+      default: //nothing
+    }
+  }
+
+  bool _isMessageHasReceivedType(MessageBubbleViewModel messageViewModel) {
+    return (messageViewModel.messageType == MessageType.received ||
+        messageViewModel.messageType == MessageType.receivedStackBottom ||
+        messageViewModel.messageType == MessageType.receivedStackBetween);
+  }
+
+  void _updateFromReceived({
+    MessageBubbleViewModel currentViewModel,
+    MessageBubbleViewModel previousViewModel,
+  }) {
+    if (currentViewModel.messageType == MessageType.received) {
+      previousViewModel.messageType = MessageType.receivedStackTop;
+      currentViewModel.messageType = MessageType.receivedStackBottom;
+    }
+  }
+
+  void _updateFromReceivedStackBottom({
+    MessageBubbleViewModel currentViewModel,
+    MessageBubbleViewModel previousViewModel,
+  }) {
+    if (currentViewModel.messageType == MessageType.received) {
+      previousViewModel.messageType = MessageType.receivedStackBetween;
+      currentViewModel.messageType = MessageType.receivedStackBottom;
     }
   }
 

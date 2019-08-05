@@ -6,6 +6,7 @@ import 'package:farmsmart_flutter/chat/ui/widgets/bubble_message.dart';
 import 'package:farmsmart_flutter/chat/ui/widgets/message_circle_avatar.dart';
 import 'package:farmsmart_flutter/chat/ui/widgets/fading_dots.dart';
 import 'package:farmsmart_flutter/chat/ui/widgets/header_message.dart';
+import 'package:farmsmart_flutter/chat/ui/widgets/styles/header_message_styles.dart';
 
 import '../ChatMessageProviderHelper.dart';
 
@@ -41,7 +42,10 @@ class ChatMessageProviderHelperImpl
 
   MessageBubbleViewModel _getMessageAsHeader(HeaderMessageViewModel viewModel) {
     return MessageBubbleViewModel(
-      messageChild: HeaderMessage(viewModel: viewModel),
+      messageChild: HeaderMessage(
+        viewModel: viewModel,
+        style: HeaderMessageStyles.buildDefaultStyle(),
+      ),
       messageType: MessageType.header,
     );
   }

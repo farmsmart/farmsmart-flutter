@@ -82,12 +82,18 @@ class ChatList extends StatelessWidget {
     switch (message.messageType) {
       case MessageType.sent:
         return MessageBubbleStyles.buildStyleSent();
-      case MessageType.received:
-        return MessageBubbleStyles.buildStyleReceived();
       case MessageType.header:
         return MessageBubbleStyles.buildStyleHeader();
       case MessageType.loading:
         return MessageBubbleStyles.buildStyleLoading();
+      case MessageType.received:
+        return MessageBubbleStyles.buildStyleReceived();
+      case MessageType.receivedStackTop:
+        return MessageBubbleStyles.buildStyleReceivedStackTop();
+      case MessageType.receivedStackBottom:
+        return MessageBubbleStyles.buildStyleReceivedStackBottom();
+      case MessageType.receivedStackBetween:
+        return MessageBubbleStyles.buildStyleReceivedStackBetween();
       default:
         return MessageBubbleStyles.buildStyleSent();
     }
