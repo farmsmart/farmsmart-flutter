@@ -1,59 +1,57 @@
 import 'package:farmsmart_flutter/model/bloc/ViewModelProvider.dart';
-import 'package:farmsmart_flutter/ui/common/ViewModelProviderBuilder.dart';
-import 'package:farmsmart_flutter/ui/common/headerAndFooterListView.dart';
 import 'package:farmsmart_flutter/ui/article/ArticleDetail.dart';
-import 'package:farmsmart_flutter/ui/article/viewModel/ArticleDetailViewModel.dart';
-import 'package:farmsmart_flutter/ui/article/viewModel/ArticleListItemViewModel.dart';
 import 'package:farmsmart_flutter/ui/article/HeroListItem.dart';
 import 'package:farmsmart_flutter/ui/article/StandardListItem.dart';
-import 'package:flutter/material.dart';
+import 'package:farmsmart_flutter/ui/article/viewModel/ArticleDetailViewModel.dart';
+import 'package:farmsmart_flutter/ui/article/viewModel/ArticleListItemViewModel.dart';
 import 'package:farmsmart_flutter/ui/article/viewModel/ArticleListViewModel.dart';
+import 'package:farmsmart_flutter/ui/common/ViewModelProviderBuilder.dart';
+import 'package:farmsmart_flutter/ui/common/headerAndFooterListView.dart';
+import 'package:flutter/material.dart';
 
-abstract class ArticleListStyle {
+class ArticleListStyle {
   final TextStyle titleTextStyle;
   final EdgeInsets titleEdgePadding;
   final bool heroEnabled;
 
-  ArticleListStyle(
+  const ArticleListStyle({
     this.titleTextStyle,
-    this.titleEdgePadding, 
+    this.titleEdgePadding,
     this.heroEnabled,
-  );
-  ArticleListStyle copyWith({
-    TextStyle titleTextStyle,
-    EdgeInsets titleEdgePadding,
-    bool heroEnabled
   });
-}
 
-class _DefaultStyle implements ArticleListStyle {
-  final TextStyle titleTextStyle;
-  final EdgeInsets titleEdgePadding;
-  final bool heroEnabled;
-
-  const _DefaultStyle({
-    TextStyle titleTextStyle,
-    EdgeInsets titleEdgePadding,
-    bool heroEnabled,
-  })  : this.titleTextStyle = titleTextStyle ??
-            const TextStyle(
-                fontSize: 27,
-                fontWeight: FontWeight.bold,
-                color: Color(0xFF1a1b46)),
-        this.titleEdgePadding = titleEdgePadding ??
-            const EdgeInsets.only(
-                left: 34.0, right: 34.0, top: 35.0, bottom: 30.0), this.heroEnabled = heroEnabled  ?? false;
-
-  @override
   ArticleListStyle copyWith({
     TextStyle titleTextStyle,
     EdgeInsets titleEdgePadding,
     bool heroEnabled,
   }) {
-    return _DefaultStyle(
-        titleTextStyle: titleTextStyle ?? this.titleTextStyle,
-        titleEdgePadding: titleEdgePadding ?? this.titleEdgePadding, heroEnabled: heroEnabled ?? this.heroEnabled);
+    return ArticleListStyle(
+      titleTextStyle: titleTextStyle ?? this.titleTextStyle,
+      titleEdgePadding: titleEdgePadding ?? this.titleEdgePadding,
+      heroEnabled: heroEnabled ?? this.heroEnabled,
+    );
   }
+}
+
+class _DefaultStyle extends ArticleListStyle {
+  final TextStyle titleTextStyle = const TextStyle(
+    fontSize: 27,
+    fontWeight: FontWeight.bold,
+    color: Color(0xFF1a1b46),
+  );
+  final EdgeInsets titleEdgePadding = const EdgeInsets.only(
+    left: 34.0,
+    right: 34.0,
+    top: 35.0,
+    bottom: 30.0,
+  );
+  final bool heroEnabled = false;
+
+  const _DefaultStyle({
+    TextStyle titleTextStyle,
+    EdgeInsets titleEdgePadding,
+    bool heroEnabled,
+  });
 }
 
 const ArticleListStyle _defaultStyle = const _DefaultStyle();

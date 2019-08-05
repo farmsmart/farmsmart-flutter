@@ -1,4 +1,4 @@
-import 'package:farmsmart_flutter/ui/common/network_image_from_future.dart';
+import 'package:farmsmart_flutter/ui/common/image_provider_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
