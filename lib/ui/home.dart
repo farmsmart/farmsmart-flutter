@@ -1,6 +1,7 @@
 import 'package:farmsmart_flutter/model/bloc/article/ArticleListProvider.dart';
 import 'package:farmsmart_flutter/model/bloc/plot/PlotListProvider.dart';
 import 'package:farmsmart_flutter/model/bloc/recommendations/RecommendationEngine.dart';
+import 'package:farmsmart_flutter/model/bloc/transactions/ProfitLossListProvider.dart';
 import 'package:farmsmart_flutter/model/model/mock/MockRecommendation.dart';
 import 'package:farmsmart_flutter/model/repositories/article/ArticleRepositoryInterface.dart';
 import 'package:farmsmart_flutter/model/repositories/repository_provider.dart';
@@ -12,7 +13,6 @@ import 'package:farmsmart_flutter/ui/mockData/MockUserProfileViewModel.dart';
 import 'package:farmsmart_flutter/ui/playground/data/playground_datasource_impl.dart';
 import 'package:farmsmart_flutter/ui/playground/playground_view.dart';
 import 'package:farmsmart_flutter/ui/profitloss/ProfitLossList.dart';
-import 'package:farmsmart_flutter/ui/profitloss/mockRepositoryTryout/MockTransactionRepository.dart';
 import 'package:farmsmart_flutter/ui/profile/UserProfile.dart';
 import 'package:flutter/material.dart';
 import 'myplot/PlotList.dart';
@@ -99,8 +99,13 @@ class Home extends StatelessWidget {
             cropRepository: repositoryProvider.getCropRepository()));
   }
 
-  _buildProfitAndLoss(){
-    return ProfitLossPage(viewModel: MockProfitLossListViewModel.build(),);
+  _buildProfitAndLoss() {
+    return ProfitLossPage(
+      viewModelProvider: ProfitLossListProvider(
+        transactionsRepository: repositoryProvider.getTransactionRepository(),
+        cropRepository: repositoryProvider.getCropRepository(),
+      ),
+    );
   }
 
   _buildDiscover() {
@@ -132,10 +137,10 @@ class Home extends StatelessWidget {
   }
 
   TabNavigator _buildTabNavigator(
-      Widget page,
-      String activeIconPath,
-      String iconPath,
-      ) {
+    Widget page,
+    String activeIconPath,
+    String iconPath,
+  ) {
     return TabNavigator(
       child: page,
       barItem: BottomNavigationBarItem(

@@ -7,6 +7,8 @@ import 'package:farmsmart_flutter/model/repositories/crop/implementation/MockCro
 import 'package:farmsmart_flutter/model/repositories/plot/PlotRepositoryInterface.dart';
 import 'package:farmsmart_flutter/model/repositories/plot/implementation/MockPlotRepository.dart';
 import 'package:farmsmart_flutter/flavors/app_config.dart';
+import 'package:farmsmart_flutter/model/repositories/transaction/TransactionRepositoryInterface.dart';
+import 'package:farmsmart_flutter/model/repositories/transaction/implementation/MockTransactionRepository.dart';
 import 'package:flutter/material.dart';
 
 import 'repository_provider.dart';
@@ -16,6 +18,7 @@ class FlameLinkRepositoryProvider implements RepositoryProvider {
 
   PlotRepositoryInterface _plot = MockPlotRepository();
   CropRepositoryInterface _crop = MockCropRepository();
+  TransactionRepositoryInterface _trans = MockTransactionRepository();
 
   init(BuildContext context) {
     this.cms = FlameLink(
@@ -35,4 +38,7 @@ class FlameLinkRepositoryProvider implements RepositoryProvider {
 
   @override
   CropRepositoryInterface getCropRepository() => _crop;
+
+  @override
+  TransactionRepositoryInterface getTransactionRepository() => _trans;
 }

@@ -193,7 +193,7 @@ class PlayGroundAtomDataSource implements PlaygroundDataSource {
               title: "Record Cost Header",
               child: RecordTransactionHeader(
                 viewModel: RecordTransactionHeaderViewModel(
-                    onAmountChanged:
+                    amount:
                         MockRecordTransactionViewModel.buildCostTransaction().amount,
                     isEditable: true),
                 style: RecordTransactionHeaderStyles.defaultCostStyle,
@@ -203,7 +203,7 @@ class PlayGroundAtomDataSource implements PlaygroundDataSource {
               title: "Record Sale Header",
               child: RecordTransactionHeader(
                 viewModel: RecordTransactionHeaderViewModel(
-                    onAmountChanged:
+                    amount:
                         MockRecordTransactionViewModel.buildCostTransaction().amount,
                     isEditable: true),
                 style: RecordTransactionHeaderStyles.defaultSaleStyle,

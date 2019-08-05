@@ -6,8 +6,8 @@ import '../enums.dart';
 import 'MockArticle.dart';
 
 class MockCrop {
-  static CropEntity build() {
-    final name =  plants.random();
+  static CropEntity build({String cropName}) {
+    final name = cropName ?? plants.random();
     final entity = CropEntity(id: name,
     article: MockArticle().buildCrop(name),
     companionPlants: plants.list(),
@@ -26,12 +26,21 @@ class MockCrop {
     return entity;
   }
 
-  static List<CropEntity> list({int count = 50}) {
-    List<CropEntity> articles = [];
-    for (var i = 0; i < count; i++) {
-      articles.add(build());
+  static List<CropEntity> uniqueList(){
+    List<CropEntity> items = [];
+    final allPlants = plants.libarary();
+    for (var i = 0; i < allPlants.length; i++) {
+      items.add(build(cropName: allPlants[i]));
     }
-    return articles;
+    return items;
+  }
+
+  static List<CropEntity> list({int count = 50}) {
+    List<CropEntity> items = [];
+    for (var i = 0; i < count; i++) {
+      items.add(build());
+    }
+    return items;
   }
 }
 
