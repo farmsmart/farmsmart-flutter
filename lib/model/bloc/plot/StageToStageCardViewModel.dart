@@ -7,23 +7,23 @@ import 'package:farmsmart_flutter/ui/playground/styles/stage_card_styles.dart';
 import 'package:intl/intl.dart';
 
 class _LocalisedStrings {
-  static stage() => 'Stage';
+  static stage() => Intl.message('Stage');
 
-  static inProgress() => 'In Progress';
+  static inProgress() => Intl.message('In Progress');
 
-  static upcoming() => 'Upcoming';
+  static upcoming() => Intl.message('Upcoming');
 
-  static complete() => 'Complete';
+  static complete() => Intl.message('Complete');
 
-  static completeAction() => 'Completed';
+  static completeAction() => Intl.message('Completed');
 
-  static revertAction() => 'Revert to In Progress';
+  static revertAction() => Intl.message('Revert to In Progress');
 
-  static readyAction() => 'Begin Stage';
+  static readyAction() => Intl.message('Begin Stage');
 
-  static upcomingAction() => 'Please complete previous';
+  static upcomingAction() => Intl.message('Please complete previous');
 
-  static inProgressAction() => 'Mark as complete';
+  static inProgressAction() => Intl.message('Mark as complete');
 
   static beginCropDialogTitle() => Intl.message('Begin crop');
 
