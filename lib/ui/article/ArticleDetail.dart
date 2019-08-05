@@ -1,7 +1,7 @@
 import 'package:farmsmart_flutter/ui/common/ContextualAppBar.dart';
 import 'package:farmsmart_flutter/ui/common/SectionListView.dart';
 import 'package:farmsmart_flutter/ui/common/headerAndFooterListView.dart';
-import 'package:farmsmart_flutter/ui/common/network_image_from_future.dart';
+import 'package:farmsmart_flutter/ui/common/image_provider_view.dart';
 import 'package:farmsmart_flutter/ui/common/stage_card.dart';
 import 'package:farmsmart_flutter/ui/article/viewModel/ArticleDetailViewModel.dart';
 import 'package:farmsmart_flutter/ui/article/viewModel/ArticleListItemViewModel.dart';
@@ -289,9 +289,8 @@ class ArticleDetail extends StatelessWidget implements ListViewSection {
     if (_viewModel.image == null) {
       return null;
     }
-    return NetworkImageFromFuture(
-        _viewModel.image.urlToFit(height: _style.imageHeight),
-        fit: BoxFit.cover,
+    return ImageProviderView(
+        imageURLProvider: _viewModel.image,
         height: _style.imageHeight);
   }
 

@@ -14,11 +14,11 @@ class _Strings {
 }
 
 class RecordTransactionHeaderViewModel {
-  String onAmountChanged;
+  String amount;
   bool isEditable;
 
   RecordTransactionHeaderViewModel({
-    this.onAmountChanged,
+    this.amount,
     this.isEditable,
   });
 }
@@ -150,7 +150,7 @@ class _RecordTransactionHeaderState extends State<RecordTransactionHeader> {
 
   _buildAmountText(RecordTransactionHeaderViewModel viewModel,
       RecordTransactionHeaderStyle style) {
-    return Text(viewModel.onAmountChanged, style: style.titleTextStyle);
+    return Text(viewModel.amount, style: style.titleTextStyle);
   }
 
   _buildAmountEditableTextField(RecordTransactionHeaderStyle style) {

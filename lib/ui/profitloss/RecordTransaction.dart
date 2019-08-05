@@ -46,7 +46,7 @@ class RecordTransactionViewModel {
   bool isFilled;
   bool isEditable;
   String buttonTitle;
-  final Function(RecordTransactionData) onTransactionRecorded;
+  final Function(RecordTransactionData) recordTransaction;
 
   RecordTransactionViewModel({
     this.actions,
@@ -55,7 +55,7 @@ class RecordTransactionViewModel {
     this.isFilled: false,
     this.type,
     this.isEditable: true,
-    this.onTransactionRecorded,
+    this.recordTransaction,
   });
 }
 
@@ -194,7 +194,7 @@ class RecordTransactionState extends State<RecordTransaction> {
     return AppBar(
       elevation: style.appBarElevation,
       leading: FlatButton(
-        onPressed: () => Navigator.of(context).pop(false),
+        onPressed: () => _dismiss(context),
         padding: style.appBarLeftMargin,
         child: Image.asset(
           _Constants.navBackIcon,
@@ -216,6 +216,16 @@ class RecordTransactionState extends State<RecordTransaction> {
     );
   }
 
+  void _dismiss(BuildContext context){
+    Navigator.pop(context, false);
+  }
+
+  void _apply(BuildContext context, RecordTransactionData data) {
+    final viewModel = widget._viewModel;
+    viewModel.recordTransaction(data);
+    _dismiss(context);
+  }
+
   List<Widget> _buildContent(
       RecordTransactionViewModel viewModel, RecordTransactionStyle style) {
     List<Widget> listBuilder = [];
@@ -224,7 +234,7 @@ class RecordTransactionState extends State<RecordTransaction> {
       RecordTransactionHeader(
           viewModel: RecordTransactionHeaderViewModel(
             isEditable: viewModel.isEditable,
-            onAmountChanged: viewModel.amount,
+            amount: viewModel.amount,
           ),
           style: viewModel.type == TransactionType.sale
               ? RecordTransactionHeaderStyles.defaultSaleStyle
@@ -306,7 +316,7 @@ class RecordTransactionState extends State<RecordTransaction> {
     return RoundedButton(
       viewModel: RoundedButtonViewModel(
         title: viewModel.buttonTitle,
-        onTap: () => viewModel.onTransactionRecorded(userData),
+        onTap: () => _apply(context,userData),
       ),
       style: viewModel.type == TransactionType.sale
           ? RoundedButtonStyle.largeRoundedButtonStyle().copyWith(

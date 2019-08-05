@@ -13,6 +13,7 @@ class _Strings {
   static String retryAction = "Retry";
 }
 
+
 typedef WidgetBuilder<T> = Widget Function({BuildContext context, AsyncSnapshot<T> snapshot});
 
 class ViewModelProviderBuilder<T> extends StatelessWidget {
@@ -66,7 +67,7 @@ class ViewModelProviderBuilder<T> extends StatelessWidget {
   }
 
   Widget _defaultLoadingBuilder(BuildContext context, AsyncSnapshot<T> snapshot) {
-    return Container(
+    return Container(decoration: BoxDecoration(color: Colors.white),
             child: CircularProgressIndicator(), alignment: Alignment.center,);
   }
 

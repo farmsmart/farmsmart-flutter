@@ -65,7 +65,7 @@ class ActionSheetListItemStyle {
           fontWeight: FontWeight.normal,
           color: Color(0xFFff6060)),
       actionItemEdgePadding: const EdgeInsets.symmetric(horizontal: 32),
-      actionItemHeight: 70,
+      actionItemHeight: 30,
       iconLineSpace: 21.5,
       actionItemElevation: 0,
       iconHeight: 20,
@@ -127,26 +127,22 @@ class ActionSheetListItem extends StatelessWidget {
         _style = ActionSheetListItemStyle.defaultStyle();
     }
 
-    return Column(
-      children: <Widget>[
-        Card(
-          elevation: _style.actionItemElevation,
-          color: _style.actionItemBackgroundColor,
-          child: Container(
-            padding: _style.actionItemEdgePadding,
-            alignment: Alignment.center,
-            height: _style.actionItemHeight,
-            child: Wrap(
-                direction: Axis.horizontal,
-                crossAxisAlignment: WrapCrossAlignment.start,
-                children: <Widget>[
-                  Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: _buildActionContent(_style, _viewModel)),
-                ]),
-          ),
-        ),
-      ],
+    return Card(
+      elevation: _style.actionItemElevation,
+      color: _style.actionItemBackgroundColor,
+      child: Container(
+        padding: _style.actionItemEdgePadding,
+        alignment: Alignment.center,
+        height: _style.actionItemHeight,
+        child: Wrap(
+            direction: Axis.horizontal,
+            crossAxisAlignment: WrapCrossAlignment.start,
+            children: <Widget>[
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: _buildActionContent(_style, _viewModel)),
+            ]),
+      ),
     );
   }
 

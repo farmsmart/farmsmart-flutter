@@ -1,14 +1,36 @@
+import 'package:farmsmart_flutter/model/bloc/ViewModelProvider.dart';
 import 'package:farmsmart_flutter/model/model/loading_status.dart';
+import 'package:farmsmart_flutter/ui/common/ActionSheet.dart';
+import 'package:farmsmart_flutter/ui/common/ActionSheetListItem.dart';
+import 'package:farmsmart_flutter/ui/common/RefreshableViewModel.dart';
+import 'package:farmsmart_flutter/ui/common/ViewModelProviderBuilder.dart';
 import 'package:farmsmart_flutter/ui/common/headerAndFooterListView.dart';
+import 'package:farmsmart_flutter/ui/common/modal_navigator.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
 import 'package:farmsmart_flutter/ui/profitloss/ProfitLossHeader.dart';
 import 'package:farmsmart_flutter/ui/profitloss/ProfitLossListItem.dart';
+import 'package:farmsmart_flutter/ui/profitloss/RecordTransaction.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
-class ProfitLossListViewModel {
+class _Strings {
+  static const costText = "Record a new Cost";
+  static const saleText = "Record a new Sale";
+  static const cancel = "Cancel";
+}
+
+class _Icons {
+  static const costIcon = "assets/icons/detail_icon_cost.png";
+  static const saleIcon = "assets/icons/detail_icon_sale.png";
+}
+
+class ProfitLossListViewModel implements RefreshableViewModel {
   LoadingStatus loadingStatus;
   final String title;
   final String detailText;
+  final Function refresh;
+  final RecordTransactionViewModel saleViewModel;
+  final RecordTransactionViewModel costViewModel;
 
   final List<ProfitLossListItemViewModel> transactions;
 
@@ -17,6 +39,9 @@ class ProfitLossListViewModel {
     this.detailText,
     this.loadingStatus,
     this.transactions,
+    this.refresh,
+    this.saleViewModel,
+    this.costViewModel,
   });
 }
 
@@ -45,39 +70,27 @@ class _DefaultStyle implements ProfitLossStyle {
   const _DefaultStyle();
 }
 
-class ProfitLossPage extends StatefulWidget {
-  final ProfitLossListViewModel _viewModel;
+class ProfitLossPage extends StatelessWidget {
+  final ViewModelProvider<ProfitLossListViewModel> _viewModelProvider;
+  final ProfitLossStyle _style;
 
-  const ProfitLossPage({Key key, ProfitLossListViewModel viewModel})
-      : this._viewModel = viewModel,
+  const ProfitLossPage(
+      {Key key,
+      ViewModelProvider<ProfitLossListViewModel> viewModelProvider,
+      ProfitLossStyle style = const _DefaultStyle()})
+      : this._viewModelProvider = viewModelProvider,
+        this._style = style,
         super(key: key);
 
-  State<StatefulWidget> createState() => _ProfitLossState();
-}
-
-class _ProfitLossState extends State<ProfitLossPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: _buildBody(context, widget._viewModel),
+    return ViewModelProviderBuilder(
+      provider: _viewModelProvider,
+      successBuilder: _buildPageWithFloatingButton,
     );
   }
 
-  Widget _buildBody(BuildContext context, ProfitLossListViewModel viewModel,
-      {ProfitLossStyle profitStyle = const _DefaultStyle()}) {
-    switch (viewModel.loadingStatus) {
-      case LoadingStatus.LOADING:
-        return Container(
-            child: CircularProgressIndicator(), alignment: Alignment.center);
-      case LoadingStatus.SUCCESS:
-        return _buildPageWithFloatingButton(context, viewModel, profitStyle);
-      case LoadingStatus.ERROR:
-        return Text("This will be refactored with view model provider next PR");
-    }
-  }
-
-  Widget _buildPage(BuildContext context, ProfitLossListViewModel viewModel,
-      ProfitLossStyle profitStyle) {
+  Widget _buildPage({BuildContext context, ProfitLossListViewModel viewModel}) {
     return HeaderAndFooterListView(
         itemCount: viewModel.transactions.length,
         itemBuilder: (BuildContext context, int index) {
@@ -95,32 +108,79 @@ class _ProfitLossState extends State<ProfitLossPage> {
         ],
         footers: [
           SizedBox(
-            height: profitStyle.bottomEdgePadding,
+            height: _style.bottomEdgePadding,
           )
         ]);
   }
 
-  Widget _buildPageWithFloatingButton(BuildContext context,
-      ProfitLossListViewModel viewModel, ProfitLossStyle profitStyle) {
+  Widget _buildPageWithFloatingButton(
+      {BuildContext context, AsyncSnapshot<ProfitLossListViewModel> snapshot}) {
+    final viewModel = snapshot.data;
     final String roundedButtonIcon = "assets/icons/profit_add.png";
     return Scaffold(
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        body: _buildPage(context, viewModel, profitStyle),
+        body: _buildPage(context: context, viewModel: viewModel),
         floatingActionButton: RoundedButton(
-            viewModel: RoundedButtonViewModel(
-                icon: roundedButtonIcon, onTap: () => _showToast(context)),
-            style: RoundedButtonStyle.bigRoundedButton()));
+          viewModel: RoundedButtonViewModel(
+              icon: roundedButtonIcon,
+              onTap: () => _addTapped(
+                    context: context,
+                    viewModel: viewModel,
+                  )),
+          style: RoundedButtonStyle.bigRoundedButton(),
+        ));
   }
 
-  //FIXME: Only is built for show that this buttons are not functional yet
-  static void _showToast(BuildContext context) {
-    final String toastText = "Not Implemented Yet";
-    final String toastButtonText = "BACK";
-    final scaffold = Scaffold.of(context);
-    scaffold.showSnackBar(SnackBar(
-      content: Text(toastText),
-      action: SnackBarAction(
-          label: toastButtonText, onPressed: scaffold.hideCurrentSnackBar),
-    ));
+  ActionSheet _moreMenu(
+      BuildContext context, ProfitLossListViewModel viewModel) {
+    final actions = [
+      ActionSheetListItemViewModel(
+          title: Intl.message(_Strings.saleText),
+          isDestructive: false,
+          type: ActionType.simple,
+          icon: _Icons.saleIcon,
+          onTap: () => _recordSaleTapped(context, viewModel)),
+      ActionSheetListItemViewModel(
+          title: Intl.message(_Strings.costText),
+          isDestructive: false,
+          icon: _Icons.costIcon,
+          type: ActionType.simple,
+          onTap: () => _recordCostTapped(context, viewModel)),
+    ];
+    final actionSheetViewModel = ActionSheetViewModel(
+      actions,
+      Intl.message(_Strings.cancel),
+    );
+    return ActionSheet(
+      viewModel: actionSheetViewModel,
+      style: ActionSheetStyle.defaultStyle(),
+    );
+  }
+
+  void _recordCostTapped(
+    BuildContext context,
+    ProfitLossListViewModel viewModel,
+  ) {
+    final recordTransaction = RecordTransaction(
+      viewModel: viewModel.costViewModel,
+    );
+    NavigationScope.presentModal(context, recordTransaction);
+  }
+
+  void _recordSaleTapped(
+    BuildContext context,
+    ProfitLossListViewModel viewModel,
+  ) {
+    final recordTransaction = RecordTransaction(
+      viewModel: viewModel.saleViewModel,
+    );
+    NavigationScope.presentModal(context, recordTransaction);
+  }
+
+  void _addTapped({
+    BuildContext context,
+    ProfitLossListViewModel viewModel,
+  }) {
+    ActionSheet.present(_moreMenu(context, viewModel), context);
   }
 }
