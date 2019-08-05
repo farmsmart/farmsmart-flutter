@@ -28,27 +28,25 @@ class InteractiveMessageHandlerImpl implements InteractiveMessageHandler {
     Function(String) onValidationPassed,
     InteractiveMessageType type,
     bool isFocusedOnBuild,
-  }) {
-    return _buildTextInputWidget(
-      onSendPressed: onSendPressed,
-      onValidationPassed: onValidationPassed,
-      textEditingController: textEditingController,
-      type: type,
-      inputRequestEntity: inputRequestEntity,
-      isFocusedOnBuild: isFocusedOnBuild,
-    );
-  }
+  }) =>
+      _buildTextInputWidget(
+        onSendPressed: onSendPressed,
+        onValidationPassed: onValidationPassed,
+        textEditingController: textEditingController,
+        type: type,
+        inputRequestEntity: inputRequestEntity,
+        isFocusedOnBuild: isFocusedOnBuild,
+      );
 
   @override
   Widget buildSelectableOptionsWidget({
     InputRequestEntity inputRequestEntity,
     Function(SelectableOptionViewModel) onTap,
-  }) {
-    return _buildSelectableOptionsWidget(
-      onTap: onTap,
-      inputRequestEntity: inputRequestEntity,
-    );
-  }
+  }) =>
+      _buildSelectableOptionsWidget(
+        onTap: onTap,
+        inputRequestEntity: inputRequestEntity,
+      );
 
   _buildTextInputWidget({
     InputRequestEntity inputRequestEntity,
@@ -57,39 +55,36 @@ class InteractiveMessageHandlerImpl implements InteractiveMessageHandler {
     Function(String) onValidationPassed,
     InteractiveMessageType type,
     bool isFocusedOnBuild,
-  }) {
-    return TextInput(
-      buttonText: Intl.message(_Strings.sendText),
-      formFieldValidatorFunction: _getValidationFunction(
-        regex: inputRequestEntity.validationRegex,
-        type: type,
-        onValidationPassed: onValidationPassed,
-      ),
-      onSendPressed: onSendPressed,
-      controller: textEditingController,
-      decoration: _getInputDecoration(),
-      isFocusedOnBuild: isFocusedOnBuild,
-    );
-  }
+  }) =>
+      TextInput(
+        buttonText: Intl.message(_Strings.sendText),
+        formFieldValidatorFunction: _getValidationFunction(
+          regex: inputRequestEntity.validationRegex,
+          type: type,
+          onValidationPassed: onValidationPassed,
+        ),
+        onSendPressed: onSendPressed,
+        controller: textEditingController,
+        decoration: _getInputDecoration(),
+        isFocusedOnBuild: isFocusedOnBuild,
+      );
 
   _buildSelectableOptionsWidget({
     InputRequestEntity inputRequestEntity,
     Function(SelectableOptionViewModel) onTap,
-  }) {
-    return SelectableOptions(
-      viewModel: _getSelectableOptionsViewModel(
-        inputRequestEntity: inputRequestEntity,
-      ),
-      onTap: onTap,
-    );
-  }
+  }) =>
+      SelectableOptions(
+        viewModel: _getSelectableOptionsViewModel(
+          inputRequestEntity: inputRequestEntity,
+        ),
+        onTap: onTap,
+      );
 
   SelectableOptionsViewModel _getSelectableOptionsViewModel({
     InputRequestEntity inputRequestEntity,
-  }) {
-    return SelectableOptionsViewModelTransformer()
-        .transform(from: inputRequestEntity);
-  }
+  }) =>
+      SelectableOptionsViewModelTransformer()
+          .transform(from: inputRequestEntity);
 
   String Function(String) _getValidationFunction({
     String regex,
@@ -106,9 +101,8 @@ class InteractiveMessageHandlerImpl implements InteractiveMessageHandler {
     };
   }
 
-  InputDecoration _getInputDecoration() {
-    return InputDecoration(hintText: Intl.message(_Strings.inputHint));
-  }
+  InputDecoration _getInputDecoration() =>
+      InputDecoration(hintText: Intl.message(_Strings.inputHint));
 
   String _getFormFieldValidatorValue({
     String value,
@@ -146,13 +140,12 @@ class InteractiveMessageHandlerImpl implements InteractiveMessageHandler {
   bool _isRegexValidationPassed({
     String value,
     String regex,
-  }) {
-    return RegExp(
-      regex,
-      caseSensitive: false,
-      multiLine: false,
-    ).hasMatch(value);
-  }
+  }) =>
+      RegExp(
+        regex,
+        caseSensitive: false,
+        multiLine: false,
+      ).hasMatch(value);
 
   bool _isRegexProvided({
     String regex,

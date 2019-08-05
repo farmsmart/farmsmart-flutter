@@ -16,57 +16,47 @@ class _Constants {
 class ChatMessageProviderHelperImpl
     implements ChatMessageProviderHelper<MessageBubbleViewModel> {
   @override
-  MessageBubbleViewModel getMessageFromEntity(FormItemEntity entity) {
-    return _getMessageAsBubble(entity);
-  }
+  MessageBubbleViewModel getMessageFromEntity(FormItemEntity entity) =>
+      _getMessageAsBubble(entity);
 
   @override
-  MessageBubbleViewModel getHeaderMessage(FormEntity entity) {
-    return _getMessageAsHeader(_getHeaderViewModel(entity));
-  }
+  MessageBubbleViewModel getHeaderMessage(FormEntity entity) =>
+      _getMessageAsHeader(_getHeaderViewModel(entity));
 
   @override
-  MessageBubbleViewModel getMessageFromString(String providedMessage) {
-    return _getMessageAsBubbleFromProvided(providedMessage);
-  }
+  MessageBubbleViewModel getMessageFromString(String providedMessage) =>
+      _getMessageAsBubbleFromProvided(providedMessage);
 
   @override
-  MessageBubbleViewModel getLoadingMessage() {
-    return _getMessageAsLoading();
-  }
+  MessageBubbleViewModel getLoadingMessage() => _getMessageAsLoading();
 
-  HeaderMessageViewModel _getHeaderViewModel(FormEntity form) {
-    return ChatHeaderViewModelTransformer().transform(from: form);
-  }
+  HeaderMessageViewModel _getHeaderViewModel(FormEntity form) =>
+      ChatHeaderViewModelTransformer().transform(from: form);
 
-  MessageBubbleViewModel _getMessageAsHeader(HeaderMessageViewModel viewModel) {
-    return MessageBubbleViewModel(
-      messageChild: HeaderMessage(viewModel: viewModel),
-      messageType: MessageType.header,
-    );
-  }
+  MessageBubbleViewModel _getMessageAsHeader(
+          HeaderMessageViewModel viewModel) =>
+      MessageBubbleViewModel(
+        messageChild: HeaderMessage(viewModel: viewModel),
+        messageType: MessageType.header,
+      );
 
-  MessageBubbleViewModel _getMessageAsBubble(FormItemEntity entity) {
-    return ChatMessageViewModelTransformer().transform(from: entity);
-  }
+  MessageBubbleViewModel _getMessageAsBubble(FormItemEntity entity) =>
+      ChatMessageViewModelTransformer().transform(from: entity);
 
   MessageBubbleViewModel _getMessageAsBubbleFromProvided(
-      String providedMessage) {
-    return MessageBubbleViewModel(
-      message: providedMessage,
-      messageType: MessageType.sent,
-    );
-  }
+          String providedMessage) =>
+      MessageBubbleViewModel(
+        message: providedMessage,
+        messageType: MessageType.sent,
+      );
 
-  MessageBubbleViewModel _getMessageAsLoading() {
-    return MessageBubbleViewModel(
-      message: null,
-      avatar: MessageCircleAvatar(
-        messageCircleAvatarViewModel: MessageCircleAvatarViewModel(
-            backgroundAssetImageSource: _Constants.defaultEmptyString),
-      ),
-      messageChild: FadingDots(),
-      messageType: MessageType.loading,
-    );
-  }
+  MessageBubbleViewModel _getMessageAsLoading() => MessageBubbleViewModel(
+        message: null,
+        avatar: MessageCircleAvatar(
+          messageCircleAvatarViewModel: MessageCircleAvatarViewModel(
+              backgroundAssetImageSource: _Constants.defaultEmptyString),
+        ),
+        messageChild: FadingDots(),
+        messageType: MessageType.loading,
+      );
 }
