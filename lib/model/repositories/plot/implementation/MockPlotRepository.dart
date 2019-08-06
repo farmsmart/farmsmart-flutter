@@ -31,12 +31,12 @@ class MockPlotRepository extends MockListRepository<PlotEntity> implements PlotR
   }
 
   @override
-  Future<List<PlotEntity>> getFarm(ProfileEntity forProfile) {
+  Future<List<PlotEntity>> getFarm() {
     return getList();
   }
 
   @override
-  Stream<List<PlotEntity>> observeFarm(ProfileEntity forProfile) {
+  Stream<List<PlotEntity>> observeFarm() {
     return observeList();
   }
 

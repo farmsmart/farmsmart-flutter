@@ -18,7 +18,8 @@ class SwitchProfileListProvider
   SwitchProfileListViewModel _snapshot;
   final StreamController<SwitchProfileListViewModel> _controller =
       StreamController<SwitchProfileListViewModel>.broadcast();
-
+  ProfileEntity _currentProfile;
+  List<ProfileEntity> _profiles;
   SwitchProfileListProvider({
     ProfileRepositoryInterface profileRepo,
   }) : this._profileRepository = profileRepo;
@@ -36,6 +37,10 @@ class SwitchProfileListProvider
   @override
   SwitchProfileListViewModel initial() {
     if (_snapshot == null) {
+      _profileRepository.observeAll().listen((profiles) {
+        _updateViewModel(status: LoadingStatus.SUCCESS, profiles: profiles);
+      });
+
       _snapshot = _viewModel(
         controller: _controller,
         status: LoadingStatus.LOADING,
@@ -45,12 +50,24 @@ class SwitchProfileListProvider
     return _snapshot;
   }
 
+  void _updateViewModel({LoadingStatus status, List<ProfileEntity> profiles}) {
+    if (profiles != null) {
+      _profiles = profiles;
+    }
+    _snapshot = _viewModel(
+        controller: _controller,
+        status: LoadingStatus.SUCCESS,
+        profiles: _profiles);
+    _controller.sink.add(_snapshot);
+  }
+
   SwitchProfileListViewModel _viewModel({
     StreamController controller,
     LoadingStatus status,
     List<ProfileEntity> profiles = const [],
   }) {
-    final transformer = SwitchProfileListItemViewModelTransformer();
+    final transformer =
+        SwitchProfileListItemViewModelTransformer(_switchTo, _currentProfile);
     final listItems = profiles.map((profile) {
       return transformer.transform(from: profile);
     }).toList();
@@ -59,11 +76,15 @@ class SwitchProfileListProvider
       actionTitle: _LocalisedStrings.switchProfile(),
       items: listItems,
       addProfileAction: null,
-      refresh: _update,
+      refresh: _refresh,
     );
   }
 
-  void _update() {
-    _profileRepository.getAll();
+  void _switchTo(ProfileEntity profile) {
+    _profileRepository.switchTo(profile);
+  }
+
+  void _refresh() {
+      _profileRepository.getAll();
   }
 }

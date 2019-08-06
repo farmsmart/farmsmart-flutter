@@ -56,7 +56,7 @@ class PlotListProvider implements ViewModelProvider<PlotListViewModel> {
   @override
   PlotListViewModel initial() {
     if (_snapshot == null) {
-      _plotRepo.observeFarm(null).listen((articles) {
+      _plotRepo.observeFarm().listen((articles) {
         _snapshot = _modelFromPlots(_controller, articles);
           _controller.sink.add(_snapshot);
       });
@@ -81,7 +81,7 @@ class PlotListProvider implements ViewModelProvider<PlotListViewModel> {
 
   void _update(StreamController controller) {
     _signalLoading(controller);
-    _plotRepo.getFarm(null);
+    _plotRepo.getFarm();
   }
 
   void _signalLoading(StreamController controller) {

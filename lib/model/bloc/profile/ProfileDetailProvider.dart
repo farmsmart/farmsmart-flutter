@@ -8,7 +8,6 @@ import 'package:farmsmart_flutter/model/repositories/profile/ProfileRepositoryIn
 import 'package:farmsmart_flutter/ui/mockData/MockUserProfileViewModel.dart';
 import 'package:farmsmart_flutter/ui/profile/Profile.dart';
 import 'package:farmsmart_flutter/ui/profile/ProfileListItem.dart';
-import 'package:farmsmart_flutter/ui/profile/SwitchProfileList.dart';
 
 import '../ViewModelProvider.dart';
 
@@ -17,7 +16,7 @@ class ProfileDetailProvider
     implements ViewModelProvider<ProfileViewModel> {
   final ProfileRepositoryInterface _profileRepository;
   ProfileViewModel _snapshot;
-  LoadingStatus _status = LoadingStatus.LOADING;
+  LoadingStatus _loadingStatus = LoadingStatus.LOADING;
   final StreamController<ProfileViewModel> _controller =
       StreamController<ProfileViewModel>.broadcast();
 
@@ -39,6 +38,7 @@ class ProfileDetailProvider
   ProfileViewModel initial() {
     if (_snapshot == null) {
       _profileRepository.observeCurrent().listen((currentProfile) {
+        _loadingStatus = LoadingStatus.SUCCESS;
         _snapshot = transform(from: currentProfile);
         _controller.sink.add(_snapshot);
       });
@@ -57,18 +57,16 @@ class ProfileDetailProvider
     final switchProfileProvider =
         SwitchProfileListProvider(profileRepo: _profileRepository);
     return ProfileViewModel(
-      status: _status,
+      loadingStatus: _loadingStatus,
       username: from?.name ?? "",
-      refresh: _update,
+      refresh: _refresh,
       items: list,
       switchProfileProvider: switchProfileProvider,
     );
   }
 
-  void _update() {
-    _profileRepository.getCurrent().then((currentProfile) {
-      _controller.sink.add(transform(from: currentProfile));
-    });
+  void _refresh() {
+    _profileRepository.getCurrent();
   }
 
   void dispose() {

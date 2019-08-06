@@ -102,7 +102,7 @@ class SwitchProfileListState extends State<SwitchProfileList> {
     return Scaffold(
       appBar: _buildSimpleAppBar(context, viewModel),
       body: _buildBody(viewModel),
-      floatingActionButton: _buildFloatingButton(viewModel),
+      floatingActionButton: _buildFloatingButton(context, viewModel),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
@@ -129,7 +129,7 @@ class SwitchProfileListState extends State<SwitchProfileList> {
                 image: viewModel.items[index].image,
                 icon: viewModel.items[index].icon,
                 isSelected: viewModel.items[index].isSelected,
-                itemAction: () => _select(index, viewModel),
+                tapAction: () => _select(index, viewModel),
               ),
             ),
             separatorBuilder: (context, index) => ListDivider.build(),
@@ -140,7 +140,7 @@ class SwitchProfileListState extends State<SwitchProfileList> {
     );
   }
 
-  _buildFloatingButton(SwitchProfileListViewModel viewModel) {
+  _buildFloatingButton(BuildContext context, SwitchProfileListViewModel viewModel) {
     return Padding(
       padding: _Constants.bottomButtonEdgePadding,
       child: Visibility(
@@ -148,7 +148,7 @@ class SwitchProfileListState extends State<SwitchProfileList> {
         child: RoundedButton(
             viewModel: RoundedButtonViewModel(
                 title: viewModel.title,
-                onTap: () => _switchProfileTapped(viewModel)),
+                onTap: () => _switchProfileTapped(context, viewModel)),
             style: RoundedButtonStyle.largeRoundedButtonStyle()),
       ),
     );
@@ -208,10 +208,11 @@ class SwitchProfileListState extends State<SwitchProfileList> {
     }
   }
 
-  _switchProfileTapped(SwitchProfileListViewModel viewModel) {
+  _switchProfileTapped(BuildContext context, SwitchProfileListViewModel viewModel) {
     setState(() {
-      viewModel.confirmedIndex = viewModel.selectedIndex;
       viewModel.isVisible = false;
+      viewModel.items[viewModel.selectedIndex].switchAction(); 
+      Navigator.of(context).pop();
     });
   }
 }

@@ -1,3 +1,5 @@
+import 'package:farmsmart_flutter/model/model/ImageURLProvider.dart';
+import 'package:farmsmart_flutter/ui/common/image_provider_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
@@ -16,17 +18,19 @@ class _Constants {
 
 class SwitchProfileListItemViewModel {
   final String title;
-  ImageProvider image;
+  ImageURLProvider image;
   final String icon;
-  Function itemAction;
+  Function tapAction;
+  Function switchAction;
   bool isSelected;
 
   SwitchProfileListItemViewModel({
     this.title,
     this.image,
     this.icon,
-    this.itemAction,
-    this.isSelected,
+    this.tapAction,
+    this.switchAction,
+    this.isSelected = false,
   });
 }
 
@@ -82,13 +86,9 @@ class SwitchProfileListItem extends StatelessWidget {
       leading: ClipOval(
         child: Stack(
           children: <Widget>[
-            Image(
-              image: _viewModel.image,
-              height: _Constants.imageSize,
-              width: _Constants.imageSize,
-              fit: BoxFit.cover,
-              alignment: Alignment.topCenter,
-            ),
+            ImageProviderView(imageURLProvider: _viewModel.image,  height: _Constants.imageSize,
+              width: _Constants.imageSize,)
+            ,
           ],
         ),
       ),
@@ -97,7 +97,7 @@ class SwitchProfileListItem extends StatelessWidget {
         height: _Constants.iconSize,
       ),
       contentPadding: _Constants.iconEdgePadding,
-      onTap: () => _viewModel.itemAction(),
+      onTap: () => _viewModel.tapAction(),
     );
   }
 }

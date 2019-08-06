@@ -1,5 +1,6 @@
 import 'package:farmsmart_flutter/farmsmart_localizations.dart';
 import 'package:farmsmart_flutter/model/bloc/article/ArticleListProvider.dart';
+import 'package:farmsmart_flutter/model/bloc/home/HomeViewModelProvider.dart';
 import 'package:farmsmart_flutter/model/bloc/plot/PlotListProvider.dart';
 import 'package:farmsmart_flutter/model/bloc/profile/ProfileDetailProvider.dart';
 import 'package:farmsmart_flutter/model/bloc/recommendations/RecommendationListProvider.dart';
@@ -9,6 +10,7 @@ import 'package:farmsmart_flutter/model/repositories/repository_provider.dart';
 import 'package:farmsmart_flutter/ui/article/ArticleList.dart';
 import 'package:farmsmart_flutter/ui/bottombar/persistent_bottom_navigation_bar.dart';
 import 'package:farmsmart_flutter/ui/bottombar/tab_navigator.dart';
+import 'package:farmsmart_flutter/ui/common/ViewModelProviderBuilder.dart';
 import 'package:farmsmart_flutter/ui/playground/data/playground_datasource_impl.dart';
 import 'package:farmsmart_flutter/ui/playground/playground_view.dart';
 import 'package:farmsmart_flutter/ui/profile/Profile.dart';
@@ -35,7 +37,6 @@ class _Constants {
 class Home extends StatelessWidget {
   FarmsmartLocalizations localizations;
   final RepositoryProvider repositoryProvider;
-
   Home({
     Key key,
     this.repositoryProvider,
@@ -44,7 +45,14 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     localizations = FarmsmartLocalizations.of(context);
+    return ViewModelProviderBuilder(
+      provider: HomeViewModelProvider(repositoryProvider.getProfileRepository()),
+      successBuilder: _buildSuccess,
+    );
+  }
 
+  Widget _buildSuccess(
+      {BuildContext context, AsyncSnapshot<HomeViewModel> snapshot}) {
     return PersistentBottomNavigationBar(
       backgroundColor: _Constants.bottomBarColor,
       tabs: tabs(),
@@ -85,7 +93,8 @@ class Home extends StatelessWidget {
   }
 
   _buildMyPlot() {
-    final recommendationsProvider = RecommendationListProvider( title:"Recommendations",
+    final recommendationsProvider = RecommendationListProvider(
+      title: "Recommendations",
       heroThreshold: 0.8,
       plotRepo: repositoryProvider.getMyPlotRepository(),
       cropRepo: repositoryProvider.getCropRepository(),

@@ -1,7 +1,7 @@
 import 'package:farmsmart_flutter/model/bloc/ViewModelProvider.dart';
-import 'package:farmsmart_flutter/model/bloc/profile/SwitchProfileListProvider.dart';
 import 'package:farmsmart_flutter/model/model/loading_status.dart';
 import 'package:farmsmart_flutter/ui/common/ListDivider.dart';
+import 'package:farmsmart_flutter/ui/common/LoadableViewModel.dart';
 import 'package:farmsmart_flutter/ui/common/RefreshableViewModel.dart';
 import 'package:farmsmart_flutter/ui/common/ViewModelProviderBuilder.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
@@ -40,7 +40,7 @@ class _Constants {
   static final double detailSpacing = 23;
 }
 
-class ProfileViewModel implements RefreshableViewModel {
+class ProfileViewModel implements RefreshableViewModel, LoadableViewModel {
   final List<ProfileListItemViewModel> items;
   final String username;
   final int activeCrops;
@@ -48,10 +48,10 @@ class ProfileViewModel implements RefreshableViewModel {
   final ViewModelProvider<SwitchProfileListViewModel> switchProfileProvider;
   final ImageProvider image;
   final Function refresh;
-  final LoadingStatus status;
+  final LoadingStatus loadingStatus;
 
   ProfileViewModel({
-    this.status,
+    this.loadingStatus,
     this.items,
     this.username,
     this.activeCrops,

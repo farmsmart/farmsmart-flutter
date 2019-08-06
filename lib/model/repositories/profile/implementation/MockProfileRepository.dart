@@ -6,14 +6,21 @@ import 'package:farmsmart_flutter/model/model/mock/MockProfile.dart';
 import '../../MockListRepository.dart';
 import '../ProfileRepositoryInterface.dart';
 
-
-class _Constants{
+class _Constants {
   static const mockCount = 5;
 }
 
-class MockProfileRepository extends MockListRepository<ProfileEntity> implements ProfileRepositoryInterface {
-
-   MockProfileRepository._(IdentifyEntity<ProfileEntity> identifyEntity, List<ProfileEntity> startData, ProfileEntity current) : this._current = current, super(identifyEntity: identifyEntity, startingData: startData,);
+class MockProfileRepository extends MockListRepository<ProfileEntity>
+    implements ProfileRepositoryInterface {
+  MockProfileRepository._(
+    IdentifyEntity<ProfileEntity> identifyEntity,
+    List<ProfileEntity> startData,
+    ProfileEntity current,
+  )   : this._current = current,
+        super(
+          identifyEntity: identifyEntity,
+          startingData: startData,
+        );
   final _streamController = StreamController<ProfileEntity>.broadcast();
   ProfileEntity _current;
 
@@ -24,10 +31,14 @@ class MockProfileRepository extends MockListRepository<ProfileEntity> implements
     final profiles = MockProfile().list(count: _Constants.mockCount);
     return MockProfileRepository._(identifyEntity, profiles, profiles.first);
   }
-  
+
   @override
   Future<ProfileEntity> getCurrent() {
-    return Future.value(_current);
+    return Future.delayed(Duration(milliseconds: 2000), () => _current)
+        .then((value) {
+          _update();
+      return value;
+    });
   }
 
   @override
@@ -56,7 +67,8 @@ class MockProfileRepository extends MockListRepository<ProfileEntity> implements
     return getList();
   }
 
-
-  
-
+  @override
+  Stream<List<ProfileEntity>> observeAll() {
+    return observeList();
+  }
 }
