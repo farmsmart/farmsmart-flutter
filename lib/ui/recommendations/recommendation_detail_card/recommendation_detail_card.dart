@@ -2,6 +2,7 @@ import 'package:farmsmart_flutter/ui/common/Dogtag.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
 import 'package:farmsmart_flutter/ui/common/rounded_button_stateful.dart';
 import 'package:farmsmart_flutter/ui/common/rounded_image_overlay.dart';
+import 'package:farmsmart_flutter/ui/recommendations/recommendation_card/recommendation_card_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -17,24 +18,6 @@ class _Constants {
   static final double imageSize = 100;
   static final BorderRadius imageRadius =
       const BorderRadius.all(Radius.circular(12));
-}
-
-class RecommendationDetailCardViewModel {
-  String title;
-  String subtitle;
-  Future<String> image;
-  String actionText;
-  Function action;
-  bool isAdded;
-
-  RecommendationDetailCardViewModel({
-    this.title,
-    this.subtitle,
-    this.actionText,
-    this.action,
-    this.image,
-    this.isAdded = false,
-  });
 }
 
 class RecommendationDetailCardStyle {
@@ -167,23 +150,37 @@ class _DefaultStyle extends RecommendationDetailCardStyle {
 
 const RecommendationDetailCardStyle _defaultStyle = const _DefaultStyle();
 
-class RecommendationDetailCard extends StatelessWidget {
+class RecommendationDetailCard extends StatefulWidget {
   final RecommendationDetailCardStyle _style;
-  final RecommendationDetailCardViewModel _viewModel;
+  final RecommendationCardViewModel _viewModel;
 
   RecommendationDetailCard({
     Key key,
-    RecommendationDetailCardViewModel viewModel,
+    RecommendationCardViewModel viewModel,
     RecommendationDetailCardStyle style = _defaultStyle,
   })  : this._viewModel = viewModel,
         this._style = style,
         super(key: key);
 
   @override
+  _RecommendationDetailCardState createState() =>
+      _RecommendationDetailCardState();
+}
+
+class _RecommendationDetailCardState extends State<RecommendationDetailCard> {
+  bool isAddedState;
+
+  @override
+  void initState() {
+    isAddedState = widget._viewModel.isAdded;
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       child: Padding(
-        padding: _style.contentPadding,
+        padding: widget._style.contentPadding,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
@@ -204,18 +201,29 @@ class RecommendationDetailCard extends StatelessWidget {
 
   Container buildActionButton() {
     return Container(
-      decoration: _viewModel.isAdded ? _style.actionBoxDecoration : null,
+      decoration: isAddedState ? widget._style.actionBoxDecoration : null,
       child: RoundedButtonStateful(
-        style: _style.actionStyle,
+        style: widget._style.actionStyle,
         viewModel: RoundedButtonStatefulViewModel(
-          isActive: !_viewModel.isAdded,
+          isActive: !isAddedState,
           roundedButtonViewModel: RoundedButtonViewModel(
-            title: _viewModel.actionText,
-            onTap: _viewModel.action,
+            title: widget._viewModel.addActionText,
+            onTap: () {
+              _buildAddActionAndChangeStyle();
+            },
           ),
         ),
       ),
     );
+  }
+
+  void _buildAddActionAndChangeStyle() {
+    if (!isAddedState) {
+      widget._viewModel.addAction();
+    }
+    setState(() {
+      isAddedState = true;
+    });
   }
 
   Row buildTopContent() {
@@ -233,18 +241,18 @@ class RecommendationDetailCard extends StatelessWidget {
     return Flexible(
       flex: _Constants.imageFlexValue,
       child: Container(
-        width: _style.imageSize,
-        height: _style.imageSize,
+        width: widget._style.imageSize,
+        height: widget._style.imageSize,
         child: RoundedImageOverlay(
-          imageHeight: _style.imageSize,
-          imageWidth: _style.imageSize,
-          imageBorderRadius: _style.imageRadius,
-          image: _viewModel.image,
-          showOverlayIcon: _viewModel.isAdded,
-          overlayIconWidth: _style.imageOverlayWidth,
-          overlayIcon: _style.iconAssetOverlay,
-          overlayIconHeight: _style.imageOverlayWidth,
-          overlayColor: _style.imageOverlayColor,
+          imageHeight: widget._style.imageSize,
+          imageWidth: widget._style.imageSize,
+          imageBorderRadius: widget._style.imageRadius,
+          image: widget._viewModel.image,
+          showOverlayIcon: isAddedState,
+          overlayIconWidth: widget._style.imageOverlayWidth,
+          overlayIcon: widget._style.iconAssetOverlay,
+          overlayIconHeight: widget._style.imageOverlayWidth,
+          overlayColor: widget._style.imageOverlayColor,
         ),
       ),
     );
@@ -258,8 +266,8 @@ class RecommendationDetailCard extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
           Text(
-            _viewModel.title,
-            style: _style.titleTextStyle,
+            widget._viewModel.title,
+            style: widget._style.titleTextStyle,
             maxLines: _Constants.titleMaxLines,
             overflow: TextOverflow.ellipsis,
           ),
@@ -267,8 +275,8 @@ class RecommendationDetailCard extends StatelessWidget {
             height: _Constants.titleSpace,
           ),
           DogTag(
-            viewModel: DogTagViewModel(title: _viewModel.subtitle),
-            style: _style.subtitleTagStyle,
+            viewModel: DogTagViewModel(title: widget._viewModel.subtitle),
+            style: widget._style.subtitleTagStyle,
           ),
         ],
       ),
