@@ -7,14 +7,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class _LocalisedStrings {
-  static String englishAction() => Intl.message('English');
-
-  static String swahiliAction() => Intl.message('Swahili');
-
-  static String confirmAction() => Intl.message('Confirm');
-
-  static String cancelAction() => Intl.message('Cancel');
+class _Strings {
+  static final englishAction = "English";
+  static final swahiliAction = "Swahili";
+  static final confirmAction = "Confirm";
+  static final cancelAction = "Cancel";
 }
 
 class _Languages {
@@ -159,7 +156,7 @@ class LandingPage extends StatelessWidget {
                       height: _Constants.subtitleLineSpace,
                     ),
                     Text(
-                      _viewModel.detailText,
+                      Intl.message(_viewModel.detailText),
                       style: _style.detailTextStyle,
                       maxLines: _style.detailTextMaxLines,
                       overflow: TextOverflow.ellipsis,
@@ -172,7 +169,7 @@ class LandingPage extends StatelessWidget {
                   children: <Widget>[
                     RoundedButton(
                       viewModel: RoundedButtonViewModel(
-                        title: _viewModel.actionText,
+                        title: Intl.message(_viewModel.actionText),
                         onTap: () => _viewModel.continueAction(),
                       ),
                       style: RoundedButtonStyle.largeRoundedButtonStyle()
@@ -187,7 +184,7 @@ class LandingPage extends StatelessWidget {
                       child: Container(
                         margin: _Constants.actionTapArea,
                         child: Text(
-                          _viewModel.footerText,
+                          Intl.message(_viewModel.footerText),
                           style: _style.footerTextStyle,
                           maxLines: _style.footerTextMaxLines,
                           overflow: TextOverflow.ellipsis,
@@ -211,14 +208,14 @@ class LandingPage extends StatelessWidget {
   ActionSheet _languageMenu() {
     final actions = [
       ActionSheetListItemViewModel(
-        title: _LocalisedStrings.englishAction(),
+        title: Intl.message(_Strings.englishAction),
         type: ActionType.selectable,
         icon: _Icons.englishIcon,
         checkBoxIcon: _Icons.checkBoxIcon,
         onTap: () => _viewModel.switchLanguageTapped(_Languages.english),
       ),
       ActionSheetListItemViewModel(
-        title: _LocalisedStrings.swahiliAction(),
+        title: Intl.message(_Strings.swahiliAction),
         type: ActionType.selectable,
         icon: _Icons.swahiliIcon,
         checkBoxIcon: _Icons.checkBoxIcon,
@@ -228,8 +225,8 @@ class LandingPage extends StatelessWidget {
 
     final actionSheetViewModel = ActionSheetViewModel(
       actions,
-      _LocalisedStrings.cancelAction(),
-      confirmButtonTitle: _LocalisedStrings.confirmAction(),
+      Intl.message(_Strings.cancelAction),
+      confirmButtonTitle: _Strings.confirmAction,
     );
     return ActionSheet(
       viewModel: actionSheetViewModel,
