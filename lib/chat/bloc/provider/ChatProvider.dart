@@ -151,7 +151,7 @@ class ChatProvider implements ViewModelProvider<ChatViewModel> {
   void _onSummaryWidgetActionButtonTap() {
     (_responseMap != null && _responseMap.isNotEmpty)
         ? _onSuccess(_responseMap)
-        : _onError(Intl.message(_Strings.summaryError));
+        : _onError(_Strings.summaryError);
   }
 
   void _setInteractiveWidget(InputRequestEntity entity) {

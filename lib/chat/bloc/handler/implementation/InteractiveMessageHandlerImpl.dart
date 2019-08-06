@@ -8,17 +8,21 @@ import 'package:farmsmart_flutter/chat/ui/viewmodel/SelectableOptionsViewModel.d
 import 'package:farmsmart_flutter/chat/ui/widgets/selectable_options.dart';
 import 'package:farmsmart_flutter/chat/ui/widgets/text_input.dart';
 import 'package:intl/intl.dart';
-
 import '../InteractiveMessageHandler.dart';
 
-class _Strings {
-  static const String sendText = "Send";
-  static const String messageNotEmpty = "Message should not be empty";
-  static const String inputHint = "Type a message";
+class _LocalisedStrings {
+  static String sendText() => Intl.message('Send');
 
-  static const String notValidString = "Provided TEXT is not valid";
-  static const String notValidEmail = "Provided EMAIL is not valid";
-  static const String notValidPhone = "Provided PHONE is not valid";
+  static String messageNotEmpty() =>
+      Intl.message('Message should not be empty');
+
+  static String inputHint() => Intl.message('Type a message');
+
+  static String notValidString() => Intl.message('Provided TEXT is not valid');
+
+  static String notValidEmail() => Intl.message("Provided EMAIL is not valid");
+
+  static String notValidPhone() => Intl.message('Provided PHONE is not valid');
 }
 
 class InteractiveMessageHandlerImpl implements InteractiveMessageHandler {
@@ -59,20 +63,19 @@ class InteractiveMessageHandlerImpl implements InteractiveMessageHandler {
     Function(String) onValidationPassed,
     InteractiveMessageType type,
     bool isFocusedOnBuild,
-  }) {
-    return TextInput(
-      buttonText: Intl.message(_Strings.sendText),
-      formFieldValidatorFunction: _getValidationFunction(
-        regex: inputRequestEntity.validationRegex,
-        type: type,
-        onValidationPassed: onValidationPassed,
-      ),
-      onSendPressed: onSendPressed,
-      controller: textEditingController,
-      decoration: _getInputDecoration(),
-      isFocusedOnBuild: isFocusedOnBuild,
-    );
-  }
+  }) =>
+      TextInput(
+        buttonText: _LocalisedStrings.sendText(),
+        formFieldValidatorFunction: _getValidationFunction(
+          regex: inputRequestEntity.validationRegex,
+          type: type,
+          onValidationPassed: onValidationPassed,
+        ),
+        onSendPressed: onSendPressed,
+        controller: textEditingController,
+        decoration: _getInputDecoration(),
+        isFocusedOnBuild: isFocusedOnBuild,
+      );
 
   _buildSelectableOptionsWidget({
     InputRequestEntity inputRequestEntity,
@@ -111,9 +114,8 @@ class InteractiveMessageHandlerImpl implements InteractiveMessageHandler {
     };
   }
 
-  InputDecoration _getInputDecoration() {
-    return InputDecoration(hintText: Intl.message(_Strings.inputHint));
-  }
+  InputDecoration _getInputDecoration() =>
+      InputDecoration(hintText: _LocalisedStrings.inputHint());
 
   String _getFormFieldValidatorValue({
     String value,
@@ -122,7 +124,7 @@ class InteractiveMessageHandlerImpl implements InteractiveMessageHandler {
     Function(String) onValidationPassed,
   }) {
     if (value.isEmpty) {
-      return Intl.message(_Strings.messageNotEmpty);
+      return _LocalisedStrings.messageNotEmpty();
     } else if (_isRegexProvided(regex: regex) &&
         !_isRegexValidationPassed(value: value, regex: regex)) {
       return _getErrorMessageByType(type: type);
@@ -134,11 +136,11 @@ class InteractiveMessageHandlerImpl implements InteractiveMessageHandler {
   String _getErrorMessageByType({InteractiveMessageType type}) {
     switch (type) {
       case InteractiveMessageType.inputString:
-        return Intl.message(_Strings.notValidString);
+        return _LocalisedStrings.notValidString();
       case InteractiveMessageType.inputEmail:
-        return Intl.message(_Strings.notValidEmail);
+        return _LocalisedStrings.notValidEmail();
       case InteractiveMessageType.inputPhoneNumber:
-        return Intl.message(_Strings.notValidPhone);
+        return _LocalisedStrings.notValidPhone();
       case InteractiveMessageType.inputImage:
         return null;
       case InteractiveMessageType.multiChoice:

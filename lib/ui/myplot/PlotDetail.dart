@@ -1,7 +1,9 @@
 import 'package:farmsmart_flutter/model/bloc/ViewModelProvider.dart';
+import 'package:farmsmart_flutter/ui/article/ArticleDetail.dart';
+import 'package:farmsmart_flutter/ui/article/viewModel/ArticleListItemViewModel.dart';
 import 'package:farmsmart_flutter/ui/common/ActionSheet.dart';
 import 'package:farmsmart_flutter/ui/common/ActionSheetListItem.dart';
-
+import 'package:farmsmart_flutter/ui/common/Alert.dart';
 import 'package:farmsmart_flutter/ui/common/ContextualAppBar.dart';
 import 'package:farmsmart_flutter/ui/common/SectionListView.dart';
 import 'package:farmsmart_flutter/ui/common/ViewModelProviderBuilder.dart';
@@ -10,25 +12,34 @@ import 'package:farmsmart_flutter/ui/common/headerAndFooterListView.dart';
 import 'package:farmsmart_flutter/ui/common/stage_card.dart';
 import 'package:farmsmart_flutter/ui/crop/CropDetail.dart';
 import 'package:farmsmart_flutter/ui/crop/viewmodel/CropDetailViewModel.dart';
-import 'package:farmsmart_flutter/ui/article/ArticleDetail.dart';
-import 'package:farmsmart_flutter/ui/article/viewModel/ArticleListItemViewModel.dart';
 import 'package:farmsmart_flutter/ui/myplot/PlotListItem.dart';
 import 'package:farmsmart_flutter/ui/myplot/viewmodel/PlotDetailViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
+
 import 'PlotDetailHeaderStyle.dart';
 
-class _Strings {
-  static final renameAction = "Rename Crop";
-  static final removeAction = "Delete Crop";
-  static final cancelAction = "Cancel";
+class _LocalisedStrings {
+  static renameAction() => Intl.message('Rename Crop');
+
+  static removeAction() => Intl.message('Delete Crop');
+
+  static cancelAction() => Intl.message('Cancel');
+
+  static confirm() => Intl.message('Confirm');
+
+  static removeDialogTitle() => Intl.message('Remove crop');
+
+  static removeDialogDescription() =>
+      Intl.message('Are you sure you want delete the crop?');
 }
 
 abstract class PlotDetailStyle {
   final TextStyle titleTextStyle;
   final double stageSectionHeight;
   final EdgeInsets cardPadding;
+
   const PlotDetailStyle(
       this.titleTextStyle, this.stageSectionHeight, this.cardPadding);
 }
@@ -37,6 +48,7 @@ class _DefaultStyle implements PlotDetailStyle {
   final TextStyle titleTextStyle = null;
   final double stageSectionHeight = 162;
   final EdgeInsets cardPadding = const EdgeInsets.all(8.0);
+
   const _DefaultStyle();
 }
 
@@ -44,6 +56,7 @@ class PlotDetail extends StatefulWidget {
   final ViewModelProvider<PlotDetailViewModel> _viewModelProvider;
   final PlotDetailStyle _style;
   ArticleDetail _articleDetail;
+
   PlotDetail(
       {Key key,
       ViewModelProvider<PlotDetailViewModel> provider,
@@ -151,8 +164,22 @@ class _PlotDetailState extends State<PlotDetail> {
   }
 
   void _removeAction(PlotDetailViewModel viewModel) {
-    viewModel.remove(); //TODO: add the confirm when ready
-    Navigator.of(context).pop();
+    Alert.present(
+      Alert(
+        viewModel: AlertViewModel(
+          cancelActionText: _LocalisedStrings.cancelAction(),
+          confirmActionText: _LocalisedStrings.confirm(),
+          titleText: _LocalisedStrings.removeDialogTitle(),
+          detailText: _LocalisedStrings.removeDialogDescription(),
+          confirmAction: () {
+            viewModel.remove();
+            Navigator.of(context).pop();
+          },
+          isDestructive: true,
+        ),
+      ),
+      context,
+    );
   }
 
   void _renameAction(PlotDetailViewModel viewModel) {
@@ -162,17 +189,17 @@ class _PlotDetailState extends State<PlotDetail> {
   ActionSheet _moreMenu(PlotDetailViewModel viewModel) {
     final actions = [
       ActionSheetListItemViewModel(
-          title: Intl.message(_Strings.renameAction),
+          title: _LocalisedStrings.renameAction(),
           type: ActionType.simple,
           onTap: () => _renameAction(viewModel)),
       ActionSheetListItemViewModel(
-          title: Intl.message(_Strings.removeAction),
+          title: _LocalisedStrings.removeAction(),
           type: ActionType.simple,
           isDestructive: true,
           onTap: () => _removeAction(viewModel)),
     ];
     final actionSheetViewModel =
-        ActionSheetViewModel(actions, Intl.message(_Strings.cancelAction));
+        ActionSheetViewModel(actions, _LocalisedStrings.cancelAction());
     return ActionSheet(
         viewModel: actionSheetViewModel,
         style: ActionSheetStyle.defaultStyle());

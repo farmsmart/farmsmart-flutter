@@ -13,10 +13,12 @@ import 'package:farmsmart_flutter/ui/profitloss/RecordTransaction.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class _Strings {
-  static const costText = "Record a new Cost";
-  static const saleText = "Record a new Sale";
-  static const cancel = "Cancel";
+class _LocalisedStrings {
+  static String costText() => Intl.message('Record a new Cost');
+
+  static String saleText() => Intl.message('Record a new Sale');
+
+  static String cancel() => Intl.message('Cancel');
 }
 
 class _Icons {
@@ -135,13 +137,13 @@ class ProfitLossPage extends StatelessWidget {
       BuildContext context, ProfitLossListViewModel viewModel) {
     final actions = [
       ActionSheetListItemViewModel(
-          title: Intl.message(_Strings.saleText),
+          title: _LocalisedStrings.saleText(),
           isDestructive: false,
           type: ActionType.simple,
           icon: _Icons.saleIcon,
           onTap: () => _recordSaleTapped(context, viewModel)),
       ActionSheetListItemViewModel(
-          title: Intl.message(_Strings.costText),
+          title: _LocalisedStrings.costText(),
           isDestructive: false,
           icon: _Icons.costIcon,
           type: ActionType.simple,
@@ -149,7 +151,7 @@ class ProfitLossPage extends StatelessWidget {
     ];
     final actionSheetViewModel = ActionSheetViewModel(
       actions,
-      Intl.message(_Strings.cancel),
+      _LocalisedStrings.cancel(),
     );
     return ActionSheet(
       viewModel: actionSheetViewModel,

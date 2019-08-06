@@ -12,10 +12,11 @@ import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:intl/intl.dart';
 
-class _Strings {
-  static const String shareText =
-      "Check out this article from the FarmSmart mobile app \n ";
-  static const String viewMore = "View more on the web";
+class _LocalisedStrings {
+  static String shareText() =>
+      Intl.message('Check out this article from the FarmSmart mobile app \n ');
+
+  static String viewMore() => Intl.message('View more on the web');
 }
 
 abstract class ArticleDetailStyle {
@@ -143,7 +144,7 @@ class ArticleDetail extends StatelessWidget implements ListViewSection {
 
   Widget _externLinkSection() {
     final buttonViewModel = RoundedButtonViewModel(
-        title: _viewModel.contentLinkTitle ?? Intl.message(_Strings.viewMore),
+        title: _viewModel.contentLinkTitle ?? _LocalisedStrings.viewMore(),
         onTap: () {
           _launchURL(_viewModel.contentLink);
         });
@@ -200,7 +201,7 @@ class ArticleDetail extends StatelessWidget implements ListViewSection {
 
   void _share() async {
     final link = await _viewModel.shareLink;
-    await Share.share(_Strings.shareText + link);
+    await Share.share(_LocalisedStrings.shareText() + link);
   }
 
   Widget _buildAppBar(BuildContext context) {
@@ -290,8 +291,7 @@ class ArticleDetail extends StatelessWidget implements ListViewSection {
       return null;
     }
     return ImageProviderView(
-        imageURLProvider: _viewModel.image,
-        height: _style.imageHeight);
+        imageURLProvider: _viewModel.image, height: _style.imageHeight);
   }
 
   Widget _buildBody() {

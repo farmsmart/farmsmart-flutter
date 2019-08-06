@@ -47,7 +47,7 @@ class MockUserProfileViewModel {
 class MockUserProfileListItemViewModel {
   static UserProfileListItemViewModel build(index) {
     return UserProfileListItemViewModel(
-      title: Intl.message(_mockActionTitle[index]),
+      title: _mockActionTitle[index],
       icon: _mockActionIcon[index],
       onTap: () => _mockItemTap(),
       isDestructive: index != 7 ? false : true,
@@ -56,7 +56,7 @@ class MockUserProfileListItemViewModel {
 
   static UserProfileListItemViewModel buildLarger(index) {
     return UserProfileListItemViewModel(
-      title: Intl.message(_mockActionTitleLarger[index]),
+      title: _mockActionTitleLarger[index],
       icon: _mockActionIcon[index],
       onTap: () => _mockItemTap(),
       isDestructive: index != 7 ? false : true,
@@ -67,7 +67,6 @@ class MockUserProfileListItemViewModel {
     print("Was tapped");
   }
 }
-
 
 List<String> _mockActionTitleLarger = [
   "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",

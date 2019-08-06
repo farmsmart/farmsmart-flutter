@@ -19,9 +19,10 @@ import 'PlotToPlotListItemViewModel.dart';
    [repo , model] -> [ViewModelProvider, Transformer] -> [viewModel, widget]
 */
 
-class _Strings {
-  static final recommendations = "Recommendations";
-  static final addCrop = "Add Another Crop";
+class _LocalisedStrings {
+  static String recommendations() => Intl.message('Recommendations');
+
+  static String addCrop() => Intl.message('Add Another Crop');
 }
 
 class _Constants {
@@ -34,6 +35,7 @@ class PlotListProvider implements ViewModelProvider<PlotListViewModel> {
   final RecommendationEngine _engine;
   final String _title;
   PlotListViewModel _snapshot;
+
   PlotListProvider({
     String title,
     PlotRepositoryInterface plotRepository,
@@ -67,7 +69,7 @@ class PlotListProvider implements ViewModelProvider<PlotListViewModel> {
     if (_snapshot == null) {
       _plotRepo.observeFarm(null).listen((articles) {
         _snapshot = _modelFromPlots(_controller, articles);
-          _controller.sink.add(_snapshot);
+        _controller.sink.add(_snapshot);
       });
       _snapshot = _viewModel(status: LoadingStatus.LOADING);
       _snapshot.refresh();
@@ -104,13 +106,13 @@ class PlotListProvider implements ViewModelProvider<PlotListViewModel> {
   PlotListViewModel _viewModel(
       {LoadingStatus status, List<PlotListItemViewModel> items = const []}) {
     final recommendationsProvider = RecommendationListProvider(
-        title: _Strings.recommendations,
+        title: _LocalisedStrings.recommendations(),
         cropRepo: _cropRepo,
         plotRepo: _plotRepo,
         engine: _engine);
     return PlotListViewModel(
       title: _title,
-      buttonTitle: Intl.message(_Strings.addCrop),
+      buttonTitle: _LocalisedStrings.addCrop(),
       loadingStatus: status,
       items: items,
       refresh: () => _update(_controller),

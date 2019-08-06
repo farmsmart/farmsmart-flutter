@@ -5,16 +5,19 @@ import 'package:farmsmart_flutter/ui/profile/UserProfileListItem.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class _Strings {
-  static final String activeCrops = "Active crops";
-  static final String completedCrops = "Completed";
-  static final String buttonTitle = "Switch Profile";
+class _LocalisedStrings {
+  static String activeCrops() => Intl.message('Active crops');
+
+  static String completedCrops() => Intl.message('Completed');
+
+  static String buttonTitle() => Intl.message('Switch Profile');
 }
 
 class _Constants {
   static final Color dividerColor = const Color(0xffe9eaf2);
 
-  static final EdgeInsets edgePadding = const EdgeInsets.symmetric(horizontal: 32);
+  static final EdgeInsets edgePadding =
+      const EdgeInsets.symmetric(horizontal: 32);
   static final EdgeInsets headerEdgePadding = const EdgeInsets.only(
     left: 32.0,
     top: 26.0,
@@ -226,61 +229,61 @@ class UserProfile extends StatelessWidget {
 
   Column _buildUsername() {
     return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Container(
-              padding: _Constants.titleLineSpace,
-              child: Text(_viewModel.username,
-                  maxLines: _style.maxLines,
-                  overflow: TextOverflow.ellipsis,
-                  style: _style.titleTextStyle),
-              decoration: BoxDecoration(
-                border: Border(
-                  bottom: BorderSide(
-                    color: _Constants.dividerColor,
-                    width: _Constants.dividerHeight,
-                  ),
-                ),
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Container(
+          padding: _Constants.titleLineSpace,
+          child: Text(_viewModel.username,
+              maxLines: _style.maxLines,
+              overflow: TextOverflow.ellipsis,
+              style: _style.titleTextStyle),
+          decoration: BoxDecoration(
+            border: Border(
+              bottom: BorderSide(
+                color: _Constants.dividerColor,
+                width: _Constants.dividerHeight,
               ),
             ),
-          ],
-        );
+          ),
+        ),
+      ],
+    );
   }
 
   Widget _buildActiveCrops() {
     return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  _viewModel.activeCrops.toString(),
-                  style: _style.subtitleTextStyle,
-                ),
-                Text(
-                  Intl.message(_Strings.activeCrops),
-                  maxLines: _style.maxLines,
-                  overflow: TextOverflow.ellipsis,
-                  style: _style.detailTextStyle,
-                ),
-              ],
-            );
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          _viewModel.activeCrops.toString(),
+          style: _style.subtitleTextStyle,
+        ),
+        Text(
+          _LocalisedStrings.activeCrops(),
+          maxLines: _style.maxLines,
+          overflow: TextOverflow.ellipsis,
+          style: _style.detailTextStyle,
+        ),
+      ],
+    );
   }
 
   Widget _buildCompletedCrops() {
     return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  _viewModel.completedCrops.toString(),
-                  style: _style.subtitleTextStyle,
-                ),
-                Text(
-                  Intl.message(_Strings.completedCrops),
-                  maxLines: _style.maxLines,
-                  overflow: TextOverflow.ellipsis,
-                  style: _style.detailTextStyle,
-                ),
-              ],
-            );
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          _viewModel.completedCrops.toString(),
+          style: _style.subtitleTextStyle,
+        ),
+        Text(
+          _LocalisedStrings.completedCrops(),
+          maxLines: _style.maxLines,
+          overflow: TextOverflow.ellipsis,
+          style: _style.detailTextStyle,
+        ),
+      ],
+    );
   }
 
   Widget _buildButton() {
@@ -290,7 +293,7 @@ class UserProfile extends StatelessWidget {
         children: <Widget>[
           RoundedButton(
             viewModel: RoundedButtonViewModel(
-              title: Intl.message(_Strings.buttonTitle),
+              title: _LocalisedStrings.buttonTitle(),
               onTap: () => _viewModel.switchProfileAction(),
             ),
             style: RoundedButtonStyle.largeRoundedButtonStyle().copyWith(
