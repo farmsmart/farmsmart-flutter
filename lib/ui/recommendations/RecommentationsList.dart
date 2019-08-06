@@ -16,10 +16,12 @@ import 'recommendation_card/recommendation_card_styles.dart';
 import 'recommendation_compact_card/recommendation_compact_card.dart';
 import 'recommendation_compact_card/recommendation_compact_card_styles.dart';
 
-class _Strings {
-  static const finish = "Finish";
-  static const clearAction = "Clear Selection";
-  static const cancelAction = "Cancel";
+class _LocalisedStrings {
+  static String finish() => Intl.message('Finish');
+
+  static String clearAction() => Intl.message('Clear Selection');
+
+  static String cancelAction() => Intl.message('Cancel');
 }
 
 class _Constants {
@@ -33,6 +35,7 @@ abstract class RecommendedListStyle {
 
   RecommendedListStyle(
       this.titleTextStyle, this.titleEdgePadding, this.applyButtonStyle);
+
   RecommendedListStyle copyWith({
     TextStyle titleTextStyle,
     EdgeInsets titleEdgePadding,
@@ -228,7 +231,7 @@ class RecommendationsList extends StatelessWidget implements ListViewSection {
       padding: _Constants.buttonPadding,
       child: RoundedButton(
         viewModel: RoundedButtonViewModel(
-            title: _Strings.finish,
+            title: _LocalisedStrings.finish(),
             onTap: () => _applyAction(context, viewModel)),
         style: _style.applyButtonStyle,
       ),
@@ -241,7 +244,8 @@ class RecommendationsList extends StatelessWidget implements ListViewSection {
   }) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => CropDetail(provider: provider), //TODO: LH add the recommedations detail header here (add to plot function) 
+        builder: (context) => CropDetail(provider: provider),
+        //TODO: LH add the recommedations detail header here (add to plot function)
       ),
     );
   }
@@ -249,7 +253,7 @@ class RecommendationsList extends StatelessWidget implements ListViewSection {
   ActionSheet _moreMenu(RecommendationsListViewModel viewModel) {
     final actions = [
       ActionSheetListItemViewModel(
-        title: Intl.message(_Strings.clearAction),
+        title: _LocalisedStrings.clearAction(),
         isDestructive: true,
         type: ActionType.simple,
         onTap: viewModel.clear,
@@ -257,7 +261,7 @@ class RecommendationsList extends StatelessWidget implements ListViewSection {
     ];
     final actionSheetViewModel = ActionSheetViewModel(
       actions,
-      Intl.message(_Strings.cancelAction),
+      _LocalisedStrings.cancelAction(),
     );
     return ActionSheet(
       viewModel: actionSheetViewModel,

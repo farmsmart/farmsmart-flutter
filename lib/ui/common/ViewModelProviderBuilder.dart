@@ -8,13 +8,14 @@ import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'LoadableViewModel.dart';
 
-class _Strings {
-  static String loadingError = "Oops, there was a problem!";
-  static String retryAction = "Retry";
+class _LocalisedStrings {
+  static String loadingError() => Intl.message('Oops, there was a problem!');
+
+  static String retryAction() => Intl.message('Retry');
 }
 
-
-typedef WidgetBuilder<T> = Widget Function({BuildContext context, AsyncSnapshot<T> snapshot});
+typedef WidgetBuilder<T> = Widget Function(
+    {BuildContext context, AsyncSnapshot<T> snapshot});
 
 class ViewModelProviderBuilder<T> extends StatelessWidget {
   final ViewModelProvider<T> _provider;
@@ -49,7 +50,7 @@ class ViewModelProviderBuilder<T> extends StatelessWidget {
           LoadingStatus status = (snapshot.error != null)
               ? LoadingStatus.ERROR
               : LoadingStatus.SUCCESS;
-          final loadable = castOrNull<LoadableViewModel>(snapshot.data );
+          final loadable = castOrNull<LoadableViewModel>(snapshot.data);
           if (loadable != null) {
             status = loadable.loadingStatus;
           }
@@ -66,18 +67,23 @@ class ViewModelProviderBuilder<T> extends StatelessWidget {
         });
   }
 
-  Widget _defaultLoadingBuilder(BuildContext context, AsyncSnapshot<T> snapshot) {
-    return Container(decoration: BoxDecoration(color: Colors.white),
-            child: CircularProgressIndicator(), alignment: Alignment.center,);
+  Widget _defaultLoadingBuilder(
+      BuildContext context, AsyncSnapshot<T> snapshot) {
+    return Container(
+      decoration: BoxDecoration(color: Colors.white),
+      child: CircularProgressIndicator(),
+      alignment: Alignment.center,
+    );
   }
 
   Widget _defaultErrorBuilder(BuildContext context, AsyncSnapshot<T> snapshot) {
     final refreshable = castOrNull<RefreshableViewModel>(snapshot.data);
-    final Function refreshFunction = (refreshable!=null) ? refreshable.refresh : null;
+    final Function refreshFunction =
+        (refreshable != null) ? refreshable.refresh : null;
     return ErrorRetry(
-      errorMessage: Intl.message(_Strings.loadingError),
-      retryActionLabel: Intl.message(_Strings.retryAction),
-      retryFunction: refreshFunction ,
+      errorMessage: _LocalisedStrings.loadingError(),
+      retryActionLabel: _LocalisedStrings.retryAction(),
+      retryFunction: refreshFunction,
     );
   }
 }

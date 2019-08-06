@@ -14,10 +14,12 @@ class _Constants {
   static const double defaultImageRatioY = 1.0;
 }
 
-class _Strings {
-  static final editPhoto = 'Edit Photo';
-  static final noImagePickedError = 'No image picked';
-  static final noCroppedImageError = 'No cropped image';
+class _LocalisedStrings {
+  static String editPhoto() => Intl.message('Edit Photo');
+
+  static String noImagePickedError() => Intl.message('No image picked');
+
+  static String noCroppedImageError() => Intl.message('No cropped image');
 }
 
 class ImagePicker {
@@ -35,7 +37,7 @@ class ImagePicker {
         await ImagePickerLib.ImagePicker.pickImage(source: imageSource);
 
     if (file == null) {
-      onError(Intl.message(_Strings.noImagePickedError));
+      onError(_LocalisedStrings.noImagePickedError());
       return false;
     }
 
@@ -48,14 +50,14 @@ class ImagePicker {
       circleShape: circleShapeOnCrop,
       statusBarColor: _Constants.cropStatusBarColor,
       toolbarColor: _Constants.cropToolbarBarColor,
-      toolbarTitle: Intl.message(_Strings.editPhoto),
+      toolbarTitle: _LocalisedStrings.editPhoto(),
       toolbarWidgetColor: Colors.black,
     );
 
     file.delete();
 
     if (croppedFile == null) {
-      onError(Intl.message(_Strings.noCroppedImageError));
+      onError(_LocalisedStrings.noCroppedImageError());
       return false;
     }
 

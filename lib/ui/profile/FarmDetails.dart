@@ -8,15 +8,20 @@ import 'package:farmsmart_flutter/ui/profile/FarmDetailsListItem.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class _Strings {
-  static final String yourFarmDetails = 'Your Farm Details';
-  static final String cancel = 'Cancel';
-  static final String editProfile = 'Edit Profile';
-  static final String deleteProfile = 'Delete Profile';
-  static final String delete = 'Delete';
-  static final String deleteProfileDescription =
+class _LocalisedStrings {
+  static String yourFarmDetails() => Intl.message('Your Farm Details');
+
+  static String cancel() => Intl.message('Cancel');
+
+  static String editProfile() => Intl.message('Edit Profile');
+
+  static String deleteProfile() => Intl.message('Delete Profile');
+
+  static String delete() => Intl.message('Delete');
+
+  static String deleteProfileDescription() => Intl.message(
       'Are you sure you want to delete your profile? Doing so will erase '
-      'all data and this action cannot be undone.';
+      'all data and this action cannot be undone.');
 }
 
 class _Constants {
@@ -146,7 +151,7 @@ class FarmDetails extends StatelessWidget {
         children: <Widget>[
           Expanded(
             child: Text(
-              Intl.message(_Strings.yourFarmDetails),
+              _LocalisedStrings.yourFarmDetails(),
               style: _style.titleTextStyle,
             ),
           ),
@@ -184,10 +189,10 @@ class FarmDetails extends StatelessWidget {
     Alert.present(
       Alert(
         viewModel: AlertViewModel(
-          cancelActionText: Intl.message(_Strings.cancel),
-          confirmActionText: Intl.message(_Strings.delete),
-          titleText: Intl.message(_Strings.deleteProfile),
-          detailText: Intl.message(_Strings.deleteProfileDescription),
+          cancelActionText: _LocalisedStrings.cancel(),
+          confirmActionText: _LocalisedStrings.delete(),
+          titleText: _LocalisedStrings.deleteProfile(),
+          detailText: _LocalisedStrings.deleteProfileDescription(),
           isDestructive: true,
           confirmAction: () {
             viewModel.removeProfile();
@@ -206,12 +211,12 @@ class FarmDetails extends StatelessWidget {
   ActionSheet _moreMenu(FarmDetailsViewModel viewModel, BuildContext context) {
     final actions = [
       ActionSheetListItemViewModel(
-        title: Intl.message(_Strings.editProfile),
+        title: _LocalisedStrings.editProfile(),
         type: ActionType.simple,
         onTap: () => _editAction(viewModel),
       ),
       ActionSheetListItemViewModel(
-        title: Intl.message(_Strings.deleteProfile),
+        title: _LocalisedStrings.deleteProfile(),
         type: ActionType.simple,
         isDestructive: true,
         onTap: () => _removeAction(viewModel, context),
@@ -219,7 +224,7 @@ class FarmDetails extends StatelessWidget {
     ];
     final actionSheetViewModel = ActionSheetViewModel(
       actions,
-      Intl.message(_Strings.cancel),
+      _LocalisedStrings.cancel(),
     );
     return ActionSheet(
       viewModel: actionSheetViewModel,

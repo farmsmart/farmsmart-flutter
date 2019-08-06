@@ -149,9 +149,9 @@ class ChatProvider implements ViewModelProvider<ChatViewModel> {
       child: Summary(
         viewModel: _chatSummaryProviderHelper.getSummary(
           inputModel: _responseMap,
-          titleValue: Intl.message(_Strings.summaryTitleValue),
-          titleText: Intl.message(_Strings.summaryTitleLabel.toUpperCase()),
-          actionText: Intl.message(_Strings.summaryActionButtonText),
+          titleValue: _Strings.summaryTitleValue,
+          titleText: _Strings.summaryTitleLabel.toUpperCase(),
+          actionText: _Strings.summaryActionButtonText,
         ),
         onTap: _onSummaryWidgetActionButtonTap,
       ),
@@ -161,7 +161,7 @@ class ChatProvider implements ViewModelProvider<ChatViewModel> {
   void _onSummaryWidgetActionButtonTap() {
     (_responseMap != null && _responseMap.isNotEmpty)
         ? _onSuccess(_responseMap)
-        : _onError(Intl.message(_Strings.summaryError));
+        : _onError(_Strings.summaryError);
   }
 
   void _setInteractiveWidget(InputRequestEntity entity) {

@@ -5,12 +5,14 @@ import 'package:farmsmart_flutter/ui/profitloss/ProfitLossListItem.dart';
 import 'package:intl/intl.dart';
 import '../Transformer.dart';
 
-
 class _Strings {
   static const costPrefix = "-";
   static const salePrefix = "+";
   static const divider = " - ";
-  static const descriptionPlaceholder = "No description";
+}
+
+class _LocalisedStrings {
+  static String descriptionPlaceholder() => Intl.message('No description');
 }
 
 class _Constants {
@@ -28,7 +30,7 @@ class TransactionToProfitLossListItemViewModel
   @override
   ProfitLossListItemViewModel transform({TransactionEntity from}) {
     return ProfitLossListItemViewModel(
-      title: _title(from) ,
+      title: _title(from),
       subtitle: _subtitle(from),
       detail: _detail(from),
       style: from.amount.isSale()
@@ -39,18 +41,19 @@ class TransactionToProfitLossListItemViewModel
   }
 
   String _title(TransactionEntity from) {
-    final dateString = (from.timestamp == null)
-        ? ""
-        : _dateFormatter.format(from.timestamp);
+    final dateString =
+        (from.timestamp == null) ? "" : _dateFormatter.format(from.timestamp);
     return dateString + _Strings.divider + from.tag;
   }
 
   String _subtitle(TransactionEntity from) {
-    return from.description ?? Intl.message(_Strings.descriptionPlaceholder);
+    return from.description ?? _LocalisedStrings.descriptionPlaceholder();
   }
 
   String _detail(TransactionEntity from) {
     final amountString = from.amount.toString();
-    return from.amount.isCost() ? _Strings.costPrefix + amountString : _Strings.salePrefix + amountString;
+    return from.amount.isCost()
+        ? _Strings.costPrefix + amountString
+        : _Strings.salePrefix + amountString;
   }
 }
