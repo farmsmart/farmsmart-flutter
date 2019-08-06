@@ -9,17 +9,14 @@ class _Constants {
       '^\$|^(0|([1-9][0-9]{0,3}))(\\.[0-9]{0,2})?\$');
 }
 
-class _LocalisedStrings {
-  static String hint() => Intl.message('00');
-}
-
 class _Strings {
-  static final emptyString = "";
+  static const String hint = '00';
+  static const emptyString = '';
 }
 
 class RecordTransactionHeaderViewModel {
-  String amount;
-  bool isEditable;
+  final String amount;
+  final bool isEditable;
 
   RecordTransactionHeaderViewModel({
     this.amount,
@@ -114,7 +111,7 @@ class RecordTransactionHeader extends StatefulWidget {
 class _RecordTransactionHeaderState extends State<RecordTransactionHeader> {
   final _textFieldController = TextEditingController();
   final FocusNode _focusNode = FocusNode();
-  var hint = _LocalisedStrings.hint();
+  var hint = _Strings.hint;
 
   @override
   void initState() {
@@ -184,7 +181,7 @@ class _RecordTransactionHeaderState extends State<RecordTransactionHeader> {
   _checkTextField(String amount) {
     setState(() {
       if (amount == "") {
-        hint = _LocalisedStrings.hint();
+        hint = _Strings.hint;
         widget.parent.isAmountFilled = false;
         widget.parent.setIfRequiredFieldsAreFilled();
       } else {
@@ -200,7 +197,7 @@ class _RecordTransactionHeaderState extends State<RecordTransactionHeader> {
       if (_textFieldController.text == _Strings.emptyString) {
         hint = _Strings.emptyString;
       } else {
-        hint = _LocalisedStrings.hint();
+        hint = _Strings.hint;
       }
     });
   }
@@ -208,7 +205,7 @@ class _RecordTransactionHeaderState extends State<RecordTransactionHeader> {
   resetHint() {
     setState(() {
       if (_textFieldController.text == _Strings.emptyString) {
-        hint = _LocalisedStrings.hint();
+        hint = _Strings.hint;
       } else {
         widget.parent.userData.amount = _textFieldController.text;
         widget.parent.isAmountFilled = true;
