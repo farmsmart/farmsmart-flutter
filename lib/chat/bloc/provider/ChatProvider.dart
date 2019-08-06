@@ -32,18 +32,20 @@ class _Constants {
 }
 
 class _Strings {
-  static const String summaryError = "Provided summary is not correct";
-  static const String viewDetails = "View Your Details";
+  static String summaryError() =>
+      Intl.message("Provided summary is not correct");
+
+  static String viewDetails() => Intl.message("View Your Details");
 }
 
 class ChatProvider implements ViewModelProvider<ChatViewModel> {
   final ChatRepository _repo;
   final ChatMessageProviderHelper _chatMessageHandler =
-  ChatMessageProviderHelperImpl();
+      ChatMessageProviderHelperImpl();
   final ChatSummaryProviderHelper _chatSummaryProviderHelper =
-  ChatSummaryProviderHelperImpl();
+      ChatSummaryProviderHelperImpl();
   final InteractiveMessageHandler _interactiveMessageHandler =
-  InteractiveMessageHandlerImpl();
+      InteractiveMessageHandlerImpl();
   final TextEditingController _textEditingController = TextEditingController();
   final Function(Map<String, String>) _onSuccess;
   final Function(String) _onError;
@@ -56,13 +58,12 @@ class ChatProvider implements ViewModelProvider<ChatViewModel> {
     @required ChatRepository repository,
     Function(Map<String, String>) onSuccess,
     Function(String) onError,
-  })
-      : this._repo = repository,
+  })  : this._repo = repository,
         this._onSuccess = onSuccess ?? (() => {}),
         this._onError = onError ?? (() => {});
 
   final StreamController<ChatViewModel> _controller =
-  StreamController<ChatViewModel>.broadcast();
+      StreamController<ChatViewModel>.broadcast();
 
   void dispose() {
     _controller.sink.close();
@@ -143,7 +144,7 @@ class ChatProvider implements ViewModelProvider<ChatViewModel> {
 
   void _setSummaryDetailsButton() {
     _chatViewModel.interactiveWidget = _chatSummaryProviderHelper.getSummary(
-      title: Intl.message(_Strings.viewDetails),
+      title: Intl.message(_Strings.viewDetails()),
       onTap: _onSummaryWidgetActionButtonTap,
     );
   }
@@ -151,7 +152,7 @@ class ChatProvider implements ViewModelProvider<ChatViewModel> {
   void _onSummaryWidgetActionButtonTap() {
     (_responseMap != null && _responseMap.isNotEmpty)
         ? _onSuccess(_responseMap)
-        : _onError(_Strings.summaryError);
+        : _onError(_Strings.summaryError());
   }
 
   void _setInteractiveWidget(InputRequestEntity entity) {
@@ -159,11 +160,11 @@ class ChatProvider implements ViewModelProvider<ChatViewModel> {
       InteractiveMessageType inputType = _getInputType(entity);
       inputType != null
           ? _chatViewModel.interactiveWidget = _buildInputTextWidget(
-        entity: entity,
-        inputType: inputType,
-      )
+              entity: entity,
+              inputType: inputType,
+            )
           : _chatViewModel.interactiveWidget =
-          _buildSelectableOptionsWidget(entity: entity);
+              _buildSelectableOptionsWidget(entity: entity);
     } else {
       _cleanInteractiveWidget();
       _showMessageWithDelay();
@@ -266,7 +267,7 @@ class ChatProvider implements ViewModelProvider<ChatViewModel> {
       _Constants.scrollAnimationOffset,
       curve: Curves.easeOut,
       duration:
-      const Duration(milliseconds: _Constants.scrollAnimationDuration),
+          const Duration(milliseconds: _Constants.scrollAnimationDuration),
     );
   }
 
@@ -275,9 +276,9 @@ class ChatProvider implements ViewModelProvider<ChatViewModel> {
         _chatViewModel.messageViewModels;
     if (messageViewModels.length >= _Constants.minMessagesLengthToUpdate) {
       MessageBubbleViewModel currentViewModel =
-      messageViewModels[_Constants.currentMessageIndex];
+          messageViewModels[_Constants.currentMessageIndex];
       MessageBubbleViewModel previousViewModel =
-      messageViewModels[_Constants.previousMessageIndex];
+          messageViewModels[_Constants.previousMessageIndex];
       _updateReceivedMessages(
         currentViewModel: currentViewModel,
         previousViewModel: previousViewModel,
