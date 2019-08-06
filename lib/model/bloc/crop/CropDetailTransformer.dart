@@ -113,7 +113,7 @@ class CropDetailTransformer
   RecommendationDetailListItemViewModel _setupCosts(CropEntity from) {
     return RecommendationDetailListItemViewModel(
         iconPath: _Icons.cost,
-        title: _LocalisedStrings.cropType(),
+        title: _LocalisedStrings.setupCosts(),
         subtitle: _loHiToString(from.setupCost));
   }
 
