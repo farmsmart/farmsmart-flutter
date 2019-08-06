@@ -1,19 +1,17 @@
 import 'dart:async';
 
-import 'package:farmsmart_flutter/chat/ui/widgets/card_view.dart';
-import 'package:flutter/widgets.dart';
 import 'package:farmsmart_flutter/chat/bloc/ViewModelProvider.dart';
 import 'package:farmsmart_flutter/chat/bloc/handler/InteractiveMessageHandler.dart';
 import 'package:farmsmart_flutter/chat/bloc/handler/implementation/InteractiveMessageHandlerImpl.dart';
 import 'package:farmsmart_flutter/chat/bloc/helper/ChatMessageProviderHelper.dart';
-import 'package:farmsmart_flutter/chat/bloc/helper/implementation/ChatMessageProviderHelperImpl.dart';
 import 'package:farmsmart_flutter/chat/bloc/helper/ChatSummaryProviderHelper.dart';
+import 'package:farmsmart_flutter/chat/bloc/helper/implementation/ChatMessageProviderHelperImpl.dart';
 import 'package:farmsmart_flutter/chat/bloc/helper/implementation/ChatSummaryProviderHelperImpl.dart';
 import 'package:farmsmart_flutter/chat/model/form/input_request_entity.dart';
 import 'package:farmsmart_flutter/chat/repository/form/ChatRepository.dart';
 import 'package:farmsmart_flutter/chat/ui/widgets/bubble_message.dart';
 import 'package:farmsmart_flutter/chat/ui/widgets/chat.dart';
-import 'package:farmsmart_flutter/chat/ui/widgets/summary.dart';
+import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 
 class _Constants {
@@ -34,20 +32,18 @@ class _Constants {
 }
 
 class _Strings {
-  static const String summaryTitleValue = "Chat summary value";
-  static const String summaryTitleLabel = "Chat summary";
-  static const String summaryActionButtonText = "Confirm";
   static const String summaryError = "Provided summary is not correct";
+  static const String viewDetails = "View Your Details";
 }
 
 class ChatProvider implements ViewModelProvider<ChatViewModel> {
   final ChatRepository _repo;
   final ChatMessageProviderHelper _chatMessageHandler =
-      ChatMessageProviderHelperImpl();
+  ChatMessageProviderHelperImpl();
   final ChatSummaryProviderHelper _chatSummaryProviderHelper =
-      ChatSummaryProviderHelperImpl();
+  ChatSummaryProviderHelperImpl();
   final InteractiveMessageHandler _interactiveMessageHandler =
-      InteractiveMessageHandlerImpl();
+  InteractiveMessageHandlerImpl();
   final TextEditingController _textEditingController = TextEditingController();
   final Function(Map<String, String>) _onSuccess;
   final Function(String) _onError;
@@ -60,12 +56,13 @@ class ChatProvider implements ViewModelProvider<ChatViewModel> {
     @required ChatRepository repository,
     Function(Map<String, String>) onSuccess,
     Function(String) onError,
-  })  : this._repo = repository,
+  })
+      : this._repo = repository,
         this._onSuccess = onSuccess ?? (() => {}),
         this._onError = onError ?? (() => {});
 
   final StreamController<ChatViewModel> _controller =
-      StreamController<ChatViewModel>.broadcast();
+  StreamController<ChatViewModel>.broadcast();
 
   void dispose() {
     _controller.sink.close();
@@ -139,22 +136,15 @@ class ChatProvider implements ViewModelProvider<ChatViewModel> {
         _setInteractiveWidget(formItem.inputRequest);
         _notifyController();
       } else {
-        _setSummaryWidget();
+        _setSummaryDetailsButton();
       }
     });
   }
 
-  void _setSummaryWidget() {
-    _chatViewModel.interactiveWidget = CardView(
-      child: Summary(
-        viewModel: _chatSummaryProviderHelper.getSummary(
-          inputModel: _responseMap,
-          titleValue: Intl.message(_Strings.summaryTitleValue),
-          titleText: Intl.message(_Strings.summaryTitleLabel.toUpperCase()),
-          actionText: Intl.message(_Strings.summaryActionButtonText),
-        ),
-        onTap: _onSummaryWidgetActionButtonTap,
-      ),
+  void _setSummaryDetailsButton() {
+    _chatViewModel.interactiveWidget = _chatSummaryProviderHelper.getSummary(
+      title: Intl.message(_Strings.viewDetails),
+      onTap: _onSummaryWidgetActionButtonTap,
     );
   }
 
@@ -169,11 +159,11 @@ class ChatProvider implements ViewModelProvider<ChatViewModel> {
       InteractiveMessageType inputType = _getInputType(entity);
       inputType != null
           ? _chatViewModel.interactiveWidget = _buildInputTextWidget(
-              entity: entity,
-              inputType: inputType,
-            )
+        entity: entity,
+        inputType: inputType,
+      )
           : _chatViewModel.interactiveWidget =
-              _buildSelectableOptionsWidget(entity: entity);
+          _buildSelectableOptionsWidget(entity: entity);
     } else {
       _cleanInteractiveWidget();
       _showMessageWithDelay();
@@ -276,7 +266,7 @@ class ChatProvider implements ViewModelProvider<ChatViewModel> {
       _Constants.scrollAnimationOffset,
       curve: Curves.easeOut,
       duration:
-          const Duration(milliseconds: _Constants.scrollAnimationDuration),
+      const Duration(milliseconds: _Constants.scrollAnimationDuration),
     );
   }
 
@@ -285,27 +275,13 @@ class ChatProvider implements ViewModelProvider<ChatViewModel> {
         _chatViewModel.messageViewModels;
     if (messageViewModels.length >= _Constants.minMessagesLengthToUpdate) {
       MessageBubbleViewModel currentViewModel =
-          messageViewModels[_Constants.currentMessageIndex];
+      messageViewModels[_Constants.currentMessageIndex];
       MessageBubbleViewModel previousViewModel =
-          messageViewModels[_Constants.previousMessageIndex];
-//      _updateAvatarVisibility(
-//        currentViewModel: currentViewModel,
-//        previousViewModel: previousViewModel,
-//      );
+      messageViewModels[_Constants.previousMessageIndex];
       _updateReceivedMessages(
         currentViewModel: currentViewModel,
         previousViewModel: previousViewModel,
       );
-    }
-  }
-
-  void _updateAvatarVisibility({
-    MessageBubbleViewModel currentViewModel,
-    MessageBubbleViewModel previousViewModel,
-  }) {
-    if (currentViewModel.messageType == MessageType.received &&
-        _isMessageHasReceivedType(previousViewModel)) {
-      previousViewModel.avatar = _buildDefaultAvatarEmptyBox();
     }
   }
 
@@ -333,12 +309,6 @@ class ChatProvider implements ViewModelProvider<ChatViewModel> {
     }
   }
 
-  bool _isMessageHasReceivedType(MessageBubbleViewModel messageViewModel) {
-    return (messageViewModel.messageType == MessageType.received ||
-        messageViewModel.messageType == MessageType.receivedStackBottom ||
-        messageViewModel.messageType == MessageType.receivedStackBetween);
-  }
-
   void _updateFromReceived({
     MessageBubbleViewModel currentViewModel,
     MessageBubbleViewModel previousViewModel,
@@ -357,9 +327,5 @@ class ChatProvider implements ViewModelProvider<ChatViewModel> {
       previousViewModel.messageType = MessageType.receivedStackBetween;
       currentViewModel.messageType = MessageType.receivedStackBottom;
     }
-  }
-
-  Widget _buildDefaultAvatarEmptyBox() {
-    return SizedBox(width: _Constants.defaultSizedBoxWidth);
   }
 }

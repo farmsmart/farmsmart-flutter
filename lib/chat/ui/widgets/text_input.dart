@@ -92,41 +92,18 @@ class _DefaultStyle extends TextInputStyle {
 const TextInputStyle _defaultStyle = const _DefaultStyle();
 
 class TextInputState extends State<TextInput> {
-  final TextEditingController _controller;
-  final InputDecoration _decoration;
-  final Function _onSendPressed;
   final _formKey = GlobalKey<FormState>();
-  final String Function(String) _formFieldValidatorFunction;
-  final String _buttonText;
-  final TextInputStyle _style;
   final FocusNode _focusNode = FocusNode();
-  final bool _isFocusedOnBuild;
-
-  TextInputState({
-    TextEditingController controller,
-    InputDecoration decoration,
-    Function onSendPressed,
-    Function(String) formFieldValidatorFunction,
-    String buttonText,
-    TextInputStyle style = _defaultStyle,
-    bool isFocusedOnBuild,
-  })  : this._controller = controller ?? TextEditingController(),
-        this._decoration = decoration ?? InputDecoration(),
-        this._onSendPressed = onSendPressed ?? (() => {}),
-        this._formFieldValidatorFunction = formFieldValidatorFunction,
-        this._buttonText = buttonText ?? "",
-        this._isFocusedOnBuild = isFocusedOnBuild ?? false,
-        this._style = style;
 
   @override
   Widget build(BuildContext context) {
     Form form = Form(
       key: _formKey,
       child: Container(
-        margin: _style.formContainerMargin,
+        margin: widget._style.formContainerMargin,
         child: Row(
-          mainAxisSize: _style.formRowMainAxisSize,
-          mainAxisAlignment: _style.formRowMainAxisAlignment,
+          mainAxisSize: widget._style.formRowMainAxisSize,
+          mainAxisAlignment: widget._style.formRowMainAxisAlignment,
           children: <Widget>[
             _buildTextFormField(),
             _buildSendButton(),
@@ -140,18 +117,18 @@ class TextInputState extends State<TextInput> {
 
   _buildTextFormField() {
     return Flexible(
-      flex: _style.textFormFieldFlex,
+      flex: widget._style.textFormFieldFlex,
       child: Container(
-        padding: _style.textFormFieldContainerPadding,
-        decoration: _style.textFormFieldContainerDecoration,
+        padding: widget._style.textFormFieldContainerPadding,
+        decoration: widget._style.textFormFieldContainerDecoration,
         child: TextFormField(
-          controller: _controller,
-          decoration: _decoration,
+          controller: widget._controller,
+          decoration: widget._decoration,
           focusNode: _focusNode,
           validator: (value) {
-            return _formFieldValidatorFunction(value);
+            return widget._formFieldValidatorFunction(value);
           },
-          style: _style.textFormFieldStyle,
+          style: widget._style.textFormFieldStyle,
         ),
       ),
     );
@@ -159,20 +136,20 @@ class TextInputState extends State<TextInput> {
 
   _buildSendButton() {
     return Flexible(
-      flex: _style.buttonFlex,
+      flex: widget._style.buttonFlex,
       child: FloatingActionButton(
-        child: Text(_buttonText),
-        backgroundColor: _style.buttonColor,
+        child: Text(widget._buttonText),
+        backgroundColor: widget._style.buttonColor,
         onPressed: () {
           _formKey.currentState.validate();
-          _onSendPressed();
+          widget._onSendPressed();
         },
       ),
     );
   }
 
   void _manageFocus() {
-    if (_isFocusedOnBuild) {
+    if (widget._isFocusedOnBuild) {
       FocusScope.of(context).requestFocus(_focusNode);
     }
   }
@@ -185,6 +162,7 @@ class TextInput extends StatefulWidget {
   final String Function(String) _formFieldValidatorFunction;
   final String _buttonText;
   final bool _isFocusedOnBuild;
+  final TextInputStyle _style;
 
   TextInput({
     TextEditingController controller,
@@ -193,21 +171,17 @@ class TextInput extends StatefulWidget {
     String Function(String) formFieldValidatorFunction,
     String buttonText,
     bool isFocusedOnBuild,
+    TextInputStyle style = _defaultStyle,
   })  : this._controller = controller,
         this._decoration = decoration,
         this._onSendPressed = onSendPressed,
         this._formFieldValidatorFunction = formFieldValidatorFunction,
         this._isFocusedOnBuild = isFocusedOnBuild,
-        this._buttonText = buttonText;
+        this._buttonText = buttonText,
+        this._style = style;
 
   @override
   TextInputState createState() {
-    return TextInputState(
-        decoration: _decoration,
-        controller: _controller,
-        onSendPressed: _onSendPressed,
-        formFieldValidatorFunction: _formFieldValidatorFunction,
-        buttonText: _buttonText,
-        isFocusedOnBuild: _isFocusedOnBuild);
+    return TextInputState();
   }
 }

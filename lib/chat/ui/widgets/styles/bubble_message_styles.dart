@@ -8,12 +8,8 @@ class _Constants {
   static const sentBackgroundColor = const Color(0xFF24D900);
   static const defaultRadius = Radius.circular(20.0);
 
-  static const receivedOuterContainerMarginLeft = 32.0;
-  static const receivedOuterContainerMarginRight = 80.0;
-  static const sentOuterContainerMarginLeft = 80.0;
-  static const sentOuterContainerMarginRight = 32.0;
-
-  static const defaultOuterContainerMarginBottom = 24.0;
+  static const messageAdditionalMargin = 48.0;
+  static const spaceBetweenMessages = 24.0;
 }
 
 class MessageBubbleStyles {
@@ -25,9 +21,8 @@ class MessageBubbleStyles {
           fontSize: 15.0,
         ),
         outerContainerMargin: EdgeInsets.only(
-          left: _Constants.receivedOuterContainerMarginLeft,
-          right: _Constants.receivedOuterContainerMarginRight,
-          bottom: _Constants.defaultOuterContainerMarginBottom,
+          right: _Constants.messageAdditionalMargin,
+          top: _Constants.spaceBetweenMessages,
         ),
         textContainerBackgroundColor: _Constants.receivedBackgroundColor,
         rowCrossAxisAlignment: CrossAxisAlignment.start,
@@ -46,8 +41,8 @@ class MessageBubbleStyles {
         ),
         outerContainerMargin: EdgeInsets.only(
           bottom: 4.0,
-          right: _Constants.receivedOuterContainerMarginRight,
-          left: _Constants.receivedOuterContainerMarginLeft,
+          right: _Constants.messageAdditionalMargin,
+          top: _Constants.spaceBetweenMessages,
         ),
       );
 
@@ -60,9 +55,7 @@ class MessageBubbleStyles {
           bottomRight: _Constants.defaultRadius,
         ),
         outerContainerMargin: EdgeInsets.only(
-          bottom: _Constants.defaultOuterContainerMarginBottom,
-          right: _Constants.receivedOuterContainerMarginRight,
-          left: _Constants.receivedOuterContainerMarginLeft,
+          right: _Constants.messageAdditionalMargin,
           top: 4.0,
         ),
       );
@@ -77,8 +70,7 @@ class MessageBubbleStyles {
         ),
         outerContainerMargin: EdgeInsets.only(
           bottom: 4.0,
-          right: _Constants.receivedOuterContainerMarginRight,
-          left: _Constants.receivedOuterContainerMarginLeft,
+          right: _Constants.messageAdditionalMargin,
           top: 4.0,
         ),
       );
@@ -88,10 +80,7 @@ class MessageBubbleStyles {
         rowCrossAxisAlignment: CrossAxisAlignment.start,
         rowMainAxisAlignment: MainAxisAlignment.start,
         outerContainerMargin: EdgeInsets.only(
-          top: 24.0,
-          left: _Constants.receivedOuterContainerMarginLeft,
-          right: _Constants.receivedOuterContainerMarginRight,
-          bottom: 44.0,
+          bottom: 20.0,
         ),
         textContainerPadding: EdgeInsets.all(0),
         textContainerBackgroundColor: Colors.transparent,
@@ -99,9 +88,7 @@ class MessageBubbleStyles {
 
   static MessageBubbleStyle buildStyleLoading() => _defaultMolecule.copyWith(
         outerContainerMargin: EdgeInsets.only(
-          left: _Constants.receivedOuterContainerMarginLeft,
-          right: _Constants.receivedOuterContainerMarginRight,
-          bottom: _Constants.defaultOuterContainerMarginBottom,
+          top: _Constants.spaceBetweenMessages,
         ),
         textContainerBackgroundColor: _Constants.receivedBackgroundColor,
         rowCrossAxisAlignment: CrossAxisAlignment.start,
@@ -120,9 +107,8 @@ class MessageBubbleStyles {
       vertical: 14.0,
     ),
     outerContainerMargin: const EdgeInsets.only(
-      left: _Constants.sentOuterContainerMarginLeft,
-      right: _Constants.sentOuterContainerMarginRight,
-      bottom: _Constants.defaultOuterContainerMarginBottom,
+      left: _Constants.messageAdditionalMargin,
+      top: _Constants.spaceBetweenMessages,
     ),
     textContainerMargin: const EdgeInsets.all(0.0),
     textContainerBackgroundColor: _Constants.sentBackgroundColor,

@@ -4,7 +4,7 @@ import 'package:farmsmart_flutter/chat/ui/widgets/header_message.dart';
 import 'package:farmsmart_flutter/chat/bloc/transformer/Transformer.dart';
 
 class _Constants {
-  static const defaultAssetImageSource = "";
+  static const defaultAssetImageSource = "assets/icons/chatbot_avatar.png";
 }
 
 class ChatHeaderViewModelTransformer

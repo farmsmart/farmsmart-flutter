@@ -1,35 +1,35 @@
-import 'package:farmsmart_flutter/chat/ui/widgets/summary.dart';
+import 'package:farmsmart_flutter/chat/ui/widgets/separator_wrapper.dart';
+import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
+import 'package:flutter/material.dart';
 
 import '../ChatSummaryProviderHelper.dart';
 
-class ChatSummaryProviderHelperImpl
-    implements
-        ChatSummaryProviderHelper<SummaryViewModel, Map<String, String>> {
-  @override
-  SummaryViewModel getSummary({
-    Map<String, String> inputModel,
-    String titleValue,
-    String titleText,
-    String actionText,
-  }) {
-    String body = _getInputModelAsString(inputModel: inputModel);
-    if (body.isNotEmpty) {
-      return SummaryViewModel(
-        actionText: actionText,
-        titleText: titleText,
-        titleValue: titleValue,
-        bodyText: body,
-      );
-    } else {
-      return null;
-    }
-  }
+class _Constants {
+  static final double detailsButtonHeight = 48.0;
+  static final BorderRadius detailsButtonRadius = BorderRadius.all(
+    Radius.circular(12.0),
+  );
+  static final TextStyle detailsButtonTextStyle = TextStyle(
+    fontSize: 15.0,
+    color: Color(0xFFFFFFFF),
+  );
+}
 
-  String _getInputModelAsString({Map<String, String> inputModel}) {
-    String response = "";
-    inputModel.forEach((key, value) {
-      response = "$response$key : $value\n";
-    });
-    return response;
+class ChatSummaryProviderHelperImpl implements ChatSummaryProviderHelper {
+  @override
+  Widget getSummary({String title, Function onTap}) {
+    return SeparatorWrapper(
+      wrappedChild: RoundedButton(
+        viewModel: RoundedButtonViewModel(
+          title: title,
+          onTap: onTap,
+        ),
+        style: RoundedButtonStyle.largeRoundedButtonStyle().copyWith(
+          height: _Constants.detailsButtonHeight,
+          borderRadius: _Constants.detailsButtonRadius,
+          buttonTextStyle: _Constants.detailsButtonTextStyle,
+        ),
+      ),
+    );
   }
 }
