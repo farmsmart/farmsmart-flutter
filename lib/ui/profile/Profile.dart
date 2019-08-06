@@ -1,9 +1,11 @@
 import 'package:farmsmart_flutter/model/bloc/ViewModelProvider.dart';
+import 'package:farmsmart_flutter/model/model/ImageURLProvider.dart';
 import 'package:farmsmart_flutter/model/model/loading_status.dart';
 import 'package:farmsmart_flutter/ui/common/ListDivider.dart';
 import 'package:farmsmart_flutter/ui/common/LoadableViewModel.dart';
 import 'package:farmsmart_flutter/ui/common/RefreshableViewModel.dart';
 import 'package:farmsmart_flutter/ui/common/ViewModelProviderBuilder.dart';
+import 'package:farmsmart_flutter/ui/common/image_provider_view.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
 import 'package:farmsmart_flutter/ui/profile/ProfileListItem.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +22,8 @@ class _Strings {
 class _Constants {
   static final Color dividerColor = const Color(0xffe9eaf2);
 
-  static final EdgeInsets edgePadding = const EdgeInsets.symmetric(horizontal: 32);
+  static final EdgeInsets edgePadding =
+      const EdgeInsets.symmetric(horizontal: 32);
   static final EdgeInsets headerEdgePadding = const EdgeInsets.only(
     left: 32.0,
     top: 26.0,
@@ -46,7 +49,7 @@ class ProfileViewModel implements RefreshableViewModel, LoadableViewModel {
   final int activeCrops;
   final int completedCrops;
   final ViewModelProvider<SwitchProfileListViewModel> switchProfileProvider;
-  final ImageProvider image;
+  final ImageURLProvider image;
   final Function refresh;
   final LoadingStatus loadingStatus;
 
@@ -167,13 +170,16 @@ class Profile extends StatelessWidget {
         this._style = style,
         super(key: key);
 
-
   @override
   Widget build(BuildContext context) {
-    return ViewModelProviderBuilder(provider: _viewModelProvider, successBuilder: _buildPage,);
+    return ViewModelProviderBuilder(
+      provider: _viewModelProvider,
+      successBuilder: _buildPage,
+    );
   }
 
-  Widget _buildPage({BuildContext context, AsyncSnapshot<ProfileViewModel> snapshot}) {
+  Widget _buildPage(
+      {BuildContext context, AsyncSnapshot<ProfileViewModel> snapshot}) {
     final viewModel = snapshot.data;
     return SafeArea(
       child: SingleChildScrollView(
@@ -198,7 +204,7 @@ class Profile extends StatelessWidget {
             children: <Widget>[
               _buildMainTextView(context, viewModel),
               SizedBox(width: _Constants.imageSpacing),
-              _buildPlotImage(viewModel.image),
+              _buildProfileImage(viewModel.image),
             ],
           ),
         ),
@@ -220,7 +226,7 @@ class Profile extends StatelessWidget {
     );
   }
 
-  Widget _buildMainTextView(BuildContext context,ProfileViewModel viewModel) {
+  Widget _buildMainTextView(BuildContext context, ProfileViewModel viewModel) {
     return Expanded(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -242,61 +248,61 @@ class Profile extends StatelessWidget {
 
   Column _buildUsername(ProfileViewModel viewModel) {
     return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Container(
-              padding: _Constants.titleLineSpace,
-              child: Text(viewModel.username,
-                  maxLines: _style.maxLines,
-                  overflow: TextOverflow.ellipsis,
-                  style: _style.titleTextStyle),
-              decoration: BoxDecoration(
-                border: Border(
-                  bottom: BorderSide(
-                    color: _Constants.dividerColor,
-                    width: _Constants.dividerHeight,
-                  ),
-                ),
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Container(
+          padding: _Constants.titleLineSpace,
+          child: Text(viewModel.username,
+              maxLines: _style.maxLines,
+              overflow: TextOverflow.ellipsis,
+              style: _style.titleTextStyle),
+          decoration: BoxDecoration(
+            border: Border(
+              bottom: BorderSide(
+                color: _Constants.dividerColor,
+                width: _Constants.dividerHeight,
               ),
             ),
-          ],
-        );
+          ),
+        ),
+      ],
+    );
   }
 
   Widget _buildActiveCrops(ProfileViewModel viewModel) {
     return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  viewModel.activeCrops.toString(),
-                  style: _style.subtitleTextStyle,
-                ),
-                Text(
-                  Intl.message(_Strings.activeCrops),
-                  maxLines: _style.maxLines,
-                  overflow: TextOverflow.ellipsis,
-                  style: _style.detailTextStyle,
-                ),
-              ],
-            );
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          viewModel.activeCrops.toString(),
+          style: _style.subtitleTextStyle,
+        ),
+        Text(
+          Intl.message(_Strings.activeCrops),
+          maxLines: _style.maxLines,
+          overflow: TextOverflow.ellipsis,
+          style: _style.detailTextStyle,
+        ),
+      ],
+    );
   }
 
   Widget _buildCompletedCrops(ProfileViewModel viewModel) {
     return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  viewModel.completedCrops.toString(),
-                  style: _style.subtitleTextStyle,
-                ),
-                Text(
-                  Intl.message(_Strings.completedCrops),
-                  maxLines: _style.maxLines,
-                  overflow: TextOverflow.ellipsis,
-                  style: _style.detailTextStyle,
-                ),
-              ],
-            );
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          viewModel.completedCrops.toString(),
+          style: _style.subtitleTextStyle,
+        ),
+        Text(
+          Intl.message(_Strings.completedCrops),
+          maxLines: _style.maxLines,
+          overflow: TextOverflow.ellipsis,
+          style: _style.detailTextStyle,
+        ),
+      ],
+    );
   }
 
   Widget _buildButton(BuildContext context, ProfileViewModel viewModel) {
@@ -307,7 +313,8 @@ class Profile extends StatelessWidget {
           RoundedButton(
             viewModel: RoundedButtonViewModel(
               title: Intl.message(_Strings.buttonTitle),
-              onTap: () => _tappedSwitchProfile(context: context, provider: viewModel.switchProfileProvider),
+              onTap: () => _tappedSwitchProfile(
+                  context: context, provider: viewModel.switchProfileProvider),
             ),
             style: RoundedButtonStyle.largeRoundedButtonStyle().copyWith(
               backgroundColor: _style.buttonColor,
@@ -321,12 +328,12 @@ class Profile extends StatelessWidget {
     );
   }
 
-  ClipOval _buildPlotImage(ImageProvider image) {
+  ClipOval _buildProfileImage(ImageURLProvider image) {
     return ClipOval(
-      child: Stack(
-        children: <Widget>[
-          SizedBox(width:_style.imageSize, height:_style.imageSize ,),
-        ],
+      child: ImageProviderView(
+        imageURLProvider: image,
+        width: _style.imageSize,
+        height: _style.imageSize,
       ),
     );
   }
@@ -341,5 +348,4 @@ class Profile extends StatelessWidget {
       ),
     );
   }
-
 }

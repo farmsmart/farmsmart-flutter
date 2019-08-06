@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:farmsmart_flutter/model/model/ProfileEntity.dart';
 import 'package:farmsmart_flutter/model/model/mock/MockProfile.dart';
@@ -8,6 +9,7 @@ import '../ProfileRepositoryInterface.dart';
 
 class _Constants {
   static const mockCount = 5;
+  static const maxDelayMs = 1000;
 }
 
 class MockProfileRepository extends MockListRepository<ProfileEntity>
@@ -34,7 +36,7 @@ class MockProfileRepository extends MockListRepository<ProfileEntity>
 
   @override
   Future<ProfileEntity> getCurrent() {
-    return Future.delayed(Duration(milliseconds: 2000), () => _current)
+    return Future.delayed(Duration(milliseconds: Random().nextInt(_Constants.maxDelayMs)), () => _current)
         .then((value) {
           _update();
       return value;

@@ -61,6 +61,7 @@ class ProfileDetailProvider
       username: from?.name ?? "",
       refresh: _refresh,
       items: list,
+      image: from?.avatar,
       switchProfileProvider: switchProfileProvider,
     );
   }

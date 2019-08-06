@@ -1,3 +1,4 @@
+import 'package:farmsmart_flutter/model/model/ProfileEntity.dart';
 import 'package:farmsmart_flutter/model/repositories/article/ArticleRepositoryInterface.dart';
 import 'package:farmsmart_flutter/model/repositories/article/implementation/MockArticlesRepository.dart';
 import 'package:farmsmart_flutter/model/repositories/crop/CropRepositoryInterface.dart';
@@ -30,13 +31,13 @@ class MockRepositoryProvider implements RepositoryProvider{
   ArticleRepositoryInterface getArticleRepository() => MockArticlesRepository();
 
   @override
-  PlotRepositoryInterface getMyPlotRepository() => _plot;
+  PlotRepositoryInterface getMyPlotRepository(String profileID) => _plot;
 
   @override
   CropRepositoryInterface getCropRepository() => _crop;
 
     @override
-  TransactionRepositoryInterface getTransactionRepository() => _trans;
+  TransactionRepositoryInterface getTransactionRepository(String profileID) => _trans;
 
   @override
   ProfileRepositoryInterface getProfileRepository() => _profile;

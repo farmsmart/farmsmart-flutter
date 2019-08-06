@@ -53,21 +53,22 @@ class Home extends StatelessWidget {
 
   Widget _buildSuccess(
       {BuildContext context, AsyncSnapshot<HomeViewModel> snapshot}) {
+
     return PersistentBottomNavigationBar(
       backgroundColor: _Constants.bottomBarColor,
-      tabs: tabs(),
+      tabs: tabs(snapshot.data),
     );
   }
 
-  List<TabNavigator> tabs() {
+  List<TabNavigator> tabs(HomeViewModel viewModel) {
     return [
       _buildTabNavigator(
-        _buildMyPlot(),
+        _buildMyPlot(viewModel),
         _Constants.myPlotSelectedIcon,
         _Constants.myPlotIcon,
       ),
       _buildTabNavigator(
-        _buildProfitAndLoss(),
+        _buildProfitAndLoss(viewModel),
         _Constants.profitLossSelectedIcon,
         _Constants.profitLossIcon,
       ),
@@ -92,11 +93,11 @@ class Home extends StatelessWidget {
     ];
   }
 
-  _buildMyPlot() {
+  _buildMyPlot(HomeViewModel viewModel) {
     final recommendationsProvider = RecommendationListProvider(
       title: "Recommendations",
       heroThreshold: 0.8,
-      plotRepo: repositoryProvider.getMyPlotRepository(),
+      plotRepo: repositoryProvider.getMyPlotRepository(viewModel.currentProfileID),
       cropRepo: repositoryProvider.getCropRepository(),
       profileRepo: repositoryProvider.getProfileRepository(),
       ratingRepo: repositoryProvider.getRatingsRepository(),
@@ -104,14 +105,14 @@ class Home extends StatelessWidget {
     return PlotList(
         provider: PlotListProvider(
             title: localizations.myPlotTab,
-            plotRepository: repositoryProvider.getMyPlotRepository(),
+            plotRepository: repositoryProvider.getMyPlotRepository(viewModel.currentProfileID),
             recommendationsProvider: recommendationsProvider));
   }
 
-  _buildProfitAndLoss() {
+  _buildProfitAndLoss(HomeViewModel viewModel) {
     return ProfitLossPage(
       viewModelProvider: ProfitLossListProvider(
-        transactionsRepository: repositoryProvider.getTransactionRepository(),
+        transactionsRepository: repositoryProvider.getTransactionRepository(viewModel.currentProfileID),
         cropRepository: repositoryProvider.getCropRepository(),
       ),
     );

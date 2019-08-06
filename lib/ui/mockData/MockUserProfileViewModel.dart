@@ -1,11 +1,11 @@
 import 'dart:math';
 
 import 'package:farmsmart_flutter/model/bloc/StaticViewModelProvider.dart';
+import 'package:farmsmart_flutter/model/repositories/image/implementation/MockImageEntity.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockSwitchProfile.dart';
 import 'package:farmsmart_flutter/ui/profile/Profile.dart';
 import 'package:farmsmart_flutter/ui/profile/ProfileListItem.dart';
 import 'package:farmsmart_flutter/ui/profile/SwitchProfileList.dart';
-import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:farmsmart_flutter/model/model/mock/MockString.dart';
 
@@ -21,7 +21,7 @@ class MockProfileViewModel {
       username: _mockUserName.random(),
       activeCrops: Random().nextInt(50),
       completedCrops: Random().nextInt(50),
-      image: NetworkImage(_mockImage.random()),
+      image: MockImageEntity().build().urlProvider,
       switchProfileProvider: StaticViewModelProvider<SwitchProfileListViewModel>(MockSwitchProfile.build()),
     );
   }
@@ -37,7 +37,7 @@ class MockProfileViewModel {
       username: _mockUserName.random(),
       activeCrops: Random().nextInt(150),
       completedCrops: Random().nextInt(150),
-      image: NetworkImage(_mockImage.random()),
+      image: MockImageEntity().build().urlProvider,
       switchProfileProvider: StaticViewModelProvider<SwitchProfileListViewModel>(MockSwitchProfile.build()),
     );
   }
@@ -103,12 +103,6 @@ List<String> _mockActionIcon = [
   null,
   null,
 ];
-
-MockString _mockImage = MockString(library: [
-  "https://i.pinimg.com/originals/29/01/c9/2901c94b5a24c2f69d827e1755b5257e.jpg",
-  "https://vignette.wikia.nocookie.net/rugratseries/images/1/1a/Tommy.jpg/revision/latest?cb=20110202050218",
-  "https://www.flower-pepper.com/wp-content/uploads/2016/10/Kermit-the-Frog-by-Bartholomew-300x378.jpg",
-]);
 
 MockString _mockUserName = MockString(library: [
   "Ireti Kuta",

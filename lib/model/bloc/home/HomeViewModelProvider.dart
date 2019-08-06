@@ -11,7 +11,8 @@ import '../ViewModelProvider.dart';
 class HomeViewModel implements LoadableViewModel, RefreshableViewModel{
   final LoadingStatus loadingStatus;
   final Function refresh;
-  HomeViewModel(this.loadingStatus, this.refresh);
+  final String currentProfileID;
+  HomeViewModel(this.loadingStatus, this.refresh,this.currentProfileID);
 }
 
 class HomeViewModelProvider implements ViewModelProvider<HomeViewModel> {
@@ -25,13 +26,13 @@ class HomeViewModelProvider implements ViewModelProvider<HomeViewModel> {
   HomeViewModel initial() {
     if (_snapshot == null) {
       _profileRepository.observeCurrent().listen((currentProfile) {
-        _snapshot = _viewModel(LoadingStatus.SUCCESS);
+        _snapshot = _viewModel(LoadingStatus.SUCCESS, currentProfile);
         if (_lastProfile != currentProfile) {
           _controller.sink.add(_snapshot);
         }
         _lastProfile = currentProfile;
       });
-      _snapshot = _viewModel(LoadingStatus.LOADING);
+      _snapshot = _viewModel(LoadingStatus.LOADING,_lastProfile);
       _snapshot.refresh();
     }
     return _snapshot;
@@ -47,8 +48,8 @@ class HomeViewModelProvider implements ViewModelProvider<HomeViewModel> {
     return _controller.stream;
   }
 
-  HomeViewModel _viewModel(LoadingStatus status){
-    return HomeViewModel(status, _refresh);
+  HomeViewModel _viewModel(LoadingStatus status, ProfileEntity profile){
+    return HomeViewModel(status, _refresh, profile?.id);
   }
 
   void _refresh() {

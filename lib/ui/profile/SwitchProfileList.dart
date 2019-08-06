@@ -1,5 +1,7 @@
 import 'package:farmsmart_flutter/model/bloc/ViewModelProvider.dart';
+import 'package:farmsmart_flutter/model/model/loading_status.dart';
 import 'package:farmsmart_flutter/ui/common/ListDivider.dart';
+import 'package:farmsmart_flutter/ui/common/LoadableViewModel.dart';
 import 'package:farmsmart_flutter/ui/common/RefreshableViewModel.dart';
 import 'package:farmsmart_flutter/ui/common/ViewModelProviderBuilder.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
@@ -23,13 +25,14 @@ class _Constants {
       const EdgeInsets.only(right: 24, left: 24, bottom: 24);
 }
 
-class SwitchProfileListViewModel implements RefreshableViewModel {
+class SwitchProfileListViewModel implements RefreshableViewModel, LoadableViewModel {
   String title;
   String actionTitle;
   bool isVisible;
   List<SwitchProfileListItemViewModel> items;
   int confirmedIndex;
   int selectedIndex;
+  LoadingStatus loadingStatus;
   Function addProfileAction;
   Function refresh;
 
@@ -40,6 +43,7 @@ class SwitchProfileListViewModel implements RefreshableViewModel {
     this.items,
     this.confirmedIndex,
     this.selectedIndex,
+    this.loadingStatus,
     @required this.addProfileAction,
     this.refresh,
   });

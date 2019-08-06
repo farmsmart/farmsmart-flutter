@@ -38,7 +38,10 @@ class SwitchProfileListProvider
   SwitchProfileListViewModel initial() {
     if (_snapshot == null) {
       _profileRepository.observeAll().listen((profiles) {
-        _updateViewModel(status: LoadingStatus.SUCCESS, profiles: profiles);
+        _updateViewModel(
+          status: LoadingStatus.SUCCESS,
+          profiles: profiles,
+        );
       });
 
       _snapshot = _viewModel(
@@ -50,7 +53,10 @@ class SwitchProfileListProvider
     return _snapshot;
   }
 
-  void _updateViewModel({LoadingStatus status, List<ProfileEntity> profiles}) {
+  void _updateViewModel({
+    LoadingStatus status,
+    List<ProfileEntity> profiles,
+  }) {
     if (profiles != null) {
       _profiles = profiles;
     }
@@ -66,8 +72,10 @@ class SwitchProfileListProvider
     LoadingStatus status,
     List<ProfileEntity> profiles = const [],
   }) {
-    final transformer =
-        SwitchProfileListItemViewModelTransformer(_switchTo, _currentProfile);
+    final transformer = SwitchProfileListItemViewModelTransformer(
+      _switchTo,
+      _currentProfile,
+    );
     final listItems = profiles.map((profile) {
       return transformer.transform(from: profile);
     }).toList();
@@ -77,6 +85,7 @@ class SwitchProfileListProvider
       items: listItems,
       addProfileAction: null,
       refresh: _refresh,
+      loadingStatus: status,
     );
   }
 
@@ -85,6 +94,15 @@ class SwitchProfileListProvider
   }
 
   void _refresh() {
+    _profileRepository.getCurrent().then((profile) {
+      _currentProfile = profile;
       _profileRepository.getAll();
+    });
   }
+
+  void dispose() {
+    _controller.sink.close();
+    _controller.close();
+  }
+
 }

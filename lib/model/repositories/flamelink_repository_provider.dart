@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:farmsmart_flutter/model/model/ProfileEntity.dart';
 import 'package:farmsmart_flutter/model/repositories/FlameLink.dart';
 import 'package:farmsmart_flutter/model/repositories/article/ArticleRepositoryInterface.dart';
 import 'package:farmsmart_flutter/model/repositories/article/implementation/ArticlesRepositoryFlamelink.dart';
@@ -20,9 +21,10 @@ import 'repository_provider.dart';
 class FlameLinkRepositoryProvider implements RepositoryProvider {
   FlameLink cms;
 
-  PlotRepositoryInterface _plot = MockPlotRepository();
+  Map<String,PlotRepositoryInterface> _plotRepos = {};
+  Map<String,TransactionRepositoryInterface> _transactionRepos = {};
+
   CropRepositoryInterface _crop = MockCropRepository();
-  TransactionRepositoryInterface _trans = MockTransactionRepository();
   ProfileRepositoryInterface _profile = MockProfileRepository();
   RatingEngineRepositoryInterface _ratings = MockRatingEngineRepository();
 
@@ -30,8 +32,6 @@ class FlameLinkRepositoryProvider implements RepositoryProvider {
     this.cms = FlameLink(
         store: Firestore.instance,
         environment: AppConfig.of(context).environment);
-        _plot =  MockPlotRepository();
-       _crop = MockCropRepository();
   }
 
   @override
@@ -40,17 +40,31 @@ class FlameLinkRepositoryProvider implements RepositoryProvider {
 
   //TODO Add My Plot FlameLink Repository
   @override
-  PlotRepositoryInterface getMyPlotRepository() => _plot;
+  PlotRepositoryInterface getMyPlotRepository(String profileID) => _plotRepoFor(profileID);
 
   @override
   CropRepositoryInterface getCropRepository() => _crop;
 
   @override
-  TransactionRepositoryInterface getTransactionRepository() => _trans;
+  TransactionRepositoryInterface getTransactionRepository(String profileID) => _transactionRepoFor(profileID);
 
   @override
   ProfileRepositoryInterface getProfileRepository() => _profile;
 
   @override
   RatingEngineRepositoryInterface getRatingsRepository() => _ratings;
+
+  PlotRepositoryInterface _plotRepoFor(String profileId){
+    if(_plotRepos[profileId] == null){
+      _plotRepos[profileId] = MockPlotRepository();
+    }
+    return _plotRepos[profileId];
+  }
+
+  TransactionRepositoryInterface _transactionRepoFor(String profileId){
+    if(_transactionRepos[profileId] == null){
+      _transactionRepos[profileId] = MockTransactionRepository();
+    }
+    return _transactionRepos[profileId];
+  }
 }
