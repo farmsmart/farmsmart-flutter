@@ -6,10 +6,7 @@ import 'package:farmsmart_flutter/chat/ui/viewmodel/SelectableOptionsViewModel.d
 import 'package:farmsmart_flutter/chat/ui/widgets/selectable_options.dart';
 import 'package:farmsmart_flutter/chat/ui/widgets/text_input.dart';
 import 'package:intl/intl.dart';
-
 import '../InteractiveMessageHandler.dart';
-import 'package:intl/intl.dart';
-import 'package:intl/intl.dart';
 
 class _LocalisedStrings {
   static String sendText() => Intl.message('Send');
