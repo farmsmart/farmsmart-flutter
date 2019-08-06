@@ -42,7 +42,8 @@ class _LocalisedStrings {
 }
 
 class _Strings {
-  static const listSeparator = ", ";
+  static const listSeparator = ', ';
+  static const emptyString = '';
 }
 
 class _Icons {
@@ -128,7 +129,7 @@ class CropDetailTransformer
     return RecommendationDetailListItemViewModel(
       iconPath: _Icons.companion,
       title: _LocalisedStrings.companionPlants(),
-      subtitle: from.companionPlants.join(', '),
+      subtitle: from.companionPlants.join(_Strings.listSeparator),
     );
   }
 
@@ -136,7 +137,7 @@ class CropDetailTransformer
     return RecommendationDetailListItemViewModel(
       iconPath: _Icons.nonCompanion,
       title: _LocalisedStrings.nonCompanionPlants(),
-      subtitle: from.nonCompanionPlants.join(', '),
+      subtitle: from.nonCompanionPlants.join(_Strings.listSeparator),
     );
   }
 
@@ -149,7 +150,7 @@ class CropDetailTransformer
         return _LocalisedStrings.single();
         break;
     }
-    return "";
+    return _Strings.emptyString;
   }
 
   String _loHiToString(LoHi value) {
@@ -163,7 +164,7 @@ class CropDetailTransformer
       case LoHi.HIGH:
         return _LocalisedStrings.high();
     }
-    return "";
+    return _Strings.emptyString;
   }
 
   String _complexityToString(CropComplexity value) {
@@ -177,6 +178,6 @@ class CropDetailTransformer
       case CropComplexity.ADVANCED:
         return _LocalisedStrings.advance();
     }
-    return "";
+    return _Strings.emptyString;
   }
 }
