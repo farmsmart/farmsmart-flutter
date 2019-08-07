@@ -52,7 +52,7 @@ class MockArticle extends MockEntity<ArticleEntity> {
     return entity;
   }
 
-  buildStageFromArticle(ArticleEntity article) {
+  ArticleEntity buildStageFromArticle(ArticleEntity article) {
     final entity = article;
     entity.images = null;
     return entity;
