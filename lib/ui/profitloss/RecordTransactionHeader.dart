@@ -2,6 +2,7 @@ import 'package:farmsmart_flutter/ui/profitloss/RecordTransaction.dart';
 import 'package:farmsmart_flutter/utils/RegExInputFormatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 
 class _Constants {
   static final amountValidator = RegExInputFormatter.withRegex(
@@ -9,13 +10,13 @@ class _Constants {
 }
 
 class _Strings {
-  static final hint = "00";
-  static final emptyString = "";
+  static const String hint = '00';
+  static const emptyString = '';
 }
 
 class RecordTransactionHeaderViewModel {
-  String amount;
-  bool isEditable;
+  final String amount;
+  final bool isEditable;
 
   RecordTransactionHeaderViewModel({
     this.amount,

@@ -80,7 +80,7 @@ class SwitchProfileListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(
-        Intl.message(_viewModel.title),
+        _viewModel.title,
         style: _style.titleTextStyle,
       ),
       leading: ClipOval(

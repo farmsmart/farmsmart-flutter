@@ -2,9 +2,18 @@ import 'package:farmsmart_flutter/ui/common/Dogtag.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:intl/intl.dart';
+
+import 'Alert.dart';
 
 export 'package:farmsmart_flutter/ui/common/Dogtag.dart';
 export 'package:farmsmart_flutter/ui/common/roundedButton.dart';
+
+class _LocalisedStrings {
+  static cancel() => Intl.message('Cancel');
+
+  static confirm() => Intl.message('Confirm');
+}
 
 class StageCardViewModel {
   String subtitle;
@@ -13,14 +22,19 @@ class StageCardViewModel {
   String statusTitle;
   Function action;
   StageCardStyle style;
+  String dialogTitle;
+  String dialogDescription;
 
-  StageCardViewModel(
-      {this.subtitle,
-      this.title,
-      this.actionText,
-      this.statusTitle,
-      this.action,
-      this.style});
+  StageCardViewModel({
+    this.subtitle,
+    this.title,
+    this.actionText,
+    this.statusTitle,
+    this.action,
+    this.style,
+    this.dialogTitle,
+    this.dialogDescription,
+  });
 }
 
 class StageCardStyle {
@@ -41,18 +55,19 @@ class StageCardStyle {
     this.titleTextStyle,
     this.actionButtonStyle,
     this.statusTagStyle,
-    this.statusIcon
+    this.statusIcon,
   });
 
-  StageCardStyle copyWith(
-      {double cornerRadius,
-      Color backgroundColor,
-      EdgeInsets contentPadding,
-      TextStyle subtitleTextStyle,
-      TextStyle titleTextStyle,
-      RoundedButtonStyle actionButtonStyle,
-      DogTagStyle statusTagStyle,
-      IconData statusIcon}) {
+  StageCardStyle copyWith({
+    double cornerRadius,
+    Color backgroundColor,
+    EdgeInsets contentPadding,
+    TextStyle subtitleTextStyle,
+    TextStyle titleTextStyle,
+    RoundedButtonStyle actionButtonStyle,
+    DogTagStyle statusTagStyle,
+    IconData statusIcon,
+  }) {
     return StageCardStyle(
         cornerRadius: cornerRadius ?? this.cornerRadius,
         backgroundColor: backgroundColor ?? this.backgroundColor,
@@ -61,7 +76,7 @@ class StageCardStyle {
         titleTextStyle: titleTextStyle ?? this.titleTextStyle,
         actionButtonStyle: actionButtonStyle ?? this.actionButtonStyle,
         statusTagStyle: statusTagStyle ?? this.statusTagStyle,
-         statusIcon: statusIcon ?? this.statusIcon);
+        statusIcon: statusIcon ?? this.statusIcon);
   }
 }
 
@@ -168,8 +183,7 @@ class StageCard extends StatelessWidget {
                 ),
                 DogTag(
                   viewModel: DogTagViewModel(
-                      title: _viewModel.statusTitle,
-                      icon: _style.statusIcon),
+                      title: _viewModel.statusTitle, icon: _style.statusIcon),
                   style: _style.statusTagStyle,
                 ),
               ],
@@ -177,12 +191,32 @@ class StageCard extends StatelessWidget {
             RoundedButton(
               viewModel: RoundedButtonViewModel(
                   title: _viewModel.actionText,
-                  onTap: _viewModel.action),
+                  onTap: () {
+                    _buildAlertAction(context);
+                  }),
               style: _style.actionButtonStyle,
             )
           ],
         ),
       ),
     );
+  }
+
+  void _buildAlertAction(BuildContext context) {
+    if(_viewModel.action != null) {
+      Alert.present(
+        Alert(
+          viewModel: AlertViewModel(
+            cancelActionText: _LocalisedStrings.cancel(),
+            confirmActionText: _LocalisedStrings.confirm(),
+            titleText: _viewModel.dialogTitle,
+            detailText: _viewModel.dialogDescription,
+            isDestructive: false,
+            confirmAction: _viewModel.action,
+          ),
+        ),
+        context,
+      );
+    }
   }
 }

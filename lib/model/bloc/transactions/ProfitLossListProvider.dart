@@ -12,10 +12,8 @@ import 'package:intl/intl.dart';
 import '../ViewModelProvider.dart';
 import 'TransactionToRecordTransactionViewModel.dart';
 
-
-class _Strings {
-  static const generalItemTag = "General";
-  static const currentcyTag = "GBP";
+class _LocalisedStrings {
+  static String generalItemTag() => Intl.message('General');
 }
 
 class ProfitLossListProvider
@@ -31,7 +29,8 @@ class ProfitLossListProvider
   ProfitLossListProvider({
     TransactionRepositoryInterface transactionsRepository,
     CropRepositoryInterface cropRepository,
-  }) : this._transactionsRepository = transactionsRepository, this._cropRepository = cropRepository;
+  })  : this._transactionsRepository = transactionsRepository,
+        this._cropRepository = cropRepository;
 
   @override
   Stream<ProfitLossListViewModel> stream() {
@@ -46,12 +45,12 @@ class ProfitLossListProvider
   @override
   ProfitLossListViewModel initial() {
     if (_snapshot == null) {
-      _taglist= _getTagList([]);
+      _taglist = _getTagList([]);
       _transactionsRepository.observeProfile(null).listen((transactions) {
         _transactionsRepository.allTimeBalance().then((balance) {
-          _title = balance.toString(allowNegative:true);
+          _title = balance.toString(allowNegative: true);
           _cropRepository.get().then((crops) {
-            _taglist= _getTagList(crops);
+            _taglist = _getTagList(crops);
             _snapshot = _viewModelFromModel(_controller, transactions);
             _controller.sink.add(_snapshot);
           });
@@ -86,10 +85,12 @@ class ProfitLossListProvider
         _transactionsRepository, _taglist);
     final costViewModel = transformer.costViewModel();
     final saleViewModel = transformer.saleViewModel();
-    final currencyName = NumberFormat.simpleCurrency(locale:Intl.getCurrentLocale()).currencyName;
+    final currencyName =
+        NumberFormat.simpleCurrency(locale: Intl.getCurrentLocale())
+            .currencyName;
     return ProfitLossListViewModel(
       title: _title,
-      detailText: currencyName ,
+      detailText: currencyName,
       loadingStatus: status,
       transactions: items,
       costViewModel: costViewModel,
@@ -102,11 +103,12 @@ class ProfitLossListProvider
     _transactionsRepository.get(null);
   }
 
-  List<String> _getTagList(List<CropEntity> crops){
-    final defaultItems = [Intl.message(_Strings.generalItemTag)];
-    return defaultItems + crops.map((crop){
-      return crop.name;
-    }).toList();
+  List<String> _getTagList(List<CropEntity> crops) {
+    final defaultItems = [_LocalisedStrings.generalItemTag()];
+    return defaultItems +
+        crops.map((crop) {
+          return crop.name;
+        }).toList();
   }
 
   void dispose() {

@@ -6,9 +6,10 @@ import 'package:farmsmart_flutter/ui/profitloss/RecordTransactionListItem.dart';
 import 'package:intl/intl.dart';
 import '../Transformer.dart';
 
-class _Strings {
-  static const recordCost = "Record Cost";
-  static const recordSale = "Record Sale";
+class _LocalisedStrings {
+  static String recordCost() => Intl.message('Record Cost');
+
+  static String recordSale() => Intl.message('Record Sale');
 }
 
 class TransactionToRecordTransactionViewModel
@@ -33,7 +34,7 @@ class TransactionToRecordTransactionViewModel
     return RecordTransactionViewModel(
         amount: amount,
         actions: _actions(from: from),
-        buttonTitle: Intl.message(_Strings.recordCost),
+        buttonTitle: _LocalisedStrings.recordCost(),
         recordTransaction: (data) => _record(data, TransactionType.cost),
         type: TransactionType.cost,
         isEditable: editable);
@@ -45,7 +46,7 @@ class TransactionToRecordTransactionViewModel
     return RecordTransactionViewModel(
         amount: amount,
         actions: _actions(from: from),
-        buttonTitle: Intl.message(_Strings.recordSale),
+        buttonTitle: _LocalisedStrings.recordSale(),
         recordTransaction: (data) => _record(data, TransactionType.sale),
         type: TransactionType.sale,
         isEditable: editable);

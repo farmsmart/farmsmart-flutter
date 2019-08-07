@@ -71,7 +71,6 @@ class MockUserProfileListItemViewModel {
   }
 }
 
-
 List<String> _mockActionTitleLarger = [
   "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
   "Maecenas vitae risus vitae nulla euismod viverra ut eu lacus.",

@@ -1,3 +1,4 @@
+import 'package:farmsmart_flutter/chat/ChatPage.dart';
 import 'package:farmsmart_flutter/model/bloc/SequencedViewModelProvider.dart';
 import 'package:farmsmart_flutter/model/bloc/StaticViewModelProvider.dart';
 import 'package:farmsmart_flutter/model/bloc/article/ArticleListProvider.dart';
@@ -154,6 +155,10 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
           listener: (widget, context) =>
               PlaygroundPresentButton.presentModal(widget, context),
         ),
+      ),
+      PlaygroundWidget(
+        title: "SPIKE Chat page",
+        child: ChatPage(),
       ),
       PlaygroundWidget(
         title: 'FARM-59 Record a Cost/Sale',

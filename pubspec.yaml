@@ -45,7 +45,9 @@ dependencies:
   url_launcher: ^5.1.1
   decimal: ^0.3.0
 
+  json_serializable: ^2.0.0
 
+  mockito: ^4.1.0
 
 
 dev_dependencies:
@@ -104,6 +106,7 @@ flutter:
     - assets/icons/nav_icon_back.png
     - assets/icons/nav_icon_options.png
     - assets/icons/nav_icon_cancel.png
+    - assets/responses/create_account_mock_form.json
 
   fonts:
   - family: GT-America-Standard

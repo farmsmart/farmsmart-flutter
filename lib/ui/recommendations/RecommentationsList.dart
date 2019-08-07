@@ -7,19 +7,24 @@ import 'package:farmsmart_flutter/ui/common/ViewModelProviderBuilder.dart';
 import 'package:farmsmart_flutter/ui/common/headerAndFooterListView.dart';
 import 'package:farmsmart_flutter/ui/crop/CropDetail.dart';
 import 'package:farmsmart_flutter/ui/crop/viewmodel/CropDetailViewModel.dart';
+import 'package:farmsmart_flutter/ui/recommendations/recommendation_detail_card/recommendation_detail_card_styles.dart';
 import 'package:farmsmart_flutter/ui/recommendations/viewmodel/RecommendationsListViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import 'recommendation_card/recommendation_card.dart';
 import 'recommendation_card/recommendation_card_styles.dart';
+import 'recommendation_card/recommendation_card_view_model.dart';
 import 'recommendation_compact_card/recommendation_compact_card.dart';
 import 'recommendation_compact_card/recommendation_compact_card_styles.dart';
+import 'recommendation_detail_card/recommendation_detail_card.dart';
 
-class _Strings {
-  static const finish = "Finish";
-  static const clearAction = "Clear Selection";
-  static const cancelAction = "Cancel";
+class _LocalisedStrings {
+  static String finish() => Intl.message('Finish');
+
+  static String clearAction() => Intl.message('Clear Selection');
+
+  static String cancelAction() => Intl.message('Cancel');
 }
 
 class _Constants {
@@ -33,6 +38,7 @@ abstract class RecommendedListStyle {
 
   RecommendedListStyle(
       this.titleTextStyle, this.titleEdgePadding, this.applyButtonStyle);
+
   RecommendedListStyle copyWith({
     TextStyle titleTextStyle,
     EdgeInsets titleEdgePadding,
@@ -120,6 +126,7 @@ class RecommendationsList extends StatelessWidget implements ListViewSection {
       final detailAction = () => _tappedDetail(
             context: context,
             provider: itemViewModel.detailProvider,
+            recommendationCardViewModel: itemViewModel,
           );
       final item = itemViewModel.isHero
           ? RecommendationCard(
@@ -148,13 +155,18 @@ class RecommendationsList extends StatelessWidget implements ListViewSection {
     if (viewModel.canApply) {
       return Scaffold(
         appBar: _buildAppBar(context, viewModel),
-        body: _buildList(
-          context: context,
-          viewModel: viewModel,
+        body: Stack(
+          children: <Widget>[
+            _buildList(
+              context: context,
+              viewModel: viewModel,
+            ),
+            _buildApplyButton(
+              context: context,
+              viewModel: viewModel,
+            ),
+          ],
         ),
-        floatingActionButton:
-            _buildApplyButton(context: context, viewModel: viewModel),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       );
     }
 
@@ -224,13 +236,18 @@ class RecommendationsList extends StatelessWidget implements ListViewSection {
     BuildContext context,
     RecommendationsListViewModel viewModel,
   }) {
-    return Padding(
-      padding: _Constants.buttonPadding,
-      child: RoundedButton(
-        viewModel: RoundedButtonViewModel(
-            title: _Strings.finish,
-            onTap: () => _applyAction(context, viewModel)),
-        style: _style.applyButtonStyle,
+    return Container(
+      height: double.infinity,
+      width: double.infinity,
+      alignment: Alignment.bottomCenter,
+      child: Padding(
+        padding: _Constants.buttonPadding,
+        child: RoundedButton(
+          viewModel: RoundedButtonViewModel(
+              title: _LocalisedStrings.finish(),
+              onTap: () => _applyAction(context, viewModel)),
+          style: _style.applyButtonStyle,
+        ),
       ),
     );
   }
@@ -238,10 +255,17 @@ class RecommendationsList extends StatelessWidget implements ListViewSection {
   void _tappedDetail({
     BuildContext context,
     ViewModelProvider<CropDetailViewModel> provider,
+    RecommendationCardViewModel recommendationCardViewModel,
   }) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => CropDetail(provider: provider), //TODO: LH add the recommedations detail header here (add to plot function) 
+        builder: (context) => CropDetail(
+          provider: provider,
+          header: RecommendationDetailCard(
+            viewModel: recommendationCardViewModel,
+            style: RecommendationDetailCardStyles.build(),
+          ),
+        ),
       ),
     );
   }
@@ -249,7 +273,7 @@ class RecommendationsList extends StatelessWidget implements ListViewSection {
   ActionSheet _moreMenu(RecommendationsListViewModel viewModel) {
     final actions = [
       ActionSheetListItemViewModel(
-        title: Intl.message(_Strings.clearAction),
+        title: _LocalisedStrings.clearAction(),
         isDestructive: true,
         type: ActionType.simple,
         onTap: viewModel.clear,
@@ -257,7 +281,7 @@ class RecommendationsList extends StatelessWidget implements ListViewSection {
     ];
     final actionSheetViewModel = ActionSheetViewModel(
       actions,
-      Intl.message(_Strings.cancelAction),
+      _LocalisedStrings.cancelAction(),
     );
     return ActionSheet(
       viewModel: actionSheetViewModel,

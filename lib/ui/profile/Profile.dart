@@ -13,10 +13,10 @@ import 'package:intl/intl.dart';
 
 import 'SwitchProfileList.dart';
 
-class _Strings {
-  static final String activeCrops = "Active crops";
-  static final String completedCrops = "Completed";
-  static final String buttonTitle = "Switch Profile";
+class _LocalisedStrings {
+  static String activeCrops() => Intl.message('Active crops');
+  static String completedCrops() => Intl.message('Completed');
+  static String buttonTitle() => Intl.message('Switch Profile');
 }
 
 class _Constants {
@@ -278,7 +278,7 @@ class Profile extends StatelessWidget {
           style: _style.subtitleTextStyle,
         ),
         Text(
-          Intl.message(_Strings.activeCrops),
+          Intl.message(_LocalisedStrings.activeCrops()),
           maxLines: _style.maxLines,
           overflow: TextOverflow.ellipsis,
           style: _style.detailTextStyle,
@@ -296,7 +296,7 @@ class Profile extends StatelessWidget {
           style: _style.subtitleTextStyle,
         ),
         Text(
-          Intl.message(_Strings.completedCrops),
+          Intl.message(_LocalisedStrings.completedCrops()),
           maxLines: _style.maxLines,
           overflow: TextOverflow.ellipsis,
           style: _style.detailTextStyle,
@@ -312,7 +312,7 @@ class Profile extends StatelessWidget {
         children: <Widget>[
           RoundedButton(
             viewModel: RoundedButtonViewModel(
-              title: Intl.message(_Strings.buttonTitle),
+              title: Intl.message(_LocalisedStrings.buttonTitle()),
               onTap: () => _tappedSwitchProfile(
                   context: context, provider: viewModel.switchProfileProvider),
             ),

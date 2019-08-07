@@ -6,18 +6,44 @@ import 'package:farmsmart_flutter/ui/common/stage_card.dart';
 import 'package:farmsmart_flutter/ui/playground/styles/stage_card_styles.dart';
 import 'package:intl/intl.dart';
 
-class _Strings {
-  static final stage = "Stage";
+class _LocalisedStrings {
+  static stage() => Intl.message('Stage');
 
-  static final inProgress = "In Progress";
-  static final upcoming = "Upcoming";
-  static final complete = "Complete";
+  static inProgress() => Intl.message('In Progress');
 
-  static final completeAction = "Completed";
-  static final revertAction = "Revert to In Progress";
-  static final readyAction = "Begin Stage";
-  static final upcomingAction = "Please complete previous";
-  static final inProgressAction = "Mark as complete";
+  static upcoming() => Intl.message('Upcoming');
+
+  static complete() => Intl.message('Complete');
+
+  static completeAction() => Intl.message('Completed');
+
+  static revertAction() => Intl.message('Revert to In Progress');
+
+  static readyAction() => Intl.message('Begin Stage');
+
+  static upcomingAction() => Intl.message('Please complete previous');
+
+  static inProgressAction() => Intl.message('Mark as complete');
+
+  static beginCropDialogTitle() => Intl.message('Begin crop');
+
+  static markAsCompleteDialogTitle() => Intl.message('Mark as complete');
+
+  static completeCropTitle() => Intl.message('Complete crop');
+
+  static revertDialogTitle() => Intl.message('Revert crop');
+
+  static beginCropDialogDescription() =>
+      Intl.message('Are you sure you want to mark this stage as in progress?');
+
+  static markAsCompleteDialogDescription() =>
+      Intl.message('Are you sure you want to mark this stage as complete?');
+
+  static completeCropDialogDescription() =>
+      Intl.message('Are you sure you want to market this crop as complete?');
+
+  static revertDialogDescription() =>
+      Intl.message('Are you sure you want revert the stage status?');
 }
 
 class StageToStageCardViewModel
@@ -35,15 +61,18 @@ class StageToStageCardViewModel
   StageCardViewModel transform({StageEntity from}) {
     final stageNumber = _plot.stages.indexOf(from) + 1;
     final subtitle =
-        Intl.message(_Strings.stage) + " " + stageNumber.toString();
+        _LocalisedStrings.stage() + " " + stageNumber.toString();
     final status = _logic.status(from);
     return StageCardViewModel(
-        title: from.article.title,
-        subtitle: subtitle,
-        statusTitle: _statusTitle(status),
-        actionText: _actionTitle(status, from),
-        action: _action(status, from),
-        style: _cardStyle(status, from));
+      title: from.article.title,
+      subtitle: subtitle,
+      statusTitle: _statusTitle(status),
+      actionText: _actionTitle(status, from),
+      action: _action(status, from),
+      style: _cardStyle(status, from),
+      dialogTitle: _dialogTitle(status, from),
+      dialogDescription: _dialogDescription(status, from),
+    );
   }
 
   StageCardStyle _cardStyle(StageStatus status, StageEntity stage) {
@@ -64,17 +93,17 @@ class StageToStageCardViewModel
   String _actionTitle(StageStatus status, StageEntity stage) {
     switch (status) {
       case StageStatus.inProgress:
-        return Intl.message(_Strings.inProgressAction);
+        return _LocalisedStrings.inProgressAction();
         break;
       case StageStatus.complete:
         return _logic.canRevert(stage, _plot.stages)
-            ? Intl.message(_Strings.revertAction)
-            : Intl.message(_Strings.completeAction);
+            ? _LocalisedStrings.revertAction()
+            : _LocalisedStrings.completeAction();
         break;
       default:
         return _logic.canBegin(stage, _plot.stages)
-            ? Intl.message(_Strings.readyAction)
-            : Intl.message(_Strings.upcomingAction);
+            ? _LocalisedStrings.readyAction()
+            : _LocalisedStrings.upcomingAction();
     }
   }
 
@@ -92,13 +121,43 @@ class StageToStageCardViewModel
   String _statusTitle(StageStatus status) {
     switch (status) {
       case StageStatus.inProgress:
-        return Intl.message(_Strings.inProgress);
+        return _LocalisedStrings.inProgress();
         break;
       case StageStatus.complete:
-        return Intl.message(_Strings.complete);
+        return _LocalisedStrings.complete();
         break;
       default:
-        return Intl.message(_Strings.upcoming);
+        return _LocalisedStrings.upcoming();
     }
+  }
+
+  String _dialogTitle(StageStatus status, StageEntity stage) {
+    if (_logic.canBegin(stage, _plot.stages)) {
+      return _LocalisedStrings.beginCropDialogTitle();
+    } else if (_logic.canComplete(stage, _plot.stages)) {
+      if (stage == _plot.stages.last) {
+        return _LocalisedStrings.completeCropTitle();
+      } else {
+        return _LocalisedStrings.markAsCompleteDialogTitle();
+      }
+    } else if (_logic.canRevert(stage, _plot.stages)) {
+      return _LocalisedStrings.revertDialogTitle();
+    }
+    return null;
+  }
+
+  String _dialogDescription(StageStatus status, StageEntity stage) {
+    if (_logic.canBegin(stage, _plot.stages)) {
+      return _LocalisedStrings.beginCropDialogDescription();
+    } else if (_logic.canComplete(stage, _plot.stages)) {
+      if (stage == _plot.stages.last) {
+        return _LocalisedStrings.completeCropDialogDescription();
+      } else {
+        return _LocalisedStrings.markAsCompleteDialogDescription();
+      }
+    } else if (_logic.canRevert(stage, _plot.stages)) {
+      return _LocalisedStrings.revertDialogDescription();
+    }
+    return null;
   }
 }
