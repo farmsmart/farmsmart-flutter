@@ -17,7 +17,7 @@ class _Constants {
   static const defaultBoxDecorationBorderRadius =
       const BorderRadius.all(Radius.circular(20.0));
   static const defaultBoxDecorationBorderColor = const Color(0xFFE9EAF2);
-  static const defaultBoxDecorationBorderWidth = 2.0;
+  static const defaultBoxDecorationBorderWidth = 1.0;
   static const defaultSizedBoxSeparatorWidth = 10.0;
 }
 
