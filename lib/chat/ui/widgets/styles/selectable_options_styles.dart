@@ -14,7 +14,6 @@ class SelectableOptionsStyles {
     optionTextStyle: TextStyle(
       fontSize: 15.0,
       color: const Color(0xFFFFFFFF),
-      fontWeight: FontWeight.bold,
     ),
     optionTextAlign: TextAlign.center,
     optionPadding: EdgeInsets.symmetric(
@@ -22,7 +21,7 @@ class SelectableOptionsStyles {
       vertical: 17.0,
     ),
     optionDecoration: const BoxDecoration(
-      color: Color(0xFF24d900),
+      color: Color(0xFF24D900),
       borderRadius: BorderRadius.all(Radius.circular(12.0)),
     ),
     optionMargin: EdgeInsets.only(bottom: 12.0),
