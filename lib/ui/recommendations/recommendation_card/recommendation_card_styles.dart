@@ -3,7 +3,6 @@ import 'package:flutter/widgets.dart';
 
 import 'recommendation_card.dart';
 
-
 class RecommendationCardStyles {
   static RecommendationCardStyle buildStyle() =>
       _defaultRecommendationCardStyle;
@@ -40,6 +39,7 @@ class RecommendationCardStyles {
       ),
       borderRadius: BorderRadius.circular(8),
     ),
+    addedOverlayColor: Color(0x3325df0c),
   );
 
   static RoundedButtonStatefulStyle _defaultLeftActionRoundedButtonStyle =
