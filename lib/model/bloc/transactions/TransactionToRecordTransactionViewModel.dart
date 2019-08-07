@@ -13,7 +13,7 @@ class _LocalisedStrings {
 }
 
 class TransactionToRecordTransactionViewModel
-    implements
+    extends
         ObjectTransformer<TransactionEntity, RecordTransactionViewModel> {
   final List<String> _tagList;
   final TransactionRepositoryInterface _repo;

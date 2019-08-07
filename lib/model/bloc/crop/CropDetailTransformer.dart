@@ -58,7 +58,7 @@ class _Icons {
 }
 
 class CropDetailTransformer
-    implements ObjectTransformer<CropEntity, CropDetailViewModel> {
+    extends ObjectTransformer<CropEntity, CropDetailViewModel> {
   @override
   CropDetailViewModel transform({CropEntity from}) {
     final detail = ArticleDetailViewModelTransformer();

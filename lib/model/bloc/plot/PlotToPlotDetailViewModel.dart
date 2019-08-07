@@ -13,7 +13,7 @@ import 'StageBusinessLogic.dart';
 import 'StageToStageCardViewModel.dart';
 
 class PlotToPlotDetailViewModel
-    implements ObjectTransformer<PlotEntity, PlotDetailViewModel> {
+    extends ObjectTransformer<PlotEntity, PlotDetailViewModel> {
   final _articleTransformer =
       ArticleListItemViewModelTransformer.buildWithDetail(
           ArticleDetailViewModelTransformer());

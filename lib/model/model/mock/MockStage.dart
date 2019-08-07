@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:farmsmart_flutter/model/model/NewStageEntity.dart';
+import 'package:farmsmart_flutter/model/model/StageEntity.dart';
 import 'package:farmsmart_flutter/model/model/article_entity.dart';
 import 'package:farmsmart_flutter/model/model/crop_entity.dart';
 import 'package:farmsmart_flutter/model/model/mock/MockDate.dart';
@@ -12,29 +12,29 @@ final _identifiers = MockString();
 final _articleBuilder = MockArticle();
 final _mockDate = MockDate();
 
-class MockStage extends MockEntity<NewStageEntity> {
+class MockStage extends MockEntity<StageEntity> {
   final Random _rand;
 
   MockStage({int seed}) : this._rand = Random(seed);
 
-  NewStageEntity build() {
+  StageEntity build() {
     final start = _mockDate.randomMonthAgo();
-    return NewStageEntity(
+    return StageEntity(
         id: _identifiers.identifier(),
         article: _articleBuilder.buildStage(),
         started: start,
         ended: null);
   }
 
-  NewStageEntity buildNewFromArticle(ArticleEntity article) {
-    return NewStageEntity(
+  StageEntity buildNewFromArticle(ArticleEntity article) {
+    return StageEntity(
       id: _identifiers.identifier(),
       article: _articleBuilder.buildStageFromArticle(article),
     );
   }
 
   //LH here we generate valid stage sequence starting and ending at the input dates, and ending at the input stage
-  List<NewStageEntity> sequence(
+  List<StageEntity> sequence(
       {DateTime starting,
       DateTime ending,
       bool inProgress = true,
@@ -44,7 +44,7 @@ class MockStage extends MockEntity<NewStageEntity> {
     int end = ending.millisecondsSinceEpoch;
     int expanse = end - start;
     int inc = expanse ~/ max(1, lastStage).toInt();
-    List<NewStageEntity> stages = [];
+    List<StageEntity> stages = [];
     int current = start;
     for (var i = 0; i < count; i++) {
       DateTime startDate = DateTime.fromMillisecondsSinceEpoch(current);
@@ -56,7 +56,7 @@ class MockStage extends MockEntity<NewStageEntity> {
         startDate = null;
         endDate = null;
       }
-      stages.add(NewStageEntity(
+      stages.add(StageEntity(
           id: _identifiers.identifier(),
           article: _articleBuilder.buildStage(),
           started: startDate,
@@ -68,7 +68,6 @@ class MockStage extends MockEntity<NewStageEntity> {
 }
 
 MockStage _stageBuilder = MockStage();
-
-class MockArticleEntityCollection extends MockEntityCollection<NewStageEntity> {
+class MockArticleEntityCollection extends MockEntityCollection<StageEntity> {
   MockArticleEntityCollection() : super(_stageBuilder);
 }

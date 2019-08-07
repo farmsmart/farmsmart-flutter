@@ -1,6 +1,11 @@
+import 'package:farmsmart_flutter/model/bloc/ViewModelProvider.dart';
+import 'package:farmsmart_flutter/model/model/loading_status.dart';
 import 'package:farmsmart_flutter/ui/common/ListDivider.dart';
+import 'package:farmsmart_flutter/ui/common/LoadableViewModel.dart';
+import 'package:farmsmart_flutter/ui/common/RefreshableViewModel.dart';
+import 'package:farmsmart_flutter/ui/common/ViewModelProviderBuilder.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
-import 'package:farmsmart_flutter/ui/profile/SwitchProfileItems.dart';
+import 'package:farmsmart_flutter/ui/profile/SwitchProfileListItem.dart';
 import 'package:flutter/material.dart';
 
 class _Icons {
@@ -20,43 +25,47 @@ class _Constants {
       const EdgeInsets.only(right: 24, left: 24, bottom: 24);
 }
 
-class SwitchProfileViewModel {
+class SwitchProfileListViewModel implements RefreshableViewModel, LoadableViewModel {
   String title;
   String actionTitle;
   bool isVisible;
-  List<SwitchProfileItemsViewModel> actions;
+  List<SwitchProfileListItemViewModel> items;
   int confirmedIndex;
   int selectedIndex;
+  LoadingStatus loadingStatus;
   Function addProfileAction;
+  Function refresh;
 
-  SwitchProfileViewModel({
+  SwitchProfileListViewModel({
     @required this.title,
     @required this.actionTitle,
     this.isVisible = false,
-    this.actions,
+    this.items,
     this.confirmedIndex,
     this.selectedIndex,
+    this.loadingStatus,
     @required this.addProfileAction,
+    this.refresh,
   });
 }
 
-class SwitchProfileStyle {
+class SwitchProfileListStyle {
   final TextStyle titleTextStyle;
 
-  const SwitchProfileStyle({
+  const SwitchProfileListStyle({
     this.titleTextStyle,
   });
 
-  SwitchProfileStyle copyWith({
+  SwitchProfileListStyle copyWith({
     TextStyle titleTextStyle,
   }) {
-    return SwitchProfileStyle(
+    return SwitchProfileListStyle(
       titleTextStyle: titleTextStyle ?? this.titleTextStyle,
     );
   }
 }
 
-class _DefaultStyle extends SwitchProfileStyle {
+class _DefaultStyle extends SwitchProfileListStyle {
   final TextStyle titleTextStyle = const TextStyle(
     color: Color(0xff1a1b46),
     fontSize: 27,
@@ -69,36 +78,40 @@ class _DefaultStyle extends SwitchProfileStyle {
   });
 }
 
-const SwitchProfileStyle _defaultStyle = const _DefaultStyle();
+const SwitchProfileListStyle _defaultStyle = const _DefaultStyle();
 
-class SwitchProfile extends StatefulWidget {
-  final SwitchProfileViewModel _viewModel;
-  final SwitchProfileStyle _style;
+class SwitchProfileList extends StatefulWidget {
+  final ViewModelProvider<SwitchProfileListViewModel> _provider;
+  final SwitchProfileListStyle _style;
 
-  SwitchProfile({
+  SwitchProfileList({
     Key key,
-    SwitchProfileViewModel viewModel,
-    SwitchProfileStyle style = _defaultStyle,
-  })  : this._viewModel = viewModel,
+    ViewModelProvider<SwitchProfileListViewModel> provider,
+    SwitchProfileListStyle style = _defaultStyle,
+  })  : this._provider = provider,
         this._style = style,
         super(key: key);
 
   @override
-  SwitchProfileState createState() => SwitchProfileState();
+  SwitchProfileListState createState() => SwitchProfileListState();
 }
 
-class SwitchProfileState extends State<SwitchProfile> {
+class SwitchProfileListState extends State<SwitchProfileList> {
   @override
   Widget build(BuildContext context) {
+    return ViewModelProviderBuilder(provider: widget._provider, successBuilder: _buildSuccess,);
+  }
+  Widget _buildSuccess({BuildContext context, AsyncSnapshot<SwitchProfileListViewModel> snapshot}) {
+    final viewModel = snapshot.data;
     return Scaffold(
-      appBar: _buildSimpleAppBar(context),
-      body: _buildBody(),
-      floatingActionButton: _buildFloatingButton(),
+      appBar: _buildSimpleAppBar(context, viewModel),
+      body: _buildBody(viewModel),
+      floatingActionButton: _buildFloatingButton(context, viewModel),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 
-  _buildBody() {
+  _buildBody(SwitchProfileListViewModel viewModel) {
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -106,7 +119,7 @@ class SwitchProfileState extends State<SwitchProfile> {
           Padding(
             padding: _Constants.generalEdgePadding,
             child: Text(
-              widget._viewModel.title,
+              viewModel.title,
               textAlign: TextAlign.left,
               style: widget._style.titleTextStyle,
             ),
@@ -114,38 +127,38 @@ class SwitchProfileState extends State<SwitchProfile> {
           ListView.separated(
             shrinkWrap: true,
             physics: ScrollPhysics(),
-            itemBuilder: (context, index) => SwitchProfileItems(
-              viewModel: SwitchProfileItemsViewModel(
-                title: widget._viewModel.actions[index].title,
-                image: widget._viewModel.actions[index].image,
-                icon: widget._viewModel.actions[index].icon,
-                isSelected: widget._viewModel.actions[index].isSelected,
-                itemAction: () => _select(index),
+            itemBuilder: (context, index) => SwitchProfileListItem(
+              viewModel: SwitchProfileListItemViewModel(
+                title: viewModel.items[index].title,
+                image: viewModel.items[index].image,
+                icon: viewModel.items[index].icon,
+                isSelected: viewModel.items[index].isSelected,
+                tapAction: () => _select(index, viewModel),
               ),
             ),
             separatorBuilder: (context, index) => ListDivider.build(),
-            itemCount: widget._viewModel.actions.length,
+            itemCount: viewModel.items.length,
           ),
         ],
       ),
     );
   }
 
-  _buildFloatingButton() {
+  _buildFloatingButton(BuildContext context, SwitchProfileListViewModel viewModel) {
     return Padding(
       padding: _Constants.bottomButtonEdgePadding,
       child: Visibility(
-        visible: widget._viewModel.isVisible,
+        visible: viewModel.isVisible,
         child: RoundedButton(
             viewModel: RoundedButtonViewModel(
-                title: widget._viewModel.title,
-                onTap: () => _switchProfileTapped()),
+                title: viewModel.title,
+                onTap: () => _switchProfileTapped(context, viewModel)),
             style: RoundedButtonStyle.largeRoundedButtonStyle()),
       ),
     );
   }
 
-  AppBar _buildSimpleAppBar(BuildContext context) {
+  AppBar _buildSimpleAppBar(BuildContext context, SwitchProfileListViewModel viewModel) {
     return AppBar(
       elevation: _Constants.appBarElevation,
       leading: FlatButton(
@@ -164,7 +177,7 @@ class SwitchProfileState extends State<SwitchProfile> {
             child: RoundedButton(
                 viewModel: RoundedButtonViewModel(
                     icon: _Icons.topButton,
-                    onTap: () => widget._viewModel.addProfileAction()),
+                    onTap: () => viewModel.addProfileAction()),
                 style: RoundedButtonStyle.defaultStyle()),
           ),
         ),
@@ -172,37 +185,38 @@ class SwitchProfileState extends State<SwitchProfile> {
     );
   }
 
-  void _select(int index) {
+  void _select(int index, SwitchProfileListViewModel viewModel) {
     setState(() {
-      widget._viewModel.selectedIndex = index;
-      _clearSelection();
-      widget._viewModel.actions[index].isSelected = true;
+      viewModel.selectedIndex = index;
+      _clearSelection(viewModel);
+      viewModel.items[index].isSelected = true;
     });
-    _checkSelection();
+    _checkSelection(viewModel);
   }
 
-  void _checkSelection() {
-    if (widget._viewModel.confirmedIndex != widget._viewModel.selectedIndex) {
+  void _checkSelection(SwitchProfileListViewModel viewModel) {
+    if (viewModel.confirmedIndex != viewModel.selectedIndex) {
       setState(() {
-        widget._viewModel.isVisible = true;
+        viewModel.isVisible = true;
       });
     } else {
       setState(() {
-        widget._viewModel.isVisible = false;
+        viewModel.isVisible = false;
       });
     }
   }
 
-  void _clearSelection() {
-    for (var actions in widget._viewModel.actions) {
+  void _clearSelection(SwitchProfileListViewModel viewModel) {
+    for (var actions in viewModel.items) {
       actions.isSelected = false;
     }
   }
 
-  _switchProfileTapped() {
+  _switchProfileTapped(BuildContext context, SwitchProfileListViewModel viewModel) {
     setState(() {
-      widget._viewModel.confirmedIndex = widget._viewModel.selectedIndex;
-      widget._viewModel.isVisible = false;
+      viewModel.isVisible = false;
+      viewModel.items[viewModel.selectedIndex].switchAction(); 
+      Navigator.of(context).pop();
     });
   }
 }

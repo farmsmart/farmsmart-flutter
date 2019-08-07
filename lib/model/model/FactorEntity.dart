@@ -1,6 +1,7 @@
 class FactorEntity {
-  final String factor;
+  final String subject;
+  final double scale;
   final Map<String,double> values;
 
-  FactorEntity(this.factor, this.values);
+  FactorEntity(this.subject, this.scale, this.values);
 }

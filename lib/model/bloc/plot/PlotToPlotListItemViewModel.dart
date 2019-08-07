@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:farmsmart_flutter/model/bloc/Transformer.dart';
 import 'package:farmsmart_flutter/model/bloc/plot/PlotDetailProvider.dart';
 import 'package:farmsmart_flutter/model/bloc/plot/StageBusinessLogic.dart';
@@ -8,12 +10,10 @@ import 'package:intl/intl.dart';
 
 class _LocalisedStrings {
   static String day() => Intl.message('Day');
-
   static String upcoming() => Intl.message('Upcoming');
 }
 
-class PlotToPlotListItemViewModel
-    implements ObjectTransformer<PlotEntity, PlotListItemViewModel> {
+class PlotToPlotListItemViewModel extends ObjectTransformer<PlotEntity, PlotListItemViewModel> {
   final _logic = StageBusinessLogic();
   final PlotDetailProvider _detailProvider;
 
@@ -46,4 +46,5 @@ class PlotToPlotListItemViewModel
     }
     return _LocalisedStrings.upcoming();
   }
+
 }
