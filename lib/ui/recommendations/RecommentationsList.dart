@@ -155,13 +155,18 @@ class RecommendationsList extends StatelessWidget implements ListViewSection {
     if (viewModel.canApply) {
       return Scaffold(
         appBar: _buildAppBar(context, viewModel),
-        body: _buildList(
-          context: context,
-          viewModel: viewModel,
+        body: Stack(
+          children: <Widget>[
+            _buildList(
+              context: context,
+              viewModel: viewModel,
+            ),
+            _buildApplyButton(
+              context: context,
+              viewModel: viewModel,
+            ),
+          ],
         ),
-        floatingActionButton:
-            _buildApplyButton(context: context, viewModel: viewModel),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       );
     }
 
@@ -231,13 +236,18 @@ class RecommendationsList extends StatelessWidget implements ListViewSection {
     BuildContext context,
     RecommendationsListViewModel viewModel,
   }) {
-    return Padding(
-      padding: _Constants.buttonPadding,
-      child: RoundedButton(
-        viewModel: RoundedButtonViewModel(
-            title: _LocalisedStrings.finish(),
-            onTap: () => _applyAction(context, viewModel)),
-        style: _style.applyButtonStyle,
+    return Container(
+      height: double.infinity,
+      width: double.infinity,
+      alignment: Alignment.bottomCenter,
+      child: Padding(
+        padding: _Constants.buttonPadding,
+        child: RoundedButton(
+          viewModel: RoundedButtonViewModel(
+              title: _LocalisedStrings.finish(),
+              onTap: () => _applyAction(context, viewModel)),
+          style: _style.applyButtonStyle,
+        ),
       ),
     );
   }
@@ -247,7 +257,6 @@ class RecommendationsList extends StatelessWidget implements ListViewSection {
     ViewModelProvider<CropDetailViewModel> provider,
     RecommendationCardViewModel recommendationCardViewModel,
   }) {
-
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => CropDetail(
