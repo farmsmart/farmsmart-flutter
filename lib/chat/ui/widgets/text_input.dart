@@ -1,6 +1,26 @@
 import 'package:farmsmart_flutter/chat/ui/widgets/roundedButton.dart';
 import 'package:flutter/material.dart';
 
+class _Constants {
+  static const defaultFormContainerMargin = const EdgeInsets.all(0.0);
+  static const defaultFormRowMainAxisSize = MainAxisSize.max;
+  static const defaultFormRowMainAxisAlignment = MainAxisAlignment.spaceBetween;
+  static const defaultTextFormFieldFlex = 4;
+  static const defaultButtonFlex = 1;
+  static const defaultTextFormFieldContainerPadding =
+      const EdgeInsets.symmetric(horizontal: 16.0);
+  static const defaultTextFormFieldStyle = const TextStyle(
+    color: Color(0xFF1A1B46),
+    fontSize: 15.0,
+  );
+  static const defaultButtonColor = const Color(0xFF00CD9F);
+  static const defaultBoxDecorationBorderRadius =
+      const BorderRadius.all(Radius.circular(20.0));
+  static const defaultBoxDecorationBorderColor = const Color(0xFFE9EAF2);
+  static const defaultBoxDecorationBorderWidth = 2.0;
+  static const defaultSizedBoxSeparatorWidth = 10.0;
+}
+
 class TextInputStyle {
   final EdgeInsetsGeometry formContainerMargin;
   final MainAxisSize formRowMainAxisSize;
@@ -10,6 +30,10 @@ class TextInputStyle {
   final EdgeInsetsGeometry textFormFieldContainerPadding;
   final TextStyle textFormFieldStyle;
   final Color buttonColor;
+  final BorderRadiusGeometry boxDecorationBorderRadius;
+  final Color boxDecorationBorderColor;
+  final double boxDecorationBorderWidth;
+  final double sizedBoxSeparatorWidth;
 
   const TextInputStyle({
     this.formContainerMargin,
@@ -20,6 +44,10 @@ class TextInputStyle {
     this.textFormFieldContainerPadding,
     this.textFormFieldFlex,
     this.textFormFieldStyle,
+    this.boxDecorationBorderRadius,
+    this.boxDecorationBorderColor,
+    this.boxDecorationBorderWidth,
+    this.sizedBoxSeparatorWidth,
   });
 
   TextInputStyle copyWith({
@@ -31,6 +59,10 @@ class TextInputStyle {
     EdgeInsetsGeometry textFormFieldContainerPadding,
     TextStyle textFormFieldStyle,
     Color buttonColor,
+    BorderRadiusGeometry boxDecorationBorderRadius,
+    Color boxDecorationBorderColor,
+    double boxDecorationBorderWidth,
+    double sizedBoxSeparatorWidth,
   }) {
     return TextInputStyle(
       formContainerMargin: formContainerMargin ?? this.formContainerMargin,
@@ -43,27 +75,39 @@ class TextInputStyle {
           textFormFieldContainerPadding ?? this.textFormFieldContainerPadding,
       textFormFieldStyle: textFormFieldStyle ?? this.textFormFieldStyle,
       buttonColor: buttonColor ?? this.buttonColor,
+      boxDecorationBorderRadius:
+          boxDecorationBorderRadius ?? this.boxDecorationBorderRadius,
+      boxDecorationBorderColor:
+          boxDecorationBorderColor ?? this.boxDecorationBorderColor,
+      boxDecorationBorderWidth:
+          boxDecorationBorderWidth ?? this.boxDecorationBorderWidth,
+      sizedBoxSeparatorWidth:
+          sizedBoxSeparatorWidth ?? this.sizedBoxSeparatorWidth,
     );
   }
 }
 
 class _DefaultStyle extends TextInputStyle {
-  final EdgeInsetsGeometry formContainerMargin = const EdgeInsets.all(0.0);
-  final MainAxisSize formRowMainAxisSize = MainAxisSize.max;
+  final EdgeInsetsGeometry formContainerMargin =
+      _Constants.defaultFormContainerMargin;
+  final MainAxisSize formRowMainAxisSize =
+      _Constants.defaultFormRowMainAxisSize;
   final MainAxisAlignment formRowMainAxisAlignment =
-      MainAxisAlignment.spaceBetween;
-  final int textFormFieldFlex = 8;
-  final int buttonFlex = 2;
+      _Constants.defaultFormRowMainAxisAlignment;
+  final int textFormFieldFlex = _Constants.defaultTextFormFieldFlex;
+  final int buttonFlex = _Constants.defaultButtonFlex;
   final EdgeInsetsGeometry textFormFieldContainerPadding =
-      const EdgeInsets.symmetric(
-    horizontal: 16.0,
-    vertical: 2.0,
-  );
-  final TextStyle textFormFieldStyle = const TextStyle(
-    color: Color(0xFF1A1B46),
-    fontSize: 15.0,
-  );
-  final Color buttonColor = const Color(0xFF00CD9F);
+      _Constants.defaultTextFormFieldContainerPadding;
+  final TextStyle textFormFieldStyle = _Constants.defaultTextFormFieldStyle;
+  final Color buttonColor = _Constants.defaultButtonColor;
+  final BorderRadiusGeometry boxDecorationBorderRadius =
+      _Constants.defaultBoxDecorationBorderRadius;
+  final Color boxDecorationBorderColor =
+      _Constants.defaultBoxDecorationBorderColor;
+  final double boxDecorationBorderWidth =
+      _Constants.defaultBoxDecorationBorderWidth;
+  final double sizedBoxSeparatorWidth =
+      _Constants.defaultSizedBoxSeparatorWidth;
 
   const _DefaultStyle({
     EdgeInsetsGeometry formContainerMargin,
@@ -74,6 +118,10 @@ class _DefaultStyle extends TextInputStyle {
     EdgeInsetsGeometry textFormFieldContainerPadding,
     TextStyle textFormFieldStyle,
     Color buttonColor,
+    BorderRadiusGeometry boxDecorationBorderRadius,
+    Color boxDecorationBorderColor,
+    double boxDecorationBorderWidth,
+    double sizedBoxSeparatorWidth,
   });
 }
 
@@ -104,72 +152,52 @@ class TextInputState extends State<TextInput> {
     return form;
   }
 
-  _buildTextFormField() {
-    return Flexible(
-      flex: widget._style.textFormFieldFlex,
-      child: Center(
-        child: Container(
-          padding: widget._style.textFormFieldContainerPadding,
-          decoration: BoxDecoration(
-            shape: BoxShape.rectangle,
-            borderRadius: BorderRadius.all(Radius.circular(20.0)),
-            border: Border.all(
-              color: Color(0xFFE9EAF2),
-              width: 2.0,
-            ),
-          ),
-          child: TextFormField(
-            controller: widget._controller,
-            decoration: widget._decoration,
-            focusNode: _focusNode,
-            validator: (value) {
-              return widget._formFieldValidatorFunction(value);
-            },
-            style: widget._style.textFormFieldStyle,
-          ),
-        ),
-      ),
-    );
-  }
-
-  _buildSpace() {
-    return SizedBox(width: 10.0);
-  }
-
-//  _buildSendButton() {
-//    return Flexible(
-//      flex: widget._style.buttonFlex,
-//      child: FloatingActionButton(
-//        child: Text(widget._buttonText),
-//        backgroundColor: widget._style.buttonColor,
-//        onPressed: () {
-//          _formKey.currentState.validate();
-//          widget._onSendPressed();
-//        },
-//      ),
-//    );
-//  }
-
-  _buildSendButton() {
-    return Flexible(
-      flex: widget._style.buttonFlex,
-      child: RoundedButton(
-        viewModel: RoundedButtonViewModel(
-            title: widget._buttonText,
-            onTap: () {
-              _formKey.currentState.validate();
-              widget._onSendPressed();
-            }),
-        style: widget._roundedButtonStyle,
-      ),
-    );
-  }
-
   void _manageFocus() {
     if (widget._isFocusedOnBuild) {
       FocusScope.of(context).requestFocus(_focusNode);
     }
   }
+
+  _buildTextFormField() => Flexible(
+        flex: widget._style.textFormFieldFlex,
+        child: Center(
+          child: Container(
+            padding: widget._style.textFormFieldContainerPadding,
+            decoration: BoxDecoration(
+              shape: BoxShape.rectangle,
+              borderRadius: widget._style.boxDecorationBorderRadius,
+              border: Border.all(
+                color: widget._style.boxDecorationBorderColor,
+                width: widget._style.boxDecorationBorderWidth,
+              ),
+            ),
+            child: TextFormField(
+              controller: widget._controller,
+              decoration: widget._decoration,
+              focusNode: _focusNode,
+              validator: (value) {
+                return widget._formFieldValidatorFunction(value);
+              },
+              style: widget._style.textFormFieldStyle,
+            ),
+          ),
+        ),
+      );
+
+  _buildSpace() => SizedBox(width: widget._style.sizedBoxSeparatorWidth);
+
+  _buildSendButton() => Flexible(
+        flex: widget._style.buttonFlex,
+        child: RoundedButton(
+          viewModel: RoundedButtonViewModel(
+              title: widget._buttonText,
+              onTap: () {
+                _formKey.currentState.validate();
+                widget._onSendPressed();
+              }),
+          style: widget._roundedButtonStyle,
+        ),
+      );
 }
 
 class TextInput extends StatefulWidget {

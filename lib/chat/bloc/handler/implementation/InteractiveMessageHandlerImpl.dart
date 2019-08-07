@@ -1,6 +1,7 @@
 import 'package:farmsmart_flutter/chat/ui/widgets/separator_wrapper.dart';
 import 'package:farmsmart_flutter/chat/ui/widgets/styles/rounded_button_styles.dart';
 import 'package:farmsmart_flutter/chat/ui/widgets/styles/selectable_options_styles.dart';
+import 'package:farmsmart_flutter/chat/ui/widgets/styles/text_input_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:farmsmart_flutter/chat/bloc/transformer/implementation/SelectableOptionsViewModelTransformer.dart';
 import 'package:farmsmart_flutter/chat/model/form/input_request_entity.dart';
@@ -35,27 +36,25 @@ class InteractiveMessageHandlerImpl implements InteractiveMessageHandler {
     Function(String) onValidationPassed,
     InteractiveMessageType type,
     bool isFocusedOnBuild,
-  }) {
-    return _buildTextInputWidget(
-      onSendPressed: onSendPressed,
-      onValidationPassed: onValidationPassed,
-      textEditingController: textEditingController,
-      type: type,
-      inputRequestEntity: inputRequestEntity,
-      isFocusedOnBuild: isFocusedOnBuild,
-    );
-  }
+  }) =>
+      _buildTextInputWidget(
+        onSendPressed: onSendPressed,
+        onValidationPassed: onValidationPassed,
+        textEditingController: textEditingController,
+        type: type,
+        inputRequestEntity: inputRequestEntity,
+        isFocusedOnBuild: isFocusedOnBuild,
+      );
 
   @override
   Widget buildSelectableOptionsWidget({
     InputRequestEntity inputRequestEntity,
     Function(SelectableOptionViewModel) onTap,
-  }) {
-    return _buildSelectableOptionsWidget(
-      onTap: onTap,
-      inputRequestEntity: inputRequestEntity,
-    );
-  }
+  }) =>
+      _buildSelectableOptionsWidget(
+        onTap: onTap,
+        inputRequestEntity: inputRequestEntity,
+      );
 
   _buildTextInputWidget({
     InputRequestEntity inputRequestEntity,
@@ -78,6 +77,7 @@ class InteractiveMessageHandlerImpl implements InteractiveMessageHandler {
           decoration: _getInputDecoration(),
           isFocusedOnBuild: isFocusedOnBuild,
           roundedButtonStyle: RoundedButtonStyles.chatButtonStyle(),
+          style: TextInputStyles.buildDefaultStyle(),
         ),
       );
 
@@ -97,32 +97,27 @@ class InteractiveMessageHandlerImpl implements InteractiveMessageHandler {
 
   SelectableOptionsViewModel _getSelectableOptionsViewModel({
     InputRequestEntity inputRequestEntity,
-  }) {
-    return SelectableOptionsViewModelTransformer()
-        .transform(from: inputRequestEntity);
-  }
+  }) =>
+      SelectableOptionsViewModelTransformer()
+          .transform(from: inputRequestEntity);
 
   String Function(String) _getValidationFunction({
     String regex,
     InteractiveMessageType type,
     Function(String) onValidationPassed,
-  }) {
-    return (value) {
-      return _getFormFieldValidatorValue(
-        value: value,
-        regex: regex,
-        type: type,
-        onValidationPassed: onValidationPassed,
-      );
-    };
-  }
+  }) =>
+      (value) {
+        return _getFormFieldValidatorValue(
+          value: value,
+          regex: regex,
+          type: type,
+          onValidationPassed: onValidationPassed,
+        );
+      };
 
   InputDecoration _getInputDecoration() => InputDecoration(
+        border: InputBorder.none,
         hintText: _LocalisedStrings.inputHint(),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(20)),
-          borderSide: BorderSide(width: 1.0, color: Colors.red),
-        ),
       );
 
   String _getFormFieldValidatorValue({
@@ -161,17 +156,15 @@ class InteractiveMessageHandlerImpl implements InteractiveMessageHandler {
   bool _isRegexValidationPassed({
     String value,
     String regex,
-  }) {
-    return RegExp(
-      regex,
-      caseSensitive: false,
-      multiLine: false,
-    ).hasMatch(value);
-  }
+  }) =>
+      RegExp(
+        regex,
+        caseSensitive: false,
+        multiLine: false,
+      ).hasMatch(value);
 
   bool _isRegexProvided({
     String regex,
-  }) {
-    return regex != null && regex.isNotEmpty;
-  }
+  }) =>
+      regex != null && regex.isNotEmpty;
 }
