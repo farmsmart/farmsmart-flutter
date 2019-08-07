@@ -1,4 +1,5 @@
 import 'package:farmsmart_flutter/chat/ui/widgets/separator_wrapper.dart';
+import 'package:farmsmart_flutter/chat/ui/widgets/styles/rounded_button_styles.dart';
 import 'package:farmsmart_flutter/chat/ui/widgets/styles/selectable_options_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:farmsmart_flutter/chat/bloc/transformer/implementation/SelectableOptionsViewModelTransformer.dart';
@@ -64,33 +65,35 @@ class InteractiveMessageHandlerImpl implements InteractiveMessageHandler {
     InteractiveMessageType type,
     bool isFocusedOnBuild,
   }) =>
-      TextInput(
-        buttonText: _LocalisedStrings.sendText(),
-        formFieldValidatorFunction: _getValidationFunction(
-          regex: inputRequestEntity.validationRegex,
-          type: type,
-          onValidationPassed: onValidationPassed,
+      SeparatorWrapper(
+        wrappedChild: TextInput(
+          buttonText: _LocalisedStrings.sendText(),
+          formFieldValidatorFunction: _getValidationFunction(
+            regex: inputRequestEntity.validationRegex,
+            type: type,
+            onValidationPassed: onValidationPassed,
+          ),
+          onSendPressed: onSendPressed,
+          controller: textEditingController,
+          decoration: _getInputDecoration(),
+          isFocusedOnBuild: isFocusedOnBuild,
+          roundedButtonStyle: RoundedButtonStyles.chatButtonStyle(),
         ),
-        onSendPressed: onSendPressed,
-        controller: textEditingController,
-        decoration: _getInputDecoration(),
-        isFocusedOnBuild: isFocusedOnBuild,
       );
 
   _buildSelectableOptionsWidget({
     InputRequestEntity inputRequestEntity,
     Function(SelectableOptionViewModel) onTap,
-  }) {
-    return SeparatorWrapper(
-      wrappedChild: SelectableOptions(
-        viewModel: _getSelectableOptionsViewModel(
-          inputRequestEntity: inputRequestEntity,
+  }) =>
+      SeparatorWrapper(
+        wrappedChild: SelectableOptions(
+          viewModel: _getSelectableOptionsViewModel(
+            inputRequestEntity: inputRequestEntity,
+          ),
+          onTap: onTap,
+          style: SelectableOptionsStyles.buildDefaultStyle(),
         ),
-        onTap: onTap,
-        style: SelectableOptionsStyles.buildDefaultStyle(),
-      ),
-    );
-  }
+      );
 
   SelectableOptionsViewModel _getSelectableOptionsViewModel({
     InputRequestEntity inputRequestEntity,
@@ -114,8 +117,13 @@ class InteractiveMessageHandlerImpl implements InteractiveMessageHandler {
     };
   }
 
-  InputDecoration _getInputDecoration() =>
-      InputDecoration(hintText: _LocalisedStrings.inputHint());
+  InputDecoration _getInputDecoration() => InputDecoration(
+        hintText: _LocalisedStrings.inputHint(),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(20)),
+          borderSide: BorderSide(width: 1.0, color: Colors.red),
+        ),
+      );
 
   String _getFormFieldValidatorValue({
     String value,
