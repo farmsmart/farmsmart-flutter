@@ -7,8 +7,7 @@ import '../ChatSummaryProviderHelper.dart';
 
 class ChatSummaryProviderHelperImpl implements ChatSummaryProviderHelper {
   @override
-  Widget getSummary({String title, Function onTap}) {
-    return SeparatorWrapper(
+  Widget getSummary({String title, Function onTap}) => SeparatorWrapper(
       wrappedChild: RoundedButton(
         viewModel: RoundedButtonViewModel(
           title: title,
@@ -17,5 +16,4 @@ class ChatSummaryProviderHelperImpl implements ChatSummaryProviderHelper {
         style: RoundedButtonStyles.chatButtonStyle(),
       ),
     );
-  }
 }
