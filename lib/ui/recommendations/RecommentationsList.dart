@@ -7,14 +7,17 @@ import 'package:farmsmart_flutter/ui/common/ViewModelProviderBuilder.dart';
 import 'package:farmsmart_flutter/ui/common/headerAndFooterListView.dart';
 import 'package:farmsmart_flutter/ui/crop/CropDetail.dart';
 import 'package:farmsmart_flutter/ui/crop/viewmodel/CropDetailViewModel.dart';
+import 'package:farmsmart_flutter/ui/recommendations/recommendation_detail_card/recommendation_detail_card_styles.dart';
 import 'package:farmsmart_flutter/ui/recommendations/viewmodel/RecommendationsListViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import 'recommendation_card/recommendation_card.dart';
 import 'recommendation_card/recommendation_card_styles.dart';
+import 'recommendation_card/recommendation_card_view_model.dart';
 import 'recommendation_compact_card/recommendation_compact_card.dart';
 import 'recommendation_compact_card/recommendation_compact_card_styles.dart';
+import 'recommendation_detail_card/recommendation_detail_card.dart';
 
 class _LocalisedStrings {
   static String finish() => Intl.message('Finish');
@@ -123,6 +126,7 @@ class RecommendationsList extends StatelessWidget implements ListViewSection {
       final detailAction = () => _tappedDetail(
             context: context,
             provider: itemViewModel.detailProvider,
+            recommendationCardViewModel: itemViewModel,
           );
       final item = itemViewModel.isHero
           ? RecommendationCard(
@@ -241,11 +245,18 @@ class RecommendationsList extends StatelessWidget implements ListViewSection {
   void _tappedDetail({
     BuildContext context,
     ViewModelProvider<CropDetailViewModel> provider,
+    RecommendationCardViewModel recommendationCardViewModel,
   }) {
+
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => CropDetail(provider: provider),
-        //TODO: LH add the recommedations detail header here (add to plot function)
+        builder: (context) => CropDetail(
+          provider: provider,
+          header: RecommendationDetailCard(
+            viewModel: recommendationCardViewModel,
+            style: RecommendationDetailCardStyles.build(),
+          ),
+        ),
       ),
     );
   }
