@@ -278,7 +278,7 @@ class Profile extends StatelessWidget {
           style: _style.subtitleTextStyle,
         ),
         Text(
-          Intl.message(_LocalisedStrings.activeCrops()),
+          _LocalisedStrings.activeCrops(),
           maxLines: _style.maxLines,
           overflow: TextOverflow.ellipsis,
           style: _style.detailTextStyle,
@@ -296,7 +296,7 @@ class Profile extends StatelessWidget {
           style: _style.subtitleTextStyle,
         ),
         Text(
-          Intl.message(_LocalisedStrings.completedCrops()),
+          _LocalisedStrings.completedCrops(),
           maxLines: _style.maxLines,
           overflow: TextOverflow.ellipsis,
           style: _style.detailTextStyle,
@@ -312,7 +312,7 @@ class Profile extends StatelessWidget {
         children: <Widget>[
           RoundedButton(
             viewModel: RoundedButtonViewModel(
-              title: Intl.message(_LocalisedStrings.buttonTitle()),
+              title: _LocalisedStrings.buttonTitle(),
               onTap: () => _tappedSwitchProfile(
                   context: context, provider: viewModel.switchProfileProvider),
             ),

@@ -27,7 +27,7 @@ class _LocalisedStrings {
 }
 
 class _Strings {
-  static final emptyString = Intl.message("");
+  static final emptyString = "";
 }
 
 enum RecordCellType {
