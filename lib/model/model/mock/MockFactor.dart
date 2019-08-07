@@ -2,19 +2,23 @@ import 'package:farmsmart_flutter/model/model/FactorEntity.dart';
 import 'package:farmsmart_flutter/model/repositories/MockStrings.dart';
 import 'MockEntity.dart';
 
+class _Constants {
+  static const inputScale = 10.0;
+}
+
 class MockFactor extends MockEntity<FactorEntity> {
   final _values = {
-    "Skill Level": 0.4,
-    "Locations": 0.3,
-    "Agrozone": 0.3,
-    "Land Size": 0.6,
-    "Soil Type": 0.2,
-    "Irrigation": 0.1,
-    "Month": 0.9,
-    "Intention": 0.8,
+    "Skill Level": 4.0,
+    "Locations": 3.0,
+    "Agrozone": 3.0,
+    "Land Size": 6.0,
+    "Soil Type": 2.0,
+    "Irrigation": 1.0,
+    "Month": 9.0,
+    "Intention": 8.0,
   };
 
   FactorEntity build() {
-    return FactorEntity(factors.random(), _values);
+    return FactorEntity(factors.random(),_Constants.inputScale, _values);
   }
 }

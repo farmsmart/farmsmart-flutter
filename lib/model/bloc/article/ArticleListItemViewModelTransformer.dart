@@ -16,7 +16,7 @@ class _Strings {
 }
 
 class ArticleListItemViewModelTransformer
-    implements ObjectTransformer<ArticleEntity, ArticleListItemViewModel> {
+    extends ObjectTransformer<ArticleEntity, ArticleListItemViewModel> {
   final ObjectTransformer<ArticleEntity, ArticleDetailViewModel>
       _detailTransformer;
 

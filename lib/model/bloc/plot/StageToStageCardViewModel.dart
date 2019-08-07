@@ -1,6 +1,6 @@
 import 'package:farmsmart_flutter/model/bloc/Transformer.dart';
 import 'package:farmsmart_flutter/model/bloc/plot/StageBusinessLogic.dart';
-import 'package:farmsmart_flutter/model/model/NewStageEntity.dart';
+import 'package:farmsmart_flutter/model/model/StageEntity.dart';
 import 'package:farmsmart_flutter/model/model/PlotEntity.dart';
 import 'package:farmsmart_flutter/ui/common/stage_card.dart';
 import 'package:farmsmart_flutter/ui/playground/styles/stage_card_styles.dart';
@@ -47,7 +47,7 @@ class _LocalisedStrings {
 }
 
 class StageToStageCardViewModel
-    implements ObjectTransformer<NewStageEntity, StageCardViewModel> {
+    extends ObjectTransformer<StageEntity, StageCardViewModel> {
   final PlotEntity _plot;
   final Function _beginAction;
   final Function _completeAction;
@@ -58,7 +58,7 @@ class StageToStageCardViewModel
       this._plot, this._beginAction, this._completeAction, this._revertAction);
 
   @override
-  StageCardViewModel transform({NewStageEntity from}) {
+  StageCardViewModel transform({StageEntity from}) {
     final stageNumber = _plot.stages.indexOf(from) + 1;
     final subtitle =
         _LocalisedStrings.stage() + " " + stageNumber.toString();
@@ -75,7 +75,7 @@ class StageToStageCardViewModel
     );
   }
 
-  StageCardStyle _cardStyle(StageStatus status, NewStageEntity stage) {
+  StageCardStyle _cardStyle(StageStatus status, StageEntity stage) {
     switch (status) {
       case StageStatus.inProgress:
         return StageCardStyles.buildInProgressStageStyle();
@@ -90,7 +90,7 @@ class StageToStageCardViewModel
     }
   }
 
-  String _actionTitle(StageStatus status, NewStageEntity stage) {
+  String _actionTitle(StageStatus status, StageEntity stage) {
     switch (status) {
       case StageStatus.inProgress:
         return _LocalisedStrings.inProgressAction();
@@ -107,7 +107,7 @@ class StageToStageCardViewModel
     }
   }
 
-  Function _action(StageStatus status, NewStageEntity stage) {
+  Function _action(StageStatus status, StageEntity stage) {
     if (_logic.canBegin(stage, _plot.stages)) {
       return () => _beginAction(_plot, stage);
     } else if (_logic.canComplete(stage, _plot.stages)) {
@@ -131,7 +131,7 @@ class StageToStageCardViewModel
     }
   }
 
-  String _dialogTitle(StageStatus status, NewStageEntity stage) {
+  String _dialogTitle(StageStatus status, StageEntity stage) {
     if (_logic.canBegin(stage, _plot.stages)) {
       return _LocalisedStrings.beginCropDialogTitle();
     } else if (_logic.canComplete(stage, _plot.stages)) {
@@ -146,7 +146,7 @@ class StageToStageCardViewModel
     return null;
   }
 
-  String _dialogDescription(StageStatus status, NewStageEntity stage) {
+  String _dialogDescription(StageStatus status, StageEntity stage) {
     if (_logic.canBegin(stage, _plot.stages)) {
       return _LocalisedStrings.beginCropDialogDescription();
     } else if (_logic.canComplete(stage, _plot.stages)) {

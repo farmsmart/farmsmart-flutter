@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:farmsmart_flutter/model/model/NewStageEntity.dart';
+import 'package:farmsmart_flutter/model/model/StageEntity.dart';
 import 'package:farmsmart_flutter/model/model/PlotEntity.dart';
 import 'package:farmsmart_flutter/model/repositories/plot/PlotRepositoryInterface.dart';
 import 'package:farmsmart_flutter/ui/myplot/viewmodel/PlotDetailViewModel.dart';
@@ -34,8 +34,8 @@ class PlotDetailProvider implements ViewModelProvider<PlotDetailViewModel> {
   }
 
   @override
-  StreamController<PlotDetailViewModel> observe() {
-    return _controller;
+  Stream<PlotDetailViewModel> stream() {
+    return _controller.stream;
   }
   
   @override
@@ -60,7 +60,7 @@ class PlotDetailProvider implements ViewModelProvider<PlotDetailViewModel> {
   }
 
   //LH here we complete the stage and begin the next if not the last stage, as per business requirements
-  void _completeStageAction(PlotEntity plot, NewStageEntity stage) {
+  void _completeStageAction(PlotEntity plot, StageEntity stage) {
     final beginNext = stage != plot.stages.last;
     _repo.completeStage(plot, stage).then((plot) {
       final currentStage = _logic.currentStage(plot.stages);
@@ -74,13 +74,13 @@ class PlotDetailProvider implements ViewModelProvider<PlotDetailViewModel> {
     });
   }
 
-  void _beginStageAction(PlotEntity plot, NewStageEntity stage) {
+  void _beginStageAction(PlotEntity plot, StageEntity stage) {
     _repo.beginStage(plot, stage).then((plot) {
       _plot = plot;
     });
   }
 
-  void _revertStageAction(PlotEntity plot, NewStageEntity stage) {
+  void _revertStageAction(PlotEntity plot, StageEntity stage) {
     _repo.revertStage(plot, stage).then((plot) {
       _plot = plot;
     });

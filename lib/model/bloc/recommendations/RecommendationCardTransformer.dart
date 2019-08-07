@@ -21,7 +21,7 @@ class _LocalisedStrings {
 }
 
 class RecommendationCardTransformer
-    implements ObjectTransformer<CropEntity, RecommendationCardViewModel> {
+    extends ObjectTransformer<CropEntity, RecommendationCardViewModel> {
   final RecommendationEngine _engine;
   final Basket<CropEntity> _basket;
   final Function _isHero;

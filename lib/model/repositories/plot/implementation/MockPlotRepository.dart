@@ -1,8 +1,8 @@
 
 import 'dart:async';
-import 'package:farmsmart_flutter/model/model/NewStageEntity.dart';
+import 'package:farmsmart_flutter/model/model/FactorEntity.dart';
+import 'package:farmsmart_flutter/model/model/StageEntity.dart';
 import 'package:farmsmart_flutter/model/model/PlotEntity.dart';
-import 'package:farmsmart_flutter/model/model/PlotInfoEntity.dart';
 import 'package:farmsmart_flutter/model/model/ProfileEntity.dart';
 import 'package:farmsmart_flutter/model/model/crop_entity.dart';
 import 'package:farmsmart_flutter/model/model/mock/MockPlot.dart';
@@ -14,7 +14,7 @@ final _plotBuilder = MockPlotEntity();
 
 class MockPlotRepository extends MockListRepository<PlotEntity> implements PlotRepositoryInterface {
 
-  MockPlotRepository._(IdentifyEntity<PlotEntity> identifyEntity, List<PlotEntity> startData) : super(identifyEntity: identifyEntity, startingData: startData);
+  MockPlotRepository._(IdentifyEntity<PlotEntity> identifyEntity, List<PlotEntity> startData,) : super(identifyEntity: identifyEntity, startingData: startData);
 
   factory MockPlotRepository() {
     final identifyEntity = (PlotEntity plot) {
@@ -23,7 +23,7 @@ class MockPlotRepository extends MockListRepository<PlotEntity> implements PlotR
     return MockPlotRepository._(identifyEntity, []);
   }
   @override
-  Future<PlotEntity> addPlot({ProfileEntity toProfile, PlotInfoEntity plotInfo, CropEntity crop}) {
+  Future<PlotEntity> addPlot({ProfileEntity toProfile, FactorEntity factorInput, CropEntity crop}) {
     final entity = _plotBuilder.buildWith(crop).then((newPlot){
       return add(newPlot);
     });
@@ -31,29 +31,29 @@ class MockPlotRepository extends MockListRepository<PlotEntity> implements PlotR
   }
 
   @override
-  Future<List<PlotEntity>> getFarm(ProfileEntity forProfile) {
+  Future<List<PlotEntity>> getFarm() {
     return getList();
   }
 
   @override
-  Stream<List<PlotEntity>> observeFarm(ProfileEntity forProfile) {
+  Stream<List<PlotEntity>> observeFarm() {
     return observeList();
   }
 
   @override
-  Future<PlotEntity> beginStage(PlotEntity forPlot, NewStageEntity stage) {
+  Future<PlotEntity> beginStage(PlotEntity forPlot, StageEntity stage) {
     forPlot = _replaceStage(forPlot, stage, _stageWithDates(stage,DateTime.now(),null));
     return Future.value(forPlot);
   }
 
   @override
-  Future<PlotEntity> completeStage(PlotEntity forPlot, NewStageEntity stage) {
+  Future<PlotEntity> completeStage(PlotEntity forPlot, StageEntity stage) {
     forPlot = _replaceStage(forPlot, stage, _stageWithDates(stage,stage.started,DateTime.now()));
     return Future.value(forPlot);
   }
 
   @override
-  Future<PlotEntity> revertStage(PlotEntity forPlot, NewStageEntity stage) {
+  Future<PlotEntity> revertStage(PlotEntity forPlot, StageEntity stage) {
     final stageIndex = forPlot.stages.indexOf(stage);
     forPlot = _replaceStage(forPlot, stage, _stageWithDates(stage,stage.started,null));
     for (var i = stageIndex+1; i < forPlot.stages.length; i++) {
@@ -69,11 +69,11 @@ class MockPlotRepository extends MockListRepository<PlotEntity> implements PlotR
     return replace(plot, newPlot);
   }
 
-  NewStageEntity _stageWithDates(NewStageEntity stage, DateTime start, DateTime end) {
-    return  NewStageEntity(id: stage.id, article: stage.article, started: start, ended: end);
+  StageEntity _stageWithDates(StageEntity stage, DateTime start, DateTime end) {
+    return  StageEntity(id: stage.id, article: stage.article, started: start, ended: end);
   }
 
-  PlotEntity _replaceStage(PlotEntity forPlot, NewStageEntity oldStage, NewStageEntity newStage) {
+  PlotEntity _replaceStage(PlotEntity forPlot, StageEntity oldStage, StageEntity newStage) {
     final stageIndex = forPlot.stages.indexOf(oldStage);
     var newStages = forPlot.stages;
     newStages.replaceRange(stageIndex,stageIndex+1, [newStage]);

@@ -2,11 +2,9 @@ import 'dart:async';
 
 import 'package:farmsmart_flutter/model/bloc/ViewModelProvider.dart';
 import 'package:farmsmart_flutter/model/bloc/plot/PlotDetailProvider.dart';
-import 'package:farmsmart_flutter/model/bloc/recommendations/RecommendationEngine.dart';
 import 'package:farmsmart_flutter/model/bloc/recommendations/RecommendationListProvider.dart';
 import 'package:farmsmart_flutter/model/model/PlotEntity.dart';
 import 'package:farmsmart_flutter/model/model/loading_status.dart';
-import 'package:farmsmart_flutter/model/repositories/crop/CropRepositoryInterface.dart';
 import 'package:farmsmart_flutter/model/repositories/plot/PlotRepositoryInterface.dart';
 import 'package:farmsmart_flutter/ui/myplot/PlotList.dart';
 import 'package:farmsmart_flutter/ui/myplot/PlotListItem.dart';
@@ -25,33 +23,26 @@ class _LocalisedStrings {
   static String addCrop() => Intl.message('Add Another Crop');
 }
 
-class _Constants {
-  static const inputScale = 10.0;
-}
-
 class PlotListProvider implements ViewModelProvider<PlotListViewModel> {
   final PlotRepositoryInterface _plotRepo;
-  final CropRepositoryInterface _cropRepo;
-  final RecommendationEngine _engine;
+  final RecommendationListProvider _recommendationsProvider;
   final String _title;
   PlotListViewModel _snapshot;
 
   PlotListProvider({
     String title,
     PlotRepositoryInterface plotRepository,
-    CropRepositoryInterface cropRepository,
-    RecommendationEngine engine,
+    RecommendationListProvider  recommendationsProvider,
   })  : this._title = title,
         this._plotRepo = plotRepository,
-        this._cropRepo = cropRepository,
-        this._engine = engine;
+        this._recommendationsProvider = recommendationsProvider;
 
   final StreamController<PlotListViewModel> _controller =
       StreamController<PlotListViewModel>.broadcast();
 
   @override
-  StreamController<PlotListViewModel> observe() {
-    return _controller;
+  Stream<PlotListViewModel> stream() {
+    return _controller.stream;
   }
 
   @override
@@ -67,7 +58,7 @@ class PlotListProvider implements ViewModelProvider<PlotListViewModel> {
   @override
   PlotListViewModel initial() {
     if (_snapshot == null) {
-      _plotRepo.observeFarm(null).listen((articles) {
+      _plotRepo.observeFarm().listen((articles) {
         _snapshot = _modelFromPlots(_controller, articles);
         _controller.sink.add(_snapshot);
       });
@@ -92,7 +83,7 @@ class PlotListProvider implements ViewModelProvider<PlotListViewModel> {
 
   void _update(StreamController controller) {
     _signalLoading(controller);
-    _plotRepo.getFarm(null);
+    _plotRepo.getFarm();
   }
 
   void _signalLoading(StreamController controller) {
@@ -105,18 +96,13 @@ class PlotListProvider implements ViewModelProvider<PlotListViewModel> {
 
   PlotListViewModel _viewModel(
       {LoadingStatus status, List<PlotListItemViewModel> items = const []}) {
-    final recommendationsProvider = RecommendationListProvider(
-        title: _LocalisedStrings.recommendations(),
-        cropRepo: _cropRepo,
-        plotRepo: _plotRepo,
-        engine: _engine);
     return PlotListViewModel(
       title: _title,
       buttonTitle: _LocalisedStrings.addCrop(),
       loadingStatus: status,
       items: items,
       refresh: () => _update(_controller),
-      recommendationsProvider: recommendationsProvider,
+      recommendationsProvider: _recommendationsProvider,
     );
   }
 }

@@ -1,18 +1,19 @@
 import 'package:farmsmart_flutter/farmsmart_localizations.dart';
 import 'package:farmsmart_flutter/model/bloc/article/ArticleListProvider.dart';
+import 'package:farmsmart_flutter/model/bloc/home/HomeViewModelProvider.dart';
 import 'package:farmsmart_flutter/model/bloc/plot/PlotListProvider.dart';
-import 'package:farmsmart_flutter/model/bloc/recommendations/RecommendationEngine.dart';
+import 'package:farmsmart_flutter/model/bloc/profile/ProfileDetailProvider.dart';
+import 'package:farmsmart_flutter/model/bloc/recommendations/RecommendationListProvider.dart';
 import 'package:farmsmart_flutter/model/bloc/transactions/ProfitLossListProvider.dart';
-import 'package:farmsmart_flutter/model/model/mock/MockRecommendation.dart';
 import 'package:farmsmart_flutter/model/repositories/article/ArticleRepositoryInterface.dart';
 import 'package:farmsmart_flutter/model/repositories/repository_provider.dart';
 import 'package:farmsmart_flutter/ui/article/ArticleList.dart';
 import 'package:farmsmart_flutter/ui/bottombar/persistent_bottom_navigation_bar.dart';
 import 'package:farmsmart_flutter/ui/bottombar/tab_navigator.dart';
-import 'package:farmsmart_flutter/ui/mockData/MockUserProfileViewModel.dart';
+import 'package:farmsmart_flutter/ui/common/ViewModelProviderBuilder.dart';
 import 'package:farmsmart_flutter/ui/playground/data/playground_datasource_impl.dart';
 import 'package:farmsmart_flutter/ui/playground/playground_view.dart';
-import 'package:farmsmart_flutter/ui/profile/UserProfile.dart';
+import 'package:farmsmart_flutter/ui/profile/Profile.dart';
 import 'package:farmsmart_flutter/ui/profitloss/ProfitLossList.dart';
 import 'package:flutter/material.dart';
 
@@ -33,16 +34,9 @@ class _Constants {
   static final communityIcon = 'assets/icons/community.png';
 }
 
-final engine = RecommendationEngine(
-  inputFactors: harryInput,
-  inputScale: 10.0,
-  weightMatrix: harryWeights,
-);
-
 class Home extends StatelessWidget {
   FarmsmartLocalizations localizations;
   final RepositoryProvider repositoryProvider;
-
   Home({
     Key key,
     this.repositoryProvider,
@@ -51,22 +45,30 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     localizations = FarmsmartLocalizations.of(context);
-
-    return PersistentBottomNavigationBar(
-      backgroundColor: _Constants.bottomBarColor,
-      tabs: tabs(),
+    return ViewModelProviderBuilder(
+      provider: HomeViewModelProvider(repositoryProvider.getProfileRepository()),
+      successBuilder: _buildSuccess,
     );
   }
 
-  List<TabNavigator> tabs() {
+  Widget _buildSuccess(
+      {BuildContext context, AsyncSnapshot<HomeViewModel> snapshot}) {
+
+    return PersistentBottomNavigationBar(
+      backgroundColor: _Constants.bottomBarColor,
+      tabs: tabs(snapshot.data),
+    );
+  }
+
+  List<TabNavigator> tabs(HomeViewModel viewModel) {
     return [
       _buildTabNavigator(
-        _buildMyPlot(),
+        _buildMyPlot(viewModel),
         _Constants.myPlotSelectedIcon,
         _Constants.myPlotIcon,
       ),
       _buildTabNavigator(
-        _buildProfitAndLoss(),
+        _buildProfitAndLoss(viewModel),
         _Constants.profitLossSelectedIcon,
         _Constants.profitLossIcon,
       ),
@@ -81,7 +83,7 @@ class Home extends StatelessWidget {
         _Constants.communityIcon,
       ),
       _buildTabNavigatorWithCircleImageWidget(
-        _buildUserProfile(),
+        _buildUserProfile(viewModel),
       ),
       _buildTabNavigator(
         _buildPlayground(),
@@ -91,19 +93,26 @@ class Home extends StatelessWidget {
     ];
   }
 
-  _buildMyPlot() {
+  _buildMyPlot(HomeViewModel viewModel) {
+    final recommendationsProvider = RecommendationListProvider(
+      title: "Recommendations",
+      heroThreshold: 0.8,
+      plotRepo: repositoryProvider.getMyPlotRepository(viewModel.currentProfileID),
+      cropRepo: repositoryProvider.getCropRepository(),
+      profileRepo: repositoryProvider.getProfileRepository(),
+      ratingRepo: repositoryProvider.getRatingsRepository(),
+    );
     return PlotList(
         provider: PlotListProvider(
             title: localizations.myPlotTab,
-            engine: engine,
-            plotRepository: repositoryProvider.getMyPlotRepository(),
-            cropRepository: repositoryProvider.getCropRepository()));
+            plotRepository: repositoryProvider.getMyPlotRepository(viewModel.currentProfileID),
+            recommendationsProvider: recommendationsProvider));
   }
 
-  _buildProfitAndLoss() {
+  _buildProfitAndLoss(HomeViewModel viewModel) {
     return ProfitLossPage(
       viewModelProvider: ProfitLossListProvider(
-        transactionsRepository: repositoryProvider.getTransactionRepository(),
+        transactionsRepository: repositoryProvider.getTransactionRepository(viewModel.currentProfileID),
         cropRepository: repositoryProvider.getCropRepository(),
       ),
     );
@@ -127,9 +136,9 @@ class Home extends StatelessWidget {
             group: ArticleCollectionGroup.chatGroups));
   }
 
-  _buildUserProfile() {
-    return UserProfile(
-      viewModel: MockUserProfileViewModel.build(),
+  _buildUserProfile(HomeViewModel viewModel) {
+    return Profile(
+      provider: ProfileDetailProvider(profileRepo: repositoryProvider.getProfileRepository(), plotRepo: repositoryProvider.getMyPlotRepository(viewModel.currentProfileID)),
     );
   }
 

@@ -38,7 +38,7 @@ enum RecordCellType {
 
 class RecordTransactionListItemViewModel {
   RecordCellType type;
-  DateTime selectedDate;
+  DateTime selectedDate = DateTime.now();
   List<String> listOfCrops = [];
   String selectedItem;
   String description;

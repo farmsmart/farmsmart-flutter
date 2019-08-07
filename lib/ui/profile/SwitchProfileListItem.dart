@@ -1,3 +1,4 @@
+import 'package:farmsmart_flutter/model/model/ImageURLProvider.dart';
 import 'package:farmsmart_flutter/ui/common/image_provider_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -15,38 +16,40 @@ class _Constants {
       EdgeInsets.symmetric(horizontal: 32, vertical: 15);
 }
 
-class SwitchProfileItemsViewModel {
+class SwitchProfileListItemViewModel {
   final String title;
-  ImageProvider image;
+  ImageURLProvider image;
   final String icon;
-  Function itemAction;
+  Function tapAction;
+  Function switchAction;
   bool isSelected;
 
-  SwitchProfileItemsViewModel({
+  SwitchProfileListItemViewModel({
     this.title,
     this.image,
     this.icon,
-    this.itemAction,
-    this.isSelected,
+    this.tapAction,
+    this.switchAction,
+    this.isSelected = false,
   });
 }
 
-class SwitchProfileItemsStyle {
+class SwitchProfileListItemStyle {
   final TextStyle titleTextStyle;
 
-  const SwitchProfileItemsStyle({
+  const SwitchProfileListItemStyle({
     this.titleTextStyle,
   });
 
-  SwitchProfileItemsStyle copyWith({
+  SwitchProfileListItemStyle copyWith({
     TextStyle titleTextStyle,
   }) {
-    return SwitchProfileItemsStyle(
+    return SwitchProfileListItemStyle(
         titleTextStyle: titleTextStyle ?? this.titleTextStyle);
   }
 }
 
-class _DefaultStyle extends SwitchProfileItemsStyle {
+class _DefaultStyle extends SwitchProfileListItemStyle {
   final TextStyle titleTextStyle = const TextStyle(
     color: Color(0xff1a1b46),
     fontSize: 17,
@@ -59,16 +62,16 @@ class _DefaultStyle extends SwitchProfileItemsStyle {
   });
 }
 
-const SwitchProfileItemsStyle _defaultStyle = const _DefaultStyle();
+const SwitchProfileListItemStyle _defaultStyle = const _DefaultStyle();
 
-class SwitchProfileItems extends StatelessWidget {
-  final SwitchProfileItemsViewModel _viewModel;
-  final SwitchProfileItemsStyle _style;
+class SwitchProfileListItem extends StatelessWidget {
+  final SwitchProfileListItemViewModel _viewModel;
+  final SwitchProfileListItemStyle _style;
 
-  const SwitchProfileItems({
+  const SwitchProfileListItem({
     Key key,
-    SwitchProfileItemsViewModel viewModel,
-    SwitchProfileItemsStyle style = _defaultStyle,
+    SwitchProfileListItemViewModel viewModel,
+    SwitchProfileListItemStyle style = _defaultStyle,
   })  : this._viewModel = viewModel,
         this._style = style,
         super(key: key);
@@ -83,13 +86,9 @@ class SwitchProfileItems extends StatelessWidget {
       leading: ClipOval(
         child: Stack(
           children: <Widget>[
-            Image(
-              image: _viewModel.image,
-              height: _Constants.imageSize,
-              width: _Constants.imageSize,
-              fit: BoxFit.cover,
-              alignment: Alignment.topCenter,
-            ),
+            ImageProviderView(imageURLProvider: _viewModel.image,  height: _Constants.imageSize,
+              width: _Constants.imageSize,)
+            ,
           ],
         ),
       ),
@@ -98,7 +97,7 @@ class SwitchProfileItems extends StatelessWidget {
         height: _Constants.iconSize,
       ),
       contentPadding: _Constants.iconEdgePadding,
-      onTap: () => _viewModel.itemAction(),
+      onTap: () => _viewModel.tapAction(),
     );
   }
 }

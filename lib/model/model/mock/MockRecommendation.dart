@@ -1,3 +1,5 @@
+import 'package:farmsmart_flutter/model/model/FactorEntity.dart';
+
 final harryInput = {
   "Skill Level": 0.0,
   "Locations": 2.0,
@@ -8,8 +10,9 @@ final harryInput = {
   "Month": 6.0,
   "Intention": 0.0,
 };
-final harryWeights = {
-  "Beetroot": {
+
+final harryWeights = [
+  FactorEntity("Beetroot", 1.0, {
     "Skill Level": 0.4,
     "Locations": 0.3,
     "Agrozone": 0.3,
@@ -18,8 +21,8 @@ final harryWeights = {
     "Irrigation": 0.1,
     "Month": 0.9,
     "Intention": 0.8,
-  },
-  "Chillies": {
+  }),
+  FactorEntity("Chillies", 1.0, {
     "Skill Level": 0.4,
     "Locations": 0.3,
     "Agrozone": 0.3,
@@ -28,8 +31,8 @@ final harryWeights = {
     "Irrigation": 0.4,
     "Month": 0.9,
     "Intention": 0.8,
-  },
-  "Cowpeas": {
+  }),
+  FactorEntity("Cowpeas", 1.0, {
     "Skill Level": 0.8,
     "Locations": 0.8,
     "Agrozone": 0.3,
@@ -38,8 +41,8 @@ final harryWeights = {
     "Irrigation": 0.1,
     "Month": 0.9,
     "Intention": 0.8,
-  },
-  "Cucumber": {
+  }),
+  FactorEntity("Cucumber", 1.0, {
     "Skill Level": 0.4,
     "Locations": 0.8,
     "Agrozone": 0.3,
@@ -48,8 +51,8 @@ final harryWeights = {
     "Irrigation": 0.1,
     "Month": 0.9,
     "Intention": 0.8,
-  },
-  "Small Urban Rotation (50m2)": {
+  }),
+  FactorEntity("Small Urban Rotation (50m2)", 1.0, {
     "Skill Level": 0.4,
     "Locations": 0.3,
     "Agrozone": 0.3,
@@ -58,8 +61,8 @@ final harryWeights = {
     "Irrigation": 0.8,
     "Month": 0.9,
     "Intention": 0.8,
-  },
-  "Sorghum": {
+  }),
+  FactorEntity("Sorghum", 1.0, {
     "Skill Level": 0.4,
     "Locations": 0.3,
     "Agrozone": 0.3,
@@ -68,8 +71,8 @@ final harryWeights = {
     "Irrigation": 0.1,
     "Month": 0.9,
     "Intention": 0.3,
-  },
-   "Tomatoes": {
+  }),
+  FactorEntity("Tomatoes", 1.0, {
     "Skill Level": 0.0,
     "Locations": 0.0,
     "Agrozone": 0.0,
@@ -78,6 +81,5 @@ final harryWeights = {
     "Irrigation": 0.9,
     "Month": 0.0,
     "Intention": 0.0,
-  }
-  
-};
+  }),
+];

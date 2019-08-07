@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:farmsmart_flutter/model/model/NewStageEntity.dart';
+import 'package:farmsmart_flutter/model/model/StageEntity.dart';
 
 enum StageStatus {
     upcoming,
@@ -13,7 +13,7 @@ class StageBusinessLogic {
   static final _emptyProgress = 0.05;
   static final _fullProgress = 1.0;
 
-  double progress(List<NewStageEntity> stages) {
+  double progress(List<StageEntity> stages) {
     if (isComplete(stages.last)) {
       return  _fullProgress;
     }
@@ -21,7 +21,7 @@ class StageBusinessLogic {
     return max(_emptyProgress,currentIndex.toDouble()  / (stages.length).toDouble());
   }
 
-  NewStageEntity currentStage(List<NewStageEntity> stages) {
+  StageEntity currentStage(List<StageEntity> stages) {
     for (var stage in stages) {
       if (isInProgress(stage) || !isStarted(stage)) {
         return stage;
@@ -30,7 +30,7 @@ class StageBusinessLogic {
     return stages.last;
   }
 
-  int currentStageIndex(List<NewStageEntity> stages) {
+  int currentStageIndex(List<StageEntity> stages) {
     final stage = currentStage(stages);
     for (var i = 0; i < stages.length; i++) {
       if (stages[i] == stage) {
@@ -40,7 +40,7 @@ class StageBusinessLogic {
     return 0;
   }
 
-  int daysSinceStarted(List<NewStageEntity> stages) {
+  int daysSinceStarted(List<StageEntity> stages) {
     final firstStage = stages.first;
     final started = firstStage.started;
     if (started != null) {
@@ -49,7 +49,7 @@ class StageBusinessLogic {
     return 0;
   }
 
-  StageStatus status(NewStageEntity stage) {
+  StageStatus status(StageEntity stage) {
     if(isInProgress(stage)) {
         return StageStatus.inProgress;
     }
@@ -59,7 +59,7 @@ class StageBusinessLogic {
     return StageStatus.upcoming;
   }
 
-  NewStageEntity nextStage(NewStageEntity stage, List<NewStageEntity> stages) {
+  StageEntity nextStage(StageEntity stage, List<StageEntity> stages) {
     bool next = false;
     for (var stageEntry in stages) {
       if(next){
@@ -72,37 +72,37 @@ class StageBusinessLogic {
     return null;
   }
 
-  NewStageEntity prevStage(NewStageEntity stage, List<NewStageEntity> stages) {
+  StageEntity prevStage(StageEntity stage, List<StageEntity> stages) {
     return nextStage(stage, stages.reversed.toList());
   }
 
 
-  bool isInProgress(NewStageEntity stage) {
+  bool isInProgress(StageEntity stage) {
     if (stage == null) {
       return false;
     }
     return isStarted(stage) && !isComplete(stage);
   }
 
-  bool isStarted(NewStageEntity stage) {
+  bool isStarted(StageEntity stage) {
     if (stage == null) {
       return false;
     }
     return (stage.started  != null) && stage.started.isBefore(DateTime.now());
   }
 
-  bool isComplete(NewStageEntity stage) {
+  bool isComplete(StageEntity stage) {
     if (stage == null) {
       return false;
     }
     return (stage.ended != null) && stage.ended.isBefore(DateTime.now());
   }
 
-  bool canComplete(NewStageEntity stage, List<NewStageEntity> stages) {
+  bool canComplete(StageEntity stage, List<StageEntity> stages) {
       return isInProgress(stage);
   }
 
-  bool canBegin(NewStageEntity stage, List<NewStageEntity> stages) {
+  bool canBegin(StageEntity stage, List<StageEntity> stages) {
     if (stage == null) {
       return false;
     }
@@ -113,7 +113,7 @@ class StageBusinessLogic {
     return isComplete(prevStage(stage, stages)) && !isStarted(stage);
   }
 
-  bool canRevert(NewStageEntity stage, List<NewStageEntity> stages) {
+  bool canRevert(StageEntity stage, List<StageEntity> stages) {
     final next = nextStage(stage, stages);
     if (next == null){
       return isComplete(stage);

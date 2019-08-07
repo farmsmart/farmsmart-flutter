@@ -25,14 +25,13 @@ class _Fields {
 }
 
 class FlamelinkArticleTransformer
-    implements ObjectTransformer<DocumentSnapshot, ArticleEntity> {
+    extends ObjectTransformer<DocumentSnapshot, ArticleEntity> {
   final ObjectTransformer<DocumentSnapshot, FlamelinkMeta> _metaTransformer;
   final FlameLink _cms;
 
   FlamelinkArticleTransformer(
       {FlameLink cms,
-      ObjectTransformer<DocumentSnapshot, FlamelinkMeta> metaTransformer =
-          const FlamelinkMetaTransformer()})
+      ObjectTransformer<DocumentSnapshot, FlamelinkMeta> metaTransformer})
       : this._cms = cms,
         this._metaTransformer = metaTransformer;
 
