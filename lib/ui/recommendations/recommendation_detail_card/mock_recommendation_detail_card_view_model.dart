@@ -1,59 +1,58 @@
 import 'package:farmsmart_flutter/model/model/mock/MockString.dart';
-import 'package:flutter/widgets.dart';
+import 'package:farmsmart_flutter/ui/recommendations/recommendation_card/recommendation_card_view_model.dart';
 
-import 'recommendation_detail_card.dart';
 
 class MockRecommendationDetailCardViewModel {
-  static RecommendationDetailCardViewModel buildAddToYourPlotState() {
-    return RecommendationDetailCardViewModel(
+  static RecommendationCardViewModel buildAddToYourPlotState() {
+    return RecommendationCardViewModel(
       title: _mockTitle.random(),
       subtitle: _mockSubtitle.random(),
-      action: () {},
-      actionText: 'Add To Your Plot',
+      addAction: () {},
+      addActionText: 'Add To Your Plot',
       isAdded: false,
       image: _mockFutureString(_mockImageUrl.random()),
     );
   }
 
-  static RecommendationDetailCardViewModel buildAddedToYourPlot() {
-    return RecommendationDetailCardViewModel(
+  static RecommendationCardViewModel buildAddedToYourPlot() {
+    return RecommendationCardViewModel(
       title: _mockTitle.random(),
       subtitle: _mockSubtitle.random(),
-      action: () {},
-      actionText: 'Added To Your Plot',
+      addAction: () {},
+      addActionText: 'Added To Your Plot',
       isAdded: true,
       image: _mockFutureString(_mockImageUrl.random()),
     );
   }
 
-  static RecommendationDetailCardViewModel buildWithLargeStrings() {
-    return RecommendationDetailCardViewModel(
+  static RecommendationCardViewModel buildWithLargeStrings() {
+    return RecommendationCardViewModel(
       title: _mockLargeStrings.random(),
       subtitle: _mockLargeStrings.random(),
-      action: () {},
-      actionText: _mockLargeStrings.random(),
+      addAction: () {},
+      addActionText: _mockLargeStrings.random(),
       isAdded: true,
       image: _mockFutureString(_mockImageUrl.random()),
     );
   }
 
-  static RecommendationDetailCardViewModel buildForTestAddedToYourPlot() {
-    return RecommendationDetailCardViewModel(
+  static RecommendationCardViewModel buildForTestAddedToYourPlot() {
+    return RecommendationCardViewModel(
       title: 'Title',
       subtitle: 'Subtitle',
-      action: () {},
-      actionText: 'Action Text',
+      addAction: () {},
+      addActionText: 'Action Text',
       isAdded: true,
       image: _mockFutureString('assets/raw/placeholder.webp'),
     );
   }
 
-  static RecommendationDetailCardViewModel buildForTestAddToYourPlot() {
-    return RecommendationDetailCardViewModel(
+  static RecommendationCardViewModel buildForTestAddToYourPlot() {
+    return RecommendationCardViewModel(
       title: 'Title',
       subtitle: 'Subtitle',
-      action: () {},
-      actionText: 'Action Text',
+      addAction: () {},
+      addActionText: 'Action Text',
       isAdded: false,
       image: _mockFutureString('assets/raw/placeholder.webp'),
     );

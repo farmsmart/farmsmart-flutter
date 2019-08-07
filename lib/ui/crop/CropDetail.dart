@@ -71,9 +71,9 @@ class CropDetail extends StatelessWidget implements ListViewSection {
         super(key: key);
 
   factory CropDetail({ViewModelProvider<CropDetailViewModel> provider,
-    CropDetailStyle style = _defaultStyle,}) {
+    CropDetailStyle style = _defaultStyle, Widget header}) {
       final listBuilder =  SectionedListView(sections: []);
-      return CropDetail._(provider: provider,style: style, listBuilder: listBuilder,);
+      return CropDetail._(provider: provider,style: style, listBuilder: listBuilder, header: header,);
   }
 
   @override
