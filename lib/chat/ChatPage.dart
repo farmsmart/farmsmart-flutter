@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 class _Constants {
   static const defaultPathToJSONFile =
-      "assets/responses/create_account_mock_form.json";
+      "assets/responses/farmsmart_chat_ui_flow.json";
 }
 
 class ChatPage extends StatelessWidget {

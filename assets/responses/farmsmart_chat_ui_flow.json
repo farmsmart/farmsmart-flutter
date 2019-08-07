@@ -1,0 +1,338 @@
+{
+  "uid": "1",
+  "title": "Chatbot",
+  "subtitle": "Welcome to FarmSmart chatbot!",
+  "origin": "com.wearemobilefirst.farmsmart",
+  "formResponse": {
+    "type": "com.google.firebase.database",
+    "uri": "profiles/%UserID/",
+    "body": {
+      "businessCard": {
+        "uri": "%BusinessCardImage",
+        "mimeType": "image/jpg"
+      },
+      "platformDevelop": "%PlatformDevelop",
+      "name": "%Nickname",
+      "email": "%Email",
+      "phoneNumber": "%PhoneNumber",
+      "loginType": "%LogInType",
+      "willUsersCreateProfile": "%WillUsersCreateProfile",
+      "willAppBeConnectedToWebsite": "%WillAppBeConnectedToWebsite",
+      "needHelpForDesign": "%NeedHelpForDesign"
+    }
+  },
+  "items": [
+    {
+      "text": "Hi! I'm the FarmSmart chatbot, Jata",
+      "sentiment": "Positive"
+    },
+    {
+      "text": "I'm here to set up your profile and recommend the best crops for your farm",
+      "sentiment": "Positive"
+    },
+    {
+      "text": "What is your name?",
+      "inputRequest": {
+        "type": "com.wearemobilefirst.String",
+        "uri": "%Name",
+        "localStore": false,
+        "inline": true,
+        "title": "Name?",
+        "validationRegex": "^[a-zA-Z]+$",
+        "responseText": "My name is %Name",
+        "optional": false
+      }
+    },
+    {
+      "text": "Nice to meet you %Name",
+      "sentiment": "Positive"
+    },
+    {
+      "text": "Now I'll ask a few questions to help me recommend the best crops for you",
+      "sentiment": "Positive"
+    },
+    {
+      "text": "What is your farming skill level?",
+      "inputRequest": {
+        "type": "com.wearemobilefirst.MultiChoice",
+        "inline": true,
+        "uri": "%SkillLevel",
+        "localStore": true,
+        "responseText": "",
+        "optional": false,
+        "args": {
+          "maxSelection": 1,
+          "options": [
+            {
+              "id": "OptionKey1",
+              "title": "Beginner",
+              "description": "No experience with farming",
+              "responseText": "I have no experience farming"
+            },
+            {
+              "id": "OptionKey2",
+              "title": "Intermediate",
+              "description": "Some experience farming",
+              "responseText": "I have farming knowledge"
+            },
+            {
+              "id": "OptionKey3",
+              "title": "Advanced",
+              "description": "Experienced farmer",
+              "responseText": "I have experience farming"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "text": "Where is your farm?",
+      "inputRequest": {
+        "type": "com.wearemobilefirst.String",
+        "uri": "%FarmLocation",
+        "localStore": false,
+        "responseText": "",
+        "inline": true,
+        "validationRegex": "^[a-zA-Z]+$",
+        "optional": false
+      }
+    },
+    {
+      "text": "What is your agro-ecological zone?",
+      "inputRequest": {
+        "type": "com.wearemobilefirst.MultiChoice",
+        "inline": true,
+        "uri": "%AgroEcoZone",
+        "localStore": true,
+        "responseText": "",
+        "optional": false,
+        "args": {
+          "maxSelection": 1,
+          "options": [
+            {
+              "id": "OptionKey1",
+              "title": "Upper midlands"
+            },
+            {
+              "id": "OptionKey2",
+              "title": "Lowland midlands"
+            },
+            {
+              "id": "OptionKey3",
+              "title": "Upper highlands"
+            },
+            {
+              "id": "OptionKey4",
+              "title": "Lowland highlands"
+            },
+            {
+              "id": "OptionKey5",
+              "title": "Inland lowlands"
+            },
+            {
+              "id": "OptionKey6",
+              "title": "Coastal lowlands"
+            },
+            {
+              "id": "OptionKey7",
+              "title": "Don't know"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "text": "What is the size of your land?",
+      "inputRequest": {
+        "type": "com.wearemobilefirst.MultiChoice",
+        "uri": "%LandSize",
+        "inline": true,
+        "localStore": false,
+        "responseText": "",
+        "optional": false,
+        "args": {
+          "maxSelection": 1,
+          "options": [
+            {
+              "id": "OptionKey1",
+              "title": "Urban garden"
+            },
+            {
+              "id": "OptionKey2",
+              "title": "Less than 1/4 acre"
+            },
+            {
+              "id": "OptionKey3",
+              "title": "1/4 - 1/2 acre"
+            },
+            {
+              "id": "OptionKey4",
+              "title": "1/2 - 1 acre"
+            },
+            {
+              "id": "OptionKey5",
+              "title": "More than 1 acre"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "text": "Why are you wanting to grow food on your farm?",
+      "inputRequest": {
+        "type": "com.wearemobilefirst.MultiChoice",
+        "uri": "%WhyGrowingFood",
+        "inline": true,
+        "localStore": false,
+        "responseText": "",
+        "optional": false,
+        "args": {
+          "maxSelection": 1,
+          "options": [
+            {
+              "id": "OptionKey1",
+              "title": "For money"
+            },
+            {
+              "id": "OptionKey2",
+              "title": "For my family"
+            },
+            {
+              "id": "OptionKey1",
+              "title": "For both"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "text": "How many people are in your household?",
+      "inputRequest": {
+        "type": "com.wearemobilefirst.MultiChoice",
+        "uri": "%PeopleInHousehold",
+        "inline": true,
+        "localStore": false,
+        "responseText": "",
+        "optional": false,
+        "args": {
+          "maxSelection": 1,
+          "options": [
+            {
+              "id": "OptionKey1",
+              "title": "2"
+            },
+            {
+              "id": "OptionKey2",
+              "title": "3 - 5"
+            },
+            {
+              "id": "OptionKey3",
+              "title": "5 +"
+            },
+            {
+              "id": "OptionKey4",
+              "title": "Skip"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "text": "What type of soil do you have?",
+      "inputRequest": {
+        "type": "com.wearemobilefirst.MultiChoice",
+        "uri": "%SoilType",
+        "inline": true,
+        "localStore": false,
+        "responseText": "",
+        "optional": false,
+        "args": {
+          "maxSelection": 1,
+          "options": [
+            {
+              "id": "OptionKey1",
+              "title": "Sandy"
+            },
+            {
+              "id": "OptionKey2",
+              "title": "Sandy Clay"
+            },
+            {
+              "id": "OptionKey3",
+              "title": "Sandy loam"
+            },
+            {
+              "id": "OptionKey4",
+              "title": "Silt"
+            },
+            {
+              "id": "OptionKey5",
+              "title": "Silty loam"
+            },
+            {
+              "id": "OptionKey6",
+              "title": "Silty clay"
+            },
+            {
+              "id": "OptionKey7",
+              "title": "Clay"
+            },
+            {
+              "id": "OptionKey8",
+              "title": "Clay loam"
+            },
+            {
+              "id": "OptionKey9",
+              "title": "Loam"
+            },
+            {
+              "id": "OptionKey10",
+              "title": "I don't know"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "text": "When do you intend to start planting?",
+      "inputRequest": {
+        "type": "com.wearemobilefirst.String",
+        "uri": "%StartDate",
+        "localStore": false,
+        "inline": true,
+        "title": "",
+        "validationRegex": "((0[1-9]|[12]\\d|3[01])/(0[1-9]|1[0-2])/[12]\\d{3})",
+        "responseText": "",
+        "optional": false
+      }
+    },
+    {
+      "text": "Will you be using irrigation on your farm?",
+      "inputRequest": {
+        "type": "com.wearemobilefirst.MultiChoice",
+        "uri": "%UsingIrrigation",
+        "inline": true,
+        "localStore": false,
+        "responseText": "",
+        "optional": false,
+        "args": {
+          "maxSelection": 1,
+          "options": [
+            {
+              "id": "OptionKey1",
+              "title": "Yes"
+            },
+            {
+              "id": "OptionKey2",
+              "title": "No"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "text": "Almost done! Now I want to confirm the information you've given me",
+      "renderHint": "center"
+    }
+  ]
+}
