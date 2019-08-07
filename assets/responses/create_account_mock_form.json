@@ -66,18 +66,6 @@
       }
     },
     {
-      "text": "We would like to have your physical business card on our database. If you have one, please take a photo.",
-      "inputRequest": {
-        "type": "com.wearemobilefirst.Image",
-        "uri": "%BusinessCardImage",
-        "inline": true,
-        "localStore": true,
-        "title": "Upload Image",
-        "responseText": "Image uploaded",
-        "optional": true
-      }
-    },
-    {
       "text": "Thanks! Now let’s start with a few questions to have a clearer view of what you want!"
     },
     {

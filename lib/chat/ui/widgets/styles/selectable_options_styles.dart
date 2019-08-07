@@ -38,5 +38,6 @@ class SelectableOptionsStyles {
     optionTextAlign: _Constants.defaultOptionTextAlign,
     optionDecoration: _Constants.defaultOptionDecoration,
     optionMargin: _Constants.defaultOptionMargin,
+    optionPadding: _Constants.defaultOptionPadding,
   );
 }
