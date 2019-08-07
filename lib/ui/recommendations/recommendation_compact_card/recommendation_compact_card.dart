@@ -34,6 +34,7 @@ class RecommendationCompactCardStyle {
   final double overlayIconHeight;
   final double overlayIconWidth;
   final String overlayIcon;
+  final Color addedOverlayColor;
 
   const RecommendationCompactCardStyle({
     this.titleTextStyle,
@@ -50,6 +51,7 @@ class RecommendationCompactCardStyle {
     this.overlayIconHeight,
     this.overlayIconWidth,
     this.overlayIcon,
+    this.addedOverlayColor,
   });
 
   RecommendationCompactCardStyle copyWith({
@@ -67,6 +69,7 @@ class RecommendationCompactCardStyle {
     double overlayIconHeight,
     double overlayIconWidth,
     String overlayIcon,
+    Color addedOverlayColor,
   }) {
     return RecommendationCompactCardStyle(
       titleTextStyle: titleTextStyle ?? this.titleTextStyle,
@@ -86,6 +89,7 @@ class RecommendationCompactCardStyle {
       overlayIconHeight: overlayIconHeight ?? this.overlayIconHeight,
       overlayIconWidth: overlayIconWidth ?? this.overlayIconWidth,
       overlayIcon: overlayIcon ?? this.overlayIcon,
+      addedOverlayColor: addedOverlayColor ?? this.addedOverlayColor,
     );
   }
 }
@@ -104,8 +108,10 @@ class _DefaultStyle extends RecommendationCompactCardStyle {
     color: Color(0xff767690),
     fontSize: 14,
   );
-  final RoundedButtonStatefulStyle leftActionButtonStyle = defaultRoundedButtonStyle;
-  final RoundedButtonStatefulStyle rightActionButtonStyle = defaultRoundedButtonStyle;
+  final RoundedButtonStatefulStyle leftActionButtonStyle =
+      defaultRoundedButtonStyle;
+  final RoundedButtonStatefulStyle rightActionButtonStyle =
+      defaultRoundedButtonStyle;
   final double imageHeight = 80;
   final BorderRadiusGeometry imageBorderRadius =
       const BorderRadius.all(Radius.circular(12.0));
@@ -114,6 +120,7 @@ class _DefaultStyle extends RecommendationCompactCardStyle {
   final EdgeInsets contentPadding = const EdgeInsets.all(32.0);
 
   final Color overlayColor = const Color(0x1924d900);
+  final Color addedOverlayColor = const Color(0x3325df0c);
   final double overlayIconHeight = 26;
   final double overlayIconWidth = 26;
 
@@ -148,6 +155,7 @@ class _DefaultStyle extends RecommendationCompactCardStyle {
       buttonShape: BoxShape.rectangle,
     ),
   );
+
   const _DefaultStyle(
       {TextStyle titleTextStyle,
       TextStyle subtitleTextStyle,
@@ -220,7 +228,8 @@ class RecommendationCompactCard extends StatelessWidget {
         overlayIcon: _style.overlayIcon,
         overlayIconHeight: _style.overlayIconHeight,
         overlayIconWidth: _style.overlayIconWidth,
-        overlayColor: _style.overlayColor,
+        overlayColor:
+            _viewModel.isAdded ? _style.addedOverlayColor : _style.overlayColor,
         showOverlayIcon: _viewModel.isAdded,
       ),
     );
@@ -302,7 +311,8 @@ class RecommendationCompactCard extends StatelessWidget {
           ),
           Expanded(
             child: Container(
-              decoration: _viewModel.isAdded ? _style.rightActionBoxDecoration : null,
+              decoration:
+                  _viewModel.isAdded ? _style.rightActionBoxDecoration : null,
               child: RoundedButtonStateful(
                 style: _style.rightActionButtonStyle,
                 viewModel: RoundedButtonStatefulViewModel(
