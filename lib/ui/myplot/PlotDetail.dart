@@ -33,21 +33,24 @@ class _LocalisedStrings {
 
   static removeDialogDescription() =>
       Intl.message('Are you sure you want delete the crop?');
+  static viewMore() => Intl.message('Learn more about');
 }
 
 abstract class PlotDetailStyle {
   final TextStyle titleTextStyle;
   final double stageSectionHeight;
   final EdgeInsets cardPadding;
+  final EdgeInsets edgePadding;
 
   const PlotDetailStyle(
-      this.titleTextStyle, this.stageSectionHeight, this.cardPadding);
+      this.titleTextStyle, this.stageSectionHeight, this.cardPadding, this.edgePadding);
 }
 
 class _DefaultStyle implements PlotDetailStyle {
   final TextStyle titleTextStyle = null;
   final double stageSectionHeight = 162;
   final EdgeInsets cardPadding = const EdgeInsets.all(8.0);
+  final EdgeInsets edgePadding = const EdgeInsets.symmetric(horizontal: 32.0, vertical: 12.0);
 
   const _DefaultStyle();
 }
@@ -117,6 +120,7 @@ class _PlotDetailState extends State<PlotDetail> {
     widget._articleDetail = ArticleDetail(
       viewModel: articleViewModel,
       articleHeader: Container(),
+      articleFooter: _viewCropDetailsButton(context,viewModel),
     );
     final topSection = HeaderAndFooterListView(
       headers: <Widget>[header, stages],
@@ -130,7 +134,7 @@ class _PlotDetailState extends State<PlotDetail> {
             sections: [topSection, widget._articleDetail],
           );
           return Scaffold(
-              appBar: _buildAppBar(context, viewModel), body: sectionedList);
+              appBar: _buildAppBar(context, viewModel), body: sectionedList,);
         });
   }
 
@@ -154,6 +158,21 @@ class _PlotDetailState extends State<PlotDetail> {
     return ContextualAppBar(
       moreAction: () => _moreTapped(_moreMenu(viewModel)),
     ).build(context);
+  }
+
+  Widget _viewCropDetailsButton( BuildContext context, PlotDetailViewModel viewModel) {
+    final buttonViewModel = RoundedButtonViewModel(
+        title: _LocalisedStrings.viewMore() + " " + viewModel.title,
+        onTap: () {
+          _tappedDetail(context: context,provider: viewModel.detailProvider);
+        });
+    return Padding(
+      padding: widget._style.edgePadding,
+      child: RoundedButton(
+        viewModel: buttonViewModel,
+        style: RoundedButtonStyle.actionSheetLargeRoundedButton(),
+      ),
+    );
   }
 
   void _moreTapped(ActionSheet sheet) {
