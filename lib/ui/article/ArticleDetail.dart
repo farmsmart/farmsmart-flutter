@@ -71,7 +71,7 @@ class _DefaultStyle implements ArticleDetailStyle {
       const EdgeInsets.only(left: 34.0, right: 34.0, top: 15.0, bottom: 20.0);
   final EdgeInsets leftRightPadding =
       const EdgeInsets.only(left: 32.0, right: 32.0);
-  final EdgeInsets bodyPadding = const EdgeInsets.only(left: 32.5, right: 45.0);
+  final EdgeInsets bodyPadding = const EdgeInsets.only(left: 32.0, right: 32.0);
 
   final double spaceBetweenDataAndImage = 36;
   final double spaceBetweenElements = 41;
