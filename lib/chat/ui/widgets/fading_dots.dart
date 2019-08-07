@@ -9,6 +9,15 @@ class _Constants {
   static const _defaultSize = 6.0;
   static const _defaultSpaceBetweenDots = 5.0;
   static const _defaultDotColor = Color(0xFF767690);
+
+  static const double _delayFactorZero = .0;
+  static const double _delayFactorTwo = .2;
+  static const double _delayFactorFour = .4;
+  static const double _beginAlpha = 0.0;
+  static const double _endAlpha = 1.0;
+  static const int _firstIndex = 0;
+  static const int _secondIndex = 1;
+  static const int _thirdIndex = 2;
 }
 
 class FadingDotsStyle {
@@ -70,15 +79,6 @@ class FadingDots extends StatefulWidget {
 
 class _FadingDotsState extends State<FadingDots>
     with SingleTickerProviderStateMixin {
-  static const double _delayFactorZero = .0;
-  static const double _delayFactorTwo = .2;
-  static const double _delayFactorFour = .4;
-  static const double _beginAlpha = 0.0;
-  static const double _endAlpha = 1.0;
-  static const int _firstIndex = 0;
-  static const int _secondIndex = 1;
-  static const int _thirdIndex = 2;
-
   AnimationController _fadeController;
 
   @override
@@ -101,11 +101,20 @@ class _FadingDotsState extends State<FadingDots>
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
-        _circle(_firstIndex, _delayFactorZero),
+        _circle(
+          _Constants._firstIndex,
+          _Constants._delayFactorZero,
+        ),
         _sizedBox(),
-        _circle(_secondIndex, _delayFactorTwo),
+        _circle(
+          _Constants._secondIndex,
+          _Constants._delayFactorTwo,
+        ),
         _sizedBox(),
-        _circle(_thirdIndex, _delayFactorFour),
+        _circle(
+          _Constants._thirdIndex,
+          _Constants._delayFactorFour,
+        ),
       ],
     );
   }
@@ -117,8 +126,8 @@ class _FadingDotsState extends State<FadingDots>
   Widget _circle(int index, double delay) {
     return FadeTransition(
       opacity: DelayTween(
-        begin: _beginAlpha,
-        end: _endAlpha,
+        begin: _Constants._beginAlpha,
+        end: _Constants._endAlpha,
         delay: delay,
       ).animate(_fadeController),
       child: SizedBox.fromSize(
