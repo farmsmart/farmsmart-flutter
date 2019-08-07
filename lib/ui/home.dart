@@ -16,6 +16,7 @@ import 'package:farmsmart_flutter/ui/playground/playground_view.dart';
 import 'package:farmsmart_flutter/ui/profile/Profile.dart';
 import 'package:farmsmart_flutter/ui/profitloss/ProfitLossList.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import 'article/ArticleListStyles.dart';
 import 'myplot/PlotList.dart';
@@ -34,9 +35,16 @@ class _Constants {
   static final communityIcon = 'assets/icons/community.png';
 }
 
+class _LocalisedStrings {
+  static relatedArticles() => Intl.message('Related articles');
+
+  static relatedGroups() => Intl.message('Related groups');
+}
+
 class Home extends StatelessWidget {
   FarmsmartLocalizations localizations;
   final RepositoryProvider repositoryProvider;
+
   Home({
     Key key,
     this.repositoryProvider,
@@ -46,14 +54,14 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     localizations = FarmsmartLocalizations.of(context);
     return ViewModelProviderBuilder(
-      provider: HomeViewModelProvider(repositoryProvider.getProfileRepository()),
+      provider:
+          HomeViewModelProvider(repositoryProvider.getProfileRepository()),
       successBuilder: _buildSuccess,
     );
   }
 
   Widget _buildSuccess(
       {BuildContext context, AsyncSnapshot<HomeViewModel> snapshot}) {
-
     return PersistentBottomNavigationBar(
       backgroundColor: _Constants.bottomBarColor,
       tabs: tabs(snapshot.data),
@@ -97,7 +105,8 @@ class Home extends StatelessWidget {
     final recommendationsProvider = RecommendationListProvider(
       title: "Recommendations",
       heroThreshold: 0.8,
-      plotRepo: repositoryProvider.getMyPlotRepository(viewModel.currentProfileID),
+      plotRepo:
+          repositoryProvider.getMyPlotRepository(viewModel.currentProfileID),
       cropRepo: repositoryProvider.getCropRepository(),
       profileRepo: repositoryProvider.getProfileRepository(),
       ratingRepo: repositoryProvider.getRatingsRepository(),
@@ -105,14 +114,16 @@ class Home extends StatelessWidget {
     return PlotList(
         provider: PlotListProvider(
             title: localizations.myPlotTab,
-            plotRepository: repositoryProvider.getMyPlotRepository(viewModel.currentProfileID),
+            plotRepository: repositoryProvider
+                .getMyPlotRepository(viewModel.currentProfileID),
             recommendationsProvider: recommendationsProvider));
   }
 
   _buildProfitAndLoss(HomeViewModel viewModel) {
     return ProfitLossPage(
       viewModelProvider: ProfitLossListProvider(
-        transactionsRepository: repositoryProvider.getTransactionRepository(viewModel.currentProfileID),
+        transactionsRepository: repositoryProvider
+            .getTransactionRepository(viewModel.currentProfileID),
         cropRepository: repositoryProvider.getCropRepository(),
       ),
     );
@@ -120,25 +131,34 @@ class Home extends StatelessWidget {
 
   _buildDiscover() {
     return ArticleList(
-        style: ArticleListStyles.buildForDiscover(),
-        viewModelProvider: ArticleListProvider(
-            title: localizations.discoverTab,
-            repository: repositoryProvider.getArticleRepository(),
-            group: ArticleCollectionGroup.discovery));
+      style: ArticleListStyles.buildForDiscover(),
+      viewModelProvider: ArticleListProvider(
+        title: localizations.discoverTab,
+        repository: repositoryProvider.getArticleRepository(),
+        group: ArticleCollectionGroup.discovery,
+        relatedTitle: _LocalisedStrings.relatedArticles(),
+      ),
+    );
   }
 
   _buildCommunity() {
     return ArticleList(
-        style: ArticleListStyles.buildForCommunity(),
-        viewModelProvider: ArticleListProvider(
-            title: localizations.communityTab,
-            repository: repositoryProvider.getArticleRepository(),
-            group: ArticleCollectionGroup.chatGroups));
+      style: ArticleListStyles.buildForCommunity(),
+      viewModelProvider: ArticleListProvider(
+        title: localizations.communityTab,
+        repository: repositoryProvider.getArticleRepository(),
+        group: ArticleCollectionGroup.chatGroups,
+        relatedTitle: _LocalisedStrings.relatedGroups(),
+      ),
+    );
   }
 
   _buildUserProfile(HomeViewModel viewModel) {
     return Profile(
-      provider: ProfileDetailProvider(profileRepo: repositoryProvider.getProfileRepository(), plotRepo: repositoryProvider.getMyPlotRepository(viewModel.currentProfileID)),
+      provider: ProfileDetailProvider(
+          profileRepo: repositoryProvider.getProfileRepository(),
+          plotRepo: repositoryProvider
+              .getMyPlotRepository(viewModel.currentProfileID)),
     );
   }
 

@@ -6,17 +6,22 @@ import 'package:farmsmart_flutter/model/model/PlotEntity.dart';
 import 'package:farmsmart_flutter/model/model/crop_entity.dart';
 import 'package:farmsmart_flutter/ui/article/viewModel/ArticleDetailViewModel.dart';
 import 'package:farmsmart_flutter/ui/myplot/viewmodel/PlotDetailViewModel.dart';
+import 'package:intl/intl.dart';
 
 import '../Transformer.dart';
 import 'PlotToPlotListItemViewModel.dart';
 import 'StageBusinessLogic.dart';
 import 'StageToStageCardViewModel.dart';
 
+class _LocalisedStrings{
+  static String relatedArticles() => Intl.message('Related articles');
+}
+
 class PlotToPlotDetailViewModel
     extends ObjectTransformer<PlotEntity, PlotDetailViewModel> {
   final _articleTransformer =
       ArticleListItemViewModelTransformer.buildWithDetail(
-          ArticleDetailViewModelTransformer());
+          ArticleDetailViewModelTransformer(relatedTitle: _LocalisedStrings.relatedArticles()));
   final _cropTransformer = CropDetailTransformer();
   final StageToStageCardViewModel _stageTransformer;
   final Function _renameAction;

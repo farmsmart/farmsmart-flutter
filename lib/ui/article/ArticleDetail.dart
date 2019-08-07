@@ -1,22 +1,30 @@
+import 'package:farmsmart_flutter/ui/article/StandardListItem.dart';
+import 'package:farmsmart_flutter/ui/article/viewModel/ArticleDetailViewModel.dart';
+import 'package:farmsmart_flutter/ui/article/viewModel/ArticleListItemViewModel.dart';
 import 'package:farmsmart_flutter/ui/common/ContextualAppBar.dart';
 import 'package:farmsmart_flutter/ui/common/SectionListView.dart';
 import 'package:farmsmart_flutter/ui/common/headerAndFooterListView.dart';
 import 'package:farmsmart_flutter/ui/common/image_provider_view.dart';
 import 'package:farmsmart_flutter/ui/common/stage_card.dart';
-import 'package:farmsmart_flutter/ui/article/viewModel/ArticleDetailViewModel.dart';
-import 'package:farmsmart_flutter/ui/article/viewModel/ArticleListItemViewModel.dart';
-import 'package:farmsmart_flutter/ui/article/StandardListItem.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:intl/intl.dart';
 import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:intl/intl.dart';
 
 class _LocalisedStrings {
   static String shareText() =>
       Intl.message('Check out this article from the FarmSmart mobile app \n ');
 
   static String viewMore() => Intl.message('View more on the web');
+}
+
+class _Constants {
+  static EdgeInsets externalLinkPadding = EdgeInsets.only(
+    left: 32.5,
+    right: 32.5,
+    bottom: 20.0,
+  );
 }
 
 abstract class ArticleDetailStyle {
@@ -81,13 +89,14 @@ class ArticleDetail extends StatelessWidget implements ListViewSection {
   final Widget _articleFooter;
   List<ArticleListItemViewModel> _relatedViewModels = [];
 
-  ArticleDetail(
-      {Key key,
-      ArticleDetailViewModel viewModel,
-      ArticleDetailStyle style = const _DefaultStyle(),
-      Widget articleHeader,
-      Widget articleFooter})
-      : this._viewModel = viewModel,
+  ArticleDetail({
+    Key key,
+    ArticleDetailViewModel viewModel,
+    ArticleDetailStyle style = const _DefaultStyle(),
+    Widget articleHeader,
+    Widget articleFooter,
+    Widget relatedHeader,
+  })  : this._viewModel = viewModel,
         this._articleHeader = articleHeader,
         this._articleFooter = articleFooter,
         this._style = style,
@@ -149,7 +158,7 @@ class ArticleDetail extends StatelessWidget implements ListViewSection {
           _launchURL(_viewModel.contentLink);
         });
     return Padding(
-      padding: _style.bodyPadding,
+      padding: _Constants.externalLinkPadding,
       child: RoundedButton(
         viewModel: buttonViewModel,
         style: RoundedButtonStyle.actionSheetLargeRoundedButton(),
