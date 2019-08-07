@@ -10,29 +10,31 @@ class RecommendationDetailCardStyles {
 
   static RecommendationDetailCardStyle _defaultRecommendationDetailCardStyle =
       RecommendationDetailCardStyle(
-          titleTextStyle: TextStyle(
-            color: Color(0xff1a1b46),
-            fontSize: 27,
-            fontWeight: FontWeight.bold,
-          ),
-          subtitleTagStyle: _defaultDogTagStyle,
-          actionStyle: _defaultActionButtonStyle,
-          contentPadding: EdgeInsets.all(32.0),
-          imageSize: 80,
-          imageRadius: BorderRadius.all(
-            Radius.circular(12),
-          ),
-          imageOverlayWidth: 26,
-          imageOverlayHeight: 26,
-          imageOverlayColor: Color(0x1425df0c),
-          iconAssetOverlay: 'assets/icons/tick_large.png',
-          actionBoxDecoration: BoxDecoration(
-            border: Border.all(
-              width: 1,
-              color: Color(0xffe9eaf2),
-            ),
-            borderRadius: BorderRadius.circular(12),
-          ));
+    titleTextStyle: TextStyle(
+      color: Color(0xff1a1b46),
+      fontSize: 27,
+      fontWeight: FontWeight.bold,
+    ),
+    subtitleTagStyle: _defaultDogTagStyle,
+    actionStyle: _defaultActionButtonStyle,
+    contentPadding: EdgeInsets.all(32.0),
+    imageSize: 80,
+    imageRadius: BorderRadius.all(
+      Radius.circular(12),
+    ),
+    imageOverlayWidth: 26,
+    imageOverlayHeight: 26,
+    imageOverlayColor: Color(0x1425df0c),
+    iconAssetOverlay: 'assets/icons/tick_large.png',
+    actionBoxDecoration: BoxDecoration(
+      border: Border.all(
+        width: 1,
+        color: Color(0xffe9eaf2),
+      ),
+      borderRadius: BorderRadius.circular(12),
+    ),
+    imageAddedOverlayColor: Color(0x3325df0c),
+  );
 
   static RoundedButtonStatefulStyle _defaultActionButtonStyle =
       RoundedButtonStatefulStyle(

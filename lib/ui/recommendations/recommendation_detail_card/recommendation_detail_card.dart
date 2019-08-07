@@ -32,6 +32,7 @@ class RecommendationDetailCardStyle {
   final double imageOverlayHeight;
   final double imageOverlayWidth;
   final String iconAssetOverlay;
+  final Color imageAddedOverlayColor;
 
   const RecommendationDetailCardStyle({
     this.titleTextStyle,
@@ -45,6 +46,7 @@ class RecommendationDetailCardStyle {
     this.imageOverlayHeight,
     this.imageOverlayWidth,
     this.iconAssetOverlay,
+    this.imageAddedOverlayColor,
   });
 
   RecommendationDetailCardStyle copyWith({
@@ -59,6 +61,7 @@ class RecommendationDetailCardStyle {
     double imageOverlayHeight,
     double imageOverlayWidth,
     String iconAssetOverlay,
+    Color imageAddedOverlayColor,
   }) {
     return RecommendationDetailCardStyle(
       titleTextStyle: titleTextStyle ?? this.titleTextStyle,
@@ -72,6 +75,8 @@ class RecommendationDetailCardStyle {
       imageOverlayHeight: imageOverlayHeight ?? this.imageOverlayHeight,
       imageOverlayWidth: imageOverlayHeight ?? this.imageOverlayHeight,
       iconAssetOverlay: iconAssetOverlay ?? this.iconAssetOverlay,
+      imageAddedOverlayColor:
+          imageAddedOverlayColor ?? this.imageAddedOverlayColor,
     );
   }
 }
@@ -130,6 +135,7 @@ class _DefaultStyle extends RecommendationDetailCardStyle {
   final BorderRadius imageRadius = const BorderRadius.all(Radius.circular(12));
   final double imageSize = 80;
   final Color imageOverlayColor = const Color(0x1924d900);
+  final Color imageAddedOverlayColor = const Color(0x3325df0c);
   final double imageOverlayHeight = 26;
   final double imageOverlayWidth = 26;
   final String iconAssetOverlay = 'assets/icons/tick_large.png';
@@ -145,6 +151,7 @@ class _DefaultStyle extends RecommendationDetailCardStyle {
     double imageOverlayHeight,
     double imageOverlayWidth,
     String iconAssetOverlay,
+    Color imageAddedOverlayColor,
   });
 }
 
@@ -252,7 +259,9 @@ class _RecommendationDetailCardState extends State<RecommendationDetailCard> {
           overlayIconWidth: widget._style.imageOverlayWidth,
           overlayIcon: widget._style.iconAssetOverlay,
           overlayIconHeight: widget._style.imageOverlayWidth,
-          overlayColor: widget._style.imageOverlayColor,
+          overlayColor: isAddedState
+              ? widget._style.imageAddedOverlayColor
+              : widget._style.imageOverlayColor,
         ),
       ),
     );
