@@ -9,7 +9,7 @@ import '../enums.dart';
 final _mockDate = MockDate();
 
 class MockArticle extends MockEntity<ArticleEntity> {
-   ArticleEntity build() {
+  ArticleEntity build() {
     final entity = ArticleEntity(
       id: mockPlainText.identifier(),
       content: mockRichText.random(),
@@ -37,7 +37,7 @@ class MockArticle extends MockEntity<ArticleEntity> {
     entity.images = MockImageEntityCollection();
     return entity;
   }
-  
+
   ArticleEntity buildStage() {
     final entity = ArticleEntity(
       id: mockPlainText.identifier(),
@@ -52,9 +52,16 @@ class MockArticle extends MockEntity<ArticleEntity> {
     return entity;
   }
 
+  ArticleEntity buildStageFromArticle(ArticleEntity article) {
+    final entity = article;
+    entity.images = null;
+    return entity;
+  }
 }
 
 MockArticle _articleBuilder = MockArticle();
+
 class MockArticleEntityCollection extends MockEntityCollection<ArticleEntity> {
-  MockArticleEntityCollection() : super(_articleBuilder);
+  MockArticleEntityCollection()
+      : super(_articleBuilder);
 }
