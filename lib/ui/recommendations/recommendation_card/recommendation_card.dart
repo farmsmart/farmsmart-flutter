@@ -32,6 +32,7 @@ class RecommendationCardStyle {
   final EdgeInsets contentPadding;
   final BoxDecoration rightActionBoxDecoration;
   final Color overlayColor;
+  final Color addedOverlayColor;
   final double overlayIconHeight;
   final double overlayIconWidth;
   final String overlayIcon;
@@ -51,6 +52,7 @@ class RecommendationCardStyle {
     this.overlayIconHeight,
     this.overlayIconWidth,
     this.overlayIcon,
+    this.addedOverlayColor,
   });
 
   RecommendationCardStyle copyWith({
@@ -65,6 +67,7 @@ class RecommendationCardStyle {
     EdgeInsets contentPadding,
     BoxDecoration rightBoxDecoration,
     Color overlayColor,
+    Color addedOverlayColor,
     double overlayIconHeight,
     double overlayIconWidth,
     String overlayIcon,
@@ -87,6 +90,7 @@ class RecommendationCardStyle {
       overlayIconHeight: overlayIconHeight ?? this.overlayIconHeight,
       overlayIconWidth: overlayIconWidth ?? this.overlayIconWidth,
       overlayIcon: overlayIcon ?? this.overlayIcon,
+      addedOverlayColor: addedOverlayColor ?? this.addedOverlayColor,
     );
   }
 }
@@ -117,6 +121,7 @@ class _DefaultStyle extends RecommendationCardStyle {
   final EdgeInsets contentPadding = const EdgeInsets.all(32.0);
 
   final Color overlayColor = const Color(0x1924d900);
+  final Color addedOverlayColor = const Color(0x3325df0c);
   final double overlayIconHeight = 54;
   final double overlayIconWidth = 54;
 
@@ -166,6 +171,7 @@ class _DefaultStyle extends RecommendationCardStyle {
     double overlayIconHeight,
     double overlayIconWidth,
     String overlayIcon,
+    Color addedOverlayColor,
   });
 }
 
@@ -215,7 +221,8 @@ class RecommendationCard extends StatelessWidget {
       overlayIcon: _style.overlayIcon,
       overlayIconHeight: _style.overlayIconHeight,
       overlayIconWidth: _style.overlayIconWidth,
-      overlayColor: _style.overlayColor,
+      overlayColor:
+          _viewModel.isAdded ? _style.addedOverlayColor : _style.overlayColor,
       showOverlayIcon: _viewModel.isAdded,
     );
   }
@@ -285,7 +292,8 @@ class RecommendationCard extends StatelessWidget {
           ),
           Expanded(
             child: Container(
-              decoration: _viewModel.isAdded ? _style.rightActionBoxDecoration : null,
+              decoration:
+                  _viewModel.isAdded ? _style.rightActionBoxDecoration : null,
               child: RoundedButtonStateful(
                 style: _style.rightActionButtonStyle,
                 viewModel: RoundedButtonStatefulViewModel(
