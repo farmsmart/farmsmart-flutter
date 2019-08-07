@@ -104,6 +104,7 @@ class _PlotDetailState extends State<PlotDetail> {
         context: context,
         provider: viewModel.detailProvider,
       ),
+      needDivider: false,
     );
     final stages = Container(
         height: widget._style.stageSectionHeight,

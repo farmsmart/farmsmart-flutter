@@ -121,41 +121,55 @@ class _Constants {
 }
 
 class PlotListItem {
-  Widget buildListItem(
-      {PlotListItemViewModel viewModel,
-      Function onTap,
-      PlotListItemStyle itemStyle = const _DefaultStyle()}) {
+  Widget buildListItem({
+    PlotListItemViewModel viewModel,
+    Function onTap,
+    PlotListItemStyle itemStyle = const _DefaultStyle(),
+    bool needDivider = true,
+  }) {
     return GestureDetector(
-        onTap: onTap,
-        child: Card(
-            margin: itemStyle.cardEdgePadding,
-            elevation: itemStyle.elevation,
-            child: Column(children: <Widget>[
-              Container(
-                  padding: itemStyle.edgePadding,
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        _buildMainTextView(viewModel, itemStyle),
-                        SizedBox(width: itemStyle.imageLineSpace),
-                        Stack(
-                          alignment: AlignmentDirectional.center,
-                          children: <Widget>[
-                            _buildPlotImage(
-                                viewModel.imageProvider, itemStyle),
-                            CircularProgress(
-                              progress: viewModel.progress,
-                              lineWidth: itemStyle.circularLineWidth,
-                              size: itemStyle.circularSize,
-                            ),
-                          ],
-                        )
-                      ])),
-              Container(
-                  height: _Constants.dividerThickness,
-                  color: itemStyle.dividerColor,
-                  margin: itemStyle.dividerEdgePadding),
-            ])));
+      onTap: onTap,
+      child: Card(
+        margin: itemStyle.cardEdgePadding,
+        elevation: itemStyle.elevation,
+        child: Column(
+          children: <Widget>[
+            Container(
+              padding: itemStyle.edgePadding,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  _buildMainTextView(viewModel, itemStyle),
+                  SizedBox(width: itemStyle.imageLineSpace),
+                  Stack(
+                    alignment: AlignmentDirectional.center,
+                    children: <Widget>[
+                      _buildPlotImage(viewModel.imageProvider, itemStyle),
+                      CircularProgress(
+                        progress: viewModel.progress,
+                        lineWidth: itemStyle.circularLineWidth,
+                        size: itemStyle.circularSize,
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
+            _buildDivider(itemStyle, needDivider),
+          ],
+        ),
+      ),
+    );
+  }
+
+  _buildDivider(PlotListItemStyle itemStyle, bool needDivider) {
+    return !needDivider
+        ? SizedBox.shrink()
+        : Container(
+            height: _Constants.dividerThickness,
+            color: itemStyle.dividerColor,
+            margin: itemStyle.dividerEdgePadding,
+          );
   }
 
   _buildMainTextView(
