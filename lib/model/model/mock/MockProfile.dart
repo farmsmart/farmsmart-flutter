@@ -6,10 +6,10 @@ import 'package:farmsmart_flutter/model/repositories/image/implementation/MockIm
 import '../ProfileEntity.dart';
 
 class MockProfile {
-  ProfileEntity build() {
+  ProfileEntity build({String name}) {
     final entity = ProfileEntity(
       mockPlainText.identifier(),
-      _names.random(),
+      name ?? _names.random(),
       MockImageEntity().build().urlProvider,
       MockFactor().build(),
     );
@@ -24,9 +24,21 @@ class MockProfile {
     return entities;
   }
 
-  final _names = MockString(library: [
+  List<ProfileEntity> library() {
+    final names = _names.libarary();
+    List<ProfileEntity> entities = [];
+    for (var name in names) {
+        entities.add(build(name: name));
+    }
+    return entities;
+  }
+
+  final _names = MockString(library: [    
+    "Harry Lusk",
+    "Maribel Dapeton",
+    "Emma Hooper",
     "Lee Higgins",
-    "Emma Higgins",
-    "Bruna Higgins",
+    "David Franquet",
+    "Farmer Joe",
   ]);
 }

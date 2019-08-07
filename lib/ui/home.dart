@@ -83,7 +83,7 @@ class Home extends StatelessWidget {
         _Constants.communityIcon,
       ),
       _buildTabNavigatorWithCircleImageWidget(
-        _buildUserProfile(),
+        _buildUserProfile(viewModel),
       ),
       _buildTabNavigator(
         _buildPlayground(),
@@ -136,9 +136,9 @@ class Home extends StatelessWidget {
             group: ArticleCollectionGroup.chatGroups));
   }
 
-  _buildUserProfile() {
+  _buildUserProfile(HomeViewModel viewModel) {
     return Profile(
-      provider: ProfileDetailProvider(profileRepo: repositoryProvider.getProfileRepository()),
+      provider: ProfileDetailProvider(profileRepo: repositoryProvider.getProfileRepository(), plotRepo: repositoryProvider.getMyPlotRepository(viewModel.currentProfileID)),
     );
   }
 
