@@ -31,7 +31,7 @@ class _Constants {
   static const String typeValueMultiChoice = "com.wearemobilefirst.MultiChoice";
 }
 
-class _Strings {
+class _LocalisedStrings {
   static String summaryError() =>
       Intl.message("Provided summary is not correct");
 
@@ -144,7 +144,7 @@ class ChatProvider implements ViewModelProvider<ChatViewModel> {
 
   void _setSummaryDetailsButton() {
     _chatViewModel.interactiveWidget = _chatSummaryProviderHelper.getSummary(
-      title: Intl.message(_Strings.viewDetails()),
+      title: _LocalisedStrings.viewDetails(),
       onTap: _onSummaryWidgetActionButtonTap,
     );
   }
@@ -152,7 +152,7 @@ class ChatProvider implements ViewModelProvider<ChatViewModel> {
   void _onSummaryWidgetActionButtonTap() {
     (_responseMap != null && _responseMap.isNotEmpty)
         ? _onSuccess(_responseMap)
-        : _onError(_Strings.summaryError());
+        : _onError(_LocalisedStrings.summaryError());
   }
 
   void _setInteractiveWidget(InputRequestEntity entity) {
