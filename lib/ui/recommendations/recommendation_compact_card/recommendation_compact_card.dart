@@ -8,7 +8,7 @@ import 'package:flutter/widgets.dart';
 export 'package:farmsmart_flutter/ui/common/roundedButton.dart';
 
 class _Constants {
-  static String textDivider = '- ';
+  static String textDivider = ' - ';
   static EdgeInsets titlesPadding = const EdgeInsets.only(left: 21.0);
   static EdgeInsets descriptionPadding = const EdgeInsets.only(top: 10);
   static EdgeInsets actionsPadding = const EdgeInsets.only(top: 24);

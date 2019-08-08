@@ -9,7 +9,7 @@ import 'recommendation_card_view_model.dart';
 export 'package:farmsmart_flutter/ui/common/roundedButton.dart';
 
 class _Constants {
-  static String textDivider = '- ';
+  static String textDivider = ' - ';
   static EdgeInsets titlesPadding = const EdgeInsets.only(top: 21.0);
   static EdgeInsets descriptionPadding = const EdgeInsets.only(top: 12.5);
   static EdgeInsets actionsPadding = const EdgeInsets.only(top: 15.5);
