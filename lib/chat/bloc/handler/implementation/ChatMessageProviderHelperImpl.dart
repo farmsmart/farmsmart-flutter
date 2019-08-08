@@ -8,10 +8,10 @@ import 'package:farmsmart_flutter/chat/ui/widgets/header_message.dart';
 import 'package:farmsmart_flutter/chat/ui/widgets/styles/fading_dots_styles.dart';
 import 'package:farmsmart_flutter/chat/ui/widgets/styles/header_message_styles.dart';
 
-import '../ChatMessageProviderHelper.dart';
+import '../ChatMessageViewModelHandler.dart';
 
-class ChatMessageProviderHelperImpl
-    implements ChatMessageProviderHelper<MessageBubbleViewModel> {
+class ChatMessageViewModelHandlerImpl
+    implements ChatMessageViewModelHandler<MessageBubbleViewModel> {
   @override
   MessageBubbleViewModel getMessageFromEntity(FormItemEntity entity) =>
       _getMessageAsBubble(entity);

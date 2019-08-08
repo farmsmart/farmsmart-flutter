@@ -3,14 +3,15 @@ import 'dart:async';
 import 'package:farmsmart_flutter/chat/bloc/ViewModelProvider.dart';
 import 'package:farmsmart_flutter/chat/bloc/handler/InteractiveMessageHandler.dart';
 import 'package:farmsmart_flutter/chat/bloc/handler/implementation/InteractiveMessageHandlerImpl.dart';
-import 'package:farmsmart_flutter/chat/bloc/helper/ChatMessageProviderHelper.dart';
-import 'package:farmsmart_flutter/chat/bloc/helper/ChatSummaryProviderHelper.dart';
-import 'package:farmsmart_flutter/chat/bloc/helper/implementation/ChatMessageProviderHelperImpl.dart';
-import 'package:farmsmart_flutter/chat/bloc/helper/implementation/ChatSummaryProviderHelperImpl.dart';
+import 'package:farmsmart_flutter/chat/bloc/handler/ChatMessageViewModelHandler.dart';
+import 'package:farmsmart_flutter/chat/bloc/handler/implementation/ChatMessageProviderHelperImpl.dart';
 import 'package:farmsmart_flutter/chat/model/form/input_request_entity.dart';
 import 'package:farmsmart_flutter/chat/repository/form/ChatRepository.dart';
 import 'package:farmsmart_flutter/chat/ui/widgets/bubble_message.dart';
 import 'package:farmsmart_flutter/chat/ui/widgets/chat.dart';
+import 'package:farmsmart_flutter/chat/ui/widgets/roundedButton.dart';
+import 'package:farmsmart_flutter/chat/ui/widgets/separator_wrapper.dart';
+import 'package:farmsmart_flutter/chat/ui/widgets/styles/rounded_button_styles.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 
@@ -40,10 +41,8 @@ class _LocalisedStrings {
 
 class ChatProvider implements ViewModelProvider<ChatViewModel> {
   final ChatRepository _repo;
-  final ChatMessageProviderHelper _chatMessageHandler =
-      ChatMessageProviderHelperImpl();
-  final ChatSummaryProviderHelper _chatSummaryProviderHelper =
-      ChatSummaryProviderHelperImpl();
+  final ChatMessageViewModelHandler _chatMessageHandler =
+      ChatMessageViewModelHandlerImpl();
   final InteractiveMessageHandler _interactiveMessageHandler =
       InteractiveMessageHandlerImpl();
   final TextEditingController _textEditingController = TextEditingController();
@@ -143,9 +142,14 @@ class ChatProvider implements ViewModelProvider<ChatViewModel> {
   }
 
   void _setSummaryDetailsButton() {
-    _chatViewModel.interactiveWidget = _chatSummaryProviderHelper.getSummary(
-      title: _LocalisedStrings.viewDetails(),
-      onTap: _onSummaryWidgetActionButtonTap,
+    _chatViewModel.interactiveWidget = SeparatorWrapper(
+      wrappedChild: RoundedButton(
+        viewModel: RoundedButtonViewModel(
+          title: _LocalisedStrings.viewDetails(),
+          onTap: _onSummaryWidgetActionButtonTap,
+        ),
+        style: RoundedButtonStyles.chatButtonStyle(),
+      ),
     );
   }
 
