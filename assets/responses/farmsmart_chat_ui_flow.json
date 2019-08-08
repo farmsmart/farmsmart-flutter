@@ -7,18 +7,16 @@
     "type": "com.google.firebase.database",
     "uri": "profiles/%UserID/",
     "body": {
-      "businessCard": {
-        "uri": "%BusinessCardImage",
-        "mimeType": "image/jpg"
-      },
-      "platformDevelop": "%PlatformDevelop",
-      "name": "%Nickname",
-      "email": "%Email",
-      "phoneNumber": "%PhoneNumber",
-      "loginType": "%LogInType",
-      "willUsersCreateProfile": "%WillUsersCreateProfile",
-      "willAppBeConnectedToWebsite": "%WillAppBeConnectedToWebsite",
-      "needHelpForDesign": "%NeedHelpForDesign"
+      "name": "%Name",
+      "skillLevel": "%SkillLevel",
+      "farmLocation": "%FarmLocation",
+      "agroEcoZone": "%AgroEcoZone",
+      "landSize": "%LandSize",
+      "whyGrowingFood": "%WhyGrowingFood",
+      "peopleInHousehold": "%PeopleInHousehold",
+      "soilType": "%SoilType",
+      "startDate": "%StartDate",
+      "usingIrrigation": "%UsingIrrigation",
     }
   },
   "items": [
