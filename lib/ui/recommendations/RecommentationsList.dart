@@ -29,6 +29,7 @@ class _LocalisedStrings {
 
 class _Constants {
   static const buttonPadding = EdgeInsets.all(24.0);
+  static const dividerPadding = EdgeInsets.symmetric(horizontal: 34.0);
 }
 
 abstract class RecommendedListStyle {
@@ -203,7 +204,7 @@ class RecommendationsList extends StatelessWidget implements ListViewSection {
         ? <Widget>[
             SizedBox(
               height: _style.applyButtonStyle.height,
-            )
+            ),
           ]
         : <Widget>[];
     final headedList = HeaderAndFooterListView(
@@ -213,6 +214,10 @@ class RecommendationsList extends StatelessWidget implements ListViewSection {
       physics: ScrollPhysics(),
       itemBuilder: itemBuilder(),
       itemCount: itemCount(),
+      contentDivider: Padding(
+        padding: _Constants.dividerPadding,
+        child: Divider(),
+      ),
     );
     return headedList;
   }
