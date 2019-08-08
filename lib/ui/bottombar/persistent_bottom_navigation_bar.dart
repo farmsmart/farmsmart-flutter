@@ -41,7 +41,12 @@ class _PersistentBottomNavigationBarState
       elevation: 0,
       backgroundColor: widget.backgroundColor,
       type: BottomNavigationBarType.fixed,
-      onTap: (int index) => setState(() => _selectedIndex = index),
+      onTap: (int index) {
+        if(_selectedIndex == index){
+          widget.tabs[_selectedIndex].navigatorKey.currentState.popUntil((route) => route.isFirst);
+        }
+        setState(() => _selectedIndex = index);
+      },
       currentIndex: selectedIndex,
       items: _buildBarItems(widget.tabs),
     );
