@@ -86,7 +86,7 @@
     {
       "text": "Where is your farm?",
       "inputRequest": {
-        "type": "com.wearemobilefirst.String",
+        "type": "com.wearemobilefirst.Dropdown",
         "uri": "%FarmLocation",
         "localStore": false,
         "responseText": "",
@@ -294,7 +294,7 @@
     {
       "text": "When do you intend to start planting?",
       "inputRequest": {
-        "type": "com.wearemobilefirst.String",
+        "type": "com.wearemobilefirst.Date",
         "uri": "%StartDate",
         "localStore": false,
         "inline": true,
