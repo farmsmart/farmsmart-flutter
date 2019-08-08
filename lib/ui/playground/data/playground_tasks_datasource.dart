@@ -152,8 +152,6 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
           child: LandingPage(
             viewModel: MockLandingPageViewModel.build(),
           ),
-          listener: (widget, context) =>
-              PlaygroundPresentButton.presentModal(widget, context),
         ),
       ),
       PlaygroundWidget(
@@ -209,9 +207,7 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
         child: PlaygroundPresentButton(
           child: SwitchProfileList(
             provider: StaticViewModelProvider(MockSwitchProfile.build()),
-          ),
-          listener: (widget, context) =>
-              PlaygroundPresentButton.presentModal(widget, context),
+          )
         ),
       ),
       PlaygroundWidget(
@@ -261,9 +257,7 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
               child: PlaygroundPresentButton(
                 child: FarmDetails(
                   viewModel: MockFarmDetailsViewModel.build(),
-                ),
-                listener: (widget, context) =>
-                    PlaygroundPresentButton.presentModal(widget, context),
+                )
               ),
             ),
           ],

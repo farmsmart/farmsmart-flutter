@@ -7,9 +7,9 @@ import 'package:intl/intl.dart';
 import '../Transformer.dart';
 
 class _LocalisedStrings {
-  static String recordCost() => Intl.message('Record Cost');
+  static String recordCost() => Intl.message('Record a Cost');
 
-  static String recordSale() => Intl.message('Record Sale');
+  static String recordSale() => Intl.message('Record a Sale');
 }
 
 class TransactionToRecordTransactionViewModel
