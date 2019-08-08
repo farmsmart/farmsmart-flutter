@@ -12,7 +12,7 @@
       "farmLocation": "%FarmLocation",
       "agroEcoZone": "%AgroEcoZone",
       "landSize": "%LandSize",
-      "whyGrowingFood": "%WhyGrowingFood",
+      "motivation": "%Motivation",
       "peopleInHousehold": "%PeopleInHousehold",
       "soilType": "%SoilType",
       "startDate": "%StartDate",
@@ -35,7 +35,7 @@
         "uri": "%Name",
         "localStore": false,
         "inline": true,
-        "title": "Name?",
+        "title": "Your Name",
         "validationRegex": "^[a-zA-Z]+$",
         "responseText": "My name is %Name",
         "optional": false
@@ -55,6 +55,7 @@
         "type": "com.wearemobilefirst.MultiChoice",
         "inline": true,
         "uri": "%SkillLevel",
+        "title": "Skill Level",
         "localStore": true,
         "responseText": "",
         "optional": false,
@@ -88,6 +89,7 @@
       "inputRequest": {
         "type": "com.wearemobilefirst.Dropdown",
         "uri": "%FarmLocation",
+        "title": "Farm Location",
         "localStore": false,
         "responseText": "",
         "inline": true,
@@ -101,6 +103,7 @@
         "type": "com.wearemobilefirst.MultiChoice",
         "inline": true,
         "uri": "%AgroEcoZone",
+        "title": "Agro-Ecological zone",
         "localStore": true,
         "responseText": "",
         "optional": false,
@@ -144,6 +147,7 @@
       "inputRequest": {
         "type": "com.wearemobilefirst.MultiChoice",
         "uri": "%LandSize",
+        "title": "Land Size",
         "inline": true,
         "localStore": false,
         "responseText": "",
@@ -179,7 +183,8 @@
       "text": "Why are you wanting to grow food on your farm?",
       "inputRequest": {
         "type": "com.wearemobilefirst.MultiChoice",
-        "uri": "%WhyGrowingFood",
+        "uri": "%Motivation",
+        "title": "Motivation",
         "inline": true,
         "localStore": false,
         "responseText": "",
@@ -208,6 +213,7 @@
       "inputRequest": {
         "type": "com.wearemobilefirst.MultiChoice",
         "uri": "%PeopleInHousehold",
+        "title": "People In Household",
         "inline": true,
         "localStore": false,
         "responseText": "",
@@ -240,6 +246,7 @@
       "inputRequest": {
         "type": "com.wearemobilefirst.MultiChoice",
         "uri": "%SoilType",
+        "title": "Soil Type",
         "inline": true,
         "localStore": false,
         "responseText": "",
@@ -298,7 +305,7 @@
         "uri": "%StartDate",
         "localStore": false,
         "inline": true,
-        "title": "",
+        "title": "Start Date",
         "validationRegex": "((0[1-9]|[12]\\d|3[01])/(0[1-9]|1[0-2])/[12]\\d{3})",
         "responseText": "",
         "optional": false
@@ -309,6 +316,7 @@
       "inputRequest": {
         "type": "com.wearemobilefirst.MultiChoice",
         "uri": "%UsingIrrigation",
+        "title": "Irrigation",
         "inline": true,
         "localStore": false,
         "responseText": "",
