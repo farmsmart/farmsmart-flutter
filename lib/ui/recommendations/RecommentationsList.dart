@@ -193,6 +193,7 @@ class RecommendationsList extends StatelessWidget implements ListViewSection {
         context: context,
         viewModel: viewModel,
       ),
+      isModal: true,
     ).build(context);
   }
 
