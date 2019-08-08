@@ -1,10 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:farmsmart_flutter/model/model/ProfileEntity.dart';
 import 'package:farmsmart_flutter/model/repositories/FlameLink.dart';
 import 'package:farmsmart_flutter/model/repositories/article/ArticleRepositoryInterface.dart';
 import 'package:farmsmart_flutter/model/repositories/article/implementation/ArticlesRepositoryFlamelink.dart';
 import 'package:farmsmart_flutter/model/repositories/crop/CropRepositoryInterface.dart';
-import 'package:farmsmart_flutter/model/repositories/crop/implementation/MockCropRepository.dart';
+import 'package:farmsmart_flutter/model/repositories/crop/implementation/CropRepositoryFlamelink.dart';
 import 'package:farmsmart_flutter/model/repositories/plot/PlotRepositoryInterface.dart';
 import 'package:farmsmart_flutter/model/repositories/plot/implementation/MockPlotRepository.dart';
 import 'package:farmsmart_flutter/flavors/app_config.dart';
@@ -24,7 +23,6 @@ class FlameLinkRepositoryProvider implements RepositoryProvider {
   Map<String,PlotRepositoryInterface> _plotRepos = {};
   Map<String,TransactionRepositoryInterface> _transactionRepos = {};
 
-  CropRepositoryInterface _crop = MockCropRepository();
   ProfileRepositoryInterface _profile = MockProfileRepository();
   RatingEngineRepositoryInterface _ratings = MockRatingEngineRepository();
 
@@ -43,7 +41,7 @@ class FlameLinkRepositoryProvider implements RepositoryProvider {
   PlotRepositoryInterface getMyPlotRepository(String profileID) => _plotRepoFor(profileID);
 
   @override
-  CropRepositoryInterface getCropRepository() => _crop;
+  CropRepositoryInterface getCropRepository() => CropRepositoryFlamelink(cms);
 
   @override
   TransactionRepositoryInterface getTransactionRepository(String profileID) => _transactionRepoFor(profileID);

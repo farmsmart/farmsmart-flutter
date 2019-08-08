@@ -112,6 +112,16 @@ class FlamelinkDocumentCollection {
       : _cms = cms,
         _paths = paths,
         _query = null;
+        
+  factory FlamelinkDocumentCollection.fromImageRefs({FlameLink cms, List<dynamic> paths}){
+    if (paths == null) {
+      return null;
+    }
+     final refs =
+          List<String>.from(paths.map((image) => image.path))
+              .toList();
+    return FlamelinkDocumentCollection.list(cms: cms, paths: refs);
+  }
 
   Future<List<DocumentSnapshot>> getDocuments({int limit = 0}) {
     if (_paths.isNotEmpty) {

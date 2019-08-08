@@ -7,7 +7,6 @@ import 'package:farmsmart_flutter/model/repositories/image/implementation/ImageR
 import '../../../FlameLink.dart';
 import '../../../FlamelinkMeta.dart';
 import '../ArticlesRepositoryFlamelink.dart';
-import '../FlameLinkMetaTransformer.dart';
 
 class _Fields {
   static String id = "id";
