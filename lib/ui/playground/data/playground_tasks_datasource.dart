@@ -156,7 +156,11 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
       ),
       PlaygroundWidget(
         title: "SPIKE Chat page",
-        child: ChatPage(),
+        child: PlaygroundPresentButton(
+          child: ChatPage(),
+          listener: (widget, context) =>
+              PlaygroundPresentButton.presentModal(widget, context),
+        ),
       ),
       PlaygroundWidget(
         title: 'FARM-59 Record a Cost/Sale',

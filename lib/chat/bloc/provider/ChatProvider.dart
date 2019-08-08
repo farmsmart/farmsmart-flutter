@@ -7,6 +7,7 @@ import 'package:farmsmart_flutter/chat/bloc/handler/ChatMessageViewModelHandler.
 import 'package:farmsmart_flutter/chat/bloc/handler/implementation/ChatMessageProviderHelperImpl.dart';
 import 'package:farmsmart_flutter/chat/model/form/input_request_entity.dart';
 import 'package:farmsmart_flutter/chat/repository/form/ChatRepository.dart';
+import 'package:farmsmart_flutter/chat/ui/viewmodel/ChatResponseViewModel.dart';
 import 'package:farmsmart_flutter/chat/ui/widgets/bubble_message.dart';
 import 'package:farmsmart_flutter/chat/ui/widgets/chat.dart';
 import 'package:farmsmart_flutter/chat/ui/widgets/roundedButton.dart';
@@ -46,16 +47,16 @@ class ChatProvider implements ViewModelProvider<ChatViewModel> {
   final InteractiveMessageHandler _interactiveMessageHandler =
       InteractiveMessageHandlerImpl();
   final TextEditingController _textEditingController = TextEditingController();
-  final Function(Map<String, String>) _onSuccess;
+  final Function(Map<String, ChatResponseViewModel>) _onSuccess;
   final Function(String) _onError;
 
   ChatViewModel _chatViewModel;
   int _currentMessageCount = _Constants.currentMessageIndex;
-  Map<String, String> _responseMap = Map<String, String>();
+  Map<String, ChatResponseViewModel> _responseMap = Map();
 
   ChatProvider({
     @required ChatRepository repository,
-    Function(Map<String, String>) onSuccess,
+    Function(Map<String, ChatResponseViewModel>) onSuccess,
     Function(String) onError,
   })  : this._repo = repository,
         this._onSuccess = onSuccess ?? (() => {}),
@@ -199,14 +200,17 @@ class ChatProvider implements ViewModelProvider<ChatViewModel> {
       textEditingController: _textEditingController,
       onSendPressed: () => {},
       type: inputType,
-      isFocusedOnBuild: true,
+      isFocusedOnBuild: false,
       onValidationPassed: (value) {
         _cleanKeyboard();
         _cleanInteractiveWidget();
         _getNextMessageByProvided(value);
         _putResponseToTheMap(
           key: entity.uri,
-          value: value,
+          value: ChatResponseViewModel(
+            response: value,
+            responseText: entity.responseText
+          ),
         );
       },
     );
@@ -220,12 +224,18 @@ class ChatProvider implements ViewModelProvider<ChatViewModel> {
       onTap: (option) {
         _cleanInteractiveWidget();
         _getNextMessageByProvided(option.title);
-        _putResponseToTheMap(key: entity.uri, value: option.id);
+        _putResponseToTheMap(
+          key: entity.uri,
+          value: ChatResponseViewModel(
+            response: option.title,
+            responseText: option.responseText,
+          ),
+        );
       },
     );
   }
 
-  void _putResponseToTheMap({String key, String value}) {
+  void _putResponseToTheMap({String key, ChatResponseViewModel value}) {
     _responseMap[key] = value;
   }
 
