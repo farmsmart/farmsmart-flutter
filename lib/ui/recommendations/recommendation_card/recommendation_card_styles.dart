@@ -96,7 +96,7 @@ class RecommendationCardStyles {
       buttonTextStyle: TextStyle(
           fontSize: 13, fontWeight: FontWeight.w500, color: Color(0xff4c4e6e)),
       iconEdgePadding: 5,
-      height: 40,
+      height: 38,
       width: double.infinity,
       buttonIconSize: null,
       iconButtonColor: Color(0xFFFFFFFF),

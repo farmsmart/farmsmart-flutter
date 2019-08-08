@@ -44,7 +44,7 @@ class RecommendationCardTransformer
     final subtitle =
         percent.toInt().toString() + "% " + _LocalisedStrings.match();
     final inBasket = _basket.contains(from);
-    final addAction = inBasket ? () => {} : () => _basket.addItem(from);
+    final addAction = inBasket ? () => _basket.removeItem(from) : () => _basket.addItem(from);
 
     return RecommendationCardViewModel(
       title: from.name,
