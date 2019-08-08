@@ -106,6 +106,7 @@ flutter:
     - assets/icons/nav_icon_back.png
     - assets/icons/nav_icon_options.png
     - assets/icons/nav_icon_cancel.png
+    - assets/responses/create_account_mock_form.json
     - assets/responses/farmsmart_chat_ui_flow.json
 
   fonts:
