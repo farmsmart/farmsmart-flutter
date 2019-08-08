@@ -4,12 +4,14 @@ import 'package:farmsmart_flutter/ui/common/LoadableViewModel.dart';
 import 'package:farmsmart_flutter/ui/common/RefreshableViewModel.dart';
 import 'package:farmsmart_flutter/ui/common/ViewModelProviderBuilder.dart';
 import 'package:farmsmart_flutter/ui/common/headerAndFooterListView.dart';
+import 'package:farmsmart_flutter/ui/common/modal_navigator.dart';
+import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
 import 'package:farmsmart_flutter/ui/recommendations/RecommentationsList.dart';
 import 'package:farmsmart_flutter/ui/recommendations/viewmodel/RecommendationsListViewModel.dart';
 import 'package:flutter/material.dart';
+
 import 'PlotDetail.dart';
 import 'PlotListItem.dart';
-import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
 import 'viewmodel/PlotDetailViewModel.dart';
 
 class PlotListViewModel implements LoadableViewModel, RefreshableViewModel {
@@ -19,6 +21,7 @@ class PlotListViewModel implements LoadableViewModel, RefreshableViewModel {
   final List<PlotListItemViewModel> items;
   final Function refresh;
   final ViewModelProvider<RecommendationsListViewModel> recommendationsProvider;
+
   PlotListViewModel({
     String title,
     String buttonTitle,
@@ -32,7 +35,6 @@ class PlotListViewModel implements LoadableViewModel, RefreshableViewModel {
         this.items = items,
         this.refresh = refresh,
         this.recommendationsProvider = recommendationsProvider;
-
 }
 
 abstract class PlotListStyle {
@@ -72,56 +74,69 @@ class PlotList extends StatelessWidget {
   final ViewModelProvider<PlotListViewModel> _viewModelProvider;
   final PlotListStyle _style;
 
-  const PlotList(
-      {Key key,
-      ViewModelProvider<PlotListViewModel> provider,
-      PlotListStyle style = const _DefaultStyle()})
-      : this._viewModelProvider = provider,
+  const PlotList({
+    Key key,
+    ViewModelProvider<PlotListViewModel> provider,
+    PlotListStyle style = const _DefaultStyle(),
+  })  : this._viewModelProvider = provider,
         this._style = style,
         super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ViewModelProviderBuilder(provider: _viewModelProvider, successBuilder: _buildPage,);
+    return ViewModelProviderBuilder(
+      provider: _viewModelProvider,
+      successBuilder: _buildPage,
+    );
   }
 
-  Widget _buildPage({BuildContext context, AsyncSnapshot<PlotListViewModel> snapshot}) {
+  Widget _buildPage(
+      {BuildContext context, AsyncSnapshot<PlotListViewModel> snapshot}) {
     final viewModel = snapshot.data;
     return HeaderAndFooterListView(
-        itemCount: viewModel.items.length,
-        itemBuilder: (BuildContext context, int index) {
-          final itemViewModel = viewModel.items[index];
-          final tapFunction = () => _tappedListItem(
+      itemCount: viewModel.items.length,
+      itemBuilder: (BuildContext context, int index) {
+        final itemViewModel = viewModel.items[index];
+        final tapFunction = () => _tappedListItem(
               context: context,
-              provider: itemViewModel.detailViewModelProvider);
-          return PlotListItem().buildListItem(
-              viewModel: viewModel.items[index], onTap: tapFunction);
-        },
-        physics: ScrollPhysics(),
-        shrinkWrap: true,
-        headers: [
-          _buildTitle(viewModel, _style, context: context)
-        ],
-        footers: [
-          Padding(
-            padding: 
-            _style.largeButtonEdgePadding,
-            child: Row(
-              children: <Widget>[
-                Expanded(
-                  child: RoundedButton(
-                      viewModel: RoundedButtonViewModel(
-                          title: viewModel.buttonTitle,
-                          onTap: () => _tappedAdd(
-                                context: context,
-                                provider: viewModel.recommendationsProvider,
-                              )),
-                      style: RoundedButtonStyle.largeRoundedButtonStyle()),
+              provider: itemViewModel.detailViewModelProvider,
+            );
+        return PlotListItem().buildListItem(
+          viewModel: viewModel.items[index],
+          onTap: tapFunction,
+        );
+      },
+      physics: ScrollPhysics(),
+      shrinkWrap: true,
+      headers: [
+        _buildTitle(
+          viewModel,
+          _style,
+          context: context,
+        ),
+      ],
+      footers: [
+        Padding(
+          padding: _style.largeButtonEdgePadding,
+          child: Row(
+            children: <Widget>[
+              Expanded(
+                child: RoundedButton(
+                  viewModel: RoundedButtonViewModel(
+                    title: viewModel.buttonTitle,
+                    onTap: () => _tappedAdd(
+                      context: context,
+                      provider: viewModel.recommendationsProvider,
+                    ),
+                  ),
+                  style: RoundedButtonStyle.largeRoundedButtonStyle(),
                 ),
-              ],
-            ),
-          )
-        ]);
+              ),
+            ],
+          ),
+        )
+      ],
+    );
   }
 
   Widget _buildTitle(
@@ -131,37 +146,40 @@ class PlotList extends StatelessWidget {
   }) {
     final String roundedButtonIcon = "assets/icons/profit_add.png";
     return Container(
-        padding: myPlotStyle.titleEdgePadding,
-        child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      padding: myPlotStyle.titleEdgePadding,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      viewModel.title,
-                      style: myPlotStyle.titleTextStyle,
-                    )
-                  ]),
-              RoundedButton(
-                  viewModel: RoundedButtonViewModel(
-                      icon: roundedButtonIcon,
-                      onTap: () => _tappedAdd(
-                            context: context,
-                            provider: viewModel.recommendationsProvider,
-                          )),
-                  style: RoundedButtonStyle.defaultStyle())
-            ]));
+              Text(
+                viewModel.title,
+                style: myPlotStyle.titleTextStyle,
+              )
+            ],
+          ),
+          RoundedButton(
+            viewModel: RoundedButtonViewModel(
+                icon: roundedButtonIcon,
+                onTap: () => _tappedAdd(
+                      context: context,
+                      provider: viewModel.recommendationsProvider,
+                    )),
+            style: RoundedButtonStyle.defaultStyle(),
+          )
+        ],
+      ),
+    );
   }
 
   void _tappedAdd({
     BuildContext context,
     ViewModelProvider<RecommendationsListViewModel> provider,
   }) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => RecommendationsList(provider: provider),
-      ),
+    NavigationScope.presentModal(
+      context,
+      RecommendationsList(provider: provider),
     );
   }
 
