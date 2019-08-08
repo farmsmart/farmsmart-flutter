@@ -6,10 +6,12 @@ class _Constants {
   static const receivedBackgroundColor = const Color(0xFFE9EAF2);
   static const sentTextColor = const Color(0xFFFFFFFF);
   static const sentBackgroundColor = const Color(0xFF24D900);
-  static const defaultRadius = Radius.circular(20.0);
+  static const defaultRadius = const Radius.circular(20.0);
+  static const receivedStackMessageBorderRadius = const Radius.circular(5.0);
 
   static const messageAdditionalMargin = 48.0;
   static const spaceBetweenMessages = 24.0;
+  static const receivedStackMessageMargin = 2.0;
 }
 
 class MessageBubbleStyles {
@@ -36,11 +38,11 @@ class MessageBubbleStyles {
         textContainerBorderRadius: BorderRadius.only(
           topLeft: _Constants.defaultRadius,
           topRight: _Constants.defaultRadius,
-          bottomLeft: Radius.circular(5.0),
+          bottomLeft: _Constants.receivedStackMessageBorderRadius,
           bottomRight: _Constants.defaultRadius,
         ),
         outerContainerMargin: EdgeInsets.only(
-          bottom: 4.0,
+          bottom: _Constants.receivedStackMessageMargin,
           right: _Constants.messageAdditionalMargin,
           top: _Constants.spaceBetweenMessages,
         ),
@@ -49,29 +51,29 @@ class MessageBubbleStyles {
   static MessageBubbleStyle buildStyleReceivedStackBottom() =>
       buildStyleReceived().copyWith(
         textContainerBorderRadius: BorderRadius.only(
-          topLeft: Radius.circular(5.0),
+          topLeft: _Constants.receivedStackMessageBorderRadius,
           topRight: _Constants.defaultRadius,
           bottomLeft: _Constants.defaultRadius,
           bottomRight: _Constants.defaultRadius,
         ),
         outerContainerMargin: EdgeInsets.only(
           right: _Constants.messageAdditionalMargin,
-          top: 4.0,
+          top: _Constants.receivedStackMessageMargin,
         ),
       );
 
   static MessageBubbleStyle buildStyleReceivedStackBetween() =>
       buildStyleReceived().copyWith(
         textContainerBorderRadius: BorderRadius.only(
-          topLeft: Radius.circular(5.0),
+          topLeft: _Constants.receivedStackMessageBorderRadius,
           topRight: _Constants.defaultRadius,
-          bottomLeft: Radius.circular(5.0),
+          bottomLeft: _Constants.receivedStackMessageBorderRadius,
           bottomRight: _Constants.defaultRadius,
         ),
         outerContainerMargin: EdgeInsets.only(
-          bottom: 4.0,
+          bottom: _Constants.receivedStackMessageMargin,
           right: _Constants.messageAdditionalMargin,
-          top: 4.0,
+          top: _Constants.receivedStackMessageMargin,
         ),
       );
 
