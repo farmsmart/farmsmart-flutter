@@ -42,9 +42,7 @@ class HeaderAndFooterListView extends StatelessWidget
     if (_contentDivider != null) {
       return ListView.separated(
         separatorBuilder: (context, index) {
-          if ((_headers.length > 0 && index < _headers.length) ||
-              (_footers.length > 0 &&
-                  index >= (_containedItemCount + _headers.length) - 1)) {
+          if (_hasDivider(index)) {
             return SizedBox.shrink();
           } else {
             return _contentDivider;
@@ -88,4 +86,11 @@ class HeaderAndFooterListView extends StatelessWidget
       }
     };
   }
+
+  bool _hasDivider(int index) {
+    return (_headers.length > 0 && index < _headers.length) ||
+        (_footers.length > 0 &&
+            index >= (_containedItemCount + _headers.length) - 1);
+  }
+
 }
