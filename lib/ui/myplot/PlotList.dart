@@ -4,6 +4,7 @@ import 'package:farmsmart_flutter/ui/common/LoadableViewModel.dart';
 import 'package:farmsmart_flutter/ui/common/RefreshableViewModel.dart';
 import 'package:farmsmart_flutter/ui/common/ViewModelProviderBuilder.dart';
 import 'package:farmsmart_flutter/ui/common/headerAndFooterListView.dart';
+import 'package:farmsmart_flutter/ui/common/modal_navigator.dart';
 import 'package:farmsmart_flutter/ui/recommendations/RecommentationsList.dart';
 import 'package:farmsmart_flutter/ui/recommendations/viewmodel/RecommendationsListViewModel.dart';
 import 'package:flutter/material.dart';
@@ -158,10 +159,10 @@ class PlotList extends StatelessWidget {
     BuildContext context,
     ViewModelProvider<RecommendationsListViewModel> provider,
   }) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => RecommendationsList(provider: provider),
-      ),
+    showDialog<bool>(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) => RecommendationsList(provider: provider),
     );
   }
 
