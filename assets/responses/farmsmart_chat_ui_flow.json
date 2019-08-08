@@ -1,7 +1,7 @@
 {
   "uid": "1",
-  "title": "Chatbot",
-  "subtitle": "Welcome to FarmSmart chatbot!",
+  "title": "Jata",
+  "subtitle": "Your personal farm assistant",
   "origin": "com.wearemobilefirst.farmsmart",
   "formResponse": {
     "type": "com.google.firebase.database",
@@ -93,7 +93,6 @@
         "localStore": false,
         "responseText": "",
         "inline": true,
-        "validationRegex": "^[a-zA-Z]+$",
         "optional": false
       }
     },
@@ -306,7 +305,6 @@
         "localStore": false,
         "inline": true,
         "title": "Start Date",
-        "validationRegex": "((0[1-9]|[12]\\d|3[01])/(0[1-9]|1[0-2])/[12]\\d{3})",
         "responseText": "",
         "optional": false
       }
