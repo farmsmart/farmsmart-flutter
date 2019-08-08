@@ -21,6 +21,7 @@ class _Constants {
       const EdgeInsets.only(left: 32, top: 10, bottom: 36);
   static final EdgeInsets bottomButtonEdgePadding =
       const EdgeInsets.only(right: 24, left: 24, bottom: 24);
+
 }
 
 class _Assets {
@@ -36,9 +37,21 @@ class _LocalisedStrings {
   static skip() => Intl.message("Skip");
 
   static cancel() => Intl.message("Cancel");
+
+  static confirm() => Intl.message("Confirm Details");
 }
 
-class ChatPage extends StatelessWidget {
+class ChatPage extends StatefulWidget {
+  @override
+  _ChatPageState createState() => _ChatPageState();
+}
+
+class _ChatPageState extends State<ChatPage> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,7 +79,7 @@ class ChatPage extends StatelessWidget {
       );
 
   _buildCloseButton(BuildContext context) => FlatButton(
-        onPressed: () => Navigator.of(context).pop(),
+        onPressed: () => _navigateBack(context),
         padding: _Constants.appBarEdgePadding,
         child: Image.asset(
           _Assets.dismissModalIcon,
@@ -100,10 +113,10 @@ class ChatPage extends StatelessWidget {
           child: FarmDetails(
         viewModel: FarmDetailsViewModel(
           items: _getFarmDetailsListFromMap(map),
-          buttonTitle: "Confirm",
+          buttonTitle: _LocalisedStrings.confirm(),
           confirm: () {
-            Navigator.of(context).pop();
-            Navigator.of(context).pop();
+            _navigateBack(context);
+            _navigateBack(context);
           },
         ),
       )),
@@ -117,7 +130,7 @@ class ChatPage extends StatelessWidget {
       viewModels.add(
         FarmDetailsListItemViewModel(
           title: key,
-          detail: value.responseText,
+          detail: value.value,
         ),
       );
     });
@@ -126,24 +139,24 @@ class ChatPage extends StatelessWidget {
 
   _doOnError(BuildContext context, String error) {
     print("On Error recevied: ${error.toString()}");
-    Navigator.of(context).pop();
+    _navigateBack(context);
   }
 
-  void _optionsTapped(ActionSheet sheet, BuildContext context) {
-    ActionSheet.present(sheet, context);
-  }
+  void _optionsTapped(ActionSheet sheet, BuildContext context) =>
+      ActionSheet.present(sheet, context);
 
   ActionSheet _optionsMenu(BuildContext context) {
     final actions = [
       ActionSheetListItemViewModel(
-        title: _LocalisedStrings.resetProcess(),
-        type: ActionType.selectable,
-        onTap: () {},
-      ),
+          title: _LocalisedStrings.resetProcess(),
+          type: ActionType.simple,
+          onTap: () {
+            setState(() {});
+          }),
       ActionSheetListItemViewModel(
         title: _LocalisedStrings.skip(),
-        type: ActionType.selectable,
-        onTap: () => Navigator.of(context).pop(),
+        type: ActionType.simple,
+        onTap: () => _navigateBack(context),
       ),
     ];
 
@@ -156,4 +169,6 @@ class ChatPage extends StatelessWidget {
       style: ActionSheetStyle.defaultStyle(),
     );
   }
+
+  void _navigateBack(BuildContext context) => Navigator.of(context).pop();
 }

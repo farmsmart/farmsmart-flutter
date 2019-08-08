@@ -200,7 +200,7 @@ class ChatProvider implements ViewModelProvider<ChatViewModel> {
       textEditingController: _textEditingController,
       onSendPressed: () => {},
       type: inputType,
-      isFocusedOnBuild: false,
+      isFocusedOnBuild: true,
       onValidationPassed: (value) {
         _cleanKeyboard();
         _cleanInteractiveWidget();
@@ -208,8 +208,9 @@ class ChatProvider implements ViewModelProvider<ChatViewModel> {
         _putResponseToTheMap(
           key: entity.uri,
           value: ChatResponseViewModel(
-            response: value,
-            responseText: entity.responseText
+            id: value,
+            title: entity.title,
+            value: value,
           ),
         );
       },
@@ -227,8 +228,9 @@ class ChatProvider implements ViewModelProvider<ChatViewModel> {
         _putResponseToTheMap(
           key: entity.uri,
           value: ChatResponseViewModel(
-            response: option.title,
-            responseText: option.responseText,
+            id: option.id,
+            title: entity.title,
+            value: option.title,
           ),
         );
       },

@@ -154,7 +154,7 @@ class TextInputState extends State<TextInput> {
 
   void _manageFocus() {
     if (widget._isFocusedOnBuild) {
-      FocusScope.of(context).requestFocus(_focusNode);
+      FocusScope.of(context).autofocus(_focusNode);
     }
   }
 

@@ -1,9 +1,11 @@
 class ChatResponseViewModel {
-  final String response;
-  final String responseText;
+  final String id;
+  final String title;
+  final String value;
 
   ChatResponseViewModel({
-    this.response,
-    this.responseText,
+    this.id,
+    this.title,
+    this.value,
   });
 }
