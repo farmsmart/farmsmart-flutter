@@ -10,7 +10,7 @@ import 'package:farmsmart_flutter/chat/repository/form/ChatRepository.dart';
 import 'package:farmsmart_flutter/chat/ui/viewmodel/ChatResponseViewModel.dart';
 import 'package:farmsmart_flutter/chat/ui/widgets/bubble_message.dart';
 import 'package:farmsmart_flutter/chat/ui/widgets/chat.dart';
-import 'package:farmsmart_flutter/chat/ui/widgets/roundedButton.dart';
+import 'package:farmsmart_flutter/chat/ui/widgets/rounded_button.dart';
 import 'package:farmsmart_flutter/chat/ui/widgets/separator_wrapper.dart';
 import 'package:farmsmart_flutter/chat/ui/widgets/styles/rounded_button_styles.dart';
 import 'package:flutter/widgets.dart';
@@ -163,13 +163,47 @@ class ChatProvider implements ViewModelProvider<ChatViewModel> {
   void _setInteractiveWidget(InputRequestEntity entity) {
     if (entity != null && entity.type != null) {
       InteractiveMessageType inputType = _getInputType(entity);
-      inputType != null
-          ? _chatViewModel.interactiveWidget = _buildInputTextWidget(
-              entity: entity,
-              inputType: inputType,
-            )
-          : _chatViewModel.interactiveWidget =
-              _buildSelectableOptionsWidget(entity: entity);
+      switch (inputType) {
+        case InteractiveMessageType.inputString:
+          _setInputTextWidget(
+            entity: entity,
+            inputType: inputType,
+          );
+          break;
+        case InteractiveMessageType.inputEmail:
+          _setInputTextWidget(
+            entity: entity,
+            inputType: inputType,
+          );
+          break;
+        case InteractiveMessageType.inputPhoneNumber:
+          _setInputTextWidget(
+            entity: entity,
+            inputType: inputType,
+          );
+          break;
+        case InteractiveMessageType.inputImage:
+          _setInputTextWidget(
+            entity: entity,
+            inputType: inputType,
+          );
+          break;
+        case InteractiveMessageType.inputDate:
+          _setDatePickerWidget(entity: entity);
+          break;
+        case InteractiveMessageType.inputDropdown:
+          _setDropdownWidget(entity: entity);
+          break;
+        case InteractiveMessageType.multiChoice:
+          _setSelectableOptionsWidget(entity: entity);
+          break;
+        default:
+          _setInputTextWidget(
+            entity: entity,
+            inputType: inputType,
+          );
+          break;
+      }
     } else {
       _cleanInteractiveWidget();
       _showMessageWithDelay();
@@ -186,56 +220,80 @@ class ChatProvider implements ViewModelProvider<ChatViewModel> {
         return InteractiveMessageType.inputPhoneNumber;
       case _Constants.typeValueImage:
         return InteractiveMessageType.inputImage;
+      case _Constants.typeValueMultiChoice:
+        return InteractiveMessageType.multiChoice;
       default:
         return null;
     }
   }
 
-  Widget _buildInputTextWidget({
+  void _setInputTextWidget({
     InteractiveMessageType inputType,
     InputRequestEntity entity,
-  }) {
-    return _interactiveMessageHandler.buildInputTextWidget(
-      inputRequestEntity: entity,
-      textEditingController: _textEditingController,
-      onSendPressed: () => {},
-      type: inputType,
-      isFocusedOnBuild: true,
-      onValidationPassed: (value) {
-        _cleanKeyboard();
-        _cleanInteractiveWidget();
-        _getNextMessageByProvided(value);
-        _putResponseToTheMap(
-          key: entity.uri,
-          value: ChatResponseViewModel(
-            id: value,
-            title: entity.title,
-            value: value,
-          ),
-        );
-      },
-    );
-  }
+  }) =>
+      _chatViewModel.interactiveWidget =
+          _interactiveMessageHandler.buildInputTextWidget(
+        inputRequestEntity: entity,
+        textEditingController: _textEditingController,
+        onSendPressed: () => {},
+        type: inputType,
+        isFocusedOnBuild: true,
+        onValidationPassed: (value) {
+          _cleanKeyboard();
+          _cleanInteractiveWidget();
+          _getNextMessageByProvided(value);
+          _putResponseToTheMap(
+            key: entity.uri,
+            value: ChatResponseViewModel(
+              id: entity.uri,
+              title: entity.title,
+              value: value,
+            ),
+          );
+        },
+      );
 
-  Widget _buildSelectableOptionsWidget({
+  void _setSelectableOptionsWidget({
     InputRequestEntity entity,
-  }) {
-    return _interactiveMessageHandler.buildSelectableOptionsWidget(
-      inputRequestEntity: entity,
-      onTap: (option) {
-        _cleanInteractiveWidget();
-        _getNextMessageByProvided(option.title);
-        _putResponseToTheMap(
-          key: entity.uri,
-          value: ChatResponseViewModel(
-            id: option.id,
-            title: entity.title,
-            value: option.title,
-          ),
-        );
-      },
-    );
-  }
+  }) =>
+      _chatViewModel.interactiveWidget =
+          _interactiveMessageHandler.buildSelectableOptionsWidget(
+        inputRequestEntity: entity,
+        onTap: (option) {
+          _cleanInteractiveWidget();
+          _getNextMessageByProvided(option.title);
+          _putResponseToTheMap(
+            key: entity.uri,
+            value: ChatResponseViewModel(
+              id: option.id,
+              title: entity.title,
+              value: option.title,
+            ),
+          );
+        },
+      );
+
+  void _setDatePickerWidget({
+    InputRequestEntity entity,
+  }) =>
+      _chatViewModel.interactiveWidget =
+          _interactiveMessageHandler.buildDatePickerWidget(
+              inputRequestEntity: entity,
+              onSendPressed: (dateValue) {
+                _cleanInteractiveWidget();
+                _getNextMessageByProvided(dateValue);
+                _putResponseToTheMap(
+                  key: entity.uri,
+                  value: ChatResponseViewModel(
+                    id: entity.uri,
+                    title: entity.title,
+                    value: dateValue,
+                  ),
+                );
+              });
+
+  void _setDropdownWidget({InputRequestEntity entity}) =>
+      _chatViewModel.interactiveWidget = null;
 
   void _putResponseToTheMap({String key, ChatResponseViewModel value}) {
     _responseMap[key] = value;

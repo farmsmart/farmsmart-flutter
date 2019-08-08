@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:farmsmart_flutter/chat/model/form/input_request_entity.dart';
 import 'package:farmsmart_flutter/chat/ui/viewmodel/SelectableOptionViewModel.dart';
+import 'package:flutter/material.dart';
 
 abstract class InteractiveMessageHandler {
   Widget buildInputTextWidget({
@@ -16,6 +16,12 @@ abstract class InteractiveMessageHandler {
     InputRequestEntity inputRequestEntity,
     Function(SelectableOptionViewModel) onTap,
   });
+
+  Widget buildDatePickerWidget({
+    InputRequestEntity inputRequestEntity,
+    Function(String) onSendPressed,
+  });
+
 }
 
 enum InteractiveMessageType {
@@ -23,5 +29,7 @@ enum InteractiveMessageType {
   inputEmail,
   inputPhoneNumber,
   inputImage,
+  inputDate,
+  inputDropdown,
   multiChoice,
 }

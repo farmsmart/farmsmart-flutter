@@ -1,4 +1,4 @@
-import 'package:farmsmart_flutter/chat/ui/widgets/roundedButton.dart';
+import 'package:farmsmart_flutter/chat/ui/widgets/rounded_button.dart';
 import 'package:flutter/material.dart';
 
 class _Constants {

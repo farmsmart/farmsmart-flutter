@@ -1,7 +1,7 @@
 class ChatResponseViewModel {
   final String id;
   final String title;
-  final String value;
+  final dynamic value;
 
   ChatResponseViewModel({
     this.id,
