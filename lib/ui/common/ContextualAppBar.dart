@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
 class _Icons {
-  static final String dismissModal = "assets/raw/nav_icon_cancel.png";
+  static final String dismissModal = "assets/icons/nav_icon_cancel.png";
+  static final String backIcon = "assets/icons/nav_icon_back.png";
 }
 
 class _Constants {
-  static final double appBarIconSize = 24;
+  static final double appBarBackIconSize = 20;
+  static final double appBarDismissIconSize = 15;
 }
 
 abstract class ContextualAppBarStyle {
@@ -19,7 +21,7 @@ abstract class ContextualAppBarStyle {
 class _DefaultStyle implements ContextualAppBarStyle {
   final double elevation = 0;
   final Color iconColor = Colors.black;
-  final EdgeInsets insets = const EdgeInsets.only(left: 25.0, right: 25.0);
+  final EdgeInsets insets = const EdgeInsets.only(left: 3.0, right: 25.0);
 
   const _DefaultStyle();
 }
@@ -68,10 +70,18 @@ class ContextualAppBar extends StatelessWidget {
       actions.add(more);
     }
     return AppBar(
-      leading: isRoot ? _buildDismissIcon(context) : _buildBackIcon(context),
       backgroundColor: theme.primaryColor,
       elevation: _style.elevation,
       actions: actions,
+      automaticallyImplyLeading: false,
+      title: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          isRoot ? _buildDismissIcon(context) : _buildBackIcon(context),
+        ],
+      ),
+
     );
   }
 
@@ -80,9 +90,13 @@ class ContextualAppBar extends StatelessWidget {
       return _buildDismissIcon(context);
     } else {
       return Container(
-        margin: EdgeInsets.only(left: _style.insets.left),
-        child: BackButton(
-          color: _style.iconColor,
+        padding: EdgeInsets.only(left: _style.insets.left),
+        child: IconButton(
+          icon: Image.asset(
+            _Icons.backIcon,
+            width: _Constants.appBarBackIconSize,
+          ),
+          onPressed: () => Navigator.of(context).pop(),
         ),
       );
     }
@@ -90,14 +104,14 @@ class ContextualAppBar extends StatelessWidget {
 
   Widget _buildDismissIcon(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(left: _style.insets.left),
+      padding: EdgeInsets.only(left: _style.insets.left),
       child: IconButton(
-          icon: Icon(
-            Icons.close,
-            color: _style.iconColor,
-            size: _Constants.appBarIconSize,
-          ),
-          onPressed: () => Navigator.of(context).pop()),
+        icon: Image.asset(
+          _Icons.dismissModal,
+          width: _Constants.appBarDismissIconSize,
+        ),
+        onPressed: () => Navigator.of(context).pop(),
+      ),
     );
   }
 }
