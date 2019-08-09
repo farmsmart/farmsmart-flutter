@@ -31,6 +31,8 @@ class _Constants {
   static const String typeValuePhoneNumber = "com.wearemobilefirst.PhoneNumber";
   static const String typeValueImage = "com.wearemobilefirst.Image";
   static const String typeValueMultiChoice = "com.wearemobilefirst.MultiChoice";
+  static const String typeValueDropdown = "com.wearemobilefirst.Dropdown";
+  static const String typeValueDate = "com.wearemobilefirst.Date";
 }
 
 class _LocalisedStrings {
@@ -222,6 +224,10 @@ class ChatProvider implements ViewModelProvider<ChatViewModel> {
         return InteractiveMessageType.inputImage;
       case _Constants.typeValueMultiChoice:
         return InteractiveMessageType.multiChoice;
+      case _Constants.typeValueDropdown:
+        return InteractiveMessageType.inputDropdown;
+      case _Constants.typeValueDate:
+        return InteractiveMessageType.inputDate;
       default:
         return null;
     }

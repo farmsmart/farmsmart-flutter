@@ -24,8 +24,9 @@ class _Constants {
 }
 
 class _Assets {
-  static const defaultPathToJSONFile =
-      "assets/responses/create_account_mock_form.json";
+//  static const defaultPathToJSONFile =
+//      "assets/responses/create_account_mock_form.json";
+  static const defaultPathToJSONFile = "assets/responses/chat_flow.json";
   static const dismissModalIcon = "assets/raw/nav_icon_cancel.png";
   static const optionButtonIcon = "assets/icons/nav_icon_options.png";
 }
@@ -127,7 +128,7 @@ class _ChatPageState extends State<ChatPage> {
     map.forEach((key, value) {
       viewModels.add(
         FarmDetailsListItemViewModel(
-          title: key,
+          title: value.title,
           detail: value.value,
         ),
       );
