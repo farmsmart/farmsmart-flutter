@@ -33,18 +33,21 @@ class _WebViewState extends State<WebView> {
 
   @override
   Widget build(BuildContext context) {
-    return IndexedStack(
-      index: _stackToView,
+    return Column(
       children: <Widget>[
-        Container(
-          color: Colors.white,
-          child: Center(
-            child: CircularProgressIndicator(),
-          ),
+        _buildAppbar(context),
+        IndexedStack(
+          index: _stackToView,
+          children: <Widget>[
+            Container(
+              color: Colors.white,
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
+            ),
+            _buildWebView(),
+          ],
         ),
-        Column(
-          children: <Widget>[_buildAppbar(context), _buildWebView()],
-        )
       ],
     );
   }
