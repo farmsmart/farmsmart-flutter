@@ -16,7 +16,7 @@
       "peopleInHousehold": "%PeopleInHousehold",
       "soilType": "%SoilType",
       "startDate": "%StartDate",
-      "usingIrrigation": "%UsingIrrigation",
+      "usingIrrigation": "%UsingIrrigation"
     }
   },
   "items": [
@@ -516,11 +516,11 @@
           "maxSelection": 1,
           "options": [
             {
-              "id": "irrigation.yes",
+              "id": "irrigation.Yes",
               "title": "Yes"
             },
             {
-              "id": "irrigation.no",
+              "id": "irrigation.No",
               "title": "No"
             }
           ]
