@@ -1,3 +1,7 @@
+import 'package:farmsmart_flutter/chat/ui/widgets/separator_wrapper.dart';
+import 'package:farmsmart_flutter/chat/ui/widgets/styles/rounded_button_styles.dart';
+import 'package:farmsmart_flutter/chat/ui/widgets/styles/selectable_options_styles.dart';
+import 'package:farmsmart_flutter/chat/ui/widgets/styles/text_input_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:farmsmart_flutter/chat/bloc/transformer/implementation/SelectableOptionsViewModelTransformer.dart';
 import 'package:farmsmart_flutter/chat/model/form/input_request_entity.dart';
@@ -60,28 +64,35 @@ class InteractiveMessageHandlerImpl implements InteractiveMessageHandler {
     InteractiveMessageType type,
     bool isFocusedOnBuild,
   }) =>
-      TextInput(
-        buttonText: _LocalisedStrings.sendText(),
-        formFieldValidatorFunction: _getValidationFunction(
-          regex: inputRequestEntity.validationRegex,
-          type: type,
-          onValidationPassed: onValidationPassed,
+      SeparatorWrapper(
+        wrappedChild: TextInput(
+          buttonText: _LocalisedStrings.sendText(),
+          formFieldValidatorFunction: _getValidationFunction(
+            regex: inputRequestEntity.validationRegex,
+            type: type,
+            onValidationPassed: onValidationPassed,
+          ),
+          onSendPressed: onSendPressed,
+          controller: textEditingController,
+          decoration: _getInputDecoration(),
+          isFocusedOnBuild: isFocusedOnBuild,
+          roundedButtonStyle: RoundedButtonStyles.chatButtonStyle(),
+          style: TextInputStyles.buildDefaultStyle(),
         ),
-        onSendPressed: onSendPressed,
-        controller: textEditingController,
-        decoration: _getInputDecoration(),
-        isFocusedOnBuild: isFocusedOnBuild,
       );
 
   _buildSelectableOptionsWidget({
     InputRequestEntity inputRequestEntity,
     Function(SelectableOptionViewModel) onTap,
   }) =>
-      SelectableOptions(
-        viewModel: _getSelectableOptionsViewModel(
-          inputRequestEntity: inputRequestEntity,
+      SeparatorWrapper(
+        wrappedChild: SelectableOptions(
+          viewModel: _getSelectableOptionsViewModel(
+            inputRequestEntity: inputRequestEntity,
+          ),
+          onTap: onTap,
+          style: SelectableOptionsStyles.buildDefaultStyle(),
         ),
-        onTap: onTap,
       );
 
   SelectableOptionsViewModel _getSelectableOptionsViewModel({
@@ -94,19 +105,20 @@ class InteractiveMessageHandlerImpl implements InteractiveMessageHandler {
     String regex,
     InteractiveMessageType type,
     Function(String) onValidationPassed,
-  }) {
-    return (value) {
-      return _getFormFieldValidatorValue(
-        value: value,
-        regex: regex,
-        type: type,
-        onValidationPassed: onValidationPassed,
-      );
-    };
-  }
+  }) =>
+      (value) {
+        return _getFormFieldValidatorValue(
+          value: value,
+          regex: regex,
+          type: type,
+          onValidationPassed: onValidationPassed,
+        );
+      };
 
-  InputDecoration _getInputDecoration() =>
-      InputDecoration(hintText: _LocalisedStrings.inputHint());
+  InputDecoration _getInputDecoration() => InputDecoration(
+        border: InputBorder.none,
+        hintText: _LocalisedStrings.inputHint(),
+      );
 
   String _getFormFieldValidatorValue({
     String value,
@@ -153,7 +165,6 @@ class InteractiveMessageHandlerImpl implements InteractiveMessageHandler {
 
   bool _isRegexProvided({
     String regex,
-  }) {
-    return regex != null && regex.isNotEmpty;
-  }
+  }) =>
+      regex != null && regex.isNotEmpty;
 }

@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+class _Constants {
+  static const defaultAssetImageSource = "assets/icons/chatbot_avatar.png";
+}
+
 class HeaderMessageStyle {
   final EdgeInsetsGeometry outerContainerMargin;
   final Color avatarBackgroundColour;
@@ -127,6 +131,6 @@ class HeaderMessageViewModel {
   HeaderMessageViewModel({
     this.title = "",
     this.subtitle = "",
-    this.backgroundAssetImageSource = "",
+    this.backgroundAssetImageSource = _Constants.defaultAssetImageSource,
   });
 }

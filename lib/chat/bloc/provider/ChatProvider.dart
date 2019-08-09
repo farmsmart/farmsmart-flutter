@@ -1,19 +1,18 @@
 import 'dart:async';
 
-import 'package:farmsmart_flutter/chat/ui/widgets/card_view.dart';
-import 'package:flutter/widgets.dart';
 import 'package:farmsmart_flutter/chat/bloc/ViewModelProvider.dart';
 import 'package:farmsmart_flutter/chat/bloc/handler/InteractiveMessageHandler.dart';
 import 'package:farmsmart_flutter/chat/bloc/handler/implementation/InteractiveMessageHandlerImpl.dart';
-import 'package:farmsmart_flutter/chat/bloc/helper/ChatMessageProviderHelper.dart';
-import 'package:farmsmart_flutter/chat/bloc/helper/implementation/ChatMessageProviderHelperImpl.dart';
-import 'package:farmsmart_flutter/chat/bloc/helper/ChatSummaryProviderHelper.dart';
-import 'package:farmsmart_flutter/chat/bloc/helper/implementation/ChatSummaryProviderHelperImpl.dart';
+import 'package:farmsmart_flutter/chat/bloc/handler/ChatMessageViewModelHandler.dart';
+import 'package:farmsmart_flutter/chat/bloc/handler/implementation/ChatMessageProviderHelperImpl.dart';
 import 'package:farmsmart_flutter/chat/model/form/input_request_entity.dart';
 import 'package:farmsmart_flutter/chat/repository/form/ChatRepository.dart';
 import 'package:farmsmart_flutter/chat/ui/widgets/bubble_message.dart';
 import 'package:farmsmart_flutter/chat/ui/widgets/chat.dart';
-import 'package:farmsmart_flutter/chat/ui/widgets/summary.dart';
+import 'package:farmsmart_flutter/chat/ui/widgets/roundedButton.dart';
+import 'package:farmsmart_flutter/chat/ui/widgets/separator_wrapper.dart';
+import 'package:farmsmart_flutter/chat/ui/widgets/styles/rounded_button_styles.dart';
+import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 
 class _Constants {
@@ -33,19 +32,17 @@ class _Constants {
   static const String typeValueMultiChoice = "com.wearemobilefirst.MultiChoice";
 }
 
-class _Strings {
-  static const String summaryTitleValue = "Chat summary value";
-  static const String summaryTitleLabel = "Chat summary";
-  static const String summaryActionButtonText = "Confirm";
-  static const String summaryError = "Provided summary is not correct";
+class _LocalisedStrings {
+  static String summaryError() =>
+      Intl.message("Provided summary is not correct");
+
+  static String viewDetails() => Intl.message("View Your Details");
 }
 
 class ChatProvider implements ViewModelProvider<ChatViewModel> {
   final ChatRepository _repo;
-  final ChatMessageProviderHelper _chatMessageHandler =
-      ChatMessageProviderHelperImpl();
-  final ChatSummaryProviderHelper _chatSummaryProviderHelper =
-      ChatSummaryProviderHelperImpl();
+  final ChatMessageViewModelHandler _chatMessageHandler =
+      ChatMessageViewModelHandlerImpl();
   final InteractiveMessageHandler _interactiveMessageHandler =
       InteractiveMessageHandlerImpl();
   final TextEditingController _textEditingController = TextEditingController();
@@ -135,25 +132,23 @@ class ChatProvider implements ViewModelProvider<ChatViewModel> {
         _insertNewMessageToList(
             _chatMessageHandler.getMessageFromEntity(formItem));
         _increaseMessageCount();
-        _updateAvatarVisibility();
+        _updatePreviousMessages();
         _setInteractiveWidget(formItem.inputRequest);
         _notifyController();
       } else {
-        _setSummaryWidget();
+        _setSummaryDetailsButton();
       }
     });
   }
 
-  void _setSummaryWidget() {
-    _chatViewModel.interactiveWidget = CardView(
-      child: Summary(
-        viewModel: _chatSummaryProviderHelper.getSummary(
-          inputModel: _responseMap,
-          titleValue: _Strings.summaryTitleValue,
-          titleText: _Strings.summaryTitleLabel.toUpperCase(),
-          actionText: _Strings.summaryActionButtonText,
+  void _setSummaryDetailsButton() {
+    _chatViewModel.interactiveWidget = SeparatorWrapper(
+      wrappedChild: RoundedButton(
+        viewModel: RoundedButtonViewModel(
+          title: _LocalisedStrings.viewDetails(),
+          onTap: _onSummaryWidgetActionButtonTap,
         ),
-        onTap: _onSummaryWidgetActionButtonTap,
+        style: RoundedButtonStyles.chatButtonStyle(),
       ),
     );
   }
@@ -161,7 +156,7 @@ class ChatProvider implements ViewModelProvider<ChatViewModel> {
   void _onSummaryWidgetActionButtonTap() {
     (_responseMap != null && _responseMap.isNotEmpty)
         ? _onSuccess(_responseMap)
-        : _onError(_Strings.summaryError);
+        : _onError(_LocalisedStrings.summaryError());
   }
 
   void _setInteractiveWidget(InputRequestEntity entity) {
@@ -280,7 +275,7 @@ class ChatProvider implements ViewModelProvider<ChatViewModel> {
     );
   }
 
-  void _updateAvatarVisibility() {
+  void _updatePreviousMessages() {
     List<MessageBubbleViewModel> messageViewModels =
         _chatViewModel.messageViewModels;
     if (messageViewModels.length >= _Constants.minMessagesLengthToUpdate) {
@@ -288,14 +283,54 @@ class ChatProvider implements ViewModelProvider<ChatViewModel> {
           messageViewModels[_Constants.currentMessageIndex];
       MessageBubbleViewModel previousViewModel =
           messageViewModels[_Constants.previousMessageIndex];
-      if (currentViewModel.messageType == MessageType.received &&
-          previousViewModel.messageType == MessageType.received) {
-        previousViewModel.avatar = _buildDefaultAvatarEmptyBox();
-      }
+      _updateReceivedMessages(
+        currentViewModel: currentViewModel,
+        previousViewModel: previousViewModel,
+      );
     }
   }
 
-  Widget _buildDefaultAvatarEmptyBox() {
-    return SizedBox(width: _Constants.defaultSizedBoxWidth);
+  void _updateReceivedMessages({
+    MessageBubbleViewModel currentViewModel,
+    MessageBubbleViewModel previousViewModel,
+  }) {
+    switch (previousViewModel.messageType) {
+      case MessageType.sent:
+        currentViewModel.messageType = MessageType.received;
+        break;
+      case MessageType.received:
+        _updateFromReceived(
+          currentViewModel: currentViewModel,
+          previousViewModel: previousViewModel,
+        );
+        break;
+      case MessageType.receivedStackBottom:
+        _updateFromReceivedStackBottom(
+          previousViewModel: previousViewModel,
+          currentViewModel: currentViewModel,
+        );
+        break;
+      default: //nothing
+    }
+  }
+
+  void _updateFromReceived({
+    MessageBubbleViewModel currentViewModel,
+    MessageBubbleViewModel previousViewModel,
+  }) {
+    if (currentViewModel.messageType == MessageType.received) {
+      previousViewModel.messageType = MessageType.receivedStackTop;
+      currentViewModel.messageType = MessageType.receivedStackBottom;
+    }
+  }
+
+  void _updateFromReceivedStackBottom({
+    MessageBubbleViewModel currentViewModel,
+    MessageBubbleViewModel previousViewModel,
+  }) {
+    if (currentViewModel.messageType == MessageType.received) {
+      previousViewModel.messageType = MessageType.receivedStackBetween;
+      currentViewModel.messageType = MessageType.receivedStackBottom;
+    }
   }
 }

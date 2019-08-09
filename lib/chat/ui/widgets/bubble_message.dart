@@ -165,7 +165,7 @@ class MessageBubble extends StatelessWidget {
 class MessageBubbleViewModel {
   final String message;
   final Widget messageChild;
-  final MessageType messageType;
+  MessageType messageType;
   Widget avatar;
 
   MessageBubbleViewModel({
@@ -179,6 +179,9 @@ class MessageBubbleViewModel {
 enum MessageType {
   sent,
   received,
+  receivedStackTop,
+  receivedStackBottom,
+  receivedStackBetween,
   header,
   loading,
 }

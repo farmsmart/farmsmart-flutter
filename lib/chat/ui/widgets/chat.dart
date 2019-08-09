@@ -25,7 +25,7 @@ class ChatStyle {
 
 class _DefaultStyle extends ChatStyle {
   final Color mainContainerColor = const Color(0xFFFFFFFF);
-  final CrossAxisAlignment crossAxisAlignment = CrossAxisAlignment.end;
+  final CrossAxisAlignment crossAxisAlignment = CrossAxisAlignment.start;
 
   const _DefaultStyle({
     Color mainContainerColor,
@@ -38,6 +38,8 @@ const ChatStyle _defaultStyle = const _DefaultStyle();
 class Chat extends StatelessWidget {
   final ChatProvider _chatProvider;
   final ChatStyle _style;
+
+  bool _notNull(Widget item) => item != null;
 
   Chat({
     @required ChatProvider chatProvider,
@@ -78,8 +80,6 @@ class Chat extends StatelessWidget {
   _buildInteractiveWidget(ChatViewModel chatViewModel) {
     return chatViewModel.interactiveWidget;
   }
-
-  bool _notNull(Widget item) => item != null;
 }
 
 class ChatViewModel {
@@ -95,4 +95,3 @@ class ChatViewModel {
         this.interactiveWidget = interactiveWidget,
         this.scrollController = scrollController ?? ScrollController();
 }
-

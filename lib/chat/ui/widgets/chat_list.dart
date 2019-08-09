@@ -3,22 +3,30 @@ import 'package:farmsmart_flutter/chat/ui/widgets/bubble_message.dart';
 
 import 'styles/bubble_message_styles.dart';
 
+class _Constants {
+  static const defaultPadding = 32.0;
+}
+
 class ChatListStyle {
   final bool shrinkWrap;
   final bool reverse;
+  final EdgeInsetsGeometry listPadding;
 
   const ChatListStyle({
     this.shrinkWrap,
     this.reverse,
+    this.listPadding,
   });
 
   ChatListStyle copyWith({
     bool shrinkWrap,
     bool reverse,
+    EdgeInsetsGeometry outerContainerMargins,
   }) {
     return ChatListStyle(
       shrinkWrap: shrinkWrap ?? this.shrinkWrap,
       reverse: reverse ?? this.reverse,
+      listPadding: outerContainerMargins ?? this.listPadding,
     );
   }
 }
@@ -26,10 +34,13 @@ class ChatListStyle {
 class _DefaultStyle extends ChatListStyle {
   final bool shrinkWrap = true;
   final bool reverse = true;
+  final EdgeInsetsGeometry listPadding =
+      const EdgeInsets.all(_Constants.defaultPadding);
 
   const _DefaultStyle({
     bool shrinkWrap,
     bool reverse,
+    EdgeInsetsGeometry outerContainerMargins,
   });
 }
 
@@ -54,16 +65,15 @@ class ChatList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Container(
-        child: ListView.builder(
-            controller: _scrollController,
-            shrinkWrap: _style.shrinkWrap,
-            itemCount: _messages.length,
-            reverse: _style.reverse,
-            itemBuilder: (BuildContext context, int index) {
-              return _buildMessage(index);
-            }),
-      ),
+      child: ListView.builder(
+          controller: _scrollController,
+          shrinkWrap: _style.shrinkWrap,
+          itemCount: _messages.length,
+          reverse: _style.reverse,
+          padding: _style.listPadding,
+          itemBuilder: (BuildContext context, int index) {
+            return _buildMessage(index);
+          }),
     );
   }
 
@@ -82,12 +92,18 @@ class ChatList extends StatelessWidget {
     switch (message.messageType) {
       case MessageType.sent:
         return MessageBubbleStyles.buildStyleSent();
-      case MessageType.received:
-        return MessageBubbleStyles.buildStyleReceived();
       case MessageType.header:
         return MessageBubbleStyles.buildStyleHeader();
       case MessageType.loading:
         return MessageBubbleStyles.buildStyleLoading();
+      case MessageType.received:
+        return MessageBubbleStyles.buildStyleReceived();
+      case MessageType.receivedStackTop:
+        return MessageBubbleStyles.buildStyleReceivedStackTop();
+      case MessageType.receivedStackBottom:
+        return MessageBubbleStyles.buildStyleReceivedStackBottom();
+      case MessageType.receivedStackBetween:
+        return MessageBubbleStyles.buildStyleReceivedStackBetween();
       default:
         return MessageBubbleStyles.buildStyleSent();
     }

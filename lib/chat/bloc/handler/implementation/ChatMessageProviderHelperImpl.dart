@@ -3,18 +3,15 @@ import 'package:farmsmart_flutter/chat/bloc/transformer/implementation/ChatMessa
 import 'package:farmsmart_flutter/chat/model/form/form_entity.dart';
 import 'package:farmsmart_flutter/chat/model/form/form_item_entity.dart';
 import 'package:farmsmart_flutter/chat/ui/widgets/bubble_message.dart';
-import 'package:farmsmart_flutter/chat/ui/widgets/message_circle_avatar.dart';
 import 'package:farmsmart_flutter/chat/ui/widgets/fading_dots.dart';
 import 'package:farmsmart_flutter/chat/ui/widgets/header_message.dart';
+import 'package:farmsmart_flutter/chat/ui/widgets/styles/fading_dots_styles.dart';
+import 'package:farmsmart_flutter/chat/ui/widgets/styles/header_message_styles.dart';
 
-import '../ChatMessageProviderHelper.dart';
+import '../ChatMessageViewModelHandler.dart';
 
-class _Constants {
-  static const defaultEmptyString = "";
-}
-
-class ChatMessageProviderHelperImpl
-    implements ChatMessageProviderHelper<MessageBubbleViewModel> {
+class ChatMessageViewModelHandlerImpl
+    implements ChatMessageViewModelHandler<MessageBubbleViewModel> {
   @override
   MessageBubbleViewModel getMessageFromEntity(FormItemEntity entity) =>
       _getMessageAsBubble(entity);
@@ -36,7 +33,10 @@ class ChatMessageProviderHelperImpl
   MessageBubbleViewModel _getMessageAsHeader(
           HeaderMessageViewModel viewModel) =>
       MessageBubbleViewModel(
-        messageChild: HeaderMessage(viewModel: viewModel),
+        messageChild: HeaderMessage(
+          viewModel: viewModel,
+          style: HeaderMessageStyles.buildDefaultStyle(),
+        ),
         messageType: MessageType.header,
       );
 
@@ -51,12 +51,9 @@ class ChatMessageProviderHelperImpl
       );
 
   MessageBubbleViewModel _getMessageAsLoading() => MessageBubbleViewModel(
-        message: null,
-        avatar: MessageCircleAvatar(
-          messageCircleAvatarViewModel: MessageCircleAvatarViewModel(
-              backgroundAssetImageSource: _Constants.defaultEmptyString),
+        messageChild: FadingDots(
+          style: FadingDotsStyles.buildDefaultStyle(),
         ),
-        messageChild: FadingDots(),
         messageType: MessageType.loading,
       );
 }
