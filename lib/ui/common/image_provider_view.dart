@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class _Constants {
-  static final placeholderAsset = 'assets/raw/placeholder.webp';
+  static final placeholderAsset = 'assets/raw/placeholder_color.png';
   static final defaultBorderRadius = BorderRadius.all(Radius.circular(0));
   static final defaultFadeDuration = 200;
 }
@@ -27,9 +27,16 @@ class ImageProviderView extends StatelessWidget {
       future: imageURLProvider.urlToFit(width: width, height: height),
       builder: (BuildContext context, AsyncSnapshot<String> url) {
         if (!url.hasData || url.data == null) {
-          return SizedBox(
-            height: height,
-            width: width,
+          return ClipRRect(
+            borderRadius: imageBorderRadius ?? _Constants.defaultBorderRadius,
+            child: SizedBox(
+              height: height,
+              width: width,
+              child: FittedBox(
+                child: Image.asset(_Constants.placeholderAsset),
+                fit: BoxFit.cover,
+              ),
+            ),
           );
         }
         return buildImage(url.data);
