@@ -93,7 +93,200 @@
         "localStore": false,
         "responseText": "",
         "inline": true,
-        "optional": false
+        "optional": false,
+        "args": {
+          "maxSelection": 1,
+          "options": [
+            {
+              "id": "OptionKey1",
+              "title": "Baringo"
+            },
+            {
+              "id": "OptionKey2",
+              "title": "Bomet"
+            },
+            {
+              "id": "OptionKey3",
+              "title": "Bungoma"
+            },
+            {
+              "id": "OptionKey4",
+              "title": "Busia"
+            },
+            {
+              "id": "OptionKey5",
+              "title": "Elgeyo-Marakwet"
+            },
+            {
+              "id": "OptionKey6",
+              "title": "Embu"
+            },
+            {
+              "id": "OptionKey7",
+              "title": "Garissa"
+            },
+            {
+              "id": "OptionKey8",
+              "title": "Homa Bay"
+            },
+            {
+              "id": "OptionKey9",
+              "title": "Isiolo"
+            },
+            {
+              "id": "OptionKey10",
+              "title": "Kajiado"
+            },
+            {
+              "id": "OptionKey11",
+              "title": "Kakamega"
+            },
+            {
+              "id": "OptionKey12",
+              "title": "Kericho"
+            },
+            {
+              "id": "OptionKey13",
+              "title": "Kiambu"
+            },
+            {
+              "id": "OptionKey14",
+              "title": "Kilifi"
+            },
+            {
+              "id": "OptionKey15",
+              "title": "Kirinyaga"
+            },
+            {
+              "id": "OptionKey16",
+              "title": "Kisii"
+            },
+            {
+              "id": "OptionKey17",
+              "title": "Kisumu"
+            },
+            {
+              "id": "OptionKey18",
+              "title": "Kitui"
+            },
+            {
+              "id": "OptionKey19",
+              "title": "Kwale"
+            },
+            {
+              "id": "OptionKey20",
+              "title": "Laikipia"
+            },
+            {
+              "id": "OptionKey21",
+              "title": "Lamu"
+            },
+            {
+              "id": "OptionKey22",
+              "title": "Machakos"
+            },
+            {
+              "id": "OptionKey23",
+              "title": "Makueni"
+            },
+            {
+              "id": "OptionKey24",
+              "title": "Mandera"
+            },
+            {
+              "id": "OptionKey25",
+              "title": "Marsabit"
+            },
+            {
+              "id": "OptionKey26",
+              "title": "Meru"
+            },
+            {
+              "id": "OptionKey27",
+              "title": "Migori"
+            },
+            {
+              "id": "OptionKey28",
+              "title": "Mombasa"
+            },
+            {
+              "id": "OptionKey29",
+              "title": "Murang'a"
+            },
+            {
+              "id": "OptionKey30",
+              "title": "Nairobi"
+            },
+            {
+              "id": "OptionKey31",
+              "title": "Nakuru"
+            },
+            {
+              "id": "OptionKey32",
+              "title": "Nandi"
+            },
+            {
+              "id": "OptionKey33",
+              "title": "Narok"
+            },
+            {
+              "id": "OptionKey34",
+              "title": "Nyamira"
+            },
+            {
+              "id": "OptionKey35",
+              "title": "Nyandarua"
+            },
+            {
+              "id": "OptionKey36",
+              "title": "Nyeri"
+            },
+            {
+              "id": "OptionKey37",
+              "title": "Samburu"
+            },
+            {
+              "id": "OptionKey38",
+              "title": "Siaya"
+            },
+            {
+              "id": "OptionKey39",
+              "title": "Taita-Taveta"
+            },
+            {
+              "id": "OptionKey40",
+              "title": "Tana River"
+            },
+            {
+              "id": "OptionKey41",
+              "title": "Tharaka-Nithi"
+            },
+            {
+              "id": "OptionKey42",
+              "title": "Trans-Nzoia"
+            },
+            {
+              "id": "OptionKey43",
+              "title": "Turkana"
+            },
+            {
+              "id": "OptionKey44",
+              "title": "Uasin Gishu"
+            },
+            {
+              "id": "OptionKey45",
+              "title": "Vihiga"
+            },
+            {
+              "id": "OptionKey46",
+              "title": "Wajir"
+            },
+            {
+              "id": "OptionKey4",
+              "title": "West Pokot"
+            }
+          ]
+        }
       }
     },
     {
