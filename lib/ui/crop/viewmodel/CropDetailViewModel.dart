@@ -7,31 +7,47 @@ class CropDetailViewModel extends ArticleDetailViewModel {
   final List<RecommendationDetailListItemViewModel> infoItems;
 
   CropDetailViewModel(
-      LoadingStatus loadingStatus,
-      String title,
-      String subtitle,
-      String relatedTitle,
-      String contentLinkTitle,
-      ImageURLProvider image,
-      String body,
-      Future<String> shareLink,
-      String contentLink,
-      List<RecommendationDetailListItemViewModel> infoItems)
-      : this.infoItems = infoItems,
-        super(loadingStatus, title, subtitle, relatedTitle, contentLinkTitle,
-            image, body, shareLink, contentLink);
+    LoadingStatus loadingStatus,
+    String title,
+    String subtitle,
+    String relatedTitle,
+    String contentLinkTitle,
+    ImageURLProvider image,
+    String body,
+    Future<String> shareLink,
+    String contentLink,
+    String contentLinkDescription,
+    String contentLinkIcon,
+    List<RecommendationDetailListItemViewModel> infoItems,
+  )   : this.infoItems = infoItems,
+        super(
+          loadingStatus,
+          title,
+          subtitle,
+          relatedTitle,
+          contentLinkTitle,
+          image,
+          body,
+          shareLink,
+          contentLink,
+          contentLinkDescription,
+          contentLinkIcon,
+        );
 
   CropDetailViewModel.fromArticle(ArticleDetailViewModel articleViewModel,
       List<RecommendationDetailListItemViewModel> infoItems)
       : this.infoItems = infoItems,
         super(
-            articleViewModel.loadingStatus,
-            articleViewModel.title,
-            articleViewModel.subtitle,
-            articleViewModel.relatedTitle,
-            articleViewModel.contentLinkTitle,
-            articleViewModel.image,
-            articleViewModel.body,
-            articleViewModel.shareLink,
-            articleViewModel.contentLink);
+          articleViewModel.loadingStatus,
+          articleViewModel.title,
+          articleViewModel.subtitle,
+          articleViewModel.relatedTitle,
+          articleViewModel.contentLinkTitle,
+          articleViewModel.image,
+          articleViewModel.body,
+          articleViewModel.shareLink,
+          articleViewModel.contentLink,
+          articleViewModel.contentLinkDescription,
+          articleViewModel.contentLinkIcon,
+        );
 }

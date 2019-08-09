@@ -39,6 +39,13 @@ class _LocalisedStrings {
   static relatedArticles() => Intl.message('Related articles');
 
   static relatedGroups() => Intl.message('Related groups');
+
+  static joinWhatsAppGroup() =>
+      Intl.message('Join the WhatsApp group and discuss with fellow farmers.');
+}
+
+class _Icons {
+  static final whatsApp = 'assets/icons/WhatsApp_Logo_short.png';
 }
 
 class Home extends StatelessWidget {
@@ -55,7 +62,7 @@ class Home extends StatelessWidget {
     localizations = FarmsmartLocalizations.of(context);
     return ViewModelProviderBuilder(
       provider:
-          HomeViewModelProvider(repositoryProvider.getProfileRepository()),
+      HomeViewModelProvider(repositoryProvider.getProfileRepository()),
       successBuilder: _buildSuccess,
     );
   }
@@ -106,7 +113,7 @@ class Home extends StatelessWidget {
       title: "Recommendations",
       heroThreshold: 0.8,
       plotRepo:
-          repositoryProvider.getMyPlotRepository(viewModel.currentProfileID),
+      repositoryProvider.getMyPlotRepository(viewModel.currentProfileID),
       cropRepo: repositoryProvider.getCropRepository(),
       profileRepo: repositoryProvider.getProfileRepository(),
       ratingRepo: repositoryProvider.getRatingsRepository(),
@@ -145,10 +152,12 @@ class Home extends StatelessWidget {
     return ArticleList(
       style: ArticleListStyles.buildForCommunity(),
       viewModelProvider: ArticleListProvider(
-        title: localizations.communityTab,
-        repository: repositoryProvider.getArticleRepository(),
-        group: ArticleCollectionGroup.chatGroups,
-        relatedTitle: _LocalisedStrings.relatedGroups(),
+          title: localizations.communityTab,
+          repository: repositoryProvider.getArticleRepository(),
+          group: ArticleCollectionGroup.chatGroups,
+          relatedTitle: _LocalisedStrings.relatedGroups(),
+          contentLinkDescription: _LocalisedStrings.joinWhatsAppGroup(),
+          contentLinkIcon: _Icons.whatsApp,
       ),
     );
   }
@@ -168,11 +177,9 @@ class Home extends StatelessWidget {
     );
   }
 
-  TabNavigator _buildTabNavigator(
-    Widget page,
-    String activeIconPath,
-    String iconPath,
-  ) {
+  TabNavigator _buildTabNavigator(Widget page,
+      String activeIconPath,
+      String iconPath,) {
     return TabNavigator(
       child: page,
       barItem: BottomNavigationBarItem(
