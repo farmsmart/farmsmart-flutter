@@ -4,7 +4,7 @@
   "subtitle": "Your personal farm assistant",
   "origin": "com.wearemobilefirst.farmsmart",
   "formResponse": {
-    "type": "com.google.firebase.database",
+    "type": "com.wearemobilefirst.local",
     "uri": "profiles/%UserID/",
     "body": {
       "name": "%Name",
@@ -32,7 +32,7 @@
       "text": "What is your name?",
       "inputRequest": {
         "type": "com.wearemobilefirst.String",
-        "uri": "%Name",
+        "uri": "Name",
         "localStore": false,
         "inline": true,
         "title": "Your Name",
@@ -54,7 +54,7 @@
       "inputRequest": {
         "type": "com.wearemobilefirst.MultiChoice",
         "inline": true,
-        "uri": "%SkillLevel",
+        "uri": "SkillLevel",
         "title": "Skill Level",
         "localStore": true,
         "responseText": "",
@@ -63,19 +63,19 @@
           "maxSelection": 1,
           "options": [
             {
-              "id": "OptionKey1",
+              "id": "skill.Beginner",
               "title": "Beginner",
               "description": "No experience with farming",
               "responseText": "I have no experience farming"
             },
             {
-              "id": "OptionKey2",
+              "id": "skill.Intermediate",
               "title": "Intermediate",
               "description": "Some experience farming",
               "responseText": "I have farming knowledge"
             },
             {
-              "id": "OptionKey3",
+              "id": "skill.Advanced",
               "title": "Advanced",
               "description": "Experienced farmer",
               "responseText": "I have experience farming"
@@ -88,7 +88,7 @@
       "text": "Where is your farm?",
       "inputRequest": {
         "type": "com.wearemobilefirst.Dropdown",
-        "uri": "%FarmLocation",
+        "uri": "FarmLocation",
         "title": "Farm Location",
         "localStore": false,
         "responseText": "",
@@ -98,191 +98,191 @@
           "maxSelection": 1,
           "options": [
             {
-              "id": "OptionKey1",
+              "id": "location.Baringo",
               "title": "Baringo"
             },
             {
-              "id": "OptionKey2",
+              "id": "location.Bomet",
               "title": "Bomet"
             },
             {
-              "id": "OptionKey3",
+              "id": "location.Bungoma",
               "title": "Bungoma"
             },
             {
-              "id": "OptionKey4",
+              "id": "location.Busia",
               "title": "Busia"
             },
             {
-              "id": "OptionKey5",
+              "id": "location.ElgeyoMarakwet",
               "title": "Elgeyo-Marakwet"
             },
             {
-              "id": "OptionKey6",
+              "id": "location.Embu",
               "title": "Embu"
             },
             {
-              "id": "OptionKey7",
+              "id": "location.Garissa",
               "title": "Garissa"
             },
             {
-              "id": "OptionKey8",
+              "id": "location.HomaBay",
               "title": "Homa Bay"
             },
             {
-              "id": "OptionKey9",
+              "id": "location.Isiolo",
               "title": "Isiolo"
             },
             {
-              "id": "OptionKey10",
+              "id": "location.Kajiado",
               "title": "Kajiado"
             },
             {
-              "id": "OptionKey11",
+              "id": "location.Kakamega",
               "title": "Kakamega"
             },
             {
-              "id": "OptionKey12",
+              "id": "location.Kericho",
               "title": "Kericho"
             },
             {
-              "id": "OptionKey13",
+              "id": "location.Kiambu",
               "title": "Kiambu"
             },
             {
-              "id": "OptionKey14",
+              "id": "location.Kilifi",
               "title": "Kilifi"
             },
             {
-              "id": "OptionKey15",
+              "id": "location.Kirinyaga",
               "title": "Kirinyaga"
             },
             {
-              "id": "OptionKey16",
+              "id": "location.Kisii",
               "title": "Kisii"
             },
             {
-              "id": "OptionKey17",
+              "id": "location.Kisumu",
               "title": "Kisumu"
             },
             {
-              "id": "OptionKey18",
+              "id": "location.Kitui",
               "title": "Kitui"
             },
             {
-              "id": "OptionKey19",
+              "id": "location.Kwale",
               "title": "Kwale"
             },
             {
-              "id": "OptionKey20",
+              "id": "location.Laikipia",
               "title": "Laikipia"
             },
             {
-              "id": "OptionKey21",
+              "id": "location.Lamu",
               "title": "Lamu"
             },
             {
-              "id": "OptionKey22",
+              "id": "location.Machakos",
               "title": "Machakos"
             },
             {
-              "id": "OptionKey23",
+              "id": "location.Makueni",
               "title": "Makueni"
             },
             {
-              "id": "OptionKey24",
+              "id": "location.Mandera",
               "title": "Mandera"
             },
             {
-              "id": "OptionKey25",
+              "id": "location.Marsabit",
               "title": "Marsabit"
             },
             {
-              "id": "OptionKey26",
+              "id": "location.Meru",
               "title": "Meru"
             },
             {
-              "id": "OptionKey27",
+              "id": "location.Migori",
               "title": "Migori"
             },
             {
-              "id": "OptionKey28",
+              "id": "location.Mombasa",
               "title": "Mombasa"
             },
             {
-              "id": "OptionKey29",
+              "id": "location.Muranga",
               "title": "Murang'a"
             },
             {
-              "id": "OptionKey30",
+              "id": "location.Nairobi",
               "title": "Nairobi"
             },
             {
-              "id": "OptionKey31",
+              "id": "location.Nakuru",
               "title": "Nakuru"
             },
             {
-              "id": "OptionKey32",
+              "id": "location.Nandi",
               "title": "Nandi"
             },
             {
-              "id": "OptionKey33",
+              "id": "location.Narok",
               "title": "Narok"
             },
             {
-              "id": "OptionKey34",
+              "id": "location.Nyamira",
               "title": "Nyamira"
             },
             {
-              "id": "OptionKey35",
+              "id": "location.Nyandarua",
               "title": "Nyandarua"
             },
             {
-              "id": "OptionKey36",
+              "id": "location.Nyeri",
               "title": "Nyeri"
             },
             {
-              "id": "OptionKey37",
+              "id": "location.Samburu",
               "title": "Samburu"
             },
             {
-              "id": "OptionKey38",
+              "id": "location.Siaya",
               "title": "Siaya"
             },
             {
-              "id": "OptionKey39",
+              "id": "location.TaitaTaveta",
               "title": "Taita-Taveta"
             },
             {
-              "id": "OptionKey40",
+              "id": "location.TanaRiver",
               "title": "Tana River"
             },
             {
-              "id": "OptionKey41",
+              "id": "location.TharakaNithi",
               "title": "Tharaka-Nithi"
             },
             {
-              "id": "OptionKey42",
+              "id": "location.TransNzoia",
               "title": "Trans-Nzoia"
             },
             {
-              "id": "OptionKey43",
+              "id": "location.Turkana",
               "title": "Turkana"
             },
             {
-              "id": "OptionKey44",
+              "id": "location.UasinGishu",
               "title": "Uasin Gishu"
             },
             {
-              "id": "OptionKey45",
+              "id": "location.Vihiga",
               "title": "Vihiga"
             },
             {
-              "id": "OptionKey46",
+              "id": "location.Wajir",
               "title": "Wajir"
             },
             {
-              "id": "OptionKey4",
+              "id": "location.WestPokot",
               "title": "West Pokot"
             }
           ]
@@ -294,7 +294,7 @@
       "inputRequest": {
         "type": "com.wearemobilefirst.MultiChoice",
         "inline": true,
-        "uri": "%AgroEcoZone",
+        "uri": "AgroEcoZone",
         "title": "Agro-Ecological zone",
         "localStore": true,
         "responseText": "",
@@ -303,31 +303,31 @@
           "maxSelection": 1,
           "options": [
             {
-              "id": "OptionKey1",
+              "id": "agroeco.UpperMidlands",
               "title": "Upper midlands"
             },
             {
-              "id": "OptionKey2",
+              "id": "agroeco.LowlandMidlands",
               "title": "Lowland midlands"
             },
             {
-              "id": "OptionKey3",
+              "id": "agroeco.UpperHighlands",
               "title": "Upper highlands"
             },
             {
-              "id": "OptionKey4",
+              "id": "agroeco.LowlandHighlands",
               "title": "Lowland highlands"
             },
             {
-              "id": "OptionKey5",
+              "id": "agroeco.InlandLowlands",
               "title": "Inland lowlands"
             },
             {
-              "id": "OptionKey6",
+              "id": "agroeco.CoastalLowlands",
               "title": "Coastal lowlands"
             },
             {
-              "id": "OptionKey7",
+              "id": "agroeco.DontKnow",
               "title": "Don't know"
             }
           ]
@@ -338,7 +338,7 @@
       "text": "What is the size of your land?",
       "inputRequest": {
         "type": "com.wearemobilefirst.MultiChoice",
-        "uri": "%LandSize",
+        "uri": "LandSize",
         "title": "Land Size",
         "inline": true,
         "localStore": false,
@@ -348,23 +348,23 @@
           "maxSelection": 1,
           "options": [
             {
-              "id": "OptionKey1",
+              "id": "landSize.UrbanGarden",
               "title": "Urban garden"
             },
             {
-              "id": "OptionKey2",
+              "id": "landSize.LessThanQuarter",
               "title": "Less than 1/4 acre"
             },
             {
-              "id": "OptionKey3",
+              "id": "landSize.BetweenQuartHalf",
               "title": "1/4 - 1/2 acre"
             },
             {
-              "id": "OptionKey4",
+              "id": "landSize.HalfToOne",
               "title": "1/2 - 1 acre"
             },
             {
-              "id": "OptionKey5",
+              "id": "landSize.MoreThanOne",
               "title": "More than 1 acre"
             }
           ]
@@ -375,7 +375,7 @@
       "text": "Why are you wanting to grow food on your farm?",
       "inputRequest": {
         "type": "com.wearemobilefirst.MultiChoice",
-        "uri": "%Motivation",
+        "uri": "Motivation",
         "title": "Motivation",
         "inline": true,
         "localStore": false,
@@ -385,15 +385,15 @@
           "maxSelection": 1,
           "options": [
             {
-              "id": "OptionKey1",
+              "id": "motivation.money",
               "title": "For money"
             },
             {
-              "id": "OptionKey2",
+              "id": "motivation.family",
               "title": "For my family"
             },
             {
-              "id": "OptionKey1",
+              "id": "motivation.both",
               "title": "For both"
             }
           ]
@@ -404,7 +404,7 @@
       "text": "How many people are in your household?",
       "inputRequest": {
         "type": "com.wearemobilefirst.MultiChoice",
-        "uri": "%PeopleInHousehold",
+        "uri": "PeopleInHousehold",
         "title": "People In Household",
         "inline": true,
         "localStore": false,
@@ -414,19 +414,19 @@
           "maxSelection": 1,
           "options": [
             {
-              "id": "OptionKey1",
+              "id": "people.2",
               "title": "2"
             },
             {
-              "id": "OptionKey2",
+              "id": "people.3_5",
               "title": "3 - 5"
             },
             {
-              "id": "OptionKey3",
+              "id": "people.5",
               "title": "5 +"
             },
             {
-              "id": "OptionKey4",
+              "id": "people.skip",
               "title": "Skip"
             }
           ]
@@ -437,7 +437,7 @@
       "text": "What type of soil do you have?",
       "inputRequest": {
         "type": "com.wearemobilefirst.MultiChoice",
-        "uri": "%SoilType",
+        "uri": "SoilType",
         "title": "Soil Type",
         "inline": true,
         "localStore": false,
@@ -447,43 +447,43 @@
           "maxSelection": 1,
           "options": [
             {
-              "id": "OptionKey1",
+              "id": "soilType.Sandy",
               "title": "Sandy"
             },
             {
-              "id": "OptionKey2",
+              "id": "soilType.SandyClay",
               "title": "Sandy Clay"
             },
             {
-              "id": "OptionKey3",
+              "id": "soilType.SandyLoam",
               "title": "Sandy loam"
             },
             {
-              "id": "OptionKey4",
+              "id": "soilType.Silt",
               "title": "Silt"
             },
             {
-              "id": "OptionKey5",
+              "id": "soilType.SiltyLoam",
               "title": "Silty loam"
             },
             {
-              "id": "OptionKey6",
+              "id": "soilType.SiltyClay",
               "title": "Silty clay"
             },
             {
-              "id": "OptionKey7",
+              "id": "soilType.Clay",
               "title": "Clay"
             },
             {
-              "id": "OptionKey8",
+              "id": "soilType.ClayLoam",
               "title": "Clay loam"
             },
             {
-              "id": "OptionKey9",
+              "id": "soilType.Loam",
               "title": "Loam"
             },
             {
-              "id": "OptionKey10",
+              "id": "soilType.DontKnow",
               "title": "I don't know"
             }
           ]
@@ -494,7 +494,7 @@
       "text": "When do you intend to start planting?",
       "inputRequest": {
         "type": "com.wearemobilefirst.Date",
-        "uri": "%StartDate",
+        "uri": "StartDate",
         "localStore": false,
         "inline": true,
         "title": "Start Date",
@@ -506,7 +506,7 @@
       "text": "Will you be using irrigation on your farm?",
       "inputRequest": {
         "type": "com.wearemobilefirst.MultiChoice",
-        "uri": "%UsingIrrigation",
+        "uri": "UsingIrrigation",
         "title": "Irrigation",
         "inline": true,
         "localStore": false,
@@ -516,11 +516,11 @@
           "maxSelection": 1,
           "options": [
             {
-              "id": "OptionKey1",
+              "id": "irrigation.yes",
               "title": "Yes"
             },
             {
-              "id": "OptionKey2",
+              "id": "irrigation.no",
               "title": "No"
             }
           ]
