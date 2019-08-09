@@ -7,9 +7,11 @@ import 'package:farmsmart_flutter/chat/ui/widgets/pair_container_wrapper.dart';
 import 'package:farmsmart_flutter/chat/ui/widgets/rounded_button.dart';
 import 'package:farmsmart_flutter/chat/ui/widgets/selectable_options.dart';
 import 'package:farmsmart_flutter/chat/ui/widgets/separator_wrapper.dart';
+import 'package:farmsmart_flutter/chat/ui/widgets/styles/date_picker_styles.dart';
 import 'package:farmsmart_flutter/chat/ui/widgets/styles/pair_container_wrapper_styles.dart';
 import 'package:farmsmart_flutter/chat/ui/widgets/styles/rounded_button_styles.dart';
 import 'package:farmsmart_flutter/chat/ui/widgets/styles/selectable_options_styles.dart';
+import 'package:farmsmart_flutter/chat/ui/widgets/styles/separator_wrapper_styles.dart';
 import 'package:farmsmart_flutter/chat/ui/widgets/styles/text_input_styles.dart';
 import 'package:farmsmart_flutter/chat/ui/widgets/text_input.dart';
 import 'package:flutter/material.dart';
@@ -98,6 +100,7 @@ class InteractiveMessageHandlerImpl implements InteractiveMessageHandler {
         ),
         style: PairContainerWrapperStyles.buildDefaultStyle(),
       ),
+      style: SeparatorWrapperStyles.buildDefaultStyle(),
     );
   }
 
@@ -132,6 +135,7 @@ class InteractiveMessageHandlerImpl implements InteractiveMessageHandler {
           onTap: onTap,
           style: SelectableOptionsStyles.buildDefaultStyle(),
         ),
+        style: SeparatorWrapperStyles.buildDefaultStyle(),
       );
 
   Widget _buildDatePicker({
@@ -144,6 +148,7 @@ class InteractiveMessageHandlerImpl implements InteractiveMessageHandler {
           onDateSelected: (date) {
             selectedDate = date;
           },
+          style: DatePickerStyles.buildDefaultStyle(),
         ),
         rightChild: RoundedButton(
           viewModel: RoundedButtonViewModel(
@@ -152,7 +157,9 @@ class InteractiveMessageHandlerImpl implements InteractiveMessageHandler {
           ),
           style: RoundedButtonStyles.chatButtonStyle(),
         ),
+        style: PairContainerWrapperStyles.buildDefaultStyle(),
       ),
+      style: SeparatorWrapperStyles.buildDefaultStyle(),
     );
   }
 
