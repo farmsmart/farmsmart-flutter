@@ -18,10 +18,13 @@ abstract class InteractiveMessageHandler {
   });
 
   Widget buildDatePickerWidget({
-    InputRequestEntity inputRequestEntity,
     Function(String) onSendPressed,
   });
 
+  Widget buildDropDownPickerWidget({
+    InputRequestEntity inputRequestEntity,
+    Function(SelectableOptionViewModel) onSendPressed,
+  });
 }
 
 enum InteractiveMessageType {

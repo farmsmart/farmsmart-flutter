@@ -7,7 +7,7 @@ class _Constants {
   static const defaultRowMainAxisAlignment = MainAxisAlignment.spaceBetween;
   static const defaultLeftChildFlex = 4;
   static const defaultRightChildFlex = 1;
-  static const defaultSizedBoxSeparatorWidth = 10.0;
+  static const defaultSizedBoxSeparatorWidth = 20.0;
 }
 
 class PairContainerWrapperStyles {

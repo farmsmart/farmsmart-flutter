@@ -278,22 +278,37 @@ class ChatProvider implements ViewModelProvider<ChatViewModel> {
   }) =>
       _chatViewModel.interactiveWidget =
           _interactiveMessageHandler.buildDatePickerWidget(
-              inputRequestEntity: entity,
-              onSendPressed: (dateValue) {
-                _cleanInteractiveWidget();
-                _getNextMessageByProvided(dateValue);
-                _putResponseToTheMap(
-                  key: entity.uri,
-                  value: ChatResponseViewModel(
-                    id: entity.uri,
-                    title: entity.title,
-                    value: dateValue,
-                  ),
-                );
-              });
+        onSendPressed: (dateValue) {
+          _cleanInteractiveWidget();
+          _getNextMessageByProvided(dateValue);
+          _putResponseToTheMap(
+            key: entity.uri,
+            value: ChatResponseViewModel(
+              id: entity.uri,
+              title: entity.title,
+              value: dateValue,
+            ),
+          );
+        },
+      );
 
   void _setDropdownWidget({InputRequestEntity entity}) =>
-      _chatViewModel.interactiveWidget = null;
+      _chatViewModel.interactiveWidget =
+          _interactiveMessageHandler.buildDropDownPickerWidget(
+        inputRequestEntity: entity,
+        onSendPressed: (option) {
+          _cleanInteractiveWidget();
+          _getNextMessageByProvided(option.title);
+          _putResponseToTheMap(
+            key: entity.uri,
+            value: ChatResponseViewModel(
+              id: option.id,
+              title: entity.title,
+              value: option.title,
+            ),
+          );
+        },
+      );
 
   void _putResponseToTheMap({String key, ChatResponseViewModel value}) {
     _responseMap[key] = value;

@@ -26,21 +26,13 @@ class _Constants {
   static final maxDateLimit = DateTime(2101);
   static final dateFormatter = DateFormat('dd MMMM yyyy');
   static final dateIcon = "assets/icons/detail_icon_date.png";
-  static final cropIcon = "assets/icons/detail_icon_best_soil.png";
-  static final descriptionIcon = "assets/icons/detail_icon_description.png";
   static final arrowIcon = "assets/icons/chevron.png";
 }
 
 class _LocalisedStrings {
   static String date() => Intl.message('Date');
 
-  static String crop() => Intl.message('Crop');
-
   static String today() => Intl.message('Today');
-
-  static String select() => Intl.message('Select...');
-
-  static String description() => Intl.message('Description (optional)...');
 }
 
 class DatePickerStyle {
