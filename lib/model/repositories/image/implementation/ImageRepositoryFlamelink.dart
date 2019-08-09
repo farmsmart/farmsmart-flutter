@@ -39,13 +39,22 @@ ImageEntity _transform(FlameLink cms, DocumentSnapshot snapshot) {
 
 class FlameLinkImageProvider implements ImageURLProvider {
   final FlameLink _cms;
-  final ImageEntity _entity;
+  final FlamelinkImageEntity _entity;
   FlameLinkImageProvider(FlameLink cms, FlamelinkImageEntity entity) : _cms = cms, _entity = entity;
 
   @override
   Future<String> urlToFit({double width, double height}) {
     //TODO: use other sizes. Here we can use the image entity size list to grab the right sized image
-    final storageReference = _cms.images(path: _entity.path); 
+    var storageReference = _cms.images(path: _entity.path); 
+    if (width != null){
+      var greaterWidth =  _entity.otherSizes.singleWhere((image){
+        return image.width > width.toInt();
+      });
+      if (greaterWidth != null) {
+          storageReference = _cms.images(path: greaterWidth.path); 
+      }
+    }
+    
     return storageReference.getDownloadURL().then((value) => value.toString());
   }
   
