@@ -163,8 +163,10 @@ class CropDetailTransformer
         break;
       case LoHi.HIGH:
         return _LocalisedStrings.high();
+        break;
+       default:
+        return _Strings.emptyString;
     }
-    return _Strings.emptyString;
   }
 
   String _complexityToString(CropComplexity value) {
@@ -177,7 +179,9 @@ class CropDetailTransformer
         break;
       case CropComplexity.ADVANCED:
         return _LocalisedStrings.advance();
+        break;
+      default:
+        return _Strings.emptyString;
     }
-    return _Strings.emptyString;
   }
 }

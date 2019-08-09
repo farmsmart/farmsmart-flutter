@@ -113,14 +113,26 @@ class FlamelinkDocumentCollection {
         _paths = paths,
         _query = null;
         
-  factory FlamelinkDocumentCollection.fromImageRefs({FlameLink cms, List<dynamic> paths}){
+  factory FlamelinkDocumentCollection.fromDocumentReferences({FlameLink cms, List<dynamic> paths}){
     if (paths == null) {
       return null;
     }
      final refs =
-          List<String>.from(paths.map((image) => image.path))
+          List<String>.from(paths.map((doc) => doc.path))
               .toList();
     return FlamelinkDocumentCollection.list(cms: cms, paths: refs);
+  }
+
+  factory FlamelinkDocumentCollection.fromObjectReferences({FlameLink cms, List<dynamic> objectReferences, String linkField}){
+    if (objectReferences == null) {
+      return null;
+    }
+     final paths =
+          List<dynamic>.from(objectReferences.map((refObject){
+            return refObject[linkField];
+          }))
+              .toList();
+    return FlamelinkDocumentCollection.fromDocumentReferences(cms: cms, paths: paths);
   }
 
   Future<List<DocumentSnapshot>> getDocuments({int limit = 0}) {

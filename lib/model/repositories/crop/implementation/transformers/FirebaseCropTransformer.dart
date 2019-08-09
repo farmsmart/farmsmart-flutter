@@ -7,6 +7,7 @@ import 'package:farmsmart_flutter/model/repositories/image/implementation/ImageR
 
 import '../../../FlameLink.dart';
 import '../../../FlamelinkMeta.dart';
+import 'FirebaseCropStageTransformer.dart';
 
 
 
@@ -16,6 +17,18 @@ class _Fields {
   static String summary = "summary";
   static String name = "name";
   static String image = "image";
+  static String stages = "stages";
+  static String stage = "cropStage";
+  static String type = "type";
+
+  static String companionPlants = "companionPlants";
+  static String nonCompanionPlants = "nonCompanionPlants";
+  static String soilTypes = "soilType";
+  static String complexity = "complexity";
+  static String watering = "waterRequirement";
+  static String cost = "setupCost";
+  static String profitability = "profitability";
+  
 }
 
 class FlamelinkCropTransformer
@@ -36,15 +49,34 @@ class FlamelinkCropTransformer
     final statusString = castOrNull<String>(from.data[_Fields.status]);
     final summary = castOrNull<String>(from.data[_Fields.summary]);
     final name = castOrNull<String>(from.data[_Fields.name]);
-    final published =
-        (meta.createdDate != null) ? meta.createdDate.toDate() : null;
+    final companionPlants = castListOrNull<String>(from.data[_Fields.companionPlants]);
+    final nonCompanionPlants = castListOrNull<String>(from.data[_Fields.nonCompanionPlants]);
+    final soilTypes = castListOrNull<String>(from.data[_Fields.soilTypes]);
+    final complexity = _cropComplexity(from.data[_Fields.complexity]);
+    final watering = _lowHigh(from.data[_Fields.watering]);
+    final type = _cropType(from.data[_Fields.type]);
+    final cost = _lowHigh(from.data[_Fields.cost]);
+    final profitability = _lowHigh(from.data[_Fields.profitability]);
+    final published = (meta.createdDate != null) ? meta.createdDate.toDate() : null;
     final imageRefs = from.data[_Fields.image];
+    final stageRefs = from.data[_Fields.stages];
     ImageEntityCollectionFlamelink imageCollection;
+    CropStageArticleEntityCollectionFlamelink stageCollection;
+
     if (imageRefs != null) {
       imageCollection = ImageEntityCollectionFlamelink(
-          collection: FlamelinkDocumentCollection.fromImageRefs(
+          collection: FlamelinkDocumentCollection.fromDocumentReferences(
         cms: _cms,
         paths: imageRefs,
+      ));
+    }
+
+    if (stageRefs !=null) {
+       stageCollection = CropStageArticleEntityCollectionFlamelink(
+          collection: FlamelinkDocumentCollection.fromObjectReferences(
+        cms: _cms,
+        objectReferences: stageRefs,
+        linkField: _Fields.stage
       ));
     }
     final status = statusValues.map[statusString];
@@ -57,11 +89,46 @@ class FlamelinkCropTransformer
       published: published,
     );
     article.images = imageCollection;
-    return CropEntity(
+    final crop = CropEntity(
       id: id,
-      status: statusValues.map[status],
+      status: status,
       name: name,
+      cropType: type,
       article: article,
+      companionPlants: companionPlants,
+      nonCompanionPlants: nonCompanionPlants,
+      soilType: soilTypes,
+      complexity: complexity,
+      waterRequirement: watering,
+      setupCost: cost,
+      profitability: profitability
     );
+    crop.images = imageCollection;
+    crop.stageArticles = stageCollection;
+    return crop;
+  }
+
+  CropComplexity _cropComplexity(String value){
+    final defaultValue = CropComplexity.UNDEFINED;
+    if (value==null) {
+      return defaultValue;
+    }
+    return begAdvValues.map[value] ?? defaultValue;
+  }
+
+  LoHi _lowHigh(String value){
+    final defaultValue = LoHi.UNDEFINED;
+    if (value==null) {
+      return defaultValue;
+    }
+    return loHiValues.map[value] ?? defaultValue;
+  }
+
+  CropType _cropType(String value){
+    final defaultValue = CropType.SINGLE;
+    if (value==null) {
+      return defaultValue;
+    }
+    return cropTypeValues.map[value] ?? defaultValue;
   }
 }
