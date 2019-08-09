@@ -96,7 +96,9 @@ class LinkBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => _viewModel.onTap,
+      onTap: () {
+        _viewModel.onTap();
+      },
       child: Container(
         decoration: BoxDecoration(
           color: _style.cardBackgroundColor,

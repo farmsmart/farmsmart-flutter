@@ -20,18 +20,25 @@ class ArticleListProvider implements ViewModelProvider<ArticleListViewModel> {
   final String _title;
   final String _relatedTitle;
   final String _contentLinkTitle;
+  final String _contentLinkDescription;
+  final String _contentLinkIcon;
   ArticleListViewModel _snapshot;
-  ArticleListProvider(
-      {String title,
-      String relatedTitle,
-      String contentLinkTitle,
-      ArticleRepositoryInterface repository,
-      ArticleCollectionGroup group = ArticleCollectionGroup.all})
-      : this._title = title,
+
+  ArticleListProvider({
+    String title,
+    String relatedTitle,
+    String contentLinkTitle,
+    ArticleRepositoryInterface repository,
+    ArticleCollectionGroup group = ArticleCollectionGroup.all,
+    String contentLinkDescription,
+    String contentLinkIcon,
+  })  : this._title = title,
         this._relatedTitle = relatedTitle,
         this._contentLinkTitle = contentLinkTitle,
         this._repo = repository,
-        this._group = group;
+        this._group = group,
+        this._contentLinkDescription = contentLinkDescription,
+        this._contentLinkIcon = contentLinkIcon;
 
   final StreamController<ArticleListViewModel> _controller =
       StreamController<ArticleListViewModel>.broadcast();
@@ -39,10 +46,13 @@ class ArticleListProvider implements ViewModelProvider<ArticleListViewModel> {
   ArticleListViewModel _modelFromArticles(
       StreamController controller, List<ArticleEntity> articles) {
     final transformer = ArticleListItemViewModelTransformer.buildWithDetail(
-        ArticleDetailViewModelTransformer(
-      relatedTitle: _relatedTitle,
-      contentLinkTitle: _contentLinkTitle,
-    ));
+      ArticleDetailViewModelTransformer(
+        relatedTitle: _relatedTitle,
+        contentLinkTitle: _contentLinkTitle,
+        contentLinkDescription: _contentLinkDescription,
+        contentLinkIcon: _contentLinkIcon,
+      ),
+    );
     final items = articles.map((article) {
       return transformer.transform(from: article);
     }).toList();

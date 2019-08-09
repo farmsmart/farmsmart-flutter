@@ -5,7 +5,8 @@ import 'package:farmsmart_flutter/ui/common/ContextualAppBar.dart';
 import 'package:farmsmart_flutter/ui/common/SectionListView.dart';
 import 'package:farmsmart_flutter/ui/common/headerAndFooterListView.dart';
 import 'package:farmsmart_flutter/ui/common/image_provider_view.dart';
-import 'package:farmsmart_flutter/ui/common/stage_card.dart';
+import 'package:farmsmart_flutter/ui/community/LinkBox.dart';
+import 'package:farmsmart_flutter/ui/community/LinkBoxStyles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:intl/intl.dart';
@@ -21,10 +22,12 @@ class _LocalisedStrings {
 
 class _Constants {
   static EdgeInsets externalLinkPadding = EdgeInsets.only(
-    left: 32.5,
-    right: 32.5,
     bottom: 20.0,
   );
+}
+
+class _Icons {
+  static final defaultExternalLinkIcon = Icons.open_in_browser;
 }
 
 abstract class ArticleDetailStyle {
@@ -151,17 +154,24 @@ class ArticleDetail extends StatelessWidget implements ListViewSection {
     //TODO: LH add error popp up (when we have the widget)
   }
 
-  Widget _externLinkSection() {
-    final buttonViewModel = RoundedButtonViewModel(
-        title: _viewModel.contentLinkTitle ?? _LocalisedStrings.viewMore(),
+  Widget _externalLinkSection() {
+    final linkBoxViewModel = LinkBoxViewModel(
+        titleText: _viewModel.contentLinkTitle ??
+            _viewModel.title ??
+            _LocalisedStrings.viewMore(),
+        detailText: _viewModel.contentLinkDescription ?? '',
+        image: _viewModel.contentLinkIcon,
+        icon: _Icons.defaultExternalLinkIcon,
         onTap: () {
           _launchURL(_viewModel.contentLink);
         });
     return Padding(
       padding: _Constants.externalLinkPadding,
-      child: RoundedButton(
-        viewModel: buttonViewModel,
-        style: RoundedButtonStyle.actionSheetLargeRoundedButton(),
+      child: LinkBox(
+        viewModel: linkBoxViewModel,
+        style: _viewModel.contentLinkIcon != null
+            ? LinkBoxStyles.buildWhatsAppStyle()
+            : LinkBoxStyles.buildBrowserStyle(),
       ),
     );
   }
@@ -169,7 +179,7 @@ class ArticleDetail extends StatelessWidget implements ListViewSection {
   HeaderAndFooterListView _content() {
     final List<Widget> relatedTitle = _hasRelated() ? [_relatedHeader()] : [];
     final List<Widget> contentLink =
-        (_viewModel.contentLink != null) ? [_externLinkSection()] : [];
+        (_viewModel.contentLink != null) ? [_externalLinkSection()] : [];
 
     final List<Widget> articleHeaders =
         (_articleHeader != null) ? [_articleHeader] : [_buildDefaultHeader()];

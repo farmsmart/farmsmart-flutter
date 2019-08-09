@@ -28,14 +28,27 @@ class ArticleDetailViewModelTransformer
       _listItemTransformer;
   final String _contentLinkTitle;
   final String _relatedTitle;
-  ArticleDetailViewModelTransformer(
-      {ObjectTransformer<ArticleEntity, ArticleListItemViewModel>
-          listItemTransformer,String relatedTitle, String contentLinkTitle,})
-      : this._listItemTransformer = listItemTransformer, this._relatedTitle = relatedTitle, this._contentLinkTitle = contentLinkTitle;
+  final String _contentLinkDescription;
+  final String _contentLinkIcon;
+
+  ArticleDetailViewModelTransformer({
+    ObjectTransformer<ArticleEntity, ArticleListItemViewModel>
+        listItemTransformer,
+    String relatedTitle,
+    String contentLinkTitle,
+    String contentLinkDescription,
+    String contentLinkIcon,
+  })  : this._listItemTransformer = listItemTransformer,
+        this._relatedTitle = relatedTitle,
+        this._contentLinkTitle = contentLinkTitle,
+        this._contentLinkDescription = contentLinkDescription,
+        this._contentLinkIcon = contentLinkIcon;
   final _dateFormatter = DateFormat(_Strings.publishedDateFormat);
+
   @override
   ArticleDetailViewModel transform({ArticleEntity from}) {
-    ArticleImageProvider imageProvider = (from.images != null) ? ArticleImageProvider(from) : null;
+    ArticleImageProvider imageProvider =
+        (from.images != null) ? ArticleImageProvider(from) : null;
     ArticleDetailViewModel viewModel = ArticleDetailViewModel(
       LoadingStatus.SUCCESS,
       from.title,
@@ -45,7 +58,9 @@ class ArticleDetailViewModelTransformer
       imageProvider,
       from.content,
       buildArticleDeeplink(from.id),
-      from.externalLink
+      from.externalLink,
+      _contentLinkDescription,
+      _contentLinkIcon,
     );
     viewModel.getRelated = () {
       if (from.related == null) {

@@ -13,15 +13,27 @@ import 'PlotToPlotListItemViewModel.dart';
 import 'StageBusinessLogic.dart';
 import 'StageToStageCardViewModel.dart';
 
-class _LocalisedStrings{
+class _LocalisedStrings {
   static String relatedArticles() => Intl.message('Related articles');
+
+  static String viewMore() => Intl.message('View more on the Web');
+
+  static String discoverMuchMore() =>
+      Intl.message('Discover much more information using this link...');
 }
+
+//TODO Add here content link description and icon
 
 class PlotToPlotDetailViewModel
     extends ObjectTransformer<PlotEntity, PlotDetailViewModel> {
   final _articleTransformer =
       ArticleListItemViewModelTransformer.buildWithDetail(
-          ArticleDetailViewModelTransformer(relatedTitle: _LocalisedStrings.relatedArticles()));
+    ArticleDetailViewModelTransformer(
+      relatedTitle: _LocalisedStrings.relatedArticles(),
+      contentLinkTitle: _LocalisedStrings.viewMore(),
+      contentLinkDescription: _LocalisedStrings.discoverMuchMore(),
+    ),
+  );
   final _cropTransformer = CropDetailTransformer();
   final StageToStageCardViewModel _stageTransformer;
   final Function _renameAction;
@@ -40,7 +52,7 @@ class PlotToPlotDetailViewModel
   PlotDetailViewModel transform({PlotEntity from}) {
     if (from != null) {
       assert(from == _plot);
-    } 
+    }
     final headerViewModel =
         PlotToPlotListItemViewModel(null).transform(from: _plot);
     final stageViewModels = _plot.stages.map((stage) {
@@ -51,7 +63,7 @@ class PlotToPlotDetailViewModel
       return _articleTransformer.transform(from: stage.article).detailViewModel;
     }).toList();
 
-    final cropDetailModel =_cropTransformer.transform(from: _plot.crop);
+    final cropDetailModel = _cropTransformer.transform(from: _plot.crop);
     final detailProvider = StaticViewModelProvider(cropDetailModel);
     return PlotDetailViewModel(
         title: headerViewModel.title,
@@ -62,7 +74,7 @@ class PlotToPlotDetailViewModel
         stageArticleViewModels: articleViewModels,
         currentStage: _logic.currentStageIndex(_plot.stages),
         remove: () => _removeAction(_plot),
-        rename: _rename, 
+        rename: _rename,
         detailProvider: detailProvider);
   }
 
