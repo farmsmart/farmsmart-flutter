@@ -158,8 +158,6 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
         title: "SPIKE Chat page",
         child: PlaygroundPresentButton(
           child: ChatPage(),
-          listener: (widget, context) =>
-              PlaygroundPresentButton.presentModal(widget, context),
         ),
       ),
       PlaygroundWidget(

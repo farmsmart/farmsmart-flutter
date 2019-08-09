@@ -21,7 +21,6 @@ class _Constants {
       const EdgeInsets.only(left: 32, top: 10, bottom: 36);
   static final EdgeInsets bottomButtonEdgePadding =
       const EdgeInsets.only(right: 24, left: 24, bottom: 24);
-
 }
 
 class _Assets {
@@ -106,11 +105,10 @@ class _ChatPageState extends State<ChatPage> {
 
   _doOnSuccess(BuildContext context, Map<String, ChatResponseViewModel> map) {
     print("On Success recevied: ${map.toString()}");
-    showDialog<bool>(
-      context: context,
-      barrierDismissible: false,
-      builder: (_) => NavigationScope(
-          child: FarmDetails(
+
+    NavigationScope.presentModal(
+      context,
+      FarmDetails(
         viewModel: FarmDetailsViewModel(
           items: _getFarmDetailsListFromMap(map),
           buttonTitle: _LocalisedStrings.confirm(),
@@ -119,7 +117,7 @@ class _ChatPageState extends State<ChatPage> {
             _navigateBack(context);
           },
         ),
-      )),
+      ),
     );
   }
 
