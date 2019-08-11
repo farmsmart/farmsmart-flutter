@@ -153,29 +153,19 @@ class RecommendationsList extends StatelessWidget implements ListViewSection {
       {BuildContext context,
       AsyncSnapshot<RecommendationsListViewModel> snapshot}) {
     final viewModel = snapshot.data;
-    if (viewModel.canApply) {
-      return Scaffold(
-        appBar: _buildAppBar(context, viewModel),
-        body: Stack(
-          children: <Widget>[
-            _buildList(
-              context: context,
-              viewModel: viewModel,
-            ),
-            _buildApplyButton(
-              context: context,
-              viewModel: viewModel,
-            ),
-          ],
-        ),
-      );
-    }
-
     return Scaffold(
       appBar: _buildAppBar(context, viewModel),
-      body: _buildList(
-        context: context,
-        viewModel: viewModel,
+      body: Stack(
+        children: <Widget>[
+          _buildList(
+            context: context,
+            viewModel: viewModel,
+          ),
+          _buildApplyButton(
+            context: context,
+            viewModel: viewModel,
+          ),
+        ],
       ),
     );
   }
@@ -242,20 +232,23 @@ class RecommendationsList extends StatelessWidget implements ListViewSection {
     BuildContext context,
     RecommendationsListViewModel viewModel,
   }) {
-    return Container(
-      height: double.infinity,
-      width: double.infinity,
-      alignment: Alignment.bottomCenter,
-      child: Padding(
-        padding: _Constants.buttonPadding,
-        child: RoundedButton(
-          viewModel: RoundedButtonViewModel(
-              title: _LocalisedStrings.finish(),
-              onTap: () => _applyAction(context, viewModel)),
-          style: _style.applyButtonStyle,
-        ),
-      ),
-    );
+    final visible = viewModel.canApply;
+    return Visibility(
+        visible: visible,
+        child: Container(
+          height: double.infinity,
+          width: double.infinity,
+          alignment: Alignment.bottomCenter,
+          child: Padding(
+            padding: _Constants.buttonPadding,
+            child: RoundedButton(
+              viewModel: RoundedButtonViewModel(
+                  title: _LocalisedStrings.finish(),
+                  onTap: () => _applyAction(context, viewModel)),
+              style: _style.applyButtonStyle,
+            ),
+          ),
+        ));
   }
 
   void _tappedDetail({
