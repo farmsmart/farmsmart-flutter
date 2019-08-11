@@ -22,7 +22,7 @@ void main() {
     );
     await expectLater(
       find.byType(CropInfoListItem),
-      matchesGoldenFile('recommendation_detail_listitem_with_color_list.png'),
+      matchesGoldenFile('cropInfoListItem_test_with_color_list.png'),
       skip: Platform.isLinux,
     );
   });
