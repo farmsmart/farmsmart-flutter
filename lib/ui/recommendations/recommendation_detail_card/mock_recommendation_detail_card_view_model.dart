@@ -11,7 +11,7 @@ class MockRecommendationDetailCardViewModel {
       addAction: () {},
       addActionText: 'Add To Your Plot',
       isAdded: false,
-      imageProvider: MockImageProvider( _mockFutureString(_mockImageUrl.random())),
+      imageProvider: MockImageProvider(_mockImageUrl.random()),
     );
   }
 
@@ -22,7 +22,7 @@ class MockRecommendationDetailCardViewModel {
       addAction: () {},
       addActionText: 'Added To Your Plot',
       isAdded: true,
-      imageProvider: MockImageProvider(_mockFutureString(_mockImageUrl.random())),
+      imageProvider: MockImageProvider(_mockImageUrl.random()),
     );
   }
 
@@ -33,7 +33,7 @@ class MockRecommendationDetailCardViewModel {
       addAction: () {},
       addActionText: _mockLargeStrings.random(),
       isAdded: true,
-      imageProvider: MockImageProvider(_mockFutureString(_mockImageUrl.random())),
+      imageProvider: MockImageProvider(_mockImageUrl.random()),
     );
   }
 
@@ -44,7 +44,7 @@ class MockRecommendationDetailCardViewModel {
       addAction: () {},
       addActionText: 'Action Text',
       isAdded: true,
-      imageProvider: MockImageProvider(_mockFutureString('assets/raw/placeholder.webp')),
+      imageProvider: MockImageProvider('assets/raw/placeholder.webp'),
     );
   }
 
@@ -55,14 +55,11 @@ class MockRecommendationDetailCardViewModel {
       addAction: () {},
       addActionText: 'Action Text',
       isAdded: false,
-      imageProvider: MockImageProvider(_mockFutureString('assets/raw/placeholder.webp')),
+      imageProvider: MockImageProvider('assets/raw/placeholder.webp'),
     );
   }
 }
 
-Future<String> _mockFutureString(String url) async{
-  return url;
-}
 
 MockString _mockTitle = MockString(library: [
   "Tomatoes ",
