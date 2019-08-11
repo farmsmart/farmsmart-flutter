@@ -1,8 +1,8 @@
 import 'package:farmsmart_flutter/model/bloc/article/ArticleDetailTransformer.dart';
 import 'package:farmsmart_flutter/model/model/crop_entity.dart';
 import 'package:farmsmart_flutter/model/model/enums.dart';
+import 'package:farmsmart_flutter/ui/crop/CropInfoListItem.dart';
 import 'package:farmsmart_flutter/ui/crop/viewmodel/CropDetailViewModel.dart';
-import 'package:farmsmart_flutter/ui/recommendations/recommendation_detail_listitem/recommendation_detail_listitem.dart';
 import 'package:intl/intl.dart';
 
 import '../Transformer.dart';
@@ -77,64 +77,64 @@ class CropDetailTransformer
     );
   }
 
-  RecommendationDetailListItemViewModel _soilType(CropEntity from) {
+  CropInfoListItemViewModel _soilType(CropEntity from) {
     final typesString = (from.soilType.isNotEmpty)
         ? from.soilType.reduce((a, b) {
             return a + _Strings.listSeparator + b;
           })
         : "";
-    return RecommendationDetailListItemViewModel(
+    return CropInfoListItemViewModel(
         iconPath: _Icons.soil,
         title: _LocalisedStrings.bestSoil(),
         subtitle: typesString);
 
   }
 
-  RecommendationDetailListItemViewModel _complexity(CropEntity from) {
-    return RecommendationDetailListItemViewModel(
+  CropInfoListItemViewModel _complexity(CropEntity from) {
+    return CropInfoListItemViewModel(
         iconPath: _Icons.complexity,
         title: _LocalisedStrings.complexity(),
         subtitle: _complexityToString(from.complexity));
   }
 
-  RecommendationDetailListItemViewModel _waterFrequency(CropEntity from) {
-    return RecommendationDetailListItemViewModel(
+  CropInfoListItemViewModel _waterFrequency(CropEntity from) {
+    return CropInfoListItemViewModel(
         iconPath: _Icons.water,
         title: _LocalisedStrings.waterFrequency(),
         subtitle: _loHiToString(from.waterRequirement));
   }
 
-  RecommendationDetailListItemViewModel _cropType(CropEntity from) {
-    return RecommendationDetailListItemViewModel(
+  CropInfoListItemViewModel _cropType(CropEntity from) {
+    return CropInfoListItemViewModel(
         iconPath: _Icons.type,
         title: _LocalisedStrings.cropType(),
         subtitle: _cropTypeToString(from.cropType));
   }
 
-  RecommendationDetailListItemViewModel _setupCosts(CropEntity from) {
-    return RecommendationDetailListItemViewModel(
+  CropInfoListItemViewModel _setupCosts(CropEntity from) {
+    return CropInfoListItemViewModel(
         iconPath: _Icons.cost,
         title: _LocalisedStrings.setupCosts(),
         subtitle: _loHiToString(from.setupCost));
   }
 
-  RecommendationDetailListItemViewModel _profitability(CropEntity from) {
-    return RecommendationDetailListItemViewModel(
+  CropInfoListItemViewModel _profitability(CropEntity from) {
+    return CropInfoListItemViewModel(
         iconPath: _Icons.profitability,
         title: _LocalisedStrings.profitability(),
         subtitle: _loHiToString(from.profitability));
   }
 
-  RecommendationDetailListItemViewModel _companionPlants(CropEntity from) {
-    return RecommendationDetailListItemViewModel(
+  CropInfoListItemViewModel _companionPlants(CropEntity from) {
+    return CropInfoListItemViewModel(
       iconPath: _Icons.companion,
       title: _LocalisedStrings.companionPlants(),
       subtitle: from.companionPlants.join(_Strings.listSeparator),
     );
   }
 
-  RecommendationDetailListItemViewModel _nonCompanionPlants(CropEntity from) {
-    return RecommendationDetailListItemViewModel(
+  CropInfoListItemViewModel _nonCompanionPlants(CropEntity from) {
+    return CropInfoListItemViewModel(
       iconPath: _Icons.nonCompanion,
       title: _LocalisedStrings.nonCompanionPlants(),
       subtitle: from.nonCompanionPlants.join(_Strings.listSeparator),

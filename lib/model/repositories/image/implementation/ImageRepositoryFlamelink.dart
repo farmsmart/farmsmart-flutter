@@ -16,6 +16,11 @@ class ImageEntityFields {
     static String file = "file";
 }
 
+class _Strings {
+  static const sizesFolder  = "sized";
+  static const pathDivider = "/";
+}
+
 class FlamelinkImageEntity extends ImageEntity {
   final FlameLink _cms;
   final List<ImageEntity> otherSizes;
@@ -28,7 +33,7 @@ ImageEntity _transform(FlameLink cms, DocumentSnapshot snapshot) {
     final imageFileNamePath = snapshot.data[ImageEntityFields.file];
     
     final alternateSizesObjs = snapshot.data[ImageEntityFields.sizes].map((imageSize) {
-      final path = imageSize[ImageEntityFields.path] + "/sized/" + imageFileNamePath;
+      final path = _Strings.sizesFolder + _Strings.pathDivider +  imageSize[ImageEntityFields.path] + _Strings.pathDivider + imageFileNamePath;
       final width = imageSize[ImageEntityFields.width];
       final height = imageSize[ImageEntityFields.height];
       return FlamelinkImageEntity(cms, width, height, path, []);
@@ -44,18 +49,27 @@ class FlameLinkImageProvider implements ImageURLProvider {
 
   @override
   Future<String> urlToFit({double width, double height}) {
-    //TODO: use other sizes. Here we can use the image entity size list to grab the right sized image
     var storageReference = _cms.images(path: _entity.path); 
     if (width != null){
-      var greaterWidth =  _entity.otherSizes.singleWhere((image){
-        return image.width > width.toInt();
+      final targetWidth = width.toInt();
+      var alternateImages = _entity.otherSizes;
+      alternateImages.sort((a,b){
+        return a.width.compareTo(b.width);
       });
-      if (greaterWidth != null) {
-          storageReference = _cms.images(path: greaterWidth.path); 
+    
+      for (var image in alternateImages) {
+        if((image.width > targetWidth) ) {
+          storageReference = _cms.images(path: image.path); 
+          break;
+        }
       }
     }
     
-    return storageReference.getDownloadURL().then((value) => value.toString());
+    return storageReference.getDownloadURL().then((value){
+      return value;
+    }, onError: (error){
+      print(error);
+    });
   }
   
 }

@@ -62,12 +62,11 @@ class FlamelinkArticleTransformer
               .toList();
     }
     final relatedPaths = List<String>.from(relatedRefs);
-    final imagePaths = List<String>.from(imageRefs);
+    final imagePaths = imageRefs.isNotEmpty ? List<String>.from(imageRefs) : null;
 
     final articleCollection =
         FlamelinkDocumentCollection.list(cms: _cms, paths: relatedPaths);
-    final imageCollection =
-        FlamelinkDocumentCollection.list(cms: _cms, paths: imagePaths);
+    final imageCollection = (imagePaths != null) ? FlamelinkDocumentCollection.list(cms: _cms, paths: imagePaths) : null;
     entity.related =
         ArticleEntityCollectionFlamelink(collection: articleCollection);
     entity.images = ImageEntityCollectionFlamelink(collection: imageCollection);

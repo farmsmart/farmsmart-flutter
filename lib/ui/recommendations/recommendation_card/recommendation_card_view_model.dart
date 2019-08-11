@@ -1,8 +1,9 @@
 import 'package:farmsmart_flutter/model/bloc/ViewModelProvider.dart';
+import 'package:farmsmart_flutter/model/model/ImageURLProvider.dart';
 import 'package:farmsmart_flutter/ui/crop/viewmodel/CropDetailViewModel.dart';
 
 class RecommendationCardViewModel {
-  Future image;
+  ImageURLProvider imageProvider;
   String title;
   String subtitle;
   String description;
@@ -16,7 +17,7 @@ class RecommendationCardViewModel {
   bool isHero;
 
   RecommendationCardViewModel({
-    this.image,
+    this.imageProvider,
     this.title,
     this.subtitle,
     this.description,

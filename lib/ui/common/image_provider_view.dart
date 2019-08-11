@@ -39,6 +39,9 @@ class ImageProviderView extends StatelessWidget {
             ),
           );
         }
+        if(url.hasError) {
+          print("Image loading error");
+        }
         return buildImage(url.data);
       },
     );
@@ -56,7 +59,7 @@ class ImageProviderView extends StatelessWidget {
         fadeInCurve: Curves.linear,
         fadeOutCurve: Curves.linear,
         placeholder: AssetImage(_Constants.placeholderAsset),
-        image: NetworkImage(url),
+        image: NetworkImage("https://firebasestorage.googleapis.com/v0/b/farmsmart-20190415.appspot.com/o/flamelink%2Fmedia%2Fsized%2F360_9999_80%2FisC68xTj4hSDGhtmrdgK_Tomatoes.jpg?alt=media&token=32ede26b-a1c7-4e6d-b9fa-306a8a74e071"),
       ),
     );
   }

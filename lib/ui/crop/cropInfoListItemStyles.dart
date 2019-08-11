@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
-import 'recommendation_detail_listitem.dart';
+import 'CropInfoListItem.dart';
+
 
 class RecommendationDetailListItemStyles {
-  static RecommendationDetailListItemStyle build() =>
-      RecommendationDetailListItemStyle(
+  static CropInfoListItemStyle build() =>
+      CropInfoListItemStyle(
         titleTextStyle: TextStyle(
           fontSize: 17,
           fontWeight: FontWeight.w500,

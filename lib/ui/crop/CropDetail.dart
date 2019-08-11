@@ -11,8 +11,7 @@ abstract class CropDetailStyle {
   final TextStyle titleTextStyle;
   final EdgeInsets titleEdgePadding;
 
-  CropDetailStyle(
-      this.titleTextStyle, this.titleEdgePadding);
+  CropDetailStyle(this.titleTextStyle, this.titleEdgePadding);
   CropDetailStyle copyWith({
     TextStyle titleTextStyle,
     EdgeInsets titleEdgePadding,
@@ -23,9 +22,7 @@ class _DefaultStyle implements CropDetailStyle {
   final TextStyle titleTextStyle;
   final EdgeInsets titleEdgePadding;
 
-  const _DefaultStyle(
-      {TextStyle titleTextStyle,
-      EdgeInsets titleEdgePadding})
+  const _DefaultStyle({TextStyle titleTextStyle, EdgeInsets titleEdgePadding})
       : this.titleTextStyle = titleTextStyle ??
             const TextStyle(
               fontSize: 27,
@@ -70,15 +67,25 @@ class CropDetail extends StatelessWidget implements ListViewSection {
         this._header = header,
         super(key: key);
 
-  factory CropDetail({ViewModelProvider<CropDetailViewModel> provider,
-    CropDetailStyle style = _defaultStyle, Widget header}) {
-      final listBuilder =  SectionedListView(sections: []);
-      return CropDetail._(provider: provider,style: style, listBuilder: listBuilder, header: header,);
+  factory CropDetail(
+      {ViewModelProvider<CropDetailViewModel> provider,
+      CropDetailStyle style = _defaultStyle,
+      Widget header}) {
+    final listBuilder = SectionedListView(sections: []);
+    return CropDetail._(
+      provider: provider,
+      style: style,
+      listBuilder: listBuilder,
+      header: header,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    final builder = ViewModelProviderBuilder(provider: _viewModelProvider,successBuilder: _buildSuccess,);
+    final builder = ViewModelProviderBuilder(
+      provider: _viewModelProvider,
+      successBuilder: _buildSuccess,
+    );
     return builder.build(context);
   }
 
@@ -93,12 +100,15 @@ class CropDetail extends StatelessWidget implements ListViewSection {
   }
 
   Widget _buildSuccess(
-      {BuildContext context,
-      AsyncSnapshot<CropDetailViewModel> snapshot}) {
+      {BuildContext context, AsyncSnapshot<CropDetailViewModel> snapshot}) {
     final viewModel = snapshot.data;
-    final article = ArticleDetail(viewModel: viewModel, articleHeader: _header,);
+    final article = ArticleDetail(
+      viewModel: viewModel,
+      articleHeader: _header,
+      shouldShowArticleImage: (_header == null),
+    );
     final infoItems = CropInfoList(items: viewModel.infoItems);
-    final listBuilder =  SectionedListView(sections:[article,infoItems]);
+    final listBuilder = SectionedListView(sections: [article, infoItems]);
     _listBuilder = listBuilder;
     return Scaffold(
       appBar: _buildAppBar(context),
@@ -111,5 +121,4 @@ class CropDetail extends StatelessWidget implements ListViewSection {
       shareAction: null,
     ).build(context);
   }
-  
 }

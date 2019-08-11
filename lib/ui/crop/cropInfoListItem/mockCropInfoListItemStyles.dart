@@ -1,43 +1,43 @@
 import 'package:farmsmart_flutter/model/model/mock/MockString.dart';
 import 'package:flutter/material.dart';
 
-import 'recommendation_detail_listitem.dart';
+import '../CropInfoListItem.dart';
 
 class MockRecommendationDetailListItemViewModel {
 
-  static RecommendationDetailListItemViewModel buildWithoutColorList() =>
-      RecommendationDetailListItemViewModel(
+  static CropInfoListItemViewModel buildWithoutColorList() =>
+      CropInfoListItemViewModel(
         iconPath: _mockIcons.random(),
         title: _mockTitle.random(),
         subtitle: _mockSubtitle.random(),
       );
 
-  static RecommendationDetailListItemViewModel buildWithLargeColorList() =>
-      RecommendationDetailListItemViewModel(
+  static CropInfoListItemViewModel buildWithLargeColorList() =>
+      CropInfoListItemViewModel(
         iconPath: _mockIcons.random(),
         title: _mockTitle.random(),
         subtitle: _mockSubtitle.random(),
         colors: _mockLargeListOfColors,
       );
 
-  static RecommendationDetailListItemViewModel buildWithLargeTextAndColorList() =>
-      RecommendationDetailListItemViewModel(
+  static CropInfoListItemViewModel buildWithLargeTextAndColorList() =>
+      CropInfoListItemViewModel(
         iconPath: _mockIcons.random(),
         title: _mockLargeStrings.random(),
         subtitle: _mockLargeStrings.random(),
         colors: _mockLargeListOfColors,
       );
 
-  static RecommendationDetailListItemViewModel buildWithShortColorList() =>
-      RecommendationDetailListItemViewModel(
+  static CropInfoListItemViewModel buildWithShortColorList() =>
+      CropInfoListItemViewModel(
         iconPath: _mockIcons.random(),
         title: _mockTitle.random(),
         subtitle: _mockSubtitle.random(),
         colors: _mockShortListOfColors,
       );
 
-  static RecommendationDetailListItemViewModel buildForTesting() =>
-      RecommendationDetailListItemViewModel(
+  static CropInfoListItemViewModel buildForTesting() =>
+      CropInfoListItemViewModel(
         iconPath: 'assets/icons/detail_icon_best_soil.png',
         title: 'Best Soil',
         subtitle: 'Sandy, Black Cotton, Loamy',

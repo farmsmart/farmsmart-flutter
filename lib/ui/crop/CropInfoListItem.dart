@@ -23,13 +23,13 @@ class _Constants {
       BorderRadius.all(Radius.circular(30));
 }
 
-class RecommendationDetailListItemViewModel {
+class CropInfoListItemViewModel {
   String iconPath;
   String title;
   String subtitle;
   List<Color> colors;
 
-  RecommendationDetailListItemViewModel({
+  CropInfoListItemViewModel({
     this.iconPath,
     this.title,
     this.subtitle,
@@ -37,26 +37,26 @@ class RecommendationDetailListItemViewModel {
   });
 }
 
-class RecommendationDetailListItemStyle {
+class CropInfoListItemStyle {
   final TextStyle titleTextStyle;
   final TextStyle subtitleTextStyle;
   final double iconSize;
   final double circleSize;
 
-  const RecommendationDetailListItemStyle({
+  const CropInfoListItemStyle({
     this.titleTextStyle,
     this.subtitleTextStyle,
     this.iconSize,
     this.circleSize,
   });
 
-  RecommendationDetailListItemStyle copyWith({
+  CropInfoListItemStyle copyWith({
     TextStyle titleTextStyle,
     TextStyle subtitleTextStyle,
     double iconSize,
     double circleSize,
   }) {
-    return RecommendationDetailListItemStyle(
+    return CropInfoListItemStyle(
       titleTextStyle: titleTextStyle ?? this.titleTextStyle,
       subtitleTextStyle: subtitleTextStyle ?? this.subtitleTextStyle,
       iconSize: iconSize ?? this.iconSize,
@@ -65,7 +65,7 @@ class RecommendationDetailListItemStyle {
   }
 }
 
-class _DefaultStyle extends RecommendationDetailListItemStyle {
+class _DefaultStyle extends CropInfoListItemStyle {
   final TextStyle titleTextStyle = const TextStyle(
     fontSize: 17,
     fontWeight: FontWeight.w500,
@@ -88,16 +88,16 @@ class _DefaultStyle extends RecommendationDetailListItemStyle {
   });
 }
 
-const RecommendationDetailListItemStyle _defaultStyle = const _DefaultStyle();
+const CropInfoListItemStyle _defaultStyle = const _DefaultStyle();
 
-class RecommendationDetailListItem extends StatelessWidget {
-  final RecommendationDetailListItemStyle _style;
-  final RecommendationDetailListItemViewModel _viewModel;
+class CropInfoListItem extends StatelessWidget {
+  final CropInfoListItemStyle _style;
+  final CropInfoListItemViewModel _viewModel;
 
-  RecommendationDetailListItem({
+  CropInfoListItem({
     Key key,
-    RecommendationDetailListItemViewModel viewModel,
-    RecommendationDetailListItemStyle style = _defaultStyle,
+    CropInfoListItemViewModel viewModel,
+    CropInfoListItemStyle style = _defaultStyle,
   })  : this._viewModel = viewModel,
         this._style = style,
         super(key: key);

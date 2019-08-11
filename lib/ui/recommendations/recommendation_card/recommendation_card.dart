@@ -214,7 +214,7 @@ class RecommendationCard extends StatelessWidget {
 
   Widget _buildTopRoundedImage() {
     return RoundedImageOverlay(
-      image: _viewModel.image,
+      image: _viewModel.imageProvider.urlToFit(width:_style.overlayIconWidth,height: _style.overlayIconHeight),
       imageHeight: _style.imageHeight,
       imageWidth: double.infinity,
       imageBorderRadius: _style.imageBorderRadius,

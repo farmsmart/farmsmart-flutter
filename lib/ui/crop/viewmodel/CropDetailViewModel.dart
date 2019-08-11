@@ -1,10 +1,11 @@
 import 'package:farmsmart_flutter/model/model/ImageURLProvider.dart';
 import 'package:farmsmart_flutter/model/model/loading_status.dart';
 import 'package:farmsmart_flutter/ui/article/viewModel/ArticleDetailViewModel.dart';
-import 'package:farmsmart_flutter/ui/recommendations/recommendation_detail_listitem/recommendation_detail_listitem.dart';
+
+import '../CropInfoListItem.dart';
 
 class CropDetailViewModel extends ArticleDetailViewModel {
-  final List<RecommendationDetailListItemViewModel> infoItems;
+  final List<CropInfoListItemViewModel> infoItems;
 
   CropDetailViewModel(
     LoadingStatus loadingStatus,
@@ -18,7 +19,7 @@ class CropDetailViewModel extends ArticleDetailViewModel {
     String contentLink,
     String contentLinkDescription,
     String contentLinkIcon,
-    List<RecommendationDetailListItemViewModel> infoItems,
+    List<CropInfoListItemViewModel> infoItems,
   )   : this.infoItems = infoItems,
         super(
           loadingStatus,
@@ -35,7 +36,7 @@ class CropDetailViewModel extends ArticleDetailViewModel {
         );
 
   CropDetailViewModel.fromArticle(ArticleDetailViewModel articleViewModel,
-      List<RecommendationDetailListItemViewModel> infoItems)
+      List<CropInfoListItemViewModel> infoItems)
       : this.infoItems = infoItems,
         super(
           articleViewModel.loadingStatus,

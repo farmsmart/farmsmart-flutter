@@ -55,7 +55,7 @@ class RecommendationCardTransformer
       addActionText:
           inBasket ? _LocalisedStrings.added() : _LocalisedStrings.add(),
       addAction: addAction,
-      image: CropImageProvider(from).urlToFit(),
+      imageProvider: CropImageProvider(from),
       isAdded: inBasket,
       isHero: _isHero(from),
       score: score,
