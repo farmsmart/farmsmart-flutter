@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:farmsmart_flutter/model/bloc/transactions/TransactionToProfitLossListItemViewModel.dart';
+import 'package:farmsmart_flutter/model/model/PlotEntity.dart';
 import 'package:farmsmart_flutter/model/model/TransactionEntity.dart';
-import 'package:farmsmart_flutter/model/model/crop_entity.dart';
 import 'package:farmsmart_flutter/model/model/loading_status.dart';
-import 'package:farmsmart_flutter/model/repositories/crop/CropRepositoryInterface.dart';
+import 'package:farmsmart_flutter/model/repositories/plot/PlotRepositoryInterface.dart';
 import 'package:farmsmart_flutter/model/repositories/transaction/TransactionRepositoryInterface.dart';
 import 'package:farmsmart_flutter/ui/profitloss/ProfitLossList.dart';
 import 'package:farmsmart_flutter/ui/profitloss/ProfitLossListItem.dart';
@@ -19,8 +19,9 @@ class _LocalisedStrings {
 class ProfitLossListProvider
     implements ViewModelProvider<ProfitLossListViewModel> {
   final TransactionRepositoryInterface _transactionsRepository;
-  final CropRepositoryInterface _cropRepository;
+  final PlotRepositoryInterface _plotRepository;
   ProfitLossListViewModel _snapshot;
+  List<TransactionEntity> _transactions;
   final StreamController<ProfitLossListViewModel> _controller =
       StreamController<ProfitLossListViewModel>.broadcast();
   List<String> _taglist = [];
@@ -28,9 +29,9 @@ class ProfitLossListProvider
 
   ProfitLossListProvider({
     TransactionRepositoryInterface transactionsRepository,
-    CropRepositoryInterface cropRepository,
+    PlotRepositoryInterface plotRepository,
   })  : this._transactionsRepository = transactionsRepository,
-        this._cropRepository = cropRepository;
+        this._plotRepository = plotRepository;
 
   @override
   Stream<ProfitLossListViewModel> stream() {
@@ -46,14 +47,17 @@ class ProfitLossListProvider
   ProfitLossListViewModel initial() {
     if (_snapshot == null) {
       _taglist = _getTagList([]);
+      _plotRepository.observeFarm().listen((plots) {
+            _taglist = _getTagList(plots);
+            _snapshot = _viewModelFromModel(_controller, _transactions);
+            _controller.sink.add(_snapshot);
+      });
       _transactionsRepository.observeProfile(null).listen((transactions) {
+        _transactions = transactions;
         _transactionsRepository.allTimeBalance().then((balance) {
           _title = balance.toString(allowNegative: true);
-          _cropRepository.get().then((crops) {
-            _taglist = _getTagList(crops);
-            _snapshot = _viewModelFromModel(_controller, transactions);
+           _snapshot = _viewModelFromModel(_controller, transactions);
             _controller.sink.add(_snapshot);
-          });
         });
       });
       _snapshot = _viewModel(status: LoadingStatus.LOADING);
@@ -100,14 +104,15 @@ class ProfitLossListProvider
   }
 
   void _update(StreamController controller) {
+    _plotRepository.getFarm();
     _transactionsRepository.get(null);
   }
 
-  List<String> _getTagList(List<CropEntity> crops) {
+  List<String> _getTagList(List<PlotEntity> plots) {
     final defaultItems = [_LocalisedStrings.generalItemTag()];
     return defaultItems +
-        crops.map((crop) {
-          return crop.name;
+        plots.map((plot) {
+          return plot.crop.name;
         }).toList();
   }
 

@@ -131,7 +131,7 @@ class Home extends StatelessWidget {
       viewModelProvider: ProfitLossListProvider(
         transactionsRepository: repositoryProvider
             .getTransactionRepository(viewModel.currentProfileID),
-        cropRepository: repositoryProvider.getCropRepository(),
+        plotRepository: repositoryProvider.getMyPlotRepository(viewModel.currentProfileID),
       ),
     );
   }
