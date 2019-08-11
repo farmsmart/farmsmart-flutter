@@ -110,10 +110,11 @@ class ProfitLossListProvider
 
   List<String> _getTagList(List<PlotEntity> plots) {
     final defaultItems = [_LocalisedStrings.generalItemTag()];
-    return defaultItems +
-        plots.map((plot) {
-          return plot.crop.name;
-        }).toList();
+    Map<String,bool> uniqueTags = {};
+    plots.forEach((plot){
+      uniqueTags[plot.crop.name] = true;
+    });
+    return defaultItems + uniqueTags.keys.toList(); 
   }
 
   void dispose() {
