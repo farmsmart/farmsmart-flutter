@@ -20,6 +20,10 @@ class _Strings {
   static const pathDivider = "/";
 }
 
+class _Constants {
+  static const int unkownSize = 0;
+}
+
 class FlamelinkImageEntity extends ImageEntity {
   final FlameLink _cms;
   final List<ImageEntity> otherSizes;
@@ -47,7 +51,7 @@ ImageEntity _transform(FlameLink cms, DocumentSnapshot snapshot) {
     return FlamelinkImageEntity(cms, width, height, path, []);
   }).toList();
   final alternateSizes = List<ImageEntity>.from(alternateSizesObjs);
-  return FlamelinkImageEntity(cms, 0, 0, imageFileNamePath, alternateSizes);
+  return FlamelinkImageEntity(cms, _Constants.unkownSize, _Constants.unkownSize, imageFileNamePath, alternateSizes);
 }
 
 class FlameLinkImageProvider implements ImageURLProvider {
@@ -60,6 +64,7 @@ class FlameLinkImageProvider implements ImageURLProvider {
   @override
   Future<String> urlToFit({double width, double height}) {
     final originalImage = _cms.images(path: _entity.path);
+    //TODO: LH investigate why some alternate images are not returning from the server Keep this for now
     /*if (width != null) {
       final targetWidth = width.toInt();
       var alternateImages = _entity.otherSizes;
