@@ -133,7 +133,7 @@ class ChatProvider implements ViewModelProvider<ChatViewModel> {
     _repo.getFormItem(_currentMessageCount).then((formItem) {
       if (formItem != null) {
         _insertNewMessageToList(
-            _chatMessageHandler.getMessageFromEntity(formItem));
+            _chatMessageHandler.getMessageFromEntity(formItem, _responseMap));
         _increaseMessageCount();
         _updatePreviousMessages();
         _setInteractiveWidget(formItem.inputRequest);
