@@ -61,7 +61,7 @@ class FlamelinkCropArticleTransformer
     final content = castOrNull<String>(from.data[_Fields.content]);
     final status = castOrNull<String>(from.data[_Fields.status]);
     final summary = castOrNull<String>(from.data[_Fields.summary]);
-    final title = castOrNull<String>(from.data[_Fields.name]) ??
+    final name = castOrNull<String>(from.data[_Fields.name]) ??
         castOrNull<String>(from.data[_Fields.name]);
     final externalLink = castOrNull(from.data[_Fields.externalLink]);
     final published =
@@ -71,7 +71,7 @@ class FlamelinkCropArticleTransformer
         content: content,
         status: statusValues.map[status],
         summary: summary,
-        title: title,
+        title: name,
         published: published,
         externalLink: externalLink);
     var relatedRefs = _relatedRefs(from);

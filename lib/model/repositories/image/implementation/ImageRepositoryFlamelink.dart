@@ -51,7 +51,8 @@ ImageEntity _transform(FlameLink cms, DocumentSnapshot snapshot) {
     return FlamelinkImageEntity(cms, width, height, path, []);
   }).toList();
   final alternateSizes = List<ImageEntity>.from(alternateSizesObjs);
-  return FlamelinkImageEntity(cms, _Constants.unkownSize, _Constants.unkownSize, imageFileNamePath, alternateSizes);
+  return FlamelinkImageEntity(cms, _Constants.unkownSize, _Constants.unkownSize,
+      imageFileNamePath, alternateSizes);
 }
 
 class FlameLinkImageProvider implements ImageURLProvider {
