@@ -119,16 +119,6 @@ class TextInputState extends State<TextInput> {
           ),
         ),
       );
-
-//  _buildSendButton() => RoundedButton(
-//        viewModel: RoundedButtonViewModel(
-//            title: widget._buttonText,
-//            onTap: () {
-//              _formKey.currentState.validate();
-//              widget._onSendPressed();
-//            }),
-//        style: widget._roundedButtonStyle,
-//      );
 }
 
 class TextInput extends StatefulWidget {
