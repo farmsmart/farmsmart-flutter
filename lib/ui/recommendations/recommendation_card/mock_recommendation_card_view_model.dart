@@ -15,7 +15,7 @@ class MockRecommendationCardViewModel {
       detailAction: () {},
       addActionText: 'Added',
       addAction: () {},
-      imageProvider: MockImageProvider(_mockFutureString('http://www.freemagebank.com/wp-content/uploads/edd/2015/07/GL0000302LR.jpg')),
+      imageProvider: MockImageProvider('http://www.freemagebank.com/wp-content/uploads/edd/2015/07/GL0000302LR.jpg'),
       isAdded: Random().nextBool(),
       isHero: Random().nextBool(),
     );
@@ -30,7 +30,7 @@ class MockRecommendationCardViewModel {
       detailAction: () {},
       addActionText: 'Add to Plot',
       addAction: () {},
-      imageProvider: MockImageProvider(_mockFutureString(_mockImageUrl.random())),
+      imageProvider: MockImageProvider(_mockImageUrl.random()),
     );
   }
 
@@ -43,7 +43,7 @@ class MockRecommendationCardViewModel {
       detailAction: () {},
       addActionText: 'Added',
       addAction: () {},
-      imageProvider: MockImageProvider(_mockFutureString('http://www.freemagebank.com/wp-content/uploads/edd/2015/07/GL0000302LR.jpg')),
+      imageProvider: MockImageProvider('http://www.freemagebank.com/wp-content/uploads/edd/2015/07/GL0000302LR.jpg'),
       isAdded: true,
     );
   }
@@ -59,7 +59,7 @@ class MockRecommendationCardViewModel {
       detailAction: () {},
       addActionText: 'Add to Plot',
       addAction: () {},
-      imageProvider: MockImageProvider(_mockFutureString(_mockImageUrl.random())),
+      imageProvider: MockImageProvider(_mockImageUrl.random()),
     );
   }
 
@@ -74,7 +74,7 @@ class MockRecommendationCardViewModel {
       detailAction: () {},
       addActionText: 'Add to Plot',
       addAction: () {},
-      imageProvider:MockImageProvider(_mockFutureString('assets/raw/placeholder.webp')),
+      imageProvider:MockImageProvider('assets/raw/placeholder.webp'),
     );
   }
 
@@ -89,16 +89,12 @@ class MockRecommendationCardViewModel {
       detailAction: () {},
       addActionText: 'Added To Plot',
       addAction: () {},
-      imageProvider:MockImageProvider(_mockFutureString('assets/raw/placeholder.webp')),
+      imageProvider:MockImageProvider('assets/raw/placeholder.webp'),
       isAdded: true,
     );
   }
 }
 
-
-Future<String> _mockFutureString(String url) async{
-  return url;
-}
 
 MockString _mockTitle = MockString(library: [
   'Tomatoes',
