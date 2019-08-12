@@ -5,7 +5,7 @@ class ProfileEntity {
     final String id;
     final String name;
     final ImageURLProvider avatar;
-    final FactorEntity lastFactorProfile;
+    final Map<String,String> lastFactorProfile;
 
   ProfileEntity(this.id, this.name, this.avatar, this.lastFactorProfile);
 }

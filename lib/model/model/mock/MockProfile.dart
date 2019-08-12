@@ -1,4 +1,4 @@
-import 'package:farmsmart_flutter/model/model/mock/MockFactor.dart';
+import 'package:farmsmart_flutter/model/model/mock/MockRecommendation.dart';
 import 'package:farmsmart_flutter/model/model/mock/MockString.dart';
 import 'package:farmsmart_flutter/model/repositories/MockStrings.dart';
 import 'package:farmsmart_flutter/model/repositories/image/implementation/MockImageEntity.dart';
@@ -11,7 +11,7 @@ class MockProfile {
       mockPlainText.identifier(),
       name ?? _names.random(),
       MockImageEntity().build().urlProvider,
-      MockFactor().build(),
+      plotInfo,
     );
     return entity;
   }

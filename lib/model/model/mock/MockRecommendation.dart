@@ -1,85 +1,78 @@
-import 'package:farmsmart_flutter/model/model/FactorEntity.dart';
 
-final harryInput = {
-  "Skill Level": 0.0,
-  "Locations": 2.0,
-  "Agrozone": 2.0,
-  "Land Size": 6.0,
-  "Soil Type": 5.0,
-  "Irrigation": 8.0,
-  "Month": 6.0,
-  "Intention": 0.0,
+final harryWeights = {
+  "Cowpeas": {
+    "Skill Level": 0.1,
+    "Location": 0.1,
+    "Agrozone": 0.1,
+  },
+  "Chillies": {
+    "Skill Level": 0.8,
+    "Location": 0.1,
+    "Agrozone": 0.1,
+  },
+  "max": {
+    "Skill Level": 1.0,
+    "Location": 1.0,
+    "Agrozone": 1.0,
+  }
 };
 
-final harryWeights = [
-  FactorEntity("Beetroot", 1.0, {
-    "Skill Level": 0.4,
-    "Locations": 0.3,
-    "Agrozone": 0.3,
-    "Land Size": 0.6,
-    "Soil Type": 0.2,
-    "Irrigation": 0.1,
-    "Month": 0.9,
-    "Intention": 0.8,
-  }),
-  FactorEntity("Chillies", 1.0, {
-    "Skill Level": 0.4,
-    "Locations": 0.3,
-    "Agrozone": 0.3,
-    "Land Size": 0.8,
-    "Soil Type": 0.2,
-    "Irrigation": 0.4,
-    "Month": 0.9,
-    "Intention": 0.8,
-  }),
-  FactorEntity("Cowpeas", 1.0, {
-    "Skill Level": 0.8,
-    "Locations": 0.8,
-    "Agrozone": 0.3,
-    "Land Size": 0.6,
-    "Soil Type": 0.8,
-    "Irrigation": 0.1,
-    "Month": 0.9,
-    "Intention": 0.8,
-  }),
-  FactorEntity("Cucumber", 1.0, {
-    "Skill Level": 0.4,
-    "Locations": 0.8,
-    "Agrozone": 0.3,
-    "Land Size": 0.6,
-    "Soil Type": 0.8,
-    "Irrigation": 0.1,
-    "Month": 0.9,
-    "Intention": 0.8,
-  }),
-  FactorEntity("Small Urban Rotation (50m2)", 1.0, {
-    "Skill Level": 0.4,
-    "Locations": 0.3,
-    "Agrozone": 0.3,
-    "Land Size": 0.6,
-    "Soil Type": 0.2,
-    "Irrigation": 0.8,
-    "Month": 0.9,
-    "Intention": 0.8,
-  }),
-  FactorEntity("Sorghum", 1.0, {
-    "Skill Level": 0.4,
-    "Locations": 0.3,
-    "Agrozone": 0.3,
-    "Land Size": 0.2,
-    "Soil Type": 0.2,
-    "Irrigation": 0.1,
-    "Month": 0.9,
-    "Intention": 0.3,
-  }),
-  FactorEntity("Tomatoes", 1.0, {
-    "Skill Level": 0.0,
-    "Locations": 0.0,
-    "Agrozone": 0.0,
-    "Land Size": 0.0,
-    "Soil Type": 0.0,
-    "Irrigation": 0.9,
-    "Month": 0.0,
-    "Intention": 0.0,
-  }),
-];
+final harryInputFactors = {
+  "Cowpeas": {
+    "Skill Level": {
+      "hi": 10.0,
+      "med": 5.0,
+      "lo": 0.0,
+    },
+    "Location": {
+      "hi": 10.0,
+      "med": 5.0,
+      "lo": 0.0,
+    },
+    "Agrozone": {
+      "hi": 10.0,
+      "med": 5.0,
+      "lo": 0.0,
+    }
+  },
+  "Chillies": {
+    "Skill Level": {
+      "hi": 10.0,
+      "med": 5.0,
+      "lo": 0.0,
+    },
+    "Location": {
+      "hi": 10.0,
+      "med": 5.0,
+      "lo": 0.0,
+    },
+    "Agrozone": {
+      "hi": 10.0,
+      "med": 5.0,
+      "lo": 0.0,
+    },
+  },
+  "max": {
+    "Skill Level": {
+      "hi": 10.0,
+      "med": 5.0,
+      "lo": 0.0,
+    },
+    "Location": {
+      "hi": 10.0,
+      "med": 5.0,
+      "lo": 0.0,
+    },
+    "Agrozone": {
+      "hi": 10.0,
+      "med": 5.0,
+      "lo": 0.0,
+    },
+  }
+};
+
+final plotInfo = {
+  "Skill Level": "hi",
+  "Location": "med",
+  "Agrozone": "low",
+};

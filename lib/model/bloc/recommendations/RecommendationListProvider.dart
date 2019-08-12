@@ -4,7 +4,6 @@ import 'package:farmsmart_flutter/model/bloc/Basket.dart';
 import 'package:farmsmart_flutter/model/bloc/StaticViewModelProvider.dart';
 import 'package:farmsmart_flutter/model/bloc/crop/CropDetailTransformer.dart';
 import 'package:farmsmart_flutter/model/bloc/recommendations/RecommendationEngine.dart';
-import 'package:farmsmart_flutter/model/model/FactorEntity.dart';
 import 'package:farmsmart_flutter/model/model/crop_entity.dart';
 import 'package:farmsmart_flutter/model/model/loading_status.dart';
 import 'package:farmsmart_flutter/model/repositories/crop/CropRepositoryInterface.dart';
@@ -18,6 +17,10 @@ import 'package:farmsmart_flutter/ui/recommendations/viewmodel/RecommendationsLi
 import '../ViewModelProvider.dart';
 import 'RecommendationCardTransformer.dart';
 
+class _Constants {
+  static const inputScale = 10.0;
+}
+
 class RecommendationListProvider
     implements ViewModelProvider<RecommendationsListViewModel> {
   final String _title;
@@ -28,7 +31,6 @@ class RecommendationListProvider
   final RatingEngineRepositoryInterface _ratingRepo;
   Basket<CropEntity> _cropBasket;
   List<CropEntity> _crops;
-  FactorEntity _currentInputFactors;
   //final UserProfileRepositoryInterface _profileRepo; //we need the current input factors from this.
   final _controller =
       StreamController<RecommendationsListViewModel>.broadcast();
@@ -97,9 +99,9 @@ class RecommendationListProvider
       engine: _recommendationBusinessLogic,
       basket: _cropBasket,
       provider: _detailProvider,
-      isHero: _isHero,
+      heroThreshold: _heroThreshold,
     );
-    List<RecommendationCardViewModel> items = crops.where((crop){
+    List<RecommendationCardViewModel> items = crops.where((crop) {
       return (crop.stageArticles != null);
     }).map((crop) {
       return transformer.transform(from: crop);
@@ -123,23 +125,18 @@ class RecommendationListProvider
     _cropRepo.get().then((crops) {
       _crops = crops;
       _profileRepo.getCurrent().then((profile) {
-        _currentInputFactors = profile.lastFactorProfile;
-        _ratingRepo.getWeights().then((weights) {
-          var weightMatrix = Map<String, Map<String, double>>();
-          weights.forEach((weight) {
-            weightMatrix[weight.subject] = weight.values;
+        _ratingRepo.getFactors().then((inputFactors) {
+          _ratingRepo.getWeights().then((weights) {
+            _recommendationBusinessLogic = RecommendationEngine(
+              inputFactors: inputFactors,
+              inputScale: _Constants.inputScale,
+              weightMatrix: weights,
+            );
+            _snapshot = _modelFromCrops(controller, crops);
+            controller.sink.add(_snapshot);
           });
-          _recommendationBusinessLogic = RecommendationEngine(
-            inputFactors: _currentInputFactors.values,
-            inputScale: _currentInputFactors.scale,
-            weightMatrix: weightMatrix,
-          );
-          _snapshot = _modelFromCrops(controller, crops);
-          controller.sink.add(_snapshot);
         });
       });
-    }).catchError((error) {
-      controller.sink.add(_viewModel(status: LoadingStatus.ERROR, items: []));
     });
   }
 
@@ -153,11 +150,6 @@ class RecommendationListProvider
   void _clear(StreamController<RecommendationsListViewModel> controller) {
     _cropBasket.empty();
     _update(controller);
-  }
-
-  bool _isHero(CropEntity crop) {
-    final score = _recommendationBusinessLogic.recommend(crop.id);
-    return score >= _heroThreshold;
   }
 
   ViewModelProvider<CropDetailViewModel> _detailProvider(CropEntity crop) {

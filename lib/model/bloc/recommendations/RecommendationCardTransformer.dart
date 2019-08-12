@@ -23,29 +23,32 @@ class _LocalisedStrings {
 class RecommendationCardTransformer
     extends ObjectTransformer<CropEntity, RecommendationCardViewModel> {
   final RecommendationEngine _engine;
+  final Map<String,String> _plotInfo;
   final Basket<CropEntity> _basket;
-  final Function _isHero;
+  final double _heroThreshold;
   final Function _detailProvider;
 
   RecommendationCardTransformer({
     RecommendationEngine engine,
+    Map<String,String> plotInfo,
     Basket<CropEntity> basket,
     Function provider,
-    Function isHero,
+    double heroThreshold,
   })  : this._engine = engine,
+        this._plotInfo = plotInfo,
         this._basket = basket,
         this._detailProvider = provider,
-        this._isHero = isHero;
+        this._heroThreshold = heroThreshold;
 
   @override
   RecommendationCardViewModel transform({CropEntity from}) {
-    final score = _engine.recommend(from.id);
+    final score = _engine.recommend(from.id,_plotInfo);
     final percent = score * _Constants.cent;
     final subtitle =
         percent.toInt().toString() + "% " + _LocalisedStrings.match();
     final inBasket = _basket.contains(from);
     final addAction = inBasket ? () => {} : () => _basket.addItem(from);
-
+    final isHero = score >= _heroThreshold;
     return RecommendationCardViewModel(
       title: from.name,
       subtitle: subtitle,
@@ -57,7 +60,7 @@ class RecommendationCardTransformer
       addAction: addAction,
       imageProvider: CropImageProvider(from),
       isAdded: inBasket,
-      isHero: _isHero(from),
+      isHero: isHero,
       score: score,
     );
   }

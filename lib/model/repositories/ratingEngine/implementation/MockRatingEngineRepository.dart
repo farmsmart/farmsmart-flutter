@@ -1,31 +1,27 @@
-import 'package:farmsmart_flutter/model/model/FactorEntity.dart';
 import 'package:farmsmart_flutter/model/model/mock/MockRecommendation.dart';
-import 'package:farmsmart_flutter/model/repositories/MockListRepository.dart';
 
 import '../RatingEngineRepositoryInterface.dart';
 
-final _mockWeights = harryWeights;
-
-class MockRatingEngineRepository extends MockListRepository<FactorEntity>
-    implements RatingEngineRepositoryInterface {
-  MockRatingEngineRepository._(
-      IdentifyEntity<FactorEntity> identifyEntity, List<FactorEntity> startData)
-      : super(
-          identifyEntity: identifyEntity,
-          startingData: startData,
-        );
-
-  factory MockRatingEngineRepository() {
-    return MockRatingEngineRepository._(null, _mockWeights);
+class MockRatingEngineRepository implements RatingEngineRepositoryInterface {
+  @override
+  Future<Map<String, Map<String, Map<String, double>>>> getFactors() {
+    return Future.value(harryInputFactors);
   }
 
   @override
-  Future<List<FactorEntity>> getWeights() {
-    return getList();
+  Future<Map<String, Map<String, double>>> getWeights() {
+     return Future.value(harryWeights);
   }
 
   @override
-  Stream<List<FactorEntity>> observeWeights() {
-    return observeList();
+  Stream<Map<String, Map<String, Map<String, double>>>> observeFactors() {
+    return null;
   }
+
+  @override
+  Stream<Map<String, Map<String, double>>> observeWeights() {
+    return null;
+  }
+
+
 }
