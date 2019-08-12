@@ -166,30 +166,6 @@ class ChatProvider implements ViewModelProvider<ChatViewModel> {
     if (entity != null && entity.type != null) {
       InteractiveMessageType inputType = _getInputType(entity);
       switch (inputType) {
-        case InteractiveMessageType.inputString:
-          _setInputTextWidget(
-            entity: entity,
-            inputType: inputType,
-          );
-          break;
-        case InteractiveMessageType.inputEmail:
-          _setInputTextWidget(
-            entity: entity,
-            inputType: inputType,
-          );
-          break;
-        case InteractiveMessageType.inputPhoneNumber:
-          _setInputTextWidget(
-            entity: entity,
-            inputType: inputType,
-          );
-          break;
-        case InteractiveMessageType.inputImage:
-          _setInputTextWidget(
-            entity: entity,
-            inputType: inputType,
-          );
-          break;
         case InteractiveMessageType.inputDate:
           _setDatePickerWidget(entity: entity);
           break;
