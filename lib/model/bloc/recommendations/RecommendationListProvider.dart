@@ -4,6 +4,7 @@ import 'package:farmsmart_flutter/model/bloc/Basket.dart';
 import 'package:farmsmart_flutter/model/bloc/StaticViewModelProvider.dart';
 import 'package:farmsmart_flutter/model/bloc/crop/CropDetailTransformer.dart';
 import 'package:farmsmart_flutter/model/bloc/recommendations/RecommendationEngine.dart';
+import 'package:farmsmart_flutter/model/model/ProfileEntity.dart';
 import 'package:farmsmart_flutter/model/model/crop_entity.dart';
 import 'package:farmsmart_flutter/model/model/loading_status.dart';
 import 'package:farmsmart_flutter/model/repositories/crop/CropRepositoryInterface.dart';
@@ -38,6 +39,7 @@ class RecommendationListProvider
   RecommendationEngine _recommendationBusinessLogic;
 
   RecommendationsListViewModel _snapshot;
+  ProfileEntity _currentProfile;
 
   RecommendationListProvider({
     String title,
@@ -97,6 +99,7 @@ class RecommendationListProvider
       List<CropEntity> crops) {
     final transformer = RecommendationCardTransformer(
       engine: _recommendationBusinessLogic,
+      plotInfo: _currentProfile.lastPlotInfo,
       basket: _cropBasket,
       provider: _detailProvider,
       heroThreshold: _heroThreshold,
@@ -125,16 +128,15 @@ class RecommendationListProvider
     _cropRepo.get().then((crops) {
       _crops = crops;
       _profileRepo.getCurrent().then((profile) {
-        _ratingRepo.getFactors().then((inputFactors) {
-          _ratingRepo.getWeights().then((weights) {
-            _recommendationBusinessLogic = RecommendationEngine(
-              inputFactors: inputFactors,
-              inputScale: _Constants.inputScale,
-              weightMatrix: weights,
-            );
-            _snapshot = _modelFromCrops(controller, crops);
-            controller.sink.add(_snapshot);
-          });
+        _currentProfile = profile;
+        _ratingRepo.getRatingInfo().then((ratingInfo) {
+          _recommendationBusinessLogic = RecommendationEngine(
+            inputFactors: RatingInfo.extractScores(ratingInfo),
+            inputScale: _Constants.inputScale,
+            weightMatrix: RatingInfo.extractWeights(ratingInfo),
+          );
+          _snapshot = _modelFromCrops(controller, crops);
+          controller.sink.add(_snapshot);
         });
       });
     });

@@ -72,7 +72,7 @@ final harryInputFactors = {
 };
 
 final plotInfo = {
-  "Skill Level": "hi",
-  "Location": "med",
-  "Agrozone": "low",
+  "Skill Level": "Beginner",
+  "Location": "Bomet",
+  "Agrozone": "Upper midlands",
 };

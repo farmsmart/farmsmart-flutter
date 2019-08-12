@@ -42,7 +42,7 @@ class RecommendationCardTransformer
 
   @override
   RecommendationCardViewModel transform({CropEntity from}) {
-    final score = _engine.recommend(from.id,_plotInfo);
+    final score = _engine.recommend(from.name,_plotInfo);
     final percent = score * _Constants.cent;
     final subtitle =
         percent.toInt().toString() + "% " + _LocalisedStrings.match();

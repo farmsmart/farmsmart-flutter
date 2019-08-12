@@ -4,24 +4,19 @@ import '../RatingEngineRepositoryInterface.dart';
 
 class MockRatingEngineRepository implements RatingEngineRepositoryInterface {
   @override
-  Future<Map<String, Map<String, Map<String, double>>>> getFactors() {
-    return Future.value(harryInputFactors);
+  Future<Map<String, RatingInfo>> getRatingInfo() {
+    final inputFactors = harryInputFactors.map((subject,value){
+      return MapEntry(subject, RatingInfo(harryWeights[subject], value));
+    });
+    return Future.value(inputFactors);
   }
 
   @override
-  Future<Map<String, Map<String, double>>> getWeights() {
-     return Future.value(harryWeights);
-  }
-
-  @override
-  Stream<Map<String, Map<String, Map<String, double>>>> observeFactors() {
+  Future<Map<String, RatingInfo>> observeRatingInfo() {
+    // TODO: implement observeRatingInfo
     return null;
   }
-
-  @override
-  Stream<Map<String, Map<String, double>>> observeWeights() {
-    return null;
-  }
+  
 
 
 }

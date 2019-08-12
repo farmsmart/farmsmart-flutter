@@ -15,10 +15,12 @@ import 'profile/ProfileRepositoryInterface.dart';
 import 'profile/implementation/MockProfileRepository.dart';
 import 'ratingEngine/RatingEngineRepositoryInterface.dart';
 import 'ratingEngine/implementation/MockRatingEngineRepository.dart';
+import 'ratingEngine/implementation/RatingEngineRepositoryFireStore.dart';
 import 'repository_provider.dart';
 
 class FlameLinkRepositoryProvider implements RepositoryProvider {
-  FlameLink cms;
+  FlameLink _cms;
+  Firestore _fireStore;
 
   Map<String,PlotRepositoryInterface> _plotRepos = {};
   Map<String,TransactionRepositoryInterface> _transactionRepos = {};
@@ -27,21 +29,22 @@ class FlameLinkRepositoryProvider implements RepositoryProvider {
   RatingEngineRepositoryInterface _ratings = MockRatingEngineRepository();
 
   init(BuildContext context) {
-    this.cms = FlameLink(
-        store: Firestore.instance,
+    this._fireStore = Firestore.instance;
+    this._cms = FlameLink(
+        store: _fireStore,
         environment: AppConfig.of(context).environment);
   }
 
   @override
   ArticleRepositoryInterface getArticleRepository() =>
-      ArticlesRepositoryFlameLink(cms);
+      ArticlesRepositoryFlameLink(_cms);
 
   //TODO Add My Plot FlameLink Repository
   @override
   PlotRepositoryInterface getMyPlotRepository(String profileID) => _plotRepoFor(profileID);
 
   @override
-  CropRepositoryInterface getCropRepository() => CropRepositoryFlamelink(cms);
+  CropRepositoryInterface getCropRepository() => CropRepositoryFlamelink(_cms);
 
   @override
   TransactionRepositoryInterface getTransactionRepository(String profileID) => _transactionRepoFor(profileID);
@@ -50,7 +53,7 @@ class FlameLinkRepositoryProvider implements RepositoryProvider {
   ProfileRepositoryInterface getProfileRepository() => _profile;
 
   @override
-  RatingEngineRepositoryInterface getRatingsRepository() => _ratings;
+  RatingEngineRepositoryInterface getRatingsRepository() => RatingEngineRepositoryFirestore(_fireStore);
 
   PlotRepositoryInterface _plotRepoFor(String profileId){
     if(_plotRepos[profileId] == null){

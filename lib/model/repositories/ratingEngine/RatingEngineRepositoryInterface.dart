@@ -1,8 +1,24 @@
-import 'package:farmsmart_flutter/model/model/FactorEntity.dart';
+
+class RatingInfo {
+  final Map<String, double> weights;
+  final Map<String,  Map<String,double>> scores;
+
+  RatingInfo(this.weights, this.scores);
+
+  static Map<String,Map<String,double>> extractWeights(Map<String,RatingInfo> from) {
+      return from.map((key,info){
+          return MapEntry(key, info.weights);
+      });
+  }
+
+  static Map<String,Map<String,Map<String,double>>> extractScores(Map<String,RatingInfo> from) {
+      return from.map((key,info){
+          return MapEntry(key, info.scores);
+      });
+  }
+}
 
 abstract class RatingEngineRepositoryInterface {
-    Future<Map<String, Map<String, double>>> getWeights();
-    Stream<Map<String, Map<String, double>>> observeWeights();
-    Future<Map<String, Map<String, Map<String, double>>>> getFactors();
-    Stream<Map<String, Map<String, Map<String, double>>>> observeFactors();
+    Future<Map<String, RatingInfo>> getRatingInfo();
+    Future<Map<String, RatingInfo>> observeRatingInfo();
 }
