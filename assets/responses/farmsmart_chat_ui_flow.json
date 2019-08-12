@@ -1,0 +1,535 @@
+{
+  "uid": "1",
+  "title": "Jata",
+  "subtitle": "Your personal farm assistant",
+  "origin": "com.wearemobilefirst.farmsmart",
+  "formResponse": {
+    "type": "com.wearemobilefirst.local",
+    "uri": "profiles/%UserID/",
+    "body": {
+      "name": "%Name",
+      "skillLevel": "%SkillLevel",
+      "farmLocation": "%FarmLocation",
+      "agroEcoZone": "%AgroEcoZone",
+      "landSize": "%LandSize",
+      "motivation": "%Motivation",
+      "peopleInHousehold": "%PeopleInHousehold",
+      "soilType": "%SoilType",
+      "startDate": "%StartDate",
+      "usingIrrigation": "%UsingIrrigation"
+    }
+  },
+  "items": [
+    {
+      "text": "Hi! I'm the FarmSmart chatbot, Jata",
+      "sentiment": "Positive"
+    },
+    {
+      "text": "I'm here to set up your profile and recommend the best crops for your farm",
+      "sentiment": "Positive"
+    },
+    {
+      "text": "What is your name?",
+      "inputRequest": {
+        "type": "com.wearemobilefirst.String",
+        "uri": "Name",
+        "localStore": false,
+        "inline": true,
+        "title": "Your Name",
+        "validationRegex": "^[a-zA-Z]+$",
+        "responseText": "My name is %Name",
+        "optional": false
+      }
+    },
+    {
+      "text": "Nice to meet you %Name",
+      "sentiment": "Positive"
+    },
+    {
+      "text": "Now I'll ask a few questions to help me recommend the best crops for you",
+      "sentiment": "Positive"
+    },
+    {
+      "text": "What is your farming skill level?",
+      "inputRequest": {
+        "type": "com.wearemobilefirst.MultiChoice",
+        "inline": true,
+        "uri": "SkillLevel",
+        "title": "Skill Level",
+        "localStore": true,
+        "responseText": "",
+        "optional": false,
+        "args": {
+          "maxSelection": 1,
+          "options": [
+            {
+              "id": "skill.Beginner",
+              "title": "Beginner",
+              "description": "No experience with farming",
+              "responseText": "I have no experience farming"
+            },
+            {
+              "id": "skill.Intermediate",
+              "title": "Intermediate",
+              "description": "Some experience farming",
+              "responseText": "I have farming knowledge"
+            },
+            {
+              "id": "skill.Advanced",
+              "title": "Advanced",
+              "description": "Experienced farmer",
+              "responseText": "I have experience farming"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "text": "Where is your farm?",
+      "inputRequest": {
+        "type": "com.wearemobilefirst.Dropdown",
+        "uri": "FarmLocation",
+        "title": "Farm Location",
+        "localStore": false,
+        "responseText": "",
+        "inline": true,
+        "optional": false,
+        "args": {
+          "maxSelection": 1,
+          "options": [
+            {
+              "id": "location.Baringo",
+              "title": "Baringo"
+            },
+            {
+              "id": "location.Bomet",
+              "title": "Bomet"
+            },
+            {
+              "id": "location.Bungoma",
+              "title": "Bungoma"
+            },
+            {
+              "id": "location.Busia",
+              "title": "Busia"
+            },
+            {
+              "id": "location.ElgeyoMarakwet",
+              "title": "Elgeyo-Marakwet"
+            },
+            {
+              "id": "location.Embu",
+              "title": "Embu"
+            },
+            {
+              "id": "location.Garissa",
+              "title": "Garissa"
+            },
+            {
+              "id": "location.HomaBay",
+              "title": "Homa Bay"
+            },
+            {
+              "id": "location.Isiolo",
+              "title": "Isiolo"
+            },
+            {
+              "id": "location.Kajiado",
+              "title": "Kajiado"
+            },
+            {
+              "id": "location.Kakamega",
+              "title": "Kakamega"
+            },
+            {
+              "id": "location.Kericho",
+              "title": "Kericho"
+            },
+            {
+              "id": "location.Kiambu",
+              "title": "Kiambu"
+            },
+            {
+              "id": "location.Kilifi",
+              "title": "Kilifi"
+            },
+            {
+              "id": "location.Kirinyaga",
+              "title": "Kirinyaga"
+            },
+            {
+              "id": "location.Kisii",
+              "title": "Kisii"
+            },
+            {
+              "id": "location.Kisumu",
+              "title": "Kisumu"
+            },
+            {
+              "id": "location.Kitui",
+              "title": "Kitui"
+            },
+            {
+              "id": "location.Kwale",
+              "title": "Kwale"
+            },
+            {
+              "id": "location.Laikipia",
+              "title": "Laikipia"
+            },
+            {
+              "id": "location.Lamu",
+              "title": "Lamu"
+            },
+            {
+              "id": "location.Machakos",
+              "title": "Machakos"
+            },
+            {
+              "id": "location.Makueni",
+              "title": "Makueni"
+            },
+            {
+              "id": "location.Mandera",
+              "title": "Mandera"
+            },
+            {
+              "id": "location.Marsabit",
+              "title": "Marsabit"
+            },
+            {
+              "id": "location.Meru",
+              "title": "Meru"
+            },
+            {
+              "id": "location.Migori",
+              "title": "Migori"
+            },
+            {
+              "id": "location.Mombasa",
+              "title": "Mombasa"
+            },
+            {
+              "id": "location.Muranga",
+              "title": "Murang'a"
+            },
+            {
+              "id": "location.Nairobi",
+              "title": "Nairobi"
+            },
+            {
+              "id": "location.Nakuru",
+              "title": "Nakuru"
+            },
+            {
+              "id": "location.Nandi",
+              "title": "Nandi"
+            },
+            {
+              "id": "location.Narok",
+              "title": "Narok"
+            },
+            {
+              "id": "location.Nyamira",
+              "title": "Nyamira"
+            },
+            {
+              "id": "location.Nyandarua",
+              "title": "Nyandarua"
+            },
+            {
+              "id": "location.Nyeri",
+              "title": "Nyeri"
+            },
+            {
+              "id": "location.Samburu",
+              "title": "Samburu"
+            },
+            {
+              "id": "location.Siaya",
+              "title": "Siaya"
+            },
+            {
+              "id": "location.TaitaTaveta",
+              "title": "Taita-Taveta"
+            },
+            {
+              "id": "location.TanaRiver",
+              "title": "Tana River"
+            },
+            {
+              "id": "location.TharakaNithi",
+              "title": "Tharaka-Nithi"
+            },
+            {
+              "id": "location.TransNzoia",
+              "title": "Trans-Nzoia"
+            },
+            {
+              "id": "location.Turkana",
+              "title": "Turkana"
+            },
+            {
+              "id": "location.UasinGishu",
+              "title": "Uasin Gishu"
+            },
+            {
+              "id": "location.Vihiga",
+              "title": "Vihiga"
+            },
+            {
+              "id": "location.Wajir",
+              "title": "Wajir"
+            },
+            {
+              "id": "location.WestPokot",
+              "title": "West Pokot"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "text": "What is your agro-ecological zone?",
+      "inputRequest": {
+        "type": "com.wearemobilefirst.MultiChoice",
+        "inline": true,
+        "uri": "AgroEcoZone",
+        "title": "Agro-Ecological zone",
+        "localStore": true,
+        "responseText": "",
+        "optional": false,
+        "args": {
+          "maxSelection": 1,
+          "options": [
+            {
+              "id": "agroeco.UpperMidlands",
+              "title": "Upper midlands"
+            },
+            {
+              "id": "agroeco.LowlandMidlands",
+              "title": "Lowland midlands"
+            },
+            {
+              "id": "agroeco.UpperHighlands",
+              "title": "Upper highlands"
+            },
+            {
+              "id": "agroeco.LowlandHighlands",
+              "title": "Lowland highlands"
+            },
+            {
+              "id": "agroeco.InlandLowlands",
+              "title": "Inland lowlands"
+            },
+            {
+              "id": "agroeco.CoastalLowlands",
+              "title": "Coastal lowlands"
+            },
+            {
+              "id": "agroeco.DontKnow",
+              "title": "Don't know"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "text": "What is the size of your land?",
+      "inputRequest": {
+        "type": "com.wearemobilefirst.MultiChoice",
+        "uri": "LandSize",
+        "title": "Land Size",
+        "inline": true,
+        "localStore": false,
+        "responseText": "",
+        "optional": false,
+        "args": {
+          "maxSelection": 1,
+          "options": [
+            {
+              "id": "landSize.UrbanGarden",
+              "title": "Urban garden"
+            },
+            {
+              "id": "landSize.LessThanQuarter",
+              "title": "Less than 1/4 acre"
+            },
+            {
+              "id": "landSize.BetweenQuartHalf",
+              "title": "1/4 - 1/2 acre"
+            },
+            {
+              "id": "landSize.HalfToOne",
+              "title": "1/2 - 1 acre"
+            },
+            {
+              "id": "landSize.MoreThanOne",
+              "title": "More than 1 acre"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "text": "Why are you wanting to grow food on your farm?",
+      "inputRequest": {
+        "type": "com.wearemobilefirst.MultiChoice",
+        "uri": "Motivation",
+        "title": "Motivation",
+        "inline": true,
+        "localStore": false,
+        "responseText": "",
+        "optional": false,
+        "args": {
+          "maxSelection": 1,
+          "options": [
+            {
+              "id": "motivation.money",
+              "title": "For money"
+            },
+            {
+              "id": "motivation.family",
+              "title": "For my family"
+            },
+            {
+              "id": "motivation.both",
+              "title": "For both"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "text": "How many people are in your household?",
+      "inputRequest": {
+        "type": "com.wearemobilefirst.MultiChoice",
+        "uri": "PeopleInHousehold",
+        "title": "People In Household",
+        "inline": true,
+        "localStore": false,
+        "responseText": "",
+        "optional": false,
+        "args": {
+          "maxSelection": 1,
+          "options": [
+            {
+              "id": "people.2",
+              "title": "2"
+            },
+            {
+              "id": "people.3_5",
+              "title": "3 - 5"
+            },
+            {
+              "id": "people.5",
+              "title": "5 +"
+            },
+            {
+              "id": "people.skip",
+              "title": "Skip"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "text": "What type of soil do you have?",
+      "inputRequest": {
+        "type": "com.wearemobilefirst.MultiChoice",
+        "uri": "SoilType",
+        "title": "Soil Type",
+        "inline": true,
+        "localStore": false,
+        "responseText": "",
+        "optional": false,
+        "args": {
+          "maxSelection": 1,
+          "options": [
+            {
+              "id": "soilType.Sandy",
+              "title": "Sandy"
+            },
+            {
+              "id": "soilType.SandyClay",
+              "title": "Sandy Clay"
+            },
+            {
+              "id": "soilType.SandyLoam",
+              "title": "Sandy loam"
+            },
+            {
+              "id": "soilType.Silt",
+              "title": "Silt"
+            },
+            {
+              "id": "soilType.SiltyLoam",
+              "title": "Silty loam"
+            },
+            {
+              "id": "soilType.SiltyClay",
+              "title": "Silty clay"
+            },
+            {
+              "id": "soilType.Clay",
+              "title": "Clay"
+            },
+            {
+              "id": "soilType.ClayLoam",
+              "title": "Clay loam"
+            },
+            {
+              "id": "soilType.Loam",
+              "title": "Loam"
+            },
+            {
+              "id": "soilType.DontKnow",
+              "title": "I don't know"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "text": "When do you intend to start planting?",
+      "inputRequest": {
+        "type": "com.wearemobilefirst.Date",
+        "uri": "StartDate",
+        "localStore": false,
+        "inline": true,
+        "title": "Start Date",
+        "responseText": "",
+        "optional": false
+      }
+    },
+    {
+      "text": "Will you be using irrigation on your farm?",
+      "inputRequest": {
+        "type": "com.wearemobilefirst.MultiChoice",
+        "uri": "UsingIrrigation",
+        "title": "Irrigation",
+        "inline": true,
+        "localStore": false,
+        "responseText": "",
+        "optional": false,
+        "args": {
+          "maxSelection": 1,
+          "options": [
+            {
+              "id": "irrigation.Yes",
+              "title": "Yes"
+            },
+            {
+              "id": "irrigation.No",
+              "title": "No"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "text": "Almost done! Now I want to confirm the information you've given me",
+      "renderHint": "center"
+    }
+  ]
+}
