@@ -99,7 +99,9 @@ class RecommendationListProvider
       provider: _detailProvider,
       isHero: _isHero,
     );
-    List<RecommendationCardViewModel> items = crops.map((crop) {
+    List<RecommendationCardViewModel> items = crops.where((crop){
+      return (crop.stageArticles != null);
+    }).map((crop) {
       return transformer.transform(from: crop);
     }).toList();
     items.sort((a, b) {

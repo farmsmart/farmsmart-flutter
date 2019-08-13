@@ -90,6 +90,7 @@ class ArticleDetail extends StatelessWidget implements ListViewSection {
   final ArticleDetailStyle _style;
   final Widget _articleHeader;
   final Widget _articleFooter;
+  final bool _articleImageVisible;
   List<ArticleListItemViewModel> _relatedViewModels = [];
 
   ArticleDetail({
@@ -98,10 +99,12 @@ class ArticleDetail extends StatelessWidget implements ListViewSection {
     ArticleDetailStyle style = const _DefaultStyle(),
     Widget articleHeader,
     Widget articleFooter,
+    bool shouldShowArticleImage = true,
     Widget relatedHeader,
   })  : this._viewModel = viewModel,
         this._articleHeader = articleHeader,
         this._articleFooter = articleFooter,
+        this._articleImageVisible = shouldShowArticleImage,
         this._style = style,
         super(key: key);
 
@@ -306,6 +309,9 @@ class ArticleDetail extends StatelessWidget implements ListViewSection {
   }
 
   Widget _buildImage() {
+    if(!_articleImageVisible){
+      return null;
+    }
     if (_viewModel.image == null) {
       return null;
     }

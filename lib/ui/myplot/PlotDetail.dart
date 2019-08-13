@@ -23,7 +23,7 @@ import 'PlotDetailHeaderStyle.dart';
 class _LocalisedStrings {
   static renameAction() => Intl.message('Rename Crop');
 
-  static removeAction() => Intl.message('Delete Crop');
+  static removeAction() => Intl.message('Remove Crop');
 
   static cancelAction() => Intl.message('Cancel');
 

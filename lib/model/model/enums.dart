@@ -1,4 +1,4 @@
-enum CropComplexity { BEGINNER, INTERMEDIATE, ADVANCED }
+enum CropComplexity { BEGINNER, INTERMEDIATE, ADVANCED, UNDEFINED }
 
 final begAdvValues = EnumValues({
   "ADVANCED": CropComplexity.ADVANCED,
@@ -11,7 +11,7 @@ enum CropType { SINGLE, ROTATION }
 final cropTypeValues =
     EnumValues({"ROTATION": CropType.ROTATION, "SINGLE": CropType.SINGLE});
 
-enum LoHi { LOW, MEDIUM, HIGH }
+enum LoHi { LOW, MEDIUM, HIGH, UNDEFINED }
 
 final loHiValues =
     EnumValues({"HIGH": LoHi.HIGH, "LOW": LoHi.LOW, "MEDIUM": LoHi.MEDIUM});

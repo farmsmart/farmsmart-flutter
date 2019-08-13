@@ -42,9 +42,11 @@ class StageBusinessLogic {
 
   int daysSinceStarted(List<StageEntity> stages) {
     final firstStage = stages.first;
+    final lastStage = stages.last;
     final started = firstStage.started;
+    final ended = lastStage.ended ?? DateTime.now();
     if (started != null) {
-       return DateTime.now().difference(started).inDays;
+      return ended.difference(started).inDays;
     }
     return 0;
   }
