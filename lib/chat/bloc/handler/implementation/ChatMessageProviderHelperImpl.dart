@@ -2,6 +2,7 @@ import 'package:farmsmart_flutter/chat/bloc/transformer/implementation/ChatHeade
 import 'package:farmsmart_flutter/chat/bloc/transformer/implementation/ChatMessageViewModelTransformer.dart';
 import 'package:farmsmart_flutter/chat/model/form/form_entity.dart';
 import 'package:farmsmart_flutter/chat/model/form/form_item_entity.dart';
+import 'package:farmsmart_flutter/chat/ui/viewmodel/ChatResponseViewModel.dart';
 import 'package:farmsmart_flutter/chat/ui/widgets/bubble_message.dart';
 import 'package:farmsmart_flutter/chat/ui/widgets/fading_dots.dart';
 import 'package:farmsmart_flutter/chat/ui/widgets/header_message.dart';
@@ -10,11 +11,16 @@ import 'package:farmsmart_flutter/chat/ui/widgets/styles/header_message_styles.d
 
 import '../ChatMessageViewModelHandler.dart';
 
+class _Constants {
+  static const percentDelimiter = "%";
+}
+
 class ChatMessageViewModelHandlerImpl
     implements ChatMessageViewModelHandler<MessageBubbleViewModel> {
   @override
-  MessageBubbleViewModel getMessageFromEntity(FormItemEntity entity) =>
-      _getMessageAsBubble(entity);
+  MessageBubbleViewModel getMessageFromEntity(FormItemEntity entity,
+          Map<String, ChatResponseViewModel> responses) =>
+      _getMessageAsBubble(entity, responses);
 
   @override
   MessageBubbleViewModel getHeaderMessage(FormEntity entity) =>
@@ -40,8 +46,15 @@ class ChatMessageViewModelHandlerImpl
         messageType: MessageType.header,
       );
 
-  MessageBubbleViewModel _getMessageAsBubble(FormItemEntity entity) =>
-      ChatMessageViewModelTransformer().transform(from: entity);
+  MessageBubbleViewModel _getMessageAsBubble(
+      FormItemEntity entity, Map<String, ChatResponseViewModel> responses) {
+    MessageBubbleViewModel viewModel =
+        ChatMessageViewModelTransformer().transform(from: entity);
+    return _getUpdateMessageByProvidedResponses(
+      viewModel: viewModel,
+      responses: responses,
+    );
+  }
 
   MessageBubbleViewModel _getMessageAsBubbleFromProvided(
           String providedMessage) =>
@@ -56,4 +69,21 @@ class ChatMessageViewModelHandlerImpl
         ),
         messageType: MessageType.loading,
       );
+
+  MessageBubbleViewModel _getUpdateMessageByProvidedResponses({
+    MessageBubbleViewModel viewModel,
+    Map<String, ChatResponseViewModel> responses,
+  }) {
+    if (viewModel.message.contains(_Constants.percentDelimiter)) {
+      responses.forEach(
+        (key, answer) {
+          viewModel.message = viewModel.message.replaceAll(
+            _Constants.percentDelimiter + key,
+            answer.value,
+          );
+        },
+      );
+    }
+    return viewModel;
+  }
 }

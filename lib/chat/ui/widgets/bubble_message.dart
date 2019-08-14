@@ -163,10 +163,11 @@ class MessageBubble extends StatelessWidget {
 }
 
 class MessageBubbleViewModel {
-  final String message;
   final Widget messageChild;
+  final Widget avatar;
+  String message;
   MessageType messageType;
-  Widget avatar;
+
 
   MessageBubbleViewModel({
     this.message,

@@ -1,15 +1,24 @@
-import 'package:farmsmart_flutter/chat/ui/widgets/separator_wrapper.dart';
-import 'package:farmsmart_flutter/chat/ui/widgets/styles/rounded_button_styles.dart';
-import 'package:farmsmart_flutter/chat/ui/widgets/styles/selectable_options_styles.dart';
-import 'package:farmsmart_flutter/chat/ui/widgets/styles/text_input_styles.dart';
-import 'package:flutter/material.dart';
 import 'package:farmsmart_flutter/chat/bloc/transformer/implementation/SelectableOptionsViewModelTransformer.dart';
 import 'package:farmsmart_flutter/chat/model/form/input_request_entity.dart';
 import 'package:farmsmart_flutter/chat/ui/viewmodel/SelectableOptionViewModel.dart';
 import 'package:farmsmart_flutter/chat/ui/viewmodel/SelectableOptionsViewModel.dart';
+import 'package:farmsmart_flutter/chat/ui/widgets/date_picker.dart';
+import 'package:farmsmart_flutter/chat/ui/widgets/drop_down_picker.dart';
+import 'package:farmsmart_flutter/chat/ui/widgets/pair_container_wrapper.dart';
+import 'package:farmsmart_flutter/chat/ui/widgets/rounded_button.dart';
 import 'package:farmsmart_flutter/chat/ui/widgets/selectable_options.dart';
+import 'package:farmsmart_flutter/chat/ui/widgets/separator_wrapper.dart';
+import 'package:farmsmart_flutter/chat/ui/widgets/styles/date_picker_styles.dart';
+import 'package:farmsmart_flutter/chat/ui/widgets/styles/drop_down_picker_styles.dart';
+import 'package:farmsmart_flutter/chat/ui/widgets/styles/pair_container_wrapper_styles.dart';
+import 'package:farmsmart_flutter/chat/ui/widgets/styles/rounded_button_styles.dart';
+import 'package:farmsmart_flutter/chat/ui/widgets/styles/selectable_options_styles.dart';
+import 'package:farmsmart_flutter/chat/ui/widgets/styles/separator_wrapper_styles.dart';
+import 'package:farmsmart_flutter/chat/ui/widgets/styles/text_input_styles.dart';
 import 'package:farmsmart_flutter/chat/ui/widgets/text_input.dart';
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+
 import '../InteractiveMessageHandler.dart';
 
 class _LocalisedStrings {
@@ -56,32 +65,78 @@ class InteractiveMessageHandlerImpl implements InteractiveMessageHandler {
         inputRequestEntity: inputRequestEntity,
       );
 
-  _buildTextInputWidget({
+  @override
+  Widget buildDatePickerWidget({
+    Function(String) onSendPressed,
+  }) =>
+      _buildDatePicker(
+        onSendPressed: onSendPressed,
+      );
+
+  @override
+  Widget buildDropDownPickerWidget({
+    InputRequestEntity inputRequestEntity,
+    Function(SelectableOptionViewModel) onSendPressed,
+  }) =>
+      _buildDropDownPicker(
+        onSendPressed: onSendPressed,
+        inputRequestEntity: inputRequestEntity,
+      );
+
+  Widget _buildTextInputWidget({
     InputRequestEntity inputRequestEntity,
     TextEditingController textEditingController,
     Function onSendPressed,
     Function(String) onValidationPassed,
     InteractiveMessageType type,
     bool isFocusedOnBuild,
-  }) =>
-      SeparatorWrapper(
-        wrappedChild: TextInput(
-          buttonText: _LocalisedStrings.sendText(),
-          formFieldValidatorFunction: _getValidationFunction(
-            regex: inputRequestEntity.validationRegex,
-            type: type,
-            onValidationPassed: onValidationPassed,
-          ),
-          onSendPressed: onSendPressed,
-          controller: textEditingController,
-          decoration: _getInputDecoration(),
-          isFocusedOnBuild: isFocusedOnBuild,
-          roundedButtonStyle: RoundedButtonStyles.chatButtonStyle(),
-          style: TextInputStyles.buildDefaultStyle(),
+  }) {
+    TextInput textInput = _buildTextInput(
+      isFocusedOnBuild: isFocusedOnBuild,
+      onValidationPassed: onValidationPassed,
+      inputRequestEntity: inputRequestEntity,
+      type: type,
+      textEditingController: textEditingController,
+    );
+    GlobalKey<FormState> formKey = textInput.formKey;
+    return SeparatorWrapper(
+      wrappedChild: PairContainerWrapper(
+        leftChild: textInput,
+        rightChild: RoundedButton(
+          viewModel: RoundedButtonViewModel(
+              title: _LocalisedStrings.sendText(),
+              onTap: () {
+                formKey.currentState.validate();
+                onSendPressed();
+              }),
+          style: RoundedButtonStyles.chatButtonStyle(),
         ),
+        style: PairContainerWrapperStyles.buildDefaultStyle(),
+      ),
+      style: SeparatorWrapperStyles.buildDefaultStyle(),
+    );
+  }
+
+  Widget _buildTextInput({
+    InputRequestEntity inputRequestEntity,
+    TextEditingController textEditingController,
+    Function(String) onValidationPassed,
+    InteractiveMessageType type,
+    bool isFocusedOnBuild,
+  }) =>
+      TextInput(
+        formFieldValidatorFunction: _getValidationFunction(
+          regex: inputRequestEntity.validationRegex,
+          type: type,
+          onValidationPassed: onValidationPassed,
+        ),
+        controller: textEditingController,
+        decoration: _getInputDecoration(),
+        isFocusedOnBuild: isFocusedOnBuild,
+        style: TextInputStyles.buildDefaultStyle(),
       );
 
-  _buildSelectableOptionsWidget({
+  Widget _buildSelectableOptionsWidget({
     InputRequestEntity inputRequestEntity,
     Function(SelectableOptionViewModel) onTap,
   }) =>
@@ -93,7 +148,62 @@ class InteractiveMessageHandlerImpl implements InteractiveMessageHandler {
           onTap: onTap,
           style: SelectableOptionsStyles.buildDefaultStyle(),
         ),
+        style: SeparatorWrapperStyles.buildDefaultStyle(),
       );
+
+  Widget _buildDatePicker({
+    Function(String) onSendPressed,
+  }) {
+    String selectedDate;
+    return SeparatorWrapper(
+      wrappedChild: PairContainerWrapper(
+        leftChild: DatePicker(
+          onDateSelected: (date) {
+            selectedDate = date;
+          },
+          style: DatePickerStyles.buildDefaultStyle(),
+        ),
+        rightChild: RoundedButton(
+          viewModel: RoundedButtonViewModel(
+            onTap: () => onSendPressed(selectedDate),
+            title: _LocalisedStrings.sendText(),
+          ),
+          style: RoundedButtonStyles.chatButtonStyle(),
+        ),
+        style: PairContainerWrapperStyles.buildDefaultStyle(),
+      ),
+      style: SeparatorWrapperStyles.buildDefaultStyle(),
+    );
+  }
+
+  Widget _buildDropDownPicker({
+    Function(SelectableOptionViewModel) onSendPressed,
+    InputRequestEntity inputRequestEntity,
+  }) {
+    SelectableOptionViewModel selectedOption;
+    return SeparatorWrapper(
+      wrappedChild: PairContainerWrapper(
+        leftChild: DropDownPicker(
+          viewModel: _getSelectableOptionsViewModel(
+            inputRequestEntity: inputRequestEntity,
+          ),
+          onOptionSelected: (option) {
+            selectedOption = option;
+          },
+          style: DropDownPickerStyles.buildDefaultStyle(),
+        ),
+        rightChild: RoundedButton(
+          viewModel: RoundedButtonViewModel(
+            onTap: () => onSendPressed(selectedOption),
+            title: _LocalisedStrings.sendText(),
+          ),
+          style: RoundedButtonStyles.chatButtonStyle(),
+        ),
+        style: PairContainerWrapperStyles.buildDefaultStyle(),
+      ),
+      style: SeparatorWrapperStyles.buildDefaultStyle(),
+    );
+  }
 
   SelectableOptionsViewModel _getSelectableOptionsViewModel({
     InputRequestEntity inputRequestEntity,
