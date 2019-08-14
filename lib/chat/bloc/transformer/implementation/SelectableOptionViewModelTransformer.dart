@@ -12,6 +12,7 @@ class SelectableOptionViewModelTransformer
       id: from.id,
       title: from.title,
       description: from.description,
+      responseText: from.responseText,
     );
   }
 }
