@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 
 import 'deep_link_helper.dart';
 import 'model/bloc/startup/StartupViewModelProvider.dart';
-import 'utils/shared_preferences_helper.dart';
 
 class AppCoordinator extends StatefulWidget {
   @override
