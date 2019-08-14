@@ -10,7 +10,9 @@ import 'package:farmsmart_flutter/model/repositories/MockListRepository.dart';
 import 'package:farmsmart_flutter/model/repositories/profile/ProfileRepositoryInterface.dart';
 import '../PlotRepositoryInterface.dart';
 
-
+/*
+  The mock profile is quite complex, it needs to have a list of different farms per profile
+*/
 final _plotBuilder = MockPlotEntity();
 
 class MockPlotRepository implements PlotRepositoryInterface {
@@ -153,6 +155,8 @@ class MockPlotRepository implements PlotRepositoryInterface {
   void dispose() {
     _streamController.sink.close();
     _streamController.close();
+    _streamforObservers.sink.close();
+    _streamforObservers.close();
   }
   
 }

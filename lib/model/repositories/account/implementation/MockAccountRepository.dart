@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:farmsmart_flutter/model/model/AccountEntity.dart';
 import 'package:farmsmart_flutter/model/repositories/profile/ProfileRepositoryInterface.dart';
 
@@ -7,9 +9,14 @@ class _Strings {
   static const accountID = "Mock";
 }
 
+class _Constants {
+  static const oneInChance = 10;
+}
+
 class MockAccountRepository implements AccountRepositoryInterface {
 
   final AccountEntity _account;
+  final Random _rand = Random(0);
   
   MockAccountRepository._(this._account);
 
@@ -29,7 +36,7 @@ class MockAccountRepository implements AccountRepositoryInterface {
 
   @override
   Future<AccountEntity> getAuthorized() {
-    return Future.value(_account);
+    return (_rand.nextInt(_Constants.oneInChance) == 0) ? Future.value(null) : Future.value(_account);
   }
 
 }

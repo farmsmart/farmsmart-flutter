@@ -1,5 +1,4 @@
 import 'package:farmsmart_flutter/model/bloc/ViewModelProvider.dart';
-import 'package:farmsmart_flutter/model/bloc/home/HomeViewModelProvider.dart';
 import 'package:farmsmart_flutter/ui/common/ViewModelProviderBuilder.dart';
 import 'package:flutter/widgets.dart';
 
@@ -35,11 +34,11 @@ class Startup extends StatelessWidget {
         : _loginSignupBuilder(context: context, viewModel: viewModel);
   }
 
-  Widget _loginSignupBuilder({BuildContext context, HomeViewModel viewModel}) {
+  Widget _loginSignupBuilder({BuildContext context, StartupViewModel viewModel}) {
     return _loginSignup;
   }
 
-  Widget _homeBuilder({BuildContext context, HomeViewModel viewModel}) {
+  Widget _homeBuilder({BuildContext context, StartupViewModel viewModel}) {
     return _home;
   }
 }
