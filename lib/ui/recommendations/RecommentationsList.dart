@@ -36,13 +36,15 @@ abstract class RecommendedListStyle {
   final TextStyle titleTextStyle;
   final EdgeInsets titleEdgePadding;
   final RoundedButtonStyle applyButtonStyle;
+  final Color backgroundColor;
 
   RecommendedListStyle(
-      this.titleTextStyle, this.titleEdgePadding, this.applyButtonStyle);
+      this.titleTextStyle, this.titleEdgePadding, this.applyButtonStyle, this.backgroundColor);
 
   RecommendedListStyle copyWith({
     TextStyle titleTextStyle,
     EdgeInsets titleEdgePadding,
+    Color backgroundColor,
   });
 }
 
@@ -50,11 +52,12 @@ class _DefaultStyle implements RecommendedListStyle {
   final TextStyle titleTextStyle;
   final EdgeInsets titleEdgePadding;
   final RoundedButtonStyle applyButtonStyle;
-
+  final Color backgroundColor;
   const _DefaultStyle(
       {TextStyle titleTextStyle,
       EdgeInsets titleEdgePadding,
-      RoundedButtonStyle applyButtonStyle})
+      RoundedButtonStyle applyButtonStyle,
+      Color backgroundColor,})
       : this.titleTextStyle = titleTextStyle ??
             const TextStyle(
               fontSize: 27,
@@ -84,16 +87,19 @@ class _DefaultStyle implements RecommendedListStyle {
               buttonIconSize: null,
               iconButtonColor: Color(0xFFFFFFFF),
               buttonShape: BoxShape.rectangle,
-            );
+            ),
+            this.backgroundColor = Colors.white;
 
   @override
   RecommendedListStyle copyWith({
     TextStyle titleTextStyle,
     EdgeInsets titleEdgePadding,
+    Color backgroundColor,
   }) {
     return _DefaultStyle(
         titleTextStyle: titleTextStyle ?? this.titleTextStyle,
-        titleEdgePadding: titleEdgePadding ?? this.titleEdgePadding);
+        titleEdgePadding: titleEdgePadding ?? this.titleEdgePadding,
+        backgroundColor: backgroundColor ?? this.backgroundColor);
   }
 }
 
@@ -155,6 +161,7 @@ class RecommendationsList extends StatelessWidget implements ListViewSection {
     final viewModel = snapshot.data;
     return Scaffold(
       appBar: _buildAppBar(context, viewModel),
+      backgroundColor: _style.backgroundColor,
       body: Stack(
         children: <Widget>[
           _buildList(
