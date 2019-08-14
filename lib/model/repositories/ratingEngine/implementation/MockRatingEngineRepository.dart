@@ -1,22 +1,29 @@
+import 'dart:async';
+
 import 'package:farmsmart_flutter/model/model/mock/MockRecommendation.dart';
 
 import '../RatingEngineRepositoryInterface.dart';
 
 class MockRatingEngineRepository implements RatingEngineRepositoryInterface {
+  final _streamController =
+      StreamController<Map<String, RatingInfo>>.broadcast();
+
   @override
   Future<Map<String, RatingInfo>> getRatingInfo() {
-    final inputFactors = harryInputFactors.map((subject,value){
+    final inputFactors = harryInputFactors.map((subject, value) {
       return MapEntry(subject, RatingInfo(harryWeights[subject], value));
     });
+    _streamController.sink.add(inputFactors);
     return Future.value(inputFactors);
   }
 
   @override
-  Future<Map<String, RatingInfo>> observeRatingInfo() {
-    // TODO: implement observeRatingInfo
-    return null;
+  Stream<Map<String, RatingInfo>> observeRatingInfo() {
+    return _streamController.stream;
   }
-  
 
-
+  void dispose() {
+    _streamController.sink.close();
+    _streamController.close();
+  }
 }

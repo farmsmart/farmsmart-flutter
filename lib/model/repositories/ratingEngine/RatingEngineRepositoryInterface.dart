@@ -20,5 +20,5 @@ class RatingInfo {
 
 abstract class RatingEngineRepositoryInterface {
     Future<Map<String, RatingInfo>> getRatingInfo();
-    Future<Map<String, RatingInfo>> observeRatingInfo();
+    Stream<Map<String, RatingInfo>> observeRatingInfo();
 }

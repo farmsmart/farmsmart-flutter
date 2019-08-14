@@ -14,11 +14,12 @@ class _Fields {
 }
 
 class FirebaseToRatingInfoTransformer
-    extends ObjectTransformer<List<DocumentSnapshot>, Map<String, RatingInfo>> {
+    extends ObjectTransformer<QuerySnapshot, Map<String, RatingInfo>> {
   @override
-  Map<String, RatingInfo> transform({List<DocumentSnapshot> from}) {
+  Map<String, RatingInfo> transform({QuerySnapshot from}) {
     Map<String, RatingInfo> ratingData = {};
-    from.forEach((ratingEntry) {
+    final documents = from.documents;
+    documents.forEach((ratingEntry) {
       final subject = (ratingEntry.data[_Fields.subject] != null)
           ? ratingEntry.data[_Fields.subject][_Fields.name]
           : null;
