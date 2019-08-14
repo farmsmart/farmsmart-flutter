@@ -50,7 +50,7 @@ import '../playground_view.dart';
 import 'playground_persistent_bottom_navigation_bar_datasource.dart';
 
 class PlayGroundTasksDataSource implements PlaygroundDataSource {
-  final _mockPlot = MockPlotRepository();
+  final _mockPlot = MockPlotRepository(MockProfileRepository());
   final _mockCrop = MockCropRepository();
   final _mockProfile = MockProfileRepository();
   final _mockRatingRepo = MockRatingEngineRepository();
@@ -327,7 +327,7 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
         child: PlotDetail(
           provider: PlotDetailProvider(
             MockPlotEntity().build(),
-            MockPlotRepository(),
+            MockPlotRepository(MockProfileRepository()),
           ),
         ),
       ),

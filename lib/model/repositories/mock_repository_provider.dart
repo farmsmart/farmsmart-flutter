@@ -1,4 +1,5 @@
-import 'package:farmsmart_flutter/model/model/ProfileEntity.dart';
+import 'package:farmsmart_flutter/model/repositories/account/AccountRepositoryInterface.dart';
+import 'package:farmsmart_flutter/model/repositories/account/implementation/MockAccountRepository.dart';
 import 'package:farmsmart_flutter/model/repositories/article/ArticleRepositoryInterface.dart';
 import 'package:farmsmart_flutter/model/repositories/article/implementation/MockArticlesRepository.dart';
 import 'package:farmsmart_flutter/model/repositories/crop/CropRepositoryInterface.dart';
@@ -14,13 +15,14 @@ import 'repository_provider.dart';
 import 'transaction/TransactionRepositoryInterface.dart';
 import 'transaction/implementation/MockTransactionRepository.dart';
 
+ProfileRepositoryInterface _profile = MockProfileRepository();// we won´t Mock account changing (i.e we always have the same account and so profiles)
 
 class MockRepositoryProvider implements RepositoryProvider{
 
-  PlotRepositoryInterface _plot = MockPlotRepository();
+  PlotRepositoryInterface _plot = MockPlotRepository(_profile);
   CropRepositoryInterface _crop = MockCropRepository();
-  TransactionRepositoryInterface _trans = MockTransactionRepository();
-  ProfileRepositoryInterface _profile = MockProfileRepository();
+  TransactionRepositoryInterface _trans = MockTransactionRepository(_profile);
+  AccountRepositoryInterface _account = MockAccountRepository(_profile);
   RatingEngineRepositoryInterface _ratings = MockRatingEngineRepository();
 
   init(BuildContext context){
@@ -31,18 +33,18 @@ class MockRepositoryProvider implements RepositoryProvider{
   ArticleRepositoryInterface getArticleRepository() => MockArticlesRepository();
 
   @override
-  PlotRepositoryInterface getMyPlotRepository(String profileID) => _plot;
+  PlotRepositoryInterface getMyPlotRepository(ProfileRepositoryInterface profileRepository) => _plot;
 
   @override
   CropRepositoryInterface getCropRepository() => _crop;
 
     @override
-  TransactionRepositoryInterface getTransactionRepository(String profileID) => _trans;
-
-  @override
-  ProfileRepositoryInterface getProfileRepository() => _profile;
+  TransactionRepositoryInterface getTransactionRepository(ProfileRepositoryInterface profileRepository) => _trans;
 
   @override
   RatingEngineRepositoryInterface getRatingsRepository() => _ratings;
+
+  @override
+  AccountRepositoryInterface getAccountRepository() => _account;
 
 }

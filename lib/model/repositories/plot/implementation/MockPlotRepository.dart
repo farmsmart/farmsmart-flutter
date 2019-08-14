@@ -1,42 +1,54 @@
 
 import 'dart:async';
+import 'package:farmsmart_flutter/model/model/EntityCollectionInterface.dart';
 import 'package:farmsmart_flutter/model/model/StageEntity.dart';
 import 'package:farmsmart_flutter/model/model/PlotEntity.dart';
 import 'package:farmsmart_flutter/model/model/ProfileEntity.dart';
 import 'package:farmsmart_flutter/model/model/crop_entity.dart';
 import 'package:farmsmart_flutter/model/model/mock/MockPlot.dart';
 import 'package:farmsmart_flutter/model/repositories/MockListRepository.dart';
+import 'package:farmsmart_flutter/model/repositories/profile/ProfileRepositoryInterface.dart';
 import '../PlotRepositoryInterface.dart';
 
 
 final _plotBuilder = MockPlotEntity();
 
-class MockPlotRepository extends MockListRepository<PlotEntity> implements PlotRepositoryInterface {
+class MockPlotRepository implements PlotRepositoryInterface {
 
-  MockPlotRepository._(IdentifyEntity<PlotEntity> identifyEntity, List<PlotEntity> startData,) : super(identifyEntity: identifyEntity, startingData: startData);
+  final ProfileRepositoryInterface _profileRepository;
+  final IdentifyEntity<PlotEntity> _identifyEntity;
+  final _streamController = StreamController<List<PlotEntity>>.broadcast();
+  final _streamforObservers = StreamController<PlotEntity>.broadcast();
+  Map<String,MockListRepository<PlotEntity>> _listRepos = {}; 
 
-  factory MockPlotRepository() {
+  MockPlotRepository._(ProfileRepositoryInterface profileRepository, IdentifyEntity<PlotEntity> identifyEntity, List<PlotEntity> startData,):  this._profileRepository = profileRepository, this._identifyEntity = identifyEntity;
+
+  factory MockPlotRepository(ProfileRepositoryInterface profileRepository) {
     final identifyEntity = (PlotEntity plot) {
       return plot.id;
     };
-    return MockPlotRepository._(identifyEntity, []);
+    return MockPlotRepository._(profileRepository,identifyEntity, []);
   }
   @override
   Future<PlotEntity> addPlot({ProfileEntity toProfile, Map<String,String> plotInfo, CropEntity crop}) {
-    final entity = _plotBuilder.buildWith(crop).then((newPlot){
-      return add(newPlot);
+    return _plotBuilder.buildWith(crop).then((newPlot){
+      return _profileRepository.getCurrent().then((profile) {
+        
+        return _listFor(profile.id).add(newPlot); 
+      });
     });
-    return entity;
   }
 
   @override
   Future<List<PlotEntity>> getFarm() {
-    return getList();
+     return _profileRepository.getCurrent().then((profile) {
+       return _listFor(profile.id).getList();
+     });
   }
 
   @override
   Stream<List<PlotEntity>> observeFarm() {
-    return observeList();
+     return _streamController.stream;
   }
 
   @override
@@ -79,6 +91,68 @@ class MockPlotRepository extends MockListRepository<PlotEntity> implements PlotR
     final newPlot = PlotEntity(id: forPlot.id ,title: forPlot.title ,crop: forPlot.crop ,score: forPlot.score ,stages: newStages);
     replace(forPlot, newPlot);
     return newPlot;
+  }
+
+  @override
+  Future<List<PlotEntity>> getCollection(EntityCollection<PlotEntity> collection) {
+    return collection.getEntities();
+  }
+
+  @override
+  Future<PlotEntity> getSingle(String uri) {
+     return _profileRepository.getCurrent().then((profile) {
+       return _listFor(profile.id).getSingle(uri);
+     });
+  }
+
+  @override
+  Stream<PlotEntity> observe(String uri) {
+    final streamTransformer = StreamTransformer<PlotEntity,PlotEntity>.fromHandlers(handleData: (input, sink) {
+        if(input.id== uri){
+          return sink.add(input);
+        }
+      }); 
+    return _streamforObservers.stream.transform(streamTransformer);
+  }
+
+  @override
+  Future<bool> remove(PlotEntity plot) {
+     return _profileRepository.getCurrent().then((profile) {
+       return _listFor(profile.id).remove(plot);
+     });
+  }
+
+  Future<PlotEntity> replace(PlotEntity oldObject, PlotEntity newObject) {
+     return _profileRepository.getCurrent().then((profile) {
+       return _listFor(profile.id).replace(oldObject,newObject);
+     });
+  }
+
+  MockListRepository<PlotEntity> _listFor(String id) {
+     if(_listRepos[id] == null) {
+          _listRepos[id] = MockListRepository<PlotEntity>(identifyEntity: _identifyEntity,startingData: []);
+          _listRepos[id].observeList().listen((plots){
+              _update(id:id, plots:plots);
+          });
+          _listRepos[id].getList();
+    }
+    return _listRepos[id];
+  }
+
+  void _update({String id, List<PlotEntity> plots}) {
+    _profileRepository.getCurrent().then((currentProfile) {
+        if(currentProfile.id  == id) {
+          for (var plot in plots) {
+            _streamforObservers.sink.add(plot);
+          }
+          _streamController.sink.add(plots);
+        }
+    });
+  }
+
+  void dispose() {
+    _streamController.sink.close();
+    _streamController.close();
   }
   
 }
