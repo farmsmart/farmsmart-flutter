@@ -7,37 +7,53 @@
 
 class _Constants {
   static const unit = 1.0;
-  static const defaultScore = 0.0; 
+  static const defaultScore = 0.0;
 }
 
 class RecommendationEngine {
-  final Map<String, double> _inputFactors;
-  final Map<String, Map<String, double>> _scoringFactors;
+  final Map<String, Map<String, Map<String, double>>>
+      _inputFactors; // _inputFactors["tomatoes"]["Skill level"]["beginner"]
+  final Map<String, Map<String, double>>
+      _weightingFactors; // _weightingFactors["tomatoes"]["Skill level"]
 
-  RecommendationEngine._(Map<String, double> inputFactors,
-      Map<String, Map<String, double>> scoringFactors)
+  RecommendationEngine._(
+      Map<String, Map<String, Map<String, double>>> inputFactors,
+      Map<String, Map<String, double>> weightingFactors)
       : this._inputFactors = inputFactors,
-        this._scoringFactors = scoringFactors;
+        this._weightingFactors = weightingFactors;
 
-  factory RecommendationEngine({Map<String, double> inputFactors,
-      double inputScale = 1.0, Map<String, Map<String, double>> weightMatrix}) {
-    final scoringFactors = weightMatrix.map((entity, weights) {
+  factory RecommendationEngine(
+      {Map<String, Map<String, Map<String, double>>> inputFactors,
+      double inputScale = 1.0,
+      Map<String, Map<String, double>> weightMatrix}) {
+    final normalisedWeights = weightMatrix.map((subject, weights) {
       final totalWeight = weights.values.reduce((a, b) {
         return a + b;
       });
-      return MapEntry(entity, _normalise(weights, totalWeight));
+      return MapEntry(subject, _normalise(weights, totalWeight));
     });
 
-    final normalInput = _normalise(inputFactors, inputScale);
-    return RecommendationEngine._(normalInput, scoringFactors);
+    final normalisedInputs = inputFactors.map((subject, factorLookup) {
+      return MapEntry(subject, factorLookup.map((factorName, valueLookup) {
+        return MapEntry(factorName, _normalise(valueLookup, inputScale));
+      }));
+    });
+
+    return RecommendationEngine._(normalisedInputs, normalisedWeights);
   }
 
-  double recommend(String entity) {
+  double recommend(String subject, Map<String, String> plotInfo) {
     double score = _Constants.defaultScore;
-    final scoringMatrix = _scoringFactors[entity];
-    if (scoringMatrix != null) {
-      for (var key in _inputFactors.keys) {
-        score += _inputFactors[key] * scoringMatrix[key] ?? _Constants.defaultScore;
+    final weightMatrix = _weightingFactors[subject];
+    final inputMatrix = _inputFactors[subject];
+    if (weightMatrix != null) {
+      for (var key in inputMatrix.keys) {
+        final subjectInput = inputMatrix[key];
+        final subjectWeighting = weightMatrix[key] ?? _Constants.defaultScore;
+        final plotInput = plotInfo[key];
+        if ((subjectInput != null) && (plotInput != null)) {
+          score += (subjectInput[plotInput] ?? 0.0) * subjectWeighting;
+        }
       }
     }
     return score;

@@ -1,6 +1,5 @@
 
 import 'dart:async';
-import 'package:farmsmart_flutter/model/model/FactorEntity.dart';
 import 'package:farmsmart_flutter/model/model/StageEntity.dart';
 import 'package:farmsmart_flutter/model/model/PlotEntity.dart';
 import 'package:farmsmart_flutter/model/model/ProfileEntity.dart';
@@ -23,7 +22,7 @@ class MockPlotRepository extends MockListRepository<PlotEntity> implements PlotR
     return MockPlotRepository._(identifyEntity, []);
   }
   @override
-  Future<PlotEntity> addPlot({ProfileEntity toProfile, FactorEntity factorInput, CropEntity crop}) {
+  Future<PlotEntity> addPlot({ProfileEntity toProfile, Map<String,String> plotInfo, CropEntity crop}) {
     final entity = _plotBuilder.buildWith(crop).then((newPlot){
       return add(newPlot);
     });

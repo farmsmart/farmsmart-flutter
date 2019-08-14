@@ -1,31 +1,29 @@
-import 'package:farmsmart_flutter/model/model/FactorEntity.dart';
+import 'dart:async';
+
 import 'package:farmsmart_flutter/model/model/mock/MockRecommendation.dart';
-import 'package:farmsmart_flutter/model/repositories/MockListRepository.dart';
 
 import '../RatingEngineRepositoryInterface.dart';
 
-final _mockWeights = harryWeights;
+class MockRatingEngineRepository implements RatingEngineRepositoryInterface {
+  final _streamController =
+      StreamController<Map<String, RatingInfo>>.broadcast();
 
-class MockRatingEngineRepository extends MockListRepository<FactorEntity>
-    implements RatingEngineRepositoryInterface {
-  MockRatingEngineRepository._(
-      IdentifyEntity<FactorEntity> identifyEntity, List<FactorEntity> startData)
-      : super(
-          identifyEntity: identifyEntity,
-          startingData: startData,
-        );
-
-  factory MockRatingEngineRepository() {
-    return MockRatingEngineRepository._(null, _mockWeights);
+  @override
+  Future<Map<String, RatingInfo>> getRatingInfo() {
+    final inputFactors = harryInputFactors.map((subject, value) {
+      return MapEntry(subject, RatingInfo(harryWeights[subject], value));
+    });
+    _streamController.sink.add(inputFactors);
+    return Future.value(inputFactors);
   }
 
   @override
-  Future<List<FactorEntity>> getWeights() {
-    return getList();
+  Stream<Map<String, RatingInfo>> observeRatingInfo() {
+    return _streamController.stream;
   }
 
-  @override
-  Stream<List<FactorEntity>> observeWeights() {
-    return observeList();
+  void dispose() {
+    _streamController.sink.close();
+    _streamController.close();
   }
 }
