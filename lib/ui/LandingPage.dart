@@ -134,7 +134,8 @@ class LandingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: _Constants.generalPadding,
+      color: Colors.white,
+      padding: _Constants.generalPadding,
       child: Column(
         children: <Widget>[
           Flexible(

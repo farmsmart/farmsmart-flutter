@@ -10,7 +10,7 @@ class _Strings {
 }
 
 class _Constants {
-  static const oneInChance = 10;
+  static const oneInChance = 1;
 }
 
 class MockAccountRepository implements AccountRepositoryInterface {
