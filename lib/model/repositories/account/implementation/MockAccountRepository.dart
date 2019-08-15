@@ -9,14 +9,10 @@ class _Strings {
   static const accountID = "Mock";
 }
 
-class _Constants {
-  static const oneInChance = 1;
-}
-
 class MockAccountRepository implements AccountRepositoryInterface {
 
   final AccountEntity _account;
-  final Random _rand = Random(0);
+  bool _created=false;
   
   MockAccountRepository._(this._account);
 
@@ -31,12 +27,13 @@ class MockAccountRepository implements AccountRepositoryInterface {
 
   @override
   Future<AccountEntity> create(String token) {
+    _created = true;
     return Future.value(_account);
   }
 
   @override
   Future<AccountEntity> getAuthorized() {
-    return (_rand.nextInt(_Constants.oneInChance) == 0) ? Future.value(null) : Future.value(_account);
+    return _created ? Future.value(_account) :  Future.value(null);
   }
 
 }

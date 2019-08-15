@@ -1,11 +1,14 @@
 import 'dart:ui';
 
+import 'package:farmsmart_flutter/chat/ChatPage.dart';
 import 'package:farmsmart_flutter/ui/common/ActionSheet.dart';
 import 'package:farmsmart_flutter/ui/common/ActionSheetListItem.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+
+import 'common/modal_navigator.dart';
 
 class _Strings {
   static final englishAction = "English";
@@ -46,8 +49,7 @@ class LandingPageViewModel {
 
   String headerImage;
   String subtitleImage;
-  Function continueAction;
-  ActionSheetViewModel actionSheetViewModel;
+  ChatPageViewModel chatViewModel;
   Function(String) switchLanguageTapped;
 
   LandingPageViewModel({
@@ -56,8 +58,7 @@ class LandingPageViewModel {
     this.headerImage,
     this.subtitleImage,
     this.footerText,
-    this.continueAction,
-    this.actionSheetViewModel,
+    this.chatViewModel,
     this.switchLanguageTapped,
   });
 }
@@ -175,7 +176,7 @@ class LandingPage extends StatelessWidget {
                     RoundedButton(
                       viewModel: RoundedButtonViewModel(
                         title: _viewModel.actionText,
-                        onTap: () => _viewModel.continueAction(),
+                        onTap: ()=>_tappedStart(context: context, viewModel: _viewModel),
                       ),
                       style: RoundedButtonStyle.largeRoundedButtonStyle()
                           .copyWith(buttonTextStyle: _style.actionTextStyle),
@@ -204,6 +205,15 @@ class LandingPage extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void _tappedStart({
+    BuildContext context,
+    LandingPageViewModel viewModel,
+  }) {
+
+    NavigationScope.presentModal(context, ChatPage(viewModel: viewModel.chatViewModel));
+   
   }
 
   void _languageTapped(ActionSheet sheet, BuildContext context) {

@@ -1,4 +1,5 @@
 import 'package:farmsmart_flutter/model/bloc/ViewModelProvider.dart';
+import 'package:farmsmart_flutter/ui/LandingPage.dart';
 import 'package:farmsmart_flutter/ui/common/ViewModelProviderBuilder.dart';
 import 'package:flutter/widgets.dart';
 
@@ -7,7 +8,6 @@ import 'viewmodel/startupViewModel.dart';
 class Startup extends StatelessWidget {
   final ViewModelProvider<StartupViewModel> _provider;
   final Widget _home;
-  final Widget _loginSignup;
 
   const Startup({
     Key key,
@@ -16,7 +16,6 @@ class Startup extends StatelessWidget {
     Widget loginSignup,
   })  : this._provider = provider,
         this._home = home,
-        this._loginSignup = loginSignup,
         super(key: key);
 
   @override
@@ -35,7 +34,7 @@ class Startup extends StatelessWidget {
   }
 
   Widget _loginSignupBuilder({BuildContext context, StartupViewModel viewModel}) {
-    return _loginSignup;
+    return LandingPage(viewModel: viewModel.landingPageViewModel,);
   }
 
   Widget _homeBuilder({BuildContext context, StartupViewModel viewModel}) {

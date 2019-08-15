@@ -1,8 +1,6 @@
 import 'package:farmsmart_flutter/model/repositories/repository_provider.dart';
 import 'package:farmsmart_flutter/flavors/app_config.dart';
-import 'package:farmsmart_flutter/ui/LandingPage.dart';
 import 'package:farmsmart_flutter/ui/home.dart';
-import 'package:farmsmart_flutter/ui/mockData/MockLandingPageViewModel.dart';
 import 'package:farmsmart_flutter/ui/startup/startup.dart';
 import 'package:flutter/material.dart';
 
@@ -33,7 +31,6 @@ class _AppCoordinatorState extends State<AppCoordinator> {
                   home: Home(
                     repositoryProvider: repositoryProvider,
                   ),
-                  loginSignup: LandingPage(viewModel: MockLandingPageViewModel.build(),),
                 );
   }
 
