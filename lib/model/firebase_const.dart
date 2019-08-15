@@ -49,7 +49,7 @@ class FirestoreEnvironment {
   static const DEVELOPMENT = 'development';
 }
 
-class Locale {
+class SupportedLocale {
   static const EN_US = 'en-US';
   static const SW_KE = 'sw-KE';
 }

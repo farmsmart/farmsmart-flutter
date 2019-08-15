@@ -41,8 +41,8 @@ class PlotToPlotListItemViewModel extends ObjectTransformer<PlotEntity, PlotList
     final firstStage = from.stages.first;
     final started = firstStage.started;
     if (started != null) {
-      final daysSinceStarted = _logic.daysSinceStarted(from.stages);
-      return _LocalisedStrings.day() + " " + daysSinceStarted.toString();
+      final day = _logic.daysSinceStarted(from.stages) + 1; //the day we are on, so + 1 on days since started (0 = 1, 1 = 2 ....)
+      return _LocalisedStrings.day() + " " + day.toString();
     }
     return _LocalisedStrings.upcoming();
   }

@@ -20,8 +20,6 @@ class MockLandingPageViewModel {
       footerText: _LocalisedStrings.footerText(),
       headerImage: "assets/raw/illustration_welcome.png",
       subtitleImage: "assets/raw/logo_default.png",
-      continueAction: () => _mockAction(),
-      actionSheetViewModel: MockActionSheetViewModel.buildWithCheckBox(),
       switchLanguageTapped: (language) => _mockSwitchLanguage(language),
     );
   }

@@ -1,10 +1,11 @@
 import 'package:farmsmart_flutter/model/repositories/repository_provider.dart';
 import 'package:farmsmart_flutter/flavors/app_config.dart';
 import 'package:farmsmart_flutter/ui/home.dart';
+import 'package:farmsmart_flutter/ui/startup/startup.dart';
 import 'package:flutter/material.dart';
 
 import 'deep_link_helper.dart';
-import 'utils/shared_preferences_helper.dart';
+import 'model/bloc/startup/StartupViewModelProvider.dart';
 
 class AppCoordinator extends StatefulWidget {
   @override
@@ -24,26 +25,13 @@ class _AppCoordinatorState extends State<AppCoordinator> {
   Widget build(BuildContext context) {
     repositoryProvider = AppConfig.of(context).repositoryProvider;
     repositoryProvider.init(context);
-
-    //TODO Replace by appEntryManagement
-    return Home(repositoryProvider: repositoryProvider,);
-  }
-
-  //TODO Should be implemented when the landing page is merged
-  FutureBuilder<bool> appEntryManagement(){
-    return FutureBuilder<bool>(
-      future: SharedPreferencesHelper.isFirstLaunch(),
-      builder: (BuildContext context, AsyncSnapshot<bool> snapshot){
-        if(snapshot.hasData){
-          SharedPreferencesHelper.setIsFirstLaunch(false);
-
-          //TODO Replace Text widget by LandingPage if snapshot.data is true
-          return snapshot.data ? Text('FIRST LAUNCH') : Home(repositoryProvider: repositoryProvider,);
-        }else{
-          return Container();
-        }
-      },
-    );
+    return Startup(
+                  provider: StartupViewModelProvider(
+                      repositoryProvider.getAccountRepository()),
+                  home: Home(
+                    repositoryProvider: repositoryProvider,
+                  ),
+                );
   }
 
   /*

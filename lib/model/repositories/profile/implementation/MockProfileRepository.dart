@@ -9,7 +9,7 @@ import '../ProfileRepositoryInterface.dart';
 
 class _Constants {
   static const mockCount = 5;
-  static const maxDelayMs = 1000;
+  static const maxDelayMs = 200;
 }
 
 class MockProfileRepository extends MockListRepository<ProfileEntity>

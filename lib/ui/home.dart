@@ -62,7 +62,7 @@ class Home extends StatelessWidget {
     localizations = FarmsmartLocalizations.of(context);
     return ViewModelProviderBuilder(
       provider:
-      HomeViewModelProvider(repositoryProvider.getProfileRepository()),
+      HomeViewModelProvider(repositoryProvider.getAccountRepository()),
       successBuilder: _buildSuccess,
     );
   }
@@ -113,16 +113,16 @@ class Home extends StatelessWidget {
       title: "Recommendations",
       heroThreshold: 0.8,
       plotRepo:
-      repositoryProvider.getMyPlotRepository(viewModel.currentProfileID),
+      repositoryProvider.getMyPlotRepository(viewModel.currentProfile),
       cropRepo: repositoryProvider.getCropRepository(),
-      profileRepo: repositoryProvider.getProfileRepository(),
+      profileRepo: viewModel.currentProfile,
       ratingRepo: repositoryProvider.getRatingsRepository(),
     );
     return PlotList(
         provider: PlotListProvider(
             title: localizations.myPlotTab,
             plotRepository: repositoryProvider
-                .getMyPlotRepository(viewModel.currentProfileID),
+                .getMyPlotRepository(viewModel.currentProfile),
             recommendationsProvider: recommendationsProvider));
   }
 
@@ -130,8 +130,8 @@ class Home extends StatelessWidget {
     return ProfitLossPage(
       viewModelProvider: ProfitLossListProvider(
         transactionsRepository: repositoryProvider
-            .getTransactionRepository(viewModel.currentProfileID),
-        plotRepository: repositoryProvider.getMyPlotRepository(viewModel.currentProfileID),
+            .getTransactionRepository(viewModel.currentProfile),
+        plotRepository: repositoryProvider.getMyPlotRepository(viewModel.currentProfile),
       ),
     );
   }
@@ -165,9 +165,9 @@ class Home extends StatelessWidget {
   _buildUserProfile(HomeViewModel viewModel) {
     return Profile(
       provider: ProfileDetailProvider(
-          profileRepo: repositoryProvider.getProfileRepository(),
+          profileRepo: viewModel.currentProfile,
           plotRepo: repositoryProvider
-              .getMyPlotRepository(viewModel.currentProfileID)),
+              .getMyPlotRepository(viewModel.currentProfile)),
     );
   }
 

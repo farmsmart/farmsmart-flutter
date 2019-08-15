@@ -39,12 +39,24 @@ class _LocalisedStrings {
   static confirm() => Intl.message("Confirm Details");
 }
 
+class ChatPageViewModel {
+    final String flowFilePath;
+    final Function onSuccess;
+    final Function onError;
+
+  ChatPageViewModel(this.flowFilePath, this.onSuccess, this.onError);
+}
+
 class ChatPage extends StatefulWidget {
+  final ChatPageViewModel _viewModel;
+  const ChatPage({Key key, ChatPageViewModel viewModel}) : this._viewModel= viewModel, super(key: key);
   @override
   _ChatPageState createState() => _ChatPageState();
 }
 
 class _ChatPageState extends State<ChatPage> {
+
+  _ChatPageState();
   @override
   void initState() {
     super.initState();
@@ -100,7 +112,9 @@ class _ChatPageState extends State<ChatPage> {
         ),
       );
 
-  File _createChatFile() => File(_Assets.defaultPathToJSONFile);
+  File _createChatFile() {
+      return File(widget._viewModel.flowFilePath);
+  }
 
   _doOnSuccess(BuildContext context, Map<String, ChatResponseViewModel> map) {
     print("On Success recevied: ${map.toString()}");
@@ -114,6 +128,7 @@ class _ChatPageState extends State<ChatPage> {
           confirm: () {
             _navigateBack(context);
             _navigateBack(context);
+            widget._viewModel.onSuccess(map);
           },
         ),
       ),
@@ -137,6 +152,7 @@ class _ChatPageState extends State<ChatPage> {
   _doOnError(BuildContext context, String error) {
     print("On Error recevied: ${error.toString()}");
     _navigateBack(context);
+    widget._viewModel.onError(error);
   }
 
   void _optionsTapped(ActionSheet sheet, BuildContext context) =>

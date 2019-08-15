@@ -81,8 +81,7 @@ class RecommendationListProvider
   RecommendationsListViewModel _viewModel(
       {LoadingStatus status,
       List<RecommendationCardViewModel> items,
-      Function heroFunction,
-      ViewModelProvider<CropDetailViewModel> provider}) {
+      }) {
     return RecommendationsListViewModel(
       title: _title,
       items: items,
