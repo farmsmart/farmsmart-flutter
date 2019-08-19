@@ -1,4 +1,5 @@
 import 'package:farmsmart_flutter/farmsmart_localizations.dart';
+import 'package:farmsmart_flutter/flavors/app_config.dart';
 import 'package:farmsmart_flutter/model/bloc/article/ArticleListProvider.dart';
 import 'package:farmsmart_flutter/model/bloc/home/HomeViewModelProvider.dart';
 import 'package:farmsmart_flutter/model/bloc/plot/PlotListProvider.dart';
@@ -51,6 +52,8 @@ class _Icons {
 class Home extends StatelessWidget {
   FarmsmartLocalizations localizations;
   final RepositoryProvider repositoryProvider;
+  bool hasPlaygroundArea;
+  List<TabNavigator> tabList;
 
   Home({
     Key key,
@@ -60,9 +63,11 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     localizations = FarmsmartLocalizations.of(context);
+    //TODO: That should be moved to the provider
+    hasPlaygroundArea = !AppConfig.of(context).isProductionBuild();
     return ViewModelProviderBuilder(
       provider:
-      HomeViewModelProvider(repositoryProvider.getAccountRepository()),
+          HomeViewModelProvider(repositoryProvider.getAccountRepository()),
       successBuilder: _buildSuccess,
     );
   }
@@ -75,8 +80,8 @@ class Home extends StatelessWidget {
     );
   }
 
-  List<TabNavigator> tabs(HomeViewModel viewModel) {
-    return [
+  _initTabsList(HomeViewModel viewModel) {
+    tabList = [
       _buildTabNavigator(
         _buildMyPlot(viewModel),
         _Constants.myPlotSelectedIcon,
@@ -100,12 +105,22 @@ class Home extends StatelessWidget {
       _buildTabNavigatorWithCircleImageWidget(
         _buildUserProfile(viewModel),
       ),
-      _buildTabNavigator(
-        _buildPlayground(),
-        _Constants.communitySelectedIcon,
-        _Constants.communityIcon,
-      ),
     ];
+
+    if (hasPlaygroundArea) {
+      tabList.add(
+        _buildTabNavigator(
+          _buildPlayground(),
+          _Constants.communitySelectedIcon,
+          _Constants.communityIcon,
+        ),
+      );
+    }
+  }
+
+  List<TabNavigator> tabs(HomeViewModel viewModel) {
+    _initTabsList(viewModel);
+    return tabList;
   }
 
   _buildMyPlot(HomeViewModel viewModel) {
@@ -113,7 +128,7 @@ class Home extends StatelessWidget {
       title: "Recommendations",
       heroThreshold: 0.8,
       plotRepo:
-      repositoryProvider.getMyPlotRepository(viewModel.currentProfile),
+          repositoryProvider.getMyPlotRepository(viewModel.currentProfile),
       cropRepo: repositoryProvider.getCropRepository(),
       profileRepo: viewModel.currentProfile,
       ratingRepo: repositoryProvider.getRatingsRepository(),
@@ -131,7 +146,8 @@ class Home extends StatelessWidget {
       viewModelProvider: ProfitLossListProvider(
         transactionsRepository: repositoryProvider
             .getTransactionRepository(viewModel.currentProfile),
-        plotRepository: repositoryProvider.getMyPlotRepository(viewModel.currentProfile),
+        plotRepository:
+            repositoryProvider.getMyPlotRepository(viewModel.currentProfile),
       ),
     );
   }
@@ -152,12 +168,12 @@ class Home extends StatelessWidget {
     return ArticleList(
       style: ArticleListStyles.buildForCommunity(),
       viewModelProvider: ArticleListProvider(
-          title: localizations.communityTab,
-          repository: repositoryProvider.getArticleRepository(),
-          group: ArticleCollectionGroup.chatGroups,
-          relatedTitle: _LocalisedStrings.relatedGroups(),
-          contentLinkDescription: _LocalisedStrings.joinWhatsAppGroup(),
-          contentLinkIcon: _Icons.whatsApp,
+        title: localizations.communityTab,
+        repository: repositoryProvider.getArticleRepository(),
+        group: ArticleCollectionGroup.chatGroups,
+        relatedTitle: _LocalisedStrings.relatedGroups(),
+        contentLinkDescription: _LocalisedStrings.joinWhatsAppGroup(),
+        contentLinkIcon: _Icons.whatsApp,
       ),
     );
   }
@@ -166,8 +182,8 @@ class Home extends StatelessWidget {
     return Profile(
       provider: ProfileDetailProvider(
           profileRepo: viewModel.currentProfile,
-          plotRepo: repositoryProvider
-              .getMyPlotRepository(viewModel.currentProfile)),
+          plotRepo:
+              repositoryProvider.getMyPlotRepository(viewModel.currentProfile)),
     );
   }
 
@@ -177,9 +193,11 @@ class Home extends StatelessWidget {
     );
   }
 
-  TabNavigator _buildTabNavigator(Widget page,
-      String activeIconPath,
-      String iconPath,) {
+  TabNavigator _buildTabNavigator(
+    Widget page,
+    String activeIconPath,
+    String iconPath,
+  ) {
     return TabNavigator(
       child: page,
       barItem: BottomNavigationBarItem(
