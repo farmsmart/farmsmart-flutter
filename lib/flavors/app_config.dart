@@ -21,4 +21,6 @@ class AppConfig extends InheritedWidget{
 
   @override
   bool updateShouldNotify(InheritedWidget oldWidget) => false;
+
+  bool isProductionBuild() => buildFlavor == "Production";
 }
