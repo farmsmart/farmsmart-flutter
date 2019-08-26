@@ -134,7 +134,8 @@ class LandingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Scaffold(
+        body: Container(
       color: Colors.white,
       padding: _Constants.generalPadding,
       child: Column(
@@ -176,7 +177,8 @@ class LandingPage extends StatelessWidget {
                     RoundedButton(
                       viewModel: RoundedButtonViewModel(
                         title: _viewModel.actionText,
-                        onTap: ()=>_tappedStart(context: context, viewModel: _viewModel),
+                        onTap: () => _tappedStart(
+                            context: context, viewModel: _viewModel),
                       ),
                       style: RoundedButtonStyle.largeRoundedButtonStyle()
                           .copyWith(buttonTextStyle: _style.actionTextStyle),
@@ -204,16 +206,15 @@ class LandingPage extends StatelessWidget {
           )
         ],
       ),
-    );
+    ));
   }
 
   void _tappedStart({
     BuildContext context,
     LandingPageViewModel viewModel,
   }) {
-
-    NavigationScope.presentModal(context, ChatPage(viewModel: viewModel.chatViewModel));
-   
+    NavigationScope.presentModal(
+        context, ChatPage(viewModel: viewModel.chatViewModel));
   }
 
   void _languageTapped(ActionSheet sheet, BuildContext context) {
