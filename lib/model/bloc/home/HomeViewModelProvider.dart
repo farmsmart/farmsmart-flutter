@@ -39,21 +39,16 @@ class HomeViewModelProvider implements ViewModelProvider<HomeViewModel> {
   @override
   HomeViewModel initial() {
     if (_snapshot == null) {
-      _accountRepository.getAuthorized().then(
-        (account) {
-          _profileRepository = account.profileRepository;
-
-          account.profileRepository.observeCurrent().listen(
-            (currentProfile) {
-              _snapshot = _viewModel(LoadingStatus.SUCCESS);
-              if (_lastProfile != currentProfile) {
-                _controller.sink.add(_snapshot);
-              }
-              _lastProfile = currentProfile;
-            },
-          );
-        },
-      );
+      _accountRepository.getAuthorized().then((account) {
+        _profileRepository = account.profileRepository;
+        account.profileRepository.observeCurrent().listen((currentProfile) {
+          _snapshot = _viewModel(LoadingStatus.SUCCESS);
+          if (_lastProfile != currentProfile) {
+            _controller.sink.add(_snapshot);
+          }
+          _lastProfile = currentProfile;
+        });
+      });
       _snapshot = _viewModel(LoadingStatus.LOADING);
       _snapshot.refresh();
     }
