@@ -1,5 +1,4 @@
 import 'package:farmsmart_flutter/farmsmart_localizations.dart';
-import 'package:farmsmart_flutter/flavors/app_config.dart';
 import 'package:farmsmart_flutter/model/bloc/article/ArticleListProvider.dart';
 import 'package:farmsmart_flutter/model/bloc/home/HomeViewModelProvider.dart';
 import 'package:farmsmart_flutter/model/bloc/plot/PlotListProvider.dart';
@@ -52,7 +51,6 @@ class _Icons {
 class Home extends StatelessWidget {
   FarmsmartLocalizations localizations;
   final RepositoryProvider repositoryProvider;
-  bool hasPlaygroundArea;
   List<TabNavigator> tabList;
 
   Home({
@@ -63,11 +61,11 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     localizations = FarmsmartLocalizations.of(context);
-    //TODO: That should be moved to the provider
-    hasPlaygroundArea = !AppConfig.of(context).isProductionBuild();
+    HomeViewModelProvider homeViewModelProvider =
+        HomeViewModelProvider(repositoryProvider.getAccountRepository());
+    homeViewModelProvider.init(context);
     return ViewModelProviderBuilder(
-      provider:
-          HomeViewModelProvider(repositoryProvider.getAccountRepository()),
+      provider: homeViewModelProvider,
       successBuilder: _buildSuccess,
     );
   }
@@ -107,7 +105,7 @@ class Home extends StatelessWidget {
       ),
     ];
 
-    if (hasPlaygroundArea) {
+    if (viewModel.isDebugBuild) {
       tabList.add(
         _buildTabNavigator(
           _buildPlayground(),
