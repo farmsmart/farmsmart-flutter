@@ -5,10 +5,8 @@ import 'package:farmsmart_flutter/chat/ChatPage.dart';
 import 'package:farmsmart_flutter/chat/ui/viewmodel/ChatResponseViewModel.dart';
 import 'package:farmsmart_flutter/model/bloc/Transformer.dart';
 import 'package:farmsmart_flutter/model/bloc/startup/ChatResponseToPlotInfoTransformer.dart';
-import 'package:farmsmart_flutter/model/model/AccountEntity.dart';
 import 'package:farmsmart_flutter/model/model/ProfileEntity.dart';
 import 'package:farmsmart_flutter/model/model/loading_status.dart';
-import 'package:farmsmart_flutter/model/model/mock/MockRecommendation.dart';
 import 'package:farmsmart_flutter/model/repositories/MockStrings.dart';
 import 'package:farmsmart_flutter/model/repositories/account/AccountRepositoryInterface.dart';
 import 'package:farmsmart_flutter/model/repositories/image/implementation/MockImageEntity.dart';
@@ -45,7 +43,6 @@ class _Strings {
 class StartupViewModelProvider implements ViewModelProvider<StartupViewModel> {
   final AccountRepositoryInterface _accountRepository;
   StartupViewModel _snapshot;
-  AccountEntity _account;
   final StreamController<StartupViewModel> _controller =
       StreamController<StartupViewModel>.broadcast();
   StartupViewModelProvider(this._accountRepository);
@@ -73,22 +70,32 @@ class StartupViewModelProvider implements ViewModelProvider<StartupViewModel> {
   ChatPageViewModel _chatPageViewModel() {
     //TODO: Remove the Mock ID´s once implemented
     final transformer = ChatResponseToPlotInfoTransformer();
-    return ChatPageViewModel(
-        _LocalisedAssets.onboardingFlow(), (data) {
-          final ChatResponseViewModel name = castOrNull<ChatResponseViewModel>(data[_Strings.nameField]);
-          if (name != null){
-            _accountRepository.create(mockPlainText.identifier(), mockPlainText.identifier()).then((account) {
-              final plotInfo = transformer.transform(from: data);
-              final newProfile = ProfileEntity(mockPlainText.identifier(), name.value, MockImageEntity().build().urlProvider,plotInfo);
-              account.profileRepository.add(newProfile).then((profile){
-                account.profileRepository.switchTo(profile);
-                _refresh();
-              }) ;
-            });
-          }
-        },(data) {
-            //TODO: error case, should display a popup.
+    return ChatPageViewModel(_LocalisedAssets.onboardingFlow(), (data) {
+      final ChatResponseViewModel name =
+          castOrNull<ChatResponseViewModel>(data[_Strings.nameField]);
+      if (name != null) {
+        _accountRepository
+            .create(
+          mockPlainText.identifier(),
+          mockPlainText.identifier(),
+        )
+            .then((account) {
+          final plotInfo = transformer.transform(from: data);
+          final newProfile = ProfileEntity(
+            mockPlainText.identifier(),
+            name.value,
+            MockImageEntity().build().urlProvider,
+            plotInfo,
+          );
+          account.profileRepository.add(newProfile).then((profile) {
+            account.profileRepository.switchTo(profile);
+            _refresh();
+          });
         });
+      }
+    }, (data) {
+      //TODO: error case, should display a popup.
+    });
   }
 
   LandingPageViewModel _landingViewmModel() {
@@ -109,7 +116,6 @@ class StartupViewModelProvider implements ViewModelProvider<StartupViewModel> {
 
   void _refresh() {
     _accountRepository.getAuthorized().then((account) {
-      _account = account;
       _snapshot = StartupViewModel(
         LoadingStatus.SUCCESS,
         _refresh,
