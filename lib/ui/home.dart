@@ -51,19 +51,19 @@ class _Icons {
 class Home extends StatelessWidget {
   FarmsmartLocalizations localizations;
   final RepositoryProvider repositoryProvider;
+  final HomeViewModelProvider homeViewModelProvider;
   List<TabNavigator> tabList;
 
   Home({
     Key key,
     this.repositoryProvider,
+    this.homeViewModelProvider,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     localizations = FarmsmartLocalizations.of(context);
-    HomeViewModelProvider homeViewModelProvider =
-        HomeViewModelProvider(repositoryProvider.getAccountRepository());
-    homeViewModelProvider.init(context);
+
     return ViewModelProviderBuilder(
       provider: homeViewModelProvider,
       successBuilder: _buildSuccess,
@@ -105,7 +105,7 @@ class Home extends StatelessWidget {
       ),
     ];
 
-    if (viewModel.isDebugBuild) {
+    if (viewModel.debugMenuVisible) {
       tabList.add(
         _buildTabNavigator(
           _buildPlayground(),

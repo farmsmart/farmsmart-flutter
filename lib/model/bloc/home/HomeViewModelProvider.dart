@@ -1,13 +1,11 @@
 import 'dart:async';
 
-import 'package:farmsmart_flutter/flavors/app_config.dart';
 import 'package:farmsmart_flutter/model/model/ProfileEntity.dart';
 import 'package:farmsmart_flutter/model/model/loading_status.dart';
 import 'package:farmsmart_flutter/model/repositories/account/AccountRepositoryInterface.dart';
 import 'package:farmsmart_flutter/model/repositories/profile/ProfileRepositoryInterface.dart';
 import 'package:farmsmart_flutter/ui/common/LoadableViewModel.dart';
 import 'package:farmsmart_flutter/ui/common/RefreshableViewModel.dart';
-import 'package:flutter/material.dart';
 
 import '../ViewModelProvider.dart';
 
@@ -15,10 +13,10 @@ class HomeViewModel implements LoadableViewModel, RefreshableViewModel {
   final LoadingStatus loadingStatus;
   final Function refresh;
   final ProfileRepositoryInterface currentProfile;
-  final bool isDebugBuild;
+  final bool debugMenuVisible;
 
-  HomeViewModel(
-      this.loadingStatus, this.refresh, this.currentProfile, this.isDebugBuild);
+  HomeViewModel(this.loadingStatus, this.refresh, this.currentProfile,
+      this.debugMenuVisible);
 }
 
 class HomeViewModelProvider implements ViewModelProvider<HomeViewModel> {
@@ -28,13 +26,9 @@ class HomeViewModelProvider implements ViewModelProvider<HomeViewModel> {
   HomeViewModel _snapshot;
   ProfileEntity _lastProfile;
   ProfileRepositoryInterface _profileRepository;
-  bool _isDebugBuild;
+  bool _debugMenuVisible;
 
-  HomeViewModelProvider(this._accountRepository);
-
-  void init(BuildContext context) {
-    _isDebugBuild = !AppConfig.of(context).isProductionBuild();
-  }
+  HomeViewModelProvider(this._accountRepository, this._debugMenuVisible);
 
   @override
   HomeViewModel initial() {
@@ -66,7 +60,7 @@ class HomeViewModelProvider implements ViewModelProvider<HomeViewModel> {
   }
 
   HomeViewModel _viewModel(LoadingStatus status) {
-    return HomeViewModel(status, _refresh, _profileRepository, _isDebugBuild);
+    return HomeViewModel(status, _refresh, _profileRepository, _debugMenuVisible);
   }
 
   void _refresh() {

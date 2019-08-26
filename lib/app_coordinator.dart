@@ -1,10 +1,11 @@
-import 'package:farmsmart_flutter/model/repositories/repository_provider.dart';
 import 'package:farmsmart_flutter/flavors/app_config.dart';
+import 'package:farmsmart_flutter/model/repositories/repository_provider.dart';
 import 'package:farmsmart_flutter/ui/home.dart';
 import 'package:farmsmart_flutter/ui/startup/startup.dart';
 import 'package:flutter/material.dart';
 
 import 'deep_link_helper.dart';
+import 'model/bloc/home/HomeViewModelProvider.dart';
 import 'model/bloc/startup/StartupViewModelProvider.dart';
 
 class AppCoordinator extends StatefulWidget {
@@ -25,13 +26,19 @@ class _AppCoordinatorState extends State<AppCoordinator> {
   Widget build(BuildContext context) {
     repositoryProvider = AppConfig.of(context).repositoryProvider;
     repositoryProvider.init(context);
+
+    HomeViewModelProvider homeViewModelProvider = HomeViewModelProvider(
+        repositoryProvider.getAccountRepository(),
+        !AppConfig.of(context).isProductionBuild());
+
     return Startup(
-                  provider: StartupViewModelProvider(
-                      repositoryProvider.getAccountRepository()),
-                  home: Home(
-                    repositoryProvider: repositoryProvider,
-                  ),
-                );
+      provider:
+          StartupViewModelProvider(repositoryProvider.getAccountRepository()),
+      home: Home(
+        repositoryProvider: repositoryProvider,
+        homeViewModelProvider: homeViewModelProvider,
+      ),
+    );
   }
 
   /*
