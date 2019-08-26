@@ -9,6 +9,7 @@ import 'package:farmsmart_flutter/model/model/AccountEntity.dart';
 import 'package:farmsmart_flutter/model/model/ProfileEntity.dart';
 import 'package:farmsmart_flutter/model/model/loading_status.dart';
 import 'package:farmsmart_flutter/model/model/mock/MockRecommendation.dart';
+import 'package:farmsmart_flutter/model/repositories/MockStrings.dart';
 import 'package:farmsmart_flutter/model/repositories/account/AccountRepositoryInterface.dart';
 import 'package:farmsmart_flutter/model/repositories/image/implementation/MockImageEntity.dart';
 import 'package:farmsmart_flutter/ui/LandingPage.dart';
@@ -35,6 +36,10 @@ class _LocalisedAssets {
 class _Assets {
   static const headerImage = "assets/raw/illustration_welcome.png";
   static const logoImage = "assets/raw/logo_default.png";
+}
+
+class _Strings {
+  static const nameField = "Name";
 }
 
 class StartupViewModelProvider implements ViewModelProvider<StartupViewModel> {
@@ -66,14 +71,15 @@ class StartupViewModelProvider implements ViewModelProvider<StartupViewModel> {
   }
 
   ChatPageViewModel _chatPageViewModel() {
+    //TODO: Remove the Mock ID´s once implemented
     final transformer = ChatResponseToPlotInfoTransformer();
     return ChatPageViewModel(
         _LocalisedAssets.onboardingFlow(), (data) {
-          final ChatResponseViewModel name = castOrNull<ChatResponseViewModel>(data["Name"]);
+          final ChatResponseViewModel name = castOrNull<ChatResponseViewModel>(data[_Strings.nameField]);
           if (name != null){
-            _accountRepository.create("Test").then((account) {
+            _accountRepository.create(mockPlainText.identifier(), mockPlainText.identifier()).then((account) {
               final plotInfo = transformer.transform(from: data);
-              final newProfile = ProfileEntity("test", name.value, MockImageEntity().build().urlProvider,plotInfo);
+              final newProfile = ProfileEntity(mockPlainText.identifier(), name.value, MockImageEntity().build().urlProvider,plotInfo);
               account.profileRepository.add(newProfile).then((profile){
                 account.profileRepository.switchTo(profile);
                 _refresh();

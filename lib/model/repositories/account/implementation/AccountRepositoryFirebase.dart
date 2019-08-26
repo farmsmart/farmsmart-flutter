@@ -14,7 +14,7 @@ class AccountRepositoryFirebase implements AccountRepositoryInterface {
   }
 
   @override
-  Future<AccountEntity> create(String token) {
+  Future<AccountEntity> create(String username, String password) {
     // TODO: implement create
     return null;
   }
