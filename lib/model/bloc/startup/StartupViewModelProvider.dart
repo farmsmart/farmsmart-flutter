@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:farmsmart_flutter/chat/ChatPage.dart';
 import 'package:farmsmart_flutter/chat/ui/viewmodel/ChatResponseViewModel.dart';
 import 'package:farmsmart_flutter/model/bloc/Transformer.dart';
+import 'package:farmsmart_flutter/model/bloc/startup/ChatResponseToPlotInfoTransformer.dart';
 import 'package:farmsmart_flutter/model/model/AccountEntity.dart';
 import 'package:farmsmart_flutter/model/model/ProfileEntity.dart';
 import 'package:farmsmart_flutter/model/model/loading_status.dart';
@@ -65,11 +66,13 @@ class StartupViewModelProvider implements ViewModelProvider<StartupViewModel> {
   }
 
   ChatPageViewModel _chatPageViewModel() {
+    final transformer = ChatResponseToPlotInfoTransformer();
     return ChatPageViewModel(
         _LocalisedAssets.onboardingFlow(), (data) {
           final ChatResponseViewModel name = castOrNull<ChatResponseViewModel>(data["Name"]);
           if (name != null){
             _accountRepository.create("Test").then((account) {
+              final plotInfo = transformer.transform(from: data);
               final newProfile = ProfileEntity("test", name.value, MockImageEntity().build().urlProvider,plotInfo);
               account.profileRepository.add(newProfile).then((profile){
                 account.profileRepository.switchTo(profile);
