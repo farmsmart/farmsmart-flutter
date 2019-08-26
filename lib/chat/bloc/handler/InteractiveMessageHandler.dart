@@ -18,7 +18,7 @@ abstract class InteractiveMessageHandler {
   });
 
   Widget buildDatePickerWidget({
-    Function(String) onSendPressed,
+    Function(DateTime) onSendPressed,
   });
 
   Widget buildDropDownPickerWidget({

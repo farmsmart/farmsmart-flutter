@@ -7,6 +7,7 @@ import 'package:farmsmart_flutter/ui/common/ActionSheetListItem.dart';
 import 'package:farmsmart_flutter/ui/common/modal_navigator.dart';
 import 'package:farmsmart_flutter/ui/profile/FarmDetails.dart';
 import 'package:farmsmart_flutter/ui/profile/FarmDetailsListItem.dart';
+import 'package:farmsmart_flutter/chat/utils/DateFormatter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -142,13 +143,15 @@ class _ChatPageState extends State<ChatPage> {
       viewModels.add(
         FarmDetailsListItemViewModel(
           title: value.title,
-          detail: value.value,
+          detail: _getDetail(value.value),
         ),
       );
     });
     return viewModels;
   }
 
+  String _getDetail(dynamic value) => value is DateTime ? DateFormatter.formatDate(value) : value;
+  
   _doOnError(BuildContext context, String error) {
     print("On Error recevied: ${error.toString()}");
     _navigateBack(context);

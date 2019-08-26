@@ -67,7 +67,7 @@ class InteractiveMessageHandlerImpl implements InteractiveMessageHandler {
 
   @override
   Widget buildDatePickerWidget({
-    Function(String) onSendPressed,
+    Function(DateTime) onSendPressed,
   }) =>
       _buildDatePicker(
         onSendPressed: onSendPressed,
@@ -152,9 +152,9 @@ class InteractiveMessageHandlerImpl implements InteractiveMessageHandler {
       );
 
   Widget _buildDatePicker({
-    Function(String) onSendPressed,
+    Function(DateTime) onSendPressed,
   }) {
-    String selectedDate;
+    DateTime selectedDate;
     return SeparatorWrapper(
       wrappedChild: PairContainerWrapper(
         leftChild: DatePicker(

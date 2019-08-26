@@ -13,6 +13,7 @@ import 'package:farmsmart_flutter/chat/ui/widgets/chat.dart';
 import 'package:farmsmart_flutter/chat/ui/widgets/rounded_button.dart';
 import 'package:farmsmart_flutter/chat/ui/widgets/separator_wrapper.dart';
 import 'package:farmsmart_flutter/chat/ui/widgets/styles/rounded_button_styles.dart';
+import 'package:farmsmart_flutter/chat/utils/DateFormatter.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 
@@ -262,7 +263,7 @@ class ChatProvider implements ViewModelProvider<ChatViewModel> {
           _interactiveMessageHandler.buildDatePickerWidget(
         onSendPressed: (dateValue) {
           _cleanInteractiveWidget();
-          _getNextMessageByProvided(dateValue);
+          _getNextMessageByProvided(DateFormatter.formatDate(dateValue));
           _putResponseToTheMap(
             key: entity.uri,
             value: ChatResponseViewModel(
