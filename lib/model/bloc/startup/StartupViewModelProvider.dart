@@ -68,7 +68,7 @@ class StartupViewModelProvider implements ViewModelProvider<StartupViewModel> {
   }
 
   ChatPageViewModel _chatPageViewModel() {
-    //TODO: Remove the Mock ID´s once implemented
+    
     return ChatPageViewModel(_LocalisedAssets.onboardingFlow(), (data) {
       final Map<String, ChatResponseViewModel> chatInput =
           castOrNull<Map<String, ChatResponseViewModel>>(data);
@@ -84,7 +84,7 @@ class StartupViewModelProvider implements ViewModelProvider<StartupViewModel> {
     final name = chatInput[_Strings.nameField];
     final transformer = ChatResponseToPlotInfoTransformer();
     final plotInfo = transformer.transform(from: chatInput);
-
+    //TODO: Remove the Mock ID´s once implemented
     if (name != null) {
       _accountRepository
           .create(
