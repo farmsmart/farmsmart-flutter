@@ -1,8 +1,9 @@
+import 'package:farmsmart_flutter/model/bloc/ViewModelProvider.dart';
 import 'package:farmsmart_flutter/model/model/ImageURLProvider.dart';
-import 'package:farmsmart_flutter/ui/common/image_provider_view.dart';
+import 'package:farmsmart_flutter/ui/common/ProfileAvatar.dart';
+import 'package:farmsmart_flutter/ui/profile/Profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:intl/intl.dart';
 
 class _Icons {
   static final checkBox = "assets/icons/radio_button_default.png";
@@ -23,6 +24,7 @@ class SwitchProfileListItemViewModel {
   Function tapAction;
   Function switchAction;
   bool isSelected;
+  final ViewModelProvider<ProfileViewModel> avatarViewModelProvider;
 
   SwitchProfileListItemViewModel({
     this.title,
@@ -30,6 +32,7 @@ class SwitchProfileListItemViewModel {
     this.icon,
     this.tapAction,
     this.switchAction,
+    this.avatarViewModelProvider,
     this.isSelected = false,
   });
 }
@@ -83,15 +86,7 @@ class SwitchProfileListItem extends StatelessWidget {
         _viewModel.title,
         style: _style.titleTextStyle,
       ),
-      leading: ClipOval(
-        child: Stack(
-          children: <Widget>[
-            ImageProviderView(imageURLProvider: _viewModel.image,  height: _Constants.imageSize,
-              width: _Constants.imageSize,)
-            ,
-          ],
-        ),
-      ),
+      leading: ProfileAvatar(viewModelProvider: _viewModel.avatarViewModelProvider,width: _Constants.imageSize,height: _Constants.imageSize,),
       trailing: Image.asset(
         _viewModel.isSelected ? _Icons.activeCheckBox : _Icons.checkBox,
         height: _Constants.iconSize,

@@ -1,11 +1,11 @@
 import 'package:farmsmart_flutter/model/bloc/ViewModelProvider.dart';
 import 'package:farmsmart_flutter/model/model/ImageURLProvider.dart';
 import 'package:farmsmart_flutter/model/model/loading_status.dart';
+import 'package:farmsmart_flutter/ui/common/ProfileAvatar.dart';
 import 'package:farmsmart_flutter/ui/common/ListDivider.dart';
 import 'package:farmsmart_flutter/ui/common/LoadableViewModel.dart';
 import 'package:farmsmart_flutter/ui/common/RefreshableViewModel.dart';
 import 'package:farmsmart_flutter/ui/common/ViewModelProviderBuilder.dart';
-import 'package:farmsmart_flutter/ui/common/image_provider_view.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
 import 'package:farmsmart_flutter/ui/profile/ProfileListItem.dart';
 import 'package:flutter/material.dart';
@@ -46,6 +46,7 @@ class _Constants {
 class ProfileViewModel implements RefreshableViewModel, LoadableViewModel {
   final List<ProfileListItemViewModel> items;
   final String username;
+  final String initials;
   final int activeCrops;
   final int completedCrops;
   final ViewModelProvider<SwitchProfileListViewModel> switchProfileProvider;
@@ -57,6 +58,7 @@ class ProfileViewModel implements RefreshableViewModel, LoadableViewModel {
     this.loadingStatus,
     this.items,
     this.username,
+    this.initials,
     this.activeCrops,
     this.completedCrops,
     this.switchProfileProvider,
@@ -204,7 +206,7 @@ class Profile extends StatelessWidget {
             children: <Widget>[
               _buildMainTextView(context, viewModel),
               SizedBox(width: _Constants.imageSpacing),
-              _buildProfileImage(viewModel.image),
+              _buildProfileImage(),
             ],
           ),
         ),
@@ -328,14 +330,8 @@ class Profile extends StatelessWidget {
     );
   }
 
-  ClipOval _buildProfileImage(ImageURLProvider image) {
-    return ClipOval(
-      child: ImageProviderView(
-        imageURLProvider: image,
-        width: _style.imageSize,
-        height: _style.imageSize,
-      ),
-    );
+  Widget _buildProfileImage() {
+    return ProfileAvatar(viewModelProvider: _viewModelProvider,width: _style.imageSize,height: _style.imageSize,);
   }
 
   void _tappedSwitchProfile({

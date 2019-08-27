@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:farmsmart_flutter/model/bloc/Transformer.dart';
 import 'package:farmsmart_flutter/model/bloc/plot/PlotStatistics.dart';
+import 'package:farmsmart_flutter/model/bloc/profile/PersonName.dart';
 import 'package:farmsmart_flutter/model/bloc/profile/SwitchProfileListProvider.dart';
 import 'package:farmsmart_flutter/model/model/PlotEntity.dart';
 import 'package:farmsmart_flutter/model/model/ProfileEntity.dart';
@@ -74,9 +75,11 @@ class ProfileDetailProvider
     }
     final switchProfileProvider =
         SwitchProfileListProvider(profileRepo: _profileRepository);
+    final personName = PersonName(from?.name ?? "");
     return ProfileViewModel(
       loadingStatus: _loadingStatus,
-      username: from?.name ?? "",
+      username: personName.fullname,
+      initials: personName.initials,
       refresh: _refresh,
       items: list,
       image: from?.avatar,

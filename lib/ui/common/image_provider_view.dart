@@ -24,7 +24,7 @@ class ImageProviderView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: imageURLProvider.urlToFit(width: width, height: height),
+      future: imageURLProvider?.urlToFit(width: width, height: height) ?? Future.value(""),
       builder: (BuildContext context, AsyncSnapshot<String> url) {
         if (!url.hasData || url.data == null) {
           return ClipRRect(
