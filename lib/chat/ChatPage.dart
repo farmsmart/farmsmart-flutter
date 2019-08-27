@@ -7,12 +7,12 @@ import 'package:farmsmart_flutter/ui/common/ActionSheetListItem.dart';
 import 'package:farmsmart_flutter/ui/common/modal_navigator.dart';
 import 'package:farmsmart_flutter/ui/profile/FarmDetails.dart';
 import 'package:farmsmart_flutter/ui/profile/FarmDetailsListItem.dart';
-import 'package:farmsmart_flutter/chat/utils/DateFormatter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class _Constants {
+  static final dateFormatter = DateFormat('dd MMMM yyyy');
   static final double appBarElevation = 0;
   static final EdgeInsets appBarEdgePadding = EdgeInsets.only(left: 25);
   static final double appBarIconSize = 16;
@@ -150,7 +150,9 @@ class _ChatPageState extends State<ChatPage> {
     return viewModels;
   }
 
-  String _getDetail(dynamic value) => value is DateTime ? DateFormatter.formatDate(value) : value;
+  String _getDetail(dynamic value) => value is DateTime ? _formatDate(value) : value;
+
+  String _formatDate(DateTime date) => _Constants.dateFormatter.format(date);
   
   _doOnError(BuildContext context, String error) {
     print("On Error recevied: ${error.toString()}");

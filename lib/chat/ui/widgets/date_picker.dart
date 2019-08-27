@@ -1,4 +1,3 @@
-import 'package:farmsmart_flutter/chat/utils/DateFormatter.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -23,6 +22,7 @@ class _Constants {
     color: Color(0xFF767690),
   );
 
+  static final dateFormatter = DateFormat('dd MMMM yyyy');
   static final currentDate = DateTime.now();
   static final minDateLimit = DateTime(2019, 6);
   static final maxDateLimit = DateTime(2101);
@@ -205,7 +205,9 @@ class _DatePickerState extends State<DatePicker> {
       );
 
   String _getDisplayDate()  => viewModel.selectedDate.difference(_Constants.currentDate).inDays ==
-      _Constants.noDifferenceBetweenDates ? _LocalisedStrings.today() : DateFormatter.formatDate(viewModel.selectedDate);
+      _Constants.noDifferenceBetweenDates ? _LocalisedStrings.today() : _formatDate(viewModel.selectedDate);
+
+  String _formatDate(DateTime date) => _Constants.dateFormatter.format(date);
 
   void _setSelectedDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(

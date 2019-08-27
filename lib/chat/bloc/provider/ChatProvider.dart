@@ -13,7 +13,6 @@ import 'package:farmsmart_flutter/chat/ui/widgets/chat.dart';
 import 'package:farmsmart_flutter/chat/ui/widgets/rounded_button.dart';
 import 'package:farmsmart_flutter/chat/ui/widgets/separator_wrapper.dart';
 import 'package:farmsmart_flutter/chat/ui/widgets/styles/rounded_button_styles.dart';
-import 'package:farmsmart_flutter/chat/utils/DateFormatter.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 
@@ -27,6 +26,7 @@ class _Constants {
   static const scrollAnimationOffset = 0.0;
   static const scrollAnimationDuration = 300;
 
+  static final dateFormatter = DateFormat('dd MMMM yyyy');
   static const String typeValueString = "com.wearemobilefirst.String";
   static const String typeValueEmail = "com.wearemobilefirst.Email";
   static const String typeValuePhoneNumber = "com.wearemobilefirst.PhoneNumber";
@@ -263,7 +263,7 @@ class ChatProvider implements ViewModelProvider<ChatViewModel> {
           _interactiveMessageHandler.buildDatePickerWidget(
         onSendPressed: (dateValue) {
           _cleanInteractiveWidget();
-          _getNextMessageByProvided(DateFormatter.formatDate(dateValue));
+          _getNextMessageByProvided(_formatDate(dateValue));
           _putResponseToTheMap(
             key: entity.uri,
             value: ChatResponseViewModel(
@@ -274,6 +274,8 @@ class ChatProvider implements ViewModelProvider<ChatViewModel> {
           );
         },
       );
+
+  String _formatDate(DateTime date) => _Constants.dateFormatter.format(date);
 
   void _setDropdownWidget({InputRequestEntity entity}) =>
       _chatViewModel.interactiveWidget =
