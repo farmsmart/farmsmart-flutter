@@ -36,7 +36,7 @@
         "localStore": false,
         "inline": true,
         "title": "Your Name",
-        "validationRegex": "^[a-zA-Z]+$",
+        "validationRegex": "^([a-zA-Z]+\\s*)*$",
         "responseText": "My name is %Name",
         "optional": false
       }
