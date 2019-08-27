@@ -54,7 +54,7 @@
       "inputRequest": {
         "type": "com.wearemobilefirst.MultiChoice",
         "inline": true,
-        "uri": "SkillLevel",
+        "uri": "Skill level",
         "title": "Skill Level",
         "localStore": true,
         "responseText": "",
@@ -63,19 +63,19 @@
           "maxSelection": 1,
           "options": [
             {
-              "id": "skill.Beginner",
+              "id": "Beginner",
               "title": "Beginner",
               "description": "No experience with farming",
               "responseText": "I have no experience farming"
             },
             {
-              "id": "skill.Intermediate",
+              "id": "Intermediate",
               "title": "Intermediate",
               "description": "Some experience farming",
               "responseText": "I have farming knowledge"
             },
             {
-              "id": "skill.Advanced",
+              "id": "Advanced",
               "title": "Advanced",
               "description": "Experienced farmer",
               "responseText": "I have experience farming"
@@ -88,7 +88,7 @@
       "text": "Where is your farm?",
       "inputRequest": {
         "type": "com.wearemobilefirst.Dropdown",
-        "uri": "FarmLocation",
+        "uri": "Location",
         "title": "Farm Location",
         "localStore": false,
         "responseText": "",
@@ -98,191 +98,191 @@
           "maxSelection": 1,
           "options": [
             {
-              "id": "location.Baringo",
+              "id": "Baringo",
               "title": "Baringo"
             },
             {
-              "id": "location.Bomet",
+              "id": "Bomet",
               "title": "Bomet"
             },
             {
-              "id": "location.Bungoma",
+              "id": "Bungoma",
               "title": "Bungoma"
             },
             {
-              "id": "location.Busia",
+              "id": "Busia",
               "title": "Busia"
             },
             {
-              "id": "location.ElgeyoMarakwet",
+              "id": "Elgeyo-Marakwet",
               "title": "Elgeyo-Marakwet"
             },
             {
-              "id": "location.Embu",
+              "id": "Embu",
               "title": "Embu"
             },
             {
-              "id": "location.Garissa",
+              "id": "Garissa",
               "title": "Garissa"
             },
             {
-              "id": "location.HomaBay",
+              "id": "Homa Bay",
               "title": "Homa Bay"
             },
             {
-              "id": "location.Isiolo",
+              "id": "Isiolo",
               "title": "Isiolo"
             },
             {
-              "id": "location.Kajiado",
+              "id": "Kajiado",
               "title": "Kajiado"
             },
             {
-              "id": "location.Kakamega",
+              "id": "Kakamega",
               "title": "Kakamega"
             },
             {
-              "id": "location.Kericho",
+              "id": "Kericho",
               "title": "Kericho"
             },
             {
-              "id": "location.Kiambu",
+              "id": "Kiambu",
               "title": "Kiambu"
             },
             {
-              "id": "location.Kilifi",
+              "id": "Kilifi",
               "title": "Kilifi"
             },
             {
-              "id": "location.Kirinyaga",
+              "id": "Kirinyaga",
               "title": "Kirinyaga"
             },
             {
-              "id": "location.Kisii",
+              "id": "Kisii",
               "title": "Kisii"
             },
             {
-              "id": "location.Kisumu",
+              "id": "Kisumu",
               "title": "Kisumu"
             },
             {
-              "id": "location.Kitui",
+              "id": "Kitui",
               "title": "Kitui"
             },
             {
-              "id": "location.Kwale",
+              "id": "Kwale",
               "title": "Kwale"
             },
             {
-              "id": "location.Laikipia",
+              "id": "Laikipia",
               "title": "Laikipia"
             },
             {
-              "id": "location.Lamu",
+              "id": "Lamu",
               "title": "Lamu"
             },
             {
-              "id": "location.Machakos",
+              "id": "Machakos",
               "title": "Machakos"
             },
             {
-              "id": "location.Makueni",
+              "id": "Makueni",
               "title": "Makueni"
             },
             {
-              "id": "location.Mandera",
+              "id": "Mandera",
               "title": "Mandera"
             },
             {
-              "id": "location.Marsabit",
+              "id": "Marsabit",
               "title": "Marsabit"
             },
             {
-              "id": "location.Meru",
+              "id": "Meru",
               "title": "Meru"
             },
             {
-              "id": "location.Migori",
+              "id": "Migori",
               "title": "Migori"
             },
             {
-              "id": "location.Mombasa",
+              "id": "Mombasa",
               "title": "Mombasa"
             },
             {
-              "id": "location.Muranga",
+              "id": "Murang'a",
               "title": "Murang'a"
             },
             {
-              "id": "location.Nairobi",
+              "id": "Nairobi",
               "title": "Nairobi"
             },
             {
-              "id": "location.Nakuru",
+              "id": "Nakuru",
               "title": "Nakuru"
             },
             {
-              "id": "location.Nandi",
+              "id": "Nandi",
               "title": "Nandi"
             },
             {
-              "id": "location.Narok",
+              "id": "Narok",
               "title": "Narok"
             },
             {
-              "id": "location.Nyamira",
+              "id": "Nyamira",
               "title": "Nyamira"
             },
             {
-              "id": "location.Nyandarua",
+              "id": "Nyandarua",
               "title": "Nyandarua"
             },
             {
-              "id": "location.Nyeri",
+              "id": "Nyeri",
               "title": "Nyeri"
             },
             {
-              "id": "location.Samburu",
+              "id": "Samburu",
               "title": "Samburu"
             },
             {
-              "id": "location.Siaya",
+              "id": "Siaya",
               "title": "Siaya"
             },
             {
-              "id": "location.TaitaTaveta",
+              "id": "Taita-Taveta",
               "title": "Taita-Taveta"
             },
             {
-              "id": "location.TanaRiver",
+              "id": "Tana River",
               "title": "Tana River"
             },
             {
-              "id": "location.TharakaNithi",
+              "id": "Tharaka-Nithi",
               "title": "Tharaka-Nithi"
             },
             {
-              "id": "location.TransNzoia",
+              "id": "Trans-Nzoia",
               "title": "Trans-Nzoia"
             },
             {
-              "id": "location.Turkana",
+              "id": "Turkana",
               "title": "Turkana"
             },
             {
-              "id": "location.UasinGishu",
+              "id": "Uasin Gishu",
               "title": "Uasin Gishu"
             },
             {
-              "id": "location.Vihiga",
+              "id": "Vihiga",
               "title": "Vihiga"
             },
             {
-              "id": "location.Wajir",
+              "id": "Wajir",
               "title": "Wajir"
             },
             {
-              "id": "location.WestPokot",
+              "id": "West Pokot",
               "title": "West Pokot"
             }
           ]
@@ -294,7 +294,7 @@
       "inputRequest": {
         "type": "com.wearemobilefirst.MultiChoice",
         "inline": true,
-        "uri": "AgroEcoZone",
+        "uri": "Agro zone",
         "title": "Agro-Ecological zone",
         "localStore": true,
         "responseText": "",
@@ -303,31 +303,31 @@
           "maxSelection": 1,
           "options": [
             {
-              "id": "agroeco.UpperMidlands",
+              "id": "Upper midlands",
               "title": "Upper midlands"
             },
             {
-              "id": "agroeco.LowlandMidlands",
+              "id": "Lowland midlands",
               "title": "Lowland midlands"
             },
             {
-              "id": "agroeco.UpperHighlands",
+              "id": "Upper highlands",
               "title": "Upper highlands"
             },
             {
-              "id": "agroeco.LowlandHighlands",
+              "id": "Lowland highlands",
               "title": "Lowland highlands"
             },
             {
-              "id": "agroeco.InlandLowlands",
+              "id": "Inland lowlands",
               "title": "Inland lowlands"
             },
             {
-              "id": "agroeco.CoastalLowlands",
+              "id": "Coastal lowlands",
               "title": "Coastal lowlands"
             },
             {
-              "id": "agroeco.DontKnow",
+              "id": "Don´t know",
               "title": "Don't know"
             }
           ]
@@ -338,7 +338,7 @@
       "text": "What is the size of your land?",
       "inputRequest": {
         "type": "com.wearemobilefirst.MultiChoice",
-        "uri": "LandSize",
+        "uri": "Land size",
         "title": "Land Size",
         "inline": true,
         "localStore": false,
@@ -348,23 +348,23 @@
           "maxSelection": 1,
           "options": [
             {
-              "id": "landSize.UrbanGarden",
+              "id": "Less than 10m2",
               "title": "Urban garden"
             },
             {
-              "id": "landSize.LessThanQuarter",
+              "id": "Less than 1/4 acre",
               "title": "Less than 1/4 acre"
             },
             {
-              "id": "landSize.BetweenQuartHalf",
+              "id": "1/4 - 1/2 acre",
               "title": "1/4 - 1/2 acre"
             },
             {
-              "id": "landSize.HalfToOne",
+              "id": "1/2 - 1 acre",
               "title": "1/2 - 1 acre"
             },
             {
-              "id": "landSize.MoreThanOne",
+              "id": "More than 1 acree",
               "title": "More than 1 acre"
             }
           ]
@@ -375,7 +375,7 @@
       "text": "Why are you wanting to grow food on your farm?",
       "inputRequest": {
         "type": "com.wearemobilefirst.MultiChoice",
-        "uri": "Motivation",
+        "uri": "Intention",
         "title": "Motivation",
         "inline": true,
         "localStore": false,
@@ -385,15 +385,15 @@
           "maxSelection": 1,
           "options": [
             {
-              "id": "motivation.money",
+              "id": "Sales",
               "title": "For money"
             },
             {
-              "id": "motivation.family",
+              "id": "Subsistence",
               "title": "For my family"
             },
             {
-              "id": "motivation.both",
+              "id": "Both",
               "title": "For both"
             }
           ]
@@ -437,7 +437,7 @@
       "text": "What type of soil do you have?",
       "inputRequest": {
         "type": "com.wearemobilefirst.MultiChoice",
-        "uri": "SoilType",
+        "uri": "Soil type",
         "title": "Soil Type",
         "inline": true,
         "localStore": false,
@@ -447,43 +447,43 @@
           "maxSelection": 1,
           "options": [
             {
-              "id": "soilType.Sandy",
+              "id": "Sandy",
               "title": "Sandy"
             },
             {
-              "id": "soilType.SandyClay",
+              "id": "Sandy clay",
               "title": "Sandy Clay"
             },
             {
-              "id": "soilType.SandyLoam",
+              "id": "Sandy loam",
               "title": "Sandy loam"
             },
             {
-              "id": "soilType.Silt",
+              "id": "Silt",
               "title": "Silt"
             },
             {
-              "id": "soilType.SiltyLoam",
+              "id": "Silty loam",
               "title": "Silty loam"
             },
             {
-              "id": "soilType.SiltyClay",
+              "id": "Silty Clay",
               "title": "Silty clay"
             },
             {
-              "id": "soilType.Clay",
+              "id": "Clay",
               "title": "Clay"
             },
             {
-              "id": "soilType.ClayLoam",
+              "id": "Clay loam",
               "title": "Clay loam"
             },
             {
-              "id": "soilType.Loam",
+              "id": "Loam",
               "title": "Loam"
             },
             {
-              "id": "soilType.DontKnow",
+              "id": "DontKnow",
               "title": "I don't know"
             }
           ]
@@ -506,7 +506,7 @@
       "text": "Will you be using irrigation on your farm?",
       "inputRequest": {
         "type": "com.wearemobilefirst.MultiChoice",
-        "uri": "UsingIrrigation",
+        "uri": "Irrigation",
         "title": "Irrigation",
         "inline": true,
         "localStore": false,
@@ -516,11 +516,11 @@
           "maxSelection": 1,
           "options": [
             {
-              "id": "irrigation.Yes",
+              "id": "Yes",
               "title": "Yes"
             },
             {
-              "id": "irrigation.No",
+              "id": "No",
               "title": "No"
             }
           ]

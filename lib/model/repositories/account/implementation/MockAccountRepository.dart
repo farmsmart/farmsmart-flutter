@@ -26,7 +26,7 @@ class MockAccountRepository implements AccountRepositoryInterface {
   }
 
   @override
-  Future<AccountEntity> create(String token) {
+  Future<AccountEntity> create(String username, String password) {
     _created = true;
     return Future.value(_account);
   }
