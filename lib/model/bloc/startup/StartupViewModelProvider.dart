@@ -69,33 +69,41 @@ class StartupViewModelProvider implements ViewModelProvider<StartupViewModel> {
 
   ChatPageViewModel _chatPageViewModel() {
     //TODO: Remove the Mock ID´s once implemented
-    final transformer = ChatResponseToPlotInfoTransformer();
     return ChatPageViewModel(_LocalisedAssets.onboardingFlow(), (data) {
-      final ChatResponseViewModel name =
-          castOrNull<ChatResponseViewModel>(data[_Strings.nameField]);
-      if (name != null) {
-        _accountRepository
-            .create(
-          mockPlainText.identifier(),
-          mockPlainText.identifier(),
-        )
-            .then((account) {
-          final plotInfo = transformer.transform(from: data);
-          final newProfile = ProfileEntity(
-            mockPlainText.identifier(),
-            name.value,
-            MockImageEntity().build().urlProvider,
-            plotInfo,
-          );
-          account.profileRepository.add(newProfile).then((profile) {
-            account.profileRepository.switchTo(profile);
-            _refresh();
-          });
-        });
+      final Map<String, ChatResponseViewModel> chatInput =
+          castOrNull<Map<String, ChatResponseViewModel>>(data);
+      if (chatInput != null) {
+        _createAccount(data);
       }
     }, (data) {
       //TODO: error case, should display a popup.
     });
+  }
+
+  void _createAccount(Map<String, ChatResponseViewModel> chatInput) {
+    final name = chatInput[_Strings.nameField];
+    final transformer = ChatResponseToPlotInfoTransformer();
+    final plotInfo = transformer.transform(from: chatInput);
+
+    if (name != null) {
+      _accountRepository
+          .create(
+        mockPlainText.identifier(),
+        mockPlainText.identifier(),
+      )
+          .then((account) {
+        final newProfile = ProfileEntity(
+          mockPlainText.identifier(),
+          name.value,
+          MockImageEntity().build().urlProvider,
+          plotInfo,
+        );
+        account.profileRepository.add(newProfile).then((profile) {
+          account.profileRepository.switchTo(profile);
+          _refresh();
+        });
+      });
+    }
   }
 
   LandingPageViewModel _landingViewmModel() {

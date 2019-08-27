@@ -12,12 +12,12 @@ class ChatResponseToPlotInfoTransformer extends ObjectTransformer<Map<String,Cha
 
   @override
   Map<String,String> transform({Map<String,ChatResponseViewModel> from}) {
-    return from.map((key,value){
-      final date = castOrNull<DateTime>(value.value);
+    return from.map((key,response){
+      final date = castOrNull<DateTime>(response.value);
       if (date != null){
         return MapEntry(key, dateFormat.format(date));
       }
-      return MapEntry(key, value.id);
+      return MapEntry(key, response.id);
     });
   }
 }
