@@ -1,9 +1,9 @@
 
 import 'dart:math';
 
-import 'package:farmsmart_flutter/model/model/EntityCollectionInterface.dart';
-import 'package:farmsmart_flutter/model/model/ImageEntity.dart';
-import 'package:farmsmart_flutter/model/model/ImageURLProvider.dart';
+import 'package:farmsmart_flutter/model/entities/EntityCollectionInterface.dart';
+import 'package:farmsmart_flutter/model/entities/ImageEntity.dart';
+import 'package:farmsmart_flutter/model/entities/ImageURLProvider.dart';
 
 class MockImageProvider implements ImageURLProvider {
   final _path;

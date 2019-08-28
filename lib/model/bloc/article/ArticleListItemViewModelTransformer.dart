@@ -1,5 +1,5 @@
 import 'package:farmsmart_flutter/model/bloc/Transformer.dart';
-import 'package:farmsmart_flutter/model/model/article_entity.dart';
+import 'package:farmsmart_flutter/model/entities/article_entity.dart';
 import 'package:farmsmart_flutter/ui/article/viewModel/ArticleDetailViewModel.dart';
 import 'package:farmsmart_flutter/ui/article/viewModel/ArticleListItemViewModel.dart';
 

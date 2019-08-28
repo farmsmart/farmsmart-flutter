@@ -1,7 +1,7 @@
 
-import 'package:farmsmart_flutter/model/model/StageEntity.dart';
-import 'package:farmsmart_flutter/model/model/PlotEntity.dart';
-import 'package:farmsmart_flutter/model/model/crop_entity.dart';
+import 'package:farmsmart_flutter/model/entities/StageEntity.dart';
+import 'package:farmsmart_flutter/model/entities/PlotEntity.dart';
+import 'package:farmsmart_flutter/model/entities/crop_entity.dart';
 import 'package:farmsmart_flutter/model/repositories/BasicRepositoryInterface.dart';
 
 abstract class PlotRepositoryInterface implements BasicRepositoryInterface<PlotEntity> {

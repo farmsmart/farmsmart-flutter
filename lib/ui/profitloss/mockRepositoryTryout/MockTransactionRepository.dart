@@ -1,5 +1,5 @@
-import 'package:farmsmart_flutter/model/model/loading_status.dart';
-import 'package:farmsmart_flutter/model/model/mock/MockString.dart';
+import 'package:farmsmart_flutter/model/entities/loading_status.dart';
+import 'package:farmsmart_flutter/model/entities/mock/MockString.dart';
 import 'package:farmsmart_flutter/ui/profitloss/ProfitLossHeader.dart';
 import 'package:farmsmart_flutter/ui/profitloss/ProfitLossListItem.dart';
 import 'package:farmsmart_flutter/ui/common/DogTagStyles.dart';

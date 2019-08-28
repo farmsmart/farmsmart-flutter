@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:farmsmart_flutter/model/model/StageEntity.dart';
+import 'package:farmsmart_flutter/model/entities/StageEntity.dart';
 
 enum StageStatus {
     upcoming,

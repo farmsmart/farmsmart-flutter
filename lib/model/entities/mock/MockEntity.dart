@@ -1,4 +1,4 @@
-import 'package:farmsmart_flutter/model/model/EntityCollectionInterface.dart';
+import 'package:farmsmart_flutter/model/entities/EntityCollectionInterface.dart';
 
 abstract class MockEntity<T> {
   T build();

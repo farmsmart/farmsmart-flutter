@@ -1,10 +1,10 @@
 import 'dart:math';
 
-import 'package:farmsmart_flutter/model/model/TransactionAmount.dart';
-import 'package:farmsmart_flutter/model/model/TransactionEntity.dart';
-import 'package:farmsmart_flutter/model/model/mock/MockCrop.dart';
-import 'package:farmsmart_flutter/model/model/mock/MockDate.dart';
-import 'package:farmsmart_flutter/model/model/mock/MockString.dart';
+import 'package:farmsmart_flutter/model/entities/TransactionAmount.dart';
+import 'package:farmsmart_flutter/model/entities/TransactionEntity.dart';
+import 'package:farmsmart_flutter/model/entities/mock/MockCrop.dart';
+import 'package:farmsmart_flutter/model/entities/mock/MockDate.dart';
+import 'package:farmsmart_flutter/model/entities/mock/MockString.dart';
 
 class MockTransaction {
   final _random = Random(0);

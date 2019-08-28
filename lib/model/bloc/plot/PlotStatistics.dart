@@ -1,4 +1,4 @@
-import 'package:farmsmart_flutter/model/model/PlotEntity.dart';
+import 'package:farmsmart_flutter/model/entities/PlotEntity.dart';
 
 import 'StageBusinessLogic.dart';
 

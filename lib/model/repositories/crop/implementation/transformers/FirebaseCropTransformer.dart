@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:farmsmart_flutter/model/bloc/Transformer.dart';
-import 'package:farmsmart_flutter/model/model/article_entity.dart';
-import 'package:farmsmart_flutter/model/model/crop_entity.dart';
-import 'package:farmsmart_flutter/model/model/enums.dart';
+import 'package:farmsmart_flutter/model/entities/article_entity.dart';
+import 'package:farmsmart_flutter/model/entities/crop_entity.dart';
+import 'package:farmsmart_flutter/model/entities/enums.dart';
 import 'package:farmsmart_flutter/model/repositories/image/implementation/ImageRepositoryFlamelink.dart';
 
 import '../../../FlameLink.dart';

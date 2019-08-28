@@ -1,4 +1,4 @@
-import 'package:farmsmart_flutter/model/model/crop_entity.dart';
+import 'package:farmsmart_flutter/model/entities/crop_entity.dart';
 import 'StageEntity.dart';
 
 class PlotEntity {

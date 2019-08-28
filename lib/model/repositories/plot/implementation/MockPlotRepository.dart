@@ -1,11 +1,11 @@
 
 import 'dart:async';
-import 'package:farmsmart_flutter/model/model/EntityCollectionInterface.dart';
-import 'package:farmsmart_flutter/model/model/StageEntity.dart';
-import 'package:farmsmart_flutter/model/model/PlotEntity.dart';
-import 'package:farmsmart_flutter/model/model/ProfileEntity.dart';
-import 'package:farmsmart_flutter/model/model/crop_entity.dart';
-import 'package:farmsmart_flutter/model/model/mock/MockPlot.dart';
+import 'package:farmsmart_flutter/model/entities/EntityCollectionInterface.dart';
+import 'package:farmsmart_flutter/model/entities/StageEntity.dart';
+import 'package:farmsmart_flutter/model/entities/PlotEntity.dart';
+import 'package:farmsmart_flutter/model/entities/ProfileEntity.dart';
+import 'package:farmsmart_flutter/model/entities/crop_entity.dart';
+import 'package:farmsmart_flutter/model/entities/mock/MockPlot.dart';
 import 'package:farmsmart_flutter/model/repositories/MockListRepository.dart';
 import 'package:farmsmart_flutter/model/repositories/profile/ProfileRepositoryInterface.dart';
 import '../PlotRepositoryInterface.dart';

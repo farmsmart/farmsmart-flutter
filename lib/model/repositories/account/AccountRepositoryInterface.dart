@@ -1,4 +1,4 @@
-import 'package:farmsmart_flutter/model/model/AccountEntity.dart';
+import 'package:farmsmart_flutter/model/entities/AccountEntity.dart';
 
 abstract class AccountRepositoryInterface {
     Future<AccountEntity> getAuthorized();

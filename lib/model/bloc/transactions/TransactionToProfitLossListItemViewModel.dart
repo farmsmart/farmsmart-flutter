@@ -1,5 +1,5 @@
 import 'package:farmsmart_flutter/model/bloc/transactions/TransactionToRecordTransactionViewModel.dart';
-import 'package:farmsmart_flutter/model/model/TransactionEntity.dart';
+import 'package:farmsmart_flutter/model/entities/TransactionEntity.dart';
 import 'package:farmsmart_flutter/ui/common/DogTagStyles.dart';
 import 'package:farmsmart_flutter/ui/profitloss/ProfitLossListItem.dart';
 import 'package:intl/intl.dart';

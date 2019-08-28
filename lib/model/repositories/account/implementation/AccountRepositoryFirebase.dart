@@ -1,4 +1,4 @@
-import 'package:farmsmart_flutter/model/model/AccountEntity.dart';
+import 'package:farmsmart_flutter/model/entities/AccountEntity.dart';
 import 'package:farmsmart_flutter/model/repositories/account/AccountRepositoryInterface.dart';
 
 class AccountRepositoryFirebase implements AccountRepositoryInterface {

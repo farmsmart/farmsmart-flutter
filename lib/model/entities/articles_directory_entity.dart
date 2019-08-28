@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:farmsmart_flutter/model/model/article_entity.dart';
-import 'package:farmsmart_flutter/model/model/entities_const.dart';
+import 'package:farmsmart_flutter/model/entities/article_entity.dart';
+import 'package:farmsmart_flutter/model/entities/entities_const.dart';
 //TODO: deprecated remove when not referenced 
 class ArticlesDirectoryEntity {
   List<ArticleEntity> articles;

@@ -1,5 +1,5 @@
 import 'package:farmsmart_flutter/model/bloc/recommendations/RecommendationEngine.dart';
-import 'package:farmsmart_flutter/model/model/crop_entity.dart';
+import 'package:farmsmart_flutter/model/entities/crop_entity.dart';
 import 'package:farmsmart_flutter/ui/recommendations/recommendation_card/recommendation_card_view_model.dart';
 import 'package:intl/intl.dart';
 

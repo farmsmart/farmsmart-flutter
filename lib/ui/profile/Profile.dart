@@ -1,6 +1,6 @@
 import 'package:farmsmart_flutter/model/bloc/ViewModelProvider.dart';
-import 'package:farmsmart_flutter/model/model/ImageURLProvider.dart';
-import 'package:farmsmart_flutter/model/model/loading_status.dart';
+import 'package:farmsmart_flutter/model/entities/ImageURLProvider.dart';
+import 'package:farmsmart_flutter/model/entities/loading_status.dart';
 import 'package:farmsmart_flutter/ui/common/ProfileAvatar.dart';
 import 'package:farmsmart_flutter/ui/common/ListDivider.dart';
 import 'package:farmsmart_flutter/ui/common/LoadableViewModel.dart';

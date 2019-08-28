@@ -1,4 +1,4 @@
-import 'package:farmsmart_flutter/model/model/article_entity.dart';
+import 'package:farmsmart_flutter/model/entities/article_entity.dart';
 class StageEntity {
   final String id;
   final ArticleEntity article;

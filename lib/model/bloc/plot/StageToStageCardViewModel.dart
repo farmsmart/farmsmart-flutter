@@ -1,7 +1,7 @@
 import 'package:farmsmart_flutter/model/bloc/Transformer.dart';
 import 'package:farmsmart_flutter/model/bloc/plot/StageBusinessLogic.dart';
-import 'package:farmsmart_flutter/model/model/StageEntity.dart';
-import 'package:farmsmart_flutter/model/model/PlotEntity.dart';
+import 'package:farmsmart_flutter/model/entities/StageEntity.dart';
+import 'package:farmsmart_flutter/model/entities/PlotEntity.dart';
 import 'package:farmsmart_flutter/ui/common/stage_card.dart';
 import 'package:farmsmart_flutter/ui/playground/styles/stage_card_styles.dart';
 import 'package:intl/intl.dart';

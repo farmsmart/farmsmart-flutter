@@ -4,7 +4,7 @@ import 'package:farmsmart_flutter/model/bloc/StaticViewModelProvider.dart';
 import 'package:farmsmart_flutter/model/bloc/article/ArticleListProvider.dart';
 import 'package:farmsmart_flutter/model/bloc/plot/PlotDetailProvider.dart';
 import 'package:farmsmart_flutter/model/bloc/recommendations/RecommendationListProvider.dart';
-import 'package:farmsmart_flutter/model/model/mock/MockPlot.dart';
+import 'package:farmsmart_flutter/model/entities/mock/MockPlot.dart';
 import 'package:farmsmart_flutter/model/repositories/article/implementation/MockArticlesRepository.dart';
 import 'package:farmsmart_flutter/model/repositories/crop/implementation/MockCropRepository.dart';
 import 'package:farmsmart_flutter/model/repositories/plot/implementation/MockPlotRepository.dart';

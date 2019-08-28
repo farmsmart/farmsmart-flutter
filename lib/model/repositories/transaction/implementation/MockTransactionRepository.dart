@@ -1,7 +1,7 @@
-import 'package:farmsmart_flutter/model/model/ProfileEntity.dart';
-import 'package:farmsmart_flutter/model/model/TransactionAmount.dart';
-import 'package:farmsmart_flutter/model/model/TransactionEntity.dart';
-import 'package:farmsmart_flutter/model/model/mock/MockTransaction.dart';
+import 'package:farmsmart_flutter/model/entities/ProfileEntity.dart';
+import 'package:farmsmart_flutter/model/entities/TransactionAmount.dart';
+import 'package:farmsmart_flutter/model/entities/TransactionEntity.dart';
+import 'package:farmsmart_flutter/model/entities/mock/MockTransaction.dart';
 import 'package:farmsmart_flutter/model/repositories/profile/ProfileRepositoryInterface.dart';
 import 'package:farmsmart_flutter/model/repositories/transaction/TransactionRepositoryInterface.dart';
 import '../../MockListRepository.dart';

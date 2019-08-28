@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:farmsmart_flutter/model/model/EntityCollectionInterface.dart';
-import 'package:farmsmart_flutter/model/model/article_entity.dart';
-import 'package:farmsmart_flutter/model/model/enums.dart';
+import 'package:farmsmart_flutter/model/entities/EntityCollectionInterface.dart';
+import 'package:farmsmart_flutter/model/entities/article_entity.dart';
+import 'package:farmsmart_flutter/model/entities/enums.dart';
 import 'package:farmsmart_flutter/model/repositories/article/implementation/FlameLinkMetaTransformer.dart';
 import '../../../firebase_const.dart';
 import '../../FlameLink.dart';

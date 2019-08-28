@@ -1,8 +1,8 @@
 import 'package:farmsmart_flutter/model/bloc/Transformer.dart';
 import 'package:farmsmart_flutter/model/bloc/article/ArticleListItemViewModelTransformer.dart';
 import 'package:farmsmart_flutter/model/firebase_const.dart';
-import 'package:farmsmart_flutter/model/model/article_entity.dart';
-import 'package:farmsmart_flutter/model/model/loading_status.dart';
+import 'package:farmsmart_flutter/model/entities/article_entity.dart';
+import 'package:farmsmart_flutter/model/entities/loading_status.dart';
 import 'package:farmsmart_flutter/ui/article/viewModel/ArticleDetailViewModel.dart';
 import 'package:farmsmart_flutter/ui/article/viewModel/ArticleListItemViewModel.dart';
 import 'package:intl/intl.dart';

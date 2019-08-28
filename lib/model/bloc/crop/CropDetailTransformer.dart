@@ -1,6 +1,6 @@
 import 'package:farmsmart_flutter/model/bloc/article/ArticleDetailTransformer.dart';
-import 'package:farmsmart_flutter/model/model/crop_entity.dart';
-import 'package:farmsmart_flutter/model/model/enums.dart';
+import 'package:farmsmart_flutter/model/entities/crop_entity.dart';
+import 'package:farmsmart_flutter/model/entities/enums.dart';
 import 'package:farmsmart_flutter/ui/crop/CropInfoListItem.dart';
 import 'package:farmsmart_flutter/ui/crop/viewmodel/CropDetailViewModel.dart';
 import 'package:intl/intl.dart';

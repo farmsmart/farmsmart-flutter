@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:farmsmart_flutter/model/bloc/transactions/TransactionToProfitLossListItemViewModel.dart';
-import 'package:farmsmart_flutter/model/model/PlotEntity.dart';
-import 'package:farmsmart_flutter/model/model/TransactionEntity.dart';
-import 'package:farmsmart_flutter/model/model/loading_status.dart';
+import 'package:farmsmart_flutter/model/entities/PlotEntity.dart';
+import 'package:farmsmart_flutter/model/entities/TransactionEntity.dart';
+import 'package:farmsmart_flutter/model/entities/loading_status.dart';
 import 'package:farmsmart_flutter/model/repositories/plot/PlotRepositoryInterface.dart';
 import 'package:farmsmart_flutter/model/repositories/transaction/TransactionRepositoryInterface.dart';
 import 'package:farmsmart_flutter/ui/profitloss/ProfitLossList.dart';

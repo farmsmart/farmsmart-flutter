@@ -1,4 +1,4 @@
-import 'package:farmsmart_flutter/model/model/mock/MockString.dart';
+import 'package:farmsmart_flutter/model/entities/mock/MockString.dart';
 import 'package:flutter/material.dart';
 
 import '../CropInfoListItem.dart';

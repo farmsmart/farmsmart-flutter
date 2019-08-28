@@ -1,7 +1,7 @@
 import 'package:farmsmart_flutter/model/bloc/article/ArticleDetailTransformer.dart';
 import 'package:farmsmart_flutter/model/bloc/plot/StageToStageCardViewModel.dart';
-import 'package:farmsmart_flutter/model/model/mock/MockPlot.dart';
-import 'package:farmsmart_flutter/model/model/mock/MockString.dart';
+import 'package:farmsmart_flutter/model/entities/mock/MockPlot.dart';
+import 'package:farmsmart_flutter/model/entities/mock/MockString.dart';
 import 'package:farmsmart_flutter/model/repositories/MockStrings.dart';
 import 'package:farmsmart_flutter/model/repositories/image/implementation/MockImageEntity.dart';
 import 'package:farmsmart_flutter/ui/common/stage_card.dart';

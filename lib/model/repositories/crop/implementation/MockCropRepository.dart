@@ -1,8 +1,8 @@
 import 'dart:math';
 
-import 'package:farmsmart_flutter/model/model/EntityCollectionInterface.dart';
-import 'package:farmsmart_flutter/model/model/crop_entity.dart';
-import 'package:farmsmart_flutter/model/model/mock/MockCrop.dart';
+import 'package:farmsmart_flutter/model/entities/EntityCollectionInterface.dart';
+import 'package:farmsmart_flutter/model/entities/crop_entity.dart';
+import 'package:farmsmart_flutter/model/entities/mock/MockCrop.dart';
 import 'package:farmsmart_flutter/model/repositories/crop/CropRepositoryInterface.dart';
 
 
