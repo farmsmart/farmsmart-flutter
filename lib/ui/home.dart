@@ -24,7 +24,7 @@ import 'myplot/PlotList.dart';
 
 class _Constants {
   static final double bottomBarIconSize = 25;
-  static final double iconHeight = 27;
+  static final double iconSize = 27;
   static final Color bottomBarColor = Colors.white;
 
   static final myPlotSelectedIcon = 'assets/icons/my_plot_selected.png';
@@ -219,8 +219,8 @@ class Home extends StatelessWidget {
           profileRepo: viewModel.currentProfile,
           plotRepo:
               repositoryProvider.getMyPlotRepository(viewModel.currentProfile)),
-      width: _Constants.iconHeight,
-      height: _Constants.iconHeight,
+      width: _Constants.iconSize,
+      height: _Constants.iconSize,
     );
   }
 
@@ -236,13 +236,13 @@ class Home extends StatelessWidget {
             shape: BoxShape.circle,
           ),
           padding: EdgeInsets.all(2.0),
-          height: _Constants.iconHeight,
-          width: _Constants.iconHeight,
+          height: _Constants.iconSize,
+          width: _Constants.iconSize,
           child: profileIcon,
         ),
         icon: Container(
-          height: _Constants.iconHeight,
-          width: _Constants.iconHeight,
+          height: _Constants.iconSize,
+          width: _Constants.iconSize,
           child: profileIcon,
         ),
         title: SizedBox.shrink(),

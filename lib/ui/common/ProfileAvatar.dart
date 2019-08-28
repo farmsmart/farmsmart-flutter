@@ -39,8 +39,10 @@ class ProfileAvatar extends StatelessWidget {
     );
   }
 
-  Widget _successBuilder(
-      {BuildContext context, AsyncSnapshot<ProfileViewModel> snapshot}) {
+  Widget _successBuilder({
+    BuildContext context,
+    AsyncSnapshot<ProfileViewModel> snapshot,
+  }) {
     final avatarProvider = snapshot.data?.image;
     final initials = snapshot.data?.initials;
     Widget avatarWidget = SizedBox(
