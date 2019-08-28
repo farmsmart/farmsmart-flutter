@@ -7,22 +7,29 @@ import 'package:farmsmart_flutter/model/bloc/profile/SwitchProfileListProvider.d
 import 'package:farmsmart_flutter/model/entities/PlotEntity.dart';
 import 'package:farmsmart_flutter/model/entities/ProfileEntity.dart';
 import 'package:farmsmart_flutter/model/entities/loading_status.dart';
+import 'package:farmsmart_flutter/model/repositories/account/AccountRepositoryInterface.dart';
 import 'package:farmsmart_flutter/model/repositories/plot/PlotRepositoryInterface.dart';
 import 'package:farmsmart_flutter/model/repositories/profile/ProfileRepositoryInterface.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockUserProfileViewModel.dart';
 import 'package:farmsmart_flutter/ui/profile/Profile.dart';
 import 'package:farmsmart_flutter/ui/profile/ProfileListItem.dart';
 import 'package:flutter/widgets.dart';
-
+import 'package:intl/intl.dart';
 import '../ViewModelProvider.dart';
+
+class _LocalisedStrings {
+  static logout() => Intl.message('Logout');
+  static removeProfile() => Intl.message('Remove Profile');
+}
 
 class ProfileDetailProvider
     extends ObjectTransformer<ProfileEntity, ProfileViewModel>
     implements ViewModelProvider<ProfileViewModel> {
-  final ProfileRepositoryInterface _profileRepository;
+  final AccountRepositoryInterface _accountRepository;
   final PlotRepositoryInterface _plotRepository;
+  ProfileRepositoryInterface _profileRepository;
   int _activeCrops = 0;
-  int _completedCrops =0; 
+  int _completedCrops = 0;
   ProfileViewModel _snapshot;
   ProfileEntity _currentProfile;
   PlotStatistics _plotStatistics = PlotStatistics();
@@ -31,9 +38,10 @@ class ProfileDetailProvider
       StreamController<ProfileViewModel>.broadcast();
 
   ProfileDetailProvider({
-    @required ProfileRepositoryInterface profileRepo,
+    @required AccountRepositoryInterface accountRepo,
     @required PlotRepositoryInterface plotRepo,
-  }) : this._profileRepository = profileRepo, this._plotRepository = plotRepo;
+  })  : this._accountRepository = accountRepo,
+        this._plotRepository = plotRepo;
 
   @override
   Stream<ProfileViewModel> stream() {
@@ -48,17 +56,22 @@ class ProfileDetailProvider
   @override
   ProfileViewModel initial() {
     if (_snapshot == null) {
-      _profileRepository.observeCurrent().listen((currentProfile) {
-        _loadingStatus = LoadingStatus.SUCCESS;
-        _currentProfile = currentProfile;
-        _snapshot = transform(from: currentProfile);
-        _controller.sink.add(_snapshot);
+      _accountRepository.observeAuthorized().listen((currentAccount) {
+        _profileRepository = currentAccount?.profileRepository;
+        currentAccount?.profileRepository
+            ?.observeCurrent()
+            ?.listen((currentProfile) {
+          _loadingStatus = LoadingStatus.SUCCESS;
+          _currentProfile = currentProfile;
+          _snapshot = transform(from: currentProfile);
+          _controller.sink.add(_snapshot);
+        });
       });
 
-      _plotRepository.observeFarm().listen((List<PlotEntity> plots){
-          _activeCrops = _plotStatistics.activeCount(plots);
-          _completedCrops = _plotStatistics.compeletedCount(plots);
-          _update();
+      _plotRepository.observeFarm().listen((List<PlotEntity> plots) {
+        _activeCrops = _plotStatistics.activeCount(plots);
+        _completedCrops = _plotStatistics.compeletedCount(plots);
+        _update();
       });
 
       _snapshot = transform(from: null);
@@ -69,10 +82,7 @@ class ProfileDetailProvider
 
   @override
   ProfileViewModel transform({ProfileEntity from}) {
-    List<ProfileListItemViewModel> list = []; //TODO; replace with real items
-    for (var i = 0; i < 8; i++) {
-      list.add(MockUserProfileListItemViewModel.build(i));
-    }
+    List<ProfileListItemViewModel> list = _profileItems();
     final switchProfileProvider =
         SwitchProfileListProvider(profileRepo: _profileRepository);
     final personName = PersonName(from?.name ?? "");
@@ -81,6 +91,8 @@ class ProfileDetailProvider
       username: personName.fullname,
       initials: personName.initials,
       refresh: _refresh,
+      remove: () => _remove(),
+      logout: () => _logout(),
       items: list,
       image: from?.avatar,
       activeCrops: _activeCrops,
@@ -89,14 +101,54 @@ class ProfileDetailProvider
     );
   }
 
+  List<ProfileListItemViewModel> _profileItems() {
+    List<ProfileListItemViewModel> list = []; //TODO; replace with real items
+
+    for (var i = 0; i < 7; i++) {
+      list.add(MockUserProfileListItemViewModel.build(i));
+    }
+
+    list.add(ProfileListItemViewModel(
+      title: _LocalisedStrings.removeProfile(),
+      icon: null,
+      onTap: () => _remove(),
+      isDestructive: true,
+    ));
+
+    list.add(ProfileListItemViewModel(
+      title: _LocalisedStrings.logout(),
+      icon: null,
+      onTap: () => _logout(),
+      isDestructive: true,
+    ));
+    return list;
+  }
+
+  Future<bool> _logout() {
+    _loadingStatus = LoadingStatus.LOADING;
+    _update();
+    return _accountRepository.deauthorize();
+  }
+
+  Future<bool> _remove() {
+    return _profileRepository.remove(_currentProfile).then((success) {
+      _profileRepository.getAll().then((profiles) {
+        _profileRepository.switchTo(profiles.first);
+      });
+      return success;
+    });
+  }
+
   void _update() {
-      _snapshot = transform(from: _currentProfile);
-      _controller.sink.add(_snapshot);
+    _snapshot = transform(from: _currentProfile);
+    _controller.sink.add(_snapshot);
   }
 
   void _refresh() {
-    _profileRepository.getCurrent();
-    _plotRepository.getFarm();
+    _accountRepository.authorized().then((account) {
+      _profileRepository.getCurrent();
+      _plotRepository.getFarm();
+    });
   }
 
   void dispose() {

@@ -1,4 +1,14 @@
+import 'package:farmsmart_flutter/ui/common/Alert.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
+class _LocalisedStrings {
+
+  static cancelAction() => Intl.message('Cancel');
+  static confirmAction() => Intl.message('Confirm');
+
+  static dialogDescription() => Intl.message('Are you sure you would like to complete this action?');
+}
 
 class _Constants {
   static final String arrowIcon = "assets/icons/chevron.png";
@@ -100,7 +110,7 @@ class ProfileListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      onTap: () => _viewModel.onTap(),
+      onTap: () => _actionTapped(context),
       contentPadding: _viewModel.icon != null
           ? _Constants.edgePadding
           : _Constants.simpleEdgePadding,
@@ -143,5 +153,28 @@ class ProfileListItem extends StatelessWidget {
       maxLines: _style.maxLines,
       overflow: TextOverflow.ellipsis,
     );
+  }
+
+  void _actionTapped(BuildContext context) {
+    if (_viewModel.isDestructive) {
+      Alert.present(
+        Alert(
+          viewModel: AlertViewModel(
+            cancelActionText: _LocalisedStrings.cancelAction(),
+            confirmActionText: _LocalisedStrings.confirmAction(),
+            titleText: _viewModel.title,
+            detailText: _LocalisedStrings.dialogDescription(),
+            confirmAction: () {
+              _viewModel.onTap();
+              Navigator.of(context).pop();
+            },
+            isDestructive: true,
+          ),
+        ),
+        context,
+      );
+    } else {
+      _viewModel.onTap();
+    }
   }
 }

@@ -52,6 +52,8 @@ class ProfileViewModel implements RefreshableViewModel, LoadableViewModel {
   final ViewModelProvider<SwitchProfileListViewModel> switchProfileProvider;
   final ImageURLProvider image;
   final Function refresh;
+  final Function logout;
+  final Function remove;
   final LoadingStatus loadingStatus;
 
   ProfileViewModel({
@@ -64,6 +66,8 @@ class ProfileViewModel implements RefreshableViewModel, LoadableViewModel {
     this.switchProfileProvider,
     this.image,
     this.refresh,
+    this.logout,
+    this.remove,
   });
 }
 

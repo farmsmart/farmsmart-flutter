@@ -1,5 +1,4 @@
-import 'dart:math';
-
+import 'dart:async';
 import 'package:farmsmart_flutter/model/entities/AccountEntity.dart';
 import 'package:farmsmart_flutter/model/repositories/profile/ProfileRepositoryInterface.dart';
 
@@ -12,6 +11,7 @@ class _Strings {
 class MockAccountRepository implements AccountRepositoryInterface {
 
   final AccountEntity _account;
+  final _streamController = StreamController<AccountEntity>.broadcast();
   bool _created=false;
   
   MockAccountRepository._(this._account);
@@ -22,18 +22,46 @@ class MockAccountRepository implements AccountRepositoryInterface {
   
   @override
   Future<AccountEntity> authorize(String username, String password) {
-    return Future.value(_account);
+    final futureAccount = Future.value(_account);
+    _streamController.sink.add(_account);
+    return futureAccount;
   }
 
   @override
   Future<AccountEntity> create(String username, String password) {
+    final futureAccount = Future.value(_account);
     _created = true;
-    return Future.value(_account);
+     _streamController.sink.add(_account);
+    return futureAccount;
   }
 
   @override
-  Future<AccountEntity> getAuthorized() {
+  Future<AccountEntity> authorized() {
     return _created ? Future.value(_account) :  Future.value(null);
+  }
+
+  @override
+  Future<AccountEntity> anonymous() {
+     final futureAccount = Future.value(_account);
+    _streamController.sink.add(_account);
+    return futureAccount;
+  }
+
+  @override
+  Future<bool> deauthorize() {
+    _created = false;
+    _streamController.sink.add(null);
+    return Future.value(true);
+  }
+
+  @override
+  Stream<AccountEntity> observeAuthorized() {
+    return _streamController.stream;
+  }
+
+  void deinit(){
+    _streamController.sink.close();
+    _streamController.close();
   }
 
 }

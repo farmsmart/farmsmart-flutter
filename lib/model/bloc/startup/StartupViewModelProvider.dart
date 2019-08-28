@@ -50,6 +50,15 @@ class StartupViewModelProvider implements ViewModelProvider<StartupViewModel> {
   @override
   StartupViewModel initial() {
     if (_snapshot == null) {
+      _accountRepository.observeAuthorized().listen((account) {
+        _snapshot = StartupViewModel(
+          LoadingStatus.SUCCESS,
+          _refresh,
+          (account != null),
+          _landingViewmModel(),
+        );
+        _controller.sink.add(_snapshot);
+      });
       _snapshot = StartupViewModel(
           LoadingStatus.LOADING, _refresh, false, _landingViewmModel());
       _refresh();
@@ -68,7 +77,6 @@ class StartupViewModelProvider implements ViewModelProvider<StartupViewModel> {
   }
 
   ChatPageViewModel _chatPageViewModel() {
-    
     return ChatPageViewModel(_LocalisedAssets.onboardingFlow(), (data) {
       final Map<String, ChatResponseViewModel> chatInput =
           castOrNull<Map<String, ChatResponseViewModel>>(data);
@@ -84,14 +92,13 @@ class StartupViewModelProvider implements ViewModelProvider<StartupViewModel> {
     final name = chatInput[_Strings.nameField];
     final transformer = ChatResponseToPlotInfoTransformer();
     final plotInfo = transformer.transform(from: chatInput);
+
+    _snapshot = StartupViewModel(LoadingStatus.LOADING, _refresh, false, _landingViewmModel());
+    _controller.sink.add(_snapshot);
+
     //TODO: Remove the Mock ID´s once implemented
     if (name != null) {
-      _accountRepository
-          .create(
-        mockPlainText.identifier(),
-        mockPlainText.identifier(),
-      )
-          .then((account) {
+      _accountRepository.anonymous().then((account) {
         final newProfile = ProfileEntity(
           mockPlainText.identifier(),
           name.value,
@@ -123,15 +130,7 @@ class StartupViewModelProvider implements ViewModelProvider<StartupViewModel> {
   }
 
   void _refresh() {
-    _accountRepository.getAuthorized().then((account) {
-      _snapshot = StartupViewModel(
-        LoadingStatus.SUCCESS,
-        _refresh,
-        (account != null),
-        _landingViewmModel(),
-      );
-      _controller.sink.add(_snapshot);
-    });
+    _accountRepository.authorized();
   }
 
   void dispose() {
