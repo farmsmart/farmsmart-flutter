@@ -1,6 +1,6 @@
 // Mock Strings --------------
 
-import 'package:farmsmart_flutter/model/model/mock/MockString.dart';
+import 'package:farmsmart_flutter/model/entities/mock/MockString.dart';
 
 MockString mockExternalLinks = MockString(library: [
   "https://chat.whatsapp.com/BwzNV2WEFAqLDdvTFUljte",

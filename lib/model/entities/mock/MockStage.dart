@@ -1,10 +1,10 @@
 import 'dart:math';
 
-import 'package:farmsmart_flutter/model/model/StageEntity.dart';
-import 'package:farmsmart_flutter/model/model/article_entity.dart';
-import 'package:farmsmart_flutter/model/model/crop_entity.dart';
-import 'package:farmsmart_flutter/model/model/mock/MockDate.dart';
-import 'package:farmsmart_flutter/model/model/mock/MockString.dart';
+import 'package:farmsmart_flutter/model/entities/StageEntity.dart';
+import 'package:farmsmart_flutter/model/entities/article_entity.dart';
+import 'package:farmsmart_flutter/model/entities/crop_entity.dart';
+import 'package:farmsmart_flutter/model/entities/mock/MockDate.dart';
+import 'package:farmsmart_flutter/model/entities/mock/MockString.dart';
 import 'MockArticle.dart';
 import 'MockEntity.dart';
 

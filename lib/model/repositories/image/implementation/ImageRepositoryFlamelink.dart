@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:farmsmart_flutter/model/model/EntityCollectionInterface.dart';
-import 'package:farmsmart_flutter/model/model/ImageEntity.dart';
-import 'package:farmsmart_flutter/model/model/ImageURLProvider.dart';
+import 'package:farmsmart_flutter/model/entities/EntityCollectionInterface.dart';
+import 'package:farmsmart_flutter/model/entities/ImageEntity.dart';
+import 'package:farmsmart_flutter/model/entities/ImageURLProvider.dart';
 
 import '../../FlameLink.dart';
 import '../ImageRepositoryInterface.dart';

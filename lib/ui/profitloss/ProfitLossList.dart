@@ -1,5 +1,5 @@
 import 'package:farmsmart_flutter/model/bloc/ViewModelProvider.dart';
-import 'package:farmsmart_flutter/model/model/loading_status.dart';
+import 'package:farmsmart_flutter/model/entities/loading_status.dart';
 import 'package:farmsmart_flutter/ui/common/ActionSheet.dart';
 import 'package:farmsmart_flutter/ui/common/ActionSheetListItem.dart';
 import 'package:farmsmart_flutter/ui/common/RefreshableViewModel.dart';

@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:farmsmart_flutter/model/model/crop_entity.dart';
+import 'package:farmsmart_flutter/model/entities/crop_entity.dart';
 
 import '../PlotEntity.dart';
 import 'MockCrop.dart';

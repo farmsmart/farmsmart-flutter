@@ -1,5 +1,5 @@
-import 'package:farmsmart_flutter/model/model/mock/MockRecommendation.dart';
-import 'package:farmsmart_flutter/model/model/mock/MockString.dart';
+import 'package:farmsmart_flutter/model/entities/mock/MockRecommendation.dart';
+import 'package:farmsmart_flutter/model/entities/mock/MockString.dart';
 import 'package:farmsmart_flutter/model/repositories/MockStrings.dart';
 import 'package:farmsmart_flutter/model/repositories/image/implementation/MockImageEntity.dart';
 

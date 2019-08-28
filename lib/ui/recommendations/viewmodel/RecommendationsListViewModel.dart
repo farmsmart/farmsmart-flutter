@@ -1,5 +1,5 @@
 import 'package:farmsmart_flutter/model/bloc/ViewModelProvider.dart';
-import 'package:farmsmart_flutter/model/model/loading_status.dart';
+import 'package:farmsmart_flutter/model/entities/loading_status.dart';
 import 'package:farmsmart_flutter/ui/common/LoadableViewModel.dart';
 import 'package:farmsmart_flutter/ui/common/RefreshableViewModel.dart';
 import 'package:farmsmart_flutter/ui/crop/viewmodel/CropDetailViewModel.dart';

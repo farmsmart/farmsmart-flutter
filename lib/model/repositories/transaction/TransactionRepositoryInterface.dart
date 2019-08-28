@@ -1,6 +1,6 @@
-import 'package:farmsmart_flutter/model/model/ProfileEntity.dart';
-import 'package:farmsmart_flutter/model/model/TransactionAmount.dart';
-import 'package:farmsmart_flutter/model/model/TransactionEntity.dart';
+import 'package:farmsmart_flutter/model/entities/ProfileEntity.dart';
+import 'package:farmsmart_flutter/model/entities/TransactionAmount.dart';
+import 'package:farmsmart_flutter/model/entities/TransactionEntity.dart';
 import 'package:farmsmart_flutter/model/repositories/BasicRepositoryInterface.dart';
 
 abstract class TransactionRepositoryInterface implements BasicRepositoryInterface<TransactionEntity> {

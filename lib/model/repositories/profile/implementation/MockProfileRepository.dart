@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:farmsmart_flutter/model/model/ProfileEntity.dart';
-import 'package:farmsmart_flutter/model/model/mock/MockProfile.dart';
+import 'package:farmsmart_flutter/model/entities/ProfileEntity.dart';
+import 'package:farmsmart_flutter/model/entities/mock/MockProfile.dart';
 
 import '../../MockListRepository.dart';
 import '../ProfileRepositoryInterface.dart';

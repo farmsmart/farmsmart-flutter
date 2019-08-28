@@ -1,7 +1,7 @@
-import 'package:farmsmart_flutter/model/model/EntityCollectionInterface.dart';
-import 'package:farmsmart_flutter/model/model/ImageEntity.dart';
-import 'package:farmsmart_flutter/model/model/ImageURLProvider.dart';
-import 'package:farmsmart_flutter/model/model/article_entity.dart';
+import 'package:farmsmart_flutter/model/entities/EntityCollectionInterface.dart';
+import 'package:farmsmart_flutter/model/entities/ImageEntity.dart';
+import 'package:farmsmart_flutter/model/entities/ImageURLProvider.dart';
+import 'package:farmsmart_flutter/model/entities/article_entity.dart';
 
 import 'enums.dart';
 

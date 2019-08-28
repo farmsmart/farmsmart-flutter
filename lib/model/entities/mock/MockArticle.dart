@@ -1,6 +1,6 @@
-import 'package:farmsmart_flutter/model/model/article_entity.dart';
-import 'package:farmsmart_flutter/model/model/mock/MockDate.dart';
-import 'package:farmsmart_flutter/model/model/mock/MockEntity.dart';
+import 'package:farmsmart_flutter/model/entities/article_entity.dart';
+import 'package:farmsmart_flutter/model/entities/mock/MockDate.dart';
+import 'package:farmsmart_flutter/model/entities/mock/MockEntity.dart';
 import 'package:farmsmart_flutter/model/repositories/MockStrings.dart';
 import 'package:farmsmart_flutter/model/repositories/image/implementation/MockImageEntity.dart';
 

@@ -1,5 +1,5 @@
-import 'package:farmsmart_flutter/model/model/EntityCollectionInterface.dart';
-import 'package:farmsmart_flutter/model/model/article_entity.dart';
+import 'package:farmsmart_flutter/model/entities/EntityCollectionInterface.dart';
+import 'package:farmsmart_flutter/model/entities/article_entity.dart';
 
 enum ArticleCollectionGroup {
   all,

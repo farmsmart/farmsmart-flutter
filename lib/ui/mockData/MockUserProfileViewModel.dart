@@ -7,7 +7,7 @@ import 'package:farmsmart_flutter/ui/profile/Profile.dart';
 import 'package:farmsmart_flutter/ui/profile/ProfileListItem.dart';
 import 'package:farmsmart_flutter/ui/profile/SwitchProfileList.dart';
 import 'package:intl/intl.dart';
-import 'package:farmsmart_flutter/model/model/mock/MockString.dart';
+import 'package:farmsmart_flutter/model/entities/mock/MockString.dart';
 
 class MockProfileViewModel {
   static ProfileViewModel build() {

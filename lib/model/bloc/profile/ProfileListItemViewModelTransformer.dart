@@ -1,5 +1,5 @@
-import 'package:farmsmart_flutter/model/model/ProfileEntity.dart';
-import 'package:farmsmart_flutter/model/model/loading_status.dart';
+import 'package:farmsmart_flutter/model/entities/ProfileEntity.dart';
+import 'package:farmsmart_flutter/model/entities/loading_status.dart';
 import 'package:farmsmart_flutter/ui/profile/Profile.dart';
 import 'package:farmsmart_flutter/ui/profile/SwitchProfileListItem.dart';
 

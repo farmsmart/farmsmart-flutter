@@ -1,5 +1,5 @@
-import 'package:farmsmart_flutter/model/model/TransactionAmount.dart';
-import 'package:farmsmart_flutter/model/model/TransactionEntity.dart';
+import 'package:farmsmart_flutter/model/entities/TransactionAmount.dart';
+import 'package:farmsmart_flutter/model/entities/TransactionEntity.dart';
 import 'package:farmsmart_flutter/model/repositories/transaction/TransactionRepositoryInterface.dart';
 import 'package:farmsmart_flutter/ui/profitloss/RecordTransaction.dart';
 import 'package:farmsmart_flutter/ui/profitloss/RecordTransactionListItem.dart';

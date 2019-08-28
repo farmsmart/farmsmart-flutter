@@ -1,5 +1,5 @@
-import 'package:farmsmart_flutter/model/model/ImageEntity.dart';
-import 'package:farmsmart_flutter/model/model/ImageURLProvider.dart';
+import 'package:farmsmart_flutter/model/entities/ImageEntity.dart';
+import 'package:farmsmart_flutter/model/entities/ImageURLProvider.dart';
 import 'EntityCollectionInterface.dart';
 import 'enums.dart';
 

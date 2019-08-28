@@ -1,4 +1,4 @@
-import 'package:farmsmart_flutter/model/model/ProfileEntity.dart';
+import 'package:farmsmart_flutter/model/entities/ProfileEntity.dart';
 import 'package:farmsmart_flutter/model/repositories/account/AccountRepositoryInterface.dart';
 import 'package:farmsmart_flutter/model/repositories/article/ArticleRepositoryInterface.dart';
 import 'package:farmsmart_flutter/model/repositories/plot/PlotRepositoryInterface.dart';

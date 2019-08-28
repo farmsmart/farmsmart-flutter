@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:farmsmart_flutter/model/bloc/Transformer.dart';
 import 'package:farmsmart_flutter/model/bloc/plot/PlotDetailProvider.dart';
 import 'package:farmsmart_flutter/model/bloc/plot/StageBusinessLogic.dart';
-import 'package:farmsmart_flutter/model/model/PlotEntity.dart';
-import 'package:farmsmart_flutter/model/model/crop_entity.dart';
+import 'package:farmsmart_flutter/model/entities/PlotEntity.dart';
+import 'package:farmsmart_flutter/model/entities/crop_entity.dart';
 import 'package:farmsmart_flutter/ui/myplot/PlotListItem.dart';
 import 'package:intl/intl.dart';
 

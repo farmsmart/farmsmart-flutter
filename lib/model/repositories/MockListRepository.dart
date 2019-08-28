@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:farmsmart_flutter/model/model/EntityCollectionInterface.dart';
+import 'package:farmsmart_flutter/model/entities/EntityCollectionInterface.dart';
 import 'package:farmsmart_flutter/model/repositories/BasicRepositoryInterface.dart';
 
 typedef String IdentifyEntity<T>(T value);

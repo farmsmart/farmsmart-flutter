@@ -1,5 +1,5 @@
-import 'package:farmsmart_flutter/model/model/ImageURLProvider.dart';
-import 'package:farmsmart_flutter/model/model/loading_status.dart';
+import 'package:farmsmart_flutter/model/entities/ImageURLProvider.dart';
+import 'package:farmsmart_flutter/model/entities/loading_status.dart';
 import 'package:farmsmart_flutter/ui/article/viewModel/ArticleDetailViewModel.dart';
 
 import '../CropInfoListItem.dart';

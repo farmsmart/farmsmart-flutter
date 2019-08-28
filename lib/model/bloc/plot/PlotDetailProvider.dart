@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:farmsmart_flutter/model/model/StageEntity.dart';
-import 'package:farmsmart_flutter/model/model/PlotEntity.dart';
+import 'package:farmsmart_flutter/model/entities/StageEntity.dart';
+import 'package:farmsmart_flutter/model/entities/PlotEntity.dart';
 import 'package:farmsmart_flutter/model/repositories/plot/PlotRepositoryInterface.dart';
 import 'package:farmsmart_flutter/ui/myplot/viewmodel/PlotDetailViewModel.dart';
 

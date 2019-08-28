@@ -1,6 +1,6 @@
-import 'package:farmsmart_flutter/model/model/EntityCollectionInterface.dart';
-import 'package:farmsmart_flutter/model/model/article_entity.dart';
-import 'package:farmsmart_flutter/model/model/mock/MockArticle.dart';
+import 'package:farmsmart_flutter/model/entities/EntityCollectionInterface.dart';
+import 'package:farmsmart_flutter/model/entities/article_entity.dart';
+import 'package:farmsmart_flutter/model/entities/mock/MockArticle.dart';
 import '../ArticleRepositoryInterface.dart';
 
 MockArticle _articleBuilder = MockArticle();

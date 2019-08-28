@@ -1,4 +1,4 @@
-import 'package:farmsmart_flutter/model/model/ImageEntity.dart';
+import 'package:farmsmart_flutter/model/entities/ImageEntity.dart';
 
 abstract class ImageRepositoryInterface {
   Future<List<ImageEntity>> getImages(List<String> paths);

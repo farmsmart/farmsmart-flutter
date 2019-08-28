@@ -1,4 +1,4 @@
-import 'package:farmsmart_flutter/model/model/ImageURLProvider.dart';
+import 'package:farmsmart_flutter/model/entities/ImageURLProvider.dart';
 
 class ImageEntity {
     final int width;
