@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:farmsmart_flutter/model/repositories/FlameLink.dart';
 import 'package:farmsmart_flutter/model/repositories/account/implementation/AccountRepositoryFirebase.dart';
-import 'package:farmsmart_flutter/model/repositories/account/implementation/MockAccountRepository.dart';
 import 'package:farmsmart_flutter/model/repositories/article/ArticleRepositoryInterface.dart';
 import 'package:farmsmart_flutter/model/repositories/article/implementation/ArticlesRepositoryFlamelink.dart';
 import 'package:farmsmart_flutter/model/repositories/crop/CropRepositoryInterface.dart';
@@ -55,7 +54,7 @@ class FlameLinkRepositoryProvider implements RepositoryProvider {
   TransactionRepositoryInterface getTransactionRepository(ProfileRepositoryInterface profileRepository) => _mockTransactionRepository;
 
   @override
-  AccountRepositoryInterface getAccountRepository() => AccountRepositoryFirebase(_firebaseAuth);
+  AccountRepositoryInterface getAccountRepository() => AccountRepositoryFirebase(_firebaseAuth, _mockProfileRepository);
 
   @override
   RatingEngineRepositoryInterface getRatingsRepository() => RatingEngineRepositoryFirestore(_fireStore);
