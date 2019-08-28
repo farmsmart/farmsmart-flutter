@@ -19,10 +19,12 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import 'article/ArticleListStyles.dart';
+import 'common/ProfileAvatar.dart';
 import 'myplot/PlotList.dart';
 
 class _Constants {
   static final double bottomBarIconSize = 25;
+  static final double iconHeight = 27;
   static final Color bottomBarColor = Colors.white;
 
   static final myPlotSelectedIcon = 'assets/icons/my_plot_selected.png';
@@ -101,8 +103,7 @@ class Home extends StatelessWidget {
         _Constants.communityIcon,
       ),
       _buildTabNavigatorWithCircleImageWidget(
-        _buildUserProfile(viewModel),
-      ),
+          _buildUserProfile(viewModel), viewModel),
     ];
 
     if (viewModel.debugMenuVisible) {
@@ -212,8 +213,20 @@ class Home extends StatelessWidget {
     );
   }
 
-  //TODO Build it properly
-  TabNavigator _buildTabNavigatorWithCircleImageWidget(Widget page) {
+  Widget _buildProfileIcon(HomeViewModel viewModel) {
+    return ProfileAvatar(
+      viewModelProvider: ProfileDetailProvider(
+          profileRepo: viewModel.currentProfile,
+          plotRepo:
+              repositoryProvider.getMyPlotRepository(viewModel.currentProfile)),
+      width: _Constants.iconHeight,
+      height: _Constants.iconHeight,
+    );
+  }
+
+  TabNavigator _buildTabNavigatorWithCircleImageWidget(
+      Widget page, HomeViewModel viewModel) {
+    final profileIcon = _buildProfileIcon(viewModel);
     return TabNavigator(
       child: page,
       barItem: BottomNavigationBarItem(
@@ -223,16 +236,14 @@ class Home extends StatelessWidget {
             shape: BoxShape.circle,
           ),
           padding: EdgeInsets.all(2.0),
-          height: 27,
-          child: CircleAvatar(
-            child: Image.asset('assets/raw/mock_profile_image.png'),
-          ),
+          height: _Constants.iconHeight,
+          width: _Constants.iconHeight,
+          child: profileIcon,
         ),
         icon: Container(
-          height: 27,
-          child: CircleAvatar(
-            child: Image.asset('assets/raw/mock_profile_image.png'),
-          ),
+          height: _Constants.iconHeight,
+          width: _Constants.iconHeight,
+          child: profileIcon,
         ),
         title: SizedBox.shrink(),
       ),

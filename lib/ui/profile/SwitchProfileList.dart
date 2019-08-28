@@ -134,6 +134,7 @@ class SwitchProfileListState extends State<SwitchProfileList> {
                 icon: viewModel.items[index].icon,
                 isSelected: viewModel.items[index].isSelected,
                 tapAction: () => _select(index, viewModel),
+                avatarViewModelProvider: viewModel.items[index].avatarViewModelProvider,
               ),
             ),
             separatorBuilder: (context, index) => ListDivider.build(),
