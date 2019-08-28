@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class _Constants {
+  static final dateFormatter = DateFormat('dd MMMM yyyy');
   static final double appBarElevation = 0;
   static final EdgeInsets appBarEdgePadding = EdgeInsets.only(left: 25);
   static final double appBarIconSize = 16;
@@ -142,13 +143,17 @@ class _ChatPageState extends State<ChatPage> {
       viewModels.add(
         FarmDetailsListItemViewModel(
           title: value.title,
-          detail: value.value,
+          detail: _getDetail(value.value),
         ),
       );
     });
     return viewModels;
   }
 
+  String _getDetail(dynamic value) => value is DateTime ? _formatDate(value) : value;
+
+  String _formatDate(DateTime date) => _Constants.dateFormatter.format(date);
+  
   _doOnError(BuildContext context, String error) {
     print("On Error recevied: ${error.toString()}");
     _navigateBack(context);

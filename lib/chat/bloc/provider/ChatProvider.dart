@@ -26,6 +26,7 @@ class _Constants {
   static const scrollAnimationOffset = 0.0;
   static const scrollAnimationDuration = 300;
 
+  static final dateFormatter = DateFormat('dd MMMM yyyy');
   static const String typeValueString = "com.wearemobilefirst.String";
   static const String typeValueEmail = "com.wearemobilefirst.Email";
   static const String typeValuePhoneNumber = "com.wearemobilefirst.PhoneNumber";
@@ -262,7 +263,7 @@ class ChatProvider implements ViewModelProvider<ChatViewModel> {
           _interactiveMessageHandler.buildDatePickerWidget(
         onSendPressed: (dateValue) {
           _cleanInteractiveWidget();
-          _getNextMessageByProvided(dateValue);
+          _getNextMessageByProvided(_formatDate(dateValue));
           _putResponseToTheMap(
             key: entity.uri,
             value: ChatResponseViewModel(
@@ -273,6 +274,8 @@ class ChatProvider implements ViewModelProvider<ChatViewModel> {
           );
         },
       );
+
+  String _formatDate(DateTime date) => _Constants.dateFormatter.format(date);
 
   void _setDropdownWidget({InputRequestEntity entity}) =>
       _chatViewModel.interactiveWidget =

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class _Constants {
+  static const noDifferenceBetweenDates = 0;
   static const defaultMainAxisAlignment = MainAxisAlignment.start;
   static const defaultIsDenseList = true;
   static const defaultListTilePadding = const EdgeInsets.all(0);
@@ -21,10 +22,10 @@ class _Constants {
     color: Color(0xFF767690),
   );
 
+  static final dateFormatter = DateFormat('dd MMMM yyyy');
   static final currentDate = DateTime.now();
   static final minDateLimit = DateTime(2019, 6);
   static final maxDateLimit = DateTime(2101);
-  static final dateFormatter = DateFormat('dd MMMM yyyy');
   static final dateIcon = "assets/icons/detail_icon_date.png";
   static final arrowIcon = "assets/icons/chevron.png";
 }
@@ -117,11 +118,11 @@ class _DefaultStyle extends DatePickerStyle {
 const DatePickerStyle _defaultStyle = const _DefaultStyle();
 
 class DatePicker extends StatefulWidget {
-  final Function(String) _onDateSelected;
+  final Function(DateTime) _onDateSelected;
   final DatePickerStyle _style;
 
   DatePicker({
-    Function(String) onDateSelected,
+    Function(DateTime) onDateSelected,
     DatePickerStyle style = _defaultStyle,
   })  : this._onDateSelected = onDateSelected,
         this._style = style;
@@ -198,16 +199,15 @@ class _DatePickerState extends State<DatePicker> {
       );
 
   _buildPickerValue() => Text(
-        _formatDate(viewModel.selectedDate) ==
-                _formatDate(_Constants.currentDate)
-            ? _LocalisedStrings.today()
-            : _formatDate(viewModel.selectedDate),
+        _getDisplayDate(),
         textAlign: TextAlign.end,
         style: widget._style.pickerValueStyle,
       );
 
-  String _formatDate(DateTime selectedDate) =>
-      _Constants.dateFormatter.format(selectedDate);
+  String _getDisplayDate()  => viewModel.selectedDate.difference(_Constants.currentDate).inDays ==
+      _Constants.noDifferenceBetweenDates ? _LocalisedStrings.today() : _formatDate(viewModel.selectedDate);
+
+  String _formatDate(DateTime date) => _Constants.dateFormatter.format(date);
 
   void _setSelectedDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
@@ -225,7 +225,7 @@ class _DatePickerState extends State<DatePicker> {
   }
 
   void _onDatePicked(DateTime dateTime) {
-    widget._onDateSelected(_formatDate(dateTime));
+    widget._onDateSelected(dateTime);
     viewModel.selectedDate = dateTime;
   }
 }
