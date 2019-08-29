@@ -93,7 +93,12 @@ class StartupViewModelProvider implements ViewModelProvider<StartupViewModel> {
     final transformer = ChatResponseToPlotInfoTransformer();
     final plotInfo = transformer.transform(from: chatInput);
 
-    _snapshot = StartupViewModel(LoadingStatus.LOADING, _refresh, false, _landingViewModel());
+    _snapshot = StartupViewModel(
+      LoadingStatus.LOADING,
+      _refresh,
+      false,
+      _landingViewModel(),
+    );
     _controller.sink.add(_snapshot);
 
     //TODO: Remove the Mock ID´s once implemented
