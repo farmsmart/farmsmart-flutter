@@ -55,12 +55,12 @@ class StartupViewModelProvider implements ViewModelProvider<StartupViewModel> {
           LoadingStatus.SUCCESS,
           _refresh,
           (account != null),
-          _landingViewmModel(),
+          _landingViewModel(),
         );
         _controller.sink.add(_snapshot);
       });
       _snapshot = StartupViewModel(
-          LoadingStatus.LOADING, _refresh, false, _landingViewmModel());
+          LoadingStatus.LOADING, _refresh, false, _landingViewModel());
       _refresh();
     }
     return _snapshot;
@@ -93,7 +93,7 @@ class StartupViewModelProvider implements ViewModelProvider<StartupViewModel> {
     final transformer = ChatResponseToPlotInfoTransformer();
     final plotInfo = transformer.transform(from: chatInput);
 
-    _snapshot = StartupViewModel(LoadingStatus.LOADING, _refresh, false, _landingViewmModel());
+    _snapshot = StartupViewModel(LoadingStatus.LOADING, _refresh, false, _landingViewModel());
     _controller.sink.add(_snapshot);
 
     //TODO: Remove the Mock ID´s once implemented
@@ -113,7 +113,7 @@ class StartupViewModelProvider implements ViewModelProvider<StartupViewModel> {
     }
   }
 
-  LandingPageViewModel _landingViewmModel() {
+  LandingPageViewModel _landingViewModel() {
     return LandingPageViewModel(
       detailText: _LocalisedStrings.detailText(),
       actionText: _LocalisedStrings.actionText(),
