@@ -6,5 +6,5 @@ class ProfileEntity {
     final ImageURLProvider avatar;
     final Map<String,String> lastPlotInfo;
 
-  ProfileEntity(this.id, this.name, this.avatar, this.lastPlotInfo);
+  ProfileEntity(this.id, this.name, this.avatar, this.lastPlotInfo,);
 }

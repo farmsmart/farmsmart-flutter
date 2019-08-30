@@ -51,13 +51,15 @@ class StartupViewModelProvider implements ViewModelProvider<StartupViewModel> {
   StartupViewModel initial() {
     if (_snapshot == null) {
       _accountRepository.observeAuthorized().listen((account) {
+        account.profileRepository.getCurrent().then((currentProfile){
         _snapshot = StartupViewModel(
           LoadingStatus.SUCCESS,
           _refresh,
-          (account != null),
+          (currentProfile != null),
           _landingViewModel(),
         );
         _controller.sink.add(_snapshot);
+        });
       });
       _snapshot = StartupViewModel(
           LoadingStatus.LOADING, _refresh, false, _landingViewModel());

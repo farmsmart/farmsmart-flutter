@@ -133,7 +133,8 @@ class ProfileDetailProvider
   Future<bool> _remove() {
     return _profileRepository.remove(_currentProfile).then((success) {
       _profileRepository.getAll().then((profiles) {
-        _profileRepository.switchTo(profiles.first);
+        final profile = profiles.isNotEmpty ? profiles.first : null;
+        _profileRepository.switchTo(profile);
       });
       return success;
     });

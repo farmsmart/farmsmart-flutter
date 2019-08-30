@@ -15,6 +15,7 @@ import 'package:flutter/material.dart';
 
 import 'account/AccountRepositoryInterface.dart';
 import 'profile/ProfileRepositoryInterface.dart';
+import 'profile/implementation/FirebaseProfileRepository.dart';
 import 'profile/implementation/MockProfileRepository.dart';
 import 'ratingEngine/RatingEngineRepositoryInterface.dart';
 import 'ratingEngine/implementation/RatingEngineRepositoryFireStore.dart';
@@ -27,16 +28,18 @@ class FlameLinkRepositoryProvider implements RepositoryProvider {
   FlameLink _cms;
   Firestore _fireStore;
   FirebaseAuth _firebaseAuth;
-
+  ProfileRepositoryInterface _profileRepo;
 
   
 
   init(BuildContext context) {
     this._fireStore = Firestore.instance;
+    this._fireStore.settings(persistenceEnabled: true);
     this._firebaseAuth = FirebaseAuth.instance;
     this._cms = FlameLink(
         store: _fireStore,
         environment: AppConfig.of(context).environment);
+    this._profileRepo = FirebaseProfileRepository(this._fireStore,this._firebaseAuth);
   }
 
   @override
@@ -54,7 +57,7 @@ class FlameLinkRepositoryProvider implements RepositoryProvider {
   TransactionRepositoryInterface getTransactionRepository(ProfileRepositoryInterface profileRepository) => _mockTransactionRepository;
 
   @override
-  AccountRepositoryInterface getAccountRepository() => AccountRepositoryFirebase(_firebaseAuth, _mockProfileRepository);
+  AccountRepositoryInterface getAccountRepository() => AccountRepositoryFirebase(_firebaseAuth, _profileRepo);
 
   @override
   RatingEngineRepositoryInterface getRatingsRepository() => RatingEngineRepositoryFirestore(_fireStore);
