@@ -180,7 +180,7 @@ class Home extends StatelessWidget {
   _buildUserProfile(HomeViewModel viewModel) {
     return Profile(
       provider: ProfileDetailProvider(
-          profileRepo: viewModel.currentProfile,
+          accountRepo: viewModel.currentAccount,
           plotRepo:
               repositoryProvider.getMyPlotRepository(viewModel.currentProfile)),
     );
@@ -216,7 +216,7 @@ class Home extends StatelessWidget {
   Widget _buildProfileIcon(HomeViewModel viewModel) {
     return ProfileAvatar(
       viewModelProvider: ProfileDetailProvider(
-          profileRepo: viewModel.currentProfile,
+          accountRepo: viewModel.currentAccount,
           plotRepo:
               repositoryProvider.getMyPlotRepository(viewModel.currentProfile)),
       width: _Constants.iconSize,

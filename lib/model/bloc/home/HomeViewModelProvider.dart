@@ -13,10 +13,16 @@ class HomeViewModel implements LoadableViewModel, RefreshableViewModel {
   final LoadingStatus loadingStatus;
   final Function refresh;
   final ProfileRepositoryInterface currentProfile;
+  final AccountRepositoryInterface currentAccount;
   final bool debugMenuVisible;
 
-  HomeViewModel(this.loadingStatus, this.refresh, this.currentProfile,
-      this.debugMenuVisible);
+  HomeViewModel(
+    this.loadingStatus,
+    this.refresh,
+    this.currentProfile,
+    this.currentAccount,
+    this.debugMenuVisible,
+  );
 }
 
 class HomeViewModelProvider implements ViewModelProvider<HomeViewModel> {
@@ -28,12 +34,15 @@ class HomeViewModelProvider implements ViewModelProvider<HomeViewModel> {
   ProfileRepositoryInterface _profileRepository;
   bool _debugMenuVisible;
 
-  HomeViewModelProvider(this._accountRepository, this._debugMenuVisible);
+  HomeViewModelProvider(
+    this._accountRepository,
+    this._debugMenuVisible,
+  );
 
   @override
   HomeViewModel initial() {
     if (_snapshot == null) {
-      _accountRepository.getAuthorized().then((account) {
+      _accountRepository.authorized().then((account) {
         _profileRepository = account.profileRepository;
         account.profileRepository.observeCurrent().listen((currentProfile) {
           _snapshot = _viewModel(LoadingStatus.SUCCESS);
@@ -60,11 +69,17 @@ class HomeViewModelProvider implements ViewModelProvider<HomeViewModel> {
   }
 
   HomeViewModel _viewModel(LoadingStatus status) {
-    return HomeViewModel(status, _refresh, _profileRepository, _debugMenuVisible);
+    return HomeViewModel(
+      status,
+      _refresh,
+      _profileRepository,
+      _accountRepository,
+      _debugMenuVisible,
+    );
   }
 
   void _refresh() {
-    _accountRepository.getAuthorized().then((account) {
+    _accountRepository.authorized().then((account) {
       if (account != null) {
         account.profileRepository.getCurrent();
       }
