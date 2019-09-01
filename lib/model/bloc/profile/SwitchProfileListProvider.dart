@@ -1,8 +1,10 @@
 import 'dart:async';
 
+import 'package:farmsmart_flutter/model/bloc/chatFlow/FlowCoordinator.dart';
+import 'package:farmsmart_flutter/model/bloc/chatFlow/NewProfileFlow.dart';
 import 'package:farmsmart_flutter/model/entities/ProfileEntity.dart';
 import 'package:farmsmart_flutter/model/entities/loading_status.dart';
-import 'package:farmsmart_flutter/model/repositories/profile/ProfileRepositoryInterface.dart';
+import 'package:farmsmart_flutter/model/repositories/account/AccountRepositoryInterface.dart';
 import 'package:farmsmart_flutter/ui/profile/SwitchProfileList.dart';
 import 'package:intl/intl.dart';
 import '../ViewModelProvider.dart';
@@ -14,15 +16,15 @@ class _LocalisedStrings {
 
 class SwitchProfileListProvider
     implements ViewModelProvider<SwitchProfileListViewModel> {
-  final ProfileRepositoryInterface _profileRepository;
+  final AccountRepositoryInterface _accountRepository;
   SwitchProfileListViewModel _snapshot;
   final StreamController<SwitchProfileListViewModel> _controller =
       StreamController<SwitchProfileListViewModel>.broadcast();
   ProfileEntity _currentProfile;
   List<ProfileEntity> _profiles;
   SwitchProfileListProvider({
-    ProfileRepositoryInterface profileRepo,
-  }) : this._profileRepository = profileRepo;
+    AccountRepositoryInterface accountRepo,
+  }) : this._accountRepository = accountRepo;
 
   @override
   Stream<SwitchProfileListViewModel> stream() {
@@ -37,13 +39,15 @@ class SwitchProfileListProvider
   @override
   SwitchProfileListViewModel initial() {
     if (_snapshot == null) {
-      _profileRepository.observeAll().listen((profiles) {
+      _accountRepository.observeAuthorized().listen((account){
+        account.profileRepository?.observeAll()?.listen((profiles) {
         _updateViewModel(
           status: LoadingStatus.SUCCESS,
           profiles: profiles,
         );
+        });
       });
-
+      
       _snapshot = _viewModel(
         controller: _controller,
         status: LoadingStatus.LOADING,
@@ -83,20 +87,28 @@ class SwitchProfileListProvider
       title: _LocalisedStrings.switchProfile(),
       actionTitle: _LocalisedStrings.switchProfile(),
       items: listItems,
-      addProfileAction: null,
+      newProfileFlow: NewProfileFlow(_accountRepository, _onFlowStatusChanged),
       refresh: _refresh,
       loadingStatus: status,
     );
   }
 
+  void _onFlowStatusChanged(FlowCoordinator coordinator) {
+
+  }
+
   void _switchTo(ProfileEntity profile) {
-    _profileRepository.switchTo(profile);
+    _accountRepository.authorized().then((account){
+        account.profileRepository.switchTo(profile);
+    });
   }
 
   void _refresh() {
-    _profileRepository.getCurrent().then((profile) {
+    _accountRepository.authorized().then((account){
+      account.profileRepository.getCurrent().then((profile) {
       _currentProfile = profile;
-      _profileRepository.getAll();
+       account.profileRepository.getAll();
+    });
     });
   }
 

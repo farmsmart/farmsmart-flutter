@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:farmsmart_flutter/model/bloc/chatFlow/CreateAccountFlow.dart';
+import 'package:farmsmart_flutter/model/bloc/chatFlow/FlowCoordinator.dart';
 import 'package:farmsmart_flutter/model/entities/ProfileEntity.dart';
 import 'package:farmsmart_flutter/model/entities/loading_status.dart';
 import 'package:farmsmart_flutter/model/repositories/account/AccountRepositoryInterface.dart';
@@ -32,11 +33,17 @@ class StartupViewModelProvider implements ViewModelProvider<StartupViewModel> {
   final StreamController<StartupViewModel> _controller =
       StreamController<StartupViewModel>.broadcast();
   StartupViewModelProvider(this._accountRepository);
-  bool _profileCreationPending = false;
+
+  NewAccountFlow _accountFlow;
 
   @override
   StartupViewModel initial() {
     if (_snapshot == null) {
+      _accountFlow = NewAccountFlow(
+        _accountRepository,
+        _accountFlowStatusChanged,
+      );
+      _accountFlow.init();
       _accountRepository.observeAuthorized().listen((account) {
         if (account != null) {
           account.profileRepository.observeCurrent().listen((currentProfile) {
@@ -55,10 +62,15 @@ class StartupViewModelProvider implements ViewModelProvider<StartupViewModel> {
     return _snapshot;
   }
 
-  void _updateState(ProfileEntity currentProfile){
-    final needsProfileCreation =
-                !_profileCreationPending && (currentProfile == null);
-    _setState(!needsProfileCreation, loading: _profileCreationPending);
+  void _accountFlowStatusChanged(FlowCoordinator coordinator){
+    
+  }
+
+  void _updateState(ProfileEntity currentProfile) {
+    _setState(
+      (currentProfile != null),
+      loading: false,
+    );
   }
 
   @override
@@ -71,7 +83,10 @@ class StartupViewModelProvider implements ViewModelProvider<StartupViewModel> {
     return _controller.stream;
   }
 
-  void _setState(bool authorized, {bool loading = false}) {
+  void _setState(
+    bool authorized, {
+    bool loading = false,
+  }) {
     _snapshot = StartupViewModel(
       loading ? LoadingStatus.LOADING : LoadingStatus.SUCCESS,
       _refresh,
@@ -88,7 +103,7 @@ class StartupViewModelProvider implements ViewModelProvider<StartupViewModel> {
       footerText: _LocalisedStrings.footerText(),
       headerImage: _Assets.headerImage,
       subtitleImage: _Assets.logoImage,
-      newAccountFlow: NewAccountFlow(_accountRepository),
+      newAccountFlow: _accountFlow,
       switchLanguageTapped: (language) => _switchLanguage(language),
     );
   }

@@ -2,25 +2,48 @@ import 'package:farmsmart_flutter/model/bloc/chatFlow/NewProfileFlow.dart';
 import 'package:farmsmart_flutter/model/repositories/account/AccountRepositoryInterface.dart';
 import 'package:flutter/cupertino.dart';
 
-class NewAccountFlow {
-  final AccountRepositoryInterface _accountRepository;
-  final NewProfileFlow _newProfile;
+import 'FlowCoordinator.dart';
 
-  NewAccountFlow(AccountRepositoryInterface accountRepository) : this._accountRepository = accountRepository, this._newProfile = NewProfileFlow(accountRepository);
-  
-  void run(BuildContext context, {Function onSuccess, Function onFail}){
+class NewAccountFlow implements FlowCoordinator {
+  final AccountRepositoryInterface _accountRepository;
+  final Function _onStatusChanged;
+  bool _creatingAccount = false;
+  NewProfileFlow _newProfile;
+
+  NewAccountFlow(AccountRepositoryInterface accountRepository, Function onStatusChanged)
+      : this._accountRepository = accountRepository, this._onStatusChanged = onStatusChanged;
+
+  init() {
+    _newProfile = NewProfileFlow(_accountRepository, _profileFlowOnStatusChanged);
+  }
+
+  void run(BuildContext context, {Function onSuccess, Function onFail}) {
     _createAccount(context, onSuccess, onFail);
   }
 
-  void _createAccount(BuildContext context, Function onSuccess, Function onFail) {
-      _accountRepository.anonymous().then((account) {
-        if(account !=null){
-          _newProfile.run(context, onSuccess: onSuccess, onFail: onFail);
-        }
-        else
-        {
-          onFail();
-        }
-      });
+  void _createAccount(
+      BuildContext context, Function onSuccess, Function onFail) {
+    _creatingAccount = true;
+    _onStatusChanged(this);
+    _accountRepository.anonymous().then((account) {
+      if (account != null) {
+        _newProfile.run(context, onSuccess: onSuccess, onFail: onFail);
+      } else {
+        onFail();
+      }
+      _creatingAccount = false;
+    });
+  }
+
+  @override
+  FlowCoordinatorStatus get status {
+    if (_creatingAccount) {
+      return FlowCoordinatorStatus.InProgress;
+    }
+    return _newProfile.status;
+  }
+
+  void _profileFlowOnStatusChanged(FlowCoordinator flow) {
+    _onStatusChanged(this);
   }
 }

@@ -84,7 +84,7 @@ class ProfileDetailProvider
   ProfileViewModel transform({ProfileEntity from}) {
     List<ProfileListItemViewModel> list = _profileItems();
     final switchProfileProvider =
-        SwitchProfileListProvider(profileRepo: _profileRepository);
+        SwitchProfileListProvider(accountRepo: _accountRepository);
     final personName = PersonName(from?.name ?? "");
     return ProfileViewModel(
       loadingStatus: _loadingStatus,

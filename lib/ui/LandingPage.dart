@@ -1,7 +1,6 @@
 import 'dart:ui';
 
-import 'package:farmsmart_flutter/chat/ChatPage.dart';
-import 'package:farmsmart_flutter/model/bloc/chatFlow/CreateAccountFlow.dart';
+import 'package:farmsmart_flutter/model/bloc/chatFlow/FlowCoordinator.dart';
 import 'package:farmsmart_flutter/ui/common/ActionSheet.dart';
 import 'package:farmsmart_flutter/ui/common/ActionSheetListItem.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
@@ -48,7 +47,7 @@ class LandingPageViewModel {
 
   String headerImage;
   String subtitleImage;
-  NewAccountFlow newAccountFlow;
+  FlowCoordinator newAccountFlow;
   Function(String) switchLanguageTapped;
 
   LandingPageViewModel({

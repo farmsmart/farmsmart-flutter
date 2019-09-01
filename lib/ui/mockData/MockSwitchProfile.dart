@@ -18,7 +18,6 @@ class MockSwitchProfile {
       isVisible: false,
       selectedIndex: 0,
       confirmedIndex: 0,
-      addProfileAction: () => _mockAddProfile(),
     );
   }
 

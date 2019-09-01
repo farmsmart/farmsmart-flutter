@@ -10,6 +10,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 
 import '../Transformer.dart';
+import 'FlowCoordinator.dart';
 
 class _LocalisedAssets {
   static String onboardingFlow() =>
@@ -20,17 +21,22 @@ class _Strings {
   static const nameField = "Name";
 }
 
-class NewProfileFlow {
+class NewProfileFlow implements FlowCoordinator {
 
   final AccountRepositoryInterface _accountRepository;
+  final Function _onStatusChanged;
+  FlowCoordinatorStatus _status = FlowCoordinatorStatus.Idle;
 
-  NewProfileFlow(this._accountRepository);
+  NewProfileFlow(this._accountRepository, Function onStatusChanged): this._onStatusChanged = onStatusChanged;
   
   void run(BuildContext context, {Function onSuccess, Function onFail}){
+      _setStatus(FlowCoordinatorStatus.InProgress);
        NavigationScope.presentModal(
         context, ChatPage(viewModel: _chatPageViewModel(onSuccess: () {
+          _setStatus(FlowCoordinatorStatus.Complete);
           return null;
         }, onFail: (error){
+          _setStatus(FlowCoordinatorStatus.Complete);
           return error;
         })));
   }
@@ -47,6 +53,13 @@ class NewProfileFlow {
         onFail();
       }
     }, onFail);
+  }
+
+  void _setStatus(FlowCoordinatorStatus newStatus) {
+    if(newStatus != _status){
+       _status = newStatus;
+       _onStatusChanged(this);
+    }
   }
 
   void _updateAccount(Map<String, ChatResponseViewModel> chatInput, Function onSuccess, Function onFail) {
@@ -69,5 +82,12 @@ class NewProfileFlow {
         });
       });
     }
+    else {
+      onFail();
+    }
   }
+
+  @override
+  // TODO: implement status
+  FlowCoordinatorStatus get status => _status;
 }
