@@ -34,12 +34,12 @@ class StartupViewModelProvider implements ViewModelProvider<StartupViewModel> {
       StreamController<StartupViewModel>.broadcast();
   StartupViewModelProvider(this._accountRepository);
 
-  NewAccountFlow _accountFlow;
+  NewAccountFlowCoordinator _accountFlow;
 
   @override
   StartupViewModel initial() {
     if (_snapshot == null) {
-      _accountFlow = NewAccountFlow(
+      _accountFlow = NewAccountFlowCoordinator(
         _accountRepository,
         _accountFlowStatusChanged,
       );

@@ -87,7 +87,7 @@ class SwitchProfileListProvider
       title: _LocalisedStrings.switchProfile(),
       actionTitle: _LocalisedStrings.switchProfile(),
       items: listItems,
-      newProfileFlow: NewProfileFlow(_accountRepository, _onFlowStatusChanged),
+      newProfileFlow: NewProfileFlowCoordinator(_accountRepository, _onFlowStatusChanged),
       refresh: _refresh,
       loadingStatus: status,
     );

@@ -21,13 +21,13 @@ class _Strings {
   static const nameField = "Name";
 }
 
-class NewProfileFlow implements FlowCoordinator {
+class NewProfileFlowCoordinator implements FlowCoordinator {
 
   final AccountRepositoryInterface _accountRepository;
   final Function _onStatusChanged;
   FlowCoordinatorStatus _status = FlowCoordinatorStatus.Idle;
 
-  NewProfileFlow(this._accountRepository, Function onStatusChanged): this._onStatusChanged = onStatusChanged;
+  NewProfileFlowCoordinator(this._accountRepository, Function onStatusChanged): this._onStatusChanged = onStatusChanged;
   
   void run(BuildContext context, {Function onSuccess, Function onFail}){
       _setStatus(FlowCoordinatorStatus.InProgress);
@@ -88,6 +88,5 @@ class NewProfileFlow implements FlowCoordinator {
   }
 
   @override
-  // TODO: implement status
   FlowCoordinatorStatus get status => _status;
 }

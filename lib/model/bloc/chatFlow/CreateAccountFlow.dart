@@ -4,17 +4,17 @@ import 'package:flutter/cupertino.dart';
 
 import 'FlowCoordinator.dart';
 
-class NewAccountFlow implements FlowCoordinator {
+class NewAccountFlowCoordinator implements FlowCoordinator {
   final AccountRepositoryInterface _accountRepository;
   final Function _onStatusChanged;
   bool _creatingAccount = false;
-  NewProfileFlow _newProfile;
+  NewProfileFlowCoordinator _newProfile;
 
-  NewAccountFlow(AccountRepositoryInterface accountRepository, Function onStatusChanged)
+  NewAccountFlowCoordinator(AccountRepositoryInterface accountRepository, Function onStatusChanged)
       : this._accountRepository = accountRepository, this._onStatusChanged = onStatusChanged;
 
   init() {
-    _newProfile = NewProfileFlow(_accountRepository, _profileFlowOnStatusChanged);
+    _newProfile = NewProfileFlowCoordinator(_accountRepository, _profileFlowOnStatusChanged);
   }
 
   void run(BuildContext context, {Function onSuccess, Function onFail}) {
