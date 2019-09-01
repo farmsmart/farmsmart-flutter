@@ -1,14 +1,13 @@
 import 'dart:ui';
 
 import 'package:farmsmart_flutter/chat/ChatPage.dart';
+import 'package:farmsmart_flutter/model/bloc/chatFlow/CreateAccountFlow.dart';
 import 'package:farmsmart_flutter/ui/common/ActionSheet.dart';
 import 'package:farmsmart_flutter/ui/common/ActionSheetListItem.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
-import 'common/modal_navigator.dart';
 
 class _Strings {
   static final englishAction = "English";
@@ -49,7 +48,7 @@ class LandingPageViewModel {
 
   String headerImage;
   String subtitleImage;
-  ChatPageViewModel chatViewModel;
+  NewAccountFlow newAccountFlow;
   Function(String) switchLanguageTapped;
 
   LandingPageViewModel({
@@ -58,7 +57,7 @@ class LandingPageViewModel {
     this.headerImage,
     this.subtitleImage,
     this.footerText,
-    this.chatViewModel,
+    this.newAccountFlow,
     this.switchLanguageTapped,
   });
 }
@@ -213,8 +212,11 @@ class LandingPage extends StatelessWidget {
     BuildContext context,
     LandingPageViewModel viewModel,
   }) {
-    NavigationScope.presentModal(
-        context, ChatPage(viewModel: viewModel.chatViewModel));
+    viewModel.newAccountFlow.run(context, onSuccess: (){
+      print("YES");
+    }, onFail: (error){
+      print(error);
+    });
   }
 
   void _languageTapped(ActionSheet sheet, BuildContext context) {

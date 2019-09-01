@@ -49,7 +49,6 @@ class FirebaseProfileRepository implements ProfileRepositoryInterface {
       return _profilesCollection(user).add(data).then((result) {
         return result.get().then((document) {
           final newProfile = _transformFromFirebase.transform(from: document);
-          
           return newProfile;
         });
       });
@@ -82,23 +81,23 @@ class FirebaseProfileRepository implements ProfileRepositoryInterface {
   @override
   Future<ProfileEntity> getCurrent() {
     return _user.then((user) {
-      return _firestore.document(_userPath(user)).get().then((document) {
-        if (document.data != null) {
-          final currentDocumentID = document.data[_Fields.currentProfile];
-          if (currentDocumentID != null){
-            final path = _currentProfilePath(user,currentDocumentID);
-            return _firestore
-                .document(path)
-                .get()
-                .then((document) {
-              final profile = _transformFromFirebase.transform(from: document);
-              _currentProfileController.sink.add(profile);
-              return profile;
-            });
+      if (user != null) {
+        return _firestore.document(_userPath(user)).get().then((document) {
+          if (document.data != null) {
+            final currentDocumentID = document.data[_Fields.currentProfile];
+            if (currentDocumentID != null) {
+              final path = _currentProfilePath(user, currentDocumentID);
+              return _firestore.document(path).get().then((document) {
+                final profile =
+                    _transformFromFirebase.transform(from: document);
+                _currentProfileController.sink.add(profile);
+                return profile;
+              });
+            }
           }
-        }
-        return null;
-      });
+          return null;
+        });
+      }
     });
   }
 
@@ -126,31 +125,28 @@ class FirebaseProfileRepository implements ProfileRepositoryInterface {
 
   @override
   Future<bool> remove(ProfileEntity profile) {
-     return _user.then((user) {
+    return _user.then((user) {
       return _firestore.document(_userPath(user)).get().then((document) {
         if (document.data != null) {
           final currentDocumentID = document.data[_Fields.currentProfile];
           final path = _currentProfilePath(user, currentDocumentID);
-          return _firestore.document(path).delete().then((response){
+          return _firestore.document(path).delete().then((response) {
             return true;
-          }, onError: (error){
+          }, onError: (error) {
             return false;
           });
         }
         return false;
       });
-     });
+    });
   }
 
   @override
   Future<bool> switchTo(ProfileEntity profile) {
     return _user.then((user) {
-      final id = (profile != null) ? profile.id : null ;
+      final id = (profile != null) ? profile.id : null;
       final data = {_Fields.currentProfile: id};
-      return _firestore
-          .document(_userPath(user))
-          .setData(data)
-          .then((result) {
+      return _firestore.document(_userPath(user)).setData(data).then((result) {
         _currentProfileController.sink.add(profile);
         return true;
       });
@@ -159,9 +155,14 @@ class FirebaseProfileRepository implements ProfileRepositoryInterface {
     });
   }
 
-  String _currentProfilePath(FirebaseUser user, String profileID){
-    return _userPath(user) + _Fields.seporator + _Fields.profiles + _Fields.seporator + profileID;
+  String _currentProfilePath(FirebaseUser user, String profileID) {
+    return _userPath(user) +
+        _Fields.seporator +
+        _Fields.profiles +
+        _Fields.seporator +
+        profileID;
   }
+
   String _userPath(FirebaseUser user) {
     return _Fields.collectionName + _Fields.seporator + user.uid;
   }
