@@ -40,7 +40,7 @@ class SwitchProfileListProvider
   SwitchProfileListViewModel initial() {
     if (_snapshot == null) {
       _accountRepository.observeAuthorized().listen((account){
-        account.profileRepository?.observeAll()?.listen((profiles) {
+        account.profileRepository?.stream()?.listen((profiles) {
         _updateViewModel(
           status: LoadingStatus.SUCCESS,
           profiles: profiles,
@@ -107,7 +107,7 @@ class SwitchProfileListProvider
     _accountRepository.authorized().then((account){
       account.profileRepository.getCurrent().then((profile) {
       _currentProfile = profile;
-       account.profileRepository.getAll();
+       account.profileRepository.get();
     });
     });
   }

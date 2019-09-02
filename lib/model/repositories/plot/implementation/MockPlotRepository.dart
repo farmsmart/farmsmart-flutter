@@ -108,7 +108,7 @@ class MockPlotRepository implements PlotRepositoryInterface {
   }
 
   @override
-  Stream<PlotEntity> observe(String uri) {
+  Stream<PlotEntity> observeSingle(String uri) {
     final streamTransformer = StreamTransformer<PlotEntity,PlotEntity>.fromHandlers(handleData: (input, sink) {
         if(input.id== uri){
           return sink.add(input);

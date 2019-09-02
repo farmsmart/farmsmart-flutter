@@ -27,7 +27,7 @@ class MockCropRepository implements CropRepositoryInterface {
   }
 
   @override
-  Stream<CropEntity> observe(String uri) {
+  Stream<CropEntity> observeSingle(String uri) {
     var sequence;
     for (var i = 0; i < _streamEventCount; i++) {
       sequence.add(Future.delayed(_delay, () => MockCrop.build()));

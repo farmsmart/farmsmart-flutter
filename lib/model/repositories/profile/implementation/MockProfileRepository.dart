@@ -65,12 +65,12 @@ class MockProfileRepository extends MockListRepository<ProfileEntity>
   }
 
   @override
-  Future<List<ProfileEntity>> getAll() {
+  Future<List<ProfileEntity>> get() {
     return getList();
   }
 
   @override
-  Stream<List<ProfileEntity>> observeAll() {
+  Stream<List<ProfileEntity>> stream() {
     return observeList();
   }
 }

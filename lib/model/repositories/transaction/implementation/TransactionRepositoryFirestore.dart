@@ -41,7 +41,7 @@ class TransactionRepositoryFirestore implements TransactionRepositoryInterface {
   }
 
   @override
-  Stream<TransactionEntity> observe(String uri) {
+  Stream<TransactionEntity> observeSingle(String uri) {
     // TODO: implement observe
     return null;
   }
