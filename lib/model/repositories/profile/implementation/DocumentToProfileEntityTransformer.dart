@@ -16,7 +16,7 @@ class DocumentToProfileEntityTransformer extends ObjectTransformer<DocumentSnaps
     final data = from.data;
     final name = castOrNull<String>(data[_Fields.name]);
     final plotInfo = castMapOrNull<String,String>(data[_Fields.plotInfo]);
-    final id = castOrNull<String>(from.documentID);
+    final id = castOrNull<String>(from.reference.path);
     return ProfileEntity(id,name,null,plotInfo,);
   }
   

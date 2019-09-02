@@ -19,6 +19,7 @@ import 'profile/implementation/FirebaseProfileRepository.dart';
 import 'ratingEngine/RatingEngineRepositoryInterface.dart';
 import 'ratingEngine/implementation/RatingEngineRepositoryFireStore.dart';
 import 'repository_provider.dart';
+import 'transaction/implementation/TransactionRepositoryFirestore.dart';
 
 
 class FlameLinkRepositoryProvider implements RepositoryProvider {
@@ -39,7 +40,7 @@ class FlameLinkRepositoryProvider implements RepositoryProvider {
         environment: AppConfig.of(context).environment);
     this._profileRepo = FirebaseProfileRepository(this._fireStore,this._firebaseAuth);
     this._plotRepo = MockPlotRepository(this._profileRepo);
-    this._transactionRepo = MockTransactionRepository(this._profileRepo);
+    this._transactionRepo = TransactionRepositoryFirestore(this._fireStore,this._profileRepo);
   }
 
   @override

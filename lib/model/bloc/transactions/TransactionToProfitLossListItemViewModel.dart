@@ -43,7 +43,7 @@ class TransactionToProfitLossListItemViewModel
   String _title(TransactionEntity from) {
     final dateString =
         (from.timestamp == null) ? "" : _dateFormatter.format(from.timestamp);
-    return dateString + _Strings.divider + from.tag;
+    return dateString + _Strings.divider + (from.tag ?? "");
   }
 
   String _subtitle(TransactionEntity from) {

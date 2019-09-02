@@ -1,37 +1,60 @@
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:farmsmart_flutter/model/entities/EntityCollectionInterface.dart';
-
 import 'package:farmsmart_flutter/model/entities/ProfileEntity.dart';
 
 import 'package:farmsmart_flutter/model/entities/TransactionAmount.dart';
 
 import 'package:farmsmart_flutter/model/entities/TransactionEntity.dart';
+import 'package:farmsmart_flutter/model/repositories/FirestoreList.dart';
+import 'package:farmsmart_flutter/model/repositories/profile/ProfileRepositoryInterface.dart';
 
 import '../TransactionRepositoryInterface.dart';
+import 'TransactionEntityTransformers.dart';
 
-class TransactionRepositoryFirestore implements TransactionRepositoryInterface {
-  @override
-  Future<TransactionEntity> add(TransactionEntity transaction) {
-    // TODO: implement add
-    return null;
+
+class _Fields {
+  static const transactions = "/transactions";
+}
+
+String _identify(TransactionEntity entity) {
+  return entity.id;
+}
+
+class TransactionRepositoryFirestore extends FireStoreList<TransactionEntity>
+    implements TransactionRepositoryInterface {
+  final ProfileRepositoryInterface _profileRepository;
+  Future<ProfileEntity> _currentProfile;
+
+  TransactionRepositoryFirestore(
+    Firestore firestore,
+    ProfileRepositoryInterface profileRepository,
+  )   : this._profileRepository = profileRepository,
+        super(
+          firestore,
+          TransactionEntityToDocumentTransformer(),
+          DocumentToTransactionEntityTransformer(),
+          null,
+          _identify,
+        ) {
+    path = _transactionsCollectionPath;
+    _profileRepository.observeCurrent().listen((profile) {
+      _currentProfile = Future.value(profile);
+    });
+    _currentProfile = _profileRepository.getCurrent().then((profile) {
+      return profile;
+    });
   }
 
   @override
   Future<TransactionAmount> allTimeBalance() {
     // TODO: implement allTimeBalance
-    return null;
+    return Future.value(TransactionAmount("0", false));
   }
 
   @override
-  Future<List<TransactionEntity>> get(ProfileEntity forProfile) {
-    // TODO: implement get
-    return null;
-  }
-
-  @override
-  Future<List<TransactionEntity>> getCollection(EntityCollection<TransactionEntity> collection) {
-    // TODO: implement getCollection
-    return null;
+  Future<List<TransactionEntity>> getCollection(
+      EntityCollection<TransactionEntity> collection) {
+    return collection.getEntities();
   }
 
   @override
@@ -47,18 +70,6 @@ class TransactionRepositoryFirestore implements TransactionRepositoryInterface {
   }
 
   @override
-  Stream<List<TransactionEntity>> observeProfile(ProfileEntity forProfile) {
-    // TODO: implement observeProfile
-    return null;
-  }
-
-  @override
-  Future<bool> remove(TransactionEntity transaction) {
-    // TODO: implement remove
-    return null;
-  }
-
-  @override
   Future<TransactionAmount> thisWeekCosts() {
     // TODO: implement thisWeekCosts
     return null;
@@ -70,4 +81,9 @@ class TransactionRepositoryFirestore implements TransactionRepositoryInterface {
     return null;
   }
 
+  Future<String> _transactionsCollectionPath() {
+    return _currentProfile.then((profile){
+      return profile.id + _Fields.transactions;
+    });
+  }
 }

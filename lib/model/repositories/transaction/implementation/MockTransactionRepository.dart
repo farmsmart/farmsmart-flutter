@@ -1,4 +1,3 @@
-import 'package:farmsmart_flutter/model/entities/ProfileEntity.dart';
 import 'package:farmsmart_flutter/model/entities/TransactionAmount.dart';
 import 'package:farmsmart_flutter/model/entities/TransactionEntity.dart';
 import 'package:farmsmart_flutter/model/entities/mock/MockTransaction.dart';
@@ -31,12 +30,12 @@ class MockTransactionRepository extends MockListRepository<TransactionEntity>
   }
 
   @override
-  Future<List<TransactionEntity>> get(ProfileEntity forProfile) {
+  Future<List<TransactionEntity>> get() {
     return getList();
   }
 
   @override
-  Stream<List<TransactionEntity>> observeProfile(ProfileEntity forProfile) {
+  Stream<List<TransactionEntity>> stream() {
     return observeList();
   }
 

@@ -52,7 +52,7 @@ class ProfitLossListProvider
             _snapshot = _viewModelFromModel(_controller, _transactions);
             _controller.sink.add(_snapshot);
       });
-      _transactionsRepository.observeProfile(null).listen((transactions) {
+      _transactionsRepository.stream().listen((transactions) {
         _transactions = transactions;
         _transactionsRepository.allTimeBalance().then((balance) {
           _title = balance.toString(allowNegative: true);
@@ -105,7 +105,7 @@ class ProfitLossListProvider
 
   void _update(StreamController controller) {
     _plotRepository.getFarm();
-    _transactionsRepository.get(null);
+    _transactionsRepository.get();
   }
 
   List<String> _getTagList(List<PlotEntity> plots) {
