@@ -211,11 +211,7 @@ class LandingPage extends StatelessWidget {
     BuildContext context,
     LandingPageViewModel viewModel,
   }) {
-    viewModel.newAccountFlow.run(context, onSuccess: (){
-      print("YES");
-    }, onFail: (error){
-      print(error);
-    });
+    viewModel.newAccountFlow.run(context);
   }
 
   void _languageTapped(ActionSheet sheet, BuildContext context) {

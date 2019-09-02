@@ -34,10 +34,14 @@ class NewProfileFlowCoordinator implements FlowCoordinator {
        NavigationScope.presentModal(
         context, ChatPage(viewModel: _chatPageViewModel(onSuccess: () {
           _setStatus(FlowCoordinatorStatus.Complete);
-          return null;
+          if(onSuccess != null){
+            onSuccess();
+          }
         }, onFail: (error){
           _setStatus(FlowCoordinatorStatus.Complete);
-          return error;
+          if(onFail != null) {
+            onFail(error);
+          }
         })));
   }
 

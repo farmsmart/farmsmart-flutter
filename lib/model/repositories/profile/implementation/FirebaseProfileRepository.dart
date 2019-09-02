@@ -14,7 +14,7 @@ class _Fields {
   static const ownerID = "owner";
   static const profiles = "profiles";
   static const currentProfile = "currentProfile";
-  static const seporator = "/";
+  static const separator = "/";
 }
 
 class FirebaseProfileRepository implements ProfileRepositoryInterface {
@@ -48,8 +48,7 @@ class FirebaseProfileRepository implements ProfileRepositoryInterface {
           _transformToFirebase.transform(from: profile);
       return _profilesCollection(user).add(data).then((result) {
         return result.get().then((document) {
-          final newProfile = _transformFromFirebase.transform(from: document);
-          return newProfile;
+          return _transformFromFirebase.transform(from: document);
         });
       });
     });
@@ -157,18 +156,18 @@ class FirebaseProfileRepository implements ProfileRepositoryInterface {
 
   String _currentProfilePath(FirebaseUser user, String profileID) {
     return _userPath(user) +
-        _Fields.seporator +
+        _Fields.separator +
         _Fields.profiles +
-        _Fields.seporator +
+        _Fields.separator +
         profileID;
   }
 
   String _userPath(FirebaseUser user) {
-    return _Fields.collectionName + _Fields.seporator + user.uid;
+    return _Fields.collectionName + _Fields.separator + user.uid;
   }
 
   CollectionReference _profilesCollection(FirebaseUser user) {
-    final path = _userPath(user) + _Fields.seporator + _Fields.profiles;
+    final path = _userPath(user) + _Fields.separator + _Fields.profiles;
     return _firestore.collection(path);
   }
 
