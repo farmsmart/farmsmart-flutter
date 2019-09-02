@@ -85,7 +85,7 @@ class FirebaseProfileRepository implements ProfileRepositoryInterface {
           if (document.data != null) {
             final currentDocumentID = document.data[_Fields.currentProfile];
             if (currentDocumentID != null) {
-              final path = _currentProfilePath(user, currentDocumentID);
+              final path = _profilePath(user, currentDocumentID);
               return _firestore.document(path).get().then((document) {
                 final profile =
                     _transformFromFirebase.transform(from: document);
@@ -125,18 +125,12 @@ class FirebaseProfileRepository implements ProfileRepositoryInterface {
   @override
   Future<bool> remove(ProfileEntity profile) {
     return _user.then((user) {
-      return _firestore.document(_userPath(user)).get().then((document) {
-        if (document.data != null) {
-          final currentDocumentID = document.data[_Fields.currentProfile];
-          final path = _currentProfilePath(user, currentDocumentID);
+          final path = _profilePath(user, profile.id);
           return _firestore.document(path).delete().then((response) {
             return true;
           }, onError: (error) {
             return false;
           });
-        }
-        return false;
-      });
     });
   }
 
@@ -154,7 +148,7 @@ class FirebaseProfileRepository implements ProfileRepositoryInterface {
     });
   }
 
-  String _currentProfilePath(FirebaseUser user, String profileID) {
+  String _profilePath(FirebaseUser user, String profileID) {
     return _userPath(user) +
         _Fields.separator +
         _Fields.profiles +
