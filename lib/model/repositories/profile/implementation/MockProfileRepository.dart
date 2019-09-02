@@ -28,7 +28,7 @@ class MockProfileRepository extends MockListRepository<ProfileEntity>
 
   factory MockProfileRepository() {
     final identifyEntity = (ProfileEntity profile) {
-      return profile.id;
+      return profile.uri;
     };
     final profiles = MockProfile().list(count: _Constants.mockCount);
     return MockProfileRepository._(identifyEntity, profiles, profiles.first);

@@ -45,9 +45,9 @@ class HomeViewModelProvider implements ViewModelProvider<HomeViewModel> {
       _accountRepository.authorized().then((account) {
         _profileRepository = account.profileRepository;
         account.profileRepository.observeCurrent().listen((currentProfile) {
-          final currentProfileID = currentProfile?.id;
+          final currentProfileID = currentProfile?.uri;
           _snapshot = _viewModel((currentProfileID != null) ? LoadingStatus.SUCCESS : LoadingStatus.LOADING);
-          if (_lastProfile?.id != currentProfileID) {
+          if (_lastProfile?.uri != currentProfileID) {
             _controller.sink.add(_snapshot);
           }
           _lastProfile = currentProfile;

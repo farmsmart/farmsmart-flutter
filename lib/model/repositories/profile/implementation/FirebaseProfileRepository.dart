@@ -18,7 +18,7 @@ class _Fields {
 }
 
 String _identify(ProfileEntity entity) {
-  return entity.id;
+  return entity.uri;
 }
 
 class FirebaseProfileRepository extends FireStoreList<ProfileEntity>
@@ -63,10 +63,9 @@ class FirebaseProfileRepository extends FireStoreList<ProfileEntity>
       if (user != null) {
         return firestore.document(_userPath(user)).get().then((document) {
           if (document.data != null) {
-            final currentDocumentID = document.data[_Fields.currentProfile];
-            if (currentDocumentID != null) {
-              final path = _profilePath(user, currentDocumentID);
-              return firestore.document(path).get().then((document) {
+            final profileURI = document.data[_Fields.currentProfile];
+            if (profileURI != null) {
+              return firestore.document(profileURI).get().then((document) {
                 final profile =
                     fromFirestoreTransformer.transform(from: document);
                 _currentProfileController.sink.add(profile);
@@ -101,7 +100,7 @@ class FirebaseProfileRepository extends FireStoreList<ProfileEntity>
   @override
   Future<bool> switchTo(ProfileEntity profile) {
     return _user.then((user) {
-      final id = (profile != null) ? profile.id : null;
+      final id = (profile != null) ? profile.uri : null;
       final data = {_Fields.currentProfile: id};
       return firestore.document(_userPath(user)).setData(data).then((result) {
         _currentProfileController.sink.add(profile);

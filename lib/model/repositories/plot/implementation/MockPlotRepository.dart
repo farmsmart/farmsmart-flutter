@@ -36,7 +36,7 @@ class MockPlotRepository implements PlotRepositoryInterface {
     return _plotBuilder.buildWith(crop).then((newPlot){
       return _profileRepository.getCurrent().then((profile) {
         
-        return _listFor(profile.id).add(newPlot); 
+        return _listFor(profile.uri).add(newPlot); 
       });
     });
   }
@@ -44,7 +44,7 @@ class MockPlotRepository implements PlotRepositoryInterface {
   @override
   Future<List<PlotEntity>> getFarm() {
      return _profileRepository.getCurrent().then((profile) {
-       return _listFor(profile.id).getList();
+       return _listFor(profile.uri).getList();
      });
   }
 
@@ -103,7 +103,7 @@ class MockPlotRepository implements PlotRepositoryInterface {
   @override
   Future<PlotEntity> getSingle(String uri) {
      return _profileRepository.getCurrent().then((profile) {
-       return _listFor(profile.id).getSingle(uri);
+       return _listFor(profile.uri).getSingle(uri);
      });
   }
 
@@ -120,13 +120,13 @@ class MockPlotRepository implements PlotRepositoryInterface {
   @override
   Future<bool> remove(PlotEntity plot) {
      return _profileRepository.getCurrent().then((profile) {
-       return _listFor(profile.id).remove(plot);
+       return _listFor(profile.uri).remove(plot);
      });
   }
 
   Future<PlotEntity> replace(PlotEntity oldObject, PlotEntity newObject) {
      return _profileRepository.getCurrent().then((profile) {
-       return _listFor(profile.id).replace(oldObject,newObject);
+       return _listFor(profile.uri).replace(oldObject,newObject);
      });
   }
 
@@ -143,7 +143,7 @@ class MockPlotRepository implements PlotRepositoryInterface {
 
   void _update({String id, List<PlotEntity> plots}) {
     _profileRepository.getCurrent().then((currentProfile) {
-        if(currentProfile.id  == id) {
+        if(currentProfile.uri  == id) {
           for (var plot in plots) {
             _streamforObservers.sink.add(plot);
           }
