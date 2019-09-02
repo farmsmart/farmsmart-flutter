@@ -17,32 +17,45 @@ class _LocalisedAssets {
       Intl.message('assets/responses/farmsmart_chat_ui_flow.json');
 }
 
+class _LocalisedStrings {
+  static String alreadyInProgress() =>
+      Intl.message('Operation already in progress');
+}
+
 class _Strings {
   static const nameField = "Name";
 }
 
 class NewProfileFlowCoordinator implements FlowCoordinator {
-
   final AccountRepositoryInterface _accountRepository;
   final Function _onStatusChanged;
   FlowCoordinatorStatus _status = FlowCoordinatorStatus.Idle;
 
-  NewProfileFlowCoordinator(this._accountRepository, Function onStatusChanged): this._onStatusChanged = onStatusChanged;
-  
-  void run(BuildContext context, {Function onSuccess, Function onFail}){
+  NewProfileFlowCoordinator(this._accountRepository, Function onStatusChanged)
+      : this._onStatusChanged = onStatusChanged;
+
+  void run(BuildContext context, {Function onSuccess, Function onFail}) {
+    if (_status != FlowCoordinatorStatus.InProgress) {
       _setStatus(FlowCoordinatorStatus.InProgress);
-       NavigationScope.presentModal(
-        context, ChatPage(viewModel: _chatPageViewModel(onSuccess: () {
-          _setStatus(FlowCoordinatorStatus.Complete);
-          if(onSuccess != null){
-            onSuccess();
-          }
-        }, onFail: (error){
-          _setStatus(FlowCoordinatorStatus.Complete);
-          if(onFail != null) {
-            onFail(error);
-          }
-        })));
+      NavigationScope.presentModal(
+          context,
+          ChatPage(
+              viewModel: _chatPageViewModel(onSuccess: () {
+            _setStatus(FlowCoordinatorStatus.Complete);
+            if (onSuccess != null) {
+              onSuccess();
+            }
+          }, onFail: (error) {
+            _setStatus(FlowCoordinatorStatus.Complete);
+            if (onFail != null) {
+              onFail(error);
+            }
+          })));
+    } else {
+       if (onFail != null) {
+          onFail(UnsupportedError(_LocalisedStrings.alreadyInProgress()));
+       }
+    }
   }
 
   ChatPageViewModel _chatPageViewModel({Function onSuccess, Function onFail}) {
@@ -50,23 +63,26 @@ class NewProfileFlowCoordinator implements FlowCoordinator {
       final Map<String, ChatResponseViewModel> chatInput =
           castOrNull<Map<String, ChatResponseViewModel>>(data);
       if (chatInput != null) {
-        _updateAccount(data, onSuccess, onFail,);
-      }
-      else
-      {
+        _updateAccount(
+          data,
+          onSuccess,
+          onFail,
+        );
+      } else {
         onFail();
       }
     }, onFail);
   }
 
   void _setStatus(FlowCoordinatorStatus newStatus) {
-    if(newStatus != _status){
-       _status = newStatus;
-       _onStatusChanged(this);
+    if (newStatus != _status) {
+      _status = newStatus;
+      _onStatusChanged(this);
     }
   }
 
-  void _updateAccount(Map<String, ChatResponseViewModel> chatInput, Function onSuccess, Function onFail) {
+  void _updateAccount(Map<String, ChatResponseViewModel> chatInput,
+      Function onSuccess, Function onFail) {
     final name = chatInput[_Strings.nameField];
     final transformer = ChatResponseToPlotInfoTransformer();
     final plotInfo = transformer.transform(from: chatInput);
@@ -85,8 +101,7 @@ class NewProfileFlowCoordinator implements FlowCoordinator {
           });
         });
       });
-    }
-    else {
+    } else {
       onFail();
     }
   }
