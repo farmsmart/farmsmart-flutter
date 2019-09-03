@@ -17,8 +17,10 @@ class FireStoreList<T> {
   final String orderField;
   final bool orderDecending;
   PathProvider path;
+  String _currentPath;
   ObjectIdentifier<T> identifier;
   StreamController<List<T>> _listController;
+  StreamSubscription<QuerySnapshot> _subscription;
 
   FireStoreList(this.firestore, this.toFirestoreTransformer,
       this.fromFirestoreTransformer, this.path, this.identifier,
@@ -53,25 +55,8 @@ class FireStoreList<T> {
   Stream<List<T>> stream() {
     if (_listController == null) {
       _listController = StreamController<List<T>>.broadcast();
-      path().then((collectionPath) {
-        if (orderField != null) {
-          return _orderedCollection(
-            collectionPath,
-            orderField,
-            descending: orderDecending,
-          ).snapshots().listen((snapshot) {
-            _update(snapshot);
-          });
-        } else {
-          return firestore
-              .collection(collectionPath)
-              .snapshots()
-              .listen((snapshot) {
-            _update(snapshot);
-          });
-        }
-      });
     }
+    renewSubscriptionIfNeeded();
     return _listController.stream;
   }
 
@@ -95,6 +80,31 @@ class FireStoreList<T> {
         }, onError: (error) {
           return emptyList;
         });
+      }
+    });
+  }
+
+  void renewSubscriptionIfNeeded() {
+    path().then((collectionPath) {
+      if (collectionPath != _currentPath) {
+        _subscription?.cancel();
+        if (orderField != null) {
+          _subscription = _orderedCollection(
+            collectionPath,
+            orderField,
+            descending: orderDecending,
+          ).snapshots().listen((snapshot) {
+            _update(snapshot);
+          });
+        } else {
+          _subscription = firestore
+              .collection(collectionPath)
+              .snapshots()
+              .listen((snapshot) {
+            _update(snapshot);
+          });
+        }
+        _currentPath = collectionPath;
       }
     });
   }

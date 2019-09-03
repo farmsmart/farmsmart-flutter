@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:farmsmart_flutter/model/entities/EntityCollectionInterface.dart';
 import 'package:farmsmart_flutter/model/entities/ProfileEntity.dart';
@@ -16,6 +18,10 @@ class _Fields {
   static const orderField = "timestamp";
 }
 
+class _Constants {
+  static final initalBalance = TransactionAmount("0", false);
+}
+
 String _identify(TransactionEntity entity) {
   return entity.id;
 }
@@ -25,6 +31,7 @@ class TransactionRepositoryFirestore extends FireStoreList<TransactionEntity>
   final ProfileRepositoryInterface _profileRepository;
   Future<ProfileEntity> _currentProfile;
   TransactionAmount _balance;
+  StreamSubscription<List<TransactionEntity>> _balanceSubscription;
 
   TransactionRepositoryFirestore(
     Firestore firestore,
@@ -40,16 +47,15 @@ class TransactionRepositoryFirestore extends FireStoreList<TransactionEntity>
           orderDecending: true,
         ) {
     path = _transactionsCollectionPath;
-    _balance = TransactionAmount("0",false);
+    _balance = _Constants.initalBalance;
     _profileRepository.observeCurrent().listen((profile) {
       _currentProfile = Future.value(profile);
     });
     _currentProfile = _profileRepository.getCurrent().then((profile) {
-      stream().listen((List<TransactionEntity> transactions) {
-      _balance = transactions.map((transaction) => transaction.amount).reduce((a, b) {
-        return a + b;
+      _balanceSubscription =
+          stream().listen((List<TransactionEntity> transactions) {
+        return _updateBalance(transactions);
       });
-    });
       return profile;
     });
   }
@@ -93,5 +99,22 @@ class TransactionRepositoryFirestore extends FireStoreList<TransactionEntity>
     return _currentProfile.then((profile) {
       return profile.uri + _Fields.transactions;
     });
+  }
+
+  void _updateBalance(List<TransactionEntity> transactions) {
+    if(transactions.isEmpty) {
+      _balance = _Constants.initalBalance;
+      return;
+    }
+    _balance =
+        transactions.map((transaction) => transaction.amount).reduce((a, b) {
+      return a + b;
+    });
+  }
+
+  @override
+  void dispose() {
+    _balanceSubscription.cancel();
+    super.dispose();
   }
 }
