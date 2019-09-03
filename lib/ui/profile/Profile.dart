@@ -620,7 +620,7 @@ class Profile extends StatelessWidget {
       onSuccess: (file) {
         viewModel.saveProfileImage(file);
       },
-      onError: (message) {
+      onCancel: (message) {
         //ignore
       },
       imageSource: imageSource,

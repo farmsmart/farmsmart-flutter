@@ -25,7 +25,7 @@ class _LocalisedStrings {
 class ImagePicker {
   static Future<bool> pickImage({
     @required Function(File) onSuccess,
-    @required Function(String) onError,
+    @required Function(String) onCancel,
     @required ImagePickerLib.ImageSource imageSource,
     @required int imageMaxHeight,
     @required int imageMaxWidth,
@@ -37,7 +37,7 @@ class ImagePicker {
         await ImagePickerLib.ImagePicker.pickImage(source: imageSource);
 
     if (file == null) {
-      onError(_LocalisedStrings.noImagePickedError());
+      onCancel(_LocalisedStrings.noImagePickedError());
       return false;
     }
 
@@ -57,7 +57,7 @@ class ImagePicker {
     file.delete();
 
     if (croppedFile == null) {
-      onError(_LocalisedStrings.noCroppedImageError());
+      onCancel(_LocalisedStrings.noCroppedImageError());
       return false;
     }
 
