@@ -11,7 +11,6 @@ import 'package:farmsmart_flutter/model/repositories/profile/ProfileRepositoryIn
 import '../TransactionRepositoryInterface.dart';
 import 'TransactionEntityTransformers.dart';
 
-
 class _Fields {
   static const transactions = "/transactions";
   static const orderField = "timestamp";
@@ -25,6 +24,7 @@ class TransactionRepositoryFirestore extends FireStoreList<TransactionEntity>
     implements TransactionRepositoryInterface {
   final ProfileRepositoryInterface _profileRepository;
   Future<ProfileEntity> _currentProfile;
+  TransactionAmount _balance;
 
   TransactionRepositoryFirestore(
     Firestore firestore,
@@ -36,22 +36,27 @@ class TransactionRepositoryFirestore extends FireStoreList<TransactionEntity>
           DocumentToTransactionEntityTransformer(),
           null,
           _identify,
-          orderField:_Fields.orderField,
+          orderField: _Fields.orderField,
           orderDecending: true,
         ) {
     path = _transactionsCollectionPath;
+    _balance = TransactionAmount("0",false);
     _profileRepository.observeCurrent().listen((profile) {
       _currentProfile = Future.value(profile);
     });
     _currentProfile = _profileRepository.getCurrent().then((profile) {
+      stream().listen((List<TransactionEntity> transactions) {
+      _balance = transactions.map((transaction) => transaction.amount).reduce((a, b) {
+        return a + b;
+      });
+    });
       return profile;
     });
   }
 
   @override
   Future<TransactionAmount> allTimeBalance() {
-    // TODO: implement allTimeBalance
-    return Future.value(TransactionAmount("0", false));
+    return Future.value(_balance);
   }
 
   @override
@@ -85,7 +90,7 @@ class TransactionRepositoryFirestore extends FireStoreList<TransactionEntity>
   }
 
   Future<String> _transactionsCollectionPath() {
-    return _currentProfile.then((profile){
+    return _currentProfile.then((profile) {
       return profile.uri + _Fields.transactions;
     });
   }
