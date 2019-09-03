@@ -443,64 +443,64 @@ class Profile extends StatelessWidget {
     ProfileViewModel viewModel,
     BuildContext context,
   ) {
-    List<ProfileListItemViewModel> list = [];
+    List<ProfileListItemViewModel> items = [];
 
-    list.add(ProfileListItemViewModel(
+    items.add(ProfileListItemViewModel(
       title: _LocalisedStrings.switchLanguage(),
       icon: _Icons.language,
       onTap: () => _switchLanguage(context, viewModel),
       isDestructive: false,
     ));
 
-    list.add(ProfileListItemViewModel(
+    items.add(ProfileListItemViewModel(
       title: _LocalisedStrings.yourFarmDetails(),
       icon: _Icons.newProfile,
       onTap: () => _openFarmDetails(viewModel, context),
       isDestructive: false,
     ));
 
-    list.add(ProfileListItemViewModel(
+    items.add(ProfileListItemViewModel(
       title: _LocalisedStrings.inviteFriends(),
       icon: _Icons.inviteFriends,
       onTap: () => _inviteFriends(),
       isDestructive: false,
     ));
 
-    list.add(ProfileListItemViewModel(
+    items.add(ProfileListItemViewModel(
       title: _LocalisedStrings.createNewProfile(),
       icon: _Icons.soil,
       onTap: () => _createNewProfile(viewModel, context),
       isDestructive: false,
     ));
 
-    list.add(ProfileListItemViewModel(
+    items.add(ProfileListItemViewModel(
       title: _LocalisedStrings.privacyPolicy(),
       icon: null,
       onTap: () => _openPrivacyPolicy(context),
       isDestructive: false,
     ));
 
-    list.add(ProfileListItemViewModel(
+    items.add(ProfileListItemViewModel(
       title: _LocalisedStrings.termsOfUse(),
       icon: null,
       onTap: () => _openTermsOfUse(context),
       isDestructive: false,
     ));
 
-    list.add(ProfileListItemViewModel(
+    items.add(ProfileListItemViewModel(
       title: _LocalisedStrings.removeProfile(),
       icon: null,
       onTap: () => viewModel.remove(),
       isDestructive: true,
     ));
 
-    list.add(ProfileListItemViewModel(
+    items.add(ProfileListItemViewModel(
       title: _LocalisedStrings.logout(),
       icon: null,
       onTap: () => viewModel.logout(),
       isDestructive: true,
     ));
-    return list;
+    return items;
   }
 
   void _switchLanguage(BuildContext context, ProfileViewModel viewModel) {
@@ -597,13 +597,11 @@ class Profile extends StatelessWidget {
       ActionSheetListItemViewModel(
         title: _LocalisedStrings.takePictureFromCamera(),
         type: ActionType.simple,
-        icon: null,
         onTap: () => _pickImage(ImagePickerLib.ImageSource.camera, viewModel),
       ),
       ActionSheetListItemViewModel(
         title: _LocalisedStrings.pickImageFromGallery(),
         type: ActionType.simple,
-        icon: null,
         onTap: () => _pickImage(ImagePickerLib.ImageSource.gallery, viewModel),
       ),
     ];
