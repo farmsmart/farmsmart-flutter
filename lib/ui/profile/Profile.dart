@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:farmsmart_flutter/model/bloc/ViewModelProvider.dart';
+import 'package:farmsmart_flutter/model/bloc/chatFlow/CreateAccountFlow.dart';
 import 'package:farmsmart_flutter/model/entities/ImageURLProvider.dart';
 import 'package:farmsmart_flutter/model/entities/loading_status.dart';
 import 'package:farmsmart_flutter/ui/common/ActionSheet.dart';
@@ -8,6 +11,8 @@ import 'package:farmsmart_flutter/ui/common/LoadableViewModel.dart';
 import 'package:farmsmart_flutter/ui/common/ProfileAvatar.dart';
 import 'package:farmsmart_flutter/ui/common/RefreshableViewModel.dart';
 import 'package:farmsmart_flutter/ui/common/ViewModelProviderBuilder.dart';
+import 'package:farmsmart_flutter/ui/common/image_picker.dart';
+import 'package:image_picker/image_picker.dart' as ImagePickerLib;
 import 'package:farmsmart_flutter/ui/common/modal_navigator.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
 import 'package:farmsmart_flutter/ui/common/webview.dart';
@@ -21,7 +26,7 @@ import 'FarmDetails.dart';
 import 'SwitchProfileList.dart';
 
 class _LocalisedStrings {
-  static activeCrops() => Intl.message('Active crops');
+  static activeCrops() => Intl.message('In progress crops');
 
   static editFarmDetails() => Intl.message('Edit Farm Details');
 
@@ -48,6 +53,10 @@ class _LocalisedStrings {
   static confirm() => Intl.message('Confirm');
 
   static cancel() => Intl.message('Cancel');
+
+  static pickImageFromGallery() => Intl.message('Pick image from gallery');
+
+  static takePictureFromCamera() => Intl.message('Take picture from camera');
 
   //TODO Add the correct text & Google Play Link
   static shareText() => Intl.message(
@@ -101,6 +110,8 @@ class _Constants {
   static final double buttonLineSpace = 25;
   static final double dividerHeight = 2;
   static final double detailSpacing = 23;
+  static final int avatarImageSize = 200;
+  static final dateFormatter = DateFormat('dd MMMM yyyy');
 }
 
 class ProfileViewModel implements RefreshableViewModel, LoadableViewModel {
@@ -116,20 +127,25 @@ class ProfileViewModel implements RefreshableViewModel, LoadableViewModel {
   final LoadingStatus loadingStatus;
   final Map<String, String> farmDetails;
   final Function(String) switchLanguageTapped;
+  final NewAccountFlowCoordinator newAccountFlow;
+  final Function(File) saveProfileImage;
 
-  ProfileViewModel(
-      {this.loadingStatus,
-      this.username,
-      this.initials,
-      this.activeCrops,
-      this.completedCrops,
-      this.switchProfileProvider,
-      this.image,
-      this.refresh,
-      this.logout,
-      this.remove,
-      this.farmDetails,
-      this.switchLanguageTapped});
+  ProfileViewModel({
+    this.loadingStatus,
+    this.username,
+    this.initials,
+    this.activeCrops,
+    this.completedCrops,
+    this.switchProfileProvider,
+    this.image,
+    this.refresh,
+    this.logout,
+    this.remove,
+    this.farmDetails,
+    this.switchLanguageTapped,
+    this.newAccountFlow,
+    this.saveProfileImage,
+  });
 }
 
 class ProfileStyle {
@@ -273,7 +289,7 @@ class Profile extends StatelessWidget {
             children: <Widget>[
               _buildMainTextView(context, viewModel),
               SizedBox(width: _Constants.imageSpacing),
-              _buildProfileImage(),
+              _buildProfileImage(viewModel, context),
             ],
           ),
         ),
@@ -399,11 +415,16 @@ class Profile extends StatelessWidget {
     );
   }
 
-  Widget _buildProfileImage() {
-    return ProfileAvatar(
-      viewModelProvider: _viewModelProvider,
-      width: _style.imageSize,
-      height: _style.imageSize,
+  Widget _buildProfileImage(ProfileViewModel viewModel, BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        ActionSheet.present(_imagePickerMenu(viewModel), context);
+      },
+      child: ProfileAvatar(
+        viewModelProvider: _viewModelProvider,
+        width: _style.imageSize,
+        height: _style.imageSize,
+      ),
     );
   }
 
@@ -434,7 +455,7 @@ class Profile extends StatelessWidget {
     list.add(ProfileListItemViewModel(
       title: _LocalisedStrings.yourFarmDetails(),
       icon: _Icons.newProfile,
-      onTap: () => _openFarmDetails(viewModel.farmDetails, context),
+      onTap: () => _openFarmDetails(viewModel, context),
       isDestructive: false,
     ));
 
@@ -448,7 +469,7 @@ class Profile extends StatelessWidget {
     list.add(ProfileListItemViewModel(
       title: _LocalisedStrings.createNewProfile(),
       icon: _Icons.soil,
-      onTap: () => _createNewProfile(),
+      onTap: () => _createNewProfile(viewModel, context),
       isDestructive: false,
     ));
 
@@ -486,24 +507,24 @@ class Profile extends StatelessWidget {
     ActionSheet.present(_languageMenu(viewModel), context);
   }
 
-  void _openFarmDetails(
-      Map<String, String> lastPlotInfo, BuildContext context) {
+  void _openFarmDetails(ProfileViewModel viewModel, BuildContext context) {
     NavigationScope.presentModal(
       context,
       FarmDetails(
         viewModel: FarmDetailsViewModel(
-          items: _mapToFarmItemViewModel(lastPlotInfo),
+          items: _mapToFarmItemViewModel(viewModel.farmDetails),
           buttonTitle: _LocalisedStrings.editFarmDetails(),
           confirm: () {
-            //TODO Navigate to Chat here
+            //TODO Should Navigate to Chat here?
+            viewModel.newAccountFlow.run(context);
           },
         ),
       ),
     );
   }
 
-  void _createNewProfile() {
-    //TODO Navigate to Chat here
+  void _createNewProfile(ProfileViewModel viewModel, BuildContext context) {
+    viewModel.newAccountFlow.run(context);
   }
 
   void _inviteFriends() async {
@@ -568,6 +589,45 @@ class Profile extends StatelessWidget {
     return ActionSheet(
       viewModel: actionSheetViewModel,
       style: ActionSheetStyle.defaultStyle(),
+    );
+  }
+
+  ActionSheet _imagePickerMenu(ProfileViewModel viewModel) {
+    final actions = [
+      ActionSheetListItemViewModel(
+        title: _LocalisedStrings.takePictureFromCamera(),
+        type: ActionType.simple,
+        icon: null,
+        onTap: () => _pickImage(ImagePickerLib.ImageSource.camera, viewModel),
+      ),
+      ActionSheetListItemViewModel(
+        title: _LocalisedStrings.pickImageFromGallery(),
+        type: ActionType.simple,
+        icon: null,
+        onTap: () => _pickImage(ImagePickerLib.ImageSource.gallery, viewModel),
+      ),
+    ];
+
+    final actionSheetViewModel = ActionSheetViewModel(
+      actions, _LocalisedStrings.cancel(),
+    );
+    return ActionSheet(
+      viewModel: actionSheetViewModel,
+      style: ActionSheetStyle.defaultStyle(),
+    );
+  }
+
+  _pickImage(ImagePickerLib.ImageSource imageSource, ProfileViewModel viewModel) {
+    ImagePicker.pickImage(
+      onSuccess: (file) {
+        viewModel.saveProfileImage(file);
+      },
+      onError: (message) {
+        //ignore
+      },
+      imageSource: imageSource,
+      imageMaxHeight: _Constants.avatarImageSize,
+      imageMaxWidth: _Constants.avatarImageSize,
     );
   }
 }
