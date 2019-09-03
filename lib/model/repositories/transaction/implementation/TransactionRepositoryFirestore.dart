@@ -22,8 +22,8 @@ class _Constants {
   static final initalBalance = TransactionAmount("0", false);
 }
 
-String _identify(TransactionEntity entity) {
-  return entity.id;
+String _getURI(TransactionEntity entity) {
+  return entity.uri;
 }
 
 class TransactionRepositoryFirestore extends FireStoreList<TransactionEntity>
@@ -42,7 +42,7 @@ class TransactionRepositoryFirestore extends FireStoreList<TransactionEntity>
           TransactionEntityToDocumentTransformer(),
           DocumentToTransactionEntityTransformer(),
           null,
-          _identify,
+          _getURI,
           orderField: _Fields.orderField,
           orderDecending: true,
         ) {

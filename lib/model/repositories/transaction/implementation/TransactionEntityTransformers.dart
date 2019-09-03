@@ -15,12 +15,12 @@ class DocumentToTransactionEntityTransformer
   @override
   TransactionEntity transform({DocumentSnapshot from}) {
     final data = from.data;
-    final id = castOrNull<String>(from.documentID);
+    final uri = castOrNull<String>(from.reference.path);
     final tag = castOrNull<String>(data[_Fields.tag]);
     final description = castOrNull<String>(data[_Fields.description]);
     final timestamp = castOrNull<Timestamp>(data[_Fields.timestamp])?.toDate();
     final value = castOrNull<String>(data[_Fields.amount]);
-    return TransactionEntity(id, TransactionAmount(value, false), tag, description, timestamp);
+    return TransactionEntity(uri, TransactionAmount(value, false), tag, description, timestamp);
   }
 }
 

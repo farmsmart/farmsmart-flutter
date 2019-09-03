@@ -18,12 +18,12 @@ class FireStoreList<T> {
   final bool orderDecending;
   PathProvider path;
   String _currentPath;
-  ObjectIdentifier<T> identifier;
+  ObjectIdentifier<T> resourceIdentifier;
   StreamController<List<T>> _listController;
   StreamSubscription<QuerySnapshot> _subscription;
 
   FireStoreList(this.firestore, this.toFirestoreTransformer,
-      this.fromFirestoreTransformer, this.path, this.identifier,
+      this.fromFirestoreTransformer, this.path, this.resourceIdentifier,
       {this.orderField, this.orderDecending = false});
 
   Future<T> add(T object) {
@@ -42,8 +42,7 @@ class FireStoreList<T> {
 
   Future<bool> remove(T object) {
     return path().then((collectionPath) {
-      final documentPath =
-          collectionPath + _Strings.separator + identifier(object);
+      final documentPath = resourceIdentifier(object);
       return firestore.document(documentPath).delete().then((response) {
         return true;
       }, onError: (error) {
@@ -88,21 +87,23 @@ class FireStoreList<T> {
     path().then((collectionPath) {
       if (collectionPath != _currentPath) {
         _subscription?.cancel();
-        if (orderField != null) {
-          _subscription = _orderedCollection(
-            collectionPath,
-            orderField,
-            descending: orderDecending,
-          ).snapshots().listen((snapshot) {
-            _update(snapshot);
-          });
-        } else {
-          _subscription = firestore
-              .collection(collectionPath)
-              .snapshots()
-              .listen((snapshot) {
-            _update(snapshot);
-          });
+        if (collectionPath != null) {
+          if (orderField != null) {
+            _subscription = _orderedCollection(
+              collectionPath,
+              orderField,
+              descending: orderDecending,
+            ).snapshots().listen((snapshot) {
+              _update(snapshot);
+            });
+          } else {
+            _subscription = firestore
+                .collection(collectionPath)
+                .snapshots()
+                .listen((snapshot) {
+              _update(snapshot);
+            });
+          }
         }
         _currentPath = collectionPath;
       }

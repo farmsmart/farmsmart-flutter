@@ -24,7 +24,7 @@ class MockTransactionRepository extends MockListRepository<TransactionEntity>
   factory MockTransactionRepository(
       ProfileRepositoryInterface profileRepository) {
     final identifyEntity = (TransactionEntity transaction) {
-      return transaction.id;
+      return transaction.uri;
     };
     return MockTransactionRepository._(profileRepository, identifyEntity,
         MockTransaction().list(count: _Constants.mockCount));

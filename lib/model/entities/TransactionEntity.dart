@@ -1,12 +1,12 @@
 import 'TransactionAmount.dart';
 
 class TransactionEntity {
-    final String id;
+    final String uri;
     final TransactionAmount amount;
     final String tag;
     final String description;
     final DateTime timestamp;
 
-  TransactionEntity(this.id, this.amount, this.tag, this.description, this.timestamp);
+  TransactionEntity(this.uri, this.amount, this.tag, this.description, this.timestamp);
 
 }
