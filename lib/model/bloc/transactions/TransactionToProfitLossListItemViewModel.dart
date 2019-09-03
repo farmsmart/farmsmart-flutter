@@ -20,8 +20,7 @@ class _Constants {
 }
 
 class TransactionToProfitLossListItemViewModel
-    extends
-        ObjectTransformer<TransactionEntity, ProfitLossListItemViewModel> {
+    extends ObjectTransformer<TransactionEntity, ProfitLossListItemViewModel> {
   final TransactionToRecordTransactionViewModel _detailTransformer;
   final _dateFormatter = DateFormat(_Constants.transactionDateFormat);
 
@@ -43,7 +42,8 @@ class TransactionToProfitLossListItemViewModel
   String _title(TransactionEntity from) {
     final dateString =
         (from.timestamp == null) ? "" : _dateFormatter.format(from.timestamp);
-    return dateString + _Strings.divider + (from.tag ?? "");
+    return dateString +
+        ((from?.tag == null) ? "" : _Strings.divider + from.tag);
   }
 
   String _subtitle(TransactionEntity from) {

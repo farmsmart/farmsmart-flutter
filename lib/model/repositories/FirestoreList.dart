@@ -16,6 +16,7 @@ class FireStoreList<T> {
   final ObjectTransformer<DocumentSnapshot, T> fromFirestoreTransformer;
   final String orderField;
   final bool orderDecending;
+  final _emptyList = List<T>();
   PathProvider path;
   String _currentPath;
   ObjectIdentifier<T> resourceIdentifier;
@@ -60,27 +61,34 @@ class FireStoreList<T> {
   }
 
   Future<List<T>> get() {
-    final emptyList = List<T>();
     return path().then((collectionPath) {
-      if (orderField != null) {
-        return _orderedCollection(
+      return _fetch(collectionPath);
+    });
+  }
+
+  Future<List<T>>_fetchAndOrder(String collectionPath) {
+    return _orderedCollection(
           collectionPath,
           orderField,
           descending: orderDecending,
         ).getDocuments().then((snapshot) {
           return _update(snapshot);
         }, onError: (error) {
-          return emptyList;
+          return _emptyList;
         });
+  }
+
+  Future<List<T>> _fetch(String collectionPath) {
+    if (orderField != null) {
+        return _fetchAndOrder(collectionPath);
       } else {
         return firestore.collection(collectionPath).getDocuments().then(
             (snapshot) {
           return _update(snapshot);
         }, onError: (error) {
-          return emptyList;
+          return _emptyList;
         });
       }
-    });
   }
 
   void renewSubscriptionIfNeeded() {
@@ -88,25 +96,29 @@ class FireStoreList<T> {
       if (collectionPath != _currentPath) {
         _subscription?.cancel();
         if (collectionPath != null) {
-          if (orderField != null) {
-            _subscription = _orderedCollection(
-              collectionPath,
-              orderField,
-              descending: orderDecending,
-            ).snapshots().listen((snapshot) {
-              _update(snapshot);
-            });
-          } else {
-            _subscription = firestore
-                .collection(collectionPath)
-                .snapshots()
-                .listen((snapshot) {
-              _update(snapshot);
-            });
-          }
+          _subscription = _subscribe(collectionPath);
         }
         _currentPath = collectionPath;
       }
+    });
+  }
+
+  StreamSubscription<QuerySnapshot> _subscribeAndOrder(String collectionPath) {
+    return _orderedCollection(
+      collectionPath,
+      orderField,
+      descending: orderDecending,
+    ).snapshots().listen((snapshot) {
+      _update(snapshot);
+    });
+  }
+
+  StreamSubscription<QuerySnapshot> _subscribe(String collectionPath) {
+    if(orderField != null) {
+      return _subscribeAndOrder(collectionPath);
+    }
+    return firestore.collection(collectionPath).snapshots().listen((snapshot) {
+      _update(snapshot);
     });
   }
 
