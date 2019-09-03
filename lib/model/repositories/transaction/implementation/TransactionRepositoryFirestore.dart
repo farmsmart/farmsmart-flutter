@@ -14,6 +14,7 @@ import 'TransactionEntityTransformers.dart';
 
 class _Fields {
   static const transactions = "/transactions";
+  static const orderField = "timestamp";
 }
 
 String _identify(TransactionEntity entity) {
@@ -35,6 +36,8 @@ class TransactionRepositoryFirestore extends FireStoreList<TransactionEntity>
           DocumentToTransactionEntityTransformer(),
           null,
           _identify,
+          orderField:_Fields.orderField,
+          orderDecending: true,
         ) {
     path = _transactionsCollectionPath;
     _profileRepository.observeCurrent().listen((profile) {

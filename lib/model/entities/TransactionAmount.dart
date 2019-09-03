@@ -6,6 +6,10 @@ class _Strings {
   static const negativeSymbol = "-";
 }
 
+class _Constants {
+  static const fixedDigits = 2;
+}
+
 class TransactionAmount {
   final Decimal _decimal;
 
@@ -34,6 +38,10 @@ class TransactionAmount {
 
   bool isCost() {
     return _decimal.isNegative;
+  }
+
+  String rawString() {
+    return _decimal.toStringAsFixed(_Constants.fixedDigits);
   }
 
   TransactionAmount operator +(covariant TransactionAmount other) =>

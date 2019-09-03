@@ -32,7 +32,7 @@ class TransactionEntityToDocumentTransformer
       _Fields.tag: from.tag,
       _Fields.description: from.description,
       _Fields.timestamp: Timestamp.fromDate(from.timestamp),
-      _Fields.amount:from.amount.toString(allowNegative:true),
+      _Fields.amount:from.amount.rawString(),  //LH we save as a string to ensure we preserve the Decimal number and not involve floating points
     };
   }
 }
