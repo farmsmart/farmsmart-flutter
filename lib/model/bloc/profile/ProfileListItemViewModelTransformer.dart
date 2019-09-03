@@ -21,7 +21,7 @@ class SwitchProfileListItemViewModelTransformer
       image: from.avatar,
       switchAction: () => _switch(from),
       avatarViewModelProvider: avatarProvider,
-      isSelected: (from == _currentProfile),
+      isSelected: (from.id == _currentProfile.id),
     );
   }
 }

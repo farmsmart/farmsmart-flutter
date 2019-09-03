@@ -15,28 +15,31 @@ import 'package:flutter/material.dart';
 
 import 'account/AccountRepositoryInterface.dart';
 import 'profile/ProfileRepositoryInterface.dart';
-import 'profile/implementation/MockProfileRepository.dart';
+import 'profile/implementation/FirebaseProfileRepository.dart';
 import 'ratingEngine/RatingEngineRepositoryInterface.dart';
 import 'ratingEngine/implementation/RatingEngineRepositoryFireStore.dart';
 import 'repository_provider.dart';
 
-MockProfileRepository _mockProfileRepository = MockProfileRepository();
-MockPlotRepository _mockPlotRepository = MockPlotRepository(_mockProfileRepository);
-TransactionRepositoryInterface _mockTransactionRepository = MockTransactionRepository(_mockProfileRepository);
+
 class FlameLinkRepositoryProvider implements RepositoryProvider {
   FlameLink _cms;
   Firestore _fireStore;
   FirebaseAuth _firebaseAuth;
-
+  ProfileRepositoryInterface _profileRepo;
+  PlotRepositoryInterface _plotRepo;
+  TransactionRepositoryInterface _transactionRepo;
 
   
-
   init(BuildContext context) {
     this._fireStore = Firestore.instance;
+    this._fireStore.settings(persistenceEnabled: true);
     this._firebaseAuth = FirebaseAuth.instance;
     this._cms = FlameLink(
         store: _fireStore,
         environment: AppConfig.of(context).environment);
+    this._profileRepo = FirebaseProfileRepository(this._fireStore,this._firebaseAuth);
+    this._plotRepo = MockPlotRepository(this._profileRepo);
+    this._transactionRepo = MockTransactionRepository(this._profileRepo);
   }
 
   @override
@@ -45,16 +48,16 @@ class FlameLinkRepositoryProvider implements RepositoryProvider {
 
   //TODO Add My Plot FlameLink Repository
   @override
-  PlotRepositoryInterface getMyPlotRepository(ProfileRepositoryInterface profileRepository) => _mockPlotRepository;
+  PlotRepositoryInterface getMyPlotRepository(ProfileRepositoryInterface profileRepository) => _plotRepo;
 
   @override
   CropRepositoryInterface getCropRepository() => CropRepositoryFlamelink(_cms);
 
   @override
-  TransactionRepositoryInterface getTransactionRepository(ProfileRepositoryInterface profileRepository) => _mockTransactionRepository;
+  TransactionRepositoryInterface getTransactionRepository(ProfileRepositoryInterface profileRepository) => _transactionRepo;
 
   @override
-  AccountRepositoryInterface getAccountRepository() => AccountRepositoryFirebase(_firebaseAuth, _mockProfileRepository);
+  AccountRepositoryInterface getAccountRepository() => AccountRepositoryFirebase(_firebaseAuth, _profileRepo);
 
   @override
   RatingEngineRepositoryInterface getRatingsRepository() => RatingEngineRepositoryFirestore(_fireStore);

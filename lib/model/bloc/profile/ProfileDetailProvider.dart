@@ -84,7 +84,7 @@ class ProfileDetailProvider
   ProfileViewModel transform({ProfileEntity from}) {
     List<ProfileListItemViewModel> list = _profileItems();
     final switchProfileProvider =
-        SwitchProfileListProvider(profileRepo: _profileRepository);
+        SwitchProfileListProvider(accountRepo: _accountRepository);
     final personName = PersonName(from?.name ?? "");
     return ProfileViewModel(
       loadingStatus: _loadingStatus,
@@ -133,7 +133,8 @@ class ProfileDetailProvider
   Future<bool> _remove() {
     return _profileRepository.remove(_currentProfile).then((success) {
       _profileRepository.getAll().then((profiles) {
-        _profileRepository.switchTo(profiles.first);
+        final profile = profiles.isNotEmpty ? profiles.first : null;
+        _profileRepository.switchTo(profile);
       });
       return success;
     });

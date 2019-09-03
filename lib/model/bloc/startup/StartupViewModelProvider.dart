@@ -1,15 +1,11 @@
 import 'dart:async';
 import 'dart:ui';
 
-import 'package:farmsmart_flutter/chat/ChatPage.dart';
-import 'package:farmsmart_flutter/chat/ui/viewmodel/ChatResponseViewModel.dart';
-import 'package:farmsmart_flutter/model/bloc/Transformer.dart';
-import 'package:farmsmart_flutter/model/bloc/startup/ChatResponseToPlotInfoTransformer.dart';
+import 'package:farmsmart_flutter/model/bloc/chatFlow/CreateAccountFlow.dart';
+import 'package:farmsmart_flutter/model/bloc/chatFlow/FlowCoordinator.dart';
 import 'package:farmsmart_flutter/model/entities/ProfileEntity.dart';
 import 'package:farmsmart_flutter/model/entities/loading_status.dart';
-import 'package:farmsmart_flutter/model/repositories/MockStrings.dart';
 import 'package:farmsmart_flutter/model/repositories/account/AccountRepositoryInterface.dart';
-import 'package:farmsmart_flutter/model/repositories/image/implementation/MockImageEntity.dart';
 import 'package:farmsmart_flutter/ui/LandingPage.dart';
 import 'package:farmsmart_flutter/ui/startup/viewmodel/startupViewModel.dart';
 import 'package:intl/intl.dart';
@@ -26,18 +22,9 @@ class _LocalisedStrings {
       Intl.message('Switch Langauge – Badilisha Lugha');
 }
 
-class _LocalisedAssets {
-  static String onboardingFlow() =>
-      Intl.message('assets/responses/farmsmart_chat_ui_flow.json');
-}
-
 class _Assets {
   static const headerImage = "assets/raw/illustration_welcome.png";
   static const logoImage = "assets/raw/logo_default.png";
-}
-
-class _Strings {
-  static const nameField = "Name";
 }
 
 class StartupViewModelProvider implements ViewModelProvider<StartupViewModel> {
@@ -47,23 +34,43 @@ class StartupViewModelProvider implements ViewModelProvider<StartupViewModel> {
       StreamController<StartupViewModel>.broadcast();
   StartupViewModelProvider(this._accountRepository);
 
+  NewAccountFlowCoordinator _accountFlow;
+
   @override
   StartupViewModel initial() {
     if (_snapshot == null) {
+      _accountFlow = NewAccountFlowCoordinator(
+        _accountRepository,
+        _accountFlowStatusChanged,
+      );
+      _accountFlow.init();
       _accountRepository.observeAuthorized().listen((account) {
-        _snapshot = StartupViewModel(
-          LoadingStatus.SUCCESS,
-          _refresh,
-          (account != null),
-          _landingViewModel(),
-        );
-        _controller.sink.add(_snapshot);
+        if (account != null) {
+          account.profileRepository.observeCurrent().listen((currentProfile) {
+            _updateState(currentProfile);
+          });
+          account.profileRepository.getCurrent().then((currentProfile) {
+            _updateState(currentProfile);
+          });
+        } else {
+          _updateState(null);
+        }
       });
-      _snapshot = StartupViewModel(
-          LoadingStatus.LOADING, _refresh, false, _landingViewModel());
+      _setState(false, loading: true);
       _refresh();
     }
     return _snapshot;
+  }
+
+  void _accountFlowStatusChanged(FlowCoordinator coordinator){
+    
+  }
+
+  void _updateState(ProfileEntity currentProfile) {
+    _setState(
+      (currentProfile != null),
+      loading: false,
+    );
   }
 
   @override
@@ -76,46 +83,17 @@ class StartupViewModelProvider implements ViewModelProvider<StartupViewModel> {
     return _controller.stream;
   }
 
-  ChatPageViewModel _chatPageViewModel() {
-    return ChatPageViewModel(_LocalisedAssets.onboardingFlow(), (data) {
-      final Map<String, ChatResponseViewModel> chatInput =
-          castOrNull<Map<String, ChatResponseViewModel>>(data);
-      if (chatInput != null) {
-        _createAccount(data);
-      }
-    }, (data) {
-      //TODO: error case, should display a popup.
-    });
-  }
-
-  void _createAccount(Map<String, ChatResponseViewModel> chatInput) {
-    final name = chatInput[_Strings.nameField];
-    final transformer = ChatResponseToPlotInfoTransformer();
-    final plotInfo = transformer.transform(from: chatInput);
-
+  void _setState(
+    bool authorized, {
+    bool loading = false,
+  }) {
     _snapshot = StartupViewModel(
-      LoadingStatus.LOADING,
+      loading ? LoadingStatus.LOADING : LoadingStatus.SUCCESS,
       _refresh,
-      false,
+      authorized,
       _landingViewModel(),
     );
     _controller.sink.add(_snapshot);
-
-    //TODO: Remove the Mock ID´s once implemented
-    if (name != null) {
-      _accountRepository.anonymous().then((account) {
-        final newProfile = ProfileEntity(
-          mockPlainText.identifier(),
-          name.value,
-          MockImageEntity().build().urlProvider,
-          plotInfo,
-        );
-        account.profileRepository.add(newProfile).then((profile) {
-          account.profileRepository.switchTo(profile);
-          _refresh();
-        });
-      });
-    }
   }
 
   LandingPageViewModel _landingViewModel() {
@@ -125,7 +103,7 @@ class StartupViewModelProvider implements ViewModelProvider<StartupViewModel> {
       footerText: _LocalisedStrings.footerText(),
       headerImage: _Assets.headerImage,
       subtitleImage: _Assets.logoImage,
-      chatViewModel: _chatPageViewModel(),
+      newAccountFlow: _accountFlow,
       switchLanguageTapped: (language) => _switchLanguage(language),
     );
   }

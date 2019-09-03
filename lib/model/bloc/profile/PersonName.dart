@@ -44,7 +44,7 @@ class PersonName {
               final firstName = (names.length > 0) ? names.first : _Strings.empty;
               final secondName = (names.length > 1) ? names[1] : _Strings.empty;
               final firstInitial =  firstName.isNotEmpty ? firstName.substring(0, 1) : _Strings.empty;
-              final secondInitial = secondName.isNotEmpty ? (_Strings.divider + secondName.substring(0,1)) : _Strings.empty;
+              final secondInitial = secondName.isNotEmpty ? secondName.substring(0, 1) : _Strings.empty;
               return firstInitial + secondInitial;
             }
           }

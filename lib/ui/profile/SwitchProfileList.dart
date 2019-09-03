@@ -1,4 +1,5 @@
 import 'package:farmsmart_flutter/model/bloc/ViewModelProvider.dart';
+import 'package:farmsmart_flutter/model/bloc/chatFlow/FlowCoordinator.dart';
 import 'package:farmsmart_flutter/model/entities/loading_status.dart';
 import 'package:farmsmart_flutter/ui/common/ListDivider.dart';
 import 'package:farmsmart_flutter/ui/common/LoadableViewModel.dart';
@@ -33,7 +34,7 @@ class SwitchProfileListViewModel implements RefreshableViewModel, LoadableViewMo
   int confirmedIndex;
   int selectedIndex;
   LoadingStatus loadingStatus;
-  Function addProfileAction;
+  FlowCoordinator newProfileFlow;
   Function refresh;
 
   SwitchProfileListViewModel({
@@ -44,7 +45,7 @@ class SwitchProfileListViewModel implements RefreshableViewModel, LoadableViewMo
     this.confirmedIndex,
     this.selectedIndex,
     this.loadingStatus,
-    @required this.addProfileAction,
+    @required this.newProfileFlow,
     this.refresh,
   });
 }
@@ -178,12 +179,16 @@ class SwitchProfileListState extends State<SwitchProfileList> {
             child: RoundedButton(
                 viewModel: RoundedButtonViewModel(
                     icon: _Icons.topButton,
-                    onTap: () => viewModel.addProfileAction()),
+                    onTap: () => _newProfileTapped(context,viewModel)),
                 style: RoundedButtonStyle.defaultStyle()),
           ),
         ),
       ],
     );
+  }
+
+  void _newProfileTapped(BuildContext context, SwitchProfileListViewModel viewModel) {
+    viewModel.newProfileFlow.run(context);
   }
 
   void _select(int index, SwitchProfileListViewModel viewModel) {
