@@ -65,7 +65,7 @@ class _LocalisedStrings {
 
 class _Strings {
   static final englishAction = "English";
-  static final swahiliAction = "Swahili";
+  static final swahiliAction = "Kiswahili";
   static final privacyPolicyUrl =
       'https://sites.google.com/farmsmart.co/farmsmart/home/privacy-policy?authuser=0';
   static final termsOfUseUrl =
