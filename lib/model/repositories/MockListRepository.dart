@@ -31,7 +31,7 @@ class MockListRepository<T> implements BasicRepositoryInterface<T> {
   }
 
   @override
-  Stream<T> observe(String uri) {
+  Stream<T> observeSingle(String uri) {
     if (_observers[uri] == null) {
       _observers[uri] = StreamController<T>.broadcast();
     }

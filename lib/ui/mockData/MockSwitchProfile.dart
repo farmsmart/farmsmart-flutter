@@ -2,7 +2,6 @@ import 'package:farmsmart_flutter/model/entities/mock/MockString.dart';
 import 'package:farmsmart_flutter/model/repositories/image/implementation/MockImageEntity.dart';
 import 'package:farmsmart_flutter/ui/profile/SwitchProfileList.dart';
 import 'package:farmsmart_flutter/ui/profile/SwitchProfileListItem.dart';
-import 'package:flutter/material.dart';
 
 class MockSwitchProfile {
   static SwitchProfileListViewModel build() {
@@ -17,7 +16,8 @@ class MockSwitchProfile {
       actionTitle: "Switch Profile",
       isVisible: false,
       selectedIndex: 0,
-      confirmedIndex: 0,
+      confirmedIndex: 0, 
+      newProfileFlow: null,
     );
   }
 

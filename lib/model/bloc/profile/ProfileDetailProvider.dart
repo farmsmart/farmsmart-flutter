@@ -125,7 +125,7 @@ class ProfileDetailProvider
 
   Future<bool> _remove() {
     return _profileRepository.remove(_currentProfile).then((success) {
-      _profileRepository.getAll().then((profiles) {
+      _profileRepository.get().then((profiles) {
         final profile = profiles.isNotEmpty ? profiles.first : null;
         _profileRepository.switchTo(profile);
       });
@@ -156,7 +156,7 @@ class ProfileDetailProvider
     final directory = await getApplicationDocumentsDirectory();
 
     final File newImage =
-        await file.copy('${directory.path}/${from.id}_${from.name}${_Constants.avatarPathSuffix}');
+        await file.copy('${directory.path}/${from.uri}_${from.name}${_Constants.avatarPathSuffix}');
 
     var savedImagePath = newImage.path;
 

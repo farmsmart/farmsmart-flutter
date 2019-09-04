@@ -53,9 +53,9 @@ class TransactionToRecordTransactionViewModel
   }
 
   List<RecordTransactionListItemViewModel> _actions({TransactionEntity from}) {
-    final timestamp = (from == null) ? DateTime.now() : from.timestamp;
-    final description = (from == null) ? "" : from.description;
-    final selectedItem = (from == null) ? null : from.tag;
+    final timestamp = (from?.timestamp == null) ? DateTime.now() : from.timestamp;
+    final description = from?.description ?? "";
+    final selectedItem = from?.tag;
     return [
       RecordTransactionListItemViewModel(
         type: RecordCellType.pickDate,

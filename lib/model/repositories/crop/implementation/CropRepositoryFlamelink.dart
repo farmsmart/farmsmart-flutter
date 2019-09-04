@@ -80,7 +80,7 @@ class CropRepositoryFlamelink implements CropRepositoryInterface {
   }
 
   @override
-  Stream<CropEntity> observe(String uri) {
+  Stream<CropEntity> observeSingle(String uri) {
      if (uri.isEmpty) {
       return null;
     }
