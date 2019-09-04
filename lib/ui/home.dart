@@ -42,6 +42,14 @@ class _LocalisedStrings {
 
   static relatedGroups() => Intl.message('Related groups');
 
+  static recommendations() => Intl.message('Recommendations');
+
+  static myPlot() => Intl.message('My Plot');
+
+  static discover() => Intl.message('Discover');
+
+  static community() => Intl.message('Community');
+
   static joinWhatsAppGroup() =>
       Intl.message('Join the WhatsApp group and discuss with fellow farmers.');
 }
@@ -124,7 +132,7 @@ class Home extends StatelessWidget {
 
   _buildMyPlot(HomeViewModel viewModel) {
     final recommendationsProvider = RecommendationListProvider(
-      title: "Recommendations",
+      title: _LocalisedStrings.recommendations(),
       heroThreshold: 0.8,
       plotRepo:
           repositoryProvider.getMyPlotRepository(viewModel.currentProfile),
@@ -134,7 +142,7 @@ class Home extends StatelessWidget {
     );
     return PlotList(
         provider: PlotListProvider(
-            title: localizations.myPlotTab,
+            title: _LocalisedStrings.myPlot(),
             plotRepository: repositoryProvider
                 .getMyPlotRepository(viewModel.currentProfile),
             recommendationsProvider: recommendationsProvider));
@@ -155,7 +163,7 @@ class Home extends StatelessWidget {
     return ArticleList(
       style: ArticleListStyles.buildForDiscover(),
       viewModelProvider: ArticleListProvider(
-        title: localizations.discoverTab,
+        title: _LocalisedStrings.discover(),
         repository: repositoryProvider.getArticleRepository(),
         group: ArticleCollectionGroup.discovery,
         relatedTitle: _LocalisedStrings.relatedArticles(),
@@ -167,7 +175,7 @@ class Home extends StatelessWidget {
     return ArticleList(
       style: ArticleListStyles.buildForCommunity(),
       viewModelProvider: ArticleListProvider(
-        title: localizations.communityTab,
+        title: _LocalisedStrings.community(),
         repository: repositoryProvider.getArticleRepository(),
         group: ArticleCollectionGroup.chatGroups,
         relatedTitle: _LocalisedStrings.relatedGroups(),

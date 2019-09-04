@@ -3,6 +3,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'app_coordinator.dart';
 import 'farmsmart_localizations.dart';
+import 'package:intl/intl.dart';
 
 class _Constants {
   static final String fontFamily = 'GT-America-Standard';
@@ -16,6 +17,10 @@ class _Constants {
   ];
 }
 
+class _String {
+  static title() => 'FarmSmart';
+}
+
 class FarmSmartApp extends StatefulWidget {
   @override
   _FarmSmartAppState createState() => _FarmSmartAppState();
@@ -25,7 +30,7 @@ class _FarmSmartAppState extends State<FarmSmartApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      onGenerateTitle: (context) => FarmsmartLocalizations.of(context).title,
+      onGenerateTitle: (context) => _String.title(),
       localizationsDelegates: [
         // ... app specific localization delegates here
         FarmsmartLocalizationsDelegate(_Constants.supportedLocales),

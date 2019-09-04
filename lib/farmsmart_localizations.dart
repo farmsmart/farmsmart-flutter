@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import 'l10n/messages_all.dart';
+import 'package:farmsmart_flutter/l10n/messages_all.dart';
 
 class FarmsmartLocalizations {
   static Future<FarmsmartLocalizations> load(Locale locale) {
@@ -16,18 +16,6 @@ class FarmsmartLocalizations {
   static FarmsmartLocalizations of(BuildContext context) {
     return Localizations.of<FarmsmartLocalizations>(context, FarmsmartLocalizations);
   }
-
-  String get title => Intl.message("Farmsmart");
-
-  String get myPlotTab => Intl.message("My Plot");
-
-  String get profitLossTab => Intl.message("Profit/Loss");
-
-  String get discoverTab => Intl.message("Discover");
-
-  String get communityTab => Intl.message("Community");
-
-  String get playgroundTab => Intl.message("Debug");
 
 }
 
