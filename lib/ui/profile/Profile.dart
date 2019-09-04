@@ -1,22 +1,91 @@
+import 'dart:io';
+
 import 'package:farmsmart_flutter/model/bloc/ViewModelProvider.dart';
+import 'package:farmsmart_flutter/model/bloc/chatFlow/CreateAccountFlow.dart';
 import 'package:farmsmart_flutter/model/entities/ImageURLProvider.dart';
 import 'package:farmsmart_flutter/model/entities/loading_status.dart';
-import 'package:farmsmart_flutter/ui/common/ProfileAvatar.dart';
+import 'package:farmsmart_flutter/ui/common/ActionSheet.dart';
+import 'package:farmsmart_flutter/ui/common/ActionSheetListItem.dart';
 import 'package:farmsmart_flutter/ui/common/ListDivider.dart';
 import 'package:farmsmart_flutter/ui/common/LoadableViewModel.dart';
+import 'package:farmsmart_flutter/ui/common/ProfileAvatar.dart';
 import 'package:farmsmart_flutter/ui/common/RefreshableViewModel.dart';
 import 'package:farmsmart_flutter/ui/common/ViewModelProviderBuilder.dart';
+import 'package:farmsmart_flutter/ui/common/image_picker.dart';
+import 'package:image_picker/image_picker.dart' as ImagePickerLib;
+import 'package:farmsmart_flutter/ui/common/modal_navigator.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
+import 'package:farmsmart_flutter/ui/common/webview.dart';
+import 'package:farmsmart_flutter/ui/profile/FarmDetailsListItem.dart';
 import 'package:farmsmart_flutter/ui/profile/ProfileListItem.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:share/share.dart';
 
+import 'FarmDetails.dart';
 import 'SwitchProfileList.dart';
 
 class _LocalisedStrings {
-  static String activeCrops() => Intl.message('Active crops');
-  static String completedCrops() => Intl.message('Completed');
-  static String buttonTitle() => Intl.message('Switch Profile');
+  static activeCrops() => Intl.message('In progress crops');
+
+  static editFarmDetails() => Intl.message('Edit Farm Details');
+
+  static completedCrops() => Intl.message('Completed');
+
+  static buttonTitle() => Intl.message('Switch Profile');
+
+  static switchLanguage() => Intl.message('Switch Language');
+
+  static yourFarmDetails() => Intl.message('Your Farm Details');
+
+  static createNewProfile() => Intl.message('Create New Profile');
+
+  static inviteFriends() => Intl.message('Invite Friends');
+
+  static privacyPolicy() => Intl.message('Privacy Policy');
+
+  static termsOfUse() => Intl.message('Terms of use');
+
+  static logout() => Intl.message('Logout');
+
+  static removeProfile() => Intl.message('Remove Profile');
+
+  static confirm() => Intl.message('Confirm');
+
+  static cancel() => Intl.message('Cancel');
+
+  static pickImageFromGallery() => Intl.message('Pick image from gallery');
+
+  static takePictureFromCamera() => Intl.message('Take picture from camera');
+
+  //TODO Add the correct text & Google Play Link
+  static shareText() => Intl.message(
+      'Join to the new smart farming app - FarmSmart  \n https://linktogoogleplay.com');
+}
+
+class _Strings {
+  static final englishAction = "English";
+  static final swahiliAction = "Kiswahili";
+  static final privacyPolicyUrl =
+      'https://sites.google.com/farmsmart.co/farmsmart/home/privacy-policy?authuser=0';
+  static final termsOfUseUrl =
+      'https://sites.google.com/farmsmart.co/farmsmart/home/privacy-policy?authuser=0';
+}
+
+class _Icons {
+  static final language = 'assets/icons/detail_icon_language.png';
+  static final soil = 'assets/icons/detail_icon_best_soil.png';
+  static final pin = 'assets/icons/detail_icon_pin.png';
+  static final newProfile = 'assets/icons/detail_icon_new_profile.png';
+  static final inviteFriends = 'assets/icons/detail_icon_invite.png';
+  static final englishIcon = "assets/icons/flag_usa.png";
+  static final swahiliIcon = "assets/icons/flag_kenya.png";
+  static final checkBoxIcon = "assets/icons/radio_button_default.png";
+}
+
+class _Languages {
+  static final english = "en";
+  static final swahili = "sw";
 }
 
 class _Constants {
@@ -41,10 +110,11 @@ class _Constants {
   static final double buttonLineSpace = 25;
   static final double dividerHeight = 2;
   static final double detailSpacing = 23;
+  static final int avatarImageSize = 200;
+  static final dateFormatter = DateFormat('dd MMMM yyyy');
 }
 
 class ProfileViewModel implements RefreshableViewModel, LoadableViewModel {
-  final List<ProfileListItemViewModel> items;
   final String username;
   final String initials;
   final int activeCrops;
@@ -55,10 +125,13 @@ class ProfileViewModel implements RefreshableViewModel, LoadableViewModel {
   final Function logout;
   final Function remove;
   final LoadingStatus loadingStatus;
+  final Map<String, String> farmDetails;
+  final Function(String) switchLanguageTapped;
+  final NewAccountFlowCoordinator newAccountFlow;
+  final Function(File) saveProfileImage;
 
   ProfileViewModel({
     this.loadingStatus,
-    this.items,
     this.username,
     this.initials,
     this.activeCrops,
@@ -68,6 +141,10 @@ class ProfileViewModel implements RefreshableViewModel, LoadableViewModel {
     this.refresh,
     this.logout,
     this.remove,
+    this.farmDetails,
+    this.switchLanguageTapped,
+    this.newAccountFlow,
+    this.saveProfileImage,
   });
 }
 
@@ -184,15 +261,17 @@ class Profile extends StatelessWidget {
     );
   }
 
-  Widget _buildPage(
-      {BuildContext context, AsyncSnapshot<ProfileViewModel> snapshot}) {
+  Widget _buildPage({
+    BuildContext context,
+    AsyncSnapshot<ProfileViewModel> snapshot,
+  }) {
     final viewModel = snapshot.data;
     return SafeArea(
       child: SingleChildScrollView(
         child: Column(
           children: <Widget>[
             _buildHeader(context, viewModel),
-            _buildItemList(viewModel),
+            _buildItemList(viewModel, context),
           ],
         ),
       ),
@@ -210,7 +289,7 @@ class Profile extends StatelessWidget {
             children: <Widget>[
               _buildMainTextView(context, viewModel),
               SizedBox(width: _Constants.imageSpacing),
-              _buildProfileImage(),
+              _buildProfileImage(viewModel, context),
             ],
           ),
         ),
@@ -220,13 +299,15 @@ class Profile extends StatelessWidget {
     );
   }
 
-  Widget _buildItemList(ProfileViewModel viewModel) {
+  Widget _buildItemList(ProfileViewModel viewModel, BuildContext context) {
+    var profileItems = _profileItems(viewModel, context);
+
     return ListView.separated(
       shrinkWrap: true,
       physics: ScrollPhysics(),
-      itemCount: viewModel.items.length,
+      itemCount: profileItems.length,
       itemBuilder: (context, index) => ProfileListItem(
-        viewModel: viewModel.items[index],
+        viewModel: profileItems[index],
       ),
       separatorBuilder: (context, index) => ListDivider.build(),
     );
@@ -334,8 +415,17 @@ class Profile extends StatelessWidget {
     );
   }
 
-  Widget _buildProfileImage() {
-    return ProfileAvatar(viewModelProvider: _viewModelProvider,width: _style.imageSize,height: _style.imageSize,);
+  Widget _buildProfileImage(ProfileViewModel viewModel, BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        ActionSheet.present(_imagePickerMenu(viewModel), context);
+      },
+      child: ProfileAvatar(
+        viewModelProvider: _viewModelProvider,
+        width: _style.imageSize,
+        height: _style.imageSize,
+      ),
+    );
   }
 
   void _tappedSwitchProfile({
@@ -346,6 +436,196 @@ class Profile extends StatelessWidget {
       MaterialPageRoute(
         builder: (context) => SwitchProfileList(provider: provider),
       ),
+    );
+  }
+
+  List<ProfileListItemViewModel> _profileItems(
+    ProfileViewModel viewModel,
+    BuildContext context,
+  ) {
+    List<ProfileListItemViewModel> items = [];
+
+    items.add(ProfileListItemViewModel(
+      title: _LocalisedStrings.switchLanguage(),
+      icon: _Icons.language,
+      onTap: () => _switchLanguage(context, viewModel),
+      isDestructive: false,
+    ));
+
+    items.add(ProfileListItemViewModel(
+      title: _LocalisedStrings.yourFarmDetails(),
+      icon: _Icons.newProfile,
+      onTap: () => _openFarmDetails(viewModel, context),
+      isDestructive: false,
+    ));
+
+    items.add(ProfileListItemViewModel(
+      title: _LocalisedStrings.inviteFriends(),
+      icon: _Icons.inviteFriends,
+      onTap: () => _inviteFriends(),
+      isDestructive: false,
+    ));
+
+    items.add(ProfileListItemViewModel(
+      title: _LocalisedStrings.createNewProfile(),
+      icon: _Icons.soil,
+      onTap: () => _createNewProfile(viewModel, context),
+      isDestructive: false,
+    ));
+
+    items.add(ProfileListItemViewModel(
+      title: _LocalisedStrings.privacyPolicy(),
+      icon: null,
+      onTap: () => _openPrivacyPolicy(context),
+      isDestructive: false,
+    ));
+
+    items.add(ProfileListItemViewModel(
+      title: _LocalisedStrings.termsOfUse(),
+      icon: null,
+      onTap: () => _openTermsOfUse(context),
+      isDestructive: false,
+    ));
+
+    items.add(ProfileListItemViewModel(
+      title: _LocalisedStrings.removeProfile(),
+      icon: null,
+      onTap: () => viewModel.remove(),
+      isDestructive: true,
+    ));
+
+    items.add(ProfileListItemViewModel(
+      title: _LocalisedStrings.logout(),
+      icon: null,
+      onTap: () => viewModel.logout(),
+      isDestructive: true,
+    ));
+    return items;
+  }
+
+  void _switchLanguage(BuildContext context, ProfileViewModel viewModel) {
+    ActionSheet.present(_languageMenu(viewModel), context);
+  }
+
+  void _openFarmDetails(ProfileViewModel viewModel, BuildContext context) {
+    NavigationScope.presentModal(
+      context,
+      FarmDetails(
+        viewModel: FarmDetailsViewModel(
+          items: _mapToFarmItemViewModel(viewModel.farmDetails),
+          buttonTitle: _LocalisedStrings.editFarmDetails(),
+          confirm: () {
+            //TODO Should Navigate to Chat here?
+            viewModel.newAccountFlow.run(context);
+          },
+        ),
+      ),
+    );
+  }
+
+  void _createNewProfile(ProfileViewModel viewModel, BuildContext context) {
+    viewModel.newAccountFlow.run(context);
+  }
+
+  void _inviteFriends() async {
+    await Share.share(_LocalisedStrings.shareText());
+  }
+
+  void _openPrivacyPolicy(BuildContext context) {
+    _navigateToWebView(context, _Strings.privacyPolicyUrl);
+  }
+
+  void _openTermsOfUse(BuildContext context) {
+    _navigateToWebView(context, _Strings.termsOfUseUrl);
+  }
+
+  List<FarmDetailsListItemViewModel> _mapToFarmItemViewModel(
+      Map<String, String> farmDetails) {
+    return farmDetails.entries.map(
+      (MapEntry mapEntry) {
+        return FarmDetailsListItemViewModel(
+          title: mapEntry.key,
+          detail: mapEntry.value,
+        );
+      },
+    ).toList();
+  }
+
+  void _navigateBack(BuildContext context) => Navigator.of(context).pop();
+
+  void _navigateToWebView(BuildContext context, String url) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => WebView(
+          url: url,
+        ),
+      ),
+    );
+  }
+
+  ActionSheet _languageMenu(ProfileViewModel viewModel) {
+    final actions = [
+      ActionSheetListItemViewModel(
+        title: _Strings.englishAction,
+        type: ActionType.selectable,
+        icon: _Icons.englishIcon,
+        checkBoxIcon: _Icons.checkBoxIcon,
+        onTap: () => viewModel.switchLanguageTapped(_Languages.english),
+      ),
+      ActionSheetListItemViewModel(
+        title: _Strings.swahiliAction,
+        type: ActionType.selectable,
+        icon: _Icons.swahiliIcon,
+        checkBoxIcon: _Icons.checkBoxIcon,
+        onTap: () => viewModel.switchLanguageTapped(_Languages.swahili),
+      ),
+    ];
+
+    final actionSheetViewModel = ActionSheetViewModel(
+      actions,
+      _LocalisedStrings.cancel(),
+      confirmButtonTitle: _LocalisedStrings.confirm(),
+    );
+    return ActionSheet(
+      viewModel: actionSheetViewModel,
+      style: ActionSheetStyle.defaultStyle(),
+    );
+  }
+
+  ActionSheet _imagePickerMenu(ProfileViewModel viewModel) {
+    final actions = [
+      ActionSheetListItemViewModel(
+        title: _LocalisedStrings.takePictureFromCamera(),
+        type: ActionType.simple,
+        onTap: () => _pickImage(ImagePickerLib.ImageSource.camera, viewModel),
+      ),
+      ActionSheetListItemViewModel(
+        title: _LocalisedStrings.pickImageFromGallery(),
+        type: ActionType.simple,
+        onTap: () => _pickImage(ImagePickerLib.ImageSource.gallery, viewModel),
+      ),
+    ];
+
+    final actionSheetViewModel = ActionSheetViewModel(
+      actions, _LocalisedStrings.cancel(),
+    );
+    return ActionSheet(
+      viewModel: actionSheetViewModel,
+      style: ActionSheetStyle.defaultStyle(),
+    );
+  }
+
+  _pickImage(ImagePickerLib.ImageSource imageSource, ProfileViewModel viewModel) {
+    ImagePicker.pickImage(
+      onSuccess: (file) {
+        viewModel.saveProfileImage(file);
+      },
+      onCancel: (message) {
+        //ignore
+      },
+      imageSource: imageSource,
+      imageMaxHeight: _Constants.avatarImageSize,
+      imageMaxWidth: _Constants.avatarImageSize,
     );
   }
 }

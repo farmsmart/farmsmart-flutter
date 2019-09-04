@@ -1,6 +1,10 @@
 import 'dart:async';
+import 'dart:io';
 
+import 'package:farmsmart_flutter/farmsmart_localizations.dart';
 import 'package:farmsmart_flutter/model/bloc/Transformer.dart';
+import 'package:farmsmart_flutter/model/bloc/chatFlow/CreateAccountFlow.dart';
+import 'package:farmsmart_flutter/model/bloc/chatFlow/FlowCoordinator.dart';
 import 'package:farmsmart_flutter/model/bloc/plot/PlotStatistics.dart';
 import 'package:farmsmart_flutter/model/bloc/profile/PersonName.dart';
 import 'package:farmsmart_flutter/model/bloc/profile/SwitchProfileListProvider.dart';
@@ -10,16 +14,14 @@ import 'package:farmsmart_flutter/model/entities/loading_status.dart';
 import 'package:farmsmart_flutter/model/repositories/account/AccountRepositoryInterface.dart';
 import 'package:farmsmart_flutter/model/repositories/plot/PlotRepositoryInterface.dart';
 import 'package:farmsmart_flutter/model/repositories/profile/ProfileRepositoryInterface.dart';
-import 'package:farmsmart_flutter/ui/mockData/MockUserProfileViewModel.dart';
 import 'package:farmsmart_flutter/ui/profile/Profile.dart';
-import 'package:farmsmart_flutter/ui/profile/ProfileListItem.dart';
 import 'package:flutter/widgets.dart';
-import 'package:intl/intl.dart';
+import 'package:path_provider/path_provider.dart';
+
 import '../ViewModelProvider.dart';
 
-class _LocalisedStrings {
-  static logout() => Intl.message('Logout');
-  static removeProfile() => Intl.message('Remove Profile');
+class _Constants {
+  static final avatarPathSuffix = '_avatar.jpg';
 }
 
 class ProfileDetailProvider
@@ -36,6 +38,8 @@ class ProfileDetailProvider
   LoadingStatus _loadingStatus = LoadingStatus.LOADING;
   final StreamController<ProfileViewModel> _controller =
       StreamController<ProfileViewModel>.broadcast();
+
+  NewAccountFlowCoordinator _accountFlow;
 
   ProfileDetailProvider({
     @required AccountRepositoryInterface accountRepo,
@@ -74,6 +78,12 @@ class ProfileDetailProvider
         _update();
       });
 
+      _accountFlow = NewAccountFlowCoordinator(
+        _accountRepository,
+        _accountFlowStatusChanged,
+      );
+      _accountFlow.init();
+
       _snapshot = transform(from: null);
       _snapshot.refresh();
     }
@@ -82,7 +92,6 @@ class ProfileDetailProvider
 
   @override
   ProfileViewModel transform({ProfileEntity from}) {
-    List<ProfileListItemViewModel> list = _profileItems();
     final switchProfileProvider =
         SwitchProfileListProvider(accountRepo: _accountRepository);
     final personName = PersonName(from?.name ?? "");
@@ -93,35 +102,19 @@ class ProfileDetailProvider
       refresh: _refresh,
       remove: () => _remove(),
       logout: () => _logout(),
-      items: list,
       image: from?.avatar,
       activeCrops: _activeCrops,
       completedCrops: _completedCrops,
       switchProfileProvider: switchProfileProvider,
+      farmDetails: from?.lastPlotInfo,
+      switchLanguageTapped: (language) => _switchLanguage(language),
+      newAccountFlow: _accountFlow,
+      saveProfileImage: (file) => _saveProfileImage(file, from),
     );
   }
 
-  List<ProfileListItemViewModel> _profileItems() {
-    List<ProfileListItemViewModel> list = []; //TODO; replace with real items
-
-    for (var i = 0; i < 7; i++) {
-      list.add(MockUserProfileListItemViewModel.build(i));
-    }
-
-    list.add(ProfileListItemViewModel(
-      title: _LocalisedStrings.removeProfile(),
-      icon: null,
-      onTap: () => _remove(),
-      isDestructive: true,
-    ));
-
-    list.add(ProfileListItemViewModel(
-      title: _LocalisedStrings.logout(),
-      icon: null,
-      onTap: () => _logout(),
-      isDestructive: true,
-    ));
-    return list;
+  _switchLanguage(String language) {
+    FarmsmartLocalizations.load(Locale(language));
   }
 
   Future<bool> _logout() {
@@ -140,6 +133,8 @@ class ProfileDetailProvider
     });
   }
 
+  void _accountFlowStatusChanged(FlowCoordinator coordinator) {}
+
   void _update() {
     _snapshot = transform(from: _currentProfile);
     _controller.sink.add(_snapshot);
@@ -155,5 +150,17 @@ class ProfileDetailProvider
   void dispose() {
     _controller.sink.close();
     _controller.close();
+  }
+
+  void _saveProfileImage(File file, ProfileEntity from) async {
+    final directory = await getApplicationDocumentsDirectory();
+
+    final File newImage =
+        await file.copy('${directory.path}/${from.id}_${from.name}${_Constants.avatarPathSuffix}');
+
+    var savedImagePath = newImage.path;
+
+    //TODO Update image for User
+    print(savedImagePath);
   }
 }

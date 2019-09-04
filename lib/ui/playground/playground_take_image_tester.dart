@@ -35,7 +35,7 @@ class _PlaygroundTakeImageTesterState extends State<PlaygroundTakeImageTester> {
           _file = imageFile;
         });
       },
-      onError: (message) {
+      onCancel: (message) {
         Scaffold.of(context).showSnackBar(
           SnackBar(
             content: Text(message),

@@ -17,7 +17,6 @@ class MockProfileViewModel {
     }
 
     return ProfileViewModel(
-      items: list,
       username: _mockUserName.random(),
       activeCrops: Random().nextInt(50),
       completedCrops: Random().nextInt(50),
@@ -33,7 +32,6 @@ class MockProfileViewModel {
     }
 
     return ProfileViewModel(
-      items: list,
       username: _mockUserName.random(),
       activeCrops: Random().nextInt(150),
       completedCrops: Random().nextInt(150),
