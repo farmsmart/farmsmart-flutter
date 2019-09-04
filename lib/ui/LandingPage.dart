@@ -10,7 +10,7 @@ import 'package:intl/intl.dart';
 
 class _Strings {
   static final englishAction = "English";
-  static final swahiliAction = "Swahili";
+  static final swahiliAction = "Kiswahili";
 }
 
 class _LocalisedStrings {
