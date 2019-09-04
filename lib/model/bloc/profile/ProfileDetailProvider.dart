@@ -114,7 +114,9 @@ class ProfileDetailProvider
   }
 
   _switchLanguage(String language) {
-    FarmsmartLocalizations.load(Locale(language));
+    FarmsmartLocalizations.load(Locale(language)).then((_){
+      _refresh();
+    });
   }
 
   Future<bool> _logout() {

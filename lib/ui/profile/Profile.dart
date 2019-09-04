@@ -357,38 +357,42 @@ class Profile extends StatelessWidget {
   }
 
   Widget _buildActiveCrops(ProfileViewModel viewModel) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Text(
-          viewModel.activeCrops.toString(),
-          style: _style.subtitleTextStyle,
-        ),
-        Text(
-          _LocalisedStrings.activeCrops(),
-          maxLines: _style.maxLines,
-          overflow: TextOverflow.ellipsis,
-          style: _style.detailTextStyle,
-        ),
-      ],
+    return Expanded(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            viewModel.activeCrops.toString(),
+            style: _style.subtitleTextStyle,
+          ),
+          Text(
+            _LocalisedStrings.activeCrops(),
+            maxLines: _style.maxLines,
+            overflow: TextOverflow.ellipsis,
+            style: _style.detailTextStyle,
+          ),
+        ],
+      ),
     );
   }
 
   Widget _buildCompletedCrops(ProfileViewModel viewModel) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Text(
-          viewModel.completedCrops.toString(),
-          style: _style.subtitleTextStyle,
-        ),
-        Text(
-          _LocalisedStrings.completedCrops(),
-          maxLines: _style.maxLines,
-          overflow: TextOverflow.ellipsis,
-          style: _style.detailTextStyle,
-        ),
-      ],
+    return Expanded(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            viewModel.completedCrops.toString(),
+            style: _style.subtitleTextStyle,
+          ),
+          Text(
+            _LocalisedStrings.completedCrops(),
+            maxLines: _style.maxLines,
+            overflow: TextOverflow.ellipsis,
+            style: _style.detailTextStyle,
+          ),
+        ],
+      ),
     );
   }
 

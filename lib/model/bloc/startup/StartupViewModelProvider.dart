@@ -9,6 +9,7 @@ import 'package:farmsmart_flutter/model/repositories/account/AccountRepositoryIn
 import 'package:farmsmart_flutter/ui/LandingPage.dart';
 import 'package:farmsmart_flutter/ui/startup/viewmodel/startupViewModel.dart';
 import 'package:intl/intl.dart';
+
 import '../../../farmsmart_localizations.dart';
 import '../ViewModelProvider.dart';
 
@@ -32,6 +33,7 @@ class StartupViewModelProvider implements ViewModelProvider<StartupViewModel> {
   StartupViewModel _snapshot;
   final StreamController<StartupViewModel> _controller =
       StreamController<StartupViewModel>.broadcast();
+
   StartupViewModelProvider(this._accountRepository);
 
   NewAccountFlowCoordinator _accountFlow;
@@ -62,9 +64,7 @@ class StartupViewModelProvider implements ViewModelProvider<StartupViewModel> {
     return _snapshot;
   }
 
-  void _accountFlowStatusChanged(FlowCoordinator coordinator){
-    
-  }
+  void _accountFlowStatusChanged(FlowCoordinator coordinator) {}
 
   void _updateState(ProfileEntity currentProfile) {
     _setState(
@@ -109,7 +109,9 @@ class StartupViewModelProvider implements ViewModelProvider<StartupViewModel> {
   }
 
   _switchLanguage(String language) {
-    FarmsmartLocalizations.load(Locale(language));
+    FarmsmartLocalizations.load(Locale(language)).then((_) {
+      _setState(false);
+    });
   }
 
   void _refresh() {
