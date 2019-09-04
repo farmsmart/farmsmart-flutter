@@ -156,7 +156,7 @@ class ProfileDetailProvider
     final directory = await getApplicationDocumentsDirectory();
 
     final File newImage =
-        await file.copy('${directory.path}/${from.id}_${from.name}${_Constants.avatarPathSuffix}');
+        await file.copy('${directory.path}/${from.uri}_${from.name}${_Constants.avatarPathSuffix}');
 
     var savedImagePath = newImage.path;
 
