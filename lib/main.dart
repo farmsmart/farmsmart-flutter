@@ -36,10 +36,9 @@ class _FarmSmartAppState extends State<FarmSmartApp> {
           locale: snapshot.data,
           onGenerateTitle: (context) => _String.title(),
           localizationsDelegates: [
-            // ... app specific localization delegates here
             FarmsmartLocalizationsDelegate(_Constants.supportedLocales),
             GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate
+            GlobalWidgetsLocalizations.delegate,
           ],
           supportedLocales: _Constants.supportedLocales,
           theme: ThemeData(

@@ -458,7 +458,7 @@ class Profile extends StatelessWidget {
 
     items.add(ProfileListItemViewModel(
       title: _LocalisedStrings.yourFarmDetails(),
-      icon: _Icons.newProfile,
+      icon: _Icons.soil,
       onTap: () => _openFarmDetails(viewModel, context),
       isDestructive: false,
     ));
@@ -472,7 +472,7 @@ class Profile extends StatelessWidget {
 
     items.add(ProfileListItemViewModel(
       title: _LocalisedStrings.createNewProfile(),
-      icon: _Icons.soil,
+      icon: _Icons.newProfile,
       onTap: () => _createNewProfile(viewModel, context),
       isDestructive: false,
     ));
