@@ -129,6 +129,7 @@ class ProfileViewModel implements RefreshableViewModel, LoadableViewModel {
   final Function refresh;
   final Function logout;
   final Function remove;
+  final Function(String) renameProfile;
   final LoadingStatus loadingStatus;
   final Map<String, String> farmDetails;
   final Function(String) switchLanguageTapped;
@@ -150,6 +151,7 @@ class ProfileViewModel implements RefreshableViewModel, LoadableViewModel {
     this.switchLanguageTapped,
     this.newAccountFlow,
     this.saveProfileImage,
+    this.renameProfile
   });
 }
 
@@ -638,7 +640,7 @@ class Profile extends StatelessWidget {
           titleText: _LocalisedStrings.renameProfile(),
           hint: _LocalisedStrings.username(),
           confirmInputAction: (value) {
-            //TODO Add the viewmodel rename func here
+            viewModel.renameProfile(value);
           }),
     );
   }

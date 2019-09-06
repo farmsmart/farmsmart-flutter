@@ -216,7 +216,9 @@ class InputAlert extends StatelessWidget {
   }
 
   confirmAndDismiss(BuildContext context) {
-    _viewModel.confirmInputAction(_textFieldController.text);
-    Navigator.of(context).pop();
+    if(_textFieldController.text != null && _textFieldController.text.isNotEmpty){
+      _viewModel.confirmInputAction(_textFieldController.text);
+      Navigator.of(context).pop();
+    }
   }
 }

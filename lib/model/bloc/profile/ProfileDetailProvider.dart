@@ -110,6 +110,7 @@ class ProfileDetailProvider
       switchLanguageTapped: (language) => _switchLanguage(language),
       newAccountFlow: _accountFlow,
       saveProfileImage: (file) => _saveProfileImage(file, from),
+      renameProfile: (username) => _renameProfile(username)
     );
   }
 
@@ -162,5 +163,9 @@ class ProfileDetailProvider
 
     //TODO Update image for User
     print(savedImagePath);
+  }
+
+  void _renameProfile(String username) {
+    //TODO Missing repo functionality update profile username
   }
 }
