@@ -65,7 +65,7 @@ class _DefaultStyle extends DogTagStyle {
   final int maxLines = 1;
   final double iconSize = 8;
   final Color iconColor = Colors.black;
-  final double spacing = 5.5;
+  final double spacing = 5;
 
   const _DefaultStyle({
     Color backgroundColor,
@@ -85,7 +85,8 @@ class DogTag extends StatelessWidget {
   final DogTagViewModel _viewModel;
   final DogTagStyle _style;
 
-  const DogTag({Key key, DogTagViewModel viewModel, DogTagStyle style = _defaultStyle})
+  const DogTag(
+      {Key key, DogTagViewModel viewModel, DogTagStyle style = _defaultStyle})
       : this._viewModel = viewModel,
         this._style = style,
         super(key: key);
@@ -98,19 +99,24 @@ class DogTag extends StatelessWidget {
         color: _style.backgroundColor,
         borderRadius: _style.borderRadius,
       ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          Flexible(
+      child: Padding(
+        padding: EdgeInsets.only(bottom: 2),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Flexible(
               child: Wrap(
-            crossAxisAlignment: WrapCrossAlignment.center,
-            children: _buildButtonContent(
-              _viewModel,
-              _style,
-            ),
-            spacing: _style.spacing,
-          ))
-        ],
+                crossAxisAlignment: WrapCrossAlignment.center,
+                children: _buildButtonContent(
+                  _viewModel,
+                  _style,
+                ),
+                spacing: _style.spacing,
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
