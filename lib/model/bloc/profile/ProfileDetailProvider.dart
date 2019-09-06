@@ -113,8 +113,11 @@ class ProfileDetailProvider
     );
   }
 
-  _switchLanguage(String language) {
-    FarmsmartLocalizations.load(Locale(language));
+  _switchLanguage(String language) async {
+    await FarmsmartLocalizations.persistLocale(Locale(language));
+    FarmsmartLocalizations.load(Locale(language)).then((_) {
+      _refresh();
+    });
   }
 
   Future<bool> _logout() {
@@ -155,8 +158,8 @@ class ProfileDetailProvider
   void _saveProfileImage(File file, ProfileEntity from) async {
     final directory = await getApplicationDocumentsDirectory();
 
-    final File newImage =
-        await file.copy('${directory.path}/${from.uri}_${from.name}${_Constants.avatarPathSuffix}');
+    final File newImage = await file.copy(
+        '${directory.path}/${from.uri}_${from.name}${_Constants.avatarPathSuffix}');
 
     var savedImagePath = newImage.path;
 

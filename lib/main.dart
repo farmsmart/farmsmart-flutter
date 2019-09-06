@@ -16,6 +16,10 @@ class _Constants {
   ];
 }
 
+class _String {
+  static title() => 'FarmSmart';
+}
+
 class FarmSmartApp extends StatefulWidget {
   @override
   _FarmSmartAppState createState() => _FarmSmartAppState();
@@ -24,23 +28,29 @@ class FarmSmartApp extends StatefulWidget {
 class _FarmSmartAppState extends State<FarmSmartApp> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      onGenerateTitle: (context) => FarmsmartLocalizations.of(context).title,
-      localizationsDelegates: [
-        // ... app specific localization delegates here
-        FarmsmartLocalizationsDelegate(_Constants.supportedLocales),
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate
-      ],
-      supportedLocales: _Constants.supportedLocales,
-      theme: ThemeData(
-        fontFamily: _Constants.fontFamily,
-        brightness: Brightness.light,
-        scaffoldBackgroundColor: _Constants.backgroundColor,
-        primaryColor: _Constants.backgroundColor,
-        accentColor: _Constants.accentColor,
-      ),
-      home: AppCoordinator(),
+    return FutureBuilder<Locale>(
+      future: FarmsmartLocalizations.getLocale(),
+      initialData: _Constants.supportedLocales.first,
+      builder: (BuildContext context, AsyncSnapshot<Locale> snapshot) {
+        return MaterialApp(
+          locale: snapshot.data,
+          onGenerateTitle: (context) => _String.title(),
+          localizationsDelegates: [
+            FarmsmartLocalizationsDelegate(_Constants.supportedLocales),
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+          ],
+          supportedLocales: _Constants.supportedLocales,
+          theme: ThemeData(
+            fontFamily: _Constants.fontFamily,
+            brightness: Brightness.light,
+            scaffoldBackgroundColor: _Constants.backgroundColor,
+            primaryColor: _Constants.backgroundColor,
+            accentColor: _Constants.accentColor,
+          ),
+          home: AppCoordinator(),
+        );
+      },
     );
   }
 }

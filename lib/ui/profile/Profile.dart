@@ -357,38 +357,42 @@ class Profile extends StatelessWidget {
   }
 
   Widget _buildActiveCrops(ProfileViewModel viewModel) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Text(
-          viewModel.activeCrops.toString(),
-          style: _style.subtitleTextStyle,
-        ),
-        Text(
-          _LocalisedStrings.activeCrops(),
-          maxLines: _style.maxLines,
-          overflow: TextOverflow.ellipsis,
-          style: _style.detailTextStyle,
-        ),
-      ],
+    return Expanded(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            viewModel.activeCrops.toString(),
+            style: _style.subtitleTextStyle,
+          ),
+          Text(
+            _LocalisedStrings.activeCrops(),
+            maxLines: _style.maxLines,
+            overflow: TextOverflow.ellipsis,
+            style: _style.detailTextStyle,
+          ),
+        ],
+      ),
     );
   }
 
   Widget _buildCompletedCrops(ProfileViewModel viewModel) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Text(
-          viewModel.completedCrops.toString(),
-          style: _style.subtitleTextStyle,
-        ),
-        Text(
-          _LocalisedStrings.completedCrops(),
-          maxLines: _style.maxLines,
-          overflow: TextOverflow.ellipsis,
-          style: _style.detailTextStyle,
-        ),
-      ],
+    return Expanded(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            viewModel.completedCrops.toString(),
+            style: _style.subtitleTextStyle,
+          ),
+          Text(
+            _LocalisedStrings.completedCrops(),
+            maxLines: _style.maxLines,
+            overflow: TextOverflow.ellipsis,
+            style: _style.detailTextStyle,
+          ),
+        ],
+      ),
     );
   }
 
@@ -454,7 +458,7 @@ class Profile extends StatelessWidget {
 
     items.add(ProfileListItemViewModel(
       title: _LocalisedStrings.yourFarmDetails(),
-      icon: _Icons.newProfile,
+      icon: _Icons.soil,
       onTap: () => _openFarmDetails(viewModel, context),
       isDestructive: false,
     ));
@@ -468,7 +472,7 @@ class Profile extends StatelessWidget {
 
     items.add(ProfileListItemViewModel(
       title: _LocalisedStrings.createNewProfile(),
-      icon: _Icons.soil,
+      icon: _Icons.newProfile,
       onTap: () => _createNewProfile(viewModel, context),
       isDestructive: false,
     ));

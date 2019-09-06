@@ -9,8 +9,8 @@ import 'package:intl/message_lookup_by_library.dart';
 // ignore: implementation_imports
 import 'package:intl/src/intl_helpers.dart';
 
-import 'messages_messages.dart' as messages_messages;
-import 'messages_sw.dart' as messages_sw;
+import 'package:farmsmart_flutter/l10n/messages_messages.dart' as messages_messages;
+import 'package:farmsmart_flutter/l10n/messages_sw.dart' as messages_sw;
 
 typedef Future<dynamic> LibraryLoader();
 Map<String, LibraryLoader> _deferredLibraries = {
