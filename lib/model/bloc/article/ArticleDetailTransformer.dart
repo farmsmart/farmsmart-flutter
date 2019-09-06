@@ -57,7 +57,7 @@ class ArticleDetailViewModelTransformer
       _contentLinkTitle,
       imageProvider,
       from.content,
-      buildArticleDeeplink(from.id),
+      buildArticleDeeplink(from.uri),
       from.externalLink,
       _contentLinkDescription,
       _contentLinkIcon,

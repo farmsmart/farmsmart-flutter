@@ -24,10 +24,12 @@ class PlotDetailProvider implements ViewModelProvider<PlotDetailViewModel> {
   PlotDetailViewModel initial() {
     if (_snapshot == null) {
       _snapshot = _viewModel();
-      _repo.observeSingle(_plot.id).listen((plot) {
-        _plot = plot;
-        _snapshot = _viewModel();
-        _controller.sink.add(_snapshot);
+      _repo.observeSingle(_plot.uri).listen((plot) {
+        if(plot != null){
+           _plot = plot;
+          _snapshot = _viewModel();
+          _controller.sink.add(_snapshot);
+        }
       });
     }
     return _snapshot;

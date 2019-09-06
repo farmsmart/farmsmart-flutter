@@ -21,7 +21,7 @@ class MockCropRepository implements CropRepositoryInterface {
   @override
   Future<CropEntity> getSingle(String uri) {
     final result =  _list.reduce((left, right) {
-        return (left.id == uri) ? left : (right.id == uri) ? right : null;
+        return (left.uri == uri) ? left : (right.uri == uri) ? right : null;
     });
     return Future.delayed(_delay, () => result);
   }

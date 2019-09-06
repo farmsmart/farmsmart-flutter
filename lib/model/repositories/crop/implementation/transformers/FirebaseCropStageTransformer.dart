@@ -31,7 +31,6 @@ class CropStageArticleEntityCollectionFlamelink implements EntityCollection<Arti
 }
 
 class _Fields {
-  static String id = "id";
   static String content = "content";
   static String status = "status";
   static String summary = "summary";
@@ -57,7 +56,7 @@ class FlamelinkCropArticleTransformer
   @override
   ArticleEntity transform({DocumentSnapshot from}) {
     final meta = _metaTransformer.transform(from: from);
-    final id = castOrNull<String>(from.data[_Fields.id]);
+    final uri = from.reference.path;
     final content = castOrNull<String>(from.data[_Fields.content]);
     final status = castOrNull<String>(from.data[_Fields.status]);
     final summary = castOrNull<String>(from.data[_Fields.summary]);
@@ -67,7 +66,7 @@ class FlamelinkCropArticleTransformer
     final published =
         (meta.createdDate != null) ? meta.createdDate.toDate() : null;
     final entity = ArticleEntity(
-        id: id,
+        uri: uri,
         content: content,
         status: statusValues.map[status],
         summary: summary,
