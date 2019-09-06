@@ -6,19 +6,20 @@ import 'package:farmsmart_flutter/model/entities/ImageURLProvider.dart';
 import 'package:farmsmart_flutter/model/entities/loading_status.dart';
 import 'package:farmsmart_flutter/ui/common/ActionSheet.dart';
 import 'package:farmsmart_flutter/ui/common/ActionSheetListItem.dart';
+import 'package:farmsmart_flutter/ui/common/InputAlert.dart';
 import 'package:farmsmart_flutter/ui/common/ListDivider.dart';
 import 'package:farmsmart_flutter/ui/common/LoadableViewModel.dart';
 import 'package:farmsmart_flutter/ui/common/ProfileAvatar.dart';
 import 'package:farmsmart_flutter/ui/common/RefreshableViewModel.dart';
 import 'package:farmsmart_flutter/ui/common/ViewModelProviderBuilder.dart';
 import 'package:farmsmart_flutter/ui/common/image_picker.dart';
-import 'package:image_picker/image_picker.dart' as ImagePickerLib;
 import 'package:farmsmart_flutter/ui/common/modal_navigator.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
 import 'package:farmsmart_flutter/ui/common/webview.dart';
 import 'package:farmsmart_flutter/ui/profile/FarmDetailsListItem.dart';
 import 'package:farmsmart_flutter/ui/profile/ProfileListItem.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart' as ImagePickerLib;
 import 'package:intl/intl.dart';
 import 'package:share/share.dart';
 
@@ -57,6 +58,10 @@ class _LocalisedStrings {
   static pickImageFromGallery() => Intl.message('Pick image from gallery');
 
   static takePictureFromCamera() => Intl.message('Take picture from camera');
+
+  static renameProfile() => Intl.message('Rename profile');
+
+  static username() => Intl.message('Username');
 
   //TODO Add the correct text & Google Play Link
   static shareText() => Intl.message(
@@ -279,23 +284,28 @@ class Profile extends StatelessWidget {
   }
 
   Widget _buildHeader(BuildContext context, ProfileViewModel viewModel) {
-    return Column(
-      children: <Widget>[
-        Container(
-          margin: _Constants.headerEdgePadding,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              _buildMainTextView(context, viewModel),
-              SizedBox(width: _Constants.imageSpacing),
-              _buildProfileImage(viewModel, context),
-            ],
+    return GestureDetector(
+      onTap: () {
+        ActionSheet.present(_optionsMenu(viewModel, context), context);
+      },
+      child: Column(
+        children: <Widget>[
+          Container(
+            margin: _Constants.headerEdgePadding,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                _buildMainTextView(context, viewModel),
+                SizedBox(width: _Constants.imageSpacing),
+                _buildProfileImage(viewModel, context),
+              ],
+            ),
           ),
-        ),
-        _buildButton(context, viewModel),
-        SizedBox(height: _Constants.buttonLineSpace),
-      ],
+          _buildButton(context, viewModel),
+          SizedBox(height: _Constants.buttonLineSpace),
+        ],
+      ),
     );
   }
 
@@ -416,15 +426,10 @@ class Profile extends StatelessWidget {
   }
 
   Widget _buildProfileImage(ProfileViewModel viewModel, BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        ActionSheet.present(_imagePickerMenu(viewModel), context);
-      },
-      child: ProfileAvatar(
-        viewModelProvider: _viewModelProvider,
-        width: _style.imageSize,
-        height: _style.imageSize,
-      ),
+    return ProfileAvatar(
+      viewModelProvider: _viewModelProvider,
+      width: _style.imageSize,
+      height: _style.imageSize,
     );
   }
 
@@ -592,7 +597,7 @@ class Profile extends StatelessWidget {
     );
   }
 
-  ActionSheet _imagePickerMenu(ProfileViewModel viewModel) {
+  ActionSheet _optionsMenu(ProfileViewModel viewModel, BuildContext context) {
     final actions = [
       ActionSheetListItemViewModel(
         title: _LocalisedStrings.takePictureFromCamera(),
@@ -604,10 +609,16 @@ class Profile extends StatelessWidget {
         type: ActionType.simple,
         onTap: () => _pickImage(ImagePickerLib.ImageSource.gallery, viewModel),
       ),
+      ActionSheetListItemViewModel(
+        title: _LocalisedStrings.renameProfile(),
+        type: ActionType.simple,
+        onTap: () => _renameProfileAction(viewModel, context),
+      ),
     ];
 
     final actionSheetViewModel = ActionSheetViewModel(
-      actions, _LocalisedStrings.cancel(),
+      actions,
+      _LocalisedStrings.cancel(),
     );
     return ActionSheet(
       viewModel: actionSheetViewModel,
@@ -615,7 +626,25 @@ class Profile extends StatelessWidget {
     );
   }
 
-  _pickImage(ImagePickerLib.ImageSource imageSource, ProfileViewModel viewModel) {
+  void _renameProfileAction(ProfileViewModel viewModel, BuildContext context) {
+    InputAlert.present(_renameInputAlert(viewModel), context);
+  }
+
+  InputAlert _renameInputAlert(ProfileViewModel viewModel) {
+    return InputAlert(
+      viewModel: InputAlertViewModel(
+          cancelActionText: _LocalisedStrings.cancel(),
+          confirmActionText: _LocalisedStrings.confirm(),
+          titleText: _LocalisedStrings.renameProfile(),
+          hint: _LocalisedStrings.username(),
+          confirmInputAction: (value) {
+            //TODO Add the viewmodel rename func here
+          }),
+    );
+  }
+
+  _pickImage(
+      ImagePickerLib.ImageSource imageSource, ProfileViewModel viewModel) {
     ImagePicker.pickImage(
       onSuccess: (file) {
         viewModel.saveProfileImage(file);

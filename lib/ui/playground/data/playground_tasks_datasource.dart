@@ -15,6 +15,7 @@ import 'package:farmsmart_flutter/ui/article/ArticleList.dart';
 import 'package:farmsmart_flutter/ui/bottombar/persistent_bottom_navigation_bar.dart';
 import 'package:farmsmart_flutter/ui/common/ActionSheet.dart';
 import 'package:farmsmart_flutter/ui/common/Alert.dart';
+import 'package:farmsmart_flutter/ui/common/InputAlert.dart';
 import 'package:farmsmart_flutter/ui/common/carousel_view.dart';
 import 'package:farmsmart_flutter/ui/community/LinkBox.dart';
 import 'package:farmsmart_flutter/ui/community/LinkBoxStyles.dart';
@@ -22,6 +23,7 @@ import 'package:farmsmart_flutter/ui/community/MockLinkBox.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockActionSheetViewModel.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockAlertWidgetViewModel.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockFarmDetailsViewModel.dart';
+import 'package:farmsmart_flutter/ui/mockData/MockInputAlertWidgetViewModel.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockLandingPageViewModel.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockRecordTransactionViewModel.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockSwitchProfile.dart';
@@ -247,6 +249,16 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
                 listener: (alert, context) => Alert.present(alert, context),
               ),
             ),
+            PlaygroundWidget(
+              title: "Input Alert",
+              child: PlaygroundPresentButton(
+                child: InputAlert(
+                  viewModel: MockInputAlertViewModel.build(),
+                ),
+                listener: (alert, context) => Alert.present(alert, context),
+              ),
+            ),
+
           ],
         ),
       ),
