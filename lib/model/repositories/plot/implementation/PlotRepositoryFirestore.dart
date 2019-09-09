@@ -17,10 +17,8 @@ import '../PlotRepositoryInterface.dart';
 import 'PlotFirestoreTransformers.dart';
 
 class _Fields {
-  static const title = "title";
-  static const startDate = "startDate";
-  static const endDate = "endDate";
   static const plotCollectionPath = "/plots";
+  static const orderField = "order";
 }
 
 class PlotRepositoryFireStore implements PlotRepositoryInterface {
@@ -38,6 +36,7 @@ class PlotRepositoryFireStore implements PlotRepositoryInterface {
     profileRepository.observeCurrent().listen((profile) {
       firestore
           .collection(_plotListPathFor(profile))
+          .orderBy(_Fields.orderField)
           .snapshots()
           .listen((snapshot) {
         Future.wait(snapshot.documents.map((document) {
@@ -61,12 +60,19 @@ class PlotRepositoryFireStore implements PlotRepositoryInterface {
           article: article,
         );
       }).toList();
-      final plot =
-          PlotEntity(title: crop.name, crop: crop, score: 0.0, stages: stages);
+
+      final plot = PlotEntity(
+        title: crop.name,
+        crop: crop,
+        score: 0.0,
+        stages: stages,
+      );
+      var firestorePlot = _transformToFirebase(plot);
+      firestorePlot[_Fields.orderField] = Timestamp.now();
       return _plotListPath().then((path) {
         return firestore
             .collection(path)
-            .add(_transformToFirebase(plot))
+            .add(firestorePlot)
             .then((documentRef) {
           return documentRef.get().then((document) {
             return _transformFromFirebase(document);
@@ -81,7 +87,7 @@ class PlotRepositoryFireStore implements PlotRepositoryInterface {
     PlotEntity forPlot,
     StageEntity stage,
   ) {
-    final startedStage = _stageWithDates(stage, DateTime.now(), stage.ended);
+    final startedStage = _stageWithDates(stage, DateTime.now(), stage.ended,);
     final updatedPlot = _replaceStage(forPlot, stage, startedStage);
     final firebasePlot = _transformToFirebase(updatedPlot);
     return firestore
@@ -98,8 +104,12 @@ class PlotRepositoryFireStore implements PlotRepositoryInterface {
     StageEntity stage,
   ) {
     final completedStage =
-        _stageWithDates(stage, stage.started, DateTime.now());
-    final updatedPlot = _replaceStage(forPlot, stage, completedStage);
+        _stageWithDates(stage, stage.started, DateTime.now(),);
+    final updatedPlot = _replaceStage(
+      forPlot,
+      stage,
+      completedStage,
+    );
     final firebasePlot = _transformToFirebase(updatedPlot);
     return firestore
         .document(forPlot.uri)
@@ -118,7 +128,7 @@ class PlotRepositoryFireStore implements PlotRepositoryInterface {
   @override
   Future<List<PlotEntity>> getFarm() {
     return _plotListPath().then((path) {
-      return firestore.collection(path).getDocuments().then((snapshot) {
+      return firestore.collection(path).orderBy(_Fields.orderField).getDocuments().then((snapshot) {
         return Future.wait(snapshot.documents.map((document) {
           return _transformFromFirebase(document);
         })).then((plots) {
@@ -167,7 +177,7 @@ class PlotRepositoryFireStore implements PlotRepositoryInterface {
     PlotEntity plot,
     String name,
   ) {
-    final data = {_Fields.title: name};
+    final data = {PlotEntityFields.title: name};
     final documentRef = firestore.document(plot.uri);
     return documentRef
         .setData(
@@ -238,9 +248,11 @@ class PlotRepositoryFireStore implements PlotRepositoryInterface {
 
   Future<List<StageEntity>> _transformStagesFromFirebase(
       DocumentSnapshot plotDocument) {
-    final stages = castListOrNull<Map>(plotDocument.data[PlotEntityFields.stages]);
+    final stages =
+        castListOrNull<Map>(plotDocument.data[PlotEntityFields.stages]);
     return Future.wait(stages.map((stage) {
-      final articlePath = castOrNull<String>(stage[PlotEntityFields.articlePath]);
+      final articlePath =
+          castOrNull<String>(stage[PlotEntityFields.articlePath]);
       final started = castOrNull<Timestamp>(stage[PlotEntityFields.started]);
       final ended = castOrNull<Timestamp>(stage[PlotEntityFields.ended]);
       final id = castOrNull<String>(stage[PlotEntityFields.id]);
