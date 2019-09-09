@@ -8,9 +8,9 @@ class _Constants {
   static final BorderRadius cornerRadius =
       const BorderRadius.all(Radius.circular(24.0));
   static final EdgeInsets alertInnerPadding =
-      const EdgeInsets.only(left: 32, right: 32, bottom: 31, top: 31);
+      const EdgeInsets.only(left: 32, right: 32, bottom: 25, top: 31);
   static final double titleLineSpace = 19;
-  static final double detailLineSpace = 28;
+  static final double detailLineSpace = 8;
   static final double actionHeight = 48;
   static final double actionWidth = 120;
   static final BorderRadius actionCornerRadius =
@@ -110,7 +110,6 @@ class InputAlert extends StatelessWidget {
 
   TextEditingController _textFieldController = TextEditingController();
 
-
   static present(InputAlert alert, BuildContext context) {
     return showDialog<bool>(
       context: context,
@@ -131,43 +130,46 @@ class InputAlert extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       type: MaterialType.transparency,
-      child: Center(
-        child: Container(
-          margin: _Constants.alertEdgePadding,
-          decoration: BoxDecoration(
-            borderRadius: _Constants.cornerRadius,
-            color: _style.backgroundColor,
-          ),
-          child: Padding(
-            padding: _Constants.alertInnerPadding,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Text(
-                  _viewModel.titleText,
-                  style: _style.titleTextStyle,
-                ),
-                SizedBox(
-                  height: _Constants.titleLineSpace,
-                ),
-                Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    TextField(
-                      controller: _textFieldController,
-                      decoration:
-                          InputDecoration(hintText: _viewModel.hint),
-                    ),
-                    SizedBox(
-                      height: _Constants.detailLineSpace,
-                    ),
-                    Row(
-                      children: _buildAction(context),
-                    ),
-                  ],
-                ),
-              ],
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        resizeToAvoidBottomInset: true,
+        body: Center(
+          child: Container(
+            margin: _Constants.alertEdgePadding,
+            decoration: BoxDecoration(
+              borderRadius: _Constants.cornerRadius,
+              color: _style.backgroundColor,
+            ),
+            child: Padding(
+              padding: _Constants.alertInnerPadding,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Text(
+                    _viewModel.titleText,
+                    style: _style.titleTextStyle,
+                  ),
+                  SizedBox(
+                    height: _Constants.titleLineSpace,
+                  ),
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      TextField(
+                        controller: _textFieldController,
+                        decoration: InputDecoration(hintText: _viewModel.hint),
+                      ),
+                      SizedBox(
+                        height: _Constants.detailLineSpace,
+                      ),
+                      Row(
+                        children: _buildAction(context),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -176,7 +178,7 @@ class InputAlert extends StatelessWidget {
   }
 
   List<Widget> _buildAction(BuildContext context) {
-    List<Widget> listBuilder = [
+    return [
       Expanded(
         child: RoundedButton(
           viewModel: RoundedButtonViewModel(
@@ -190,19 +192,16 @@ class InputAlert extends StatelessWidget {
           ),
         ),
       ),
-    ];
-    listBuilder.add(
       SizedBox(
         width: _Constants.actionLineSpace,
       ),
-    );
-    listBuilder.add(
       Expanded(
         child: RoundedButton(
           viewModel: RoundedButtonViewModel(
               title: _viewModel.confirmActionText,
               onTap: () => confirmAndDismiss(context)),
           style: RoundedButtonStyle.actionSheetLargeRoundedButton().copyWith(
+            edgePadding: EdgeInsets.symmetric(horizontal: 8),
             height: _Constants.actionHeight,
             width: _Constants.actionWidth,
             backgroundColor: _style.actionBackgroundColor,
@@ -211,12 +210,12 @@ class InputAlert extends StatelessWidget {
           ),
         ),
       ),
-    );
-    return listBuilder;
+    ];
   }
 
   confirmAndDismiss(BuildContext context) {
-    if(_textFieldController.text != null && _textFieldController.text.isNotEmpty){
+    if (_textFieldController.text != null &&
+        _textFieldController.text.isNotEmpty) {
       _viewModel.confirmInputAction(_textFieldController.text);
       Navigator.of(context).pop();
     }
