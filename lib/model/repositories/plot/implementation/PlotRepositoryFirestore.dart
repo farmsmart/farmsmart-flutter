@@ -81,9 +81,15 @@ class PlotRepositoryFireStore implements PlotRepositoryInterface {
     PlotEntity forPlot,
     StageEntity stage,
   ) {
-    return Future.value(forPlot);
-    //final data = {_Fields.startDate: Timestamp.fromDate(DateTime.now())};
-    //return firestore.document(stage.id).setData(data, merge: true);
+    final startedStage = _stageWithDates(stage, DateTime.now(), stage.ended);
+    final updatedPlot = _replaceStage(forPlot, stage, startedStage);
+    final firebasePlot = _transformToFirebase(updatedPlot);
+    return firestore
+        .document(forPlot.uri)
+        .setData(firebasePlot, merge: true)
+        .then((result) {
+      return updatedPlot;
+    });
   }
 
   @override
@@ -91,9 +97,16 @@ class PlotRepositoryFireStore implements PlotRepositoryInterface {
     PlotEntity forPlot,
     StageEntity stage,
   ) {
-    return Future.value(forPlot);
-    //final data = {_Fields.endDate: Timestamp.fromDate(DateTime.now())};
-    //return firestore.document(stage.id).setData(data, merge: true);
+    final completedStage =
+        _stageWithDates(stage, stage.started, DateTime.now());
+    final updatedPlot = _replaceStage(forPlot, stage, completedStage);
+    final firebasePlot = _transformToFirebase(updatedPlot);
+    return firestore
+        .document(forPlot.uri)
+        .setData(firebasePlot, merge: true)
+        .then((result) {
+      return updatedPlot;
+    });
   }
 
   @override
@@ -156,7 +169,12 @@ class PlotRepositoryFireStore implements PlotRepositoryInterface {
   ) {
     final data = {_Fields.title: name};
     final documentRef = firestore.document(plot.uri);
-    return documentRef.setData(data, merge: true).then((_) {
+    return documentRef
+        .setData(
+      data,
+      merge: true,
+    )
+        .then((_) {
       return documentRef.get().then((document) {
         return _transformFromFirebase(document);
       });
@@ -168,9 +186,17 @@ class PlotRepositoryFireStore implements PlotRepositoryInterface {
     PlotEntity forPlot,
     StageEntity stage,
   ) {
-    return Future.value(forPlot);
-    //final data = {_Fields.endDate: null};
-    //return firestore.document(stage.id).setData(data, merge: true);
+    final updatedPlot = _revertStage(forPlot, stage);
+    final firebasePlot = _transformToFirebase(updatedPlot);
+    return firestore
+        .document(forPlot.uri)
+        .setData(
+          firebasePlot,
+          merge: true,
+        )
+        .then((result) {
+      return updatedPlot;
+    });
   }
 
   String _plotListPathFor(ProfileEntity profile) {
@@ -212,13 +238,12 @@ class PlotRepositoryFireStore implements PlotRepositoryInterface {
 
   Future<List<StageEntity>> _transformStagesFromFirebase(
       DocumentSnapshot plotDocument) {
-    final stages =
-        castListOrNull<Map>(plotDocument.data["stages"]);
+    final stages = castListOrNull<Map>(plotDocument.data[PlotEntityFields.stages]);
     return Future.wait(stages.map((stage) {
-      final articlePath = castOrNull<String>(stage["articlePath"]);
-      final started = castOrNull<Timestamp>(stage["started"]);
-      final ended = castOrNull<Timestamp>(stage["ended"]);
-      final id = castOrNull<String>(stage["id"]);
+      final articlePath = castOrNull<String>(stage[PlotEntityFields.articlePath]);
+      final started = castOrNull<Timestamp>(stage[PlotEntityFields.started]);
+      final ended = castOrNull<Timestamp>(stage[PlotEntityFields.ended]);
+      final id = castOrNull<String>(stage[PlotEntityFields.id]);
       final stageArticleTransformer = FlamelinkCropArticleTransformer(
         cms: flamelink,
         metaTransformer: FlamelinkMetaTransformer(),
@@ -234,6 +259,57 @@ class PlotRepositoryFireStore implements PlotRepositoryInterface {
         );
       });
     }));
+  }
+
+  PlotEntity _revertStage(PlotEntity forPlot, StageEntity stage) {
+    final stageIndex = forPlot.stages.indexOf(stage);
+    forPlot = _replaceStage(
+        forPlot,
+        stage,
+        _stageWithDates(
+          stage,
+          stage.started,
+          null,
+        ));
+    for (var i = stageIndex + 1; i < forPlot.stages.length; i++) {
+      final upcomingStage = forPlot.stages[i];
+      forPlot = _replaceStage(
+          forPlot,
+          upcomingStage,
+          _stageWithDates(
+            upcomingStage,
+            null,
+            null,
+          ));
+    }
+    return forPlot;
+  }
+
+  PlotEntity _replaceStage(
+      PlotEntity forPlot, StageEntity oldStage, StageEntity newStage) {
+    final stageIndex = forPlot.stages.indexOf(oldStage);
+    var newStages = List<StageEntity>.from(forPlot.stages);
+    newStages.replaceRange(stageIndex, stageIndex + 1, [newStage]);
+    return PlotEntity(
+      uri: forPlot.uri,
+      title: forPlot.title,
+      crop: forPlot.crop,
+      score: forPlot.score,
+      stages: newStages,
+    );
+  }
+
+  StageEntity _stageWithDates(
+    StageEntity stage,
+    DateTime start,
+    DateTime end,
+  ) {
+    return StageEntity(
+      id: stage.id,
+      article: stage.article,
+      started: start,
+      ended: end,
+    );
   }
 
   void dispose() {
