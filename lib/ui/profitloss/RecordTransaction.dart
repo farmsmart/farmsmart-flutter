@@ -17,6 +17,7 @@ class _Constants {
   static final Color disabledActionColor = Color(0xFFe9eaf2);
   static final Color enabledActionSaleColor = Color(0xFF24d900);
   static final Color enabledActionCostColor = Color(0xFFff8d4f);
+  static final EdgeInsets descriptionPadding = EdgeInsets.only(bottom: 60);
 }
 
 class RecordTransactionData {
@@ -164,11 +165,16 @@ class RecordTransactionState extends State<RecordTransaction> {
           FocusScope.of(context).unfocus();
           setIfRequiredFieldsAreFilled();
         },
-        child: ListView(
-          children: _buildContent(
-            viewModel,
-            style,
-          ),
+        child: Stack(
+          children: <Widget>[
+            ListView(
+              children: _buildContent(
+                viewModel,
+                style,
+              ),
+            ),
+            _buildFooterAction(viewModel, style),
+          ],
         ),
       ),
     );
@@ -216,7 +222,7 @@ class RecordTransactionState extends State<RecordTransaction> {
     );
   }
 
-  void _dismiss(BuildContext context){
+  void _dismiss(BuildContext context) {
     Navigator.pop(context, false);
   }
 
@@ -276,39 +282,48 @@ class RecordTransactionState extends State<RecordTransaction> {
     listBuilder.add(ListDivider.build());
 
     listBuilder.add(
-      RecordTransactionListItem(
-        viewModel: RecordTransactionListItemViewModel(
-          type: RecordCellType.description,
-          isEditable: viewModel.isEditable,
-          description: viewModel.isEditable
-              ? userData.description
-              : viewModel.actions[_Constants.thirdListItem].description,
+      Padding(
+        padding: _Constants.descriptionPadding,
+        child: RecordTransactionListItem(
+          viewModel: RecordTransactionListItemViewModel(
+            type: RecordCellType.description,
+            isEditable: viewModel.isEditable,
+            description: viewModel.isEditable
+                ? userData.description
+                : viewModel.actions[_Constants.thirdListItem].description,
+          ),
+          style: RecordTransactionListItemStyles.biggerStyle,
+          parent: this,
         ),
-        style: RecordTransactionListItemStyles.biggerStyle,
-        parent: this,
       ),
     );
 
-    if (viewModel.isEditable) {
-      listBuilder.add(_buildFooterAction(viewModel, style));
-    }
     return listBuilder;
   }
 
-  Padding _buildFooterAction(
+  Widget _buildFooterAction(
       RecordTransactionViewModel viewModel, RecordTransactionStyle style) {
-    return Padding(
-      padding: style.buttonEdgePadding,
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            child: !widget._viewModel.isFilled
-                ? _buildDisabledRoundedButton(viewModel)
-                : _buildEnabledRoundedButton(viewModel),
+    if (viewModel.isEditable) {
+      return Container(
+        width: double.infinity,
+        height: double.infinity,
+        alignment: Alignment.bottomCenter,
+        child: Padding(
+          padding: style.buttonEdgePadding,
+          child: Row(
+            children: <Widget>[
+              Expanded(
+                child: !widget._viewModel.isFilled
+                    ? _buildDisabledRoundedButton(viewModel)
+                    : _buildEnabledRoundedButton(viewModel),
+              ),
+            ],
           ),
-        ],
-      ),
-    );
+        ),
+      );
+    } else {
+      return SizedBox.shrink();
+    }
   }
 
   RoundedButton _buildEnabledRoundedButton(
@@ -316,7 +331,7 @@ class RecordTransactionState extends State<RecordTransaction> {
     return RoundedButton(
       viewModel: RoundedButtonViewModel(
         title: viewModel.buttonTitle,
-        onTap: () => _apply(context,userData),
+        onTap: () => _apply(context, userData),
       ),
       style: viewModel.type == TransactionType.sale
           ? RoundedButtonStyle.largeRoundedButtonStyle().copyWith(
