@@ -14,15 +14,11 @@ import 'package:farmsmart_flutter/model/entities/loading_status.dart';
 import 'package:farmsmart_flutter/model/repositories/account/AccountRepositoryInterface.dart';
 import 'package:farmsmart_flutter/model/repositories/plot/PlotRepositoryInterface.dart';
 import 'package:farmsmart_flutter/model/repositories/profile/ProfileRepositoryInterface.dart';
+import 'package:farmsmart_flutter/model/repositories/profile/implementation/ProfileEntityTransformers.dart';
 import 'package:farmsmart_flutter/ui/profile/Profile.dart';
 import 'package:flutter/widgets.dart';
-import 'package:path_provider/path_provider.dart';
 
 import '../ViewModelProvider.dart';
-
-class _Constants {
-  static final avatarPathSuffix = '_avatar.jpg';
-}
 
 class ProfileDetailProvider
     extends ObjectTransformer<ProfileEntity, ProfileViewModel>
@@ -156,19 +152,17 @@ class ProfileDetailProvider
   }
 
   void _saveProfileImage(File file, ProfileEntity from) async {
-    final directory = await getApplicationDocumentsDirectory();
-
-    final File newImage = await file.copy(
-        '${directory.path}/${from.uri}_${from.name}${_Constants.avatarPathSuffix}');
-
-    var savedImagePath = newImage.path;
-
-    //TODO Update image for User
-    print(savedImagePath);
+       LocalProfileImageProvider.localAvatarPath(from.id).then((savePath) {
+        imageCache.evict(FileImage(File(savePath))); // we have to remove any cached image as the filename is the same
+        file.copy(savePath
+        ).then((result){
+           _profileRepository.updateCurrent(from);
+        });
+    });
   }
 
   void _renameProfile(String username) {
-    final updatedProfile = ProfileEntity(
+    final updatedProfile = ProfileEntity(_currentProfile.id,
       _currentProfile.uri,
       username,
       _currentProfile.avatar,

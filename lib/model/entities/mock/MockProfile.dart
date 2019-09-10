@@ -7,7 +7,7 @@ import '../ProfileEntity.dart';
 
 class MockProfile {
   ProfileEntity build({String name}) {
-    final entity = ProfileEntity(
+    final entity = ProfileEntity(mockPlainText.identifier(),
       mockPlainText.identifier(),
       name ?? _names.random(),
       MockImageEntity().build().urlProvider,

@@ -7,8 +7,8 @@ import 'package:farmsmart_flutter/model/repositories/FirestoreList.dart';
 import 'package:farmsmart_flutter/model/repositories/profile/ProfileRepositoryInterface.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import 'DocumentToProfileEntityTransformer.dart';
-import 'ProfileEntityToDocumentTransformer.dart';
+import 'ProfileEntityTransformers.dart';
+
 
 class _Fields {
   static const collectionName = "fs_users";

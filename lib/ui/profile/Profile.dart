@@ -561,9 +561,7 @@ class Profile extends StatelessWidget {
       },
     ).toList();
   }
-
-  void _navigateBack(BuildContext context) => Navigator.of(context).pop();
-
+  
   void _navigateToWebView(BuildContext context, String url) {
     Navigator.of(context).push(
       MaterialPageRoute(
