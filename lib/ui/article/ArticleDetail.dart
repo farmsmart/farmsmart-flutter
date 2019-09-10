@@ -46,16 +46,17 @@ abstract class ArticleDetailStyle {
   final int maxLinesPerTitle;
 
   ArticleDetailStyle(
-      this.titlePageStyle,
-      this.dateStyle,
-      this.bodyStyle,
-      this.titlePagePadding,
-      this.leftRightPadding,
-      this.bodyPadding,
-      this.spaceBetweenDataAndImage,
-      this.spaceBetweenElements,
-      this.imageHeight,
-      this.maxLinesPerTitle);
+    this.titlePageStyle,
+    this.dateStyle,
+    this.bodyStyle,
+    this.titlePagePadding,
+    this.leftRightPadding,
+    this.bodyPadding,
+    this.spaceBetweenDataAndImage,
+    this.spaceBetweenElements,
+    this.imageHeight,
+    this.maxLinesPerTitle,
+  );
 }
 
 class _DefaultStyle implements ArticleDetailStyle {
@@ -76,7 +77,7 @@ class _DefaultStyle implements ArticleDetailStyle {
       const EdgeInsets.only(left: 32.0, right: 32.0);
   final EdgeInsets bodyPadding = const EdgeInsets.only(left: 32.0, right: 32.0);
 
-  final double spaceBetweenDataAndImage = 36;
+  final double spaceBetweenDataAndImage = 25;
   final double spaceBetweenElements = 41;
   final double imageHeight = 192;
 
@@ -250,7 +251,6 @@ class ArticleDetail extends StatelessWidget implements ListViewSection {
         ? [
             SizedBox(height: _style.spaceBetweenElements),
             image,
-            SizedBox(height: _style.spaceBetweenElements)
           ]
         : [];
     final List<Widget> bodySection = body != null
@@ -309,7 +309,7 @@ class ArticleDetail extends StatelessWidget implements ListViewSection {
   }
 
   Widget _buildImage() {
-    if(!_articleImageVisible){
+    if (!_articleImageVisible) {
       return null;
     }
     if (_viewModel.image == null) {
