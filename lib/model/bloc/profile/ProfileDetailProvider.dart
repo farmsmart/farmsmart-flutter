@@ -96,22 +96,21 @@ class ProfileDetailProvider
         SwitchProfileListProvider(accountRepo: _accountRepository);
     final personName = PersonName(from?.name ?? "");
     return ProfileViewModel(
-      loadingStatus: _loadingStatus,
-      username: personName.fullname,
-      initials: personName.initials,
-      refresh: _refresh,
-      remove: () => _remove(),
-      logout: () => _logout(),
-      image: from?.avatar,
-      activeCrops: _activeCrops,
-      completedCrops: _completedCrops,
-      switchProfileProvider: switchProfileProvider,
-      farmDetails: from?.lastPlotInfo,
-      switchLanguageTapped: (language) => _switchLanguage(language),
-      newAccountFlow: _accountFlow,
-      saveProfileImage: (file) => _saveProfileImage(file, from),
-      renameProfile: (username) => _renameProfile(username)
-    );
+        loadingStatus: _loadingStatus,
+        username: personName.fullname,
+        initials: personName.initials,
+        refresh: _refresh,
+        remove: () => _remove(),
+        logout: () => _logout(),
+        image: from?.avatar,
+        activeCrops: _activeCrops,
+        completedCrops: _completedCrops,
+        switchProfileProvider: switchProfileProvider,
+        farmDetails: from?.lastPlotInfo,
+        switchLanguageTapped: (language) => _switchLanguage(language),
+        newAccountFlow: _accountFlow,
+        saveProfileImage: (file) => _saveProfileImage(file, from),
+        renameProfile: (username) => _renameProfile(username));
   }
 
   _switchLanguage(String language) async {
@@ -169,6 +168,12 @@ class ProfileDetailProvider
   }
 
   void _renameProfile(String username) {
-    //TODO Missing repo functionality update profile username
+    final updatedProfile = ProfileEntity(
+      _currentProfile.uri,
+      username,
+      _currentProfile.avatar,
+      _currentProfile.lastPlotInfo,
+    );
+    _profileRepository.updateCurrent(updatedProfile);
   }
 }

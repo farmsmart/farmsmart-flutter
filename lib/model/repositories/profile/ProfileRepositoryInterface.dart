@@ -3,6 +3,7 @@ import 'package:farmsmart_flutter/model/repositories/BasicRepositoryInterface.da
 
 abstract class ProfileRepositoryInterface implements BasicRepositoryInterface<ProfileEntity> {
     Future<ProfileEntity> getCurrent();
+    Future<ProfileEntity> updateCurrent(ProfileEntity profile);
     Stream<ProfileEntity> observeCurrent();
     Future<bool> switchTo(ProfileEntity profile);
     Future<ProfileEntity> add(ProfileEntity profile);
