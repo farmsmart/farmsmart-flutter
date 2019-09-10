@@ -36,7 +36,7 @@ List<T> castListOrPlaceholder<T>(dynamic from, T placeholder) {
   }
   List<T> cast = [];
   list.forEach((item){
-    final value = castOrPlaceholder(item, placeholder);
+    final value = castOrPlaceholder<T>(item, placeholder);
     if(value != null){
       cast.add(value);
     }

@@ -27,7 +27,7 @@ class MockPlotRepository implements PlotRepositoryInterface {
 
   factory MockPlotRepository(ProfileRepositoryInterface profileRepository) {
     final identifyEntity = (PlotEntity plot) {
-      return plot.id;
+      return plot.uri;
     };
     return MockPlotRepository._(profileRepository,identifyEntity, []);
   }
@@ -78,7 +78,7 @@ class MockPlotRepository implements PlotRepositoryInterface {
 
   @override
   Future<PlotEntity> rename(PlotEntity plot, String name) {
-    final newPlot = PlotEntity(id: plot.id ,title: name ,crop: plot.crop ,score: plot.score ,stages: plot.stages);
+    final newPlot = PlotEntity(uri: plot.uri ,title: name ,crop: plot.crop ,score: plot.score ,stages: plot.stages);
     return replace(plot, newPlot);
   }
 
@@ -90,7 +90,7 @@ class MockPlotRepository implements PlotRepositoryInterface {
     final stageIndex = forPlot.stages.indexOf(oldStage);
     var newStages = forPlot.stages;
     newStages.replaceRange(stageIndex,stageIndex+1, [newStage]);
-    final newPlot = PlotEntity(id: forPlot.id ,title: forPlot.title ,crop: forPlot.crop ,score: forPlot.score ,stages: newStages);
+    final newPlot = PlotEntity(uri: forPlot.uri ,title: forPlot.title ,crop: forPlot.crop ,score: forPlot.score ,stages: newStages);
     replace(forPlot, newPlot);
     return newPlot;
   }
@@ -110,7 +110,7 @@ class MockPlotRepository implements PlotRepositoryInterface {
   @override
   Stream<PlotEntity> observeSingle(String uri) {
     final streamTransformer = StreamTransformer<PlotEntity,PlotEntity>.fromHandlers(handleData: (input, sink) {
-        if(input.id== uri){
+        if(input.uri== uri){
           return sink.add(input);
         }
       }); 

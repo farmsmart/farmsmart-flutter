@@ -4,7 +4,7 @@ import 'EntityCollectionInterface.dart';
 import 'enums.dart';
 
 class ArticleEntity {
-  String id;
+  String uri;
   String content;
   EntityCollection<ImageEntity> images;
   EntityCollection<ArticleEntity> related;
@@ -15,7 +15,7 @@ class ArticleEntity {
   String externalLink;
 
   ArticleEntity(
-      {this.id,
+      {this.uri,
       this.content,
       this.status,
       this.summary,

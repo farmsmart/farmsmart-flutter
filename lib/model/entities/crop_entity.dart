@@ -6,7 +6,7 @@ import 'package:farmsmart_flutter/model/entities/article_entity.dart';
 import 'enums.dart';
 
 class CropEntity {
-  String id;
+  String uri;
   List<String> companionPlants;
   CropComplexity complexity;
   List<String> cropsInRotation;
@@ -23,7 +23,7 @@ class CropEntity {
   EntityCollection<ImageEntity> images;
 
   CropEntity({
-    this.id,
+    this.uri,
     this.article,
     this.companionPlants = const [],
     this.complexity,

@@ -23,7 +23,7 @@ class MockPlotEntity extends MockEntity<PlotEntity> {
 
   PlotEntity build() {
     final entity = PlotEntity(
-      id: _identifiers.identifier(),
+      uri: _identifiers.identifier(),
       title: _titles.random(),
       crop: MockCrop.build(),
       score: 0.5,
@@ -44,7 +44,7 @@ class MockPlotEntity extends MockEntity<PlotEntity> {
             return MockStage().buildNewFromArticle(article);
         }).toList();
         return PlotEntity(
-        id: _identifiers.identifier(),
+        uri: _identifiers.identifier(),
         title: crop.name,
         crop: crop,
         score: 0.5,

@@ -12,7 +12,6 @@ import 'FirebaseCropStageTransformer.dart';
 
 
 class _Fields {
-  static String id = "id";
   static String status = "status";
   static String summary = "summary";
   static String name = "name";
@@ -45,7 +44,7 @@ class FlamelinkCropTransformer
   @override
   CropEntity transform({DocumentSnapshot from}) {
     final meta = _metaTransformer.transform(from: from);
-    final id = castOrNull<String>(from.data[_Fields.id]);
+    final uri = from.reference.path;
     final statusString = castOrNull<String>(from.data[_Fields.status]);
     final summary = castOrNull<String>(from.data[_Fields.summary]);
     final name = castOrNull<String>(from.data[_Fields.name]);
@@ -81,7 +80,7 @@ class FlamelinkCropTransformer
     }
     final status = statusValues.map[statusString];
     final article = ArticleEntity(
-      id: id,
+      uri: uri,
       title: name,
       status: status,
       summary: summary,
@@ -90,7 +89,7 @@ class FlamelinkCropTransformer
     );
     article.images = imageCollection;
     final crop = CropEntity(
-      id: id,
+      uri: uri,
       status: status,
       name: name,
       cropType: type,

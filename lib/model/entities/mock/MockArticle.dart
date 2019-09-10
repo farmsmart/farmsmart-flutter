@@ -11,7 +11,7 @@ final _mockDate = MockDate();
 class MockArticle extends MockEntity<ArticleEntity> {
   ArticleEntity build() {
     final entity = ArticleEntity(
-      id: mockPlainText.identifier(),
+      uri: mockPlainText.identifier(),
       content: mockRichText.random(),
       status: Status.PUBLISHED,
       summary: mockPlainText.random(),
@@ -26,7 +26,7 @@ class MockArticle extends MockEntity<ArticleEntity> {
 
   ArticleEntity buildCrop(String title) {
     final entity = ArticleEntity(
-      id: mockPlainText.identifier(),
+      uri: mockPlainText.identifier(),
       content: mockRichTextNoImage.random(),
       status: Status.PUBLISHED,
       summary: mockPlainText.random(),
@@ -40,7 +40,7 @@ class MockArticle extends MockEntity<ArticleEntity> {
 
   ArticleEntity buildStage() {
     final entity = ArticleEntity(
-      id: mockPlainText.identifier(),
+      uri: mockPlainText.identifier(),
       content: mockRichTextNoImage.random(),
       status: Status.PUBLISHED,
       summary: mockPlainText.random(),
