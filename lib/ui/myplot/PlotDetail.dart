@@ -32,10 +32,12 @@ class _LocalisedStrings {
 
   static confirm() => Intl.message('Confirm');
 
+  static remove() => Intl.message('Remove');
+
   static removeDialogTitle() => Intl.message('Remove crop');
 
   static removeDialogDescription() =>
-      Intl.message('Are you sure you want delete the crop?');
+      Intl.message('Are you sure you want to remove the crop? All progress will be lost.');
 
   static viewMore() => Intl.message('Learn more about');
 }
@@ -196,7 +198,7 @@ class _PlotDetailState extends State<PlotDetail> {
       Alert(
         viewModel: AlertViewModel(
           cancelActionText: _LocalisedStrings.cancelAction(),
-          confirmActionText: _LocalisedStrings.confirm(),
+          confirmActionText: _LocalisedStrings.remove(),
           titleText: _LocalisedStrings.removeDialogTitle(),
           detailText: _LocalisedStrings.removeDialogDescription(),
           confirmAction: () {
