@@ -36,10 +36,15 @@ class _LocalisedStrings {
 
   static removeDialogTitle() => Intl.message('Remove crop');
 
-  static removeDialogDescription() =>
-      Intl.message('Are you sure you want to remove the crop? All progress will be lost.');
+  static removeDialogDescription() => Intl.message(
+      'Are you sure you want to remove the crop? All progress will be lost.');
 
   static viewMore() => Intl.message('Learn more about');
+}
+
+class _Constants {
+  static const viewportFraction = 0.85;
+  static const slideAnimationDurationInSeconds = 1;
 }
 
 abstract class PlotDetailStyle {
@@ -83,11 +88,18 @@ class PlotDetail extends StatefulWidget {
 
 class _PlotDetailState extends State<PlotDetail> {
   int _selectedStage = 0;
+  int _currentStage = 0;
+  PageController _pageController;
 
   void initState() {
     super.initState();
     final viewModel = widget._viewModelProvider.initial();
     _selectedStage = viewModel.currentStage;
+    _pageController = PageController(
+      initialPage: viewModel.currentStage,
+      viewportFraction: _Constants.viewportFraction,
+    );
+    _currentStage = viewModel.currentStage;
   }
 
   @override
@@ -101,6 +113,18 @@ class _PlotDetailState extends State<PlotDetail> {
   Widget _successBuilder(
       {BuildContext context, AsyncSnapshot<PlotDetailViewModel> snapshot}) {
     final viewModel = snapshot.data;
+
+    if (_currentStage != viewModel.currentStage) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _pageController.animateToPage(
+          viewModel.currentStage,
+          duration: Duration(seconds: _Constants.slideAnimationDurationInSeconds),
+          curve: Curves.ease,
+        );
+        _currentStage = viewModel.currentStage;
+      });
+    }
+
     final PlotListItemViewModel headerViewModel = PlotListItemViewModel(
         title: viewModel.title,
         detail: viewModel.detailText,
@@ -117,12 +141,13 @@ class _PlotDetailState extends State<PlotDetail> {
       needDivider: false,
     );
     final stages = Container(
-        height: widget._style.stageSectionHeight,
-        child: CarouselView(
-          children: _stageCardDataSource(viewModel),
-          initialPage: _selectedStage,
-          onPageChange: _pageChanged,
-        ));
+      height: widget._style.stageSectionHeight,
+      child: CarouselView(
+        pageController: _pageController,
+        children: _stageCardDataSource(viewModel),
+        onPageChange: _pageChanged,
+      ),
+    );
 
     widget._articleDetail = ArticleDetail(
       viewModel: articleViewModel,
@@ -140,6 +165,7 @@ class _PlotDetailState extends State<PlotDetail> {
           final sectionedList = SectionedListView(
             sections: [topSection, widget._articleDetail],
           );
+
           return Scaffold(
             appBar: _buildAppBar(context, viewModel),
             body: sectionedList,
@@ -219,14 +245,13 @@ class _PlotDetailState extends State<PlotDetail> {
   InputAlert _renameInputAlert(PlotDetailViewModel viewModel) {
     return InputAlert(
       viewModel: InputAlertViewModel(
-        cancelActionText: _LocalisedStrings.cancelAction(),
-        confirmActionText: _LocalisedStrings.confirm(),
-        titleText: _LocalisedStrings.renameAction(),
-        hint: _LocalisedStrings.cropName(),
-        confirmInputAction: (value){
-          viewModel.rename(value);
-        }
-      ),
+          cancelActionText: _LocalisedStrings.cancelAction(),
+          confirmActionText: _LocalisedStrings.confirm(),
+          titleText: _LocalisedStrings.renameAction(),
+          hint: _LocalisedStrings.cropName(),
+          confirmInputAction: (value) {
+            viewModel.rename(value);
+          }),
     );
   }
 
