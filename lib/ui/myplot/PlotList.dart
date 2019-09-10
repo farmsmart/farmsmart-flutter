@@ -27,6 +27,10 @@ class _Strings {
   static const emptyImagePath = 'assets/raw/illustration_empty.png';
 }
 
+class _Constants {
+  static const titlePaddingOnEmptyState = const EdgeInsets.only(top: 31);
+}
+
 class PlotListViewModel implements LoadableViewModel, RefreshableViewModel {
   final String title;
   final String buttonTitle;
@@ -123,7 +127,7 @@ class PlotList extends StatelessWidget {
     return Column(
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.only(top: 31),
+          padding: _Constants.titlePaddingOnEmptyState,
           child: _buildTitle(viewModel, _style, context: context),
         ),
         Expanded(
