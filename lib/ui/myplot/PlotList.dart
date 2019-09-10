@@ -3,16 +3,29 @@ import 'package:farmsmart_flutter/model/entities/loading_status.dart';
 import 'package:farmsmart_flutter/ui/common/LoadableViewModel.dart';
 import 'package:farmsmart_flutter/ui/common/RefreshableViewModel.dart';
 import 'package:farmsmart_flutter/ui/common/ViewModelProviderBuilder.dart';
+import 'package:farmsmart_flutter/ui/common/empty_view.dart';
 import 'package:farmsmart_flutter/ui/common/headerAndFooterListView.dart';
 import 'package:farmsmart_flutter/ui/common/modal_navigator.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
 import 'package:farmsmart_flutter/ui/recommendations/RecommentationsList.dart';
 import 'package:farmsmart_flutter/ui/recommendations/viewmodel/RecommendationsListViewModel.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import 'PlotDetail.dart';
 import 'PlotListItem.dart';
 import 'viewmodel/PlotDetailViewModel.dart';
+
+class _LocalisedStrings {
+  static String getStartedAddingYourPlot() =>
+      Intl.message('Get started by adding to your plot');
+
+  static String addToYourPlot() => Intl.message('Add to your Plot');
+}
+
+class _Strings {
+  static const emptyImagePath = 'assets/raw/illustration_empty.png';
+}
 
 class PlotListViewModel implements LoadableViewModel, RefreshableViewModel {
   final String title;
@@ -90,9 +103,47 @@ class PlotList extends StatelessWidget {
     );
   }
 
-  Widget _buildPage(
-      {BuildContext context, AsyncSnapshot<PlotListViewModel> snapshot}) {
+  Widget _buildPage({
+    BuildContext context,
+    AsyncSnapshot<PlotListViewModel> snapshot,
+  }) {
     final viewModel = snapshot.data;
+    return snapshot.data.items.isNotEmpty
+        ? _buildList(
+            viewModel,
+            context,
+          )
+        : _buildEmptyView(
+            viewModel,
+            context,
+          );
+  }
+
+  Widget _buildEmptyView(PlotListViewModel viewModel, BuildContext context) {
+    return Column(
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.only(top: 31),
+          child: _buildTitle(viewModel, _style, context: context),
+        ),
+        Expanded(
+          child: EmptyView(
+            viewModel: EmptyViewViewModel(
+              imagePath: _Strings.emptyImagePath,
+              description: _LocalisedStrings.getStartedAddingYourPlot(),
+              actionText: _LocalisedStrings.addToYourPlot(),
+              action: () => _tappedAdd(
+                context: context,
+                provider: viewModel.recommendationsProvider,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildList(PlotListViewModel viewModel, BuildContext context) {
     return HeaderAndFooterListView(
       itemCount: viewModel.items.length,
       itemBuilder: (BuildContext context, int index) {

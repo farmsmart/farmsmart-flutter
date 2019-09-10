@@ -7,11 +7,13 @@ import 'package:farmsmart_flutter/ui/common/ActionSheetListItem.dart';
 import 'package:farmsmart_flutter/ui/common/CircularProgress.dart';
 import 'package:farmsmart_flutter/ui/common/DogTagStyles.dart';
 import 'package:farmsmart_flutter/ui/common/Dogtag.dart';
+import 'package:farmsmart_flutter/ui/common/empty_view.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
 import 'package:farmsmart_flutter/ui/common/stage_card.dart';
 import 'package:farmsmart_flutter/ui/common/webview.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockActionSheetViewModel.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockDogTagViewModel.dart';
+import 'package:farmsmart_flutter/ui/mockData/MockEmptyViewViewModel.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockRecordTransactionViewModel.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockRoundedButtonViewModel.dart';
 import 'package:farmsmart_flutter/ui/mockData/MockStageCardViewModel.dart';
@@ -276,7 +278,17 @@ class PlayGroundAtomDataSource implements PlaygroundDataSource {
             ),
           ],
         ),
-      )
+      ),
+      PlaygroundWidget(
+        title: 'Empty view',
+        child: PlaygroundView(
+          widgetList: [
+            EmptyView(
+              viewModel: MockEmptyViewViewModel.build(),
+            ),
+          ],
+        ),
+      ),
     ];
   }
 }
