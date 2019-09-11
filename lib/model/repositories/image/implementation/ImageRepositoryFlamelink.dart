@@ -74,17 +74,32 @@ class FlameLinkImageProvider implements ImageURLProvider {
 
       for (var image in alternateImages) {
         if ((image.width >= targetWidth)) {
-          return _cms
-              .images(path: image.path)
-              .getDownloadURL()
-              .then((value) {
-                print(value);
-                return value;
-              });
+          return _cms.images(path: image.path).getDownloadURL().then((value) {
+            cacheURL(value, cacheIdentifier(width: width,height: height));
+            return value;
+          });
         }
       }
     }
-    return originalImage.getDownloadURL().then((value) => value.toString());
+    return originalImage.getDownloadURL().then((value) { 
+      final url = value.toString();
+      cacheURL(url, cacheIdentifier(height: height, width: width));
+      return url;
+    });
+  }
+
+  @override
+  String cacheIdentifier({double width, double height}) {
+    return _entity.path +
+        ImageURLProvider.sizeIdentifier(
+          width: width,
+          height: height,
+        );
+  }
+
+  @override
+  String cachedUrlToFit({double width, double height}) {
+    return cachedURL(cacheIdentifier(width: width, height: height));
   }
 }
 

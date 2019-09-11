@@ -2,6 +2,7 @@ import 'package:farmsmart_flutter/model/entities/EntityCollectionInterface.dart'
 import 'package:farmsmart_flutter/model/entities/ImageEntity.dart';
 import 'package:farmsmart_flutter/model/entities/ImageURLProvider.dart';
 import 'package:farmsmart_flutter/model/entities/article_entity.dart';
+import 'package:farmsmart_flutter/model/repositories/image/ImageRepositoryInterface.dart';
 
 import 'enums.dart';
 
@@ -37,7 +38,6 @@ class CropEntity {
     this.status,
     this.waterRequirement,
   });
-
 }
 
 // LH this is to make getting the main crop image easier
@@ -46,13 +46,30 @@ class CropImageProvider implements ImageURLProvider {
   CropImageProvider(CropEntity crop) : _crop = crop;
   @override
   Future<String> urlToFit({double width, double height}) {
-    if ( _crop.images == null)
-    {
+    if (_crop.images == null) {
       return Future.value(null);
     }
     return _crop.images.getEntities(limit: 1).then((imageEntities) {
       // NB: we assume the first image is the hero
-      return imageEntities.first.urlProvider.urlToFit(width: width,height: height);
+      return imageEntities.first.urlProvider
+          .urlToFit(width: width, height: height).then((url){
+            cacheURL(url, cacheIdentifier(height: height, width: width));
+            return url;
+          });
     });
+  }
+
+  @override
+  String cacheIdentifier({double width, double height}) {
+    return _crop.uri +
+        ImageURLProvider.sizeIdentifier(
+          width: width,
+          height: height,
+        );
+  }
+  
+  @override
+  String cachedUrlToFit({double width, double height}) {
+    return cachedURL(cacheIdentifier(width: width, height: height));
   }
 }
