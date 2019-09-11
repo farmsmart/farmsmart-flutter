@@ -43,6 +43,16 @@ class MockProfileRepository extends MockListRepository<ProfileEntity>
     });
   }
 
+   @override
+  Future<ProfileEntity> updateCurrent(ProfileEntity updated) {
+    _current = updated;
+    return Future.delayed(Duration(milliseconds: Random().nextInt(_Constants.maxDelayMs)), () => _current)
+        .then((value) {
+          _update();
+      return value;
+    });
+  }
+
   @override
   Stream<ProfileEntity> observeCurrent() {
     return _streamController.stream;

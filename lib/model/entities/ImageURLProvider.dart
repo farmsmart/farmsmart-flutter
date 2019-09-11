@@ -9,8 +9,8 @@ abstract class ImageURLProvider {
     String cacheIdentifier({double width, double height});
 
     static String sizeIdentifier({double width, double height}) {
-      final widthString = width?.toInt()?.toString() ?? "";
-      final heightString = height?.toInt()?.toString() ?? "";
+      final widthString = width?.toString() ?? "";
+      final heightString = height?.toString() ?? "";
       return _Strings.prefix + widthString + _Strings.divider + heightString;
     }
 }

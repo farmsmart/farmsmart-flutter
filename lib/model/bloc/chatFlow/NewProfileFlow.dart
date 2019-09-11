@@ -89,10 +89,10 @@ class NewProfileFlowCoordinator implements FlowCoordinator {
     //TODO: Remove the Mock ID´s once implemented
     if (name != null) {
       _accountRepository.authorized().then((account) {
-        final newProfile = ProfileEntity(
+        final newProfile = ProfileEntity(mockPlainText.identifier(),
           mockPlainText.identifier(),
           name.value,
-          MockImageEntity().build().urlProvider,
+          null,
           plotInfo,
         );
         account.profileRepository.add(newProfile).then((profile) {

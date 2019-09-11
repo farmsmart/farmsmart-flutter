@@ -65,7 +65,7 @@ class FlameLinkImageProvider implements ImageURLProvider {
   @override
   Future<String> urlToFit({double width, double height}) {
     final originalImage = _cms.images(path: _entity.path);
-    if (width != null) {
+    if (width != null && width != double.infinity) {
       final targetWidth = width.toInt();
       var alternateImages = _entity.otherSizes;
       alternateImages.sort((a, b) {

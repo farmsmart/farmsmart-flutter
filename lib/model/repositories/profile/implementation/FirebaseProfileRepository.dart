@@ -7,8 +7,8 @@ import 'package:farmsmart_flutter/model/repositories/FirestoreList.dart';
 import 'package:farmsmart_flutter/model/repositories/profile/ProfileRepositoryInterface.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import 'DocumentToProfileEntityTransformer.dart';
-import 'ProfileEntityToDocumentTransformer.dart';
+import 'ProfileEntityTransformers.dart';
+
 
 class _Fields {
   static const collectionName = "fs_users";
@@ -61,19 +61,40 @@ class FirebaseProfileRepository extends FireStoreList<ProfileEntity>
   Future<ProfileEntity> getCurrent() {
     return _user.then((user) {
       if (user != null) {
-        return firestore.document(_userPath(user)).get().then((document) {
-          if (document.data != null) {
-            final profileURI = document.data[_Fields.currentProfile];
+        return firestore.document(_userPath(user)).get().then((userDocument) {
+          if (userDocument.data != null) {
+            final profileURI = userDocument.data[_Fields.currentProfile];
             if (profileURI != null) {
-              return firestore.document(profileURI).get().then((document) {
-                final profile =
-                    fromFirestoreTransformer.transform(from: document);
-                _currentProfileController.sink.add(profile);
-                return profile;
+              return firestore.document(profileURI).get().then((profileDocument) {
+                return _updateWith(profileDocument);
               });
             }
           }
-          return null;
+        });
+      }
+      return null;
+    });
+  }
+
+  ProfileEntity _updateWith(DocumentSnapshot document) {
+    if (document.data != null) {
+          final profile = fromFirestoreTransformer.transform(from: document);
+          _currentProfileController.sink.add(profile);
+          return profile;
+    }
+    return null;
+  }
+
+  @override
+  Future<ProfileEntity> updateCurrent(ProfileEntity updated) {
+    return _user.then((user) {
+      if (user != null) {
+        final firebaseObject = toFirestoreTransformer.transform(from: updated);
+        final profileURI = updated.uri;
+        return firestore.document(profileURI).setData(firebaseObject).then((_) {
+          return firestore.document(profileURI).get().then((document) {
+            return _updateWith(document);
+          });
         });
       }
       return null;
@@ -109,14 +130,6 @@ class FirebaseProfileRepository extends FireStoreList<ProfileEntity>
     }, onError: (error) {
       return false;
     });
-  }
-
-  String _profilePath(FirebaseUser user, String profileID) {
-    return _userPath(user) +
-        _Fields.separator +
-        _Fields.profiles +
-        _Fields.separator +
-        profileID;
   }
 
   String _userPath(FirebaseUser user) {

@@ -45,22 +45,28 @@ class ProfileAvatar extends StatelessWidget {
   }) {
     final avatarProvider = snapshot.data?.image;
     final initials = snapshot.data?.initials;
-    Widget avatarWidget = SizedBox(
+   
+    Widget fallbackWidget = SizedBox(
       width: _width,
       height: _height,
     );
+    Widget initialsWidget = fallbackWidget;
     if (initials != null) {
-      avatarWidget = Center(
+      initialsWidget = Container(
+        height: _width,
+        width: _height, child: Center(
           child: Text(
         initials,
         style: _textStyle ?? TextStyle(color: _Constants.defaultFontColor),
-      ));
+      )));
     }
+    Widget avatarWidget = initialsWidget;
     if (avatarProvider != null) {
       avatarWidget = ImageProviderView(
         imageURLProvider: avatarProvider,
         width: _width,
         height: _height,
+        placeholderWidget: initialsWidget,
       );
     }
     return Container(
