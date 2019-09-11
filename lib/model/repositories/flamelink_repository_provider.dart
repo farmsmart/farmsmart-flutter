@@ -53,7 +53,6 @@ class FlameLinkRepositoryProvider implements RepositoryProvider {
   ArticleRepositoryInterface getArticleRepository() =>
       ArticlesRepositoryFlameLink(_cms);
 
-  //TODO Add My Plot FlameLink Repository
   @override
   PlotRepositoryInterface getMyPlotRepository(
           ProfileRepositoryInterface profileRepository) =>

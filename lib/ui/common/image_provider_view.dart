@@ -17,7 +17,7 @@ class ImageProviderView extends StatelessWidget {
   ImageProviderView({
     this.imageURLProvider,
     this.height,
-    this.width = double.infinity,
+    this.width,
     this.imageBorderRadius,
   });
 
@@ -30,8 +30,8 @@ class ImageProviderView extends StatelessWidget {
           return ClipRRect(
             borderRadius: imageBorderRadius ?? _Constants.defaultBorderRadius,
             child: SizedBox(
-              height: height,
-              width: width,
+              height: height ?? double.infinity,
+              width: width ?? double.infinity,
               child: FittedBox(
                 child: Image.asset(_Constants.placeholderAsset),
                 fit: BoxFit.cover,
@@ -48,8 +48,8 @@ class ImageProviderView extends StatelessWidget {
     return ClipRRect(
       borderRadius: imageBorderRadius ?? _Constants.defaultBorderRadius,
       child: FadeInImage(
-        width: width,
-        height: height,
+        width: width ?? double.infinity,
+        height: height ?? double.infinity,
         fit: BoxFit.cover,
         fadeOutDuration: Duration(milliseconds: _Constants.defaultFadeDuration),
         fadeInDuration: Duration(milliseconds: _Constants.defaultFadeDuration),

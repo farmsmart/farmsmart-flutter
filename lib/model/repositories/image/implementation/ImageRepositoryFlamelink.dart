@@ -65,8 +65,7 @@ class FlameLinkImageProvider implements ImageURLProvider {
   @override
   Future<String> urlToFit({double width, double height}) {
     final originalImage = _cms.images(path: _entity.path);
-    //TODO: LH investigate why some alternate images are not returning from the server Keep this for now
-    /*if (width != null) {
+    if (width != null) {
       final targetWidth = width.toInt();
       var alternateImages = _entity.otherSizes;
       alternateImages.sort((a, b) {
@@ -74,14 +73,17 @@ class FlameLinkImageProvider implements ImageURLProvider {
       });
 
       for (var image in alternateImages) {
-        if ((image.width > targetWidth)) {
+        if ((image.width >= targetWidth)) {
           return _cms
               .images(path: image.path)
               .getDownloadURL()
-              .then((value) => value.toString());
+              .then((value) {
+                print(value);
+                return value;
+              });
         }
       }
-    }*/
+    }
     return originalImage.getDownloadURL().then((value) => value.toString());
   }
 }

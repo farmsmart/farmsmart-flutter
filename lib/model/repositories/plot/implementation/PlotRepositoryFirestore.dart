@@ -36,7 +36,10 @@ class PlotRepositoryFireStore implements PlotRepositoryInterface {
     profileRepository.observeCurrent().listen((profile) {
       firestore
           .collection(_plotListPathFor(profile))
-          .orderBy(_Fields.orderField)
+          .orderBy(
+            _Fields.orderField,
+            descending: true,
+          )
           .snapshots()
           .listen((snapshot) {
         Future.wait(snapshot.documents.map((document) {
@@ -87,7 +90,11 @@ class PlotRepositoryFireStore implements PlotRepositoryInterface {
     PlotEntity forPlot,
     StageEntity stage,
   ) {
-    final startedStage = _stageWithDates(stage, DateTime.now(), stage.ended,);
+    final startedStage = _stageWithDates(
+      stage,
+      DateTime.now(),
+      stage.ended,
+    );
     final updatedPlot = _replaceStage(forPlot, stage, startedStage);
     final firebasePlot = _transformToFirebase(updatedPlot);
     return firestore
@@ -103,8 +110,11 @@ class PlotRepositoryFireStore implements PlotRepositoryInterface {
     PlotEntity forPlot,
     StageEntity stage,
   ) {
-    final completedStage =
-        _stageWithDates(stage, stage.started, DateTime.now(),);
+    final completedStage = _stageWithDates(
+      stage,
+      stage.started,
+      DateTime.now(),
+    );
     final updatedPlot = _replaceStage(
       forPlot,
       stage,
@@ -128,7 +138,14 @@ class PlotRepositoryFireStore implements PlotRepositoryInterface {
   @override
   Future<List<PlotEntity>> getFarm() {
     return _plotListPath().then((path) {
-      return firestore.collection(path).orderBy(_Fields.orderField).getDocuments().then((snapshot) {
+      return firestore
+          .collection(path)
+          .orderBy(
+            _Fields.orderField,
+            descending: true,
+          )
+          .getDocuments()
+          .then((snapshot) {
         return Future.wait(snapshot.documents.map((document) {
           return _transformFromFirebase(document);
         })).then((plots) {
