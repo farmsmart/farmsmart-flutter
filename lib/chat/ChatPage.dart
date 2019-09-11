@@ -30,6 +30,10 @@ class _Assets {
   static const optionButtonIcon = "assets/icons/nav_icon_options.png";
 }
 
+class _Errors {
+  static const cancelled = "operation cancelled";
+}
+
 class _LocalisedStrings {
   static resetProcess() => Intl.message("Reset Process");
 
@@ -90,7 +94,7 @@ class _ChatPageState extends State<ChatPage> {
       );
 
   _buildCloseButton(BuildContext context) => FlatButton(
-        onPressed: () => _navigateBack(context),
+        onPressed: () => _cancel(context),
         padding: _Constants.appBarEdgePadding,
         child: Image.asset(
           _Assets.dismissModalIcon,
@@ -188,5 +192,11 @@ class _ChatPageState extends State<ChatPage> {
     );
   }
 
-  void _navigateBack(BuildContext context) => Navigator.of(context).pop();
+  void _cancel(BuildContext context) {
+    _doOnError(context, _Errors.cancelled);
+  }
+
+  void _navigateBack(BuildContext context) {
+    Navigator.of(context).pop();
+  }
 }
