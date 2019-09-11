@@ -138,6 +138,7 @@ class PlayGroundTasksDataSource implements PlaygroundDataSource {
         child: Container(
           height: 162,
           child: CarouselView(
+            pageController: PageController(viewportFraction: 0.85, initialPage: 0),
             children: PlaygroundStageCardDataSource().getList(),
           ),
         ),
