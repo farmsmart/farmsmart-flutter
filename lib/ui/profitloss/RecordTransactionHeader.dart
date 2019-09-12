@@ -116,11 +116,9 @@ class _RecordTransactionHeaderState extends State<RecordTransactionHeader> {
   @override
   void initState() {
     super.initState();
-    var amount = widget._viewModel.amount;
-    if(amount != null && amount.isNotEmpty) {
-      _textFieldController.text = widget._viewModel.amount;
-    }
+    _initializeAmount();
   }
+
 
   @override
   void dispose() {
@@ -216,5 +214,12 @@ class _RecordTransactionHeaderState extends State<RecordTransactionHeader> {
         FocusScope.of(context).unfocus();
       }
     });
+  }
+
+  void _initializeAmount() {
+    var amount = widget._viewModel.amount;
+    if(amount != null && amount.isNotEmpty) {
+      _textFieldController.text = widget._viewModel.amount;
+    }
   }
 }

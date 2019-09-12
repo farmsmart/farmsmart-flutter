@@ -198,13 +198,7 @@ class _RecordTransactionListItemState extends State<RecordTransactionListItem> {
   void initState() {
     super.initState();
 
-    initialDescription = widget._viewModel.description;
-    initialDate = widget._viewModel.selectedDate;
-    initialSelectedItem = widget._viewModel.selectedItem;
-
-    if(initialDescription != null && initialDescription.isNotEmpty){
-      _textFieldController.text = initialDescription;
-    }
+    _initializeValues();
   }
 
   @override
@@ -520,5 +514,15 @@ class _RecordTransactionListItemState extends State<RecordTransactionListItem> {
       widget.parent.isCropFilled = true;
       widget.parent.setIfRequiredFieldsAreFilled();
     });
+  }
+
+  void _initializeValues() {
+    initialDescription = widget._viewModel.description;
+    initialDate = widget._viewModel.selectedDate;
+    initialSelectedItem = widget._viewModel.selectedItem;
+
+    if(initialDescription != null && initialDescription.isNotEmpty){
+      _textFieldController.text = initialDescription;
+    }
   }
 }

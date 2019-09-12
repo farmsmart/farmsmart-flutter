@@ -178,6 +178,10 @@ class RecordTransactionState extends State<RecordTransaction> {
     RecordTransactionViewModel viewModel = widget._viewModel;
     isNewRecord = widget._viewModel.isEditable;
 
+    if (viewModel.actions.length <= _Constants.thirdListItem) {
+      throw ('The actions inside viewModel are not correct');
+    }
+
     initialData = RecordTransactionData(
       uri: viewModel.uri,
       amount: viewModel.amount,
@@ -433,13 +437,14 @@ class RecordTransactionState extends State<RecordTransaction> {
         },
       ),
       ActionSheetListItemViewModel(
-          title: _LocalisedStrings.removeRecord(),
-          type: ActionType.simple,
-          onTap: () {
-            widget._viewModel.removeTransaction(initialData);
-            Navigator.of(context).pop();
-          },
-          isDestructive: true),
+        title: _LocalisedStrings.removeRecord(),
+        type: ActionType.simple,
+        onTap: () {
+          widget._viewModel.removeTransaction(initialData);
+          Navigator.of(context).pop();
+        },
+        isDestructive: true,
+      ),
     ];
 
     final actionSheetViewModel = ActionSheetViewModel(
