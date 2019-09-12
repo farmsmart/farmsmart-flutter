@@ -19,6 +19,7 @@ class _Constants {
 }
 
 class InputAlertViewModel {
+  String initialValue;
   String cancelActionText;
   String confirmActionText;
   String titleText;
@@ -29,6 +30,7 @@ class InputAlertViewModel {
     @required this.cancelActionText,
     @required this.confirmActionText,
     @required this.titleText,
+    this.initialValue,
     this.hint,
     this.confirmInputAction,
   });
@@ -104,11 +106,9 @@ class _DefaultStyle extends InputAlertStyle {
 
 const InputAlertStyle _defaultStyle = const _DefaultStyle();
 
-class InputAlert extends StatelessWidget {
+class InputAlert extends StatefulWidget {
   final InputAlertViewModel _viewModel;
   final InputAlertStyle _style;
-
-  TextEditingController _textFieldController = TextEditingController();
 
   static present(InputAlert alert, BuildContext context) {
     return showDialog<bool>(
@@ -127,6 +127,21 @@ class InputAlert extends StatelessWidget {
         super(key: key);
 
   @override
+  _InputAlertState createState() => _InputAlertState();
+}
+
+class _InputAlertState extends State<InputAlert> {
+  TextEditingController _textFieldController = TextEditingController();
+  final _focusNode = FocusNode();
+
+  @override
+  void initState() {
+    _textFieldController.text = widget._viewModel.initialValue;
+    _selectAllOnFocusListener();
+    super.initState();
+  }
+  
+  @override
   Widget build(BuildContext context) {
     return Material(
       type: MaterialType.transparency,
@@ -138,7 +153,7 @@ class InputAlert extends StatelessWidget {
             margin: _Constants.alertEdgePadding,
             decoration: BoxDecoration(
               borderRadius: _Constants.cornerRadius,
-              color: _style.backgroundColor,
+              color: widget._style.backgroundColor,
             ),
             child: Padding(
               padding: _Constants.alertInnerPadding,
@@ -147,8 +162,8 @@ class InputAlert extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   Text(
-                    _viewModel.titleText,
-                    style: _style.titleTextStyle,
+                    widget._viewModel.titleText,
+                    style: widget._style.titleTextStyle,
                   ),
                   SizedBox(
                     height: _Constants.titleLineSpace,
@@ -158,7 +173,10 @@ class InputAlert extends StatelessWidget {
                     children: <Widget>[
                       TextField(
                         controller: _textFieldController,
-                        decoration: InputDecoration(hintText: _viewModel.hint),
+                        decoration:
+                            InputDecoration(hintText: widget._viewModel.hint),
+                        autofocus: true,
+                        focusNode: _focusNode,
                       ),
                       SizedBox(
                         height: _Constants.detailLineSpace,
@@ -182,7 +200,7 @@ class InputAlert extends StatelessWidget {
       Expanded(
         child: RoundedButton(
           viewModel: RoundedButtonViewModel(
-            title: _viewModel.cancelActionText,
+            title: widget._viewModel.cancelActionText,
             onTap: () => Navigator.of(context).pop(),
           ),
           style: RoundedButtonStyle.actionSheetLargeRoundedButton().copyWith(
@@ -198,14 +216,14 @@ class InputAlert extends StatelessWidget {
       Expanded(
         child: RoundedButton(
           viewModel: RoundedButtonViewModel(
-              title: _viewModel.confirmActionText,
+              title: widget._viewModel.confirmActionText,
               onTap: () => confirmAndDismiss(context)),
           style: RoundedButtonStyle.actionSheetLargeRoundedButton().copyWith(
             edgePadding: EdgeInsets.symmetric(horizontal: 8),
             height: _Constants.actionHeight,
             width: _Constants.actionWidth,
-            backgroundColor: _style.actionBackgroundColor,
-            buttonTextStyle: _style.actionTextStyle,
+            backgroundColor: widget._style.actionBackgroundColor,
+            buttonTextStyle: widget._style.actionTextStyle,
             borderRadius: _Constants.actionCornerRadius,
           ),
         ),
@@ -216,8 +234,17 @@ class InputAlert extends StatelessWidget {
   confirmAndDismiss(BuildContext context) {
     if (_textFieldController.text != null &&
         _textFieldController.text.isNotEmpty) {
-      _viewModel.confirmInputAction(_textFieldController.text);
+      widget._viewModel.confirmInputAction(_textFieldController.text);
       Navigator.of(context).pop();
     }
+  }
+
+  void _selectAllOnFocusListener() {
+    _focusNode.addListener(() {
+      _textFieldController.selection = TextSelection(
+        baseOffset: 0,
+        extentOffset: _textFieldController.text.length,
+      );
+    });
   }
 }

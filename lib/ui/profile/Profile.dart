@@ -637,6 +637,7 @@ class Profile extends StatelessWidget {
   InputAlert _renameInputAlert(ProfileViewModel viewModel) {
     return InputAlert(
       viewModel: InputAlertViewModel(
+          initialValue: viewModel.username,
           cancelActionText: _LocalisedStrings.cancel(),
           confirmActionText: _LocalisedStrings.confirm(),
           titleText: _LocalisedStrings.renameProfile(),
