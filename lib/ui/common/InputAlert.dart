@@ -16,6 +16,7 @@ class _Constants {
   static final BorderRadius actionCornerRadius =
       const BorderRadius.all(Radius.circular(14));
   static final double actionLineSpace = 8;
+  static final int baseInputTextOffset = 0;
 }
 
 class InputAlertViewModel {
@@ -242,7 +243,7 @@ class _InputAlertState extends State<InputAlert> {
   void _selectAllOnFocusListener() {
     _focusNode.addListener(() {
       _textFieldController.selection = TextSelection(
-        baseOffset: 0,
+        baseOffset: _Constants.baseInputTextOffset,
         extentOffset: _textFieldController.text.length,
       );
     });
