@@ -109,13 +109,17 @@ class RecordTransactionHeader extends StatefulWidget {
 }
 
 class _RecordTransactionHeaderState extends State<RecordTransactionHeader> {
-  final _textFieldController = TextEditingController();
   final FocusNode _focusNode = FocusNode();
   var hint = _Strings.hint;
+  TextEditingController _textFieldController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
+    var amount = widget._viewModel.amount;
+    if(amount != null && amount.isNotEmpty) {
+      _textFieldController.text = widget._viewModel.amount;
+    }
   }
 
   @override
@@ -139,7 +143,7 @@ class _RecordTransactionHeaderState extends State<RecordTransactionHeader> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 viewModel.isEditable
-                    ? _buildAmountEditableTextField(style)
+                    ? _buildAmountEditableTextField(style, viewModel)
                     : _buildAmountText(viewModel, style),
               ],
             ),
@@ -154,7 +158,7 @@ class _RecordTransactionHeaderState extends State<RecordTransactionHeader> {
     return Text(viewModel.amount, style: style.titleTextStyle);
   }
 
-  _buildAmountEditableTextField(RecordTransactionHeaderStyle style) {
+  _buildAmountEditableTextField(RecordTransactionHeaderStyle style, RecordTransactionHeaderViewModel viewModel) {
     return TextField(
       decoration: InputDecoration(
           hintText: hint,
