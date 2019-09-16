@@ -245,6 +245,7 @@ class _PlotDetailState extends State<PlotDetail> {
   InputAlert _renameInputAlert(PlotDetailViewModel viewModel) {
     return InputAlert(
       viewModel: InputAlertViewModel(
+          initialValue: viewModel.title,
           cancelActionText: _LocalisedStrings.cancelAction(),
           confirmActionText: _LocalisedStrings.confirm(),
           titleText: _LocalisedStrings.renameAction(),
