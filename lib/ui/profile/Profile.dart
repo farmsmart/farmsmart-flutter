@@ -63,8 +63,8 @@ class _LocalisedStrings {
 
   static username() => Intl.message('Username');
 
-  static shareText() => Intl.message(
-      'Join to the new smart farming app - FarmSmart \n');
+  static shareText() =>
+      Intl.message('Join to the new smart farming app - FarmSmart \n');
 }
 
 class _Strings {
@@ -74,7 +74,8 @@ class _Strings {
       'https://sites.google.com/farmsmart.co/farmsmart/home/privacy-policy?authuser=0';
   static final termsOfUseUrl =
       'https://sites.google.com/farmsmart.co/farmsmart/home/privacy-policy?authuser=0';
-  static final shareLink = 'https://play.google.com/store/apps/details?id=co.farmsmart.app';
+  static final shareLink =
+      'https://play.google.com/store/apps/details?id=co.farmsmart.app';
 }
 
 class _Icons {
@@ -136,23 +137,22 @@ class ProfileViewModel implements RefreshableViewModel, LoadableViewModel {
   final NewAccountFlowCoordinator newAccountFlow;
   final Function(File) saveProfileImage;
 
-  ProfileViewModel({
-    this.loadingStatus,
-    this.username,
-    this.initials,
-    this.activeCrops,
-    this.completedCrops,
-    this.switchProfileProvider,
-    this.image,
-    this.refresh,
-    this.logout,
-    this.remove,
-    this.farmDetails,
-    this.switchLanguageTapped,
-    this.newAccountFlow,
-    this.saveProfileImage,
-    this.renameProfile
-  });
+  ProfileViewModel(
+      {this.loadingStatus,
+      this.username,
+      this.initials,
+      this.activeCrops,
+      this.completedCrops,
+      this.switchProfileProvider,
+      this.image,
+      this.refresh,
+      this.logout,
+      this.remove,
+      this.farmDetails,
+      this.switchLanguageTapped,
+      this.newAccountFlow,
+      this.saveProfileImage,
+      this.renameProfile});
 }
 
 class ProfileStyle {
@@ -498,12 +498,14 @@ class Profile extends StatelessWidget {
       isDestructive: false,
     ));
 
-    items.add(ProfileListItemViewModel(
-      title: _LocalisedStrings.removeProfile(),
-      icon: null,
-      onTap: () => viewModel.remove(),
-      isDestructive: true,
-    ));
+    if (viewModel.remove != null) {
+      items.add(ProfileListItemViewModel(
+        title: _LocalisedStrings.removeProfile(),
+        icon: null,
+        onTap: () => viewModel.remove(),
+        isDestructive: true,
+      ));
+    }
 
     items.add(ProfileListItemViewModel(
       title: _LocalisedStrings.logout(),
@@ -561,7 +563,7 @@ class Profile extends StatelessWidget {
       },
     ).toList();
   }
-  
+
   void _navigateToWebView(BuildContext context, String url) {
     Navigator.of(context).push(
       MaterialPageRoute(
