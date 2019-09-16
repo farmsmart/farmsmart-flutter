@@ -63,9 +63,8 @@ class _LocalisedStrings {
 
   static username() => Intl.message('Username');
 
-  //TODO Add the correct text & Google Play Link
   static shareText() => Intl.message(
-      'Join to the new smart farming app - FarmSmart  \n https://linktogoogleplay.com');
+      'Join to the new smart farming app - FarmSmart \n');
 }
 
 class _Strings {
@@ -75,6 +74,7 @@ class _Strings {
       'https://sites.google.com/farmsmart.co/farmsmart/home/privacy-policy?authuser=0';
   static final termsOfUseUrl =
       'https://sites.google.com/farmsmart.co/farmsmart/home/privacy-policy?authuser=0';
+  static final shareLink = 'https://play.google.com/store/apps/details?id=co.farmsmart.app';
 }
 
 class _Icons {
@@ -539,7 +539,7 @@ class Profile extends StatelessWidget {
   }
 
   void _inviteFriends() async {
-    await Share.share(_LocalisedStrings.shareText());
+    await Share.share('${_LocalisedStrings.shareText()} ${_Strings.shareLink}');
   }
 
   void _openPrivacyPolicy(BuildContext context) {
