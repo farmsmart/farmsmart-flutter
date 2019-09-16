@@ -77,4 +77,5 @@ class RecommendationDetailCardStyles {
     iconSize: 8,
     spacing: 5.5,
   );
+  
 }
