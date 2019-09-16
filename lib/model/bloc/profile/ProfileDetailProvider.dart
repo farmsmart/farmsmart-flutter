@@ -67,7 +67,7 @@ class ProfileDetailProvider
           _snapshot = transform(from: currentProfile);
           _controller.sink.add(_snapshot);
         });
-        
+
         _profileRepository.get().then((profiles) {
           _canDeleteProfile = profiles.length > 1;
           _update();
