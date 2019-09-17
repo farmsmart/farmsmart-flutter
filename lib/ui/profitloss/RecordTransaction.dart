@@ -1,5 +1,6 @@
 import 'package:farmsmart_flutter/ui/common/ActionSheet.dart';
 import 'package:farmsmart_flutter/ui/common/ActionSheetListItem.dart';
+import 'package:farmsmart_flutter/ui/common/Alert.dart';
 import 'package:farmsmart_flutter/ui/common/ListDivider.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
 import 'package:farmsmart_flutter/ui/profitloss/RecordTransactionHeader.dart';
@@ -29,6 +30,11 @@ class _LocalisedStrings {
   static save() => Intl.message("Save");
 
   static removeRecord() => Intl.message("Remove record");
+
+  static remove() => Intl.message("Remove");
+
+  static removeTransactionDescription() => Intl.message(
+      "Are you sure you want to remove this record? This action cannot be undone.");
 
   static cancel() => Intl.message("Cancel");
 }
@@ -440,8 +446,10 @@ class RecordTransactionState extends State<RecordTransaction> {
         title: _LocalisedStrings.removeRecord(),
         type: ActionType.simple,
         onTap: () {
-          widget._viewModel.removeTransaction(initialData);
-          Navigator.of(context).pop();
+          Alert.present(
+            _removeConfirmationAlert(),
+            context,
+          );
         },
         isDestructive: true,
       ),
@@ -455,6 +463,21 @@ class RecordTransactionState extends State<RecordTransaction> {
     return ActionSheet(
       viewModel: actionSheetViewModel,
       style: ActionSheetStyle.defaultStyle(),
+    );
+  }
+
+  Alert _removeConfirmationAlert() {
+    return Alert(
+      viewModel: AlertViewModel(
+          cancelActionText: _LocalisedStrings.cancel(),
+          confirmActionText: _LocalisedStrings.remove(),
+          titleText: _LocalisedStrings.removeRecord(),
+          detailText: _LocalisedStrings.removeTransactionDescription(),
+          isDestructive: true,
+          confirmAction: () {
+            widget._viewModel.removeTransaction(initialData);
+            Navigator.of(context).pop();
+          }),
     );
   }
 }
