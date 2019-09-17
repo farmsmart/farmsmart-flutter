@@ -292,7 +292,7 @@
     {
       "text": "What is your agro-ecological zone?",
       "inputRequest": {
-        "type": "com.wearemobilefirst.MultiChoice",
+        "type": "com.wearemobilefirst.Dropdown",
         "inline": true,
         "uri": "Agro zone",
         "title": "Agro-Ecological zone",

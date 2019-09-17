@@ -292,7 +292,7 @@
     {
       "text": "Je! eneo lako la kilimo and ikolojia ni gani?",
       "inputRequest": {
-        "type": "com.wearemobilefirst.MultiChoice",
+        "type": "com.wearemobilefirst.Dropdown",
         "inline": true,
         "uri": "Agro zone",
         "title": "Ukanda wa Ekolojia",
