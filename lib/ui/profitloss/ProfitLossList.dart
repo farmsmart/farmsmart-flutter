@@ -4,6 +4,7 @@ import 'package:farmsmart_flutter/ui/common/ActionSheet.dart';
 import 'package:farmsmart_flutter/ui/common/ActionSheetListItem.dart';
 import 'package:farmsmart_flutter/ui/common/RefreshableViewModel.dart';
 import 'package:farmsmart_flutter/ui/common/ViewModelProviderBuilder.dart';
+import 'package:farmsmart_flutter/ui/common/empty_view.dart';
 import 'package:farmsmart_flutter/ui/common/headerAndFooterListView.dart';
 import 'package:farmsmart_flutter/ui/common/modal_navigator.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
@@ -19,6 +20,15 @@ class _LocalisedStrings {
   static String saleText() => Intl.message('Record a new Sale');
 
   static String cancel() => Intl.message('Cancel');
+
+  static String getStartedAddingYourFirstTransaction() =>
+      Intl.message('Get started by adding your first transaction');
+
+  static String addATransaction() => Intl.message('Add a transaction');
+}
+
+class _Strings {
+  static const emptyImagePath = 'assets/raw/illustration_empty.png';
 }
 
 class _Icons {
@@ -93,6 +103,31 @@ class ProfitLossPage extends StatelessWidget {
   }
 
   Widget _buildPage({BuildContext context, ProfitLossListViewModel viewModel}) {
+    return viewModel.transactions.isNotEmpty
+        ? _buildList(viewModel)
+        : _buildEmptyView(viewModel, context);
+  }
+
+  Widget _buildEmptyView(
+      ProfitLossListViewModel viewModel, BuildContext context) {
+    return Container(
+      height: double.infinity,
+      width: double.infinity,
+      child: EmptyView(
+        viewModel: EmptyViewViewModel(
+          imagePath: _Strings.emptyImagePath,
+          description: _LocalisedStrings.getStartedAddingYourFirstTransaction(),
+          actionText: _LocalisedStrings.addATransaction(),
+          action: () => _addTapped(
+            context: context,
+            viewModel: viewModel,
+          ),
+        ),
+      ),
+    );
+  }
+
+  HeaderAndFooterListView _buildList(ProfitLossListViewModel viewModel) {
     return HeaderAndFooterListView(
         itemCount: viewModel.transactions.length,
         itemBuilder: (BuildContext context, int index) {
@@ -120,17 +155,25 @@ class ProfitLossPage extends StatelessWidget {
     final viewModel = snapshot.data;
     final String roundedButtonIcon = "assets/icons/profit_add.png";
     return Scaffold(
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        body: _buildPage(context: context, viewModel: viewModel),
-        floatingActionButton: RoundedButton(
-          viewModel: RoundedButtonViewModel(
-              icon: roundedButtonIcon,
-              onTap: () => _addTapped(
-                    context: context,
-                    viewModel: viewModel,
-                  )),
-          style: RoundedButtonStyle.bigRoundedButton(),
-        ));
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      body: _buildPage(context: context, viewModel: viewModel),
+      floatingActionButton: viewModel.transactions.isNotEmpty
+          ? _buildRoundedButton(roundedButtonIcon, context, viewModel)
+          : SizedBox.shrink(),
+    );
+  }
+
+  RoundedButton _buildRoundedButton(String roundedButtonIcon,
+      BuildContext context, ProfitLossListViewModel viewModel) {
+    return RoundedButton(
+      viewModel: RoundedButtonViewModel(
+          icon: roundedButtonIcon,
+          onTap: () => _addTapped(
+                context: context,
+                viewModel: viewModel,
+              )),
+      style: RoundedButtonStyle.bigRoundedButton(),
+    );
   }
 
   ActionSheet _moreMenu(
