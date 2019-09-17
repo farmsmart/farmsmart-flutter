@@ -5,7 +5,7 @@ import 'app_coordinator.dart';
 import 'farmsmart_localizations.dart';
 
 class _Constants {
-  static final String fontFamily = 'GT-America-Standard';
+  static final String fontFamily = 'IBMPlexSans';
 
   static final backgroundColor = Color(0xFFFFFFFF);
   static final accentColor = Color(0xFF757575);
