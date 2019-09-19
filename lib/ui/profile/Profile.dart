@@ -525,6 +525,8 @@ class Profile extends StatelessWidget {
       context,
       FarmDetails(
         viewModel: FarmDetailsViewModel(
+          removeProfile: viewModel.remove,
+          editProfile: () => viewModel.newAccountFlow.run(context),
           items: _mapToFarmItemViewModel(viewModel.farmDetails),
           buttonTitle: _LocalisedStrings.editFarmDetails(),
           confirm: () {

@@ -174,11 +174,18 @@ class FarmDetails extends StatelessWidget {
 
   Widget _buildAppBar(BuildContext context, FarmDetailsViewModel viewModel) {
     return ContextualAppBar(
-      moreAction: () => _moreTapped(
-        _moreMenu(viewModel, context),
-        context,
-      ),
+      moreAction: _buildMoreAction(viewModel, context),
     ).build(context);
+  }
+
+  Function _buildMoreAction(
+      FarmDetailsViewModel viewModel, BuildContext context) {
+    return viewModel.removeProfile != null || viewModel.editProfile != null
+        ? () => _moreTapped(
+              _moreMenu(viewModel, context),
+              context,
+            )
+        : null;
   }
 
   void _moreTapped(ActionSheet sheet, BuildContext context) {
@@ -209,19 +216,29 @@ class FarmDetails extends StatelessWidget {
   }
 
   ActionSheet _moreMenu(FarmDetailsViewModel viewModel, BuildContext context) {
-    final actions = [
-      ActionSheetListItemViewModel(
-        title: _LocalisedStrings.editProfile(),
-        type: ActionType.simple,
-        onTap: () => _editAction(viewModel),
-      ),
-      ActionSheetListItemViewModel(
-        title: _LocalisedStrings.deleteProfile(),
-        type: ActionType.simple,
-        isDestructive: true,
-        onTap: () => _removeAction(viewModel, context),
-      ),
-    ];
+    final List<ActionSheetListItemViewModel> actions = [];
+
+    if (viewModel.editProfile != null) {
+      actions.add(
+        ActionSheetListItemViewModel(
+          title: _LocalisedStrings.editProfile(),
+          type: ActionType.simple,
+          onTap: () => _editAction(viewModel),
+        ),
+      );
+    }
+
+    if (viewModel.removeProfile != null) {
+      actions.add(
+        ActionSheetListItemViewModel(
+          title: _LocalisedStrings.deleteProfile(),
+          type: ActionType.simple,
+          isDestructive: true,
+          onTap: () => _removeAction(viewModel, context),
+        ),
+      );
+    }
+
     final actionSheetViewModel = ActionSheetViewModel(
       actions,
       _LocalisedStrings.cancel(),
