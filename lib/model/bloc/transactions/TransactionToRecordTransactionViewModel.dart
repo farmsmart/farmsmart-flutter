@@ -4,6 +4,7 @@ import 'package:farmsmart_flutter/model/repositories/transaction/TransactionRepo
 import 'package:farmsmart_flutter/ui/profitloss/RecordTransaction.dart';
 import 'package:farmsmart_flutter/ui/profitloss/RecordTransactionListItem.dart';
 import 'package:intl/intl.dart';
+
 import '../Transformer.dart';
 
 class _LocalisedStrings {
@@ -13,8 +14,7 @@ class _LocalisedStrings {
 }
 
 class TransactionToRecordTransactionViewModel
-    extends
-        ObjectTransformer<TransactionEntity, RecordTransactionViewModel> {
+    extends ObjectTransformer<TransactionEntity, RecordTransactionViewModel> {
   final List<String> _tagList;
   final TransactionRepositoryInterface _repo;
 
@@ -32,28 +32,39 @@ class TransactionToRecordTransactionViewModel
       {TransactionEntity from, bool editable = true}) {
     final amount = from?.amount?.toString() ?? "";
     return RecordTransactionViewModel(
-        amount: amount,
-        actions: _actions(from: from),
-        buttonTitle: _LocalisedStrings.recordCost(),
-        recordTransaction: (data) => _record(data, TransactionType.cost),
-        type: TransactionType.cost,
-        isEditable: editable);
+      uri: from?.uri,
+      amount: amount,
+      actions: _actions(from: from),
+      buttonTitle: _LocalisedStrings.recordCost(),
+      recordTransaction: (data) => _record(data, TransactionType.cost),
+      editTransaction: (oldData, data) =>
+          _edit(oldData, data, TransactionType.cost),
+      removeTransaction: (data) => _remove(data, TransactionType.cost),
+      type: TransactionType.cost,
+      isEditable: editable,
+    );
   }
 
   RecordTransactionViewModel saleViewModel(
       {TransactionEntity from, bool editable = true}) {
     final amount = from?.amount?.toString() ?? "";
     return RecordTransactionViewModel(
-        amount: amount,
-        actions: _actions(from: from),
-        buttonTitle: _LocalisedStrings.recordSale(),
-        recordTransaction: (data) => _record(data, TransactionType.sale),
-        type: TransactionType.sale,
-        isEditable: editable);
+      uri: from?.uri,
+      amount: amount,
+      actions: _actions(from: from),
+      buttonTitle: _LocalisedStrings.recordSale(),
+      recordTransaction: (data) => _record(data, TransactionType.sale),
+      editTransaction: (oldData, data) =>
+          _edit(oldData, data, TransactionType.sale),
+      removeTransaction: (data) => _remove(data, TransactionType.sale),
+      type: TransactionType.sale,
+      isEditable: editable,
+    );
   }
 
   List<RecordTransactionListItemViewModel> _actions({TransactionEntity from}) {
-    final timestamp = (from?.timestamp == null) ? DateTime.now() : from.timestamp;
+    final timestamp =
+        (from?.timestamp == null) ? DateTime.now() : from.timestamp;
     final description = from?.description ?? "";
     final selectedItem = from?.tag;
     return [
@@ -81,15 +92,47 @@ class TransactionToRecordTransactionViewModel
     ];
   }
 
-  void _record(RecordTransactionData data, TransactionType type) {
+  TransactionEntity transformRecordTransactionDataToTransactionEntity(
+    RecordTransactionData data,
+    TransactionType type,
+  ) {
     final isCost = (type == TransactionType.cost);
-    final amount = TransactionAmount(data.amount, isCost);
-    final newTransaction =
-        TransactionEntity(null, amount, data.crop, data.description, data.date);
-    _repo.add(newTransaction);
+    final amount = TransactionAmount(
+      data.amount,
+      isCost,
+    );
+    return TransactionEntity(
+      data.uri,
+      amount,
+      data.crop,
+      data.description,
+      data.date,
+    );
   }
 
-  void _remove(TransactionEntity transaction) {
-    _repo.remove(transaction);
+  void _record(
+    RecordTransactionData data,
+    TransactionType type,
+  ) {
+    _repo.add(transformRecordTransactionDataToTransactionEntity(data, type));
+  }
+
+  void _edit(
+    RecordTransactionData oldData,
+    RecordTransactionData data,
+    TransactionType type,
+  ) {
+    var oldTransactionEntity =
+        transformRecordTransactionDataToTransactionEntity(oldData, type);
+    var newTransactionEntity =
+        transformRecordTransactionDataToTransactionEntity(data, type);
+
+    _repo.remove(oldTransactionEntity).then((_) {
+      _repo.add(newTransactionEntity);
+    });
+  }
+
+  void _remove(RecordTransactionData data, TransactionType type) {
+    _repo.remove(transformRecordTransactionDataToTransactionEntity(data, type));
   }
 }
