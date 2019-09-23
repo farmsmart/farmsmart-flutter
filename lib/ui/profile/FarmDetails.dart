@@ -115,7 +115,9 @@ class FarmDetails extends StatelessWidget {
         child: RoundedButton(
           viewModel: RoundedButtonViewModel(
             title: _viewModel.buttonTitle,
-            onTap: () => _viewModel.confirm(),
+            onTap: () {
+              _viewModel.confirm();
+            },
           ),
           style: RoundedButtonStyle.largeRoundedButtonStyle().copyWith(
             height: _Constants.buttonHeight,
@@ -211,8 +213,9 @@ class FarmDetails extends StatelessWidget {
     );
   }
 
-  void _editAction(FarmDetailsViewModel viewModel) {
-    viewModel.editProfile(); //TODO: add the UI for input when ready (Chat)
+  void _editAction(FarmDetailsViewModel viewModel, BuildContext context) {
+    viewModel.editProfile();
+    Navigator.of(context).pop();
   }
 
   ActionSheet _moreMenu(FarmDetailsViewModel viewModel, BuildContext context) {
@@ -223,7 +226,7 @@ class FarmDetails extends StatelessWidget {
         ActionSheetListItemViewModel(
           title: _LocalisedStrings.editProfile(),
           type: ActionType.simple,
-          onTap: () => _editAction(viewModel),
+          onTap: () => _editAction(viewModel, context),
         ),
       );
     }

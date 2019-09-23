@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:farmsmart_flutter/model/bloc/ViewModelProvider.dart';
 import 'package:farmsmart_flutter/model/bloc/chatFlow/CreateAccountFlow.dart';
+import 'package:farmsmart_flutter/model/bloc/chatFlow/EditProfileFlow.dart';
 import 'package:farmsmart_flutter/model/entities/ImageURLProvider.dart';
 import 'package:farmsmart_flutter/model/entities/loading_status.dart';
 import 'package:farmsmart_flutter/ui/common/ActionSheet.dart';
@@ -136,23 +137,26 @@ class ProfileViewModel implements RefreshableViewModel, LoadableViewModel {
   final Function(String) switchLanguageTapped;
   final NewAccountFlowCoordinator newAccountFlow;
   final Function(File) saveProfileImage;
+  EditProfileFlowCoordinator editProfileFlow;
 
-  ProfileViewModel(
-      {this.loadingStatus,
-      this.username,
-      this.initials,
-      this.activeCrops,
-      this.completedCrops,
-      this.switchProfileProvider,
-      this.image,
-      this.refresh,
-      this.logout,
-      this.remove,
-      this.farmDetails,
-      this.switchLanguageTapped,
-      this.newAccountFlow,
-      this.saveProfileImage,
-      this.renameProfile});
+  ProfileViewModel({
+    this.loadingStatus,
+    this.username,
+    this.initials,
+    this.activeCrops,
+    this.completedCrops,
+    this.switchProfileProvider,
+    this.image,
+    this.refresh,
+    this.logout,
+    this.remove,
+    this.farmDetails,
+    this.switchLanguageTapped,
+    this.newAccountFlow,
+    this.saveProfileImage,
+    this.renameProfile,
+    this.editProfileFlow,
+  });
 }
 
 class ProfileStyle {
@@ -526,16 +530,22 @@ class Profile extends StatelessWidget {
       FarmDetails(
         viewModel: FarmDetailsViewModel(
           removeProfile: viewModel.remove,
-          editProfile: () => viewModel.newAccountFlow.run(context),
+          editProfile: () => _editProfile(viewModel, context),
           items: _mapToFarmItemViewModel(viewModel.farmDetails),
           buttonTitle: _LocalisedStrings.editFarmDetails(),
           confirm: () {
-            //TODO Should Navigate to Chat here?
-            viewModel.newAccountFlow.run(context);
+            _editProfile(viewModel, context);
           },
         ),
       ),
     );
+  }
+
+  void _editProfile(ProfileViewModel viewModel, BuildContext context) {
+    return viewModel.editProfileFlow.run(
+          context,
+          onSuccess: () => _onEditProfileSuccess(context),
+        );
   }
 
   void _createNewProfile(ProfileViewModel viewModel, BuildContext context) {
@@ -665,5 +675,10 @@ class Profile extends StatelessWidget {
       imageMaxHeight: _Constants.avatarImageSize,
       imageMaxWidth: _Constants.avatarImageSize,
     );
+  }
+
+  _onEditProfileSuccess(BuildContext context) {
+    Navigator.of(context, rootNavigator: true).pop();
+    _openFarmDetails(_viewModelProvider.snapshot(), context);
   }
 }

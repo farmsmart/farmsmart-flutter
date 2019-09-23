@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:farmsmart_flutter/farmsmart_localizations.dart';
 import 'package:farmsmart_flutter/model/bloc/Transformer.dart';
 import 'package:farmsmart_flutter/model/bloc/chatFlow/CreateAccountFlow.dart';
+import 'package:farmsmart_flutter/model/bloc/chatFlow/EditProfileFlow.dart';
 import 'package:farmsmart_flutter/model/bloc/chatFlow/FlowCoordinator.dart';
 import 'package:farmsmart_flutter/model/bloc/plot/PlotStatistics.dart';
 import 'package:farmsmart_flutter/model/bloc/profile/PersonName.dart';
@@ -37,6 +38,7 @@ class ProfileDetailProvider
       StreamController<ProfileViewModel>.broadcast();
 
   NewAccountFlowCoordinator _accountFlow;
+  EditProfileFlowCoordinator _editProfileFlow;
 
   ProfileDetailProvider({
     @required AccountRepositoryInterface accountRepo,
@@ -86,6 +88,11 @@ class ProfileDetailProvider
       );
       _accountFlow.init();
 
+      _editProfileFlow = EditProfileFlowCoordinator(
+        _accountRepository,
+        _accountFlowStatusChanged,
+      );
+
       _snapshot = transform(from: null);
       _snapshot.refresh();
     }
@@ -98,21 +105,23 @@ class ProfileDetailProvider
         SwitchProfileListProvider(accountRepo: _accountRepository);
     final personName = PersonName(from?.name ?? "");
     return ProfileViewModel(
-        loadingStatus: _loadingStatus,
-        username: personName.fullname,
-        initials: personName.initials,
-        refresh: _refresh,
-        remove: _canDeleteProfile ? () => _remove() : null,
-        logout: () => _logout(),
-        image: from?.avatar,
-        activeCrops: _activeCrops,
-        completedCrops: _completedCrops,
-        switchProfileProvider: switchProfileProvider,
-        farmDetails: from?.lastPlotInfo,
-        switchLanguageTapped: (language) => _switchLanguage(language),
-        newAccountFlow: _accountFlow,
-        saveProfileImage: (file) => _saveProfileImage(file, from),
-        renameProfile: (username) => _renameProfile(username));
+      loadingStatus: _loadingStatus,
+      username: personName.fullname,
+      initials: personName.initials,
+      refresh: _refresh,
+      remove: _canDeleteProfile ? () => _remove() : null,
+      logout: () => _logout(),
+      image: from?.avatar,
+      activeCrops: _activeCrops,
+      completedCrops: _completedCrops,
+      switchProfileProvider: switchProfileProvider,
+      farmDetails: from?.lastPlotInfo,
+      switchLanguageTapped: (language) => _switchLanguage(language),
+      newAccountFlow: _accountFlow,
+      saveProfileImage: (file) => _saveProfileImage(file, from),
+      renameProfile: (username) => _renameProfile(username),
+      editProfileFlow: _editProfileFlow,
+    );
   }
 
   _switchLanguage(String language) async {
