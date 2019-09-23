@@ -1,3 +1,6 @@
+import 'package:farmsmart_flutter/ui/common/ActionSheet.dart';
+import 'package:farmsmart_flutter/ui/common/ActionSheetListItem.dart';
+import 'package:farmsmart_flutter/ui/common/Alert.dart';
 import 'package:farmsmart_flutter/ui/common/ListDivider.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
 import 'package:farmsmart_flutter/ui/profitloss/RecordTransactionHeader.dart';
@@ -5,6 +8,7 @@ import 'package:farmsmart_flutter/ui/profitloss/RecordTransactionHeaderStyles.da
 import 'package:farmsmart_flutter/ui/profitloss/RecordTransactionListItem.dart';
 import 'package:farmsmart_flutter/ui/profitloss/RecordTransactionListItemStyles.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class _Constants {
   static final int firstListItem = 0;
@@ -20,13 +24,30 @@ class _Constants {
   static final EdgeInsets descriptionPadding = EdgeInsets.only(bottom: 60);
 }
 
+class _LocalisedStrings {
+  static editRecord() => Intl.message("Edit record");
+
+  static save() => Intl.message("Save");
+
+  static removeRecord() => Intl.message("Remove record");
+
+  static remove() => Intl.message("Remove");
+
+  static removeTransactionDescription() => Intl.message(
+      "Are you sure you want to remove this record? This action cannot be undone.");
+
+  static cancel() => Intl.message("Cancel");
+}
+
 class RecordTransactionData {
+  String uri;
   String amount;
   DateTime date;
   String crop;
   String description;
 
   RecordTransactionData({
+    this.uri,
     this.amount,
     this.date,
     this.crop,
@@ -40,6 +61,7 @@ enum TransactionType {
 }
 
 class RecordTransactionViewModel {
+  String uri;
   List<RecordTransactionListItemViewModel> actions;
   TransactionType type;
   String amount;
@@ -48,6 +70,8 @@ class RecordTransactionViewModel {
   bool isEditable;
   String buttonTitle;
   final Function(RecordTransactionData) recordTransaction;
+  final Function(RecordTransactionData, RecordTransactionData) editTransaction;
+  final Function(RecordTransactionData) removeTransaction;
 
   RecordTransactionViewModel({
     this.actions,
@@ -57,6 +81,9 @@ class RecordTransactionViewModel {
     this.type,
     this.isEditable: true,
     this.recordTransaction,
+    this.editTransaction,
+    this.removeTransaction,
+    this.uri,
   });
 }
 
@@ -126,6 +153,7 @@ class _DefaultStyle extends RecordTransactionStyle {
 
 const RecordTransactionStyle _defaultStyle = const _DefaultStyle();
 
+//TODO: We should refactor the whole widget in the future!!
 class RecordTransaction extends StatefulWidget {
   final RecordTransactionViewModel _viewModel;
   final RecordTransactionStyle _style;
@@ -146,18 +174,51 @@ class RecordTransactionState extends State<RecordTransaction> {
   RecordTransactionData userData = RecordTransactionData(date: DateTime.now());
   bool isAmountFilled = false;
   bool isCropFilled = false;
+  bool isEditing = false;
+  bool isNewRecord = false;
+  RecordTransactionData initialData;
 
   @override
   void initState() {
     super.initState();
+    RecordTransactionViewModel viewModel = widget._viewModel;
+    isNewRecord = widget._viewModel.isEditable;
+
+    if (viewModel.actions.length <= _Constants.thirdListItem) {
+      throw ('The actions inside viewModel are not correct');
+    }
+
+    initialData = RecordTransactionData(
+      uri: viewModel.uri,
+      amount: viewModel.amount,
+      description: viewModel.actions[_Constants.thirdListItem].description,
+      crop: viewModel.actions[_Constants.secondListItem].selectedItem,
+      date: viewModel.actions[_Constants.firstListItem].selectedDate,
+    );
+
+    if (isNewRecord) {
+      userData = RecordTransactionData(date: DateTime.now());
+    } else {
+      userData = RecordTransactionData(
+        uri: initialData.uri,
+        amount: initialData.amount,
+        date: initialData.date,
+        crop: initialData.crop,
+        description: initialData.description,
+      );
+    }
   }
 
   Widget build(BuildContext context) {
     RecordTransactionViewModel viewModel = widget._viewModel;
     RecordTransactionStyle style = widget._style;
 
+    if (isEditing) {
+      widget._viewModel.isFilled = true;
+    }
+
     return Scaffold(
-      appBar: viewModel.isEditable
+      appBar: isEditing || isNewRecord
           ? _buildSimpleAppBar(style, context)
           : _buildEditAppBar(style, context),
       body: GestureDetector(
@@ -210,7 +271,7 @@ class RecordTransactionState extends State<RecordTransaction> {
       ),
       actions: <Widget>[
         FlatButton(
-          onPressed: () => null,
+          onPressed: () => _displayOptionsMenu(context, userData),
           padding: style.appBarRightMargin,
           child: Image.asset(
             _Constants.navOptionsIcon,
@@ -228,7 +289,12 @@ class RecordTransactionState extends State<RecordTransaction> {
 
   void _apply(BuildContext context, RecordTransactionData data) {
     final viewModel = widget._viewModel;
-    viewModel.recordTransaction(data);
+    if (isEditing && !isNewRecord) {
+      viewModel.editTransaction(initialData, data);
+    } else {
+      viewModel.recordTransaction(data);
+    }
+
     _dismiss(context);
   }
 
@@ -239,7 +305,7 @@ class RecordTransactionState extends State<RecordTransaction> {
     listBuilder.add(
       RecordTransactionHeader(
           viewModel: RecordTransactionHeaderViewModel(
-            isEditable: viewModel.isEditable,
+            isEditable: isEditing || isNewRecord,
             amount: viewModel.amount,
           ),
           style: viewModel.type == TransactionType.sale
@@ -254,8 +320,8 @@ class RecordTransactionState extends State<RecordTransaction> {
       RecordTransactionListItem(
         viewModel: RecordTransactionListItemViewModel(
           type: RecordCellType.pickDate,
-          isEditable: viewModel.isEditable,
-          selectedDate: viewModel.isEditable
+          isEditable: isEditing || isNewRecord,
+          selectedDate: isEditing
               ? userData.date
               : viewModel.actions[_Constants.firstListItem].selectedDate,
         ),
@@ -269,8 +335,8 @@ class RecordTransactionState extends State<RecordTransaction> {
       RecordTransactionListItem(
         viewModel: RecordTransactionListItemViewModel(
           type: RecordCellType.pickItem,
-          isEditable: viewModel.isEditable,
-          selectedItem: viewModel.isEditable
+          isEditable: isEditing || isNewRecord,
+          selectedItem: isEditing
               ? userData.crop
               : viewModel.actions[_Constants.secondListItem].selectedItem,
           listOfCrops: viewModel.actions[_Constants.secondListItem].listOfCrops,
@@ -287,8 +353,8 @@ class RecordTransactionState extends State<RecordTransaction> {
         child: RecordTransactionListItem(
           viewModel: RecordTransactionListItemViewModel(
             type: RecordCellType.description,
-            isEditable: viewModel.isEditable,
-            description: viewModel.isEditable
+            isEditable: isEditing || isNewRecord,
+            description: isEditing
                 ? userData.description
                 : viewModel.actions[_Constants.thirdListItem].description,
           ),
@@ -303,7 +369,7 @@ class RecordTransactionState extends State<RecordTransaction> {
 
   Widget _buildFooterAction(
       RecordTransactionViewModel viewModel, RecordTransactionStyle style) {
-    if (viewModel.isEditable) {
+    if (isEditing || isNewRecord) {
       return Container(
         width: double.infinity,
         height: double.infinity,
@@ -330,7 +396,7 @@ class RecordTransactionState extends State<RecordTransaction> {
       RecordTransactionViewModel viewModel) {
     return RoundedButton(
       viewModel: RoundedButtonViewModel(
-        title: viewModel.buttonTitle,
+        title: isEditing ? _LocalisedStrings.save() : viewModel.buttonTitle,
         onTap: () => _apply(context, userData),
       ),
       style: viewModel.type == TransactionType.sale
@@ -356,7 +422,62 @@ class RecordTransactionState extends State<RecordTransaction> {
 
   setIfRequiredFieldsAreFilled() {
     setState(() {
-      widget._viewModel.isFilled = isAmountFilled && isCropFilled;
+      widget._viewModel.isFilled =
+          (isAmountFilled && isCropFilled) || isEditing;
     });
+  }
+
+  _displayOptionsMenu(BuildContext context, RecordTransactionData data) {
+    ActionSheet.present(_optionsMenu(context, data), context);
+  }
+
+  ActionSheet _optionsMenu(BuildContext context, RecordTransactionData data) {
+    final actions = [
+      ActionSheetListItemViewModel(
+        title: _LocalisedStrings.editRecord(),
+        type: ActionType.simple,
+        onTap: () {
+          setState(() {
+            isEditing = true;
+          });
+        },
+      ),
+      ActionSheetListItemViewModel(
+        title: _LocalisedStrings.removeRecord(),
+        type: ActionType.simple,
+        onTap: () {
+          Alert.present(
+            _removeConfirmationAlert(),
+            context,
+          );
+        },
+        isDestructive: true,
+      ),
+    ];
+
+    final actionSheetViewModel = ActionSheetViewModel(
+      actions,
+      _LocalisedStrings.cancel(),
+    );
+
+    return ActionSheet(
+      viewModel: actionSheetViewModel,
+      style: ActionSheetStyle.defaultStyle(),
+    );
+  }
+
+  Alert _removeConfirmationAlert() {
+    return Alert(
+      viewModel: AlertViewModel(
+          cancelActionText: _LocalisedStrings.cancel(),
+          confirmActionText: _LocalisedStrings.remove(),
+          titleText: _LocalisedStrings.removeRecord(),
+          detailText: _LocalisedStrings.removeTransactionDescription(),
+          isDestructive: true,
+          confirmAction: () {
+            widget._viewModel.removeTransaction(initialData);
+            Navigator.of(context).pop();
+          }),
+    );
   }
 }

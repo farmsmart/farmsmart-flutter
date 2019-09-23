@@ -59,7 +59,7 @@ class RecommendationDetailCardStyles {
       buttonTextStyle: TextStyle(
           fontSize: 15, fontWeight: FontWeight.w500, color: Color(0xff4c4e6e)),
       iconEdgePadding: 5,
-      height: 45,
+      height: 43,
       width: double.infinity,
       buttonIconSize: null,
       iconButtonColor: Color(0xFFFFFFFF),
@@ -77,4 +77,5 @@ class RecommendationDetailCardStyles {
     iconSize: 8,
     spacing: 5.5,
   );
+  
 }

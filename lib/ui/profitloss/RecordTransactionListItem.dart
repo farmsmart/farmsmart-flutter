@@ -190,9 +190,15 @@ class RecordTransactionListItem extends StatefulWidget {
 class _RecordTransactionListItemState extends State<RecordTransactionListItem> {
   final _textFieldController = TextEditingController();
 
+  var initialDescription;
+  var initialDate;
+  var initialSelectedItem;
+
   @override
   void initState() {
     super.initState();
+
+    _initializeValues();
   }
 
   @override
@@ -251,10 +257,10 @@ class _RecordTransactionListItemState extends State<RecordTransactionListItem> {
                   style: style.titleTextStyle,
                 ),
                 Text(
-                  _formatDate(viewModel.selectedDate) ==
+                  _formatDate(initialDate) ==
                           _formatDate(_Constants.currentDate)
                       ? _LocalisedStrings.today()
-                      : _formatDate(viewModel.selectedDate),
+                      : _formatDate(initialDate),
                   textAlign: TextAlign.end,
                   style: style.detailTextStyle,
                 ),
@@ -321,9 +327,9 @@ class _RecordTransactionListItemState extends State<RecordTransactionListItem> {
                 style: style.titleTextStyle,
               ),
               Text(
-                viewModel.selectedItem == null
+                initialSelectedItem == null
                     ? _LocalisedStrings.select()
-                    : viewModel.selectedItem,
+                    : initialSelectedItem,
                 textAlign: TextAlign.end,
                 style: style.detailTextStyle,
               ),
@@ -362,14 +368,14 @@ class _RecordTransactionListItemState extends State<RecordTransactionListItem> {
                   textAlign: TextAlign.start,
                   style: style.titleTextStyle,
                 ),
-                viewModel.selectedItem == null
+                initialSelectedItem == null
                     ? Text(
                         _LocalisedStrings.select(),
                         textAlign: TextAlign.end,
                         style: style.pendingDetailTextStyle,
                       )
                     : Text(
-                        viewModel.selectedItem,
+                        initialSelectedItem,
                         textAlign: TextAlign.end,
                         style: style.detailTextStyle,
                       ),
@@ -466,13 +472,14 @@ class _RecordTransactionListItemState extends State<RecordTransactionListItem> {
   ) async {
     final DateTime picked = await showDatePicker(
       context: context,
-      initialDate: viewModel.selectedDate,
+      initialDate: initialDate,
       firstDate: _Constants.minDateLimit,
       lastDate: _Constants.maxDateLimit,
     );
 
     if (picked != null) {
       setState(() {
+        initialDate = picked;
         viewModel.selectedDate = picked;
         widget.parent.userData.date = picked;
       });
@@ -501,10 +508,21 @@ class _RecordTransactionListItemState extends State<RecordTransactionListItem> {
 
   void _setSelectedDropDownItem(String selectedCrop) {
     setState(() {
+      initialSelectedItem = selectedCrop;
       widget._viewModel.selectedItem = selectedCrop;
       widget.parent.userData.crop = selectedCrop;
       widget.parent.isCropFilled = true;
       widget.parent.setIfRequiredFieldsAreFilled();
     });
+  }
+
+  void _initializeValues() {
+    initialDescription = widget._viewModel.description;
+    initialDate = widget._viewModel.selectedDate;
+    initialSelectedItem = widget._viewModel.selectedItem;
+
+    if(initialDescription != null && initialDescription.isNotEmpty){
+      _textFieldController.text = initialDescription;
+    }
   }
 }

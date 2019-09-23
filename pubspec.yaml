@@ -113,11 +113,12 @@ flutter:
     - assets/responses/farmsmart_chat_ui_flow_sw.json
 
   fonts:
-  - family: GT-America-Standard
+  - family: IBMPlexSans
     fonts:
-      - asset: assets/fonts/GT-America-Standard-Bold.ttf
-      - asset: assets/fonts/GT-America-Standard-Medium.ttf
-      - asset: assets/fonts/GT-America-Standard-Regular.ttf
+      - asset: assets/fonts/IBMPlexSans-Bold.ttf
+      - asset: assets/fonts/IBMPlexSans-Medium.ttf
+      - asset: assets/fonts/IBMPlexSans-Regular.ttf
+
 
 flutter_icons:
   android: "launcher_icon"

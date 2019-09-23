@@ -32,6 +32,7 @@ class ProfileDetailProvider
   ProfileEntity _currentProfile;
   PlotStatistics _plotStatistics = PlotStatistics();
   LoadingStatus _loadingStatus = LoadingStatus.LOADING;
+  bool _canDeleteProfile = false;
   final StreamController<ProfileViewModel> _controller =
       StreamController<ProfileViewModel>.broadcast();
 
@@ -66,6 +67,11 @@ class ProfileDetailProvider
           _snapshot = transform(from: currentProfile);
           _controller.sink.add(_snapshot);
         });
+
+        _profileRepository.get().then((profiles) {
+          _canDeleteProfile = profiles.length > 1;
+          _update();
+        });
       });
 
       _plotRepository.observeFarm().listen((List<PlotEntity> plots) {
@@ -96,7 +102,7 @@ class ProfileDetailProvider
         username: personName.fullname,
         initials: personName.initials,
         refresh: _refresh,
-        remove: () => _remove(),
+        remove: _canDeleteProfile ? () => _remove() : null,
         logout: () => _logout(),
         image: from?.avatar,
         activeCrops: _activeCrops,

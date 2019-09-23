@@ -69,9 +69,14 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: _buildSimpleAppBar(context),
-      body: _buildChat(context),
+    return WillPopScope(
+      onWillPop: () {
+        _cancel(context);
+      },
+      child: Scaffold(
+        appBar: _buildSimpleAppBar(context),
+        body: _buildChat(context),
+      ),
     );
   }
 
