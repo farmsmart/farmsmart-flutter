@@ -21,8 +21,9 @@ class TransactionAmount {
   }
 
   String toString({bool allowNegative = false}) {
-    final formatter =
-        NumberFormat.compactCurrency(locale: Intl.getCurrentLocale());
+    final formatter = NumberFormat.currency(
+      locale: Intl.getCurrentLocale(),
+    );
     final absDecimal = _decimal.isNegative ? -_decimal : _decimal;
     final prefix =
         (_decimal.isNegative && allowNegative) ? _Strings.negativeSymbol : "";
