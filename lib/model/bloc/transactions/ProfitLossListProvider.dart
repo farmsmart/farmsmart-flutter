@@ -17,7 +17,7 @@ class _LocalisedStrings {
 }
 
 class ProfitLossListProvider
-    implements ViewModelProvider<ProfitLossListViewModel> {
+    implements ViewModelProviderInterface<ProfitLossListViewModel> {
   final TransactionRepositoryInterface _transactionsRepository;
   final PlotRepositoryInterface _plotRepository;
   ProfitLossListViewModel _snapshot;

@@ -1,17 +1,22 @@
+import 'package:farmsmart_flutter/flavors/app_config.dart';
 import 'package:farmsmart_flutter/model/bloc/ViewModelProvider.dart';
+import 'package:farmsmart_flutter/model/bloc/article/ArticleListProvider.dart';
+import 'package:farmsmart_flutter/model/repositories/article/ArticleRepositoryInterface.dart';
 import 'package:farmsmart_flutter/ui/LandingPage.dart';
+import 'package:farmsmart_flutter/ui/article/viewModel/ArticleListViewModel.dart';
 import 'package:farmsmart_flutter/ui/common/ViewModelProviderBuilder.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 
 import 'viewmodel/startupViewModel.dart';
 
 class Startup extends StatelessWidget {
-  final ViewModelProvider<StartupViewModel> _provider;
+  final ViewModelProviderInterface<StartupViewModel> _provider;
   final Widget _home;
 
   const Startup({
     Key key,
-    ViewModelProvider<StartupViewModel> provider,
+    ViewModelProviderInterface<StartupViewModel> provider,
     Widget home,
     Widget loginSignup,
   })  : this._provider = provider,
@@ -21,7 +26,7 @@ class Startup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelProviderBuilder(
-      provider: _provider,
+      defaultProvider: _provider,
       successBuilder: _successBuilder,
     );
   }
@@ -38,6 +43,16 @@ class Startup extends StatelessWidget {
   }
 
   Widget _homeBuilder({BuildContext context, StartupViewModel viewModel}) {
-    return _home;
+   final repositoryProvider = AppConfig.of(context).repositoryProvider;
+
+   final articleProvider = ArticleListProvider(
+        title: "title",
+        repository: repositoryProvider.getArticleRepository(),
+        group: ArticleCollectionGroup.discovery,
+        relatedTitle: "related",
+      );
+
+    return Provider<ViewModelProviderInterface<ArticleListViewModel>>.value(
+  value: articleProvider, child:_home);
   }
 }

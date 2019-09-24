@@ -1,6 +1,6 @@
 import 'dart:async';
 
-abstract class ViewModelProvider<T> {
+abstract class ViewModelProviderInterface<T> {
 
   Stream<T> stream();
   T initial();

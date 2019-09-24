@@ -68,13 +68,13 @@ class _DefaultStyle implements PlotDetailStyle {
 }
 
 class PlotDetail extends StatefulWidget {
-  final ViewModelProvider<PlotDetailViewModel> _viewModelProvider;
+  final ViewModelProviderInterface<PlotDetailViewModel> _viewModelProvider;
   final PlotDetailStyle _style;
   ArticleDetail _articleDetail;
 
   PlotDetail(
       {Key key,
-      ViewModelProvider<PlotDetailViewModel> provider,
+      ViewModelProviderInterface<PlotDetailViewModel> provider,
       PlotDetailStyle style = const _DefaultStyle()})
       : this._viewModelProvider = provider,
         this._style = style,
@@ -105,7 +105,7 @@ class _PlotDetailState extends State<PlotDetail> {
   @override
   Widget build(BuildContext context) {
     return ViewModelProviderBuilder(
-      provider: widget._viewModelProvider,
+      defaultProvider: widget._viewModelProvider,
       successBuilder: _successBuilder,
     );
   }
@@ -277,7 +277,7 @@ class _PlotDetailState extends State<PlotDetail> {
 
   void _tappedDetail({
     BuildContext context,
-    ViewModelProvider<CropDetailViewModel> provider,
+    ViewModelProviderInterface<CropDetailViewModel> provider,
   }) {
     Navigator.of(context).push(
       MaterialPageRoute(

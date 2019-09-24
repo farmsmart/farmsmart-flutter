@@ -75,7 +75,7 @@ class Home extends StatelessWidget {
     localizations = FarmsmartLocalizations.of(context);
 
     return ViewModelProviderBuilder(
-      provider: homeViewModelProvider,
+      defaultProvider: homeViewModelProvider,
       successBuilder: _buildSuccess,
     );
   }
@@ -162,12 +162,12 @@ class Home extends StatelessWidget {
   _buildDiscover() {
     return ArticleList(
       style: ArticleListStyles.buildForDiscover(),
-      viewModelProvider: ArticleListProvider(
+      /*viewModelProvider: ArticleListProvider(
         title: _LocalisedStrings.discover(),
         repository: repositoryProvider.getArticleRepository(),
         group: ArticleCollectionGroup.discovery,
         relatedTitle: _LocalisedStrings.relatedArticles(),
-      ),
+      ),*/
     );
   }
 

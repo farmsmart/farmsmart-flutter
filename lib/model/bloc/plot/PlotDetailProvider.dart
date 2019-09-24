@@ -10,7 +10,7 @@ import 'PlotToPlotDetailViewModel.dart';
 import 'StageBusinessLogic.dart';
 import 'StageToStageCardViewModel.dart';
 
-class PlotDetailProvider implements ViewModelProvider<PlotDetailViewModel> {
+class PlotDetailProvider implements ViewModelProviderInterface<PlotDetailViewModel> {
   PlotDetailViewModel _snapshot;
 
   PlotEntity _plot;

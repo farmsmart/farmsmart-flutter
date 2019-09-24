@@ -14,7 +14,7 @@ import 'package:farmsmart_flutter/ui/article/viewModel/ArticleListViewModel.dart
    [repo , model] -> [ViewModelProvider, Transformer] -> [viewModel, widget]
 */
 
-class ArticleListProvider implements ViewModelProvider<ArticleListViewModel> {
+class ArticleListProvider implements ViewModelProviderInterface<ArticleListViewModel> {
   final ArticleRepositoryInterface _repo;
   final ArticleCollectionGroup _group;
   final String _title;

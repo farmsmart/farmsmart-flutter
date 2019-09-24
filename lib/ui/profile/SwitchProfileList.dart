@@ -82,12 +82,12 @@ class _DefaultStyle extends SwitchProfileListStyle {
 const SwitchProfileListStyle _defaultStyle = const _DefaultStyle();
 
 class SwitchProfileList extends StatefulWidget {
-  final ViewModelProvider<SwitchProfileListViewModel> _provider;
+  final ViewModelProviderInterface<SwitchProfileListViewModel> _provider;
   final SwitchProfileListStyle _style;
 
   SwitchProfileList({
     Key key,
-    ViewModelProvider<SwitchProfileListViewModel> provider,
+    ViewModelProviderInterface<SwitchProfileListViewModel> provider,
     SwitchProfileListStyle style = _defaultStyle,
   })  : this._provider = provider,
         this._style = style,
@@ -100,7 +100,7 @@ class SwitchProfileList extends StatefulWidget {
 class SwitchProfileListState extends State<SwitchProfileList> {
   @override
   Widget build(BuildContext context) {
-    return ViewModelProviderBuilder(provider: widget._provider, successBuilder: _buildSuccess,);
+    return ViewModelProviderBuilder(defaultProvider: widget._provider, successBuilder: _buildSuccess,);
   }
   Widget _buildSuccess({BuildContext context, AsyncSnapshot<SwitchProfileListViewModel> snapshot}) {
     final viewModel = snapshot.data;

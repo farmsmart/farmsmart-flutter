@@ -6,6 +6,7 @@ import 'package:farmsmart_flutter/ui/common/RefreshableViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'LoadableViewModel.dart';
 
 class _LocalisedStrings {
@@ -18,18 +19,18 @@ typedef WidgetBuilder<T> = Widget Function(
     {BuildContext context, AsyncSnapshot<T> snapshot});
 
 class ViewModelProviderBuilder<T> extends StatelessWidget {
-  final ViewModelProvider<T> _provider;
+  final ViewModelProviderInterface<T> _defaultProvider;
   final WidgetBuilder<T> _successBuilder;
   final WidgetBuilder<T> _errorBuilder;
   final WidgetBuilder<T> _loadingBuilder;
 
   const ViewModelProviderBuilder(
       {Key key,
-      ViewModelProvider<T> provider,
+      ViewModelProviderInterface<T> defaultProvider,
       WidgetBuilder<T> successBuilder,
       WidgetBuilder<T> errorBuilder,
       WidgetBuilder<T> loadingBuilder})
-      : this._provider = provider,
+      : this._defaultProvider = defaultProvider,
         this._successBuilder = successBuilder,
         this._errorBuilder = errorBuilder,
         this._loadingBuilder = loadingBuilder,
@@ -39,10 +40,11 @@ class ViewModelProviderBuilder<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     final errorBuilder = _errorBuilder ?? _defaultErrorBuilder;
     final loadingBuilder = _loadingBuilder ?? _defaultLoadingBuilder;
-
+    final provider = _defaultProvider ?? Provider.of<ViewModelProviderInterface<T>>(context, listen: false,);
+    assert(provider != null, "Missing dependency. No default or injected dependency provider can be found! ",);
     return StreamBuilder<T>(
-        stream: _provider.stream(),
-        initialData: _provider.initial(),
+        stream: provider.stream(),
+        initialData: provider.initial(),
         builder: (
           BuildContext context,
           AsyncSnapshot<T> snapshot,

@@ -23,7 +23,7 @@ class _LocalisedStrings {
   static String addCrop() => Intl.message('Add Another Crop');
 }
 
-class PlotListProvider implements ViewModelProvider<PlotListViewModel> {
+class PlotListProvider implements ViewModelProviderInterface<PlotListViewModel> {
   final PlotRepositoryInterface _plotRepo;
   final RecommendationListProvider _recommendationsProvider;
   final String _title;

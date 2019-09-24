@@ -23,7 +23,7 @@ class _Constants {
 }
 
 class RecommendationListProvider
-    implements ViewModelProvider<RecommendationsListViewModel> {
+    implements ViewModelProviderInterface<RecommendationsListViewModel> {
   final String _title;
   final double _heroThreshold;
   final CropRepositoryInterface _cropRepo;
@@ -153,7 +153,7 @@ class RecommendationListProvider
     _update(controller);
   }
 
-  ViewModelProvider<CropDetailViewModel> _detailProvider(CropEntity crop) {
+  ViewModelProviderInterface<CropDetailViewModel> _detailProvider(CropEntity crop) {
     final transformer = CropDetailTransformer();
     final cropViewModel = transformer.transform(from: crop);
     final provider =

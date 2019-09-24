@@ -22,7 +22,7 @@ import '../ViewModelProvider.dart';
 
 class ProfileDetailProvider
     extends ObjectTransformer<ProfileEntity, ProfileViewModel>
-    implements ViewModelProvider<ProfileViewModel> {
+    implements ViewModelProviderInterface<ProfileViewModel> {
   final AccountRepositoryInterface _accountRepository;
   final PlotRepositoryInterface _plotRepository;
   ProfileRepositoryInterface _profileRepository;

@@ -4,7 +4,7 @@ import 'dart:async';
 
 import 'package:farmsmart_flutter/model/bloc/ViewModelProvider.dart';
 
-class SequencedViewModelProvider<T> implements ViewModelProvider<T> {
+class SequencedViewModelProvider<T> implements ViewModelProviderInterface<T> {
 
   final Duration _tempo;
   final List<T> _sequence;

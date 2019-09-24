@@ -15,7 +15,7 @@ class PlotDetailViewModel
     final int currentStage;
     final Function rename;
     final Function remove;
-    final ViewModelProvider<CropDetailViewModel> detailProvider;
+    final ViewModelProviderInterface<CropDetailViewModel> detailProvider;
 
   PlotDetailViewModel({String title, 
   String detailText, 
@@ -26,7 +26,7 @@ class PlotDetailViewModel
   int currentStage, 
   Function rename, 
   Function remove,
-  ViewModelProvider<CropDetailViewModel> detailProvider,}) : this.title = title, 
+  ViewModelProviderInterface<CropDetailViewModel> detailProvider,}) : this.title = title, 
   this.detailText = detailText, 
   this.progress = progress, 
   this.imageProvider = imageProvider,

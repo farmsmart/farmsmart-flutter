@@ -25,7 +25,7 @@ class HomeViewModel implements LoadableViewModel, RefreshableViewModel {
   );
 }
 
-class HomeViewModelProvider implements ViewModelProvider<HomeViewModel> {
+class HomeViewModelProvider implements ViewModelProviderInterface<HomeViewModel> {
   final AccountRepositoryInterface _accountRepository;
   final StreamController<HomeViewModel> _controller =
       StreamController<HomeViewModel>.broadcast();

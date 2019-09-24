@@ -6,7 +6,7 @@ import 'package:farmsmart_flutter/ui/crop/viewmodel/CropDetailViewModel.dart';
 import 'package:farmsmart_flutter/ui/recommendations/recommendation_card/recommendation_card_view_model.dart';
 
 typedef BoolFunction = bool Function();
-typedef DetailProviderFunction = ViewModelProvider<CropDetailViewModel> Function();
+typedef DetailProviderFunction = ViewModelProviderInterface<CropDetailViewModel> Function();
 
 class RecommendationsListViewModel implements RefreshableViewModel, LoadableViewModel{
   static final error = RecommendationsListViewModel(loadingStatus: LoadingStatus.ERROR);

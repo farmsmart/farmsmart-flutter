@@ -13,7 +13,7 @@ class PlotListItemViewModel {
   final String detail;
   final double progress;
   final ImageURLProvider imageProvider;
-  final ViewModelProvider<PlotDetailViewModel> detailViewModelProvider;
+  final ViewModelProviderInterface<PlotDetailViewModel> detailViewModelProvider;
 
   PlotListItemViewModel(
       {String title,
@@ -21,7 +21,7 @@ class PlotListItemViewModel {
       String detail,
       double progress,
       ImageURLProvider imageProvider,
-      ViewModelProvider<PlotDetailViewModel> provider})
+      ViewModelProviderInterface<PlotDetailViewModel> provider})
       : this.title = title,
         this.subtitle = subtitle,
         this.detail = detail,

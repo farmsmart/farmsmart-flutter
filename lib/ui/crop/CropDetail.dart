@@ -52,12 +52,12 @@ const CropDetailStyle _defaultStyle = const _DefaultStyle();
 
 class CropDetail extends StatelessWidget implements ListViewSection {
   final CropDetailStyle _style;
-  final ViewModelProvider<CropDetailViewModel> _viewModelProvider;
+  final ViewModelProviderInterface<CropDetailViewModel> _viewModelProvider;
   final Widget _header;
   SectionedListView _listBuilder;
   CropDetail._({
     Key key,
-    ViewModelProvider<CropDetailViewModel> provider,
+    ViewModelProviderInterface<CropDetailViewModel> provider,
     CropDetailStyle style,
     SectionedListView listBuilder,
     Widget header,
@@ -68,7 +68,7 @@ class CropDetail extends StatelessWidget implements ListViewSection {
         super(key: key);
 
   factory CropDetail(
-      {ViewModelProvider<CropDetailViewModel> provider,
+      {ViewModelProviderInterface<CropDetailViewModel> provider,
       CropDetailStyle style = _defaultStyle,
       Widget header}) {
     final listBuilder = SectionedListView(sections: []);
@@ -83,7 +83,7 @@ class CropDetail extends StatelessWidget implements ListViewSection {
   @override
   Widget build(BuildContext context) {
     final builder = ViewModelProviderBuilder(
-      provider: _viewModelProvider,
+      defaultProvider: _viewModelProvider,
       successBuilder: _buildSuccess,
     );
     return builder.build(context);

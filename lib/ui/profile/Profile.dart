@@ -125,7 +125,7 @@ class ProfileViewModel implements RefreshableViewModel, LoadableViewModel {
   final String initials;
   final int activeCrops;
   final int completedCrops;
-  final ViewModelProvider<SwitchProfileListViewModel> switchProfileProvider;
+  final ViewModelProviderInterface<SwitchProfileListViewModel> switchProfileProvider;
   final ImageURLProvider image;
   final Function refresh;
   final Function logout;
@@ -249,12 +249,12 @@ class _DefaultStyle extends ProfileStyle {
 const ProfileStyle _defaultStyle = const _DefaultStyle();
 
 class Profile extends StatelessWidget {
-  final ViewModelProvider<ProfileViewModel> _viewModelProvider;
+  final ViewModelProviderInterface<ProfileViewModel> _viewModelProvider;
   final ProfileStyle _style;
 
   const Profile({
     Key key,
-    ViewModelProvider<ProfileViewModel> provider,
+    ViewModelProviderInterface<ProfileViewModel> provider,
     ProfileStyle style = _defaultStyle,
   })  : this._viewModelProvider = provider,
         this._style = style,
@@ -263,7 +263,7 @@ class Profile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelProviderBuilder(
-      provider: _viewModelProvider,
+      defaultProvider: _viewModelProvider,
       successBuilder: _buildPage,
     );
   }
@@ -441,7 +441,7 @@ class Profile extends StatelessWidget {
 
   void _tappedSwitchProfile({
     BuildContext context,
-    ViewModelProvider<SwitchProfileListViewModel> provider,
+    ViewModelProviderInterface<SwitchProfileListViewModel> provider,
   }) {
     Navigator.of(context).push(
       MaterialPageRoute(

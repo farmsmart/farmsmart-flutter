@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:farmsmart_flutter/model/bloc/ViewModelProvider.dart';
 
-class StaticViewModelProvider<T> implements ViewModelProvider<T> {
+class StaticViewModelProvider<T> implements ViewModelProviderInterface<T> {
 
   final T _viewModel;
   final StreamController _controller = StreamController<T>.broadcast();

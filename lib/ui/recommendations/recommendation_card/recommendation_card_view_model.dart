@@ -10,7 +10,7 @@ class RecommendationCardViewModel {
   String detailActionText;
   String addActionText;
   double score;
-  ViewModelProvider<CropDetailViewModel> detailProvider;
+  ViewModelProviderInterface<CropDetailViewModel> detailProvider;
   Function detailAction;
   Function addAction;
   bool isAdded;

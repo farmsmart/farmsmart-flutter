@@ -15,7 +15,7 @@ class _LocalisedStrings {
 }
 
 class SwitchProfileListProvider
-    implements ViewModelProvider<SwitchProfileListViewModel> {
+    implements ViewModelProviderInterface<SwitchProfileListViewModel> {
   final AccountRepositoryInterface _accountRepository;
   SwitchProfileListViewModel _snapshot;
   final StreamController<SwitchProfileListViewModel> _controller =

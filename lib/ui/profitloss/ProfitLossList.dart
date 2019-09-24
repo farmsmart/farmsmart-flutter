@@ -83,12 +83,12 @@ class _DefaultStyle implements ProfitLossStyle {
 }
 
 class ProfitLossPage extends StatelessWidget {
-  final ViewModelProvider<ProfitLossListViewModel> _viewModelProvider;
+  final ViewModelProviderInterface<ProfitLossListViewModel> _viewModelProvider;
   final ProfitLossStyle _style;
 
   const ProfitLossPage(
       {Key key,
-      ViewModelProvider<ProfitLossListViewModel> viewModelProvider,
+      ViewModelProviderInterface<ProfitLossListViewModel> viewModelProvider,
       ProfitLossStyle style = const _DefaultStyle()})
       : this._viewModelProvider = viewModelProvider,
         this._style = style,
@@ -97,7 +97,7 @@ class ProfitLossPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelProviderBuilder(
-      provider: _viewModelProvider,
+      defaultProvider: _viewModelProvider,
       successBuilder: _buildPageWithFloatingButton,
     );
   }

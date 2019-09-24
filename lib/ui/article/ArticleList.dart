@@ -58,12 +58,12 @@ const ArticleListStyle _defaultStyle = const _DefaultStyle();
 
 class ArticleList extends StatelessWidget {
   static ArticleListStyle defaultStyle = _defaultStyle;
-  final ViewModelProvider<ArticleListViewModel> _viewModelProvider;
+  final ViewModelProviderInterface<ArticleListViewModel> _viewModelProvider;
   final ArticleListStyle _style;
 
   ArticleList(
       {Key key,
-      ViewModelProvider<ArticleListViewModel> viewModelProvider,
+      ViewModelProviderInterface<ArticleListViewModel> viewModelProvider,
       ArticleListStyle style = _defaultStyle})
       : this._style = style,
         this._viewModelProvider = viewModelProvider,
@@ -72,7 +72,7 @@ class ArticleList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelProviderBuilder<ArticleListViewModel>(
-      provider: _viewModelProvider,
+      defaultProvider: _viewModelProvider,
       successBuilder: _buildSuccess,
     );
   }

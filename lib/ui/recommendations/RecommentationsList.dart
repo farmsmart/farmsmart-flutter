@@ -107,11 +107,11 @@ const RecommendedListStyle _defaultStyle = const _DefaultStyle();
 
 class RecommendationsList extends StatelessWidget implements ListViewSection {
   final RecommendedListStyle _style;
-  final ViewModelProvider<RecommendationsListViewModel> _viewModelProvider;
+  final ViewModelProviderInterface<RecommendationsListViewModel> _viewModelProvider;
 
   const RecommendationsList({
     Key key,
-    ViewModelProvider<RecommendationsListViewModel> provider,
+    ViewModelProviderInterface<RecommendationsListViewModel> provider,
     RecommendedListStyle style = _defaultStyle,
   })  : this._style = style,
         this._viewModelProvider = provider,
@@ -120,7 +120,7 @@ class RecommendationsList extends StatelessWidget implements ListViewSection {
   @override
   Widget build(BuildContext context) {
     return ViewModelProviderBuilder(
-      provider: _viewModelProvider,
+      defaultProvider: _viewModelProvider,
       successBuilder: _buildSuccess,
     );
   }
@@ -260,7 +260,7 @@ class RecommendationsList extends StatelessWidget implements ListViewSection {
 
   void _tappedDetail({
     BuildContext context,
-    ViewModelProvider<CropDetailViewModel> provider,
+    ViewModelProviderInterface<CropDetailViewModel> provider,
     RecommendationCardViewModel recommendationCardViewModel,
   }) {
     Navigator.of(context).push(

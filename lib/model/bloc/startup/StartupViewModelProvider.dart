@@ -28,7 +28,7 @@ class _Assets {
   static const logoImage = "assets/raw/logo_default.png";
 }
 
-class StartupViewModelProvider implements ViewModelProvider<StartupViewModel> {
+class StartupViewModelProvider implements ViewModelProviderInterface<StartupViewModel> {
   final AccountRepositoryInterface _accountRepository;
   StartupViewModel _snapshot;
   final StreamController<StartupViewModel> _controller =

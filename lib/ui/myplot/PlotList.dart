@@ -37,7 +37,7 @@ class PlotListViewModel implements LoadableViewModel, RefreshableViewModel {
   final LoadingStatus loadingStatus;
   final List<PlotListItemViewModel> items;
   final Function refresh;
-  final ViewModelProvider<RecommendationsListViewModel> recommendationsProvider;
+  final ViewModelProviderInterface<RecommendationsListViewModel> recommendationsProvider;
 
   PlotListViewModel({
     String title,
@@ -45,7 +45,7 @@ class PlotListViewModel implements LoadableViewModel, RefreshableViewModel {
     LoadingStatus loadingStatus,
     List<PlotListItemViewModel> items,
     Function refresh,
-    ViewModelProvider<RecommendationsListViewModel> recommendationsProvider,
+    ViewModelProviderInterface<RecommendationsListViewModel> recommendationsProvider,
   })  : this.title = title,
         this.loadingStatus = loadingStatus,
         this.buttonTitle = buttonTitle,
@@ -88,12 +88,12 @@ class _DefaultStyle implements PlotListStyle {
 }
 
 class PlotList extends StatelessWidget {
-  final ViewModelProvider<PlotListViewModel> _viewModelProvider;
+  final ViewModelProviderInterface<PlotListViewModel> _viewModelProvider;
   final PlotListStyle _style;
 
   const PlotList({
     Key key,
-    ViewModelProvider<PlotListViewModel> provider,
+    ViewModelProviderInterface<PlotListViewModel> provider,
     PlotListStyle style = const _DefaultStyle(),
   })  : this._viewModelProvider = provider,
         this._style = style,
@@ -102,7 +102,7 @@ class PlotList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelProviderBuilder(
-      provider: _viewModelProvider,
+      defaultProvider: _viewModelProvider,
       successBuilder: _buildPage,
     );
   }
@@ -230,7 +230,7 @@ class PlotList extends StatelessWidget {
 
   void _tappedAdd({
     BuildContext context,
-    ViewModelProvider<RecommendationsListViewModel> provider,
+    ViewModelProviderInterface<RecommendationsListViewModel> provider,
   }) {
     NavigationScope.presentModal(
       context,
@@ -240,7 +240,7 @@ class PlotList extends StatelessWidget {
 
   void _tappedListItem({
     BuildContext context,
-    ViewModelProvider<PlotDetailViewModel> provider,
+    ViewModelProviderInterface<PlotDetailViewModel> provider,
   }) {
     Navigator.of(context).push(
       MaterialPageRoute(

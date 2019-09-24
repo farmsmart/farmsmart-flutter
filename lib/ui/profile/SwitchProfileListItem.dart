@@ -24,7 +24,7 @@ class SwitchProfileListItemViewModel {
   Function tapAction;
   Function switchAction;
   bool isSelected;
-  final ViewModelProvider<ProfileViewModel> avatarViewModelProvider;
+  final ViewModelProviderInterface<ProfileViewModel> avatarViewModelProvider;
 
   SwitchProfileListItemViewModel({
     this.title,

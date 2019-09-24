@@ -11,7 +11,7 @@ class _Constants {
 }
 
 class ProfileAvatar extends StatelessWidget {
-  final ViewModelProvider<ProfileViewModel> _viewModelProvider;
+  final ViewModelProviderInterface<ProfileViewModel> _viewModelProvider;
   final double _width;
   final double _height;
   final Color _backgroundColor;
@@ -19,7 +19,7 @@ class ProfileAvatar extends StatelessWidget {
 
   const ProfileAvatar({
     Key key,
-    ViewModelProvider<ProfileViewModel> viewModelProvider,
+    ViewModelProviderInterface<ProfileViewModel> viewModelProvider,
     double width,
     double height,
     TextStyle textStyle,
@@ -34,7 +34,7 @@ class ProfileAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelProviderBuilder(
-      provider: _viewModelProvider,
+      defaultProvider: _viewModelProvider,
       successBuilder: _successBuilder,
     );
   }
