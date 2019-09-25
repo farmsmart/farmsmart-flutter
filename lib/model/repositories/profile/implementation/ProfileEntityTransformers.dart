@@ -29,6 +29,16 @@ class LocalProfileImageProvider implements ImageURLProvider {
        return '${directory.path}/${id}_${_Constants.avatarPathSuffix}';
     });
   }
+
+  @override
+  String cacheIdentifier({double width, double height}) {
+    return null;
+  }
+
+  @override
+  String cachedUrlToFit({double width, double height}) {
+    return null;
+  }
 }
 
 class DocumentToProfileEntityTransformer extends ObjectTransformer<DocumentSnapshot,ProfileEntity> {

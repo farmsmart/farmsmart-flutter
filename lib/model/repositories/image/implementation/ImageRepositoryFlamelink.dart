@@ -65,8 +65,7 @@ class FlameLinkImageProvider implements ImageURLProvider {
   @override
   Future<String> urlToFit({double width, double height}) {
     final originalImage = _cms.images(path: _entity.path);
-    //TODO: LH investigate why some alternate images are not returning from the server Keep this for now
-    /*if (width != null) {
+    if (width != null && width != double.infinity) {
       final targetWidth = width.toInt();
       var alternateImages = _entity.otherSizes;
       alternateImages.sort((a, b) {
@@ -74,15 +73,33 @@ class FlameLinkImageProvider implements ImageURLProvider {
       });
 
       for (var image in alternateImages) {
-        if ((image.width > targetWidth)) {
-          return _cms
-              .images(path: image.path)
-              .getDownloadURL()
-              .then((value) => value.toString());
+        if ((image.width >= targetWidth)) {
+          return _cms.images(path: image.path).getDownloadURL().then((value) {
+            cacheURL(value, cacheIdentifier(width: width,height: height));
+            return value;
+          });
         }
       }
-    }*/
-    return originalImage.getDownloadURL().then((value) => value.toString());
+    }
+    return originalImage.getDownloadURL().then((value) { 
+      final url = value.toString();
+      cacheURL(url, cacheIdentifier(height: height, width: width));
+      return url;
+    });
+  }
+
+  @override
+  String cacheIdentifier({double width, double height}) {
+    return _entity.path +
+        ImageURLProvider.sizeIdentifier(
+          width: width,
+          height: height,
+        );
+  }
+
+  @override
+  String cachedUrlToFit({double width, double height}) {
+    return cachedURL(cacheIdentifier(width: width, height: height));
   }
 }
 
