@@ -8,6 +8,7 @@ class _Strings {
 
 class _Constants {
   static const fixedDigits = 2;
+  static const thousand = 1000;
 }
 
 class TransactionAmount {
@@ -21,8 +22,7 @@ class TransactionAmount {
   }
 
   String toString({bool allowNegative = false}) {
-    final formatter =
-        NumberFormat.compactCurrency(locale: Intl.getCurrentLocale());
+    final formatter = _getNumberFormat(Intl.getCurrentLocale());
     final absDecimal = _decimal.isNegative ? -_decimal : _decimal;
     final prefix =
         (_decimal.isNegative && allowNegative) ? _Strings.negativeSymbol : "";
@@ -30,6 +30,15 @@ class TransactionAmount {
         formatter
             .format(absDecimal.toDouble())
             .replaceAll(formatter.currencyName, "");
+  }
+
+  NumberFormat _getNumberFormat(String locale) {
+    int compareToResult = _decimal.abs().compareTo(Decimal.fromInt(_Constants.thousand));
+    if(compareToResult.isNegative) {
+      return NumberFormat.currency(locale: locale);
+    } else {
+      return NumberFormat.compactCurrency(locale: locale);
+    }
   }
 
   bool isSale() {
