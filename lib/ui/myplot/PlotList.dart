@@ -29,6 +29,7 @@ class _Strings {
 
 class _Constants {
   static const titlePaddingOnEmptyState = const EdgeInsets.only(top: 31);
+  static const double bottomHeightSpaceForStickButton = 100;
 }
 
 class PlotListViewModel implements LoadableViewModel, RefreshableViewModel {
@@ -79,7 +80,7 @@ class _DefaultStyle implements PlotListStyle {
   final EdgeInsets titleEdgePadding =
       const EdgeInsets.only(left: 32, top: 30, right: 32, bottom: 0);
   final EdgeInsets largeButtonEdgePadding =
-      const EdgeInsets.only(left: 32, top: 31, right: 32, bottom: 32);
+      const EdgeInsets.only(left: 32, top: 31, right: 32, bottom: 20);
 
   final TextStyle titleTextStyle = const TextStyle(
       fontSize: 27, fontWeight: FontWeight.bold, color: Color(0xFF000000));
@@ -148,30 +149,47 @@ class PlotList extends StatelessWidget {
   }
 
   Widget _buildList(PlotListViewModel viewModel, BuildContext context) {
-    return HeaderAndFooterListView(
-      itemCount: viewModel.items.length,
-      itemBuilder: (BuildContext context, int index) {
-        final itemViewModel = viewModel.items[index];
-        final tapFunction = () => _tappedListItem(
-              context: context,
-              provider: itemViewModel.detailViewModelProvider,
+    return Stack(
+      children: <Widget>[
+        HeaderAndFooterListView(
+          itemCount: viewModel.items.length,
+          itemBuilder: (BuildContext context, int index) {
+            final itemViewModel = viewModel.items[index];
+            final tapFunction = () => _tappedListItem(
+                  context: context,
+                  provider: itemViewModel.detailViewModelProvider,
+                );
+            return PlotListItem().buildListItem(
+              viewModel: viewModel.items[index],
+              onTap: tapFunction,
             );
-        return PlotListItem().buildListItem(
-          viewModel: viewModel.items[index],
-          onTap: tapFunction,
-        );
-      },
-      physics: ScrollPhysics(),
-      shrinkWrap: true,
-      headers: [
-        _buildTitle(
-          viewModel,
-          _style,
-          context: context,
+          },
+          physics: ScrollPhysics(),
+          shrinkWrap: true,
+          headers: [
+            _buildTitle(
+              viewModel,
+              _style,
+              context: context,
+            ),
+          ],
+          footers: [
+            SizedBox(
+              height: _Constants.bottomHeightSpaceForStickButton,
+            )
+          ],
         ),
+        _buildBottomActionButton(viewModel, context)
       ],
-      footers: [
-        Padding(
+    );
+  }
+
+  Container _buildBottomActionButton(PlotListViewModel viewModel, BuildContext context) {
+    return Container(
+        width: double.infinity,
+        height: double.infinity,
+        alignment: Alignment.bottomCenter,
+        child: Padding(
           padding: _style.largeButtonEdgePadding,
           child: Row(
             children: <Widget>[
@@ -189,9 +207,8 @@ class PlotList extends StatelessWidget {
               ),
             ],
           ),
-        )
-      ],
-    );
+        ),
+      );
   }
 
   Widget _buildTitle(
