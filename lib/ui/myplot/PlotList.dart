@@ -10,6 +10,7 @@ import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
 import 'package:farmsmart_flutter/ui/recommendations/RecommentationsList.dart';
 import 'package:farmsmart_flutter/ui/recommendations/viewmodel/RecommendationsListViewModel.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:intl/intl.dart';
 
 import 'PlotDetail.dart';
@@ -88,7 +89,7 @@ class _DefaultStyle implements PlotListStyle {
   const _DefaultStyle();
 }
 
-class PlotList extends StatelessWidget {
+class PlotList extends StatefulWidget {
   final ViewModelProvider<PlotListViewModel> _viewModelProvider;
   final PlotListStyle _style;
 
@@ -101,9 +102,17 @@ class PlotList extends StatelessWidget {
         super(key: key);
 
   @override
+  _PlotListState createState() => _PlotListState();
+}
+
+class _PlotListState extends State<PlotList> {
+  GlobalKey<State> topActionButtonVisibilityKey = GlobalKey();
+  double actionButtonOpacity = 0.0;
+
+  @override
   Widget build(BuildContext context) {
     return ViewModelProviderBuilder(
-      provider: _viewModelProvider,
+      provider: widget._viewModelProvider,
       successBuilder: _buildPage,
     );
   }
@@ -129,7 +138,7 @@ class PlotList extends StatelessWidget {
       children: <Widget>[
         Padding(
           padding: _Constants.titlePaddingOnEmptyState,
-          child: _buildTitle(viewModel, _style, context: context),
+          child: _buildTitle(viewModel, widget._style, context: context),
         ),
         Expanded(
           child: EmptyView(
@@ -151,49 +160,89 @@ class PlotList extends StatelessWidget {
   Widget _buildList(PlotListViewModel viewModel, BuildContext context) {
     return Stack(
       children: <Widget>[
-        HeaderAndFooterListView(
-          itemCount: viewModel.items.length,
-          itemBuilder: (BuildContext context, int index) {
-            final itemViewModel = viewModel.items[index];
-            final tapFunction = () => _tappedListItem(
-                  context: context,
-                  provider: itemViewModel.detailViewModelProvider,
-                );
-            return PlotListItem().buildListItem(
-              viewModel: viewModel.items[index],
-              onTap: tapFunction,
-            );
-          },
-          physics: ScrollPhysics(),
-          shrinkWrap: true,
-          headers: [
-            _buildTitle(
-              viewModel,
-              _style,
-              context: context,
-            ),
-          ],
-          footers: [
-            SizedBox(
-              height: _Constants.bottomHeightSpaceForStickButton,
-            )
-          ],
+        NotificationListener<ScrollEndNotification>(
+          onNotification: _onScrollNotification,
+          child: HeaderAndFooterListView(
+            itemCount: viewModel.items.length,
+            itemBuilder: (BuildContext context, int index) {
+              final itemViewModel = viewModel.items[index];
+              final tapFunction = () => _tappedListItem(
+                    context: context,
+                    provider: itemViewModel.detailViewModelProvider,
+                  );
+              return PlotListItem().buildListItem(
+                viewModel: viewModel.items[index],
+                onTap: tapFunction,
+              );
+            },
+            physics: ScrollPhysics(),
+            shrinkWrap: true,
+            headers: [
+              _buildTitle(
+                viewModel,
+                widget._style,
+                context: context,
+              ),
+            ],
+            footers: [
+              SizedBox(
+                height: _Constants.bottomHeightSpaceForStickButton,
+              )
+            ],
+          ),
         ),
         _buildBottomActionButton(viewModel, context)
       ],
     );
   }
 
-  Container _buildBottomActionButton(PlotListViewModel viewModel, BuildContext context) {
+  bool _onScrollNotification(scroll) {
+    var topActionButtonCurrentContext =
+        topActionButtonVisibilityKey.currentContext;
+
+    if (topActionButtonVisibilityKey.currentContext == null) return false;
+
+    var topActionRenderObject =
+        topActionButtonCurrentContext.findRenderObject();
+    RenderAbstractViewport viewport =
+        RenderAbstractViewport.of(topActionRenderObject);
+    var offsetToRevealBottom =
+        viewport.getOffsetToReveal(topActionRenderObject, 1.0);
+    var offsetToRevealTop =
+        viewport.getOffsetToReveal(topActionRenderObject, 0.0);
+
+    if (offsetToRevealBottom.offset > scroll.metrics.pixels ||
+        scroll.metrics.pixels > offsetToRevealTop.offset) {
+      if (actionButtonOpacity == 0.0) {
+        setState(() {
+          actionButtonOpacity = 1.0;
+        });
+      }
+    } else {
+      if (actionButtonOpacity != 0.0) {
+        setState(() {
+          actionButtonOpacity = 0.0;
+        });
+      }
+    }
+    return false;
+  }
+
+  Container _buildBottomActionButton(
+      PlotListViewModel viewModel, BuildContext context) {
     return Container(
-        width: double.infinity,
-        height: double.infinity,
-        alignment: Alignment.bottomCenter,
-        child: Padding(
-          padding: _style.largeButtonEdgePadding,
-          child: Row(
-            children: <Widget>[
-              Expanded(
+      width: double.infinity,
+      height: double.infinity,
+      alignment: Alignment.bottomCenter,
+      child: Padding(
+        padding: widget._style.largeButtonEdgePadding,
+        child: Row(
+          children: <Widget>[
+            Expanded(
+              child: AnimatedOpacity(
+                opacity: actionButtonOpacity,
+                duration: Duration(milliseconds: 200),
+                curve: Curves.easeIn,
                 child: RoundedButton(
                   viewModel: RoundedButtonViewModel(
                     title: viewModel.buttonTitle,
@@ -205,10 +254,11 @@ class PlotList extends StatelessWidget {
                   style: RoundedButtonStyle.largeRoundedButtonStyle(),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
-      );
+      ),
+    );
   }
 
   Widget _buildTitle(
@@ -232,6 +282,7 @@ class PlotList extends StatelessWidget {
             ],
           ),
           RoundedButton(
+            key: topActionButtonVisibilityKey,
             viewModel: RoundedButtonViewModel(
                 icon: roundedButtonIcon,
                 onTap: () => _tappedAdd(
