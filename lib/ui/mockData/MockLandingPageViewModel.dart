@@ -20,7 +20,7 @@ class MockLandingPageViewModel {
       footerText: _LocalisedStrings.footerText(),
       headerImage: "assets/raw/illustration_welcome.png",
       subtitleImage: "assets/raw/logo_default.png",
-      switchLanguageTapped: (language) => _mockSwitchLanguage(language),
+      switchLanguageTapped: (language, country) => _mockSwitchLanguage(language, country),
     );
   }
 
@@ -28,7 +28,7 @@ class MockLandingPageViewModel {
     return print("This should be a Navigator for chat route");
   }
 
-  static _mockSwitchLanguage(String language) {
-    print(language);
+  static _mockSwitchLanguage(String language, String country) {
+    print(language + " " + country);
   }
 }

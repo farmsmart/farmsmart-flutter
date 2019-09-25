@@ -105,27 +105,26 @@ class ProfileDetailProvider
         SwitchProfileListProvider(accountRepo: _accountRepository);
     final personName = PersonName(from?.name ?? "");
     return ProfileViewModel(
-      loadingStatus: _loadingStatus,
-      username: personName.fullname,
-      initials: personName.initials,
-      refresh: _refresh,
-      remove: _canDeleteProfile ? () => _remove() : null,
-      logout: () => _logout(),
-      image: from?.avatar,
-      activeCrops: _activeCrops,
-      completedCrops: _completedCrops,
-      switchProfileProvider: switchProfileProvider,
-      farmDetails: from?.lastPlotInfo,
-      switchLanguageTapped: (language) => _switchLanguage(language),
-      newAccountFlow: _accountFlow,
-      saveProfileImage: (file) => _saveProfileImage(file, from),
-      renameProfile: (username) => _renameProfile(username),
-      editProfileFlow: _editProfileFlow,
-    );
+        loadingStatus: _loadingStatus,
+        username: personName.fullname,
+        initials: personName.initials,
+        refresh: _refresh,
+        remove: _canDeleteProfile ? () => _remove() : null,
+        logout: () => _logout(),
+        image: from?.avatar,
+        activeCrops: _activeCrops,
+        completedCrops: _completedCrops,
+        switchProfileProvider: switchProfileProvider,
+        farmDetails: from?.lastPlotInfo,
+        switchLanguageTapped: (language, country) => _switchLanguage(language, country),
+        newAccountFlow: _accountFlow,
+        saveProfileImage: (file) => _saveProfileImage(file, from),
+        renameProfile: (username) => _renameProfile(username),
+        editProfileFlow: _editProfileFlow,);
   }
 
-  _switchLanguage(String language) async {
-    await FarmsmartLocalizations.persistLocale(Locale(language));
+  _switchLanguage(String language, String country) async {
+    await FarmsmartLocalizations.persistLocale(Locale(language, country));
     FarmsmartLocalizations.load(Locale(language)).then((_) {
       _refresh();
     });

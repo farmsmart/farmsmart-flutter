@@ -1,13 +1,15 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class FlameLinkSchemaType {
   static String single = "single";
 }
 
 class FlameLinkFileType {
-   static String images = "images";
+  static String images = "images";
 }
 
 class FlameLinkFileFields {
@@ -23,6 +25,11 @@ class FlameLinkDocumentFields {
   static String locale = '_fl_meta_.locale';
 }
 
+class _Strings {
+  static const flamelinkDivider = "-";
+  static const flutterLocaleDivider = "_";
+}
+
 enum Environment { development, production }
 final _environmentValues = {
   Environment.development: "development",
@@ -30,18 +37,17 @@ final _environmentValues = {
 };
 
 class FlameLink {
-  static const defaultLocale = "en-US";
   static const _contentCollectionName = 'fl_content';
   static const _fileCollectionName = 'fl_files';
   static const _storageBasePath = "/flamelink";
   static const _imageBasePath = "media";
   final Firestore _store;
   final String _environment;
-  final String _locale;
 
-  FlameLink({Firestore store, String locale = FlameLink.defaultLocale,Environment environment = Environment.production})
-      : this._store = store,
-        this._locale = locale,
+  FlameLink({
+    Firestore store,
+    Environment environment = Environment.production,
+  })  : this._store = store,
         this._environment = _environmentValues[environment];
 
   CollectionReference content() {
@@ -53,8 +59,7 @@ class FlameLink {
   }
 
   StorageReference storage({String path}) {
-    final flamelinkPath =
-        _storageBasePath + '/' + path;
+    final flamelinkPath = _storageBasePath + '/' + path;
     final storageReference =
         FirebaseStorage.instance.ref().child(flamelinkPath);
     return storageReference;
@@ -66,6 +71,9 @@ class FlameLink {
 
   Future<DocumentSnapshot> getSingle({String schema}) {
     return documentQuery(schema: schema).getDocuments().then((snapshot) {
+      if(snapshot.documents.isEmpty) {
+        return Future.error("Empty");
+      }
       return snapshot.documents.singleWhere((_) => true, orElse: null);
     });
   }
@@ -81,20 +89,32 @@ class FlameLink {
   }
 
   Query documentQuery({String schema = ""}) {
-    Query query = documentsQuery(schema: schema, limit: 1).where(FlameLinkDocumentFields.type,
-            isEqualTo: FlameLinkSchemaType.single);
+    Query query = documentsQuery(schema: schema, limit: 1).where(
+        FlameLinkDocumentFields.type,
+        isEqualTo: FlameLinkSchemaType.single);
     return query;
   }
 
   Query documentsQuery({String schema = "", int limit = 0}) {
+    final locale = _serverFormatLocale();
     var query = content()
-        .where(FlameLinkDocumentFields.locale, isEqualTo: _locale)
+        .where(FlameLinkDocumentFields.locale, isEqualTo: locale)
         .where(FlameLinkDocumentFields.env, isEqualTo: _environment)
         .where(FlameLinkDocumentFields.schema, isEqualTo: schema);
     if (limit > 0) {
       query = query.limit(limit);
     }
     return query;
+  }
+
+  String _serverFormatLocale() {
+    // the CMS uses <languagecode>-<countrycode> , flutter has a _ divider
+    final loc = Locale(Intl.getCurrentLocale());
+    final serverFormat = loc.languageCode.replaceAll(
+      _Strings.flutterLocaleDivider,
+      _Strings.flamelinkDivider,
+    );
+    return serverFormat;
   }
 }
 
@@ -112,27 +132,26 @@ class FlamelinkDocumentCollection {
       : _cms = cms,
         _paths = paths,
         _query = null;
-        
-  factory FlamelinkDocumentCollection.fromDocumentReferences({FlameLink cms, List<dynamic> paths}){
+
+  factory FlamelinkDocumentCollection.fromDocumentReferences(
+      {FlameLink cms, List<dynamic> paths}) {
     if (paths == null) {
       return null;
     }
-     final refs =
-          List<String>.from(paths.map((doc) => doc.path))
-              .toList();
+    final refs = List<String>.from(paths.map((doc) => doc.path)).toList();
     return FlamelinkDocumentCollection.list(cms: cms, paths: refs);
   }
 
-  factory FlamelinkDocumentCollection.fromObjectReferences({FlameLink cms, List<dynamic> objectReferences, String linkField}){
+  factory FlamelinkDocumentCollection.fromObjectReferences(
+      {FlameLink cms, List<dynamic> objectReferences, String linkField}) {
     if (objectReferences == null) {
       return null;
     }
-     final paths =
-          List<dynamic>.from(objectReferences.map((refObject){
-            return refObject[linkField];
-          }))
-              .toList();
-    return FlamelinkDocumentCollection.fromDocumentReferences(cms: cms, paths: paths);
+    final paths = List<dynamic>.from(objectReferences.map((refObject) {
+      return refObject[linkField];
+    })).toList();
+    return FlamelinkDocumentCollection.fromDocumentReferences(
+        cms: cms, paths: paths);
   }
 
   Future<List<DocumentSnapshot>> getDocuments({int limit = 0}) {

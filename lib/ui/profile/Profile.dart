@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:farmsmart_flutter/model/bloc/ResetStateWidget.dart';
 import 'package:farmsmart_flutter/model/bloc/ViewModelProvider.dart';
 import 'package:farmsmart_flutter/model/bloc/chatFlow/CreateAccountFlow.dart';
 import 'package:farmsmart_flutter/model/bloc/chatFlow/EditProfileFlow.dart';
@@ -94,6 +95,9 @@ class _Languages {
   static final english = "en";
   static final swahili = "sw";
 }
+class _Country {
+  static final usa = "us";
+}
 
 class _Constants {
   static final Color dividerColor = const Color(0xffe9eaf2);
@@ -134,7 +138,7 @@ class ProfileViewModel implements RefreshableViewModel, LoadableViewModel {
   final Function(String) renameProfile;
   final LoadingStatus loadingStatus;
   final Map<String, String> farmDetails;
-  final Function(String) switchLanguageTapped;
+  final Function(String, String) switchLanguageTapped;
   final NewAccountFlowCoordinator newAccountFlow;
   final Function(File) saveProfileImage;
   EditProfileFlowCoordinator editProfileFlow;
@@ -521,7 +525,7 @@ class Profile extends StatelessWidget {
   }
 
   void _switchLanguage(BuildContext context, ProfileViewModel viewModel) {
-    ActionSheet.present(_languageMenu(viewModel), context);
+    ActionSheet.present(_languageMenu(context,viewModel), context);
   }
 
   void _openFarmDetails(ProfileViewModel viewModel, BuildContext context) {
@@ -586,21 +590,27 @@ class Profile extends StatelessWidget {
     );
   }
 
-  ActionSheet _languageMenu(ProfileViewModel viewModel) {
+  ActionSheet _languageMenu(BuildContext context, ProfileViewModel viewModel) {
     final actions = [
       ActionSheetListItemViewModel(
         title: _Strings.englishAction,
         type: ActionType.selectable,
         icon: _Icons.englishIcon,
         checkBoxIcon: _Icons.checkBoxIcon,
-        onTap: () => viewModel.switchLanguageTapped(_Languages.english),
+        onTap: () {
+          viewModel.switchLanguageTapped(_Languages.english, _Country.usa);
+          ResetStateWidget.resetState(context);
+        }
       ),
       ActionSheetListItemViewModel(
         title: _Strings.swahiliAction,
         type: ActionType.selectable,
         icon: _Icons.swahiliIcon,
         checkBoxIcon: _Icons.checkBoxIcon,
-        onTap: () => viewModel.switchLanguageTapped(_Languages.swahili),
+        onTap: () { 
+          viewModel.switchLanguageTapped(_Languages.swahili, null);
+           ResetStateWidget.resetState(context);
+        }
       ),
     ];
 
