@@ -9,6 +9,7 @@ class _Fields {
 
 class _Constants {
   static const lookupCollection = "/fs_crop_score_cms_link";
+  static const pathDivider= "/";
 }
 
 class CropRecommendationLookup {
@@ -17,10 +18,10 @@ class CropRecommendationLookup {
   CropRecommendationLookup(this._flameLink);
 
   Future<Map<String,String>> lookupTable() {
-      final contentPath = _flameLink.content().path;
+      final contentPath = _flameLink.content().path + _Constants.pathDivider;
       return _flameLink.store.collection(_Constants.lookupCollection).getDocuments().then((snapshot){
           return snapshot.documents.asMap().map((_,document){
-              return MapEntry(contentPath + "/" + _identifier(document),_recomendationName(document));
+              return MapEntry(contentPath + _identifier(document),_recomendationName(document));
           });
       });
   }
