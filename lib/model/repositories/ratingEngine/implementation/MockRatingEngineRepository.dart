@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:farmsmart_flutter/model/entities/crop_entity.dart';
 import 'package:farmsmart_flutter/model/entities/mock/MockRecommendation.dart';
 
 import '../RatingEngineRepositoryInterface.dart';
@@ -25,5 +26,10 @@ class MockRatingEngineRepository implements RatingEngineRepositoryInterface {
   void dispose() {
     _streamController.sink.close();
     _streamController.close();
+  }
+
+  @override
+  Future<Map<String,String>> ratingNameLookup() {
+    return Future.value({});
   }
 }

@@ -1,6 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+
+import 'package:farmsmart_flutter/model/repositories/crop/implementation/CropRecomendationLookup.dart';
 import 'package:farmsmart_flutter/model/repositories/ratingEngine/implementation/transformers/FirebaseToInputFactors.dart';
 
+import '../../FlameLink.dart';
 import '../RatingEngineRepositoryInterface.dart';
 
 class _Constants {
@@ -9,14 +11,16 @@ class _Constants {
 
 class RatingEngineRepositoryFirestore
     implements RatingEngineRepositoryInterface {
-  final Firestore _store;
-
-  RatingEngineRepositoryFirestore(this._store);
+  final FlameLink _flamelink;
+  CropRecommendationLookup _lookup;
+  RatingEngineRepositoryFirestore(this._flamelink) {
+    _lookup = CropRecommendationLookup(_flamelink);
+  }
 
   @override
   Future<Map<String, RatingInfo>> getRatingInfo() {
     final transformer = FirebaseToRatingInfoTransformer();
-    return _store
+    return _flamelink.store
         .collection(_Constants.cropScoreCollectionName)
         .getDocuments()
         .then((snapshot) {
@@ -27,10 +31,17 @@ class RatingEngineRepositoryFirestore
   @override
   Stream<Map<String, RatingInfo>> observeRatingInfo() {
     final transformer = FirebaseToRatingInfoTransformer();
-    return _store
+    return _flamelink.store
         .collection(_Constants.cropScoreCollectionName)
         .getDocuments()
         .asStream()
         .transform(transformer.streamTransformer());
   }
+
+  @override
+  Future<Map<String,String>> ratingNameLookup() {
+    return _lookup.lookupTable();
+  }
+
+
 }

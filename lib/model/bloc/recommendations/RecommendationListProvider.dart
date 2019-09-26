@@ -32,6 +32,7 @@ class RecommendationListProvider
   final RatingEngineRepositoryInterface _ratingRepo;
   Basket<CropEntity> _cropBasket;
   List<CropEntity> _crops;
+  Map<String, String> _ratingLookup;
   //final UserProfileRepositoryInterface _profileRepo; //we need the current input factors from this.
   final _controller =
       StreamController<RecommendationsListViewModel>.broadcast();
@@ -78,10 +79,10 @@ class RecommendationListProvider
     return _snapshot;
   }
 
-  RecommendationsListViewModel _viewModel(
-      {LoadingStatus status,
-      List<RecommendationCardViewModel> items,
-      }) {
+  RecommendationsListViewModel _viewModel({
+    LoadingStatus status,
+    List<RecommendationCardViewModel> items,
+  }) {
     return RecommendationsListViewModel(
       title: _title,
       items: items,
@@ -94,11 +95,11 @@ class RecommendationListProvider
   }
 
   RecommendationsListViewModel _modelFromCrops(
-      StreamController<RecommendationsListViewModel> controller,
-      List<CropEntity> crops) {
+      List<CropEntity> crops, Map<String, String> lookup) {
     final transformer = RecommendationCardTransformer(
       engine: _recommendationBusinessLogic,
       plotInfo: _currentProfile.lastPlotInfo,
+      ratingLookup: lookup,
       basket: _cropBasket,
       provider: _detailProvider,
       heroThreshold: _heroThreshold,
@@ -118,7 +119,7 @@ class RecommendationListProvider
   }
 
   void _basketDidChange(List<CropEntity> old) {
-    _snapshot = _modelFromCrops(_controller, _crops);
+    _snapshot = _modelFromCrops(_crops, _ratingLookup);
     _controller.sink.add(_snapshot);
   }
 
@@ -129,13 +130,16 @@ class RecommendationListProvider
       _profileRepo.getCurrent().then((profile) {
         _currentProfile = profile;
         _ratingRepo.getRatingInfo().then((ratingInfo) {
-          _recommendationBusinessLogic = RecommendationEngine(
-            inputFactors: RatingInfo.extractScores(ratingInfo),
-            inputScale: _Constants.inputScale,
-            weightMatrix: RatingInfo.extractWeights(ratingInfo),
-          );
-          _snapshot = _modelFromCrops(controller, crops);
-          controller.sink.add(_snapshot);
+          _ratingRepo.ratingNameLookup().then((lookup) {
+            _ratingLookup = lookup;
+            _recommendationBusinessLogic = RecommendationEngine(
+              inputFactors: RatingInfo.extractScores(ratingInfo),
+              inputScale: _Constants.inputScale,
+              weightMatrix: RatingInfo.extractWeights(ratingInfo),
+            );
+            _snapshot = _modelFromCrops(crops, _ratingLookup);
+            controller.sink.add(_snapshot);
+          });
         });
       });
     });
