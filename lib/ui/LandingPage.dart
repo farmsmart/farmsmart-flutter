@@ -24,6 +24,10 @@ class _Languages {
   static final swahili = "sw";
 }
 
+class _Country {
+  static final usa = "us";
+}
+
 class _Icons {
   static final englishIcon = "assets/icons/flag_usa.png";
   static final swahiliIcon = "assets/icons/flag_kenya.png";
@@ -48,7 +52,7 @@ class LandingPageViewModel {
   String headerImage;
   String subtitleImage;
   FlowCoordinator newAccountFlow;
-  Function(String) switchLanguageTapped;
+  Function(String, String) switchLanguageTapped;
 
   LandingPageViewModel({
     this.detailText,
@@ -225,14 +229,14 @@ class LandingPage extends StatelessWidget {
         type: ActionType.selectable,
         icon: _Icons.englishIcon,
         checkBoxIcon: _Icons.checkBoxIcon,
-        onTap: () => _viewModel.switchLanguageTapped(_Languages.english),
+        onTap: () => _viewModel.switchLanguageTapped(_Languages.english, _Country.usa),
       ),
       ActionSheetListItemViewModel(
         title: _Strings.swahiliAction,
         type: ActionType.selectable,
         icon: _Icons.swahiliIcon,
         checkBoxIcon: _Icons.checkBoxIcon,
-        onTap: () => _viewModel.switchLanguageTapped(_Languages.swahili),
+        onTap: () => _viewModel.switchLanguageTapped(_Languages.swahili, null),
       ),
     ];
 

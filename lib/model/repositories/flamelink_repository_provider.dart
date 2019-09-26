@@ -33,7 +33,9 @@ class FlameLinkRepositoryProvider implements RepositoryProvider {
     this._fireStore.settings(persistenceEnabled: true);
     this._firebaseAuth = FirebaseAuth.instance;
     this._cms = FlameLink(
-        store: _fireStore, environment: AppConfig.of(context).environment);
+      store: _fireStore,
+      environment: AppConfig.of(context).environment,
+    );
     this._profileRepo = FirebaseProfileRepository(
       this._fireStore,
       this._firebaseAuth,

@@ -104,13 +104,14 @@ class StartupViewModelProvider implements ViewModelProvider<StartupViewModel> {
       headerImage: _Assets.headerImage,
       subtitleImage: _Assets.logoImage,
       newAccountFlow: _accountFlow,
-      switchLanguageTapped: (language) => _switchLanguage(language),
+      switchLanguageTapped: (language, country) => _switchLanguage(language,country),
     );
   }
 
-  _switchLanguage(String language) async {
-    FarmsmartLocalizations.persistLocale(Locale(language));
-    await FarmsmartLocalizations.load(Locale(language)).then((_) {
+  _switchLanguage(String language, String country) async {
+    final locale = Locale(language, country);
+    FarmsmartLocalizations.persistLocale(locale);
+    await FarmsmartLocalizations.load(locale).then((_) {
       _setState(false);
     });
   }

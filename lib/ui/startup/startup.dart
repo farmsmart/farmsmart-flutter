@@ -1,3 +1,4 @@
+import 'package:farmsmart_flutter/model/bloc/ResetStateWidget.dart';
 import 'package:farmsmart_flutter/model/bloc/ViewModelProvider.dart';
 import 'package:farmsmart_flutter/ui/LandingPage.dart';
 import 'package:farmsmart_flutter/ui/common/ViewModelProviderBuilder.dart';
@@ -38,6 +39,6 @@ class Startup extends StatelessWidget {
   }
 
   Widget _homeBuilder({BuildContext context, StartupViewModel viewModel}) {
-    return _home;
+    return ResetStateWidget(child:_home);
   }
 }

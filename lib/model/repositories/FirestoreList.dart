@@ -124,7 +124,7 @@ class FireStoreList<T> {
 
   List<T> _update(QuerySnapshot snapshot) {
     final newValue = _transformCollection(snapshot);
-    _listController.sink.add(newValue);
+    _listController?.sink?.add(newValue);
     return newValue;
   }
 
