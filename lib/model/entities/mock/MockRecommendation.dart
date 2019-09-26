@@ -1,4 +1,3 @@
-
 final harryWeights = {
   "Cowpeas": {
     "Skill Level": 0.1,
@@ -72,7 +71,19 @@ final harryInputFactors = {
 };
 
 final plotInfo = {
-  "Skill Level": "Beginner",
-  "Location": "Bomet",
-  "Agrozone": "Upper midlands",
+  "Skill Level": {
+    "id": "Beginner",
+    "title": "Beginner",
+    "value": "Beginner",
+  },
+  "Location": {
+    "id": "Bomet",
+    "title": "Bomet",
+    "value": "Bomet",
+  },
+  "Agrozone": {
+    "id": "Upper midlands",
+    "title": "Upper midlands",
+    "value": "Upper midlands",
+  },
 };

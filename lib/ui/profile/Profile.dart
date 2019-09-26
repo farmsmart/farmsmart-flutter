@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:farmsmart_flutter/chat/utils/ChatResponseKeys.dart';
 import 'package:farmsmart_flutter/model/bloc/ResetStateWidget.dart';
 import 'package:farmsmart_flutter/model/bloc/ViewModelProvider.dart';
 import 'package:farmsmart_flutter/model/bloc/chatFlow/CreateAccountFlow.dart';
@@ -137,7 +138,7 @@ class ProfileViewModel implements RefreshableViewModel, LoadableViewModel {
   final Function remove;
   final Function(String) renameProfile;
   final LoadingStatus loadingStatus;
-  final Map<String, String> farmDetails;
+  final Map<String, Map<String, String>> farmDetails;
   final Function(String, String) switchLanguageTapped;
   final NewAccountFlowCoordinator newAccountFlow;
   final Function(File) saveProfileImage;
@@ -569,12 +570,12 @@ class Profile extends StatelessWidget {
   }
 
   List<FarmDetailsListItemViewModel> _mapToFarmItemViewModel(
-      Map<String, String> farmDetails) {
+      Map<String, Map<String, String>> farmDetails) {
     return farmDetails.entries.map(
       (MapEntry mapEntry) {
         return FarmDetailsListItemViewModel(
-          title: mapEntry.key,
-          detail: mapEntry.value,
+          title: (mapEntry.value as Map<String, String>)[ChatResponseKeys.keyTitle],
+          detail: (mapEntry.value as Map<String, String>)[ChatResponseKeys.keyValue],
         );
       },
     ).toList();

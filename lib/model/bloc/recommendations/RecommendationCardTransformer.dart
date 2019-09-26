@@ -23,16 +23,16 @@ class _LocalisedStrings {
 class RecommendationCardTransformer
     extends ObjectTransformer<CropEntity, RecommendationCardViewModel> {
   final RecommendationEngine _engine;
-  final Map<String,String> _plotInfo;
   final Map<String,String> _ratingLookup;
+  final Map<String, Map<String,String>> _plotInfo;
   final Basket<CropEntity> _basket;
   final double _heroThreshold;
   final Function _detailProvider;
 
   RecommendationCardTransformer({
     RecommendationEngine engine,
-    Map<String,String> plotInfo,
     Map<String,String> ratingLookup,
+    Map<String, Map<String,String>> plotInfo,
     Basket<CropEntity> basket,
     Function provider,
     double heroThreshold,

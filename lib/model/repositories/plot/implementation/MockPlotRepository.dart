@@ -32,7 +32,7 @@ class MockPlotRepository implements PlotRepositoryInterface {
     return MockPlotRepository._(profileRepository,identifyEntity, []);
   }
   @override
-  Future<PlotEntity> addPlot({ProfileEntity toProfile, Map<String,String> plotInfo, CropEntity crop}) {
+  Future<PlotEntity> addPlot({ProfileEntity toProfile, Map<String,Map<String,String>> plotInfo, CropEntity crop}) {
     return _plotBuilder.buildWith(crop).then((newPlot){
       return _profileRepository.getCurrent().then((profile) {
         

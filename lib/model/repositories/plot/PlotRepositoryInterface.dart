@@ -7,7 +7,7 @@ import 'package:farmsmart_flutter/model/repositories/BasicRepositoryInterface.da
 abstract class PlotRepositoryInterface implements BasicRepositoryInterface<PlotEntity> {
     Future<List<PlotEntity>> getFarm();
     Stream<List<PlotEntity>> observeFarm();
-    Future<PlotEntity> addPlot({Map<String,String> plotInfo, CropEntity crop});
+    Future<PlotEntity> addPlot({Map<String, Map<String,String>> plotInfo, CropEntity crop});
     Future<PlotEntity> completeStage(PlotEntity forPlot, StageEntity stage);
     Future<PlotEntity> beginStage(PlotEntity forPlot, StageEntity stage);
     Future<PlotEntity> revertStage(PlotEntity forPlot, StageEntity stage);
