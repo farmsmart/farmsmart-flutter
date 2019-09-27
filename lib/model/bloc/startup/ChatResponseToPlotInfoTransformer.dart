@@ -1,10 +1,15 @@
 import 'package:farmsmart_flutter/chat/ui/viewmodel/ChatResponseViewModel.dart';
-import 'package:farmsmart_flutter/chat/utils/ChatResponseKeys.dart';
 import 'package:farmsmart_flutter/model/bloc/Transformer.dart';
 import 'package:intl/intl.dart';
 
 class _Constants {
   static const dateFormat = "MMMM";
+}
+
+class _Fields {
+  static final id = "id";
+  static final title = "title";
+  static final value = "value";
 }
 
 class ChatResponseToPlotInfoTransformer extends ObjectTransformer<
@@ -22,13 +27,13 @@ class ChatResponseToPlotInfoTransformer extends ObjectTransformer<
   Map<String, String> _transformOptions(
       ChatResponseViewModel chatResponseViewModel) {
     Map<String, String> responseMap = {};
-    responseMap[ChatResponseKeys.keyId] = chatResponseViewModel.id;
-    responseMap[ChatResponseKeys.keyTitle] = chatResponseViewModel.title;
+    responseMap[_Fields.id] = chatResponseViewModel.id;
+    responseMap[_Fields.title] = chatResponseViewModel.title;
     final date = castOrNull<DateTime>(chatResponseViewModel.value);
     if (date != null) {
-      responseMap[ChatResponseKeys.keyValue] = dateFormat.format(date);
+      responseMap[_Fields.value] = dateFormat.format(date);
     } else {
-      responseMap[ChatResponseKeys.keyValue] = chatResponseViewModel.value;
+      responseMap[_Fields.value] = chatResponseViewModel.value;
     }
 
     return responseMap;

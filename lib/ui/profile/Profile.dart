@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:farmsmart_flutter/chat/utils/ChatResponseKeys.dart';
 import 'package:farmsmart_flutter/model/bloc/ResetStateWidget.dart';
 import 'package:farmsmart_flutter/model/bloc/ViewModelProvider.dart';
 import 'package:farmsmart_flutter/model/bloc/chatFlow/CreateAccountFlow.dart';
@@ -124,6 +123,11 @@ class _Constants {
   static final double detailSpacing = 23;
   static final int avatarImageSize = 200;
   static final dateFormatter = DateFormat('dd MMMM yyyy');
+}
+
+class _Fields {
+  static final title = "title";
+  static final value = "value";
 }
 
 class ProfileViewModel implements RefreshableViewModel, LoadableViewModel {
@@ -574,8 +578,8 @@ class Profile extends StatelessWidget {
     return farmDetails.entries.map(
       (MapEntry mapEntry) {
         return FarmDetailsListItemViewModel(
-          title: (mapEntry.value as Map<String, String>)[ChatResponseKeys.keyTitle],
-          detail: (mapEntry.value as Map<String, String>)[ChatResponseKeys.keyValue],
+          title: (mapEntry.value as Map<String, String>)[_Fields.title],
+          detail: (mapEntry.value as Map<String, String>)[_Fields.value],
         );
       },
     ).toList();

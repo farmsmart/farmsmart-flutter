@@ -5,11 +5,15 @@
   It will output a normalised value in unit terms (0-1)
 */
 
-import 'package:farmsmart_flutter/chat/utils/ChatResponseKeys.dart';
+
 
 class _Constants {
   static const unit = 1.0;
   static const defaultScore = 0.0;
+}
+
+class _Fields {
+  static final id = "id";
 }
 
 class RecommendationEngine {
@@ -53,7 +57,7 @@ class RecommendationEngine {
         final subjectInput = inputMatrix[key];
         final subjectWeighting = weightMatrix[key] ?? _Constants.defaultScore;
         final plotInput = plotInfo[key];
-        final plotInputOption = plotInput != null ? plotInput[ChatResponseKeys.keyId] : null;
+        final plotInputOption = plotInput != null ? plotInput[_Fields.id] : null;
         if ((subjectInput != null) && (plotInputOption != null)) {
           score += (subjectInput[plotInputOption] ?? 0.0) * subjectWeighting;
         }
