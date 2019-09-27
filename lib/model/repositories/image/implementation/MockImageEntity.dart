@@ -24,9 +24,7 @@ class MockImageProvider implements ImageURLProvider {
 
   @override
   String cachedUrlToFit({double width, double height}) {
-    final widthString = (width == null) ? "200" : width.toInt().toString();
-    final heightString = (height == null) ? "200" : height.toInt().toString();
-    return _path + widthString + "/" + heightString;
+    return _path;
   }
 }
 
