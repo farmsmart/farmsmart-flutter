@@ -1,11 +1,14 @@
+import 'package:farmsmart_flutter/model/entities/ImageURLProvider.dart';
 import 'package:flutter/widgets.dart';
+
+import 'image_provider_view.dart';
 
 class _Constants {
   static final startWithAssets = 'assets/';
 }
 
 class RoundedImageOverlay extends StatelessWidget {
-  final Future<String> image;
+  final ImageURLProvider image;
   final double imageHeight;
   final double imageWidth;
   final BorderRadiusGeometry imageBorderRadius;
@@ -30,44 +33,26 @@ class RoundedImageOverlay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(children: <Widget>[
-      _buildImageWithFutureBuilder(),
+      _buildMainImage(),
       _buildOverlay(),
     ]);
   }
 
-  FutureBuilder<String> _buildImageWithFutureBuilder() {
-    return FutureBuilder(
-      future: image,
-      builder: (BuildContext context, AsyncSnapshot<String> url) {
-        if (!url.hasData) {
-          return SizedBox(
-            height: imageHeight,
-            width: imageWidth,
-          );
-        }
-
-        return Container(
-          width: imageWidth,
-          height: imageHeight,
-          decoration: BoxDecoration(
-            shape: BoxShape.rectangle,
-            borderRadius: imageBorderRadius,
-            image: DecorationImage(
-              fit: BoxFit.cover,
-              image: _buildImageProvider(url),
-            ),
-          ),
-        );
-      },
+  Widget _buildMainImage() {
+    return Container(
+      width: imageWidth,
+      height: imageHeight,
+      decoration: BoxDecoration(
+        shape: BoxShape.rectangle,
+        borderRadius: imageBorderRadius,
+      ),
+      child: ImageProviderView(
+        imageURLProvider: image,
+        imageBorderRadius: imageBorderRadius,
+        width: imageWidth,
+        height: imageHeight,
+      ),
     );
-  }
-
-  ImageProvider _buildImageProvider(AsyncSnapshot<String> url) {
-    if (url.data.startsWith(_Constants.startWithAssets)) {
-      return AssetImage(url.data);
-    } else {
-      return NetworkImage(url.data);
-    }
   }
 
   Widget _buildOverlay() {
@@ -80,12 +65,12 @@ class RoundedImageOverlay extends StatelessWidget {
         color: overlayColor,
       ),
       child: Center(
-        child: _buildImage(),
+        child: _buildOverlayIcon(),
       ),
     );
   }
 
-  _buildImage() {
+  _buildOverlayIcon() {
     if (showOverlayIcon) {
       return Image(
         image: AssetImage(overlayIcon),

@@ -221,7 +221,7 @@ class RecommendationCompactCard extends StatelessWidget {
       width: _style.imageHeight,
       height: _style.imageHeight,
       child: RoundedImageOverlay(
-        image: _viewModel.imageProvider.urlToFit(width: _style.imageHeight ,height: _style.imageHeight),
+        image: _viewModel.imageProvider,
         imageHeight: _style.imageHeight,
         imageWidth: _style.imageHeight,
         imageBorderRadius: _style.imageBorderRadius,

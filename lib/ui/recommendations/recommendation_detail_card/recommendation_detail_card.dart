@@ -254,7 +254,7 @@ class _RecommendationDetailCardState extends State<RecommendationDetailCard> {
           imageHeight: widget._style.imageSize,
           imageWidth: widget._style.imageSize,
           imageBorderRadius: widget._style.imageRadius,
-          image: widget._viewModel.imageProvider.urlToFit(width: widget._style.imageSize, height: widget._style.imageSize),
+          image: widget._viewModel.imageProvider,
           showOverlayIcon: isAddedState,
           overlayIconWidth: widget._style.imageOverlayWidth,
           overlayIcon: widget._style.iconAssetOverlay,
