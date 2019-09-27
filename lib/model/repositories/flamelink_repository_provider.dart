@@ -74,5 +74,5 @@ class FlameLinkRepositoryProvider implements RepositoryProvider {
 
   @override
   RatingEngineRepositoryInterface getRatingsRepository() =>
-      RatingEngineRepositoryFirestore(_fireStore);
+      RatingEngineRepositoryFirestore(_cms);
 }

@@ -24,6 +24,7 @@ class RecommendationCardTransformer
     extends ObjectTransformer<CropEntity, RecommendationCardViewModel> {
   final RecommendationEngine _engine;
   final Map<String,String> _plotInfo;
+  final Map<String,String> _ratingLookup;
   final Basket<CropEntity> _basket;
   final double _heroThreshold;
   final Function _detailProvider;
@@ -31,18 +32,21 @@ class RecommendationCardTransformer
   RecommendationCardTransformer({
     RecommendationEngine engine,
     Map<String,String> plotInfo,
+    Map<String,String> ratingLookup,
     Basket<CropEntity> basket,
     Function provider,
     double heroThreshold,
   })  : this._engine = engine,
         this._plotInfo = plotInfo,
+        this._ratingLookup = ratingLookup,
         this._basket = basket,
         this._detailProvider = provider,
         this._heroThreshold = heroThreshold;
 
   @override
   RecommendationCardViewModel transform({CropEntity from}) {
-    final score = _engine.recommend(from.name,_plotInfo);
+    final recommendationName = _ratingLookup[from.uri] ?? from.name;
+    final score = _engine.recommend(recommendationName, _plotInfo);
     final percent = score * _Constants.cent;
     final subtitle =
         percent.toInt().toString() + "% " + _LocalisedStrings.match();

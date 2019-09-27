@@ -41,21 +41,21 @@ class FlameLink {
   static const _fileCollectionName = 'fl_files';
   static const _storageBasePath = "/flamelink";
   static const _imageBasePath = "media";
-  final Firestore _store;
+  final Firestore store;
   final String _environment;
 
   FlameLink({
     Firestore store,
     Environment environment = Environment.production,
-  })  : this._store = store,
+  })  : this.store = store,
         this._environment = _environmentValues[environment];
 
   CollectionReference content() {
-    return _store.collection(_contentCollectionName);
+    return store.collection(_contentCollectionName);
   }
 
   CollectionReference files() {
-    return _store.collection(_fileCollectionName);
+    return store.collection(_fileCollectionName);
   }
 
   StorageReference storage({String path}) {
@@ -79,7 +79,7 @@ class FlameLink {
   }
 
   Future<List<DocumentSnapshot>> get(List<String> paths) {
-    final fetchRequests = paths.map((path) => _store.document(path).get());
+    final fetchRequests = paths.map((path) => store.document(path).get());
     return Future.wait(fetchRequests);
   }
 
