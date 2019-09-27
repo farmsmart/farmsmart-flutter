@@ -20,10 +20,6 @@ class MockSwitchProfile {
       newProfileFlow: null,
     );
   }
-
-  static _mockAddProfile() {
-    print("This should be a add Profile Screen");
-  }
 }
 
 class MockSwitchProfileItemsViewModel {

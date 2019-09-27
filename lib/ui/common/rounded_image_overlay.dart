@@ -3,10 +3,6 @@ import 'package:flutter/widgets.dart';
 
 import 'image_provider_view.dart';
 
-class _Constants {
-  static final startWithAssets = 'assets/';
-}
-
 class RoundedImageOverlay extends StatelessWidget {
   final ImageURLProvider image;
   final double imageHeight;
