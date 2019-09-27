@@ -52,9 +52,10 @@ class RecommendationEngine {
       for (var key in inputMatrix.keys) {
         final subjectInput = inputMatrix[key];
         final subjectWeighting = weightMatrix[key] ?? _Constants.defaultScore;
-        final plotInput = plotInfo[key][ChatResponseKeys.keyId];
-        if ((subjectInput != null) && (plotInput != null)) {
-          score += (subjectInput[plotInput] ?? 0.0) * subjectWeighting;
+        final plotInput = plotInfo[key];
+        final plotInputOption = plotInput != null ? plotInput[ChatResponseKeys.keyId] : null;
+        if ((subjectInput != null) && (plotInputOption != null)) {
+          score += (subjectInput[plotInputOption] ?? 0.0) * subjectWeighting;
         }
       }
     }
