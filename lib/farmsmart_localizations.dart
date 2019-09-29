@@ -6,21 +6,24 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class _Constants {
   static String defaultLocale = 'en';
+  static String defaultCountry = 'us';
 }
 
 class _Field {
   static String locale = 'locale';
+  static String country = 'country';
 }
 
 class FarmsmartLocalizations {
   static Future<FarmsmartLocalizations> load(Locale locale) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     String savedLocale = prefs.get(_Field.locale);
+    String savedCountry= prefs.get(_Field.country);
     
     String localeName = _canonicalLocale(locale);
 
     if(savedLocale != null && savedLocale.isNotEmpty){
-      localeName = savedLocale;
+      localeName = _canonicalLocale(Locale(savedLocale,savedCountry));
     }
     
     return initializeMessages(localeName).then((_) {
@@ -37,13 +40,18 @@ class FarmsmartLocalizations {
 
   static persistLocale(Locale locale) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString(_Field.locale, _canonicalLocale(locale));
+    prefs.setString(_Field.locale, locale.languageCode);
+    prefs.setString(_Field.country, locale.countryCode ?? "");
   }
 
   static Future<Locale> getLocale() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    return Locale(prefs.getString(_Field.locale)) ?? Locale(_Constants.defaultLocale);
+    String savedLocale = prefs.get(_Field.locale);
+    String savedCountry= prefs.get(_Field.country);
+    if(savedLocale != null && savedCountry != null){
+      return Locale(savedLocale,savedCountry);
+    }
+    return Locale(_Constants.defaultLocale, _Constants.defaultCountry);
   }
 
 }
