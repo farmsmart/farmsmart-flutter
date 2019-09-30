@@ -70,7 +70,7 @@ class ProfileDetailProvider
           _controller.sink.add(_snapshot);
         });
 
-        _profileRepository.get().then((profiles) {
+        _profileRepository?.get()?.then((profiles) {
           _canDeleteProfile = profiles.length > 1;
           _update();
         });
