@@ -111,7 +111,7 @@ class StartupViewModelProvider implements ViewModelProvider<StartupViewModel> {
   _switchLanguage(String language, String country) async {
     final locale = Locale(language, country);
     FarmsmartLocalizations.persistLocale(locale);
-    await FarmsmartLocalizations.load(locale).then((_) {
+    await FarmsmartLocalizations.load().then((_) {
       _setState(false);
     });
   }

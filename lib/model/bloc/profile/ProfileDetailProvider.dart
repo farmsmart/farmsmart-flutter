@@ -125,7 +125,7 @@ class ProfileDetailProvider
 
   _switchLanguage(String language, String country) async {
     await FarmsmartLocalizations.persistLocale(Locale(language, country));
-    FarmsmartLocalizations.load(Locale(language)).then((_) {
+    FarmsmartLocalizations.load().then((_) {
       _refresh();
     });
   }
