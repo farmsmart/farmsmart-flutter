@@ -15,21 +15,11 @@ class _Field {
 }
 
 class FarmsmartLocalizations {
-  static Future<FarmsmartLocalizations> load(Locale locale) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    String savedLocale = prefs.get(_Field.locale);
-    String savedCountry= prefs.get(_Field.country);
-    
+  static Future<FarmsmartLocalizations> load() async {
+    Locale locale = await getLocale();
     String localeName = _canonicalLocale(locale);
-
-    if(savedLocale != null && savedLocale.isNotEmpty){
-      localeName = _canonicalLocale(Locale(savedLocale,savedCountry));
-    }
-    
     return initializeMessages(localeName).then((_) {
       Intl.defaultLocale = localeName;
-      debugPrint('Loading locale ${Intl.defaultLocale}');
-
       return FarmsmartLocalizations();
     });
   }
@@ -67,7 +57,7 @@ class FarmsmartLocalizationsDelegate extends LocalizationsDelegate<FarmsmartLoca
   bool isSupported(Locale locale) => _languagesSupported.contains(locale.languageCode);
 
   @override
-  Future<FarmsmartLocalizations> load(Locale locale) => FarmsmartLocalizations.load(locale);
+  Future<FarmsmartLocalizations> load(Locale locale) => FarmsmartLocalizations.load();
 
   @override
   bool shouldReload(FarmsmartLocalizationsDelegate old) => false;

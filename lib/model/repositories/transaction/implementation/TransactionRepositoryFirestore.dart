@@ -97,7 +97,10 @@ class TransactionRepositoryFirestore extends FireStoreList<TransactionEntity>
 
   Future<String> _transactionsCollectionPath() {
     return _currentProfile.then((profile) {
-      return profile.uri + _Fields.transactions;
+      if (profile != null) {
+         return profile.uri + _Fields.transactions;
+      }
+      return null;
     });
   }
 
