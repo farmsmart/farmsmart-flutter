@@ -5,7 +5,7 @@ class ProfileEntity {
   final String uri;
   final String name;
   final ImageURLProvider avatar;
-  final Map<String, String> lastPlotInfo;
+  final Map<String, Map<String, String>> lastPlotInfo;
 
   ProfileEntity(
     this.id,

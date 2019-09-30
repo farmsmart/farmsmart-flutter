@@ -79,6 +79,12 @@
               "title": "Kiwango wa juu",
               "description": "Experienced farmer",
               "responseText": "I have experience farming"
+            },
+            {
+              "id": "Trainer",
+              "title": "Trainer",
+              "description": "Experienced farmer",
+              "responseText": "I train other farmers"
             }
           ]
         }

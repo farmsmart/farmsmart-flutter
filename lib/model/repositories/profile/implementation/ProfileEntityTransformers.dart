@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:farmsmart_flutter/model/bloc/Transformer.dart';
 import 'package:farmsmart_flutter/model/entities/ImageURLProvider.dart';
@@ -19,14 +18,15 @@ class LocalProfileImageProvider implements ImageURLProvider {
   final String id;
 
   LocalProfileImageProvider(this.id);
+
   @override
   Future<String> urlToFit({double width, double height}) {
     return localAvatarPath(id);
   }
 
   static Future<String> localAvatarPath(String id) {
-    return getApplicationDocumentsDirectory().then((directory){
-       return '${directory.path}/${id}_${_Constants.avatarPathSuffix}';
+    return getApplicationDocumentsDirectory().then((directory) {
+      return '${directory.path}/${id}_${_Constants.avatarPathSuffix}';
     });
   }
 
@@ -41,25 +41,39 @@ class LocalProfileImageProvider implements ImageURLProvider {
   }
 }
 
-class DocumentToProfileEntityTransformer extends ObjectTransformer<DocumentSnapshot,ProfileEntity> {
-
+class DocumentToProfileEntityTransformer
+    extends ObjectTransformer<DocumentSnapshot, ProfileEntity> {
   @override
   ProfileEntity transform({DocumentSnapshot from}) {
     final data = from.data;
     final name = castOrNull<String>(data[_Fields.name]);
-    final plotInfo = castMapOrNull<String,String>(data[_Fields.plotInfo]);
+    final plotInfo = _getPlotInfoData(data[_Fields.plotInfo]);
     final uri = castOrNull<String>(from.reference.path);
     final id = from.documentID;
-    return ProfileEntity(id,uri,name,LocalProfileImageProvider(id),plotInfo,);
+    return ProfileEntity(
+      id,
+      uri,
+      name,
+      LocalProfileImageProvider(id),
+      plotInfo,
+    );
   }
-  
+
+  Map<String, Map<String, String>> _getPlotInfoData(dynamic data) {
+    Map<String, Map<String, String>> responseMap = {};
+    data.forEach((key, value) => responseMap[castOrNull<String>(key)] =
+        castMapOrNull<String, String>(value));
+    return responseMap;
+  }
 }
 
-class ProfileEntityToDocumentTransformer extends ObjectTransformer<ProfileEntity,Map<String,dynamic>> {
-
+class ProfileEntityToDocumentTransformer
+    extends ObjectTransformer<ProfileEntity, Map<String, dynamic>> {
   @override
-  Map<String,dynamic> transform({ProfileEntity from}) {
-    return {_Fields.name:from.name, _Fields.plotInfo:from.lastPlotInfo};
+  Map<String, dynamic> transform({ProfileEntity from}) {
+    return {
+      _Fields.name: from.name,
+      _Fields.plotInfo: from.lastPlotInfo,
+    };
   }
-  
 }

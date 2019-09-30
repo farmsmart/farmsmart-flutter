@@ -5,9 +5,15 @@
   It will output a normalised value in unit terms (0-1)
 */
 
+
+
 class _Constants {
   static const unit = 1.0;
   static const defaultScore = 0.0;
+}
+
+class _Fields {
+  static final id = "id";
 }
 
 class RecommendationEngine {
@@ -42,7 +48,7 @@ class RecommendationEngine {
     return RecommendationEngine._(normalisedInputs, normalisedWeights);
   }
 
-  double recommend(String subject, Map<String, String> plotInfo) {
+  double recommend(String subject, Map<String, Map<String, String>> plotInfo) {
     double score = _Constants.defaultScore;
     final weightMatrix = _weightingFactors[subject];
     final inputMatrix = _inputFactors[subject];
@@ -51,8 +57,9 @@ class RecommendationEngine {
         final subjectInput = inputMatrix[key];
         final subjectWeighting = weightMatrix[key] ?? _Constants.defaultScore;
         final plotInput = plotInfo[key];
-        if ((subjectInput != null) && (plotInput != null)) {
-          score += (subjectInput[plotInput] ?? 0.0) * subjectWeighting;
+        final plotInputOption = plotInput != null ? plotInput[_Fields.id] : null;
+        if ((subjectInput != null) && (plotInputOption != null)) {
+          score += (subjectInput[plotInputOption] ?? 0.0) * subjectWeighting;
         }
       }
     }

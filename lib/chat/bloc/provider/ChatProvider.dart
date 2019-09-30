@@ -55,7 +55,7 @@ class ChatProvider implements ViewModelProvider<ChatViewModel> {
 
   ChatViewModel _chatViewModel;
   int _currentMessageCount = _Constants.currentMessageIndex;
-  Map<String, ChatResponseViewModel> _responseMap = Map();
+  Map<String, ChatResponseViewModel> _responseMap = {};
 
   ChatProvider({
     @required ChatRepository repository,

@@ -53,7 +53,7 @@ class PlotRepositoryFireStore implements PlotRepositoryInterface {
 
   @override
   Future<PlotEntity> addPlot({
-    Map<String, String> plotInfo,
+    Map<String, Map<String,String>> plotInfo,
     CropEntity crop,
   }) {
     return crop.stageArticles.getEntities().then((articles) {

@@ -125,6 +125,11 @@ class _Constants {
   static final dateFormatter = DateFormat('dd MMMM yyyy');
 }
 
+class _Fields {
+  static final title = "title";
+  static final value = "value";
+}
+
 class ProfileViewModel implements RefreshableViewModel, LoadableViewModel {
   final String username;
   final String initials;
@@ -137,7 +142,7 @@ class ProfileViewModel implements RefreshableViewModel, LoadableViewModel {
   final Function remove;
   final Function(String) renameProfile;
   final LoadingStatus loadingStatus;
-  final Map<String, String> farmDetails;
+  final Map<String, Map<String, String>> farmDetails;
   final Function(String, String) switchLanguageTapped;
   final NewAccountFlowCoordinator newAccountFlow;
   final Function(File) saveProfileImage;
@@ -569,12 +574,12 @@ class Profile extends StatelessWidget {
   }
 
   List<FarmDetailsListItemViewModel> _mapToFarmItemViewModel(
-      Map<String, String> farmDetails) {
+      Map<String, Map<String, String>> farmDetails) {
     return farmDetails.entries.map(
       (MapEntry mapEntry) {
         return FarmDetailsListItemViewModel(
-          title: mapEntry.key,
-          detail: mapEntry.value,
+          title: (mapEntry.value as Map<String, String>)[_Fields.title],
+          detail: (mapEntry.value as Map<String, String>)[_Fields.value],
         );
       },
     ).toList();

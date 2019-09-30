@@ -183,7 +183,7 @@ class _ChatPageState extends State<ChatPage> {
       ActionSheetListItemViewModel(
         title: _LocalisedStrings.skip(),
         type: ActionType.simple,
-        onTap: () => _navigateBack(context),
+        onTap: () => _cancel(context),
       ),
     ];
 
