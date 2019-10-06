@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2019-10-06T14:08:53.307078",
+  "@@last_modified": "2019-10-06T14:07:32.720734",
   "Related articles": "Related articles",
   "@Related articles": {
     "type": "text",
@@ -600,7 +600,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "Currency": "Currency",
+  "Currency": "KSh",
   "@Currency": {
     "type": "text",
     "placeholders": {}
