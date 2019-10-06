@@ -14,7 +14,7 @@ import 'TransactionToRecordTransactionViewModel.dart';
 
 class _LocalisedStrings {
   static String generalItemTag() => Intl.message('General');
-  static String currentcyTag() => Intl.message('Currency');
+  static String currencyTag() => Intl.message('Currency');
 }
 
 class ProfitLossListProvider
@@ -90,7 +90,7 @@ class ProfitLossListProvider
         _transactionsRepository, _taglist);
     final costViewModel = transformer.costViewModel();
     final saleViewModel = transformer.saleViewModel();
-    final currencyName = _LocalisedStrings.currentcyTag();  //TODO: sort out server locale this is HACK  NumberFormat.simpleCurrency()
+    final currencyName = _LocalisedStrings.currencyTag();  //TODO: sort out server locale this is HACK  NumberFormat.simpleCurrency()
     return ProfitLossListViewModel(
       title: _title,
       detailText: currencyName,
