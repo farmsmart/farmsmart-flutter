@@ -114,6 +114,9 @@ class FlameLink {
       _Strings.flutterLocaleDivider,
       _Strings.flamelinkDivider,
     );
+    if(serverFormat.startsWith("en")){ //massive hack due to server setup
+      return "en-US";
+    }
     return serverFormat;
   }
 }

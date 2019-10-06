@@ -5,8 +5,7 @@ import 'package:farmsmart_flutter/l10n/messages_all.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class _Constants {
-  static String defaultLocale = 'en';
-  static String defaultCountry = 'us';
+  static String defaultLocale = 'en_US';
 }
 
 class _Field {
@@ -31,17 +30,15 @@ class FarmsmartLocalizations {
   static persistLocale(Locale locale) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString(_Field.locale, locale.languageCode);
-    prefs.setString(_Field.country, locale.countryCode ?? "");
   }
 
   static Future<Locale> getLocale() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     String savedLocale = prefs.get(_Field.locale);
-    String savedCountry= prefs.get(_Field.country);
-    if(savedLocale != null && savedCountry != null){
-      return Locale(savedLocale,savedCountry);
+    if(savedLocale != null){
+      return Locale(savedLocale);
     }
-    return Locale(_Constants.defaultLocale, _Constants.defaultCountry);
+    return Locale(_Constants.defaultLocale);
   }
 
 }
