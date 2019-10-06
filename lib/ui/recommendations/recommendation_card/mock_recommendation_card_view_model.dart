@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:farmsmart_flutter/model/entities/mock/MockString.dart';
-import 'package:farmsmart_flutter/model/repositories/image/implementation/MockImageEntity.dart';
+import 'package:farmsmart_flutter/model/repositories/image/implementation/PathImageProvider.dart';
 import 'package:farmsmart_flutter/ui/recommendations/recommendation_card/recommendation_card_view_model.dart';
 
 class MockRecommendationCardViewModel {
@@ -15,7 +15,7 @@ class MockRecommendationCardViewModel {
       detailAction: () {},
       addActionText: 'Added',
       addAction: () {},
-      imageProvider: MockImageProvider('http://www.freemagebank.com/wp-content/uploads/edd/2015/07/GL0000302LR.jpg'),
+      imageProvider: PathImageProvider('http://www.freemagebank.com/wp-content/uploads/edd/2015/07/GL0000302LR.jpg'),
       isAdded: Random().nextBool(),
       isHero: Random().nextBool(),
     );
@@ -30,7 +30,7 @@ class MockRecommendationCardViewModel {
       detailAction: () {},
       addActionText: 'Add to Plot',
       addAction: () {},
-      imageProvider: MockImageProvider(_mockImageUrl.random()),
+      imageProvider: PathImageProvider(_mockImageUrl.random()),
     );
   }
 
@@ -43,7 +43,7 @@ class MockRecommendationCardViewModel {
       detailAction: () {},
       addActionText: 'Added',
       addAction: () {},
-      imageProvider: MockImageProvider('http://www.freemagebank.com/wp-content/uploads/edd/2015/07/GL0000302LR.jpg'),
+      imageProvider: PathImageProvider('http://www.freemagebank.com/wp-content/uploads/edd/2015/07/GL0000302LR.jpg'),
       isAdded: true,
     );
   }
@@ -59,7 +59,7 @@ class MockRecommendationCardViewModel {
       detailAction: () {},
       addActionText: 'Add to Plot',
       addAction: () {},
-      imageProvider: MockImageProvider(_mockImageUrl.random()),
+      imageProvider: PathImageProvider(_mockImageUrl.random()),
     );
   }
 
@@ -74,7 +74,7 @@ class MockRecommendationCardViewModel {
       detailAction: () {},
       addActionText: 'Add to Plot',
       addAction: () {},
-      imageProvider:MockImageProvider('assets/raw/placeholder.webp'),
+      imageProvider:PathImageProvider('assets/raw/placeholder.webp'),
     );
   }
 
@@ -89,7 +89,7 @@ class MockRecommendationCardViewModel {
       detailAction: () {},
       addActionText: 'Added To Plot',
       addAction: () {},
-      imageProvider:MockImageProvider('assets/raw/placeholder.webp'),
+      imageProvider:PathImageProvider('assets/raw/placeholder.webp'),
       isAdded: true,
     );
   }

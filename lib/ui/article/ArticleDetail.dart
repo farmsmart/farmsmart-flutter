@@ -1,3 +1,5 @@
+import 'package:farmsmart_flutter/model/repositories/image/implementation/MockImageEntity.dart';
+import 'package:farmsmart_flutter/model/repositories/image/implementation/PathImageProvider.dart';
 import 'package:farmsmart_flutter/ui/article/StandardListItem.dart';
 import 'package:farmsmart_flutter/ui/article/viewModel/ArticleDetailViewModel.dart';
 import 'package:farmsmart_flutter/ui/article/viewModel/ArticleListItemViewModel.dart';
@@ -9,6 +11,7 @@ import 'package:farmsmart_flutter/ui/community/LinkBox.dart';
 import 'package:farmsmart_flutter/ui/community/LinkBoxStyles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:html/dom.dart' as dom;
 import 'package:intl/intl.dart';
 import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -24,6 +27,11 @@ class _Constants {
   static EdgeInsets externalLinkPadding = EdgeInsets.only(
     bottom: 20.0,
   );
+}
+
+class _Fields {
+  static const imageTag = "img";
+  static const sourceTag = "src";
 }
 
 class _Icons {
@@ -322,6 +330,21 @@ class ArticleDetail extends StatelessWidget implements ListViewSection {
   Widget _buildBody() {
     return Container(
         padding: _style.bodyPadding,
-        child: Html(data: _viewModel.body, useRichText: true));
+        child: Html(
+            data: _viewModel.body,
+            useRichText: false,
+            customRender: (node, children) {
+              if (node is dom.Element) {
+                if (node.localName == _Fields.imageTag) {
+                 final src = node.attributes[_Fields.sourceTag];
+                  return ImageProviderView(
+                    imageURLProvider:
+                        PathImageProvider(src),
+                    height: _style.imageHeight,
+                  );
+                }
+              }
+              return null;
+            }));
   }
 }
