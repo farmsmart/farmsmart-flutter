@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:farmsmart_flutter/model/bloc/chatFlow/FlowCoordinator.dart';
+import 'package:farmsmart_flutter/model/bloc/download/OfflineDownloader.dart';
 import 'package:farmsmart_flutter/ui/common/ActionSheet.dart';
 import 'package:farmsmart_flutter/ui/common/ActionSheetListItem.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
@@ -53,6 +54,7 @@ class LandingPageViewModel {
   String subtitleImage;
   FlowCoordinator newAccountFlow;
   Function(String, String) switchLanguageTapped;
+  Function triggerOfflineDownload;
 
   LandingPageViewModel({
     this.detailText,
@@ -62,6 +64,7 @@ class LandingPageViewModel {
     this.footerText,
     this.newAccountFlow,
     this.switchLanguageTapped,
+    this.triggerOfflineDownload,
   });
 }
 
@@ -215,7 +218,9 @@ class LandingPage extends StatelessWidget {
     BuildContext context,
     LandingPageViewModel viewModel,
   }) {
-    viewModel.newAccountFlow.run(context);
+    viewModel.newAccountFlow.run(context, onSuccess: (){
+      viewModel.triggerOfflineDownload();
+    });
   }
 
   void _languageTapped(ActionSheet sheet, BuildContext context) {

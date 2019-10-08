@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:farmsmart_flutter/model/bloc/Transformer.dart';
 import 'package:farmsmart_flutter/model/entities/EntityCollectionInterface.dart';
 import 'package:farmsmart_flutter/model/entities/ImageEntity.dart';
 import 'package:farmsmart_flutter/model/entities/ImageURLProvider.dart';
@@ -37,8 +38,12 @@ class FlamelinkImageEntity extends ImageEntity {
 }
 
 ImageEntity _transform(FlameLink cms, DocumentSnapshot snapshot) {
-  final imageFileNamePath = snapshot.data[ImageEntityFields.file];
-
+  if(snapshot.data == null) {
+     return FlamelinkImageEntity(cms, _Constants.unkownSize, _Constants.unkownSize,
+      null, null);
+  }
+  final imageFileNamePath = castOrNull<String>(snapshot.data[ImageEntityFields.file]);
+  
   final alternateSizesObjs =
       snapshot.data[ImageEntityFields.sizes].map((imageSize) {
     final path = _Strings.sizesFolder +
@@ -64,6 +69,9 @@ class FlameLinkImageProvider implements ImageURLProvider {
 
   @override
   Future<String> urlToFit({double width, double height}) {
+    if(_entity.path == null){
+      return null;
+    }
     final originalImage = _cms.images(path: _entity.path);
     if (width != null && width != double.infinity) {
       final targetWidth = width.toInt();

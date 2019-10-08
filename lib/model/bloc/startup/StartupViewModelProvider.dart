@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:farmsmart_flutter/model/bloc/chatFlow/CreateAccountFlow.dart';
 import 'package:farmsmart_flutter/model/bloc/chatFlow/FlowCoordinator.dart';
+import 'package:farmsmart_flutter/model/bloc/download/OfflineDownloader.dart';
 import 'package:farmsmart_flutter/model/entities/ProfileEntity.dart';
 import 'package:farmsmart_flutter/model/entities/loading_status.dart';
 import 'package:farmsmart_flutter/model/repositories/account/AccountRepositoryInterface.dart';
@@ -30,11 +31,12 @@ class _Assets {
 
 class StartupViewModelProvider implements ViewModelProvider<StartupViewModel> {
   final AccountRepositoryInterface _accountRepository;
+  final OfflineDownloader _downloader;
   StartupViewModel _snapshot;
   final StreamController<StartupViewModel> _controller =
       StreamController<StartupViewModel>.broadcast();
 
-  StartupViewModelProvider(this._accountRepository);
+  StartupViewModelProvider(this._accountRepository, this._downloader);
 
   NewAccountFlowCoordinator _accountFlow;
 
@@ -105,6 +107,7 @@ class StartupViewModelProvider implements ViewModelProvider<StartupViewModel> {
       subtitleImage: _Assets.logoImage,
       newAccountFlow: _accountFlow,
       switchLanguageTapped: (language, country) => _switchLanguage(language,country),
+      triggerOfflineDownload: _offlineDownload
     );
   }
 
@@ -114,6 +117,10 @@ class StartupViewModelProvider implements ViewModelProvider<StartupViewModel> {
     await FarmsmartLocalizations.load().then((_) {
       _setState(false);
     });
+  }
+
+  void _offlineDownload(){
+    _downloader.downloadAll();
   }
 
   void _refresh() {

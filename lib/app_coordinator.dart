@@ -5,6 +5,7 @@ import 'package:farmsmart_flutter/ui/startup/startup.dart';
 import 'package:flutter/material.dart';
 
 import 'deep_link_helper.dart';
+import 'model/bloc/download/OfflineDownloader.dart';
 import 'model/bloc/home/HomeViewModelProvider.dart';
 import 'model/bloc/startup/StartupViewModelProvider.dart';
 
@@ -26,14 +27,14 @@ class _AppCoordinatorState extends State<AppCoordinator> {
   Widget build(BuildContext context) {
     repositoryProvider = AppConfig.of(context).repositoryProvider;
     repositoryProvider.init(context);
-
+    final downloader = OfflineDownloader(repositoryProvider.getArticleRepository(),repositoryProvider.getCropRepository(),repositoryProvider.getRatingsRepository(),);
     HomeViewModelProvider homeViewModelProvider = HomeViewModelProvider(
         repositoryProvider.getAccountRepository(),
         !AppConfig.of(context).isProductionBuild());
 
     return Startup(
       provider:
-          StartupViewModelProvider(repositoryProvider.getAccountRepository()),
+          StartupViewModelProvider(repositoryProvider.getAccountRepository(),downloader),
       home: Home(
         repositoryProvider: repositoryProvider,
         homeViewModelProvider: homeViewModelProvider,
