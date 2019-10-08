@@ -79,7 +79,6 @@ class OfflineDownloader {
 
   Future<List<ImageEntity>> _articleImages(List<ArticleEntity> articles) {
     final futures = articles.map((article) {
-      print(article.title);
       return article.images?.getEntities()?.then((images) {
         return images.where((image) {
           return image != null && image.path != null;
