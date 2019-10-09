@@ -1,4 +1,6 @@
-import 'package:farmsmart_flutter/model/repositories/image/implementation/MockImageEntity.dart';
+
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:farmsmart_flutter/model/repositories/article/ArticleLinkExtractor.dart';
 import 'package:farmsmart_flutter/model/repositories/image/implementation/PathImageProvider.dart';
 import 'package:farmsmart_flutter/ui/article/StandardListItem.dart';
 import 'package:farmsmart_flutter/ui/article/viewModel/ArticleDetailViewModel.dart';
@@ -128,6 +130,11 @@ class ArticleDetail extends StatelessWidget implements ListViewSection {
   Widget build(BuildContext context) {
     final related =
         _hasRelated() ? Future.value(_relatedViewModels) : fetchReleated();
+    
+   // final links = HTMLLinkExtractor(_viewModel.body).imagePaths();
+   // links.forEach((link) => print(link));
+   // final preload = links.map((path) => precacheImage(CachedNetworkImageProvider(path), context)).toList();
+   // final builderFuture = Future.wait(preload).then((_) => related);
     return FutureBuilder(
       future: related,
       builder: (BuildContext context,
@@ -332,7 +339,7 @@ class ArticleDetail extends StatelessWidget implements ListViewSection {
         padding: _style.bodyPadding,
         child: Html(
             data: _viewModel.body,
-            useRichText: false,
+            useRichText: true,
             customRender: (node, children) {
               if (node is dom.Element) {
                 if (node.localName == _Fields.imageTag) {

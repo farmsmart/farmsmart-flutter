@@ -1,5 +1,4 @@
 import 'package:farmsmart_flutter/model/entities/ImageURLProvider.dart';
-import 'package:farmsmart_flutter/model/entities/article_entity.dart';
 import 'package:farmsmart_flutter/model/repositories/image/implementation/PathImageProvider.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart' as parser;
@@ -9,25 +8,33 @@ class _Fields {
   static const sourceTag = "src";
 }
 
-class ArticleLinkExtractor {
-  final ArticleEntity article;
+class HTMLLinkExtractor {
+  final String content;
 
-  ArticleLinkExtractor(this.article);
+  HTMLLinkExtractor(this.content);
 
-  List<ImageURLProvider> imageLinks(){
-    dom.Document document = parser.parse(article.content);
+  List<ImageURLProvider> imageProviders(){
+    dom.Document document = parser.parse(content);
     dom.Node body = document.body;
-    return _findImageLinks(body);
+    return _findImageLinks(body).map((link) => PathImageProvider(link)).toList();
   }
 
-  List<ImageURLProvider> _findImageLinks(dom.Node node){
-    ImageURLProvider nodeImage;
+  List<String> imagePaths(){
+    dom.Document document = parser.parse(content);
+    dom.Node body = document.body;
+    return _findImageLinks(body).toList();
+  }
+
+
+
+  List<String> _findImageLinks(dom.Node node){
+    String nodeImage;
       if (node is dom.Element) {
                 if (node.localName == _Fields.imageTag) {
-                nodeImage = PathImageProvider(node.attributes[_Fields.sourceTag]);
+                nodeImage = node.attributes[_Fields.sourceTag];
                 }
       }
-    List<ImageURLProvider> links = (nodeImage!=null) ? [nodeImage] : [];
+    List<String> links = (nodeImage!=null) ? [nodeImage] : [];
     for (var child in node.children) {
         _findImageLinks(child).forEach((image) => links.add(image));
     }

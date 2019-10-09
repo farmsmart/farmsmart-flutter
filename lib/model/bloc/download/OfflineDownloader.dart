@@ -74,27 +74,27 @@ class OfflineDownloader {
       List<ImageURLProvider> articleImageProviders = [];
 
       final articleUrls = articles.map((article) {
-            final extractor = ArticleLinkExtractor(article);
-                    extractor.imageLinks().forEach((provider) => articleImageProviders.add(provider));
-            return ArticleImageProvider(article) as ImageURLProvider;
+            final extractor = HTMLLinkExtractor(article.content);
+                    extractor.imageProviders().forEach((provider) => articleImageProviders.add(provider));
+            return ArticleImageProvider(article);
           } ).toList();
       articleImageProviders += articleUrls;
       _articleRepo
           .get(group: ArticleCollectionGroup.chatGroups)
           .then((chatGroupArticles) {
         articleImageProviders += chatGroupArticles
-            .map((article) => ArticleImageProvider(article) as ImageURLProvider).toList();
+            .map((article) => ArticleImageProvider(article)).toList();
         _cropRepo.get().then((crops) {
           final List<Future> stages = [];
           final List<ImageURLProvider> cropImageProviders = [];
               crops.forEach((crop) {
-                cropImageProviders.add(CropImageProvider(crop) as ImageURLProvider);
+                cropImageProviders.add(CropImageProvider(crop));
                 stages.add(crop.stageArticles.getEntities().then((stages)
                 {
                   for (var stage in stages) {
-                    final extractor = ArticleLinkExtractor(stage);
-                    extractor.imageLinks().forEach((provider) => cropImageProviders.add(provider));
-                    cropImageProviders.add(ArticleImageProvider(stage) as ImageURLProvider);
+                    final extractor = HTMLLinkExtractor(stage.content);
+                    extractor.imageProviders().forEach((provider) => cropImageProviders.add(provider));
+                    cropImageProviders.add(ArticleImageProvider(stage));
                   }
                 }));
               }) ;

@@ -7,7 +7,7 @@ import 'main.dart';
 
 void main() {
   var configuredApp = AppConfig(
-    environment: Environment.production,
+    environment: Environment.production, //TODO: change back to dev
     buildFlavor: 'Development',
     child: FarmSmartApp(),
     repositoryProvider: FlameLinkRepositoryProvider(),
