@@ -42,7 +42,7 @@ class ImageProviderView extends StatelessWidget {
             return url;
           })
         : Future.value(null);
-
+    print(width.toString() + " x " +height.toString());
     final cachedURL =
         imageURLProvider?.cachedUrlToFit(width: width, height: height);
     if (cachedURL != null) {

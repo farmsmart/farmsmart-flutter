@@ -1,11 +1,13 @@
 import 'dart:async';
 
-import 'package:farmsmart_flutter/model/entities/ImageEntity.dart';
+import 'package:farmsmart_flutter/model/entities/ImageURLProvider.dart';
 import 'package:farmsmart_flutter/model/entities/article_entity.dart';
 import 'package:farmsmart_flutter/model/entities/crop_entity.dart';
+import 'package:farmsmart_flutter/model/repositories/article/ArticleLinkExtractor.dart';
 import 'package:farmsmart_flutter/model/repositories/article/ArticleRepositoryInterface.dart';
 import 'package:farmsmart_flutter/model/repositories/crop/CropRepositoryInterface.dart';
 import 'package:farmsmart_flutter/model/repositories/ratingEngine/RatingEngineRepositoryInterface.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
 class DownloadProgress {
@@ -14,6 +16,8 @@ class DownloadProgress {
 
   DownloadProgress(this.progress, this.error);
 }
+
+final imageSizes = [Size(double.infinity, 192.0),Size(double.infinity, 152.0), Size(80.0, 80.0),Size(72.0, 72.0)];
 
 class OfflineDownloader {
   final _cacheManager = DefaultCacheManager();
@@ -27,25 +31,33 @@ class OfflineDownloader {
   OfflineDownloader(this._articleRepo, this._cropRepo, this._ratingRepo);
 
   Stream<DownloadProgress> dowloadImages(
-      {List<ImageEntity> images, Function complete}) {
-    final taskCount = images.length;
+      {List<ImageURLProvider> imageURls, Function complete}) {
+    int taskCount = imageURls.length * imageSizes.length;
     int completeTasks = 0;
+    int totalBytes = 0;
     List<Future> futures = [];
-    for (var image in images) {
-      if (image != null) {
-        futures.add(image.urlProvider.urlToFit().then((url) {
-          return _cacheManager.getSingleFile(url).then((_) {
-            completeTasks++;
-            print("downloaded " +
-                completeTasks.toString() +
-                " of" +
-                taskCount.toString());
-            _controller.add(DownloadProgress(completeTasks / taskCount, null));
-          }, onError: (error) {
-            completeTasks++;
-            _controller.add(DownloadProgress(completeTasks / taskCount, error));
-          });
-        }));
+    for (var urlProvider in imageURls) {
+      if (urlProvider != null) {
+        for (var imageSize in imageSizes) {
+          futures.add(urlProvider
+              .urlToFit(width: imageSize.width, height: imageSize.height)
+              .then((url) {
+            return _cacheManager.getSingleFile(url).then((file) {
+              completeTasks++;
+              file?.length()?.then((bytes) { print("Bytes: " + (totalBytes+=bytes).toString());});
+              print("downloaded " +
+                  completeTasks.toString() +
+                  " of " +
+                  taskCount.toString());
+              _controller
+                  .add(DownloadProgress(completeTasks / taskCount, null));
+            }, onError: (error) {
+              completeTasks++;
+              _controller
+                  .add(DownloadProgress(completeTasks / taskCount, error));
+            });
+          }));
+        }
       }
     }
     Future.wait(futures).then((_) {
@@ -59,66 +71,43 @@ class OfflineDownloader {
   Stream<DownloadProgress> downloadAll({Function complete}) {
     _ratingRepo.getRatingInfo();
     _articleRepo.get().then((articles) {
-      _articleImages(articles).then((articleImages) {
-        _articleRepo
-            .get(group: ArticleCollectionGroup.chatGroups)
-            .then((chatGroupArticles) {
-          _articleImages(chatGroupArticles).then((chatImages) {
-            _cropRepo.get().then((crops) {
-              _cropImages(crops).then((cropImages) {
-                dowloadImages(images: articleImages + chatImages + cropImages);
-              });
+      List<ImageURLProvider> articleImageProviders = [];
+
+      final articleUrls = articles.map((article) {
+            final extractor = ArticleLinkExtractor(article);
+                    extractor.imageLinks().forEach((provider) => articleImageProviders.add(provider));
+            return ArticleImageProvider(article) as ImageURLProvider;
+          } ).toList();
+      articleImageProviders += articleUrls;
+      _articleRepo
+          .get(group: ArticleCollectionGroup.chatGroups)
+          .then((chatGroupArticles) {
+        articleImageProviders += chatGroupArticles
+            .map((article) => ArticleImageProvider(article) as ImageURLProvider).toList();
+        _cropRepo.get().then((crops) {
+          final List<Future> stages = [];
+          final List<ImageURLProvider> cropImageProviders = [];
+              crops.forEach((crop) {
+                cropImageProviders.add(CropImageProvider(crop) as ImageURLProvider);
+                stages.add(crop.stageArticles.getEntities().then((stages)
+                {
+                  for (var stage in stages) {
+                    final extractor = ArticleLinkExtractor(stage);
+                    extractor.imageLinks().forEach((provider) => cropImageProviders.add(provider));
+                    cropImageProviders.add(ArticleImageProvider(stage) as ImageURLProvider);
+                  }
+                }));
+              }) ;
+            Future.wait(stages).then((_){
+                dowloadImages(
+              imageURls: articleImageProviders +
+                  cropImageProviders);
             });
-          });
         });
       });
     });
     return _controller.stream;
   }
 
-  Future<List<ImageEntity>> _articleImages(List<ArticleEntity> articles) {
-    final futures = articles.map((article) {
-      return article.images?.getEntities()?.then((images) {
-        return images.where((image) {
-          return image != null && image.path != null;
-        }).toList();
-      });
-    }).where((value) {
-      return value != null;
-    });
-    if (futures.isEmpty) {
-      return Future.value([]);
-    }
-    return Future.wait(futures).then((lists) {
-      return lists.reduce((a, b) {
-        return (b != null) ? a + b : a;
-      });
-    });
-  }
 
-  Future<List<ImageEntity>> _cropImages(List<CropEntity> crops) {
-    final cropImages = crops.map((crop) {
-      return crop.images?.getEntities()?.then((images) {
-        return images.where((image) {
-          return image != null && image.path != null;
-        }).toList();
-      });
-    }).where((object) {
-      return object != null;
-    }).toList();
-
-    final stageImages = crops.map((crop) {
-      return crop.stageArticles?.getEntities()?.then((articles) {
-        return _articleImages(articles);
-      });
-    }).where((object) {
-      return object != null;
-    }).toList();
-
-    return Future.wait(cropImages + stageImages).then((lists) {
-      return lists.reduce((a, b) {
-        return (b != null) ? a + b : a;
-      });
-    });
-  }
 }
