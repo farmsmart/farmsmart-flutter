@@ -188,9 +188,11 @@ class Home extends StatelessWidget {
   _buildUserProfile(HomeViewModel viewModel) {
     return Profile(
       provider: ProfileDetailProvider(
-          accountRepo: viewModel.currentAccount,
-          plotRepo:
-              repositoryProvider.getMyPlotRepository(viewModel.currentProfile)),
+        accountRepo: viewModel.currentAccount,
+        plotRepo:
+            repositoryProvider.getMyPlotRepository(viewModel.currentProfile),
+        downloader: repositoryProvider.getDownloader(),
+      ),
     );
   }
 

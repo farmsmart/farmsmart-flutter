@@ -19,10 +19,6 @@ String cachedURL(String identifier) {
 }
 
 void cacheURL(String url, String identifier) {
-  if(_prefs == null) {
-    print("!!!!!!! unable to save");
-  }
-  print("caching id:" + identifier + " url: " + url);
   _prefs?.setString(_Strings.prefix + identifier, url);
 }
 

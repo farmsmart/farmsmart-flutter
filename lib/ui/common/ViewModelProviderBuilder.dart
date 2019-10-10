@@ -56,10 +56,10 @@ class ViewModelProviderBuilder<T> extends StatelessWidget {
           }
           switch (status) {
             case LoadingStatus.ERROR:
-              return errorBuilder(context, snapshot);
+              return errorBuilder(context: context, snapshot: snapshot);
               break;
             case LoadingStatus.LOADING:
-              return loadingBuilder(context, snapshot);
+              return loadingBuilder(context: context, snapshot: snapshot);
               break;
             default:
               return _successBuilder(context: context, snapshot: snapshot);
@@ -68,7 +68,7 @@ class ViewModelProviderBuilder<T> extends StatelessWidget {
   }
 
   Widget _defaultLoadingBuilder(
-      BuildContext context, AsyncSnapshot<T> snapshot) {
+      {BuildContext context, AsyncSnapshot<T> snapshot}) {
     return Container(
       decoration: BoxDecoration(color: Colors.white),
       child: CircularProgressIndicator(),
@@ -76,7 +76,7 @@ class ViewModelProviderBuilder<T> extends StatelessWidget {
     );
   }
 
-  Widget _defaultErrorBuilder(BuildContext context, AsyncSnapshot<T> snapshot) {
+  Widget _defaultErrorBuilder({BuildContext context, AsyncSnapshot<T> snapshot}) {
     final refreshable = castOrNull<RefreshableViewModel>(snapshot.data);
     final Function refreshFunction =
         (refreshable != null) ? refreshable.refresh : null;

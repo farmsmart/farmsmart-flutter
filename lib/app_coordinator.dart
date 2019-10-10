@@ -27,14 +27,13 @@ class _AppCoordinatorState extends State<AppCoordinator> {
   Widget build(BuildContext context) {
     repositoryProvider = AppConfig.of(context).repositoryProvider;
     repositoryProvider.init(context);
-    final downloader = OfflineDownloader(repositoryProvider.getArticleRepository(),repositoryProvider.getCropRepository(),repositoryProvider.getRatingsRepository(),);
     HomeViewModelProvider homeViewModelProvider = HomeViewModelProvider(
         repositoryProvider.getAccountRepository(),
         !AppConfig.of(context).isProductionBuild());
-
+    final downloader = repositoryProvider.getDownloader();
     return Startup(
       provider:
-          StartupViewModelProvider(repositoryProvider.getAccountRepository(),downloader),
+          StartupViewModelProvider(repositoryProvider.getAccountRepository(), downloader,),
       home: Home(
         repositoryProvider: repositoryProvider,
         homeViewModelProvider: homeViewModelProvider,

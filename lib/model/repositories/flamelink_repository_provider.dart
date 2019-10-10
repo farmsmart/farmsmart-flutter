@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:farmsmart_flutter/model/bloc/download/OfflineDownloader.dart';
 import 'package:farmsmart_flutter/model/repositories/FlameLink.dart';
 import 'package:farmsmart_flutter/model/repositories/account/implementation/AccountRepositoryFirebase.dart';
 import 'package:farmsmart_flutter/model/repositories/article/ArticleRepositoryInterface.dart';
@@ -75,4 +76,9 @@ class FlameLinkRepositoryProvider implements RepositoryProvider {
   @override
   RatingEngineRepositoryInterface getRatingsRepository() =>
       RatingEngineRepositoryFirestore(_cms);
+
+  @override
+  OfflineDownloader getDownloader() {
+    return OfflineDownloader(getArticleRepository(),getCropRepository(), getRatingsRepository());
+  }
 }

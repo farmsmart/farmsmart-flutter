@@ -34,7 +34,7 @@ class OfflineDownloader {
       {List<ImageURLProvider> imageURls, Function complete}) {
     int taskCount = imageURls.length * imageSizes.length;
     int completeTasks = 0;
-    int totalBytes = 0;
+    //int totalBytes = 0;
     List<Future> futures = [];
     for (var urlProvider in imageURls) {
       if (urlProvider != null) {
@@ -44,11 +44,11 @@ class OfflineDownloader {
               .then((url) {
             return _cacheManager.getSingleFile(url).then((file) {
               completeTasks++;
-              file?.length()?.then((bytes) { print("Bytes: " + (totalBytes+=bytes).toString());});
+             /* file?.length()?.then((bytes) { print("Bytes: " + (totalBytes+=bytes).toString());});
               print("downloaded " +
                   completeTasks.toString() +
                   " of " +
-                  taskCount.toString());
+                  taskCount.toString());*/
               _controller
                   .add(DownloadProgress(completeTasks / taskCount, null));
             }, onError: (error) {
@@ -101,7 +101,7 @@ class OfflineDownloader {
             Future.wait(stages).then((_){
                 dowloadImages(
               imageURls: articleImageProviders +
-                  cropImageProviders);
+                  cropImageProviders, complete: complete);
             });
         });
       });
