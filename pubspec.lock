@@ -170,10 +170,12 @@ packages:
   flutter_html:
     dependency: "direct main"
     description:
-      name: flutter_html
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.10.4"
+      path: "."
+      ref: "feature/customImgRender"
+      resolved-ref: a82acf18cf9949f1cf50ea7fe4d08357d7c6295a
+      url: "https://github.com/farmsmart/flutter_html.git"
+    source: git
+    version: "0.11.0"
   flutter_launcher_icons:
     dependency: "direct main"
     description:

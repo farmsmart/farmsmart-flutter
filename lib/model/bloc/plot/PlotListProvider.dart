@@ -90,10 +90,6 @@ class PlotListProvider implements ViewModelProvider<PlotListViewModel> {
     controller.sink.add(_viewModel(status: LoadingStatus.LOADING));
   }
 
-  void _signalError(StreamController controller) {
-    controller.sink.add(_viewModel(status: LoadingStatus.ERROR));
-  }
-
   PlotListViewModel _viewModel(
       {LoadingStatus status, List<PlotListItemViewModel> items = const []}) {
     return PlotListViewModel(

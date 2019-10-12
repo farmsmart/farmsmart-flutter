@@ -1,5 +1,5 @@
-
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:farmsmart_flutter/model/bloc/download/ApplicationCache.dart';
 import 'package:farmsmart_flutter/model/repositories/article/ArticleLinkExtractor.dart';
 import 'package:farmsmart_flutter/model/repositories/image/implementation/PathImageProvider.dart';
 import 'package:farmsmart_flutter/ui/article/StandardListItem.dart';
@@ -13,6 +13,8 @@ import 'package:farmsmart_flutter/ui/community/LinkBox.dart';
 import 'package:farmsmart_flutter/ui/community/LinkBoxStyles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_html/image_properties.dart';
+import 'package:flutter_html/rich_text_parser.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:intl/intl.dart';
 import 'package:share/share.dart';
@@ -130,11 +132,11 @@ class ArticleDetail extends StatelessWidget implements ListViewSection {
   Widget build(BuildContext context) {
     final related =
         _hasRelated() ? Future.value(_relatedViewModels) : fetchReleated();
-    
-   // final links = HTMLLinkExtractor(_viewModel.body).imagePaths();
-   // links.forEach((link) => print(link));
-   // final preload = links.map((path) => precacheImage(CachedNetworkImageProvider(path), context)).toList();
-   // final builderFuture = Future.wait(preload).then((_) => related);
+
+    // final links = HTMLLinkExtractor(_viewModel.body).imagePaths();
+    // links.forEach((link) => print(link));
+    // final preload = links.map((path) => precacheImage(CachedNetworkImageProvider(path), context)).toList();
+    // final builderFuture = Future.wait(preload).then((_) => related);
     return FutureBuilder(
       future: related,
       builder: (BuildContext context,
@@ -335,23 +337,32 @@ class ArticleDetail extends StatelessWidget implements ListViewSection {
   }
 
   Widget _buildBody() {
+    Function function = (
+        {String src,
+        String alt,
+        double width,
+        double height,
+        ImageProperties imageProperties,
+        bool shrinkToFit,
+        nextContext: ParseContext}) {
+      return CachedNetworkImage(cacheManager: OfflineCacheManager(),
+        imageUrl: src,
+        width: (width ?? -1) > 0 ? width : null,
+        height: (height ?? -1) > 0 ? height : null,
+        matchTextDirection: imageProperties?.matchTextDirection ?? false,
+        alignment: imageProperties?.alignment ?? Alignment.center,
+        colorBlendMode: imageProperties?.colorBlendMode,
+        fit: imageProperties?.fit,
+        color: imageProperties?.color,
+        repeat: imageProperties?.repeat ?? ImageRepeat.noRepeat,
+      );
+    };
     return Container(
         padding: _style.bodyPadding,
         child: Html(
-            data: _viewModel.body,
-            useRichText: true,
-            customRender: (node, children) {
-              if (node is dom.Element) {
-                if (node.localName == _Fields.imageTag) {
-                 final src = node.attributes[_Fields.sourceTag];
-                  return ImageProviderView(
-                    imageURLProvider:
-                        PathImageProvider(src),
-                    height: _style.imageHeight,
-                  );
-                }
-              }
-              return null;
-            }));
+          data: _viewModel.body,
+          useRichText: true,
+          customImgRender: function,
+        ));
   }
 }

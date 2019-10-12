@@ -5,7 +5,6 @@ import 'package:farmsmart_flutter/ui/startup/startup.dart';
 import 'package:flutter/material.dart';
 
 import 'deep_link_helper.dart';
-import 'model/bloc/download/OfflineDownloader.dart';
 import 'model/bloc/home/HomeViewModelProvider.dart';
 import 'model/bloc/startup/StartupViewModelProvider.dart';
 

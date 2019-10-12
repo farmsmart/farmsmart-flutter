@@ -45,7 +45,7 @@ class _Constants {
 class _LocalisedStrings {
   static String title() => Intl.message('Enable Offline Use');
   static String description() => Intl.message(
-      'To allow you to use the app offline, you must first download some content. Please check your data charges.');
+      'To allow offline use, you must download the apps most recent content. Please check your connection to avoid data charges.');
   static String confirm() => Intl.message('Download');
   static String skip() => Intl.message('Skip');
   static String pleaseWait() => Intl.message('Please Wait');

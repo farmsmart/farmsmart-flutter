@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:farmsmart_flutter/model/bloc/download/ApplicationCache.dart';
 
 import 'dart:io';
 
@@ -72,7 +73,7 @@ class ImageProviderView extends StatelessWidget {
 
   buildImage(String url) {
     final isRemote = !_isLocalImage(url);
-    final image = isRemote ? CachedNetworkImage(
+    final image = isRemote ? CachedNetworkImage(cacheManager: OfflineCacheManager(),
             width: width ?? double.infinity,
             height: height ?? double.infinity,
             fit: BoxFit.cover,

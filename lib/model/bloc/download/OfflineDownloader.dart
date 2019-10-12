@@ -10,6 +10,8 @@ import 'package:farmsmart_flutter/model/repositories/ratingEngine/RatingEngineRe
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
+import 'ApplicationCache.dart';
+
 class DownloadProgress {
   final double progress;
   final Error error;
@@ -20,7 +22,7 @@ class DownloadProgress {
 final imageSizes = [Size(double.infinity, 192.0),Size(double.infinity, 152.0), Size(80.0, 80.0),Size(72.0, 72.0)];
 
 class OfflineDownloader {
-  final _cacheManager = DefaultCacheManager();
+  final _cacheManager = OfflineCacheManager();
   final ArticleRepositoryInterface _articleRepo;
   final CropRepositoryInterface _cropRepo;
   final RatingEngineRepositoryInterface _ratingRepo;

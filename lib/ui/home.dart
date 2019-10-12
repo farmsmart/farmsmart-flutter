@@ -228,7 +228,7 @@ class Home extends StatelessWidget {
       viewModelProvider: ProfileDetailProvider(
           accountRepo: viewModel.currentAccount,
           plotRepo:
-              repositoryProvider.getMyPlotRepository(viewModel.currentProfile)),
+              repositoryProvider.getMyPlotRepository(viewModel.currentProfile), downloader: repositoryProvider.getDownloader()),
       width: _Constants.iconSize,
       height: _Constants.iconSize,
     );

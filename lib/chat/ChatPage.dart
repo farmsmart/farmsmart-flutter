@@ -72,6 +72,7 @@ class _ChatPageState extends State<ChatPage> {
     return WillPopScope(
       onWillPop: () {
         _cancel(context);
+        return Future.value(true);
       },
       child: Scaffold(
         appBar: _buildSimpleAppBar(context),
