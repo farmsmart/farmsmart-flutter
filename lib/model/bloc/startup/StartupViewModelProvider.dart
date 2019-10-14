@@ -3,10 +3,13 @@ import 'dart:ui';
 
 import 'package:farmsmart_flutter/model/bloc/chatFlow/CreateAccountFlow.dart';
 import 'package:farmsmart_flutter/model/bloc/chatFlow/FlowCoordinator.dart';
+import 'package:farmsmart_flutter/model/bloc/download/OfflineDownloader.dart';
+import 'package:farmsmart_flutter/model/bloc/download/OfflineDownloaderProvider.dart';
 import 'package:farmsmart_flutter/model/entities/ProfileEntity.dart';
 import 'package:farmsmart_flutter/model/entities/loading_status.dart';
 import 'package:farmsmart_flutter/model/repositories/account/AccountRepositoryInterface.dart';
 import 'package:farmsmart_flutter/ui/LandingPage.dart';
+import 'package:farmsmart_flutter/ui/offline/OfflineDownloadPage.dart';
 import 'package:farmsmart_flutter/ui/startup/viewmodel/startupViewModel.dart';
 import 'package:intl/intl.dart';
 
@@ -30,11 +33,12 @@ class _Assets {
 
 class StartupViewModelProvider implements ViewModelProvider<StartupViewModel> {
   final AccountRepositoryInterface _accountRepository;
+  final OfflineDownloader _downloader;
   StartupViewModel _snapshot;
   final StreamController<StartupViewModel> _controller =
       StreamController<StartupViewModel>.broadcast();
 
-  StartupViewModelProvider(this._accountRepository);
+  StartupViewModelProvider(this._accountRepository, this._downloader);
 
   NewAccountFlowCoordinator _accountFlow;
 
@@ -92,6 +96,7 @@ class StartupViewModelProvider implements ViewModelProvider<StartupViewModel> {
       _refresh,
       authorized,
       _landingViewModel(),
+      _downloadViewModelProvider(),
     );
     _controller.sink.add(_snapshot);
   }
@@ -105,7 +110,12 @@ class StartupViewModelProvider implements ViewModelProvider<StartupViewModel> {
       subtitleImage: _Assets.logoImage,
       newAccountFlow: _accountFlow,
       switchLanguageTapped: (language, country) => _switchLanguage(language,country),
+      downloaderViewModelProvider: _downloadViewModelProvider(),
     );
+  }
+
+  ViewModelProvider<OfflineDownloadPageViewModel> _downloadViewModelProvider() {
+    return OfflineDownloaderProvider(_downloader);
   }
 
   _switchLanguage(String language, String country) async {

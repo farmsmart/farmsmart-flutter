@@ -90,7 +90,6 @@ class ArticleDetailViewModelTransformer
   }
 
   int _minuteCount(String content) {
-    //TODO: check these values
     final int wordsPerMin = 200;
     final int averageCharsPerWord = 8;
     return content.length ~/ (wordsPerMin * averageCharsPerWord);

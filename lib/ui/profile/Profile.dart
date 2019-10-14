@@ -18,6 +18,7 @@ import 'package:farmsmart_flutter/ui/common/image_picker.dart';
 import 'package:farmsmart_flutter/ui/common/modal_navigator.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
 import 'package:farmsmart_flutter/ui/common/webview.dart';
+import 'package:farmsmart_flutter/ui/offline/OfflineDownloadPage.dart';
 import 'package:farmsmart_flutter/ui/profile/FarmDetailsListItem.dart';
 import 'package:farmsmart_flutter/ui/profile/ProfileListItem.dart';
 import 'package:flutter/material.dart';
@@ -65,6 +66,8 @@ class _LocalisedStrings {
 
   static username() => Intl.message('Username');
 
+  static offlineSync() => Intl.message('Enable Offline Use');
+
   static shareText() =>
       Intl.message('Join to the new smart farming app - FarmSmart \n');
 }
@@ -89,6 +92,7 @@ class _Icons {
   static final englishIcon = "assets/icons/flag_usa.png";
   static final swahiliIcon = "assets/icons/flag_kenya.png";
   static final checkBoxIcon = "assets/icons/radio_button_default.png";
+  static final downloadIcon =  "assets/icons/detail_icon_sale.png";
 }
 
 class _Languages {
@@ -147,6 +151,7 @@ class ProfileViewModel implements RefreshableViewModel, LoadableViewModel {
   final NewAccountFlowCoordinator newAccountFlow;
   final Function(File) saveProfileImage;
   EditProfileFlowCoordinator editProfileFlow;
+  final ViewModelProvider<OfflineDownloadPageViewModel> downloaderViewModelProvider;
 
   ProfileViewModel({
     this.loadingStatus,
@@ -165,6 +170,7 @@ class ProfileViewModel implements RefreshableViewModel, LoadableViewModel {
     this.saveProfileImage,
     this.renameProfile,
     this.editProfileFlow,
+    this.downloaderViewModelProvider,
   });
 }
 
@@ -477,6 +483,13 @@ class Profile extends StatelessWidget {
     ));
 
     items.add(ProfileListItemViewModel(
+      title: _LocalisedStrings.offlineSync(),
+      icon: _Icons.downloadIcon,
+      onTap: () => _showOffline(context, viewModel),
+      isDestructive: false,
+    ));
+
+    items.add(ProfileListItemViewModel(
       title: _LocalisedStrings.yourFarmDetails(),
       icon: _Icons.soil,
       onTap: () => _openFarmDetails(viewModel, context),
@@ -690,6 +703,11 @@ class Profile extends StatelessWidget {
       imageMaxHeight: _Constants.avatarImageSize,
       imageMaxWidth: _Constants.avatarImageSize,
     );
+  }
+
+  _showOffline(BuildContext context, ProfileViewModel viewModel){
+    final offlinePage = OfflineDownloadPage(provider: viewModel.downloaderViewModelProvider);
+    OfflineDownloadPage.present(offlinePage, context);
   }
 
   _onEditProfileSuccess(BuildContext context) {

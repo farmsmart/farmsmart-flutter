@@ -2,7 +2,6 @@ import 'package:farmsmart_flutter/ui/profitloss/RecordTransaction.dart';
 import 'package:farmsmart_flutter/utils/RegExInputFormatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
 
 class _Constants {
   static final amountValidator = RegExInputFormatter.withRegex(

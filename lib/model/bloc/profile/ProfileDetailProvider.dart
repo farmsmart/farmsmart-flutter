@@ -6,6 +6,8 @@ import 'package:farmsmart_flutter/model/bloc/Transformer.dart';
 import 'package:farmsmart_flutter/model/bloc/chatFlow/CreateAccountFlow.dart';
 import 'package:farmsmart_flutter/model/bloc/chatFlow/EditProfileFlow.dart';
 import 'package:farmsmart_flutter/model/bloc/chatFlow/FlowCoordinator.dart';
+import 'package:farmsmart_flutter/model/bloc/download/OfflineDownloader.dart';
+import 'package:farmsmart_flutter/model/bloc/download/OfflineDownloaderProvider.dart';
 import 'package:farmsmart_flutter/model/bloc/plot/PlotStatistics.dart';
 import 'package:farmsmart_flutter/model/bloc/profile/PersonName.dart';
 import 'package:farmsmart_flutter/model/bloc/profile/SwitchProfileListProvider.dart';
@@ -26,6 +28,7 @@ class ProfileDetailProvider
     implements ViewModelProvider<ProfileViewModel> {
   final AccountRepositoryInterface _accountRepository;
   final PlotRepositoryInterface _plotRepository;
+  final OfflineDownloader _downloader;
   ProfileRepositoryInterface _profileRepository;
   int _activeCrops = 0;
   int _completedCrops = 0;
@@ -40,11 +43,13 @@ class ProfileDetailProvider
   NewAccountFlowCoordinator _accountFlow;
   EditProfileFlowCoordinator _editProfileFlow;
 
-  ProfileDetailProvider({
-    @required AccountRepositoryInterface accountRepo,
-    @required PlotRepositoryInterface plotRepo,
-  })  : this._accountRepository = accountRepo,
-        this._plotRepository = plotRepo;
+  ProfileDetailProvider(
+      {@required AccountRepositoryInterface accountRepo,
+      @required PlotRepositoryInterface plotRepo,
+      @required OfflineDownloader downloader})
+      : this._accountRepository = accountRepo,
+        this._plotRepository = plotRepo,
+        this._downloader = downloader;
 
   @override
   Stream<ProfileViewModel> stream() {
@@ -70,7 +75,7 @@ class ProfileDetailProvider
           _controller.sink.add(_snapshot);
         });
 
-        _profileRepository.get().then((profiles) {
+        _profileRepository?.get()?.then((profiles) {
           _canDeleteProfile = profiles.length > 1;
           _update();
         });
@@ -105,22 +110,25 @@ class ProfileDetailProvider
         SwitchProfileListProvider(accountRepo: _accountRepository);
     final personName = PersonName(from?.name ?? "");
     return ProfileViewModel(
-        loadingStatus: _loadingStatus,
-        username: personName.fullname,
-        initials: personName.initials,
-        refresh: _refresh,
-        remove: _canDeleteProfile ? () => _remove() : null,
-        logout: () => _logout(),
-        image: from?.avatar,
-        activeCrops: _activeCrops,
-        completedCrops: _completedCrops,
-        switchProfileProvider: switchProfileProvider,
-        farmDetails: from?.lastPlotInfo,
-        switchLanguageTapped: (language, country) => _switchLanguage(language, country),
-        newAccountFlow: _accountFlow,
-        saveProfileImage: (file) => _saveProfileImage(file, from),
-        renameProfile: (username) => _renameProfile(username),
-        editProfileFlow: _editProfileFlow,);
+      loadingStatus: _loadingStatus,
+      username: personName.fullname,
+      initials: personName.initials,
+      refresh: _refresh,
+      remove: _canDeleteProfile ? () => _remove() : null,
+      logout: () => _logout(),
+      image: from?.avatar,
+      activeCrops: _activeCrops,
+      completedCrops: _completedCrops,
+      switchProfileProvider: switchProfileProvider,
+      farmDetails: from?.lastPlotInfo,
+      switchLanguageTapped: (language, country) =>
+          _switchLanguage(language, country),
+      newAccountFlow: _accountFlow,
+      saveProfileImage: (file) => _saveProfileImage(file, from),
+      renameProfile: (username) => _renameProfile(username),
+      editProfileFlow: _editProfileFlow,
+      downloaderViewModelProvider: OfflineDownloaderProvider(_downloader),
+    );
   }
 
   _switchLanguage(String language, String country) async {
@@ -166,17 +174,18 @@ class ProfileDetailProvider
   }
 
   void _saveProfileImage(File file, ProfileEntity from) async {
-       LocalProfileImageProvider.localAvatarPath(from.id).then((savePath) {
-        imageCache.evict(FileImage(File(savePath))); // we have to remove any cached image as the filename is the same
-        file.copy(savePath
-        ).then((result){
-           _profileRepository.updateCurrent(from);
-        });
+    LocalProfileImageProvider.localAvatarPath(from.id).then((savePath) {
+      imageCache.evict(FileImage(File(
+          savePath))); // we have to remove any cached image as the filename is the same
+      file.copy(savePath).then((result) {
+        _profileRepository.updateCurrent(from);
+      });
     });
   }
 
   void _renameProfile(String username) {
-    final updatedProfile = ProfileEntity(_currentProfile.id,
+    final updatedProfile = ProfileEntity(
+      _currentProfile.id,
       _currentProfile.uri,
       username,
       _currentProfile.avatar,

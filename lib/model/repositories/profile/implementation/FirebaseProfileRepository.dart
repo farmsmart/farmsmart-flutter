@@ -70,6 +70,7 @@ class FirebaseProfileRepository extends FireStoreList<ProfileEntity>
               });
             }
           }
+          return null;
         });
       }
       return null;

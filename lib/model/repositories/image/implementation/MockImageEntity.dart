@@ -2,33 +2,8 @@ import 'dart:math';
 
 import 'package:farmsmart_flutter/model/entities/EntityCollectionInterface.dart';
 import 'package:farmsmart_flutter/model/entities/ImageEntity.dart';
-import 'package:farmsmart_flutter/model/entities/ImageURLProvider.dart';
 
-class MockImageProvider implements ImageURLProvider {
-  final _path;
-
-  MockImageProvider(this._path);
-  @override
-  Future<String> urlToFit({double width, double height}) {
-    return Future.value(cachedUrlToFit(width: width, height: height));
-  }
-
-  @override
-  String cacheIdentifier({double width, double height}) {
-    return _path +
-        ImageURLProvider.sizeIdentifier(
-          width: width,
-          height: height,
-        );
-  }
-
-  @override
-  String cachedUrlToFit({double width, double height}) {
-    final widthString = (width == null) ? "200" : width.toInt().toString();
-    final heightString = (height == null) ? "200" : height.toInt().toString();
-    return _path + widthString + "/" + heightString;
-  }
-}
+import 'PathImageProvider.dart';
 
 class MockImageEntity {
   final Random _rand;
@@ -39,7 +14,7 @@ class MockImageEntity {
     int width = _rand.nextInt(768);
     int height = _rand.nextInt(768);
     String path = "https://picsum.photos/";
-    return ImageEntity(width, height, path, MockImageProvider(path));
+    return ImageEntity(width, height, path, PathImageProvider(path));
   }
 
   List<ImageEntity> list({int count = 10}) {

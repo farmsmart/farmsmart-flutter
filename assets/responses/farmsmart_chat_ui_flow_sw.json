@@ -523,11 +523,11 @@
           "options": [
             {
               "id": "Yes",
-              "title": "Yes"
+              "title": "Ndio"
             },
             {
               "id": "No",
-              "title": "No"
+              "title": "Hapana"
             }
           ]
         }

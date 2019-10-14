@@ -133,7 +133,7 @@ packages:
       name: firebase_auth
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.14.0+1"
+    version: "0.14.0+5"
   firebase_core:
     dependency: transitive
     description:
@@ -154,7 +154,7 @@ packages:
       name: firebase_storage
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.4"
+    version: "3.0.6"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -170,10 +170,12 @@ packages:
   flutter_html:
     dependency: "direct main"
     description:
-      name: flutter_html
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.10.4"
+      path: "."
+      ref: "feature/customImgRender"
+      resolved-ref: a82acf18cf9949f1cf50ea7fe4d08357d7c6295a
+      url: "https://github.com/farmsmart/flutter_html.git"
+    source: git
+    version: "0.11.0"
   flutter_launcher_icons:
     dependency: "direct main"
     description:

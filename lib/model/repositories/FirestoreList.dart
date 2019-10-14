@@ -3,10 +3,6 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:farmsmart_flutter/model/bloc/Transformer.dart';
 
-class _Strings {
-  static const separator = "/";
-}
-
 typedef PathProvider = Future<String> Function();
 typedef ObjectIdentifier<T> = String Function(T object);
 

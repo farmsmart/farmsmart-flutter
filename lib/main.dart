@@ -3,6 +3,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'app_coordinator.dart';
 import 'farmsmart_localizations.dart';
+import 'model/repositories/image/ImageRepositoryInterface.dart';
 
 class _Constants {
   static final String fontFamily = 'IBMPlexSans';
@@ -28,8 +29,11 @@ class FarmSmartApp extends StatefulWidget {
 class _FarmSmartAppState extends State<FarmSmartApp> {
   @override
   Widget build(BuildContext context) {
+    
     return FutureBuilder<Locale>(
-      future: FarmsmartLocalizations.getLocale(),
+      future: FarmsmartLocalizations.getLocale().then((locale){
+        return startURLCache().then((_){ return locale;});
+      }),
       initialData: _Constants.supportedLocales.first,
       builder: (BuildContext context, AsyncSnapshot<Locale> snapshot) {
         return MaterialApp(

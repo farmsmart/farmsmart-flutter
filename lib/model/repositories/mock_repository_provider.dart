@@ -1,3 +1,4 @@
+import 'package:farmsmart_flutter/model/bloc/download/OfflineDownloader.dart';
 import 'package:farmsmart_flutter/model/repositories/account/AccountRepositoryInterface.dart';
 import 'package:farmsmart_flutter/model/repositories/account/implementation/MockAccountRepository.dart';
 import 'package:farmsmart_flutter/model/repositories/article/ArticleRepositoryInterface.dart';
@@ -46,5 +47,10 @@ class MockRepositoryProvider implements RepositoryProvider{
 
   @override
   AccountRepositoryInterface getAccountRepository() => _account;
+
+  @override
+  OfflineDownloader getDownloader() {
+    return OfflineDownloader(getArticleRepository(),getCropRepository(), getRatingsRepository());
+  }
 
 }

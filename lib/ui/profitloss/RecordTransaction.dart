@@ -17,7 +17,7 @@ class _Constants {
   static final String navCancelIcon = 'assets/icons/nav_icon_cancel.png';
   static final String navBackIcon = 'assets/icons/nav_icon_back.png';
   static final String navOptionsIcon = 'assets/icons/nav_icon_options.png';
-  static final String EMPTY_STRING = "";
+  static final String emptyString = "";
   static final Color disabledActionColor = Color(0xFFe9eaf2);
   static final Color enabledActionSaleColor = Color(0xFF24d900);
   static final Color enabledActionCostColor = Color(0xFFff8d4f);

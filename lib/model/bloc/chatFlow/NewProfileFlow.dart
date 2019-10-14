@@ -4,7 +4,6 @@ import 'package:farmsmart_flutter/model/bloc/startup/ChatResponseToPlotInfoTrans
 import 'package:farmsmart_flutter/model/entities/ProfileEntity.dart';
 import 'package:farmsmart_flutter/model/repositories/MockStrings.dart';
 import 'package:farmsmart_flutter/model/repositories/account/AccountRepositoryInterface.dart';
-import 'package:farmsmart_flutter/model/repositories/image/implementation/MockImageEntity.dart';
 import 'package:farmsmart_flutter/ui/common/modal_navigator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';

@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:farmsmart_flutter/model/entities/StageEntity.dart';
 import 'package:farmsmart_flutter/model/entities/article_entity.dart';
-import 'package:farmsmart_flutter/model/entities/crop_entity.dart';
 import 'package:farmsmart_flutter/model/entities/mock/MockDate.dart';
 import 'package:farmsmart_flutter/model/entities/mock/MockString.dart';
 import 'MockArticle.dart';

@@ -1,3 +1,4 @@
+import 'package:farmsmart_flutter/model/bloc/download/OfflineDownloader.dart';
 import 'package:farmsmart_flutter/model/repositories/account/AccountRepositoryInterface.dart';
 import 'package:farmsmart_flutter/model/repositories/article/ArticleRepositoryInterface.dart';
 import 'package:farmsmart_flutter/model/repositories/plot/PlotRepositoryInterface.dart';
@@ -23,4 +24,6 @@ abstract class RepositoryProvider {
   TransactionRepositoryInterface getTransactionRepository(ProfileRepositoryInterface profileRepository);
 
   RatingEngineRepositoryInterface getRatingsRepository();
+
+  OfflineDownloader getDownloader();
 }

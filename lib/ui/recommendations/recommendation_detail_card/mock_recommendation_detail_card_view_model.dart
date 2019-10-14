@@ -1,5 +1,5 @@
 import 'package:farmsmart_flutter/model/entities/mock/MockString.dart';
-import 'package:farmsmart_flutter/model/repositories/image/implementation/MockImageEntity.dart';
+import 'package:farmsmart_flutter/model/repositories/image/implementation/PathImageProvider.dart';
 import 'package:farmsmart_flutter/ui/recommendations/recommendation_card/recommendation_card_view_model.dart';
 
 
@@ -11,7 +11,7 @@ class MockRecommendationDetailCardViewModel {
       addAction: () {},
       addActionText: 'Add To Your Plot',
       isAdded: false,
-      imageProvider: MockImageProvider(_mockImageUrl.random()),
+      imageProvider: PathImageProvider(_mockImageUrl.random()),
     );
   }
 
@@ -22,7 +22,7 @@ class MockRecommendationDetailCardViewModel {
       addAction: () {},
       addActionText: 'Added To Your Plot',
       isAdded: true,
-      imageProvider: MockImageProvider(_mockImageUrl.random()),
+      imageProvider: PathImageProvider(_mockImageUrl.random()),
     );
   }
 
@@ -33,7 +33,7 @@ class MockRecommendationDetailCardViewModel {
       addAction: () {},
       addActionText: _mockLargeStrings.random(),
       isAdded: true,
-      imageProvider: MockImageProvider(_mockImageUrl.random()),
+      imageProvider: PathImageProvider(_mockImageUrl.random()),
     );
   }
 
@@ -44,7 +44,7 @@ class MockRecommendationDetailCardViewModel {
       addAction: () {},
       addActionText: 'Action Text',
       isAdded: true,
-      imageProvider: MockImageProvider('assets/raw/placeholder.webp'),
+      imageProvider: PathImageProvider('assets/raw/placeholder.webp'),
     );
   }
 
@@ -55,7 +55,7 @@ class MockRecommendationDetailCardViewModel {
       addAction: () {},
       addActionText: 'Action Text',
       isAdded: false,
-      imageProvider: MockImageProvider('assets/raw/placeholder.webp'),
+      imageProvider: PathImageProvider('assets/raw/placeholder.webp'),
     );
   }
 }
