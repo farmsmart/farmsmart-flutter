@@ -38,11 +38,11 @@ class ArticleImageProvider implements ImageURLProvider {
     }
     return _article.images.getEntities(limit: 1).then((imageEntities) {
       // NB: we assume the first image is the hero
-      return imageEntities.first.urlProvider
-          .urlToFit(width: width, height: height).then((url){
+      return imageEntities?.first?.urlProvider
+          ?.urlToFit(width: width, height: height)?.then((url){
             cacheURL(url, cacheIdentifier(width: width, height: height));
             return url;
-          });
+          }) ?? Future.value(null);
     });
   }
 

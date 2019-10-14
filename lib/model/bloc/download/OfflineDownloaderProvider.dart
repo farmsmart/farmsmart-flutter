@@ -33,8 +33,8 @@ class OfflineDownloaderProvider
   }
 
   OfflineDownloadPageViewModel _viewModel(
-      {LoadingStatus status, double progress = 0.0}) {
-    return OfflineDownloadPageViewModel(status, _triggerDownload, progress);
+      {LoadingStatus status, double progress = 0.0, Error error}) {
+    return OfflineDownloadPageViewModel(status, _triggerDownload, progress, error);
   }
 
   void _triggerDownload() {
@@ -44,7 +44,7 @@ class OfflineDownloaderProvider
       _controller.add(_viewModel(status: LoadingStatus.SUCCESS));
     }).listen((update) {
       _controller.add(
-          _viewModel(status: LoadingStatus.LOADING, progress: update.progress));
+          _viewModel(status: LoadingStatus.LOADING, progress: update.progress, error: update.error));
     });
   }
 
