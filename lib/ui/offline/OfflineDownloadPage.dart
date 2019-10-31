@@ -14,7 +14,7 @@ class _Constants {
   static const textPadding =
       const EdgeInsets.only(top: 24, right: 24, left: 24);
   static const buttonPadding =
-      const EdgeInsets.symmetric(vertical: 30, horizontal: 10);
+      const EdgeInsets.symmetric(vertical: 20, horizontal: 10);
   static const textStyle = TextStyle(
     fontSize: 17,
     color: Color(
@@ -37,7 +37,7 @@ class _Constants {
   static final BorderRadius cornerRadius =
       const BorderRadius.all(Radius.circular(24.0));
   static final EdgeInsets alertInnerPadding =
-      const EdgeInsets.only(left: 24, right: 24, bottom: 24, top: 24);
+      const EdgeInsets.only(left: 24, right: 24, bottom: 0, top: 24);
   static final double actionHeight = 48;
   static final double actionWidth = 120;
 }
@@ -47,7 +47,6 @@ class _LocalisedStrings {
   static String description() => Intl.message(
       'To allow offline use, you must download the apps most recent content. Please check your connection to avoid data charges.');
   static String confirm() => Intl.message('Download');
-  static String skip() => Intl.message('Skip');
   static String pleaseWait() => Intl.message('Please Wait');
   static String completed() => Intl.message('Completed');
   static String cancel() => Intl.message('Cancel');
@@ -56,10 +55,12 @@ class _LocalisedStrings {
 class OfflineDownloadPageViewModel implements LoadableViewModel {
   final LoadingStatus loadingStatus;
   final double progress;
+  final Error error;
   final Function downloadAction;
 
+
   OfflineDownloadPageViewModel(
-      this.loadingStatus, this.downloadAction, this.progress);
+      this.loadingStatus, this.downloadAction, this.progress, this.error);
 }
 
 class OfflineDownloadPage extends StatelessWidget {
@@ -129,12 +130,18 @@ class OfflineDownloadPage extends StatelessWidget {
         _dismiss(context);
       });
     }
+  
     return Container(
       decoration: BoxDecoration(color: Colors.white),
-      height: 127.0,
-      child: Stack(children: <Widget>[
+      height: 235.0,
+      child: Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[ Stack(children: <Widget>[
         CircularProgress(
             progress: viewModel.progress, size: 127.0, lineWidth: 2.0),
+        SizedBox(height: 127.0, child:
         Center(
           child: Text(
             viewModel.progress < 1.0
@@ -142,8 +149,8 @@ class OfflineDownloadPage extends StatelessWidget {
                 : _LocalisedStrings.completed(),
             style: _Constants.detailTextStyle,
           ),
-        ),
-      ]),
+        ))
+      ]), _buildCancelButton(context)]),
     );
   }
 

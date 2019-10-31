@@ -97,6 +97,6 @@ class ImageProviderView extends StatelessWidget {
   }
 
   bool _isLocalImage(String uri) {
-    return !uri.toLowerCase().startsWith(_Constants.webPathPrefix);
+    return !(uri?.toLowerCase()?.startsWith(_Constants.webPathPrefix) ?? true);
   }
 }
