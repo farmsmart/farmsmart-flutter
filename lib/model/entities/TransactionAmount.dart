@@ -13,15 +13,21 @@ class _Constants {
 
 class TransactionAmount {
   final Decimal _decimal;
-
-  TransactionAmount._(this._decimal);
+  final String _originalString;
+  TransactionAmount._(this._decimal, {String originalString}) : this._originalString = originalString;
 
   factory TransactionAmount(String value, bool forceNegative) {
-    final decimal = Decimal.parse(value);
-    return TransactionAmount._(forceNegative ? -decimal : decimal);
+    try {
+      final decimal = Decimal.parse(value);
+      return TransactionAmount._(forceNegative ? -decimal : decimal);
+    } catch (exception) {}
+    return TransactionAmount._(Decimal.fromInt(0), originalString: value);
   }
 
   String toString({bool allowNegative = false}) {
+    if(_decimal == null) {
+      return _originalString;
+    }
     final formatter = _getNumberFormat(Intl.getCurrentLocale());
     final absDecimal = _decimal.isNegative ? -_decimal : _decimal;
     final prefix =
@@ -33,8 +39,9 @@ class TransactionAmount {
   }
 
   NumberFormat _getNumberFormat(String locale) {
-    int compareToResult = _decimal.abs().compareTo(Decimal.fromInt(_Constants.thousand));
-    if(compareToResult.isNegative) {
+    int compareToResult =
+        _decimal.abs().compareTo(Decimal.fromInt(_Constants.thousand));
+    if (compareToResult.isNegative) {
       return NumberFormat.currency(locale: locale);
     } else {
       return NumberFormat.compactCurrency(locale: locale);
