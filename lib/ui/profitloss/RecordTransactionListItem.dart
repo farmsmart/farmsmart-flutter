@@ -417,7 +417,6 @@ class _RecordTransactionListItemState extends State<RecordTransactionListItem> {
       ),
       dense: true,
       contentPadding: style.actionItemEdgePadding,
-      onTap: () => _setSelectedDate(context, viewModel),
       enabled: viewModel.isEditable,
     );
   }
