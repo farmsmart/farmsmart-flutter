@@ -23,7 +23,7 @@ class _LocalisedStrings {
   static String actionText() => Intl.message('Get Started');
 
   static String footerText() =>
-      Intl.message('Switch Langauge – Badilisha Lugha');
+      Intl.message('Switch language – Badilisha Lugha');
 }
 
 class _Assets {
