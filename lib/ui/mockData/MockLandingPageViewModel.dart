@@ -1,5 +1,4 @@
 import 'package:farmsmart_flutter/ui/LandingPage.dart';
-import 'package:farmsmart_flutter/ui/mockData/MockActionSheetViewModel.dart';
 import 'package:intl/intl.dart';
 
 class _LocalisedStrings {
@@ -22,10 +21,6 @@ class MockLandingPageViewModel {
       subtitleImage: "assets/raw/logo_default.png",
       switchLanguageTapped: (language, country) => _mockSwitchLanguage(language, country),
     );
-  }
-
-  static void _mockAction() {
-    return print("This should be a Navigator for chat route");
   }
 
   static _mockSwitchLanguage(String language, String country) {
