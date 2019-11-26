@@ -36,7 +36,7 @@
         "localStore": false,
         "inline": true,
         "title": "Lako nani",
-        "validationRegex": "^([a-zA-Z]+\\s*)*[^\\s]+$",
+        "validationRegex": ".*",
         "responseText": "Jina langu ni %Name",
         "optional": false
       }
