@@ -116,10 +116,8 @@ class Home extends StatelessWidget {
 
     if (viewModel.debugMenuVisible) {
       tabList.add(
-        _buildTabNavigator(
+        _buildDebugTabNavigator(
           _buildPlayground(),
-          _Constants.communitySelectedIcon,
-          _Constants.communityIcon,
         ),
       );
     }
@@ -218,6 +216,19 @@ class Home extends StatelessWidget {
           iconPath,
           height: _Constants.bottomBarIconSize,
         ),
+        title: SizedBox.shrink(),
+      ),
+    );
+  }
+
+  TabNavigator _buildDebugTabNavigator(
+    Widget page,
+  ) {
+    return TabNavigator(
+      child: page,
+      barItem: BottomNavigationBarItem(
+        activeIcon: Text('Debug', style: TextStyle(color:Color(0xff24d900)),),
+        icon: Text('Debug'),
         title: SizedBox.shrink(),
       ),
     );
