@@ -180,7 +180,7 @@ class ArticleDetail extends StatelessWidget implements ListViewSection {
         titleText: _viewModel.contentLinkTitle ??
             _viewModel.title ??
             _LocalisedStrings.viewMore(),
-        detailText: _viewModel.contentLinkDescription ?? '',
+        detailText: _viewModel.contentLinkDescription ?? _LocalisedStrings.viewMore(),
         image: _viewModel.contentLinkIcon,
         icon: _Icons.defaultExternalLinkIcon,
         onTap: () {
@@ -200,7 +200,7 @@ class ArticleDetail extends StatelessWidget implements ListViewSection {
   HeaderAndFooterListView _content() {
     final List<Widget> relatedTitle = _hasRelated() ? [_relatedHeader()] : [];
     final List<Widget> contentLink =
-        (_viewModel.contentLink != null) ? [_externalLinkSection()] : [];
+        (_viewModel.contentLink != null && _viewModel.contentLink.trimRight().isNotEmpty) ? [_externalLinkSection()] : [];
 
     final List<Widget> articleHeaders =
         (_articleHeader != null) ? [_articleHeader] : [_buildDefaultHeader()];

@@ -42,7 +42,7 @@ class FlamelinkArticleTransformer
     final summary = castOrNull<String>(from.data[_Fields.summary]);
     final title = castOrNull<String>(from.data[_Fields.title]) ??
         castOrNull<String>(from.data[_Fields.name]);
-    final externalLink = castOrNull(from.data[_Fields.externalLink]);
+    final externalLink = castOrNull<String>(from.data[_Fields.externalLink]);
     final published =
         (meta.createdDate != null) ? meta.createdDate.toDate() : null;
     final entity = ArticleEntity(

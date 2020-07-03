@@ -49,6 +49,8 @@ class ArticleDetailViewModelTransformer
   ArticleDetailViewModel transform({ArticleEntity from}) {
     ArticleImageProvider imageProvider =
         (from.images != null) ? ArticleImageProvider(from) : null;
+    final externalLink =
+        from.externalLink != null ? from.externalLink.trim() : null;
     ArticleDetailViewModel viewModel = ArticleDetailViewModel(
       LoadingStatus.SUCCESS,
       from.title,
@@ -58,7 +60,7 @@ class ArticleDetailViewModelTransformer
       imageProvider,
       from.content,
       buildArticleDeeplink(from.uri),
-      from.externalLink,
+      externalLink,
       _contentLinkDescription,
       _contentLinkIcon,
     );
