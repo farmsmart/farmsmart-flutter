@@ -10,7 +10,6 @@ class _Constants {
 
 class _Field {
   static String locale = 'locale';
-  static String country = 'country';
 }
 
 class FarmsmartLocalizations {

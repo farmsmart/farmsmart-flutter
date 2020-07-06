@@ -18,8 +18,6 @@ import 'PlotToPlotListItemViewModel.dart';
 */
 
 class _LocalisedStrings {
-  static String recommendations() => Intl.message('Recommendations');
-
   static String addCrop() => Intl.message('Add Another Crop');
 }
 

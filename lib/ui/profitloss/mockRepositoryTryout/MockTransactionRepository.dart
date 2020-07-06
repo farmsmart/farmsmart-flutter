@@ -35,15 +35,6 @@ MockString _mockTitleText = MockString(library: [
   "Longer title example ",
   "A Bit longer title example more longer example"]);
 
-MockString _mockDetailText = MockString(library: [
-  "Day 490",
-  "Week 300",
-  "Day 500000",
-  "Day 1",
-  "Day 1",
-  "A Bit Longer day 9000"
-]);
-
 MockString _mockCurrencyText = MockString(library: [
   "Eur",
   "Usd",

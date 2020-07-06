@@ -2,7 +2,6 @@ import 'package:farmsmart_flutter/chat/ui/widgets/date_picker.dart';
 import 'package:flutter/material.dart';
 
 class _Constants {
-  static const defaultMainAxisAlignment = MainAxisAlignment.start;
   static const defaultIsDenseList = true;
   static const defaultListTilePadding = const EdgeInsets.all(0);
   static const defaultLeftIconHeight = 20.0;

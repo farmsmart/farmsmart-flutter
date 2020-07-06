@@ -13,8 +13,6 @@ import '../CropRepositoryInterface.dart';
 import 'transformers/FirebaseCropTransformer.dart';
 
 class _Fields {
-  static final cropCollection = "crops";
-  static final cropEntry = "crop";
   static final cropSchema = "crop";
 }
 

@@ -15,9 +15,6 @@ class _Constants {
   static final int titleMaxLines = 1;
   static final double titleSpace = 12;
   static final double actionSpace = 36;
-  static final double imageSize = 100;
-  static final BorderRadius imageRadius =
-      const BorderRadius.all(Radius.circular(12));
 }
 
 class RecommendationDetailCardStyle {

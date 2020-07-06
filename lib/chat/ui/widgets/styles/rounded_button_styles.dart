@@ -10,15 +10,6 @@ class _Constants {
   static const defaultButtonShape = BoxShape.rectangle;
   static const defaultBorderRadius = BorderRadius.all(Radius.circular(20));
   static const defaultBackgroundColor = Color(0xFF24D900);
-
-  static const double detailsButtonHeight = 48.0;
-  static const BorderRadius detailsButtonRadius = BorderRadius.all(
-    Radius.circular(12.0),
-  );
-  static const TextStyle detailsButtonTextStyle = TextStyle(
-    fontSize: 15.0,
-    color: Color(0xFFFFFFFF),
-  );
 }
 
 class RoundedButtonStyles {

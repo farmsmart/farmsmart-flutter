@@ -163,7 +163,7 @@ class ProfileDetailProvider
 
   void _refresh() {
     _accountRepository.authorized().then((account) {
-      _profileRepository.getCurrent();
+      _profileRepository?.getCurrent();
       _plotRepository.getFarm();
     });
   }

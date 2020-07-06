@@ -9,8 +9,6 @@ import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 
 class _Constants {
-  static final EdgeInsets generalPadding =
-      EdgeInsets.only(left: 32, right: 32, top: 40, bottom: 18);
   static const textPadding =
       const EdgeInsets.only(top: 24, right: 24, left: 24);
   static const buttonPadding =

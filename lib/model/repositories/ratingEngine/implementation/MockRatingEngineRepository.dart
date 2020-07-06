@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:farmsmart_flutter/model/entities/crop_entity.dart';
 import 'package:farmsmart_flutter/model/entities/mock/MockRecommendation.dart';
 
 import '../RatingEngineRepositoryInterface.dart';
