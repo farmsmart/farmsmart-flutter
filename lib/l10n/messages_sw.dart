@@ -3,22 +3,21 @@
 // messages from the main program should be duplicated here with the same
 // function name.
 
-// ignore_for_file: unnecessary_brace_in_string_interps
+// Ignore issues from commonly used lints in this file.
+// ignore_for_file:unnecessary_brace_in_string_interps, unnecessary_new
+// ignore_for_file:prefer_single_quotes,comment_references, directives_ordering
+// ignore_for_file:annotate_overrides,prefer_generic_function_type_aliases
+// ignore_for_file:unused_import, file_names
 
 import 'package:intl/intl.dart';
 import 'package:intl/message_lookup_by_library.dart';
 
-// ignore: unnecessary_new
 final messages = new MessageLookup();
 
-// ignore: unused_element
-final _keepAnalysisHappy = Intl.defaultLocale;
-
-// ignore: non_constant_identifier_names
-typedef MessageIfAbsent(String message_str, List args);
+typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 
 class MessageLookup extends MessageLookupByLibrary {
-  get localeName => 'sw';
+  String get localeName => 'sw';
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
@@ -48,12 +47,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "Cancel" : MessageLookupByLibrary.simpleMessage("Futa"),
     "Cancel" : MessageLookupByLibrary.simpleMessage("Futa"),
     "Cancel" : MessageLookupByLibrary.simpleMessage("Futa"),
+    "Cancel" : MessageLookupByLibrary.simpleMessage("Futa"),
     "Check out this article from the FarmSmart mobile app \n " : MessageLookupByLibrary.simpleMessage("Angalia nakala hii kutoka kwa programu ya simu ya FarmSmart \n "),
     "Clear Selection" : MessageLookupByLibrary.simpleMessage("Futa Uchaguzi"),
     "Community" : MessageLookupByLibrary.simpleMessage("Jamii"),
     "Companion Plants" : MessageLookupByLibrary.simpleMessage("Mimea ya Masahaba"),
     "Complete" : MessageLookupByLibrary.simpleMessage("Kukamilika"),
     "Complete crop" : MessageLookupByLibrary.simpleMessage("Mazao kamili"),
+    "Completed" : MessageLookupByLibrary.simpleMessage("Imekamilika"),
     "Completed" : MessageLookupByLibrary.simpleMessage("Imekamilika"),
     "Completed" : MessageLookupByLibrary.simpleMessage("Imekamilika"),
     "Complexity" : MessageLookupByLibrary.simpleMessage("Ugumu"),
@@ -113,7 +114,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "Provided TEXT is not valid" : MessageLookupByLibrary.simpleMessage("Maandishi yaliyotolewa sio sawa"),
     "Provided summary is not correct" : MessageLookupByLibrary.simpleMessage("Muhtasari uliotolewa sio sawa"),
     "Recommendations" : MessageLookupByLibrary.simpleMessage("Pendekezo"),
-    "Recommendations" : MessageLookupByLibrary.simpleMessage("Pendekezo"),
     "Record a Cost" : MessageLookupByLibrary.simpleMessage("Rekodi Gharama"),
     "Record a Sale" : MessageLookupByLibrary.simpleMessage("Rekodi mauzo"),
     "Record a new Cost" : MessageLookupByLibrary.simpleMessage("Rekodi gharama"),
@@ -137,10 +137,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "Single" : MessageLookupByLibrary.simpleMessage("Moja"),
     "Skip" : MessageLookupByLibrary.simpleMessage("Ruka"),
     "Stage" : MessageLookupByLibrary.simpleMessage("Jukwaa"),
-    "Switch language – Badilisha Lugha" : MessageLookupByLibrary.simpleMessage("Switch language – Badilisha Lugha"),
-    "Switch language – Badilisha Lugha" : MessageLookupByLibrary.simpleMessage("Switch language – Badilisha Lugha"),
     "Switch Language" : MessageLookupByLibrary.simpleMessage("Badilisha lugha"),
     "Switch Profile" : MessageLookupByLibrary.simpleMessage("Badilisha wasifu"),
+    "Switch language – Badilisha Lugha" : MessageLookupByLibrary.simpleMessage("Switch language – Badilisha Lugha"),
+    "Switch language – Badilisha Lugha" : MessageLookupByLibrary.simpleMessage("Switch language – Badilisha Lugha"),
     "Switch profile" : MessageLookupByLibrary.simpleMessage("Badilisha wasifu"),
     "Take picture from camera" : MessageLookupByLibrary.simpleMessage("Chukua picha kutoka kwa kamera"),
     "Terms of use" : MessageLookupByLibrary.simpleMessage("Masharti ya matumizi"),

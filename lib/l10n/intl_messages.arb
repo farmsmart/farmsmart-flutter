@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2019-10-06T14:08:53.307078",
+  "@@last_modified": "2020-07-07T11:01:27.219808",
   "Related articles": "Related articles",
   "@Related articles": {
     "type": "text",
@@ -175,6 +175,11 @@
     "type": "text",
     "placeholders": {}
   },
+  "Enable Offline Use": "Enable Offline Use",
+  "@Enable Offline Use": {
+    "type": "text",
+    "placeholders": {}
+  },
   "Join to the new smart farming app - FarmSmart \n": "Join to the new smart farming app - FarmSmart \n",
   "@Join to the new smart farming app - FarmSmart \n": {
     "type": "text",
@@ -322,6 +327,21 @@
   },
   "Are you sure you want to remove this record? This action cannot be undone.": "Are you sure you want to remove this record? This action cannot be undone.",
   "@Are you sure you want to remove this record? This action cannot be undone.": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "To allow offline use, you must download the apps most recent content. Please check your connection to avoid data charges.": "To allow offline use, you must download the apps most recent content. Please check your connection to avoid data charges.",
+  "@To allow offline use, you must download the apps most recent content. Please check your connection to avoid data charges.": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "Download": "Download",
+  "@Download": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "Please Wait": "Please Wait",
+  "@Please Wait": {
     "type": "text",
     "placeholders": {}
   },

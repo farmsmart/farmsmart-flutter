@@ -3,22 +3,21 @@
 // messages from the main program should be duplicated here with the same
 // function name.
 
-// ignore_for_file: unnecessary_brace_in_string_interps
+// Ignore issues from commonly used lints in this file.
+// ignore_for_file:unnecessary_brace_in_string_interps, unnecessary_new
+// ignore_for_file:prefer_single_quotes,comment_references, directives_ordering
+// ignore_for_file:annotate_overrides,prefer_generic_function_type_aliases
+// ignore_for_file:unused_import, file_names
 
 import 'package:intl/intl.dart';
 import 'package:intl/message_lookup_by_library.dart';
 
-// ignore: unnecessary_new
 final messages = new MessageLookup();
 
-// ignore: unused_element
-final _keepAnalysisHappy = Intl.defaultLocale;
-
-// ignore: non_constant_identifier_names
-typedef MessageIfAbsent(String message_str, List args);
+typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 
 class MessageLookup extends MessageLookupByLibrary {
-  get localeName => 'messages';
+  String get localeName => 'messages';
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
@@ -52,12 +51,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "Cancel" : MessageLookupByLibrary.simpleMessage("Cancel"),
     "Cancel" : MessageLookupByLibrary.simpleMessage("Cancel"),
     "Cancel" : MessageLookupByLibrary.simpleMessage("Cancel"),
+    "Cancel" : MessageLookupByLibrary.simpleMessage("Cancel"),
     "Check out this article from the FarmSmart mobile app \n " : MessageLookupByLibrary.simpleMessage("Check out this article from the FarmSmart mobile app \n "),
     "Clear Selection" : MessageLookupByLibrary.simpleMessage("Clear Selection"),
     "Community" : MessageLookupByLibrary.simpleMessage("Community"),
     "Companion Plants" : MessageLookupByLibrary.simpleMessage("Companion Plants"),
     "Complete" : MessageLookupByLibrary.simpleMessage("Complete"),
     "Complete crop" : MessageLookupByLibrary.simpleMessage("Complete crop"),
+    "Completed" : MessageLookupByLibrary.simpleMessage("Completed"),
     "Completed" : MessageLookupByLibrary.simpleMessage("Completed"),
     "Completed" : MessageLookupByLibrary.simpleMessage("Completed"),
     "Complexity" : MessageLookupByLibrary.simpleMessage("Complexity"),
@@ -80,10 +81,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "Description (optional)..." : MessageLookupByLibrary.simpleMessage("Description (optional)..."),
     "Discover" : MessageLookupByLibrary.simpleMessage("Discover"),
     "Discover much more information using this link..." : MessageLookupByLibrary.simpleMessage("Discover much more information using this link..."),
+    "Download" : MessageLookupByLibrary.simpleMessage("Download"),
     "Edit Farm Details" : MessageLookupByLibrary.simpleMessage("Edit Farm Details"),
     "Edit Photo" : MessageLookupByLibrary.simpleMessage("Edit Photo"),
     "Edit Profile" : MessageLookupByLibrary.simpleMessage("Edit Profile"),
     "Edit record" : MessageLookupByLibrary.simpleMessage("Edit record"),
+    "Enable Offline Use" : MessageLookupByLibrary.simpleMessage("Enable Offline Use"),
+    "Enable Offline Use" : MessageLookupByLibrary.simpleMessage("Enable Offline Use"),
     "Finish" : MessageLookupByLibrary.simpleMessage("Finish"),
     "General" : MessageLookupByLibrary.simpleMessage("General"),
     "Get Started" : MessageLookupByLibrary.simpleMessage("Get Started"),
@@ -114,6 +118,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "Operation already in progress" : MessageLookupByLibrary.simpleMessage("Operation already in progress"),
     "Option" : MessageLookupByLibrary.simpleMessage("Option"),
     "Pick image from gallery" : MessageLookupByLibrary.simpleMessage("Pick image from gallery"),
+    "Please Wait" : MessageLookupByLibrary.simpleMessage("Please Wait"),
     "Please complete previous" : MessageLookupByLibrary.simpleMessage("Please complete previous"),
     "Privacy Policy" : MessageLookupByLibrary.simpleMessage("Privacy Policy"),
     "Profitability" : MessageLookupByLibrary.simpleMessage("Profitability"),
@@ -121,7 +126,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "Provided PHONE is not valid" : MessageLookupByLibrary.simpleMessage("Provided PHONE is not valid"),
     "Provided TEXT is not valid" : MessageLookupByLibrary.simpleMessage("Provided TEXT is not valid"),
     "Provided summary is not correct" : MessageLookupByLibrary.simpleMessage("Provided summary is not correct"),
-    "Recommendations" : MessageLookupByLibrary.simpleMessage("Recommendations"),
     "Recommendations" : MessageLookupByLibrary.simpleMessage("Recommendations"),
     "Record a Cost" : MessageLookupByLibrary.simpleMessage("Record a Cost"),
     "Record a Sale" : MessageLookupByLibrary.simpleMessage("Record a Sale"),
@@ -151,13 +155,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "Single" : MessageLookupByLibrary.simpleMessage("Single"),
     "Skip" : MessageLookupByLibrary.simpleMessage("Skip"),
     "Stage" : MessageLookupByLibrary.simpleMessage("Stage"),
-    "Switch language – Badilisha Lugha" : MessageLookupByLibrary.simpleMessage("Switch language – Badilisha Lugha"),
-    "Switch language – Badilisha Lugha" : MessageLookupByLibrary.simpleMessage("Switch language – Badilisha Lugha"),
     "Switch Language" : MessageLookupByLibrary.simpleMessage("Switch Language"),
     "Switch Profile" : MessageLookupByLibrary.simpleMessage("Switch Profile"),
+    "Switch language – Badilisha Lugha" : MessageLookupByLibrary.simpleMessage("Switch language – Badilisha Lugha"),
+    "Switch language – Badilisha Lugha" : MessageLookupByLibrary.simpleMessage("Switch language – Badilisha Lugha"),
     "Switch profile" : MessageLookupByLibrary.simpleMessage("Switch profile"),
     "Take picture from camera" : MessageLookupByLibrary.simpleMessage("Take picture from camera"),
     "Terms of use" : MessageLookupByLibrary.simpleMessage("Terms of use"),
+    "To allow offline use, you must download the apps most recent content. Please check your connection to avoid data charges." : MessageLookupByLibrary.simpleMessage("To allow offline use, you must download the apps most recent content. Please check your connection to avoid data charges."),
     "Today" : MessageLookupByLibrary.simpleMessage("Today"),
     "Today" : MessageLookupByLibrary.simpleMessage("Today"),
     "Type a message" : MessageLookupByLibrary.simpleMessage("Type a message"),
