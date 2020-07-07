@@ -7,7 +7,7 @@ class ResetStateWidget extends StatefulWidget {
 
   static resetState(BuildContext context) {
     final _ResetStateWidgetState state =
-        context.ancestorStateOfType(const TypeMatcher<_ResetStateWidgetState>());
+        context.findAncestorStateOfType();
     state.restartApp();
   }
 

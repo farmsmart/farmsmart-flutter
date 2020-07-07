@@ -22,8 +22,6 @@ class _LocalisedStrings {
       Intl.message('Discover much more information using this link...');
 }
 
-//TODO Add here content link description and icon
-
 class PlotToPlotDetailViewModel
     extends ObjectTransformer<PlotEntity, PlotDetailViewModel> {
   final _articleTransformer =

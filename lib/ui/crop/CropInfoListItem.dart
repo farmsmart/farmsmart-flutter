@@ -10,11 +10,6 @@ class _Constants {
   static final EdgeInsets wrapColorsPadding = const EdgeInsets.only(
     top: 11.5,
   );
-
-  static final EdgeInsets circlePadding = EdgeInsets.only(
-    right: 18,
-    bottom: 5,
-  );
   static final double wrapSpacing = 8;
   static final double wrapRunSpacing = 8;
 

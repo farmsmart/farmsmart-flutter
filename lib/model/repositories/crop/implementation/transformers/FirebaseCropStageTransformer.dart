@@ -34,7 +34,6 @@ class _Fields {
   static String content = "content";
   static String status = "status";
   static String summary = "summary";
-  static String title = "title";
   static String name = "stageName";
   static String relatedArticles = "relatedArticles";
   static String article = "article";

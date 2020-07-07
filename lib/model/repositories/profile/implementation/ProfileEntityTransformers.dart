@@ -7,7 +7,6 @@ import 'package:path_provider/path_provider.dart';
 class _Fields {
   static const name = "name";
   static const plotInfo = "plotInfo";
-  static const avatarPath = "avatarPath";
 }
 
 class _Constants {

@@ -16,16 +16,9 @@ class _Constants {
   static final double appBarElevation = 0;
   static final EdgeInsets appBarEdgePadding = EdgeInsets.only(left: 25);
   static final double appBarIconSize = 16;
-  static final EdgeInsets topButtonEdgePadding =
-      const EdgeInsets.only(right: 32.0);
-  static final EdgeInsets generalEdgePadding =
-      const EdgeInsets.only(left: 32, top: 10, bottom: 36);
-  static final EdgeInsets bottomButtonEdgePadding =
-      const EdgeInsets.only(right: 24, left: 24, bottom: 24);
 }
 
 class _Assets {
-  static const defaultPathToJSONFile = "assets/responses/farmsmart_chat_ui_flow.json";
   static const dismissModalIcon = "assets/raw/nav_icon_cancel.png";
   static const optionButtonIcon = "assets/icons/nav_icon_options.png";
 }

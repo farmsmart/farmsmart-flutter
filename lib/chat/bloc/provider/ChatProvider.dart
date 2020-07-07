@@ -20,7 +20,6 @@ class _Constants {
   static const currentMessageIndex = 0;
   static const minMessagesLengthToUpdate = 3;
   static const previousMessageIndex = 1;
-  static const defaultSizedBoxWidth = 40.0;
   static const defaultDelayDuration = 1000;
   static const defaultEmptyString = "";
   static const scrollAnimationOffset = 0.0;

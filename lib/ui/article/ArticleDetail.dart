@@ -1,7 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:farmsmart_flutter/model/bloc/download/ApplicationCache.dart';
-import 'package:farmsmart_flutter/model/repositories/article/ArticleLinkExtractor.dart';
-import 'package:farmsmart_flutter/model/repositories/image/implementation/PathImageProvider.dart';
 import 'package:farmsmart_flutter/ui/article/StandardListItem.dart';
 import 'package:farmsmart_flutter/ui/article/viewModel/ArticleDetailViewModel.dart';
 import 'package:farmsmart_flutter/ui/article/viewModel/ArticleListItemViewModel.dart';
@@ -15,7 +13,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_html/image_properties.dart';
 import 'package:flutter_html/rich_text_parser.dart';
-import 'package:html/dom.dart' as dom;
 import 'package:intl/intl.dart';
 import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -31,11 +28,6 @@ class _Constants {
   static EdgeInsets externalLinkPadding = EdgeInsets.only(
     bottom: 20.0,
   );
-}
-
-class _Fields {
-  static const imageTag = "img";
-  static const sourceTag = "src";
 }
 
 class _Icons {
@@ -180,7 +172,7 @@ class ArticleDetail extends StatelessWidget implements ListViewSection {
         titleText: _viewModel.contentLinkTitle ??
             _viewModel.title ??
             _LocalisedStrings.viewMore(),
-        detailText: _viewModel.contentLinkDescription ?? '',
+        detailText: _viewModel.contentLinkDescription ?? _LocalisedStrings.viewMore(),
         image: _viewModel.contentLinkIcon,
         icon: _Icons.defaultExternalLinkIcon,
         onTap: () {
@@ -200,7 +192,7 @@ class ArticleDetail extends StatelessWidget implements ListViewSection {
   HeaderAndFooterListView _content() {
     final List<Widget> relatedTitle = _hasRelated() ? [_relatedHeader()] : [];
     final List<Widget> contentLink =
-        (_viewModel.contentLink != null) ? [_externalLinkSection()] : [];
+        (_viewModel.contentLink != null && _viewModel.contentLink.trimRight().isNotEmpty) ? [_externalLinkSection()] : [];
 
     final List<Widget> articleHeaders =
         (_articleHeader != null) ? [_articleHeader] : [_buildDefaultHeader()];

@@ -86,7 +86,6 @@ class _Strings {
 class _Icons {
   static final language = 'assets/icons/detail_icon_language.png';
   static final soil = 'assets/icons/detail_icon_best_soil.png';
-  static final pin = 'assets/icons/detail_icon_pin.png';
   static final newProfile = 'assets/icons/detail_icon_new_profile.png';
   static final inviteFriends = 'assets/icons/detail_icon_invite.png';
   static final englishIcon = "assets/icons/flag_usa.png";
@@ -126,7 +125,6 @@ class _Constants {
   static final double dividerHeight = 2;
   static final double detailSpacing = 23;
   static final int avatarImageSize = 200;
-  static final dateFormatter = DateFormat('dd MMMM yyyy');
 }
 
 class _Fields {

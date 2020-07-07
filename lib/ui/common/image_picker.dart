@@ -7,7 +7,6 @@ import 'package:image_picker/image_picker.dart' as ImagePickerLib
 import 'package:intl/intl.dart';
 
 class _Constants {
-  static final EdgeInsets cropAreaPadding = const EdgeInsets.only(top: 20.0);
   static final Color cropStatusBarColor = const Color(0xffffffff);
   static final Color cropToolbarBarColor = const Color(0xffffffff);
   static const double defaultImageRatioX = 1.0;

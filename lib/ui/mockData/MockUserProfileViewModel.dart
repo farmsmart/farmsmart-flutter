@@ -40,9 +40,7 @@ class MockProfileViewModel {
     );
   }
 
-  static _mockSwitchTap() {
-    print("Profile switched");
-  }
+
 }
 
 class MockUserProfileListItemViewModel {
