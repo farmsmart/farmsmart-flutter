@@ -41,17 +41,23 @@ class ImagePicker {
       return false;
     }
 
+    AndroidUiSettings androidSettings = AndroidUiSettings(
+      toolbarTitle: _LocalisedStrings.editPhoto(),
+      toolbarColor: _Constants.cropToolbarBarColor,
+      toolbarWidgetColor: Colors.black,
+      statusBarColor: _Constants.cropStatusBarColor,
+    );
+    IOSUiSettings iosSettings =
+        IOSUiSettings(title: _LocalisedStrings.editPhoto());
+
     File croppedFile = await ImageCropper.cropImage(
       sourcePath: file.path,
-      ratioX: imageRatioX,
-      ratioY: imageRatioY,
+      aspectRatio: CropAspectRatio(ratioX: imageRatioX, ratioY: imageRatioY),
       maxWidth: imageMaxWidth,
       maxHeight: imageMaxHeight,
-      circleShape: circleShapeOnCrop,
-      statusBarColor: _Constants.cropStatusBarColor,
-      toolbarColor: _Constants.cropToolbarBarColor,
-      toolbarTitle: _LocalisedStrings.editPhoto(),
-      toolbarWidgetColor: Colors.black,
+      cropStyle: CropStyle.circle,
+      androidUiSettings: androidSettings,
+      iosUiSettings: iosSettings,
     );
 
     file.delete();

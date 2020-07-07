@@ -2,11 +2,13 @@
 import 'package:farmsmart_flutter/model/bloc/article/ArticleDetailTransformer.dart';
 import 'package:farmsmart_flutter/model/bloc/article/ArticleListItemViewModelTransformer.dart';
 import 'package:farmsmart_flutter/model/entities/mock/MockArticle.dart';
-import 'package:test/test.dart';
+import 'package:flutter_test/flutter_test.dart';
+
 
 final testArticle = MockArticle().build();
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
   test('Article list item viewmodel transfomed from article correctly', () {
     final detailTransformer = ArticleDetailViewModelTransformer();
     final listTransformer = ArticleListItemViewModelTransformer(detailTransformer: detailTransformer);
