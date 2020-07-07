@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'model/repositories/FlameLink.dart';
 import 'model/repositories/flamelink_repository_provider.dart';
 import 'flavors/app_config.dart';
 import 'main.dart';
 
 void main() {
   var configuredApp = AppConfig(
-    environment: Environment.production,
+    environment: 'production',
     buildFlavor: 'Production',
     child: FarmSmartApp(),
     repositoryProvider: FlameLinkRepositoryProvider(),
