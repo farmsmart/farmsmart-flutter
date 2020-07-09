@@ -15,6 +15,7 @@ import 'package:farmsmart_flutter/model/entities/PlotEntity.dart';
 import 'package:farmsmart_flutter/model/entities/ProfileEntity.dart';
 import 'package:farmsmart_flutter/model/entities/loading_status.dart';
 import 'package:farmsmart_flutter/model/repositories/account/AccountRepositoryInterface.dart';
+import 'package:farmsmart_flutter/model/repositories/locale/locale_repository_interface.dart';
 import 'package:farmsmart_flutter/model/repositories/plot/PlotRepositoryInterface.dart';
 import 'package:farmsmart_flutter/model/repositories/profile/ProfileRepositoryInterface.dart';
 import 'package:farmsmart_flutter/model/repositories/profile/implementation/ProfileEntityTransformers.dart';
@@ -28,12 +29,14 @@ class ProfileDetailProvider
     implements ViewModelProvider<ProfileViewModel> {
   final AccountRepositoryInterface _accountRepository;
   final PlotRepositoryInterface _plotRepository;
+  final LocaleRepositoryInterface _localesRepository;
   final OfflineDownloader _downloader;
   ProfileRepositoryInterface _profileRepository;
   int _activeCrops = 0;
   int _completedCrops = 0;
   ProfileViewModel _snapshot;
   ProfileEntity _currentProfile;
+  List<ContentLocale> _availableLocales;
   PlotStatistics _plotStatistics = PlotStatistics();
   LoadingStatus _loadingStatus = LoadingStatus.LOADING;
   bool _canDeleteProfile = false;
@@ -46,9 +49,11 @@ class ProfileDetailProvider
   ProfileDetailProvider(
       {@required AccountRepositoryInterface accountRepo,
       @required PlotRepositoryInterface plotRepo,
+      @required LocaleRepositoryInterface localeRepo,
       @required OfflineDownloader downloader})
       : this._accountRepository = accountRepo,
         this._plotRepository = plotRepo,
+        this._localesRepository = localeRepo,
         this._downloader = downloader;
 
   @override
@@ -69,15 +74,22 @@ class ProfileDetailProvider
         currentAccount?.profileRepository
             ?.observeCurrent()
             ?.listen((currentProfile) {
-          _loadingStatus = LoadingStatus.SUCCESS;
-          _currentProfile = currentProfile;
-          _snapshot = transform(from: currentProfile);
-          _controller.sink.add(_snapshot);
+          _localesRepository.availableLocales().then((availableLocales) {
+            _availableLocales = availableLocales;
+            _loadingStatus = LoadingStatus.SUCCESS;
+            _currentProfile = currentProfile;
+            _snapshot = transform(
+                from: currentProfile, supportedLocales: _availableLocales);
+            _controller.sink.add(_snapshot);
+          });
         });
 
         _profileRepository?.get()?.then((profiles) {
           _canDeleteProfile = profiles.length > 1;
-          _update();
+          _localesRepository.availableLocales().then((availableLocales) {
+            _availableLocales = availableLocales;
+            _update();
+          });
         });
       });
 
@@ -105,7 +117,8 @@ class ProfileDetailProvider
   }
 
   @override
-  ProfileViewModel transform({ProfileEntity from}) {
+  ProfileViewModel transform(
+      {ProfileEntity from, List<ContentLocale> supportedLocales}) {
     final switchProfileProvider =
         SwitchProfileListProvider(accountRepo: _accountRepository);
     final personName = PersonName(from?.name ?? "");
@@ -127,6 +140,7 @@ class ProfileDetailProvider
       saveProfileImage: (file) => _saveProfileImage(file, from),
       renameProfile: (username) => _renameProfile(username),
       editProfileFlow: _editProfileFlow,
+      supportedLocales: supportedLocales,
       downloaderViewModelProvider: OfflineDownloaderProvider(_downloader),
     );
   }
@@ -157,7 +171,8 @@ class ProfileDetailProvider
   void _accountFlowStatusChanged(FlowCoordinator coordinator) {}
 
   void _update() {
-    _snapshot = transform(from: _currentProfile);
+    _snapshot =
+        transform(from: _currentProfile, supportedLocales: _availableLocales);
     _controller.sink.add(_snapshot);
   }
 

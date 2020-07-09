@@ -6,6 +6,7 @@ import 'package:farmsmart_flutter/model/bloc/chatFlow/CreateAccountFlow.dart';
 import 'package:farmsmart_flutter/model/bloc/chatFlow/EditProfileFlow.dart';
 import 'package:farmsmart_flutter/model/entities/ImageURLProvider.dart';
 import 'package:farmsmart_flutter/model/entities/loading_status.dart';
+import 'package:farmsmart_flutter/model/repositories/locale/locale_repository_interface.dart';
 import 'package:farmsmart_flutter/ui/common/ActionSheet.dart';
 import 'package:farmsmart_flutter/ui/common/ActionSheetListItem.dart';
 import 'package:farmsmart_flutter/ui/common/InputAlert.dart';
@@ -22,6 +23,7 @@ import 'package:farmsmart_flutter/ui/offline/OfflineDownloadPage.dart';
 import 'package:farmsmart_flutter/ui/profile/FarmDetailsListItem.dart';
 import 'package:farmsmart_flutter/ui/profile/ProfileListItem.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localized_locales/flutter_localized_locales.dart';
 import 'package:image_picker/image_picker.dart' as ImagePickerLib;
 import 'package:intl/intl.dart';
 import 'package:share/share.dart';
@@ -149,6 +151,7 @@ class ProfileViewModel implements RefreshableViewModel, LoadableViewModel {
   final NewAccountFlowCoordinator newAccountFlow;
   final Function(File) saveProfileImage;
   EditProfileFlowCoordinator editProfileFlow;
+  final List<ContentLocale> supportedLocales;
   final ViewModelProvider<OfflineDownloadPageViewModel> downloaderViewModelProvider;
 
   ProfileViewModel({
@@ -168,6 +171,7 @@ class ProfileViewModel implements RefreshableViewModel, LoadableViewModel {
     this.saveProfileImage,
     this.renameProfile,
     this.editProfileFlow,
+    this.supportedLocales,
     this.downloaderViewModelProvider,
   });
 }
@@ -607,28 +611,20 @@ class Profile extends StatelessWidget {
   }
 
   ActionSheet _languageMenu(BuildContext context, ProfileViewModel viewModel) {
-    final actions = [
-      ActionSheetListItemViewModel(
-        title: _Strings.englishAction,
+
+    final actions = viewModel.supportedLocales.map((contentLocale) {
+      final title = contentLocale.displayName;
+      return ActionSheetListItemViewModel(
+        title: title,
         type: ActionType.selectable,
         icon: _Icons.englishIcon,
         checkBoxIcon: _Icons.checkBoxIcon,
         onTap: () {
-          viewModel.switchLanguageTapped(_Languages.english, _Country.usa);
+          viewModel.switchLanguageTapped(contentLocale.locale.languageCode, contentLocale.locale.countryCode);
           ResetStateWidget.resetState(context);
         }
-      ),
-      ActionSheetListItemViewModel(
-        title: _Strings.swahiliAction,
-        type: ActionType.selectable,
-        icon: _Icons.swahiliIcon,
-        checkBoxIcon: _Icons.checkBoxIcon,
-        onTap: () { 
-          viewModel.switchLanguageTapped(_Languages.swahili, null);
-           ResetStateWidget.resetState(context);
-        }
-      ),
-    ];
+      );
+    }).toList();
 
     final actionSheetViewModel = ActionSheetViewModel(
       actions,

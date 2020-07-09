@@ -189,6 +189,7 @@ class Home extends StatelessWidget {
         accountRepo: viewModel.currentAccount,
         plotRepo:
             repositoryProvider.getMyPlotRepository(viewModel.currentProfile),
+        localeRepo: repositoryProvider.getLocaleRepository(),
         downloader: repositoryProvider.getDownloader(),
       ),
     );
@@ -227,7 +228,10 @@ class Home extends StatelessWidget {
     return TabNavigator(
       child: page,
       barItem: BottomNavigationBarItem(
-        activeIcon: Text('Debug', style: TextStyle(color:Color(0xff24d900)),),
+        activeIcon: Text(
+          'Debug',
+          style: TextStyle(color: Color(0xff24d900)),
+        ),
         icon: Text('Debug'),
         title: SizedBox.shrink(),
       ),
@@ -239,7 +243,9 @@ class Home extends StatelessWidget {
       viewModelProvider: ProfileDetailProvider(
           accountRepo: viewModel.currentAccount,
           plotRepo:
-              repositoryProvider.getMyPlotRepository(viewModel.currentProfile), downloader: repositoryProvider.getDownloader()),
+              repositoryProvider.getMyPlotRepository(viewModel.currentProfile),
+          localeRepo: repositoryProvider.getLocaleRepository(),
+          downloader: repositoryProvider.getDownloader()),
       width: _Constants.iconSize,
       height: _Constants.iconSize,
     );

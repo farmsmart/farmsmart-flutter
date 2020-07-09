@@ -1,8 +1,11 @@
+import 'package:farmsmart_flutter/model/repositories/locale/locale_repository_interface.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_localized_locales/flutter_localized_locales.dart';
 
 import 'app_coordinator.dart';
 import 'farmsmart_localizations.dart';
+import 'flavors/app_config.dart';
 import 'model/repositories/image/ImageRepositoryInterface.dart';
 
 class _Constants {
@@ -10,11 +13,6 @@ class _Constants {
 
   static final backgroundColor = Color(0xFFFFFFFF);
   static final accentColor = Color(0xFF757575);
-
-  static final List<Locale> supportedLocales = [
-    const Locale('en'),
-    const Locale('sw'),
-  ];
 }
 
 class _String {
@@ -26,25 +24,46 @@ class FarmSmartApp extends StatefulWidget {
   _FarmSmartAppState createState() => _FarmSmartAppState();
 }
 
+class _LocaleSettings {
+  final ContentLocale currentLocale;
+  final List<ContentLocale> supportedLocales;
+
+  _LocaleSettings(this.currentLocale, this.supportedLocales);
+}
+
 class _FarmSmartAppState extends State<FarmSmartApp> {
   @override
   Widget build(BuildContext context) {
-    
-    return FutureBuilder<Locale>(
-      future: FarmsmartLocalizations.getLocale().then((locale){
-        return startURLCache().then((_){ return locale;});
+    return FutureBuilder<_LocaleSettings>(
+      future: FarmsmartLocalizations.getLocale().then((locale) {
+        final repositoryProvider = AppConfig.of(context).repositoryProvider;
+        return repositoryProvider
+            .getLocaleRepository()
+            .availableLocales()
+            .then((availableLocales) {
+          final matchingLocale = availableLocales.firstWhere(
+              (element) => element.locale == locale,
+              orElse: () => FarmsmartLocalizations.defaultLocale);
+          return startURLCache().then((_) {
+            return _LocaleSettings(matchingLocale, availableLocales);
+          });
+        });
       }),
-      initialData: _Constants.supportedLocales.first,
-      builder: (BuildContext context, AsyncSnapshot<Locale> snapshot) {
+      initialData: _LocaleSettings(FarmsmartLocalizations.defaultLocale,
+          [FarmsmartLocalizations.defaultLocale]),
+      builder: (BuildContext context, AsyncSnapshot<_LocaleSettings> snapshot) {
+        final _LocaleSettings settings = snapshot.data;
+        final supportedLocales =
+            settings.supportedLocales.map<Locale>((e) => e.locale).toList();
         return MaterialApp(
-          locale: snapshot.data,
+          locale: settings.currentLocale.locale,
           onGenerateTitle: (context) => _String.title(),
           localizationsDelegates: [
-            FarmsmartLocalizationsDelegate(_Constants.supportedLocales),
+            FarmsmartLocalizationsDelegate(supportedLocales),
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
           ],
-          supportedLocales: _Constants.supportedLocales,
+          supportedLocales: supportedLocales,
           theme: ThemeData(
             fontFamily: _Constants.fontFamily,
             brightness: Brightness.light,

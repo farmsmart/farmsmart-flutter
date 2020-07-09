@@ -5,6 +5,7 @@ import 'package:farmsmart_flutter/model/repositories/article/ArticleRepositoryIn
 import 'package:farmsmart_flutter/model/repositories/article/implementation/MockArticlesRepository.dart';
 import 'package:farmsmart_flutter/model/repositories/crop/CropRepositoryInterface.dart';
 import 'package:farmsmart_flutter/model/repositories/crop/implementation/MockCropRepository.dart';
+import 'package:farmsmart_flutter/model/repositories/locale/locale_repository_interface.dart';
 import 'package:farmsmart_flutter/model/repositories/plot/PlotRepositoryInterface.dart';
 import 'package:farmsmart_flutter/model/repositories/plot/implementation/MockPlotRepository.dart';
 import 'package:farmsmart_flutter/model/repositories/profile/ProfileRepositoryInterface.dart';
@@ -51,6 +52,12 @@ class MockRepositoryProvider implements RepositoryProvider{
   @override
   OfflineDownloader getDownloader() {
     return OfflineDownloader(getArticleRepository(),getCropRepository(), getRatingsRepository());
+  }
+
+  @override
+  LocaleRepositoryInterface getLocaleRepository() {
+    // TODO: implement getLocaleRepository
+    throw UnimplementedError();
   }
 
 }
