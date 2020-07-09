@@ -1,7 +1,7 @@
 import 'package:farmsmart_flutter/model/repositories/locale/locale_repository_interface.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_localized_locales/flutter_localized_locales.dart';
+
 
 import 'app_coordinator.dart';
 import 'farmsmart_localizations.dart';
@@ -24,39 +24,29 @@ class FarmSmartApp extends StatefulWidget {
   _FarmSmartAppState createState() => _FarmSmartAppState();
 }
 
-class _LocaleSettings {
-  final ContentLocale currentLocale;
-  final List<ContentLocale> supportedLocales;
-
-  _LocaleSettings(this.currentLocale, this.supportedLocales);
-}
 
 class _FarmSmartAppState extends State<FarmSmartApp> {
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<_LocaleSettings>(
-      future: FarmsmartLocalizations.getLocale().then((locale) {
-        final repositoryProvider = AppConfig.of(context).repositoryProvider;
-        return repositoryProvider
+    final repositoryProvider = AppConfig.of(context).repositoryProvider;
+    repositoryProvider.init(context);
+    return FutureBuilder<LocaleState>(
+      future: repositoryProvider
             .getLocaleRepository()
-            .availableLocales()
-            .then((availableLocales) {
-          final matchingLocale = availableLocales.firstWhere(
-              (element) => element.locale == locale,
-              orElse: () => FarmsmartLocalizations.defaultLocale);
+            .getLocaleState()
+            .then((state) {
           return startURLCache().then((_) {
-            return _LocaleSettings(matchingLocale, availableLocales);
+            return state;
           });
-        });
-      }),
-      initialData: _LocaleSettings(FarmsmartLocalizations.defaultLocale,
+        }),
+      initialData: LocaleState(FarmsmartLocalizations.defaultLocale,
           [FarmsmartLocalizations.defaultLocale]),
-      builder: (BuildContext context, AsyncSnapshot<_LocaleSettings> snapshot) {
-        final _LocaleSettings settings = snapshot.data;
+      builder: (BuildContext context, AsyncSnapshot<LocaleState> snapshot) {
+        final LocaleState state = snapshot.data;
         final supportedLocales =
-            settings.supportedLocales.map<Locale>((e) => e.locale).toList();
+            state.availableLocales.map<Locale>((e) => e.locale).toList();
         return MaterialApp(
-          locale: settings.currentLocale.locale,
+          locale: state.currentLocale.locale,
           onGenerateTitle: (context) => _String.title(),
           localizationsDelegates: [
             FarmsmartLocalizationsDelegate(supportedLocales),

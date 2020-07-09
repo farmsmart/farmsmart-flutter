@@ -1,5 +1,7 @@
 import 'dart:ui';
 
+import 'package:farmsmart_flutter/farmsmart_localizations.dart';
+
 import '../../FlameLink.dart';
 import '../locale_repository_interface.dart';
 
@@ -23,9 +25,34 @@ class LocaleRepositoryFlameLink implements LocaleRepositoryInterface {
         .then((snapshot) {
       final supportedLocales = snapshot.data[_Constants.supportedLocales];
       return supportedLocales
-          .map<ContentLocale>((locale) =>ContentLocale( Locale(locale[_Constants.languageField],
-              locale[_Constants.countryField]),locale[_Constants.displayNameField] ))
+          .map<ContentLocale>((locale) => ContentLocale(
+              Locale(locale[_Constants.languageField],
+                  locale[_Constants.countryField]),
+              locale[_Constants.displayNameField]))
           .toList();
+    });
+  }
+
+  @override
+  Future<ContentLocale> currentLocale() {
+    return availableLocales().then((availableLocales) {
+      return FarmsmartLocalizations.getLocale().then((locale) {
+        return availableLocales.firstWhere(
+            (element) => element.locale == locale,
+            orElse: () => FarmsmartLocalizations.defaultLocale);
+      });
+    });
+  }
+
+  @override
+  Future<LocaleState> getLocaleState() {
+    return availableLocales().then((availableLocales) {
+      return FarmsmartLocalizations.getLocale().then((locale) {
+        final currentLocale = availableLocales.firstWhere(
+            (element) => element.locale == locale,
+            orElse: () => FarmsmartLocalizations.defaultLocale);
+        return LocaleState(currentLocale, availableLocales);
+      });
     });
   }
 }

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:farmsmart_flutter/farmsmart_localizations.dart';
 import 'package:farmsmart_flutter/model/bloc/ResetStateWidget.dart';
 import 'package:farmsmart_flutter/model/bloc/ViewModelProvider.dart';
 import 'package:farmsmart_flutter/model/bloc/chatFlow/CreateAccountFlow.dart';
@@ -23,11 +24,11 @@ import 'package:farmsmart_flutter/ui/offline/OfflineDownloadPage.dart';
 import 'package:farmsmart_flutter/ui/profile/FarmDetailsListItem.dart';
 import 'package:farmsmart_flutter/ui/profile/ProfileListItem.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_localized_locales/flutter_localized_locales.dart';
 import 'package:image_picker/image_picker.dart' as ImagePickerLib;
 import 'package:intl/intl.dart';
 import 'package:share/share.dart';
 
+import '../../country_flags.dart';
 import 'FarmDetails.dart';
 import 'SwitchProfileList.dart';
 
@@ -75,8 +76,6 @@ class _LocalisedStrings {
 }
 
 class _Strings {
-  static final englishAction = "English";
-  static final swahiliAction = "Kiswahili";
   static final privacyPolicyUrl =
       'https://sites.google.com/farmsmart.co/farmsmart/home/privacy-policy?authuser=0';
   static final termsOfUseUrl =
@@ -90,18 +89,8 @@ class _Icons {
   static final soil = 'assets/icons/detail_icon_best_soil.png';
   static final newProfile = 'assets/icons/detail_icon_new_profile.png';
   static final inviteFriends = 'assets/icons/detail_icon_invite.png';
-  static final englishIcon = "assets/icons/flag_usa.png";
-  static final swahiliIcon = "assets/icons/flag_kenya.png";
   static final checkBoxIcon = "assets/icons/radio_button_default.png";
   static final downloadIcon =  "assets/icons/detail_icon_sale.png";
-}
-
-class _Languages {
-  static final english = "en";
-  static final swahili = "sw";
-}
-class _Country {
-  static final usa = "us";
 }
 
 class _Constants {
@@ -152,6 +141,7 @@ class ProfileViewModel implements RefreshableViewModel, LoadableViewModel {
   final Function(File) saveProfileImage;
   EditProfileFlowCoordinator editProfileFlow;
   final List<ContentLocale> supportedLocales;
+  final ContentLocale currentLocale;
   final ViewModelProvider<OfflineDownloadPageViewModel> downloaderViewModelProvider;
 
   ProfileViewModel({
@@ -172,6 +162,7 @@ class ProfileViewModel implements RefreshableViewModel, LoadableViewModel {
     this.renameProfile,
     this.editProfileFlow,
     this.supportedLocales,
+    this.currentLocale,
     this.downloaderViewModelProvider,
   });
 }
@@ -611,14 +602,13 @@ class Profile extends StatelessWidget {
   }
 
   ActionSheet _languageMenu(BuildContext context, ProfileViewModel viewModel) {
-
     final actions = viewModel.supportedLocales.map((contentLocale) {
-      final title = contentLocale.displayName;
+      final title =  getEmojiFlag(contentLocale.locale.countryCode) + ' ' + contentLocale.displayName;
       return ActionSheetListItemViewModel(
         title: title,
         type: ActionType.selectable,
-        icon: _Icons.englishIcon,
         checkBoxIcon: _Icons.checkBoxIcon,
+        isSelected: contentLocale.locale == viewModel.currentLocale,
         onTap: () {
           viewModel.switchLanguageTapped(contentLocale.locale.languageCode, contentLocale.locale.countryCode);
           ResetStateWidget.resetState(context);
