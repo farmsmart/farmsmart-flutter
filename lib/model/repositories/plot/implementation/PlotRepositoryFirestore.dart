@@ -22,6 +22,7 @@ class _Fields {
 }
 
 class PlotRepositoryFireStore implements PlotRepositoryInterface {
+  static final invalidCropError = Exception('Selected crop invalid'); 
   final Firestore firestore;
   final FlameLink flamelink;
   final ProfileRepositoryInterface profileRepository;
@@ -53,35 +54,38 @@ class PlotRepositoryFireStore implements PlotRepositoryInterface {
 
   @override
   Future<PlotEntity> addPlot({
-    Map<String, Map<String,String>> plotInfo,
+    Map<String, Map<String, String>> plotInfo,
     CropEntity crop,
   }) {
     return crop.stageArticles.getEntities().then((articles) {
-      final stages = articles.map((article) {
-        return StageEntity(
-          id: article.uri,
-          article: article,
-        );
-      }).toList();
+      if (articles.isNotEmpty) {
+        final stages = articles.map((article) {
+          return StageEntity(
+            id: article.uri,
+            article: article,
+          );
+        }).toList();
 
-      final plot = PlotEntity(
-        title: crop.name,
-        crop: crop,
-        score: 0.0,
-        stages: stages,
-      );
-      var firestorePlot = _transformToFirebase(plot);
-      firestorePlot[_Fields.orderField] = Timestamp.now();
-      return _plotListPath().then((path) {
-        return firestore
-            .collection(path)
-            .add(firestorePlot)
-            .then((documentRef) {
-          return documentRef.get().then((document) {
-            return _transformFromFirebase(document);
+        final plot = PlotEntity(
+          title: crop.name,
+          crop: crop,
+          score: 0.0,
+          stages: stages,
+        );
+        var firestorePlot = _transformToFirebase(plot);
+        firestorePlot[_Fields.orderField] = Timestamp.now();
+        return _plotListPath().then((path) {
+          return firestore
+              .collection(path)
+              .add(firestorePlot)
+              .then((documentRef) {
+            return documentRef.get().then((document) {
+              return _transformFromFirebase(document);
+            });
           });
         });
-      });
+      }
+      return Future.error(invalidCropError);
     });
   }
 
