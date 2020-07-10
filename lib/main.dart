@@ -13,6 +13,8 @@ class _Constants {
 
   static final backgroundColor = Color(0xFFFFFFFF);
   static final accentColor = Color(0xFF757575);
+  static final defaultLocaleState = LocaleState(FarmsmartLocalizations.defaultLocale,
+          [FarmsmartLocalizations.defaultLocale]);
 }
 
 class _String {
@@ -39,10 +41,9 @@ class _FarmSmartAppState extends State<FarmSmartApp> {
             return state;
           });
         }),
-      initialData: LocaleState(FarmsmartLocalizations.defaultLocale,
-          [FarmsmartLocalizations.defaultLocale]),
+      initialData: _Constants.defaultLocaleState,
       builder: (BuildContext context, AsyncSnapshot<LocaleState> snapshot) {
-        final LocaleState state = snapshot.data;
+        final LocaleState state = snapshot.data ?? _Constants.defaultLocaleState;
         final supportedLocales =
             state.availableLocales.map<Locale>((e) => e.locale).toList();
         return MaterialApp(
