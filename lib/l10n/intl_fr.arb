@@ -1,0 +1,648 @@
+{
+    "@@last_modified": "2020-07-13T11:53:16.923601",
+    "Related articles": "Articles connexes",
+    "@Related articles": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Related groups": "Groupes connexes",
+    "@Related groups": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Recommendations": "Recommandations",
+    "@Recommendations": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "My Plot": "Mon Plot",
+    "@My Plot": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Discover": "Découvrir",
+    "@Discover": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Community": "Communauté",
+    "@Community": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Join the WhatsApp group and discuss with fellow farmers.": "Rejoignez le groupe WhatsApp et discutez avec d'autres agriculteurs.",
+    "@Join the WhatsApp group and discuss with fellow farmers.": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "A network and knowledge source for farmers in Kenya": "Un réseau et une source de connaissances pour les agriculteurs kenyans",
+    "@A network and knowledge source for farmers in Kenya": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Get Started": "Commencer",
+    "@Get Started": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Switch language – Badilisha Lugha": "Changer de langue – Switch language",
+    "@Switch language – Badilisha Lugha": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Finish": "Terminer",
+    "@Finish": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Clear Selection": "Vider la sélection",
+    "@Clear Selection": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Cancel": "Abandonner",
+    "@Cancel": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Confirm": "Valider",
+    "@Confirm": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Edit Photo": "Modifier la photo",
+    "@Edit Photo": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "No image picked": "Aucune image sélectionnée",
+    "@No image picked": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "No cropped image": "Aucune image recadrée",
+    "@No cropped image": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Oops, there was a problem!": "Oups, il y a eu un problème !",
+    "@Oops, there was a problem!": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Retry": "Réessayer",
+    "@Retry": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "In progress crops": "Cultures en cours",
+    "@In progress crops": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Edit Farm Details": "Modifier les détails de la ferme",
+    "@Edit Farm Details": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Completed": "Complété",
+    "@Completed": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Switch Profile": "Changer de profil",
+    "@Switch Profile": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Switch Language": "Changer de langue",
+    "@Switch Language": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Your Farm Details": "Détails de votre Ferme",
+    "@Your Farm Details": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Create New Profile": "Créer un nouveau profil",
+    "@Create New Profile": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Invite Friends": "Inviter des amis",
+    "@Invite Friends": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Privacy Policy": "Politique de confidentialité",
+    "@Privacy Policy": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Terms of use": "Conditions d'utilisation",
+    "@Terms of use": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Logout": "Déconnexion",
+    "@Logout": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Remove Profile": "Retirer le profil",
+    "@Remove Profile": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Pick image from gallery": "Choisir une image dans la galerie",
+    "@Pick image from gallery": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Take picture from camera": "Prendre une photo depuis l'appareil photo",
+    "@Take picture from camera": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Rename profile": "Renommer le profil",
+    "@Rename profile": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Username": "Nom d'utilisateur",
+    "@Username": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Enable Offline Use": "Activer l'utilisation hors ligne",
+    "@Enable Offline Use": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Join to the new smart farming app - FarmSmart \n": "Rejoignez la nouvelle application de agriculture intelligente - FarmSmart \n",
+    "@Join to the new smart farming app - FarmSmart \n": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Edit Profile": "Modifier le profil",
+    "@Edit Profile": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Delete Profile": "Retirer le profil",
+    "@Delete Profile": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Delete": "Retirer",
+    "@Delete": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Are you sure you want to delete your profile? Doing so will erase all data and this action cannot be undone.": "Êtes-vous sûr de vouloir supprimer votre profil ? Cela effacera toutes les données et cette action ne pourra pas être annulée.",
+    "@Are you sure you want to delete your profile? Doing so will erase all data and this action cannot be undone.": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Are you sure you would like to complete this action?": "Êtes-vous sûr de vouloir terminer cette action ?",
+    "@Are you sure you would like to complete this action?": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Rename Crop": "Renommer le recadrage",
+    "@Rename Crop": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Crop name": "Nom du rognage",
+    "@Crop name": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Remove Crop": "Retirer le recadrage",
+    "@Remove Crop": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Remove": "Retirer",
+    "@Remove": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Remove crop": "Retirer le recadrage",
+    "@Remove crop": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Are you sure you want to remove the crop? All progress will be lost.": "Êtes-vous sûr de vouloir supprimer le recadrage ? Tous les progrès seront perdus.",
+    "@Are you sure you want to remove the crop? All progress will be lost.": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Learn more about": "En savoir plus sur",
+    "@Learn more about": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Get started by adding to your plot": "Commencez par ajouter à votre parcelle",
+    "@Get started by adding to your plot": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Add to your Plot": "Ajouter à votre lot",
+    "@Add to your Plot": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Check out this article from the FarmSmart mobile app \n ": "Consultez cet article depuis l'application mobile FarmSmart \n ",
+    "@Check out this article from the FarmSmart mobile app \n ": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "View more on the web": "Voir plus sur le web",
+    "@View more on the web": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Record a new Cost": "Enregistrer un coût",
+    "@Record a new Cost": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Record a new Sale": "Enregistrer une Vente",
+    "@Record a new Sale": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Get started by adding your first transaction": "Commencez par ajouter votre première transaction",
+    "@Get started by adding your first transaction": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Add a transaction": "Ajouter une transaction",
+    "@Add a transaction": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Date": "Date",
+    "@Date": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Crop": "Rogner",
+    "@Crop": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Today": "Aujourd'hui",
+    "@Today": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Select...": "Sélection...",
+    "@Select...": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Description (optional)...": "Description (optionnelle)...",
+    "@Description (optional)...": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Edit record": "Modifier l'enregistrement",
+    "@Edit record": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Save": "Enregistrer",
+    "@Save": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Remove record": "Supprimer l'enregistrement",
+    "@Remove record": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Are you sure you want to remove this record? This action cannot be undone.": "Êtes-vous sûr de vouloir supprimer cet enregistrement ? Cette action ne peut pas être annulée.",
+    "@Are you sure you want to remove this record? This action cannot be undone.": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "To allow offline use, you must download the apps most recent content. Please check your connection to avoid data charges.": "Pour permettre une utilisation hors ligne, vous devez télécharger le contenu le plus récent des applications. Veuillez vérifier votre connexion pour éviter les frais de données.",
+    "@To allow offline use, you must download the apps most recent content. Please check your connection to avoid data charges.": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Download": "Télécharger",
+    "@Download": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Please Wait": "Veuillez patienter",
+    "@Please Wait": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Option": "Option",
+    "@Option": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Reset Process": "Réinitialiser le processus",
+    "@Reset Process": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Skip": "Ignorer",
+    "@Skip": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Confirm Details": "Confirmer les détails",
+    "@Confirm Details": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Send": "Envoyer",
+    "@Send": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Message should not be empty": "Le message ne doit pas être vide",
+    "@Message should not be empty": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Type a message": "Tapez un message",
+    "@Type a message": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Provided TEXT is not valid": "Le TEXT fourni n'est pas valide",
+    "@Provided TEXT is not valid": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Provided EMAIL is not valid": "Le courrier électronique fourni n'est pas valide",
+    "@Provided EMAIL is not valid": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Provided PHONE is not valid": "TÉLÉPHONE fourni n'est pas valide",
+    "@Provided PHONE is not valid": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Provided summary is not correct": "Le résumé fourni n'est pas correct",
+    "@Provided summary is not correct": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "View Your Details": "Voir les détails",
+    "@View Your Details": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Add Another Crop": "Ajouter une autre culture",
+    "@Add Another Crop": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Day": "Jour",
+    "@Day": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Upcoming": "À venir",
+    "@Upcoming": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "View more on the Web": "Voir plus sur le web",
+    "@View more on the Web": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Discover much more information using this link...": "Découvrez bien plus d'informations en utilisant ce lien...",
+    "@Discover much more information using this link...": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Stage": "Étape",
+    "@Stage": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "In Progress": "En cours",
+    "@In Progress": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Complete": "Complete",
+    "@Complete": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Revert to In Progress": "Revenir à en cours",
+    "@Revert to In Progress": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Begin Stage": "Phase de Début",
+    "@Begin Stage": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Please complete previous": "Veuillez compléter le précédent",
+    "@Please complete previous": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Mark as complete": "Marquer comme terminé",
+    "@Mark as complete": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Begin crop": "Commencer le recadrage",
+    "@Begin crop": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Complete crop": "Recadrage complet",
+    "@Complete crop": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Revert crop": "Annuler le recadrage",
+    "@Revert crop": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Are you sure you want to mark this stage as in progress?": "Êtes-vous sûr de vouloir marquer cette étape comme en cours ?",
+    "@Are you sure you want to mark this stage as in progress?": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Are you sure you want to mark this stage as complete?": "Êtes-vous sûr de vouloir marquer cette étape comme terminée ?",
+    "@Are you sure you want to mark this stage as complete?": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Are you sure you want to market this crop as complete?": "Êtes-vous sûr de vouloir marquer cette étape comme terminée ?",
+    "@Are you sure you want to market this crop as complete?": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Are you sure you want revert the stage status?": "Êtes-vous sûr de vouloir annuler le statut d'étape?",
+    "@Are you sure you want revert the stage status?": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "assets/responses/farmsmart_chat_ui_flow.json": "assets/réponses/farmsmart_chat_ui_flow.json",
+    "@assets/responses/farmsmart_chat_ui_flow.json": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Operation already in progress": "Opération déjà en cours",
+    "@Operation already in progress": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Best Soil": "Meilleur sol",
+    "@Best Soil": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Water Frequency": "Fréquence de l'eau",
+    "@Water Frequency": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Crop Type": "Type de culture",
+    "@Crop Type": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Complexity": "Complexité",
+    "@Complexity": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Setup Costs": "Coûts d'installation",
+    "@Setup Costs": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Profitability": "Bénéficiabilité",
+    "@Profitability": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Companion Plants": "Plantes compagnon",
+    "@Companion Plants": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Non-Companion Plants": "Plantes hors compagnon",
+    "@Non-Companion Plants": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Low": "Bas",
+    "@Low": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Medium": "Moyenne",
+    "@Medium": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "High": "Élevé",
+    "@High": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Single": "Simple",
+    "@Single": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Rotation": "Rotation",
+    "@Rotation": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Beginner": "Débutant",
+    "@Beginner": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Advance": "Avancé",
+    "@Advance": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Intermediate": "Intermédiaire",
+    "@Intermediate": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Match": "Correspondance",
+    "@Match": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "View Details": "Voir les détails",
+    "@View Details": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Add to Plot": "Ajouter au tracé",
+    "@Add to Plot": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Added": "Ajouté",
+    "@Added": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "No description": "Pas de description",
+    "@No description": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "General": "Généraux",
+    "@General": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Currency": "Devise",
+    "@Currency": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Record a Cost": "Enregistrer un coût",
+    "@Record a Cost": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Record a Sale": "Enregistrer une Vente",
+    "@Record a Sale": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Switch profile": "Changer de profil",
+    "@Switch profile": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "minute read": "minute lue",
+    "@minute read": {
+        "type": "text",
+        "placeholders": {}
+    }
+}
