@@ -52,7 +52,7 @@ class FarmsmartLocalizationsDelegate extends LocalizationsDelegate<FarmsmartLoca
   }
 
   @override
-  bool isSupported(Locale locale) => _languagesSupported.contains(locale.languageCode);
+  bool isSupported(Locale locale) => _languagesSupported.contains(_canonicalLocale(locale));
 
   @override
   Future<FarmsmartLocalizations> load(Locale locale) => FarmsmartLocalizations.load();
