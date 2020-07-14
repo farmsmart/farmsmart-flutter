@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:farmsmart_flutter/farmsmart_localizations.dart';
+import 'package:farmsmart_flutter/model/analytics_interface.dart';
 import 'package:farmsmart_flutter/model/bloc/ResetStateWidget.dart';
 import 'package:farmsmart_flutter/model/bloc/ViewModelProvider.dart';
 import 'package:farmsmart_flutter/model/bloc/chatFlow/CreateAccountFlow.dart';
@@ -91,6 +91,17 @@ class _Icons {
   static final inviteFriends = 'assets/icons/detail_icon_invite.png';
   static final checkBoxIcon = "assets/icons/radio_button_default.png";
   static final downloadIcon =  "assets/icons/detail_icon_sale.png";
+}
+
+class _Events {
+  static const switchProfileInteraction = 'switch_profile';
+  static const switchLanguageInteraction = 'switch_lanaguage';
+  static const editProfileInteraction = 'edit_profile';
+  static const createNewProfileInteraction = 'create_profile';
+  static const inviteFriendsInteraction = 'invite_friends';
+  static const privacyPolicyInteraction = 'privacy_policy';
+  static const termsOfUseInteraction = 'terms';
+  static const renameProfileInteraction = 'rename_profile';
 }
 
 class _Constants {
@@ -455,6 +466,7 @@ class Profile extends StatelessWidget {
     BuildContext context,
     ViewModelProvider<SwitchProfileListViewModel> provider,
   }) {
+    AnalyticsInterface.of(context).interaction(_Events.switchProfileInteraction);
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => SwitchProfileList(provider: provider),
@@ -492,7 +504,7 @@ class Profile extends StatelessWidget {
     items.add(ProfileListItemViewModel(
       title: _LocalisedStrings.inviteFriends(),
       icon: _Icons.inviteFriends,
-      onTap: () => _inviteFriends(),
+      onTap: () => _inviteFriends(context),
       isDestructive: false,
     ));
 
@@ -536,6 +548,7 @@ class Profile extends StatelessWidget {
   }
 
   void _switchLanguage(BuildContext context, ProfileViewModel viewModel) {
+    AnalyticsInterface.of(context).interaction(_Events.switchLanguageInteraction);
     ActionSheet.present(_languageMenu(context,viewModel), context);
   }
 
@@ -557,6 +570,7 @@ class Profile extends StatelessWidget {
   }
 
   void _editProfile(ProfileViewModel viewModel, BuildContext context) {
+    AnalyticsInterface.of(context).interaction(_Events.editProfileInteraction);
     return viewModel.editProfileFlow.run(
           context,
           onSuccess: () => _onEditProfileSuccess(context),
@@ -564,18 +578,22 @@ class Profile extends StatelessWidget {
   }
 
   void _createNewProfile(ProfileViewModel viewModel, BuildContext context) {
+    AnalyticsInterface.of(context).interaction(_Events.createNewProfileInteraction);
     viewModel.newAccountFlow.run(context);
   }
 
-  void _inviteFriends() async {
+  void _inviteFriends(BuildContext context) async {
+     AnalyticsInterface.of(context).interaction(_Events.inviteFriendsInteraction);
     await Share.share('${_LocalisedStrings.shareText()} ${_Strings.shareLink}');
   }
 
   void _openPrivacyPolicy(BuildContext context) {
+    AnalyticsInterface.of(context).interaction(_Events.privacyPolicyInteraction);
     _navigateToWebView(context, _Strings.privacyPolicyUrl);
   }
 
   void _openTermsOfUse(BuildContext context) {
+     AnalyticsInterface.of(context).impression(_Events.termsOfUseInteraction);
     _navigateToWebView(context, _Strings.termsOfUseUrl);
   }
 
@@ -608,7 +626,7 @@ class Profile extends StatelessWidget {
         title: title,
         type: ActionType.selectable,
         checkBoxIcon: _Icons.checkBoxIcon,
-        isSelected: contentLocale.locale == viewModel.currentLocale,
+        isSelected: contentLocale.locale == viewModel.currentLocale.locale,
         onTap: () {
           viewModel.switchLanguageTapped(contentLocale.locale.languageCode, contentLocale.locale.countryCode);
           ResetStateWidget.resetState(context);
@@ -657,6 +675,7 @@ class Profile extends StatelessWidget {
   }
 
   void _renameProfileAction(ProfileViewModel viewModel, BuildContext context) {
+    AnalyticsInterface.of(context).interaction(_Events.renameProfileInteraction);
     InputAlert.present(_renameInputAlert(viewModel), context);
   }
 

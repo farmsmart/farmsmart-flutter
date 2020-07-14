@@ -1,12 +1,18 @@
+import 'package:farmsmart_flutter/model/analytics_interface.dart';
 import 'package:farmsmart_flutter/model/repositories/locale/locale_repository_interface.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:provider/provider.dart';
 
 
 import 'app_coordinator.dart';
 import 'farmsmart_localizations.dart';
 import 'flavors/app_config.dart';
+import 'model/analytics_firebase.dart';
 import 'model/repositories/image/ImageRepositoryInterface.dart';
+
+AnalyticsInterface analytics = AnalyticsFirebase(FirebaseAnalytics());
 
 class _Constants {
   static final String fontFamily = 'IBMPlexSans';
@@ -25,13 +31,13 @@ class FarmSmartApp extends StatefulWidget {
   @override
   _FarmSmartAppState createState() => _FarmSmartAppState();
 }
-
-
+  
 class _FarmSmartAppState extends State<FarmSmartApp> {
   @override
   Widget build(BuildContext context) {
     final repositoryProvider = AppConfig.of(context).repositoryProvider;
     repositoryProvider.init(context);
+    final analyticsProvider = Provider.value(value: analytics);
     return FutureBuilder<LocaleState>(
       future: repositoryProvider
             .getLocaleRepository()
@@ -46,7 +52,10 @@ class _FarmSmartAppState extends State<FarmSmartApp> {
         final LocaleState state = snapshot.data ?? _Constants.defaultLocaleState;
         final supportedLocales =
             state.availableLocales.map<Locale>((e) => e.locale).toList();
-        return MaterialApp(
+        return MultiProvider(
+      providers: [analyticsProvider],
+      child: MaterialApp(
+          navigatorObservers: [analytics.navigationObserver],
           locale: state.currentLocale.locale,
           onGenerateTitle: (context) => _String.title(),
           localizationsDelegates: [
@@ -63,7 +72,7 @@ class _FarmSmartAppState extends State<FarmSmartApp> {
             accentColor: _Constants.accentColor,
           ),
           home: AppCoordinator(),
-        );
+        ),);
       },
     );
   }
