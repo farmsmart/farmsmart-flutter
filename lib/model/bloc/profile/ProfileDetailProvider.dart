@@ -36,7 +36,7 @@ class ProfileDetailProvider
   int _completedCrops = 0;
   ProfileViewModel _snapshot;
   ProfileEntity _currentProfile;
-  List<ContentLocale> _availableLocales;
+  LocaleState _localeState;
   PlotStatistics _plotStatistics = PlotStatistics();
   LoadingStatus _loadingStatus = LoadingStatus.LOADING;
   bool _canDeleteProfile = false;
@@ -74,20 +74,20 @@ class ProfileDetailProvider
         currentAccount?.profileRepository
             ?.observeCurrent()
             ?.listen((currentProfile) {
-          _localesRepository.availableLocales().then((availableLocales) {
-            _availableLocales = availableLocales;
+          _localesRepository.getLocaleState().then((localeState) {
+            _localeState = localeState;
             _loadingStatus = LoadingStatus.SUCCESS;
             _currentProfile = currentProfile;
             _snapshot = transform(
-                from: currentProfile, supportedLocales: _availableLocales);
+                from: currentProfile);
             _controller.sink.add(_snapshot);
           });
         });
 
         _profileRepository?.get()?.then((profiles) {
           _canDeleteProfile = profiles.length > 1;
-          _localesRepository.availableLocales().then((availableLocales) {
-            _availableLocales = availableLocales;
+          _localesRepository.getLocaleState().then((localeState) {
+            _localeState = localeState;
             _update();
           });
         });
@@ -118,7 +118,7 @@ class ProfileDetailProvider
 
   @override
   ProfileViewModel transform(
-      {ProfileEntity from, List<ContentLocale> supportedLocales}) {
+      {ProfileEntity from}) {
     final switchProfileProvider =
         SwitchProfileListProvider(accountRepo: _accountRepository);
     final personName = PersonName(from?.name ?? "");
@@ -140,7 +140,8 @@ class ProfileDetailProvider
       saveProfileImage: (file) => _saveProfileImage(file, from),
       renameProfile: (username) => _renameProfile(username),
       editProfileFlow: _editProfileFlow,
-      supportedLocales: supportedLocales,
+      supportedLocales: _localeState?.availableLocales,
+      currentLocale: _localeState?.currentLocale,
       downloaderViewModelProvider: OfflineDownloaderProvider(_downloader),
     );
   }
@@ -172,7 +173,7 @@ class ProfileDetailProvider
 
   void _update() {
     _snapshot =
-        transform(from: _currentProfile, supportedLocales: _availableLocales);
+        transform(from: _currentProfile);
     _controller.sink.add(_snapshot);
   }
 
