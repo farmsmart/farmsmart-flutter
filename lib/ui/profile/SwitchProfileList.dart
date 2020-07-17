@@ -82,6 +82,7 @@ class _DefaultStyle extends SwitchProfileListStyle {
 const SwitchProfileListStyle _defaultStyle = const _DefaultStyle();
 
 class SwitchProfileList extends StatefulWidget {
+  static const analyticsName = 'switch_profile_list';
   final ViewModelProvider<SwitchProfileListViewModel> _provider;
   final SwitchProfileListStyle _style;
 

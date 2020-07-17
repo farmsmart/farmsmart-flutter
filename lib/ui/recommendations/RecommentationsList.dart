@@ -271,7 +271,9 @@ class RecommendationsList extends StatelessWidget implements ListViewSection {
             viewModel: recommendationCardViewModel,
             style: RecommendationDetailCardStyles.build(),
           ),
+           
         ),
+         settings: RouteSettings(name:CropDetail.analyticsName),
       ),
     );
   }

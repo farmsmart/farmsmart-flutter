@@ -8,6 +8,7 @@ import 'package:farmsmart_flutter/ui/common/modal_navigator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 
+import '../../analytics_interface.dart';
 import '../Transformer.dart';
 import 'FlowCoordinator.dart';
 
@@ -23,6 +24,10 @@ class _LocalisedStrings {
 
 class _Strings {
   static const nameField = "Name";
+}
+
+class _AnalyticsNames {
+  static const newProfile = 'new_profile';
 }
 
 class NewProfileFlowCoordinator implements FlowCoordinator {
@@ -41,6 +46,7 @@ class NewProfileFlowCoordinator implements FlowCoordinator {
           ChatPage(
               viewModel: _chatPageViewModel(onSuccess: () {
             _setStatus(FlowCoordinatorStatus.Complete);
+            
             if (onSuccess != null) {
               onSuccess();
             }
@@ -64,7 +70,13 @@ class NewProfileFlowCoordinator implements FlowCoordinator {
       if (chatInput != null) {
         _updateAccount(
           data,
-          onSuccess,
+          (){
+                 final valueMap = chatInput.map<String, String>(
+                (key, value) => MapEntry(key, value.value.toString()));
+            AnalyticsInterface.implementation()
+                .effect(_AnalyticsNames.newProfile, parameters: valueMap);
+            onSuccess();
+          },
           onFail,
         );
       } else {

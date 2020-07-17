@@ -93,7 +93,7 @@ class _Icons {
   static final downloadIcon =  "assets/icons/detail_icon_sale.png";
 }
 
-class _Events {
+class _AnalyticsNames {
   static const switchProfileInteraction = 'switch_profile';
   static const switchLanguageInteraction = 'switch_lanaguage';
   static const editProfileInteraction = 'edit_profile';
@@ -466,10 +466,11 @@ class Profile extends StatelessWidget {
     BuildContext context,
     ViewModelProvider<SwitchProfileListViewModel> provider,
   }) {
-    AnalyticsInterface.of(context).interaction(_Events.switchProfileInteraction);
+    AnalyticsInterface.implementation().interaction(_AnalyticsNames.switchProfileInteraction);
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => SwitchProfileList(provider: provider),
+        settings: RouteSettings(name:SwitchProfileList.analyticsName),
       ),
     );
   }
@@ -548,7 +549,7 @@ class Profile extends StatelessWidget {
   }
 
   void _switchLanguage(BuildContext context, ProfileViewModel viewModel) {
-    AnalyticsInterface.of(context).interaction(_Events.switchLanguageInteraction);
+    AnalyticsInterface.implementation().interaction(_AnalyticsNames.switchLanguageInteraction);
     ActionSheet.present(_languageMenu(context,viewModel), context);
   }
 
@@ -570,7 +571,7 @@ class Profile extends StatelessWidget {
   }
 
   void _editProfile(ProfileViewModel viewModel, BuildContext context) {
-    AnalyticsInterface.of(context).interaction(_Events.editProfileInteraction);
+    AnalyticsInterface.implementation().interaction(_AnalyticsNames.editProfileInteraction);
     return viewModel.editProfileFlow.run(
           context,
           onSuccess: () => _onEditProfileSuccess(context),
@@ -578,22 +579,22 @@ class Profile extends StatelessWidget {
   }
 
   void _createNewProfile(ProfileViewModel viewModel, BuildContext context) {
-    AnalyticsInterface.of(context).interaction(_Events.createNewProfileInteraction);
+    AnalyticsInterface.implementation().interaction(_AnalyticsNames.createNewProfileInteraction);
     viewModel.newAccountFlow.run(context);
   }
 
   void _inviteFriends(BuildContext context) async {
-     AnalyticsInterface.of(context).interaction(_Events.inviteFriendsInteraction);
+     AnalyticsInterface.implementation().interaction(_AnalyticsNames.inviteFriendsInteraction);
     await Share.share('${_LocalisedStrings.shareText()} ${_Strings.shareLink}');
   }
 
   void _openPrivacyPolicy(BuildContext context) {
-    AnalyticsInterface.of(context).interaction(_Events.privacyPolicyInteraction);
+    AnalyticsInterface.implementation().interaction(_AnalyticsNames.privacyPolicyInteraction);
     _navigateToWebView(context, _Strings.privacyPolicyUrl);
   }
 
   void _openTermsOfUse(BuildContext context) {
-     AnalyticsInterface.of(context).impression(_Events.termsOfUseInteraction);
+     AnalyticsInterface.implementation().impression(_AnalyticsNames.termsOfUseInteraction);
     _navigateToWebView(context, _Strings.termsOfUseUrl);
   }
 
@@ -675,7 +676,7 @@ class Profile extends StatelessWidget {
   }
 
   void _renameProfileAction(ProfileViewModel viewModel, BuildContext context) {
-    AnalyticsInterface.of(context).interaction(_Events.renameProfileInteraction);
+    AnalyticsInterface.implementation().interaction(_AnalyticsNames.renameProfileInteraction);
     InputAlert.present(_renameInputAlert(viewModel), context);
   }
 

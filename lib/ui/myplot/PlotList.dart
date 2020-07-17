@@ -1,3 +1,4 @@
+import 'package:farmsmart_flutter/model/analytics_interface.dart';
 import 'package:farmsmart_flutter/model/bloc/ViewModelProvider.dart';
 import 'package:farmsmart_flutter/model/entities/loading_status.dart';
 import 'package:farmsmart_flutter/ui/common/LoadableViewModel.dart';
@@ -31,6 +32,10 @@ class _Strings {
 class _Constants {
   static const titlePaddingOnEmptyState = const EdgeInsets.only(top: 31);
   static const double bottomHeightSpaceForStickButton = 100;
+}
+
+class _AnalyticsNames {
+    static const addToPlot = 'add_to_plot';
 }
 
 class PlotListViewModel implements LoadableViewModel, RefreshableViewModel {
@@ -166,10 +171,12 @@ class _PlotListState extends State<PlotList> {
             itemCount: viewModel.items.length,
             itemBuilder: (BuildContext context, int index) {
               final itemViewModel = viewModel.items[index];
-              final tapFunction = () => _tappedListItem(
+              final tapFunction = () {
+                 AnalyticsInterface.implementation().interaction(PlotDetail.analyticsName, context: itemViewModel.title);
+                _tappedListItem(
                     context: context,
                     provider: itemViewModel.detailViewModelProvider,
-                  );
+                  );};
               return PlotListItem().buildListItem(
                 viewModel: viewModel.items[index],
                 onTap: tapFunction,
@@ -300,6 +307,7 @@ class _PlotListState extends State<PlotList> {
     BuildContext context,
     ViewModelProvider<RecommendationsListViewModel> provider,
   }) {
+    AnalyticsInterface.implementation().interaction(_AnalyticsNames.addToPlot);
     NavigationScope.presentModal(
       context,
       RecommendationsList(provider: provider),
@@ -313,6 +321,8 @@ class _PlotListState extends State<PlotList> {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => PlotDetail(provider: provider),
+        settings: RouteSettings(name:PlotDetail.analyticsName)
+        
       ),
     );
   }

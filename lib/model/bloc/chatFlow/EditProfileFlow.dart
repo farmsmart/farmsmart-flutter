@@ -7,6 +7,7 @@ import 'package:farmsmart_flutter/ui/common/modal_navigator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 
+import '../../analytics_interface.dart';
 import '../Transformer.dart';
 import 'FlowCoordinator.dart';
 
@@ -22,6 +23,11 @@ class _LocalisedStrings {
 
 class _Strings {
   static const nameField = "Name";
+}
+
+class _AnalyticsNames {
+  static const updateProfile = 'update_profile';
+  static const updateProfileFailed = 'update_profile_failed';
 }
 
 class EditProfileFlowCoordinator implements FlowCoordinator {
@@ -63,8 +69,19 @@ class EditProfileFlowCoordinator implements FlowCoordinator {
       if (chatInput != null) {
         _updateAccount(
           data,
-          onSuccess,
-          onFail,
+          () {
+            final valueMap = chatInput.map<String, String>(
+                (key, value) => MapEntry(key, value.value.toString()));
+            AnalyticsInterface.implementation()
+                .effect(_AnalyticsNames.updateProfile, parameters: valueMap);
+            onSuccess();
+          },
+          () {
+            AnalyticsInterface.implementation()
+                .effect(_AnalyticsNames.updateProfileFailed);
+
+            onFail();
+          },
         );
       } else {
         onFail();
@@ -94,7 +111,9 @@ class EditProfileFlowCoordinator implements FlowCoordinator {
             currentProfile.avatar,
             plotInfo,
           );
-          account.profileRepository.updateCurrent(editedProfile).then((profile){
+          account.profileRepository
+              .updateCurrent(editedProfile)
+              .then((profile) {
             account.profileRepository.switchTo(profile).then((result) {
               result ? onSuccess() : onFail();
             });

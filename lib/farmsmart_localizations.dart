@@ -5,6 +5,12 @@ import 'package:intl/intl.dart';
 import 'package:farmsmart_flutter/l10n/messages_all.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'model/analytics_interface.dart';
+
+class _AnalyticsNames {
+  static const switchLocale = 'locale_changed';
+  static const localeParameter = 'locale';
+}
 
 class _Field {
   static String locale = 'locale';
@@ -16,6 +22,7 @@ class FarmsmartLocalizations {
   static Future<FarmsmartLocalizations> load() async {
     Locale locale = await getLocale();
     String localeName = _canonicalLocale(locale);
+    AnalyticsInterface.implementation().userProperty(_AnalyticsNames.localeParameter, locale.toString());
     return initializeMessages(localeName).then((_) {
       Intl.defaultLocale = localeName;
       return FarmsmartLocalizations();
@@ -30,6 +37,8 @@ class FarmsmartLocalizations {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString(_Field.locale, locale.languageCode);
     prefs.setString(_Field.country, locale.countryCode);
+    final stringLocale = locale.toString();
+    AnalyticsInterface.implementation().effect(_AnalyticsNames.switchLocale, parameters:{_AnalyticsNames.localeParameter :stringLocale});
   }
 
   static Future<Locale> getLocale() async {
