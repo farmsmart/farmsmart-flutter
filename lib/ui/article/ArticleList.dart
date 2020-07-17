@@ -1,3 +1,4 @@
+import 'package:farmsmart_flutter/model/analytics_interface.dart';
 import 'package:farmsmart_flutter/model/bloc/ViewModelProvider.dart';
 import 'package:farmsmart_flutter/ui/article/ArticleDetail.dart';
 import 'package:farmsmart_flutter/ui/article/HeroListItem.dart';
@@ -57,6 +58,7 @@ class _DefaultStyle extends ArticleListStyle {
 const ArticleListStyle _defaultStyle = const _DefaultStyle();
 
 class ArticleList extends StatelessWidget {
+  static const analyticsName = 'article_list';
   static ArticleListStyle defaultStyle = _defaultStyle;
   final ViewModelProvider<ArticleListViewModel> _viewModelProvider;
   final ArticleListStyle _style;
@@ -120,9 +122,11 @@ class ArticleList extends StatelessWidget {
     BuildContext context,
     ArticleDetailViewModel viewModel,
   }) {
+    AnalyticsInterface.implementation().interaction(ArticleDetail.analyticsName, context: viewModel.title);
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => ArticleDetail(viewModel: viewModel),
+        settings: RouteSettings(name:ArticleDetail.analyticsName)
       ),
     );
   }
@@ -132,6 +136,7 @@ class ArticleList extends StatelessWidget {
     AsyncSnapshot<ArticleListViewModel> snapshot,
   }) {
     final viewModel = snapshot.data;
+    AnalyticsInterface.implementation().impression(analyticsName, context: viewModel.title);
     return HeaderAndFooterListView(
         itemCount: viewModel.articleListItemViewModels.length,
         itemBuilder:

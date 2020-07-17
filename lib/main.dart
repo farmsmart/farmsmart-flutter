@@ -12,7 +12,7 @@ import 'flavors/app_config.dart';
 import 'model/analytics_firebase.dart';
 import 'model/repositories/image/ImageRepositoryInterface.dart';
 
-AnalyticsInterface analytics = AnalyticsFirebase(FirebaseAnalytics());
+AnalyticsInterface analytics = AnalyticsFirebaseImp(FirebaseAnalytics());
 
 class _Constants {
   static final String fontFamily = 'IBMPlexSans';
@@ -34,10 +34,15 @@ class FarmSmartApp extends StatefulWidget {
   
 class _FarmSmartAppState extends State<FarmSmartApp> {
   @override
+  void initState() {
+    AnalyticsInterface.registerImplementation(analytics);
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
     final repositoryProvider = AppConfig.of(context).repositoryProvider;
     repositoryProvider.init(context);
-    final analyticsProvider = Provider.value(value: analytics);
+    final provider = Provider.value(value: repositoryProvider);
     return FutureBuilder<LocaleState>(
       future: repositoryProvider
             .getLocaleRepository()
@@ -53,9 +58,8 @@ class _FarmSmartAppState extends State<FarmSmartApp> {
         final supportedLocales =
             state.availableLocales.map<Locale>((e) => e.locale).toList();
         return MultiProvider(
-      providers: [analyticsProvider],
+      providers: [provider],
       child: MaterialApp(
-          navigatorObservers: [analytics.navigationObserver],
           locale: state.currentLocale.locale,
           onGenerateTitle: (context) => _String.title(),
           localizationsDelegates: [

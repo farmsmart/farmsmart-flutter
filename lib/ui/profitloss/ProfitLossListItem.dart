@@ -110,6 +110,7 @@ _navigateToDetail(BuildContext context, RecordTransactionViewModel viewModel) {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => RecordTransaction(viewModel: viewModel),
+         settings: RouteSettings(name:RecordTransaction.analyticsName),
       ),
     );
 }

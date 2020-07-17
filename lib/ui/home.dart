@@ -54,6 +54,15 @@ class _LocalisedStrings {
       Intl.message('Join the WhatsApp group and discuss with fellow farmers.');
 }
 
+class _AnalyticsNames {
+  static const myPlot = 'my_plot_tab';
+  static const profitAndLoss = 'profit_and_loss_tab';
+  static const discover = 'discover_tab';
+  static const community = 'community_tab';
+  static const profile = 'profile_tab';
+  static const debug = 'debug_tab';
+}
+
 class _Icons {
   static final whatsApp = 'assets/icons/WhatsApp_Logo_short.png';
 }
@@ -94,21 +103,26 @@ class Home extends StatelessWidget {
         _buildMyPlot(viewModel),
         _Constants.myPlotSelectedIcon,
         _Constants.myPlotIcon,
+        _AnalyticsNames.myPlot,
+        
       ),
       _buildTabNavigator(
         _buildProfitAndLoss(viewModel),
         _Constants.profitLossSelectedIcon,
         _Constants.profitLossIcon,
+        _AnalyticsNames.profitAndLoss,
       ),
       _buildTabNavigator(
         _buildDiscover(),
         _Constants.discoverSelectedIcon,
         _Constants.discoverIcon,
+        _AnalyticsNames.discover,
       ),
       _buildTabNavigator(
         _buildCommunity(),
         _Constants.communitySelectedIcon,
         _Constants.communityIcon,
+        _AnalyticsNames.community,
       ),
       _buildTabNavigatorWithCircleImageWidget(
           _buildUserProfile(viewModel), viewModel),
@@ -205,6 +219,7 @@ class Home extends StatelessWidget {
     Widget page,
     String activeIconPath,
     String iconPath,
+    String analyticsName,
   ) {
     return TabNavigator(
       child: page,
@@ -219,6 +234,7 @@ class Home extends StatelessWidget {
         ),
         title: SizedBox.shrink(),
       ),
+      analyticsName: analyticsName,
     );
   }
 
@@ -235,6 +251,7 @@ class Home extends StatelessWidget {
         icon: Text('Debug'),
         title: SizedBox.shrink(),
       ),
+      analyticsName: _AnalyticsNames.debug,
     );
   }
 
@@ -274,6 +291,7 @@ class Home extends StatelessWidget {
         ),
         title: SizedBox.shrink(),
       ),
+      analyticsName: _AnalyticsNames.profile,
     );
   }
 }

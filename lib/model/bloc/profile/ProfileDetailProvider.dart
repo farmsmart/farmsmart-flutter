@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:farmsmart_flutter/farmsmart_localizations.dart';
+import 'package:farmsmart_flutter/model/analytics_interface.dart';
 import 'package:farmsmart_flutter/model/bloc/Transformer.dart';
 import 'package:farmsmart_flutter/model/bloc/chatFlow/CreateAccountFlow.dart';
 import 'package:farmsmart_flutter/model/bloc/chatFlow/EditProfileFlow.dart';
@@ -23,6 +24,11 @@ import 'package:farmsmart_flutter/ui/profile/Profile.dart';
 import 'package:flutter/widgets.dart';
 
 import '../ViewModelProvider.dart';
+
+class _AnalyticsNames {
+  static const updatedImage = 'profile_image_updated';
+}
+
 
 class ProfileDetailProvider
     extends ObjectTransformer<ProfileEntity, ProfileViewModel>
@@ -194,6 +200,7 @@ class ProfileDetailProvider
       imageCache.evict(FileImage(File(
           savePath))); // we have to remove any cached image as the filename is the same
       file.copy(savePath).then((result) {
+         AnalyticsInterface.implementation().effect(_AnalyticsNames.updatedImage);
         _profileRepository.updateCurrent(from);
       });
     });

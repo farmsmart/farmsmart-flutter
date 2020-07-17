@@ -13,6 +13,7 @@ import 'package:farmsmart_flutter/chat/ui/widgets/chat.dart';
 import 'package:farmsmart_flutter/chat/ui/widgets/rounded_button.dart';
 import 'package:farmsmart_flutter/chat/ui/widgets/separator_wrapper.dart';
 import 'package:farmsmart_flutter/chat/ui/widgets/styles/rounded_button_styles.dart';
+import 'package:farmsmart_flutter/model/analytics_interface.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 
@@ -33,6 +34,12 @@ class _Constants {
   static const String typeValueMultiChoice = "com.wearemobilefirst.MultiChoice";
   static const String typeValueDropdown = "com.wearemobilefirst.Dropdown";
   static const String typeValueDate = "com.wearemobilefirst.Date";
+
+  
+}
+
+class _AnalyticsNames {
+  static const question = 'chat_question';
 }
 
 class _LocalisedStrings {
@@ -132,6 +139,9 @@ class ChatProvider implements ViewModelProvider<ChatViewModel> {
   void _insertMessageFromService() {
     _repo.getFormItem(_currentMessageCount).then((formItem) {
       if (formItem != null) {
+        if(formItem.inputRequest !=null) {
+           AnalyticsInterface.implementation().impression(_AnalyticsNames.question, context: formItem.inputRequest.uri);
+        }
         _insertNewMessageToList(
             _chatMessageHandler.getMessageFromEntity(formItem, _responseMap));
         _increaseMessageCount();
@@ -221,6 +231,7 @@ class ChatProvider implements ViewModelProvider<ChatViewModel> {
         type: inputType,
         isFocusedOnBuild: true,
         onValidationPassed: (value) {
+           AnalyticsInterface.implementation().interaction(_AnalyticsNames.question, context: entity.uri + '_' + value);
           _cleanKeyboard();
           _cleanInteractiveWidget();
           _getNextMessageByProvided(value);
@@ -242,6 +253,7 @@ class ChatProvider implements ViewModelProvider<ChatViewModel> {
           _interactiveMessageHandler.buildSelectableOptionsWidget(
         inputRequestEntity: entity,
         onTap: (option) {
+          AnalyticsInterface.implementation().interaction(_AnalyticsNames.question, context: entity.uri + '_' + option.id);
           _cleanInteractiveWidget();
           _getNextMessageByProvided(option.title);
           _putResponseToTheMap(
@@ -261,6 +273,7 @@ class ChatProvider implements ViewModelProvider<ChatViewModel> {
       _chatViewModel.interactiveWidget =
           _interactiveMessageHandler.buildDatePickerWidget(
         onSendPressed: (dateValue) {
+           AnalyticsInterface.implementation().interaction(_AnalyticsNames.question, context: entity.uri + '_' + dateValue.toString());
           _cleanInteractiveWidget();
           _getNextMessageByProvided(_formatDate(dateValue));
           _putResponseToTheMap(
@@ -281,6 +294,7 @@ class ChatProvider implements ViewModelProvider<ChatViewModel> {
           _interactiveMessageHandler.buildDropDownPickerWidget(
         inputRequestEntity: entity,
         onSendPressed: (option) {
+           AnalyticsInterface.implementation().interaction(_AnalyticsNames.question, context: entity.uri + '_' + option.id);
           _cleanInteractiveWidget();
           _getNextMessageByProvided(option.title);
           _putResponseToTheMap(

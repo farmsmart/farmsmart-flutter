@@ -154,6 +154,7 @@ const RecordTransactionStyle _defaultStyle = const _DefaultStyle();
 
 //TODO: We should refactor the whole widget in the future!!
 class RecordTransaction extends StatefulWidget {
+  static const analyticsName = 'record_transaction';
   final RecordTransactionViewModel _viewModel;
   final RecordTransactionStyle _style;
 
