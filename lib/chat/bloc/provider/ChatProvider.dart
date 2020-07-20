@@ -18,6 +18,7 @@ import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 
 class _Constants {
+  static const divider = '_';
   static const currentMessageIndex = 0;
   static const minMessagesLengthToUpdate = 3;
   static const previousMessageIndex = 1;
@@ -141,6 +142,7 @@ class ChatProvider implements ViewModelProvider<ChatViewModel> {
       if (formItem != null) {
         if(formItem.inputRequest !=null) {
            AnalyticsInterface.implementation().impression(_AnalyticsNames.question, context: formItem.inputRequest.uri);
+           AnalyticsInterface.implementation().impression(_AnalyticsNames.question + _Constants.divider + formItem.inputRequest.uri);
         }
         _insertNewMessageToList(
             _chatMessageHandler.getMessageFromEntity(formItem, _responseMap));
@@ -231,7 +233,9 @@ class ChatProvider implements ViewModelProvider<ChatViewModel> {
         type: inputType,
         isFocusedOnBuild: true,
         onValidationPassed: (value) {
-           AnalyticsInterface.implementation().interaction(_AnalyticsNames.question, context: entity.uri + '_' + value);
+          final context = entity.uri + _Constants.divider + value;
+           AnalyticsInterface.implementation().interaction(_AnalyticsNames.question, context: context);
+           AnalyticsInterface.implementation().interaction(_AnalyticsNames.question + _Constants.divider + context);
           _cleanKeyboard();
           _cleanInteractiveWidget();
           _getNextMessageByProvided(value);
@@ -253,7 +257,9 @@ class ChatProvider implements ViewModelProvider<ChatViewModel> {
           _interactiveMessageHandler.buildSelectableOptionsWidget(
         inputRequestEntity: entity,
         onTap: (option) {
-          AnalyticsInterface.implementation().interaction(_AnalyticsNames.question, context: entity.uri + '_' + option.id);
+          final context = entity.uri + _Constants.divider + option.id;
+          AnalyticsInterface.implementation().interaction(_AnalyticsNames.question, context: context);
+          AnalyticsInterface.implementation().interaction(_AnalyticsNames.question + _Constants.divider + context, context: context);
           _cleanInteractiveWidget();
           _getNextMessageByProvided(option.title);
           _putResponseToTheMap(
@@ -273,7 +279,9 @@ class ChatProvider implements ViewModelProvider<ChatViewModel> {
       _chatViewModel.interactiveWidget =
           _interactiveMessageHandler.buildDatePickerWidget(
         onSendPressed: (dateValue) {
-           AnalyticsInterface.implementation().interaction(_AnalyticsNames.question, context: entity.uri + '_' + dateValue.toString());
+          final context = entity.uri + _Constants.divider + dateValue.toString();
+           AnalyticsInterface.implementation().interaction(_AnalyticsNames.question, context: context);
+           AnalyticsInterface.implementation().interaction(_AnalyticsNames.question + _Constants.divider + context);
           _cleanInteractiveWidget();
           _getNextMessageByProvided(_formatDate(dateValue));
           _putResponseToTheMap(
@@ -294,7 +302,9 @@ class ChatProvider implements ViewModelProvider<ChatViewModel> {
           _interactiveMessageHandler.buildDropDownPickerWidget(
         inputRequestEntity: entity,
         onSendPressed: (option) {
-           AnalyticsInterface.implementation().interaction(_AnalyticsNames.question, context: entity.uri + '_' + option.id);
+          final context = entity.uri + _Constants.divider + option.id;
+           AnalyticsInterface.implementation().interaction(_AnalyticsNames.question, context: context);
+           AnalyticsInterface.implementation().interaction(_AnalyticsNames.question + _Constants.divider + context);
           _cleanInteractiveWidget();
           _getNextMessageByProvided(option.title);
           _putResponseToTheMap(
