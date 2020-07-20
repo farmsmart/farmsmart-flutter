@@ -20,7 +20,7 @@ class AnalyticsFirebaseImp extends AnalyticsInterface {
 
   Future<void> send(AnalyticsEvent event){
     final acceptableParameters = event.parameters.map<String, String>(
-                (key, value) => MapEntry(acceptableString(key), value));
+                (key, value) => MapEntry(acceptableString(key), value.toString()));
     final acceptableName = acceptableString(event.name);
     return analytics.logEvent(name: acceptableName, parameters: acceptableParameters);
   }
