@@ -10,6 +10,10 @@ import 'app_coordinator.dart';
 import 'farmsmart_localizations.dart';
 import 'flavors/app_config.dart';
 import 'model/analytics_firebase.dart';
+import 'model/bloc/ResetStateWidget.dart';
+import 'model/bloc/ViewModelProvider.dart';
+import 'model/bloc/locale/locale_selection_provider.dart';
+import 'model/bloc/locale/locale_selection_viewmodel.dart';
 import 'model/repositories/image/ImageRepositoryInterface.dart';
 
 AnalyticsInterface analytics = AnalyticsFirebaseImp(FirebaseAnalytics());
@@ -42,7 +46,9 @@ class _FarmSmartAppState extends State<FarmSmartApp> {
   Widget build(BuildContext context) {
     final repositoryProvider = AppConfig.of(context).repositoryProvider;
     repositoryProvider.init(context);
-    final provider = Provider.value(value: repositoryProvider);
+    final repoProvider = Provider.value(value: repositoryProvider);
+    final ViewModelProvider<LocaleSelectionViewModel> localeSelectionProvider = LocaleSelectionProvider(repositoryProvider.getLocaleRepository());
+    final localeProvider = Provider.value(value: localeSelectionProvider);
     return FutureBuilder<LocaleState>(
       future: repositoryProvider
             .getLocaleRepository()
@@ -58,8 +64,8 @@ class _FarmSmartAppState extends State<FarmSmartApp> {
         final supportedLocales =
             state.availableLocales.map<Locale>((e) => e.locale).toList();
         return MultiProvider(
-      providers: [provider],
-      child: MaterialApp(
+      providers: [repoProvider,localeProvider],
+      child: ResetStateWidget(child:MaterialApp(
           locale: state.currentLocale.locale,
           onGenerateTitle: (context) => _String.title(),
           localizationsDelegates: [
@@ -76,7 +82,7 @@ class _FarmSmartAppState extends State<FarmSmartApp> {
             accentColor: _Constants.accentColor,
           ),
           home: AppCoordinator(),
-        ),);
+        ),));
       },
     );
   }

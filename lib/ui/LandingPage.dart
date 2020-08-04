@@ -9,6 +9,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import 'common/locale_selection.dart';
 import 'offline/OfflineDownloadPage.dart';
 
 class _Strings {
@@ -195,7 +196,7 @@ class LandingPage extends StatelessWidget {
                     ),
                     GestureDetector(
                       behavior: HitTestBehavior.opaque,
-                      onTap: () => _languageTapped(_languageMenu(), context),
+                      onTap: () => _languageTapped(context),
                       child: Container(
                         margin: _Constants.actionTapArea,
                         child: Text(
@@ -230,36 +231,8 @@ class LandingPage extends StatelessWidget {
     OfflineDownloadPage.present(offlinePage, context);
   }
 
-  void _languageTapped(ActionSheet sheet, BuildContext context) {
-    ActionSheet.present(sheet, context);
+  void _languageTapped(BuildContext context) {
+    LocaleSelection.present(context);
   }
 
-  ActionSheet _languageMenu() {
-    final actions = [
-      ActionSheetListItemViewModel(
-        title: _Strings.englishAction,
-        type: ActionType.selectable,
-        icon: _Icons.englishIcon,
-        checkBoxIcon: _Icons.checkBoxIcon,
-        onTap: () => _viewModel.switchLanguageTapped(_Languages.english, _Country.usa),
-      ),
-      ActionSheetListItemViewModel(
-        title: _Strings.swahiliAction,
-        type: ActionType.selectable,
-        icon: _Icons.swahiliIcon,
-        checkBoxIcon: _Icons.checkBoxIcon,
-        onTap: () => _viewModel.switchLanguageTapped(_Languages.swahili, null),
-      ),
-    ];
-
-    final actionSheetViewModel = ActionSheetViewModel(
-      actions,
-      _LocalisedStrings.cancelAction(),
-      confirmButtonTitle: _LocalisedStrings.confirmAction(),
-    );
-    return ActionSheet(
-      viewModel: actionSheetViewModel,
-      style: ActionSheetStyle.defaultStyle(),
-    );
-  }
 }

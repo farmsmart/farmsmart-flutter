@@ -17,6 +17,7 @@ import 'package:farmsmart_flutter/ui/common/ProfileAvatar.dart';
 import 'package:farmsmart_flutter/ui/common/RefreshableViewModel.dart';
 import 'package:farmsmart_flutter/ui/common/ViewModelProviderBuilder.dart';
 import 'package:farmsmart_flutter/ui/common/image_picker.dart';
+import 'package:farmsmart_flutter/ui/common/locale_selection.dart';
 import 'package:farmsmart_flutter/ui/common/modal_navigator.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
 import 'package:farmsmart_flutter/ui/common/webview.dart';
@@ -550,7 +551,8 @@ class Profile extends StatelessWidget {
 
   void _switchLanguage(BuildContext context, ProfileViewModel viewModel) {
     AnalyticsInterface.implementation().interaction(_AnalyticsNames.switchLanguageInteraction);
-    ActionSheet.present(_languageMenu(context,viewModel), context);
+    LocaleSelection.present(context);
+    //ActionSheet.present(_languageMenu(context,viewModel), context);
   }
 
   void _openFarmDetails(ProfileViewModel viewModel, BuildContext context) {
