@@ -28,8 +28,6 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart' as ImagePickerLib;
 import 'package:intl/intl.dart';
 import 'package:share/share.dart';
-
-import '../../country_flags.dart';
 import 'FarmDetails.dart';
 import 'SwitchProfileList.dart';
 
@@ -552,7 +550,6 @@ class Profile extends StatelessWidget {
   void _switchLanguage(BuildContext context, ProfileViewModel viewModel) {
     AnalyticsInterface.implementation().interaction(_AnalyticsNames.switchLanguageInteraction);
     LocaleSelection.present(context);
-    //ActionSheet.present(_languageMenu(context,viewModel), context);
   }
 
   void _openFarmDetails(ProfileViewModel viewModel, BuildContext context) {
@@ -619,32 +616,6 @@ class Profile extends StatelessWidget {
           url: url,
         ),
       ),
-    );
-  }
-
-  ActionSheet _languageMenu(BuildContext context, ProfileViewModel viewModel) {
-    final actions = viewModel.supportedLocales.map((contentLocale) {
-      final title =  getEmojiFlag(contentLocale.locale.countryCode) + ' ' + contentLocale.displayName;
-      return ActionSheetListItemViewModel(
-        title: title,
-        type: ActionType.selectable,
-        checkBoxIcon: _Icons.checkBoxIcon,
-        isSelected: contentLocale.locale == viewModel.currentLocale.locale,
-        onTap: () {
-          viewModel.switchLanguageTapped(contentLocale.locale.languageCode, contentLocale.locale.countryCode);
-          ResetStateWidget.resetState(context);
-        }
-      );
-    }).toList();
-
-    final actionSheetViewModel = ActionSheetViewModel(
-      actions,
-      _LocalisedStrings.cancel(),
-      confirmButtonTitle: _LocalisedStrings.confirm(),
-    );
-    return ActionSheet(
-      viewModel: actionSheetViewModel,
-      style: ActionSheetStyle.defaultStyle(),
     );
   }
 

@@ -1,3 +1,4 @@
+import 'package:country_codes/country_codes.dart';
 import 'package:farmsmart_flutter/model/bloc/ResetStateWidget.dart';
 import 'package:farmsmart_flutter/model/bloc/ViewModelProvider.dart';
 import 'package:farmsmart_flutter/model/bloc/locale/locale_selection_viewmodel.dart';
@@ -6,10 +7,22 @@ import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
+import '../../country_flags.dart';
 
 class _Constants {
   static final Color enabledColor = Color(0xFF24d900);
-  static final Color disabledColor = Color(0xFFe9eaf2);  
+  static final Color disabledColor = Color(0xFFe9eaf2);
+  static final textStyle = TextStyle(
+    fontWeight: FontWeight.normal,
+    fontSize: 17,
+  );
+}
+
+class _LocalisedStrings {
+  static String country() => Intl.message('Country');
+  static String lanugage() => Intl.message('Language');
+  static String apply() => Intl.message('Apply');
 }
 
 class LocaleSelection extends StatefulWidget {
@@ -45,6 +58,11 @@ class _LocaleSelectionState extends State<LocaleSelection> {
             )));
   }
 
+  String _countryDisplayName(Locale locale) {
+    final localeDetails = CountryCodes.detailsForLocale(locale);
+    return getEmojiFlag(locale.countryCode) + ' ' + localeDetails.name;
+  }
+
   Widget _buildSuccess(
       {BuildContext context,
       AsyncSnapshot<LocaleSelectionViewModel> snapshot}) {
@@ -53,16 +71,20 @@ class _LocaleSelectionState extends State<LocaleSelection> {
     if (selectedLocale == null) {
       selectedLocale = currentLocale;
     }
-    final selectedLanguage = selectedLocale.locale.languageCode;
-    final selectedCountry = selectedLocale.locale.countryCode;
+    final selectedLanguage = selectedLocale.title;
+    final selectedCountry = _countryDisplayName(selectedLocale.locale);
 
     final countries = viewmodel.items
         .map<String>((e) => e.locale.countryCode)
         .toSet()
         .toList();
+
     final countryOptions = countries
         .map((e) => ListTile(
-              title: Text(e),
+              title: Text(
+                _countryDisplayName(Locale('en', e)),
+                style: _Constants.textStyle,
+              ),
               onTap: () {
                 setState(() {
                   selectedLocale = viewmodel.items
@@ -73,11 +95,12 @@ class _LocaleSelectionState extends State<LocaleSelection> {
         .toList();
     final languages = viewmodel.items
         .where((element) =>
-            element.locale.countryCode == selectedLocale.locale.countryCode)
+            (element.locale.countryCode == selectedLocale.locale.countryCode) &&
+            element.locale.languageCode != selectedLocale.locale.languageCode)
         .toList();
     final lanuageOptions = languages
         .map((e) => ListTile(
-              title: Text(e.locale.languageCode),
+              title: Text(e.title, style: _Constants.textStyle),
               onTap: () {
                 setState(() {
                   selectedLocale = e;
@@ -86,9 +109,20 @@ class _LocaleSelectionState extends State<LocaleSelection> {
             ))
         .toList();
 
-    final selectedLanaguageTitle = 'Language - ' + selectedLanguage;
-    final selectedCountryTitle = 'Country - ' + selectedCountry;
     final canSubmit = currentLocale.locale != selectedLocale.locale;
+
+    final languageTile = lanuageOptions.isNotEmpty
+        ? ExpansionTile(
+            key: ValueKey(selectedLanguage),
+            leading:
+                Text(_LocalisedStrings.lanugage(), style: _Constants.textStyle),
+            title: Text(selectedLanguage, style: _Constants.textStyle),
+            children: lanuageOptions,
+          )
+        : ListTile(
+            leading:
+                Text(_LocalisedStrings.lanugage(), style: _Constants.textStyle),
+            title: Text(selectedLanguage, style: _Constants.textStyle));
     return Padding(
       padding: const EdgeInsets.all(32.0),
       child: Column(children: [
@@ -97,31 +131,33 @@ class _LocaleSelectionState extends State<LocaleSelection> {
           shrinkWrap: true,
           children: <Widget>[
             ExpansionTile(
-              key: ValueKey(selectedCountryTitle),
-              title: Text(selectedCountryTitle),
+              key: ValueKey(selectedCountry),
+              leading: Text(_LocalisedStrings.country(),
+                  style: _Constants.textStyle),
+              title: Text(selectedCountry, style: _Constants.textStyle),
               children: countryOptions,
             ),
-            ExpansionTile(
-              key: ValueKey(selectedLanaguageTitle),
-              title: Text(selectedLanaguageTitle),
-              children: lanuageOptions,
-            ),
+            languageTile,
           ],
         )),
         RoundedButton(
+
             viewModel: RoundedButtonViewModel(
-                title: 'Submit',
+                title: _LocalisedStrings.apply(),
                 onTap: () {
-                  Navigator.of(context).pop();
-                  viewmodel.selectLocale(selectedLocale);
-                  ResetStateWidget.resetState(context);
+                  if(canSubmit) {
+                    Navigator.of(context).pop();
+                    viewmodel.selectLocale(selectedLocale);
+                    ResetStateWidget.resetState(context);
+                  }
                 }),
-            style: canSubmit ? RoundedButtonStyle.largeRoundedButtonStyle().copyWith(
-                backgroundColor: _Constants.enabledColor,
-              )
-            : RoundedButtonStyle.largeRoundedButtonStyle().copyWith(
-                backgroundColor: _Constants.disabledColor,
-              )),
+            style: canSubmit
+                ? RoundedButtonStyle.largeRoundedButtonStyle().copyWith(
+                    backgroundColor: _Constants.enabledColor,
+                  )
+                : RoundedButtonStyle.largeRoundedButtonStyle().copyWith(
+                    backgroundColor: _Constants.disabledColor,
+                  )),
       ]),
     );
   }

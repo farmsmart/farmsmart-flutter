@@ -1,3 +1,5 @@
+import 'package:country_codes/country_codes.dart';
+import 'package:farmsmart_flutter/model/repositories/locale/implementation/locale_repository_flamelink.dart';
 import 'package:farmsmart_flutter/model/repositories/locale/locale_repository_interface.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -41,6 +43,11 @@ class FarmsmartLocalizations {
     AnalyticsInterface.implementation().effect(_AnalyticsNames.switchLocale, parameters:{_AnalyticsNames.localeParameter :stringLocale});
   }
 
+  static Future<bool> hasPersistedLocale() async {
+     final SharedPreferences prefs = await SharedPreferences.getInstance();
+     return prefs.get(_Field.locale) !=null;
+  }
+
   static Future<Locale> getLocale() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     String savedLocale = prefs.get(_Field.locale);
@@ -48,7 +55,7 @@ class FarmsmartLocalizations {
     if(savedLocale != null){
       return Locale(savedLocale,savedCountry);
     }
-    return defaultLocale.locale;
+    return CountryCodes.getDeviceLocale();
   }
 
 }

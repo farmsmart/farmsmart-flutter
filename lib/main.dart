@@ -1,3 +1,4 @@
+import 'package:country_codes/country_codes.dart';
 import 'package:farmsmart_flutter/model/analytics_interface.dart';
 import 'package:farmsmart_flutter/model/repositories/locale/locale_repository_interface.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
@@ -40,6 +41,7 @@ class _FarmSmartAppState extends State<FarmSmartApp> {
   @override
   void initState() {
     AnalyticsInterface.registerImplementation(analytics);
+    CountryCodes.init();
     super.initState();
   }
   @override
@@ -85,5 +87,13 @@ class _FarmSmartAppState extends State<FarmSmartApp> {
         ),));
       },
     );
+  }
+
+  static Future<Locale> matchDeviceLocale(LocaleRepositoryInterface repo){
+    return repo.availableLocales().then((locales) {
+      
+    });
+   
+    
   }
 }
