@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:farmsmart_flutter/model/analytics_interface.dart';
-import 'package:farmsmart_flutter/model/bloc/ResetStateWidget.dart';
 import 'package:farmsmart_flutter/model/bloc/ViewModelProvider.dart';
 import 'package:farmsmart_flutter/model/bloc/chatFlow/CreateAccountFlow.dart';
 import 'package:farmsmart_flutter/model/bloc/chatFlow/EditProfileFlow.dart';
@@ -17,7 +16,6 @@ import 'package:farmsmart_flutter/ui/common/ProfileAvatar.dart';
 import 'package:farmsmart_flutter/ui/common/RefreshableViewModel.dart';
 import 'package:farmsmart_flutter/ui/common/ViewModelProviderBuilder.dart';
 import 'package:farmsmart_flutter/ui/common/image_picker.dart';
-import 'package:farmsmart_flutter/ui/common/locale_selection.dart';
 import 'package:farmsmart_flutter/ui/common/modal_navigator.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
 import 'package:farmsmart_flutter/ui/common/webview.dart';
@@ -39,8 +37,6 @@ class _LocalisedStrings {
   static completedCrops() => Intl.message('Completed');
 
   static buttonTitle() => Intl.message('Switch Profile');
-
-  static switchLanguage() => Intl.message('Switch Language');
 
   static yourFarmDetails() => Intl.message('Your Farm Details');
 
@@ -94,7 +90,6 @@ class _Icons {
 
 class _AnalyticsNames {
   static const switchProfileInteraction = 'switch_profile';
-  static const switchLanguageInteraction = 'switch_lanaguage';
   static const editProfileInteraction = 'edit_profile';
   static const createNewProfileInteraction = 'create_profile';
   static const inviteFriendsInteraction = 'invite_friends';
@@ -481,13 +476,6 @@ class Profile extends StatelessWidget {
     List<ProfileListItemViewModel> items = [];
 
     items.add(ProfileListItemViewModel(
-      title: _LocalisedStrings.switchLanguage(),
-      icon: _Icons.language,
-      onTap: () => _switchLanguage(context, viewModel),
-      isDestructive: false,
-    ));
-
-    items.add(ProfileListItemViewModel(
       title: _LocalisedStrings.offlineSync(),
       icon: _Icons.downloadIcon,
       onTap: () => _showOffline(context, viewModel),
@@ -545,11 +533,6 @@ class Profile extends StatelessWidget {
       isDestructive: true,
     ));
     return items;
-  }
-
-  void _switchLanguage(BuildContext context, ProfileViewModel viewModel) {
-    AnalyticsInterface.implementation().interaction(_AnalyticsNames.switchLanguageInteraction);
-    LocaleSelection.present(context);
   }
 
   void _openFarmDetails(ProfileViewModel viewModel, BuildContext context) {

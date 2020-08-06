@@ -500,7 +500,7 @@
         "type": "text",
         "placeholders": {}
     },
-    "assets/responses/farmsmart_chat_ui_flow.json": "assets/réponses/farmsmart_chat_ui_flow.json",
+    "assets/responses/farmsmart_chat_ui_flow.json": "assets/responses/farmsmart_chat_ui_flow_fr.json",
     "@assets/responses/farmsmart_chat_ui_flow.json": {
         "type": "text",
         "placeholders": {}

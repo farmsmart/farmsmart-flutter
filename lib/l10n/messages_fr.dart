@@ -51,7 +51,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "Cancel" : MessageLookupByLibrary.simpleMessage("Abandonner"),
     "Cancel" : MessageLookupByLibrary.simpleMessage("Abandonner"),
     "Cancel" : MessageLookupByLibrary.simpleMessage("Abandonner"),
-    "Cancel" : MessageLookupByLibrary.simpleMessage("Abandonner"),
     "Check out this article from the FarmSmart mobile app \n " : MessageLookupByLibrary.simpleMessage("Consultez cet article depuis l\'application mobile FarmSmart \n "),
     "Clear Selection" : MessageLookupByLibrary.simpleMessage("Vider la sélection"),
     "Community" : MessageLookupByLibrary.simpleMessage("Communauté"),
@@ -62,7 +61,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "Completed" : MessageLookupByLibrary.simpleMessage("Complété"),
     "Completed" : MessageLookupByLibrary.simpleMessage("Complété"),
     "Complexity" : MessageLookupByLibrary.simpleMessage("Complexité"),
-    "Confirm" : MessageLookupByLibrary.simpleMessage("Valider"),
     "Confirm" : MessageLookupByLibrary.simpleMessage("Valider"),
     "Confirm" : MessageLookupByLibrary.simpleMessage("Valider"),
     "Confirm" : MessageLookupByLibrary.simpleMessage("Valider"),
@@ -155,7 +153,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "Single" : MessageLookupByLibrary.simpleMessage("Simple"),
     "Skip" : MessageLookupByLibrary.simpleMessage("Ignorer"),
     "Stage" : MessageLookupByLibrary.simpleMessage("Étape"),
-    "Switch Language" : MessageLookupByLibrary.simpleMessage("Changer de langue"),
     "Switch Profile" : MessageLookupByLibrary.simpleMessage("Changer de profil"),
     "Switch language – Badilisha Lugha" : MessageLookupByLibrary.simpleMessage("Changer de langue – Switch language"),
     "Switch language – Badilisha Lugha" : MessageLookupByLibrary.simpleMessage("Changer de langue – Switch language"),
@@ -176,8 +173,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "Water Frequency" : MessageLookupByLibrary.simpleMessage("Fréquence de l\'eau"),
     "Your Farm Details" : MessageLookupByLibrary.simpleMessage("Détails de votre Ferme"),
     "Your Farm Details" : MessageLookupByLibrary.simpleMessage("Détails de votre Ferme"),
-    "assets/responses/farmsmart_chat_ui_flow.json" : MessageLookupByLibrary.simpleMessage("assets/réponses/farmsmart_chat_ui_flow.json"),
-    "assets/responses/farmsmart_chat_ui_flow.json" : MessageLookupByLibrary.simpleMessage("assets/réponses/farmsmart_chat_ui_flow.json"),
+    "assets/responses/farmsmart_chat_ui_flow.json" : MessageLookupByLibrary.simpleMessage("assets/responses/farmsmart_chat_ui_flow_fr.json"),
+    "assets/responses/farmsmart_chat_ui_flow.json" : MessageLookupByLibrary.simpleMessage("assets/responses/farmsmart_chat_ui_flow_fr.json"),
     "minute read" : MessageLookupByLibrary.simpleMessage("minute lue")
   };
 }
