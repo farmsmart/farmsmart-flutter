@@ -37,12 +37,15 @@ class FlameLink {
   static const _imageBasePath = "media";
   final Firestore store;
   final String _environment;
+  final Locale _locale;
 
   FlameLink({
     Firestore store,
     String environment,
+    Locale locale,
   })  : this.store = store,
-        this._environment = environment;
+        this._environment = environment,
+        this._locale = locale;
 
   CollectionReference content() {
     return store.collection(_contentCollectionName);
@@ -103,7 +106,7 @@ class FlameLink {
 
   String _serverFormatLocale() {
     // the CMS uses <languagecode>-<countrycode> , flutter has a _ divider
-    final loc = Locale(Intl.getCurrentLocale());
+    final loc = _locale == null ?  Locale(Intl.getCurrentLocale()): _locale;
     final serverFormat = loc.languageCode.replaceAll(
       _Strings.flutterLocaleDivider,
       _Strings.flamelinkDivider,
@@ -111,7 +114,7 @@ class FlameLink {
     if(serverFormat.startsWith("en")){ //massive hack due to server setup
       return "en-US";
     }
-    return serverFormat;
+    return serverFormat.toLowerCase();
   }
 }
 

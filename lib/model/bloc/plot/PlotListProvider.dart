@@ -72,7 +72,7 @@ class PlotListProvider implements ViewModelProvider<PlotListViewModel> {
       final transformer =
           PlotToPlotListItemViewModel(PlotDetailProvider(plot, _plotRepo));
       return transformer.transform(from: plot);
-    }).toList();
+    }).where((element) => element!=null).toList();
     return _viewModel(
       status: LoadingStatus.SUCCESS,
       items: items,

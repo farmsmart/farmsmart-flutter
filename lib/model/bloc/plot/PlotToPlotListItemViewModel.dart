@@ -11,7 +11,8 @@ class _LocalisedStrings {
   static String upcoming() => Intl.message('Upcoming');
 }
 
-class PlotToPlotListItemViewModel extends ObjectTransformer<PlotEntity, PlotListItemViewModel> {
+class PlotToPlotListItemViewModel
+    extends ObjectTransformer<PlotEntity, PlotListItemViewModel> {
   final _logic = StageBusinessLogic();
   final PlotDetailProvider _detailProvider;
 
@@ -19,30 +20,36 @@ class PlotToPlotListItemViewModel extends ObjectTransformer<PlotEntity, PlotList
 
   @override
   PlotListItemViewModel transform({PlotEntity from}) {
-    final title = from.title;
-    final detailText = _detailString(from: from);
-    final progress = _logic.progress(from.stages);
-    return PlotListItemViewModel(
-        title: title,
-        subtitle: _subtitleString(from: from),
-        detail: detailText,
-        progress: progress,
-        provider: _detailProvider,
-        imageProvider: CropImageProvider(from.crop));
+    if (from.stages.isNotEmpty) {
+      final title = from.title;
+      final detailText = _detailString(from: from);
+      final progress = _logic.progress(from.stages);
+      return PlotListItemViewModel(
+          title: title,
+          subtitle: _subtitleString(from: from),
+          detail: detailText,
+          progress: progress,
+          provider: _detailProvider,
+          imageProvider: CropImageProvider(from.crop));
+    }
+    return null;
   }
 
   String _subtitleString({PlotEntity from}) {
-    return _logic.currentStage(from.stages).article.title;
+    return _logic.currentStage(from.stages)?.article?.title ?? '';
   }
 
   String _detailString({PlotEntity from}) {
-    final firstStage = from.stages.first;
-    final started = firstStage.started;
-    if (started != null) {
-      final day = _logic.daysSinceStarted(from.stages) + 1; //the day we are on, so + 1 on days since started (0 = 1, 1 = 2 ....)
-      return _LocalisedStrings.day() + " " + day.toString();
+    if (from.stages.isNotEmpty) {
+      final firstStage = from.stages.first;
+      final started = firstStage.started;
+      if (started != null) {
+        final day = _logic.daysSinceStarted(from.stages) +
+            1; //the day we are on, so + 1 on days since started (0 = 1, 1 = 2 ....)
+        return _LocalisedStrings.day() + " " + day.toString();
+      }
+      return _LocalisedStrings.upcoming();
     }
-    return _LocalisedStrings.upcoming();
+    return '';
   }
-
 }

@@ -1,8 +1,11 @@
+import 'package:farmsmart_flutter/model/repositories/locale/locale_repository_interface.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
+
 import 'app_coordinator.dart';
 import 'farmsmart_localizations.dart';
+import 'flavors/app_config.dart';
 import 'model/repositories/image/ImageRepositoryInterface.dart';
 
 class _Constants {
@@ -10,11 +13,6 @@ class _Constants {
 
   static final backgroundColor = Color(0xFFFFFFFF);
   static final accentColor = Color(0xFF757575);
-
-  static final List<Locale> supportedLocales = [
-    const Locale('en'),
-    const Locale('sw'),
-  ];
 }
 
 class _String {
@@ -26,25 +24,36 @@ class FarmSmartApp extends StatefulWidget {
   _FarmSmartAppState createState() => _FarmSmartAppState();
 }
 
+
 class _FarmSmartAppState extends State<FarmSmartApp> {
   @override
   Widget build(BuildContext context) {
-    
-    return FutureBuilder<Locale>(
-      future: FarmsmartLocalizations.getLocale().then((locale){
-        return startURLCache().then((_){ return locale;});
-      }),
-      initialData: _Constants.supportedLocales.first,
-      builder: (BuildContext context, AsyncSnapshot<Locale> snapshot) {
+    final repositoryProvider = AppConfig.of(context).repositoryProvider;
+    repositoryProvider.init(context);
+    return FutureBuilder<LocaleState>(
+      future: repositoryProvider
+            .getLocaleRepository()
+            .getLocaleState()
+            .then((state) {
+          return startURLCache().then((_) {
+            return state;
+          });
+        }),
+      initialData: LocaleState(FarmsmartLocalizations.defaultLocale,
+          [FarmsmartLocalizations.defaultLocale]),
+      builder: (BuildContext context, AsyncSnapshot<LocaleState> snapshot) {
+        final LocaleState state = snapshot.data;
+        final supportedLocales =
+            state.availableLocales.map<Locale>((e) => e.locale).toList();
         return MaterialApp(
-          locale: snapshot.data,
+          locale: state.currentLocale.locale,
           onGenerateTitle: (context) => _String.title(),
           localizationsDelegates: [
-            FarmsmartLocalizationsDelegate(_Constants.supportedLocales),
+            FarmsmartLocalizationsDelegate(supportedLocales),
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
           ],
-          supportedLocales: _Constants.supportedLocales,
+          supportedLocales: supportedLocales,
           theme: ThemeData(
             fontFamily: _Constants.fontFamily,
             brightness: Brightness.light,

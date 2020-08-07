@@ -195,12 +195,7 @@ class _ActionSheetState extends State<ActionSheet> {
       );
     });
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: actionSheetItems,
-    );
+    return Expanded(child:  ListView(children:actionSheetItems, scrollDirection: Axis.vertical, shrinkWrap: true,));
   }
 
   List<Widget> _buildListFooter(ActionSheetStyle style,
