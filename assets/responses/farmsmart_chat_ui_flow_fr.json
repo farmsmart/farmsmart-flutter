@@ -21,40 +21,40 @@
   },
   "items": [
     {
-      "text": "Hi! I'm the FarmSmart chatbot, Jata",
+      "text": "Salut! Je suis le chatbot FarmSmart, Jata",
       "sentiment": "Positive"
     },
     {
-      "text": "I'm here to set up your profile and recommend the best crops for your farm",
+      "text": "Je suis ici pour configurer votre profil et recommander les meilleures cultures pour votre ferme",
       "sentiment": "Positive"
     },
     {
-      "text": "What is your name?",
+      "text": "Quel est votre nom?",
       "inputRequest": {
         "type": "com.wearemobilefirst.String",
         "uri": "Name",
         "localStore": false,
         "inline": true,
-        "title": "Your Name",
+        "title": "votre nom",
         "validationRegex": ".*",
-        "responseText": "My name is %Name",
+        "responseText": "Je m'appelle %Name",
         "optional": false
       }
     },
     {
-      "text": "Nice to meet you %Name",
+      "text": "Ravi de vous rencontrer %Name",
       "sentiment": "Positive"
     },
     {
-      "text": "Now I'll ask a few questions to help me recommend the best crops for you",
+      "text": "Maintenant, je vais poser quelques questions pour m'aider à vous recommander les meilleures cultures",
       "sentiment": "Positive"
     },
     {
-      "text": "How high above sea level are you?",
+      "text": "À quelle hauteur êtes-vous au-dessus du niveau de la mer?",
       "inputRequest": {
         "type": "com.wearemobilefirst.MultiChoice",
         "uri": "Hight Above Sea Level",
-        "title": "Height",
+        "title": "la taille",
         "inline": true,
         "localStore": false,
         "responseText": "",
@@ -64,26 +64,26 @@
           "options": [
             {
               "id": "0-2 meters",
-              "title": "0-2 meters"
+              "title": "0-2 mètres"
             },
             {
               "id": "2-15 meters",
-              "title": "2-15 meters"
+              "title": "2-15 mètres"
             },
             {
               "id": "15+ meters",
-              "title": "15+ meters"
+              "title": "15+ mètres"
             }
           ]
         }
       }
     },
     {
-      "text": "What is the size of your land?",
+      "text": "Quelle est la taille de votre terrain?",
       "inputRequest": {
         "type": "com.wearemobilefirst.MultiChoice",
         "uri": "Farm size",
-        "title": "Land Size",
+        "title": "Taille du terrain",
         "inline": true,
         "localStore": false,
         "responseText": "",
@@ -93,7 +93,7 @@
           "options": [
             {
               "id": "less than 5 m2",
-              "title": "less than 5 m2"
+              "title": "moins que 5 m2"
             },
             {
               "id": "5 - 20 m2",
@@ -101,20 +101,20 @@
             },
             {
               "id": "20m2+",
-              "title": "20m2+"
+              "title": "20+ m2"
             }
           ]
         }
       }
     },
     {
-      "text": "Which island do you live on?",
+      "text": "Sur quelle île habitez-vous?",
       "inputRequest": {
         "type": "com.wearemobilefirst.String",
         "uri": "Island",
         "localStore": false,
         "inline": true,
-        "title": "Island name",
+        "title": "Nom de l'île",
         "validationRegex": ".*",
         "responseText": "",
         "optional": false
@@ -122,7 +122,7 @@
     },
     
     {
-      "text": "Almost done! Now I want to confirm the information you've given me",
+      "text": "Presque fini! Maintenant, je veux confirmer les informations que vous m'avez fournies",
       "renderHint": "center"
     }
   ]
