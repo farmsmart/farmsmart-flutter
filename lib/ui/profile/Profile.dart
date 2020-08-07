@@ -80,11 +80,9 @@ class _Strings {
 }
 
 class _Icons {
-  static final language = 'assets/icons/detail_icon_language.png';
   static final soil = 'assets/icons/detail_icon_best_soil.png';
   static final newProfile = 'assets/icons/detail_icon_new_profile.png';
   static final inviteFriends = 'assets/icons/detail_icon_invite.png';
-  static final checkBoxIcon = "assets/icons/radio_button_default.png";
   static final downloadIcon =  "assets/icons/detail_icon_sale.png";
 }
 

@@ -11,8 +11,12 @@ import 'package:intl/intl.dart';
 class _Constants {
   static const textPadding =
       const EdgeInsets.only(top: 24, right: 24, left: 24);
-  static const buttonPadding =
-      const EdgeInsets.symmetric(vertical: 20, horizontal: 10);
+  
+   static const leftButtonPadding =
+      const EdgeInsets.fromLTRB(0, 20, 10, 20);
+  static const rightButtonPadding =
+      const EdgeInsets.fromLTRB(10, 20, 0, 20);
+
   static const textStyle = TextStyle(
     fontSize: 17,
     color: Color(
@@ -110,8 +114,11 @@ class OfflineDownloadPage extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         Text(_LocalisedStrings.title(), style: _Constants.titleTextStyle),
-        _buildDescription(),
-        Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.only(top:10.0),
+          child: _buildDescription(),
+        ),
+        Row(mainAxisSize: MainAxisSize.max, children: <Widget>[
           _buildCancelButton(context),
           _buildActionButton(snapshot.data),
         ]),
@@ -158,7 +165,7 @@ class OfflineDownloadPage extends StatelessWidget {
 
   Widget _buildActionButton(OfflineDownloadPageViewModel viewModel) {
     return Padding(
-      padding: _Constants.buttonPadding,
+      padding: _Constants.rightButtonPadding,
       child: RoundedButton(
           viewModel: RoundedButtonViewModel(
             title: _LocalisedStrings.confirm(),
@@ -173,7 +180,7 @@ class OfflineDownloadPage extends StatelessWidget {
 
   Widget _buildCancelButton(BuildContext context) {
     return Padding(
-      padding: _Constants.buttonPadding,
+      padding: _Constants.leftButtonPadding,
       child: RoundedButton(
           viewModel: RoundedButtonViewModel(
             title: _LocalisedStrings.cancel(),
@@ -187,13 +194,10 @@ class OfflineDownloadPage extends StatelessWidget {
   }
 
   Widget _buildDescription() {
-    return Padding(
-      padding: _Constants.textPadding,
-      child: Text(
-        _LocalisedStrings.description(),
-        textAlign: TextAlign.left,
-        style: _Constants.textStyle,
-      ),
+    return Text(
+      _LocalisedStrings.description(),
+      textAlign: TextAlign.left,
+      style: _Constants.textStyle,
     );
   }
 }

@@ -230,6 +230,8 @@ PODS:
     - Flutter
   - cloud_functions_web (1.0.0):
     - Flutter
+  - country_codes (0.0.1):
+    - Flutter
   - Firebase/Analytics (6.27.0):
     - Firebase/Core
   - Firebase/Auth (6.27.0):
@@ -429,6 +431,7 @@ DEPENDENCIES:
   - cloud_firestore_web (from `.symlinks/plugins/cloud_firestore_web/ios`)
   - cloud_functions (from `.symlinks/plugins/cloud_functions/ios`)
   - cloud_functions_web (from `.symlinks/plugins/cloud_functions_web/ios`)
+  - country_codes (from `.symlinks/plugins/country_codes/ios`)
   - firebase_analytics (from `.symlinks/plugins/firebase_analytics/ios`)
   - firebase_analytics_web (from `.symlinks/plugins/firebase_analytics_web/ios`)
   - firebase_auth (from `.symlinks/plugins/firebase_auth/ios`)
@@ -491,6 +494,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/cloud_functions/ios"
   cloud_functions_web:
     :path: ".symlinks/plugins/cloud_functions_web/ios"
+  country_codes:
+    :path: ".symlinks/plugins/country_codes/ios"
   firebase_analytics:
     :path: ".symlinks/plugins/firebase_analytics/ios"
   firebase_analytics_web:
@@ -549,6 +554,7 @@ SPEC CHECKSUMS:
   cloud_firestore_web: 9ec3dc7f5f98de5129339802d491c1204462bfec
   cloud_functions: 20ba5a917ef4e8f5e60648c7398c272b38a66051
   cloud_functions_web: ec883775f4a3b3fad943918d2cdad4fbf51cdbf0
+  country_codes: b0900f46ad686281d5dab438e354e44ad10f5941
   Firebase: fc4cbf6f1592636431821ef9a3c557e4dfd9f268
   firebase_analytics: 9118044ffb98bee71d84733fc594f5134fe4bc1b
   firebase_analytics_web: 7d539061ea4af07563a0e21044af89cab70efec0
