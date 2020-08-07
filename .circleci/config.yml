@@ -22,7 +22,7 @@ executors:
     working_directory: *working_dir
   flutter:
     docker:
-      - image: cirrusci/flutter:v1.7.8-hotfix.3
+      - image: cirrusci/flutter:stable
     working_directory: *working_dir
   utilities:
     docker:

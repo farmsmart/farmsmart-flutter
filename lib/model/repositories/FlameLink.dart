@@ -30,12 +30,6 @@ class _Strings {
   static const flutterLocaleDivider = "_";
 }
 
-enum Environment { development, production }
-final _environmentValues = {
-  Environment.development: "development",
-  Environment.production: "production"
-};
-
 class FlameLink {
   static const _contentCollectionName = 'fl_content';
   static const _fileCollectionName = 'fl_files';
@@ -46,9 +40,9 @@ class FlameLink {
 
   FlameLink({
     Firestore store,
-    Environment environment = Environment.production,
+    String environment,
   })  : this.store = store,
-        this._environment = _environmentValues[environment];
+        this._environment = environment;
 
   CollectionReference content() {
     return store.collection(_contentCollectionName);
