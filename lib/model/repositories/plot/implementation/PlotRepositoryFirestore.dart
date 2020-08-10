@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:farmsmart_flutter/model/analytics_interface.dart';
 import 'package:farmsmart_flutter/model/bloc/Transformer.dart';
 import 'package:farmsmart_flutter/model/entities/EntityCollectionInterface.dart';
 import 'package:farmsmart_flutter/model/entities/PlotEntity.dart';
@@ -19,6 +20,22 @@ import 'PlotFirestoreTransformers.dart';
 class _Fields {
   static const plotCollectionPath = "/plots";
   static const orderField = "order";
+}
+
+class _AnalyticsNames {
+  static const addToPlot = 'add_to_plot';
+  static const removedFromPlot = 'removed_from_plot';
+  static const renamedPlot = 'renamed_plot';
+  static const beganStage = 'began_stage';
+  static const completedStage = 'completed_stage';
+  static const revertedStage = 'reverted_stage';
+  static const completedCrop = 'completed_crop';
+  static const cropNameParameter = 'crop_name';
+  static const cropIdParameter = 'crop_id';
+  static const plotTitle = 'plot_title';
+  static const stageIdParameter = 'stage_id';
+  static const stageTitleParameter = 'stage_title';
+  static const plotScoreParameter = 'plot_score';
 }
 
 class PlotRepositoryFireStore implements PlotRepositoryInterface {
@@ -79,6 +96,8 @@ class PlotRepositoryFireStore implements PlotRepositoryInterface {
               .collection(path)
               .add(firestorePlot)
               .then((documentRef) {
+              AnalyticsInterface.implementation().effect(_AnalyticsNames.addToPlot,
+              parameters: _analyticsParameters(crop: crop));
             return documentRef.get().then((document) {
               return _transformFromFirebase(document);
             });
@@ -105,6 +124,8 @@ class PlotRepositoryFireStore implements PlotRepositoryInterface {
         .document(forPlot.uri)
         .setData(firebasePlot, merge: true)
         .then((result) {
+      AnalyticsInterface.implementation().effect(_AnalyticsNames.beganStage,
+          parameters: _analyticsParameters(plot: forPlot, stage: startedStage));
       return updatedPlot;
     });
   }
@@ -129,6 +150,14 @@ class PlotRepositoryFireStore implements PlotRepositoryInterface {
         .document(forPlot.uri)
         .setData(firebasePlot, merge: true)
         .then((result) {
+      AnalyticsInterface.implementation().effect(_AnalyticsNames.completedStage,
+          parameters: _analyticsParameters(plot: forPlot, crop: forPlot.crop));
+      if (stage.id == forPlot.stages.last.id) {
+        AnalyticsInterface.implementation().effect(
+            _AnalyticsNames.completedCrop,
+            parameters:
+                _analyticsParameters(plot: forPlot, crop: forPlot.crop));
+      }
       return updatedPlot;
     });
   }
@@ -187,6 +216,9 @@ class PlotRepositoryFireStore implements PlotRepositoryInterface {
   @override
   Future<bool> remove(PlotEntity plot) {
     return firestore.document(plot.uri).delete().then((_) {
+      AnalyticsInterface.implementation().effect(
+          _AnalyticsNames.removedFromPlot,
+          parameters: _analyticsParameters(plot: plot));
       return true;
     }, onError: (error) {
       return false;
@@ -206,6 +238,8 @@ class PlotRepositoryFireStore implements PlotRepositoryInterface {
       merge: true,
     )
         .then((_) {
+      AnalyticsInterface.implementation().effect(_AnalyticsNames.renamedPlot,
+          parameters: _analyticsParameters(plot: plot));
       return documentRef.get().then((document) {
         return _transformFromFirebase(document);
       });
@@ -226,8 +260,34 @@ class PlotRepositoryFireStore implements PlotRepositoryInterface {
           merge: true,
         )
         .then((result) {
+      AnalyticsInterface.implementation().effect(_AnalyticsNames.revertedStage,
+          parameters: _analyticsParameters(plot: forPlot, stage: stage));
       return updatedPlot;
     });
+  }
+
+  Map<String, dynamic> _analyticsParameters(
+      {PlotEntity plot, CropEntity crop, StageEntity stage}) {
+    Map<String, dynamic> parameters = {};
+    if (plot != null) {
+      parameters.addAll({
+        _AnalyticsNames.plotTitle: plot.title,
+        _AnalyticsNames.plotScoreParameter: plot.score ?? 0
+      });
+    }
+    if (crop != null) {
+      parameters.addAll({
+        _AnalyticsNames.cropNameParameter: crop.name,
+        _AnalyticsNames.cropIdParameter: crop.uri
+      });
+    }
+    if (stage != null) {
+      parameters.addAll({
+        _AnalyticsNames.stageTitleParameter: stage.article.title,
+        _AnalyticsNames.stageIdParameter: stage.article.uri
+      });
+    }
+    return parameters;
   }
 
   String _plotListPathFor(ProfileEntity profile) {

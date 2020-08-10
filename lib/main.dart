@@ -1,12 +1,23 @@
+import 'package:country_codes/country_codes.dart';
+import 'package:farmsmart_flutter/model/analytics_interface.dart';
 import 'package:farmsmart_flutter/model/repositories/locale/locale_repository_interface.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:provider/provider.dart';
 
 
 import 'app_coordinator.dart';
 import 'farmsmart_localizations.dart';
 import 'flavors/app_config.dart';
+import 'model/analytics_firebase.dart';
+import 'model/bloc/ResetStateWidget.dart';
+import 'model/bloc/ViewModelProvider.dart';
+import 'model/bloc/locale/locale_selection_provider.dart';
+import 'model/bloc/locale/locale_selection_viewmodel.dart';
 import 'model/repositories/image/ImageRepositoryInterface.dart';
+
+AnalyticsInterface analytics = AnalyticsFirebaseImp(FirebaseAnalytics());
 
 class _Constants {
   static final String fontFamily = 'IBMPlexSans';
@@ -25,13 +36,21 @@ class FarmSmartApp extends StatefulWidget {
   @override
   _FarmSmartAppState createState() => _FarmSmartAppState();
 }
-
-
+  
 class _FarmSmartAppState extends State<FarmSmartApp> {
+  @override
+  void initState() {
+    AnalyticsInterface.registerImplementation(analytics);
+    CountryCodes.init();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     final repositoryProvider = AppConfig.of(context).repositoryProvider;
     repositoryProvider.init(context);
+    final repoProvider = Provider.value(value: repositoryProvider);
+    final ViewModelProvider<LocaleSelectionViewModel> localeSelectionProvider = LocaleSelectionProvider(repositoryProvider.getLocaleRepository());
+    final localeProvider = Provider.value(value: localeSelectionProvider);
     return FutureBuilder<LocaleState>(
       future: repositoryProvider
             .getLocaleRepository()
@@ -46,7 +65,9 @@ class _FarmSmartAppState extends State<FarmSmartApp> {
         final LocaleState state = snapshot.data ?? _Constants.defaultLocaleState;
         final supportedLocales =
             state.availableLocales.map<Locale>((e) => e.locale).toList();
-        return MaterialApp(
+        return MultiProvider(
+      providers: [repoProvider,localeProvider],
+      child: ResetStateWidget(child:MaterialApp(
           locale: state.currentLocale.locale,
           onGenerateTitle: (context) => _String.title(),
           localizationsDelegates: [
@@ -63,8 +84,16 @@ class _FarmSmartAppState extends State<FarmSmartApp> {
             accentColor: _Constants.accentColor,
           ),
           home: AppCoordinator(),
-        );
+        ),));
       },
     );
+  }
+
+  static Future<Locale> matchDeviceLocale(LocaleRepositoryInterface repo){
+    return repo.availableLocales().then((locales) {
+      
+    });
+   
+    
   }
 }

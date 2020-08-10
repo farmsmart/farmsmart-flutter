@@ -26,6 +26,7 @@ dependencies:
     sdk: flutter
 
   intl_translation: ^0.17.5
+  country_codes: ^1.0.1
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -41,8 +42,9 @@ dependencies:
   firebase_storage: ^3.1.6
   cloud_functions: ^0.5.0
   firebase_dynamic_links: ^0.5.0+11
+  firebase_analytics: ^5.0.16
 
-  webview_flutter: ^0.3.6
+  webview_flutter: ^0.3.22+1
   share: ^0.6.1+1
   package_info: ^0.4.0+3
   cached_network_image: ^2.2.0+1
@@ -52,6 +54,8 @@ dependencies:
   json_serializable: ^2.0.0
 
   mockito: ^4.1.0
+
+  provider: ^4.3.1
 
 
 dev_dependencies:
@@ -114,6 +118,8 @@ flutter:
     - assets/responses/create_account_mock_form.json
     - assets/responses/farmsmart_chat_ui_flow.json
     - assets/responses/farmsmart_chat_ui_flow_sw.json
+    - assets/responses/farmsmart_chat_ui_flow_fr.json
+    
 
   fonts:
   - family: IBMPlexSans

@@ -39,6 +39,6 @@ class Startup extends StatelessWidget {
   }
 
   Widget _homeBuilder({BuildContext context, StartupViewModel viewModel}) {
-    return ResetStateWidget(child:_home);
+    return _home;
   }
 }

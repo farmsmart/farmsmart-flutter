@@ -36,11 +36,8 @@ class _WebViewState extends State<WebView> {
     return IndexedStack(
       index: _stackToView,
       children: <Widget>[
-        Container(
-          color: Colors.white,
-          child: Center(
-            child: CircularProgressIndicator(),
-          ),
+        Column(
+          children: <Widget>[_buildAppbar(context), _buildProgress()],
         ),
         Column(
           children: <Widget>[_buildAppbar(context), _buildWebView()],
@@ -57,6 +54,15 @@ class _WebViewState extends State<WebView> {
         onPageFinished: _handlePageLoaded,
       ),
     );
+  }
+
+  Widget _buildProgress() {
+     return Container(
+          color: Colors.white,
+          child: Center(
+            child: CircularProgressIndicator(),
+          ),
+        );
   }
 
   Widget _buildAppbar(BuildContext context) =>

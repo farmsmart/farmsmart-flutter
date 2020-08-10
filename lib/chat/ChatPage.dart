@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:farmsmart_flutter/chat/flow/implementation/ChatFlowFromFile.dart';
 import 'package:farmsmart_flutter/chat/ui/viewmodel/ChatResponseViewModel.dart';
+import 'package:farmsmart_flutter/model/analytics_interface.dart';
 import 'package:farmsmart_flutter/ui/common/ActionSheet.dart';
 import 'package:farmsmart_flutter/ui/common/ActionSheetListItem.dart';
 import 'package:farmsmart_flutter/ui/common/modal_navigator.dart';
@@ -16,6 +17,13 @@ class _Constants {
   static final double appBarElevation = 0;
   static final EdgeInsets appBarEdgePadding = EdgeInsets.only(left: 25);
   static final double appBarIconSize = 16;
+  
+}
+
+class _AnalyticsNames {
+  static const summary = 'chat_page_summary';
+  static const confirm = 'chat_page_confirm';
+  static const close = 'chat_page_close';
 }
 
 class _Assets {
@@ -38,22 +46,23 @@ class _LocalisedStrings {
 }
 
 class ChatPageViewModel {
-    final String flowFilePath;
-    final Function onSuccess;
-    final Function onError;
+  final String flowFilePath;
+  final Function onSuccess;
+  final Function onError;
 
   ChatPageViewModel(this.flowFilePath, this.onSuccess, this.onError);
 }
 
 class ChatPage extends StatefulWidget {
   final ChatPageViewModel _viewModel;
-  const ChatPage({Key key, ChatPageViewModel viewModel}) : this._viewModel= viewModel, super(key: key);
+  const ChatPage({Key key, ChatPageViewModel viewModel})
+      : this._viewModel = viewModel,
+        super(key: key);
   @override
   _ChatPageState createState() => _ChatPageState();
 }
 
 class _ChatPageState extends State<ChatPage> {
-
   _ChatPageState();
   @override
   void initState() {
@@ -117,12 +126,12 @@ class _ChatPageState extends State<ChatPage> {
       );
 
   File _createChatFile() {
-      return File(widget._viewModel.flowFilePath);
+    return File(widget._viewModel.flowFilePath);
   }
 
   _doOnSuccess(BuildContext context, Map<String, ChatResponseViewModel> map) {
     print("On Success recevied: ${map.toString()}");
-
+     AnalyticsInterface.implementation().impression(_AnalyticsNames.summary);
     NavigationScope.presentModal(
       context,
       FarmDetails(
@@ -130,6 +139,7 @@ class _ChatPageState extends State<ChatPage> {
           items: _getFarmDetailsListFromMap(map),
           buttonTitle: _LocalisedStrings.confirm(),
           confirm: () {
+             AnalyticsInterface.implementation().interaction(_AnalyticsNames.confirm);
             _navigateBack(context);
             _navigateBack(context);
             widget._viewModel.onSuccess(map);
@@ -153,10 +163,11 @@ class _ChatPageState extends State<ChatPage> {
     return viewModels;
   }
 
-  String _getDetail(dynamic value) => value is DateTime ? _formatDate(value) : value;
+  String _getDetail(dynamic value) =>
+      value is DateTime ? _formatDate(value) : value;
 
   String _formatDate(DateTime date) => _Constants.dateFormatter.format(date);
-  
+
   _doOnError(BuildContext context, String error) {
     print("On Error recevied: ${error.toString()}");
     _navigateBack(context);
@@ -192,6 +203,9 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   void _cancel(BuildContext context) {
+    AnalyticsInterface.implementation().interaction(
+        _AnalyticsNames.close,
+        context: widget._viewModel.flowFilePath);
     _doOnError(context, _Errors.cancelled);
   }
 

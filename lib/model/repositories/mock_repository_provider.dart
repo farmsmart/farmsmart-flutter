@@ -56,7 +56,6 @@ class MockRepositoryProvider implements RepositoryProvider{
 
   @override
   LocaleRepositoryInterface getLocaleRepository() {
-    // TODO: implement getLocaleRepository
     throw UnimplementedError();
   }
 

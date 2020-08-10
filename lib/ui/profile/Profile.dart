@@ -1,7 +1,6 @@
 import 'dart:io';
 
-import 'package:farmsmart_flutter/farmsmart_localizations.dart';
-import 'package:farmsmart_flutter/model/bloc/ResetStateWidget.dart';
+import 'package:farmsmart_flutter/model/analytics_interface.dart';
 import 'package:farmsmart_flutter/model/bloc/ViewModelProvider.dart';
 import 'package:farmsmart_flutter/model/bloc/chatFlow/CreateAccountFlow.dart';
 import 'package:farmsmart_flutter/model/bloc/chatFlow/EditProfileFlow.dart';
@@ -27,8 +26,6 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart' as ImagePickerLib;
 import 'package:intl/intl.dart';
 import 'package:share/share.dart';
-
-import '../../country_flags.dart';
 import 'FarmDetails.dart';
 import 'SwitchProfileList.dart';
 
@@ -40,8 +37,6 @@ class _LocalisedStrings {
   static completedCrops() => Intl.message('Completed');
 
   static buttonTitle() => Intl.message('Switch Profile');
-
-  static switchLanguage() => Intl.message('Switch Language');
 
   static yourFarmDetails() => Intl.message('Your Farm Details');
 
@@ -85,12 +80,20 @@ class _Strings {
 }
 
 class _Icons {
-  static final language = 'assets/icons/detail_icon_language.png';
   static final soil = 'assets/icons/detail_icon_best_soil.png';
   static final newProfile = 'assets/icons/detail_icon_new_profile.png';
   static final inviteFriends = 'assets/icons/detail_icon_invite.png';
-  static final checkBoxIcon = "assets/icons/radio_button_default.png";
   static final downloadIcon =  "assets/icons/detail_icon_sale.png";
+}
+
+class _AnalyticsNames {
+  static const switchProfileInteraction = 'switch_profile';
+  static const editProfileInteraction = 'edit_profile';
+  static const createNewProfileInteraction = 'create_profile';
+  static const inviteFriendsInteraction = 'invite_friends';
+  static const privacyPolicyInteraction = 'privacy_policy';
+  static const termsOfUseInteraction = 'terms';
+  static const renameProfileInteraction = 'rename_profile';
 }
 
 class _Constants {
@@ -455,9 +458,11 @@ class Profile extends StatelessWidget {
     BuildContext context,
     ViewModelProvider<SwitchProfileListViewModel> provider,
   }) {
+    AnalyticsInterface.implementation().interaction(_AnalyticsNames.switchProfileInteraction);
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => SwitchProfileList(provider: provider),
+        settings: RouteSettings(name:SwitchProfileList.analyticsName),
       ),
     );
   }
@@ -467,13 +472,6 @@ class Profile extends StatelessWidget {
     BuildContext context,
   ) {
     List<ProfileListItemViewModel> items = [];
-
-    items.add(ProfileListItemViewModel(
-      title: _LocalisedStrings.switchLanguage(),
-      icon: _Icons.language,
-      onTap: () => _switchLanguage(context, viewModel),
-      isDestructive: false,
-    ));
 
     items.add(ProfileListItemViewModel(
       title: _LocalisedStrings.offlineSync(),
@@ -492,7 +490,7 @@ class Profile extends StatelessWidget {
     items.add(ProfileListItemViewModel(
       title: _LocalisedStrings.inviteFriends(),
       icon: _Icons.inviteFriends,
-      onTap: () => _inviteFriends(),
+      onTap: () => _inviteFriends(context),
       isDestructive: false,
     ));
 
@@ -535,10 +533,6 @@ class Profile extends StatelessWidget {
     return items;
   }
 
-  void _switchLanguage(BuildContext context, ProfileViewModel viewModel) {
-    ActionSheet.present(_languageMenu(context,viewModel), context);
-  }
-
   void _openFarmDetails(ProfileViewModel viewModel, BuildContext context) {
     NavigationScope.presentModal(
       context,
@@ -557,6 +551,7 @@ class Profile extends StatelessWidget {
   }
 
   void _editProfile(ProfileViewModel viewModel, BuildContext context) {
+    AnalyticsInterface.implementation().interaction(_AnalyticsNames.editProfileInteraction);
     return viewModel.editProfileFlow.run(
           context,
           onSuccess: () => _onEditProfileSuccess(context),
@@ -564,18 +559,22 @@ class Profile extends StatelessWidget {
   }
 
   void _createNewProfile(ProfileViewModel viewModel, BuildContext context) {
+    AnalyticsInterface.implementation().interaction(_AnalyticsNames.createNewProfileInteraction);
     viewModel.newAccountFlow.run(context);
   }
 
-  void _inviteFriends() async {
+  void _inviteFriends(BuildContext context) async {
+     AnalyticsInterface.implementation().interaction(_AnalyticsNames.inviteFriendsInteraction);
     await Share.share('${_LocalisedStrings.shareText()} ${_Strings.shareLink}');
   }
 
   void _openPrivacyPolicy(BuildContext context) {
+    AnalyticsInterface.implementation().interaction(_AnalyticsNames.privacyPolicyInteraction);
     _navigateToWebView(context, _Strings.privacyPolicyUrl);
   }
 
   void _openTermsOfUse(BuildContext context) {
+     AnalyticsInterface.implementation().impression(_AnalyticsNames.termsOfUseInteraction);
     _navigateToWebView(context, _Strings.termsOfUseUrl);
   }
 
@@ -598,32 +597,6 @@ class Profile extends StatelessWidget {
           url: url,
         ),
       ),
-    );
-  }
-
-  ActionSheet _languageMenu(BuildContext context, ProfileViewModel viewModel) {
-    final actions = viewModel.supportedLocales.map((contentLocale) {
-      final title =  getEmojiFlag(contentLocale.locale.countryCode) + ' ' + contentLocale.displayName;
-      return ActionSheetListItemViewModel(
-        title: title,
-        type: ActionType.selectable,
-        checkBoxIcon: _Icons.checkBoxIcon,
-        isSelected: contentLocale.locale == viewModel.currentLocale,
-        onTap: () {
-          viewModel.switchLanguageTapped(contentLocale.locale.languageCode, contentLocale.locale.countryCode);
-          ResetStateWidget.resetState(context);
-        }
-      );
-    }).toList();
-
-    final actionSheetViewModel = ActionSheetViewModel(
-      actions,
-      _LocalisedStrings.cancel(),
-      confirmButtonTitle: _LocalisedStrings.confirm(),
-    );
-    return ActionSheet(
-      viewModel: actionSheetViewModel,
-      style: ActionSheetStyle.defaultStyle(),
     );
   }
 
@@ -657,6 +630,7 @@ class Profile extends StatelessWidget {
   }
 
   void _renameProfileAction(ProfileViewModel viewModel, BuildContext context) {
+    AnalyticsInterface.implementation().interaction(_AnalyticsNames.renameProfileInteraction);
     InputAlert.present(_renameInputAlert(viewModel), context);
   }
 

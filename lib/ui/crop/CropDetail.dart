@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'CropInfoList.dart';
 
 class CropDetail extends StatelessWidget implements ListViewSection {
+  static const analyticsName = 'crop_detail';
   final ViewModelProvider<CropDetailViewModel> _viewModelProvider;
   final Widget _header;
   SectionedListView _listBuilder;

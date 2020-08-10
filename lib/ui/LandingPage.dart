@@ -2,40 +2,12 @@ import 'dart:ui';
 
 import 'package:farmsmart_flutter/model/bloc/ViewModelProvider.dart';
 import 'package:farmsmart_flutter/model/bloc/chatFlow/FlowCoordinator.dart';
-import 'package:farmsmart_flutter/ui/common/ActionSheet.dart';
-import 'package:farmsmart_flutter/ui/common/ActionSheetListItem.dart';
 import 'package:farmsmart_flutter/ui/common/roundedButton.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
+import 'common/locale_selection.dart';
 import 'offline/OfflineDownloadPage.dart';
-
-class _Strings {
-  static final englishAction = "English";
-  static final swahiliAction = "Kiswahili";
-}
-
-class _LocalisedStrings {
-  static String confirmAction() => Intl.message('Confirm');
-
-  static String cancelAction() => Intl.message('Cancel');
-}
-
-class _Languages {
-  static final english = "en";
-  static final swahili = "sw";
-}
-
-class _Country {
-  static final usa = "us";
-}
-
-class _Icons {
-  static final englishIcon = "assets/icons/flag_usa.png";
-  static final swahiliIcon = "assets/icons/flag_kenya.png";
-  static final checkBoxIcon = "assets/icons/radio_button_default.png";
-}
 
 class _Constants {
   static final EdgeInsets generalPadding =
@@ -195,7 +167,7 @@ class LandingPage extends StatelessWidget {
                     ),
                     GestureDetector(
                       behavior: HitTestBehavior.opaque,
-                      onTap: () => _languageTapped(_languageMenu(), context),
+                      onTap: () => _languageTapped(context),
                       child: Container(
                         margin: _Constants.actionTapArea,
                         child: Text(
@@ -230,36 +202,8 @@ class LandingPage extends StatelessWidget {
     OfflineDownloadPage.present(offlinePage, context);
   }
 
-  void _languageTapped(ActionSheet sheet, BuildContext context) {
-    ActionSheet.present(sheet, context);
+  void _languageTapped(BuildContext context) {
+    LocaleSelection.present(context);
   }
 
-  ActionSheet _languageMenu() {
-    final actions = [
-      ActionSheetListItemViewModel(
-        title: _Strings.englishAction,
-        type: ActionType.selectable,
-        icon: _Icons.englishIcon,
-        checkBoxIcon: _Icons.checkBoxIcon,
-        onTap: () => _viewModel.switchLanguageTapped(_Languages.english, _Country.usa),
-      ),
-      ActionSheetListItemViewModel(
-        title: _Strings.swahiliAction,
-        type: ActionType.selectable,
-        icon: _Icons.swahiliIcon,
-        checkBoxIcon: _Icons.checkBoxIcon,
-        onTap: () => _viewModel.switchLanguageTapped(_Languages.swahili, null),
-      ),
-    ];
-
-    final actionSheetViewModel = ActionSheetViewModel(
-      actions,
-      _LocalisedStrings.cancelAction(),
-      confirmButtonTitle: _LocalisedStrings.confirmAction(),
-    );
-    return ActionSheet(
-      viewModel: actionSheetViewModel,
-      style: ActionSheetStyle.defaultStyle(),
-    );
-  }
 }

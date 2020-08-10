@@ -4,6 +4,7 @@ import 'package:farmsmart_flutter/model/repositories/FlameLink.dart';
 
 class _Fields {
   static const cropName = "cropName";
+  static const score = "score";
   static const identifier = "cmsCropId";
 }
 
@@ -31,6 +32,8 @@ class CropRecommendationLookup {
   } 
 
   String _recomendationName(DocumentSnapshot snapshot) {
-    return castOrNull<String>(snapshot.data[_Fields.cropName]);
+    final score = snapshot.data[_Fields.score];
+    final cropname = snapshot.data[_Fields.cropName];
+    return castOrNull<String>(score ?? cropname); //LH the old system used crop name, new system uses the score field. this should handle both.
   }
 }

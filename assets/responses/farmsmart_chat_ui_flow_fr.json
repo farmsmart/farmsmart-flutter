@@ -1,0 +1,129 @@
+{
+  "uid": "1",
+  "title": "René Artois",
+  "subtitle": "Votre assistant personnel de ferme",
+  "origin": "com.wearemobilefirst.farmsmart",
+  "formResponse": {
+    "type": "com.wearemobilefirst.local",
+    "uri": "profiles/%UserID/",
+    "body": {
+      "name": "%Name",
+      "skillLevel": "%SkillLevel",
+      "farmLocation": "%FarmLocation",
+      "agroEcoZone": "%AgroEcoZone",
+      "landSize": "%LandSize",
+      "motivation": "%Motivation",
+      "peopleInHousehold": "%PeopleInHousehold",
+      "soilType": "%SoilType",
+      "startDate": "%StartDate",
+      "usingIrrigation": "%UsingIrrigation"
+    }
+  },
+  "items": [
+    {
+      "text": "Salut! Je suis le chatbot FarmSmart, Jata",
+      "sentiment": "Positive"
+    },
+    {
+      "text": "Je suis ici pour configurer votre profil et recommander les meilleures cultures pour votre ferme",
+      "sentiment": "Positive"
+    },
+    {
+      "text": "Quel est votre nom?",
+      "inputRequest": {
+        "type": "com.wearemobilefirst.String",
+        "uri": "Name",
+        "localStore": false,
+        "inline": true,
+        "title": "votre nom",
+        "validationRegex": ".*",
+        "responseText": "Je m'appelle %Name",
+        "optional": false
+      }
+    },
+    {
+      "text": "Ravi de vous rencontrer %Name",
+      "sentiment": "Positive"
+    },
+    {
+      "text": "Maintenant, je vais poser quelques questions pour m'aider à vous recommander les meilleures cultures",
+      "sentiment": "Positive"
+    },
+    {
+      "text": "À quelle hauteur êtes-vous au-dessus du niveau de la mer?",
+      "inputRequest": {
+        "type": "com.wearemobilefirst.MultiChoice",
+        "uri": "Hight Above Sea Level",
+        "title": "la taille",
+        "inline": true,
+        "localStore": false,
+        "responseText": "",
+        "optional": false,
+        "args": {
+          "maxSelection": 1,
+          "options": [
+            {
+              "id": "0-2 meters",
+              "title": "0-2 mètres"
+            },
+            {
+              "id": "2-15 meters",
+              "title": "2-15 mètres"
+            },
+            {
+              "id": "15+ meters",
+              "title": "15+ mètres"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "text": "Quelle est la taille de votre terrain?",
+      "inputRequest": {
+        "type": "com.wearemobilefirst.MultiChoice",
+        "uri": "Farm size",
+        "title": "Taille du terrain",
+        "inline": true,
+        "localStore": false,
+        "responseText": "",
+        "optional": false,
+        "args": {
+          "maxSelection": 1,
+          "options": [
+            {
+              "id": "less than 5 m2",
+              "title": "moins que 5 m2"
+            },
+            {
+              "id": "5 - 20 m2",
+              "title": "5 - 20 m2"
+            },
+            {
+              "id": "20m2+",
+              "title": "20+ m2"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "text": "Sur quelle île habitez-vous?",
+      "inputRequest": {
+        "type": "com.wearemobilefirst.String",
+        "uri": "Island",
+        "localStore": false,
+        "inline": true,
+        "title": "Nom de l'île",
+        "validationRegex": ".*",
+        "responseText": "",
+        "optional": false
+      }
+    },
+    
+    {
+      "text": "Presque fini! Maintenant, je veux confirmer les informations que vous m'avez fournies",
+      "renderHint": "center"
+    }
+  ]
+}

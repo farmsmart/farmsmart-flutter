@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:farmsmart_flutter/model/analytics_interface.dart';
 import 'package:farmsmart_flutter/model/bloc/download/ApplicationCache.dart';
 import 'package:farmsmart_flutter/ui/article/StandardListItem.dart';
 import 'package:farmsmart_flutter/ui/article/viewModel/ArticleDetailViewModel.dart';
@@ -28,6 +29,13 @@ class _Constants {
   static EdgeInsets externalLinkPadding = EdgeInsets.only(
     bottom: 20.0,
   );
+
+ 
+}
+
+class _AnalyticsNames {
+  static const share = 'article_share';
+  static const more = 'article_more';
 }
 
 class _Icons {
@@ -91,6 +99,7 @@ class _DefaultStyle implements ArticleDetailStyle {
 }
 
 class ArticleDetail extends StatelessWidget implements ListViewSection {
+  static const analyticsName = 'article_detail';
   final ArticleDetailViewModel _viewModel;
   final ArticleDetailStyle _style;
   final Widget _articleHeader;
@@ -124,11 +133,7 @@ class ArticleDetail extends StatelessWidget implements ListViewSection {
   Widget build(BuildContext context) {
     final related =
         _hasRelated() ? Future.value(_relatedViewModels) : fetchReleated();
-
-    // final links = HTMLLinkExtractor(_viewModel.body).imagePaths();
-    // links.forEach((link) => print(link));
-    // final preload = links.map((path) => precacheImage(CachedNetworkImageProvider(path), context)).toList();
-    // final builderFuture = Future.wait(preload).then((_) => related);
+    AnalyticsInterface.implementation().impression(analyticsName, context: _viewModel.title);
     return FutureBuilder(
       future: related,
       builder: (BuildContext context,
@@ -176,6 +181,7 @@ class ArticleDetail extends StatelessWidget implements ListViewSection {
         image: _viewModel.contentLinkIcon,
         icon: _Icons.defaultExternalLinkIcon,
         onTap: () {
+          AnalyticsInterface.implementation().interaction(_AnalyticsNames.more, context: _viewModel.title);
           _launchURL(_viewModel.contentLink);
         });
     return Padding(
@@ -231,14 +237,15 @@ class ArticleDetail extends StatelessWidget implements ListViewSection {
     return _content().itemCount();
   }
 
-  void _share() async {
+  void _share(BuildContext context) async {
     final link = await _viewModel.shareLink;
+    AnalyticsInterface.implementation().interaction(_AnalyticsNames.share, context: _viewModel.title);
     await Share.share(_LocalisedStrings.shareText() + link);
   }
 
   Widget _buildAppBar(BuildContext context) {
     return ContextualAppBar(
-      shareAction: _share,
+      shareAction: () => _share(context),
     ).build(context);
   }
 
@@ -277,9 +284,11 @@ class ArticleDetail extends StatelessWidget implements ListViewSection {
 
   void _tappedListItem(
       {BuildContext context, ArticleDetailViewModel viewModel}) {
+        AnalyticsInterface.implementation().interaction(ArticleDetail.analyticsName, context:analyticsName);
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => ArticleDetail(viewModel: viewModel),
+        settings: RouteSettings(name:ArticleDetail.analyticsName)
       ),
     );
   }

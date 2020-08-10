@@ -50,6 +50,7 @@ class PlaygroundPersistentBottomNavigationBar {
         ),
         title: SizedBox.shrink(),
       ),
+      analyticsName: 'mock',
     );
   }
 
@@ -78,6 +79,7 @@ class PlaygroundPersistentBottomNavigationBar {
         ),
         title: SizedBox.shrink(),
       ),
+      analyticsName: 'Mock',
     );
   }
 }

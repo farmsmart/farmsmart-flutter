@@ -1,3 +1,4 @@
+import 'package:farmsmart_flutter/model/analytics_interface.dart';
 import 'package:farmsmart_flutter/ui/bottombar/tab_navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -23,12 +24,13 @@ class _PersistentBottomNavigationBarState
 
   @override
   Widget build(BuildContext context) {
+    AnalyticsInterface.implementation().impression( widget.tabs[_selectedIndex].analyticsName);
     return WillPopScope(
       onWillPop: () async => !await widget
           .tabs[_selectedIndex].navigatorKey.currentState
           .maybePop(),
       child: Scaffold(
-        bottomNavigationBar: _bottomNavigationBar(_selectedIndex),
+        bottomNavigationBar: _bottomNavigationBar(_selectedIndex, context),
         body: Stack(
           children: _buildChildren(widget.tabs),
         ),
@@ -36,12 +38,13 @@ class _PersistentBottomNavigationBarState
     );
   }
 
-  Widget _bottomNavigationBar(int selectedIndex) {
+  Widget _bottomNavigationBar(int selectedIndex, BuildContext context) {
     return BottomNavigationBar(
       elevation: 0,
       backgroundColor: widget.backgroundColor,
       type: BottomNavigationBarType.fixed,
       onTap: (int index) {
+        AnalyticsInterface.implementation().interaction( widget.tabs[index].analyticsName);
         if(_selectedIndex == index){
           widget.tabs[_selectedIndex].navigatorKey.currentState.popUntil((route) => route.isFirst);
         }
