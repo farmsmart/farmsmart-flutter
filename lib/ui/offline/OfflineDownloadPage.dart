@@ -9,8 +9,6 @@ import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 
 class _Constants {
-  static const textPadding =
-      const EdgeInsets.only(top: 24, right: 24, left: 24);
 
   static const leftButtonPadding = const EdgeInsets.fromLTRB(0, 20, 10, 20);
   static const rightButtonPadding = const EdgeInsets.fromLTRB(10, 20, 0, 20);
@@ -39,13 +37,12 @@ class _Constants {
   static final EdgeInsets alertInnerPadding =
       const EdgeInsets.only(left: 24, right: 24, bottom: 0, top: 24);
   static final double actionHeight = 48;
-  static final double actionWidth = 120;
 }
 
 class _LocalisedStrings {
   static String title() => Intl.message('Enable Offline Use');
   static String description() => Intl.message(
-      'To allow offline use, you must download the apps most recent content. Please check your connection to avoid data charges.');
+      'To allow for offline use, you must download the app’s latest content. Connect to wifi to avoid data charges.');
   static String confirm() => Intl.message('Download');
   static String pleaseWait() => Intl.message('Please Wait');
   static String completed() => Intl.message('Completed');

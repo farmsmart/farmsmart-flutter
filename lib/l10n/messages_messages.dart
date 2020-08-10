@@ -159,7 +159,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "Switch profile" : MessageLookupByLibrary.simpleMessage("Switch profile"),
     "Take picture from camera" : MessageLookupByLibrary.simpleMessage("Take picture from camera"),
     "Terms of use" : MessageLookupByLibrary.simpleMessage("Terms of use"),
-    "To allow offline use, you must download the apps most recent content. Please check your connection to avoid data charges." : MessageLookupByLibrary.simpleMessage("To allow offline use, you must download the apps most recent content. Please check your connection to avoid data charges."),
     "Today" : MessageLookupByLibrary.simpleMessage("Today"),
     "Today" : MessageLookupByLibrary.simpleMessage("Today"),
     "Type a message" : MessageLookupByLibrary.simpleMessage("Type a message"),

@@ -20,7 +20,7 @@ class _Constants {
 }
 
 class _LocalisedStrings {
-  static String country() => Intl.message('Country');
+  static String country() => Intl.message('Location');
   static String lanugage() => Intl.message('Language');
   static String apply() => Intl.message('Apply');
 }
