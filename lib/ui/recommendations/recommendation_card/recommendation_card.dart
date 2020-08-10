@@ -9,13 +9,10 @@ import 'recommendation_card_view_model.dart';
 export 'package:farmsmart_flutter/ui/common/roundedButton.dart';
 
 class _Constants {
-  static String textDivider = ' - ';
   static EdgeInsets titlesPadding = const EdgeInsets.only(top: 21.0);
   static EdgeInsets descriptionPadding = const EdgeInsets.only(top: 12.5);
   static EdgeInsets actionsPadding = const EdgeInsets.only(top: 15.5);
   static double horizontalActionsSeparation = 12;
-  static int titleFlex = 1;
-  static int subtitleFlex = 1;
   static int titleMaxLines = 1;
   static int subtitleMaxLines = 1;
 }
@@ -203,7 +200,18 @@ class RecommendationCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             _buildTopRoundedImage(),
-            _buildTitles(),
+            Text(
+              _viewModel.title,
+              style: _style.titleTextStyle,
+              maxLines: _Constants.titleMaxLines,
+              overflow: TextOverflow.ellipsis,
+            ),
+            Text(
+              _viewModel.subtitle,
+              style: _style.subtitleTextStyle,
+              maxLines: _Constants.subtitleMaxLines,
+              overflow: TextOverflow.ellipsis,
+            ),
             _buildDescription(),
             _buildActions(),
           ],
@@ -224,38 +232,6 @@ class RecommendationCard extends StatelessWidget {
       overlayColor:
           _viewModel.isAdded ? _style.addedOverlayColor : _style.overlayColor,
       showOverlayIcon: _viewModel.isAdded,
-    );
-  }
-
-  Padding _buildTitles() {
-    return Padding(
-      padding: _Constants.titlesPadding,
-      child: Row(
-        children: <Widget>[
-          Flexible(
-            flex: _Constants.titleFlex,
-            child: Text(
-              _viewModel.title,
-              style: _style.titleTextStyle,
-              maxLines: _Constants.titleMaxLines,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-          Text(
-            _Constants.textDivider,
-            style: _style.subtitleTextStyle,
-          ),
-          Flexible(
-            flex: _Constants.subtitleFlex,
-            child: Text(
-              _viewModel.subtitle,
-              style: _style.subtitleTextStyle,
-              maxLines: _Constants.subtitleMaxLines,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-        ],
-      ),
     );
   }
 
