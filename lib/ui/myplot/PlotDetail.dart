@@ -50,8 +50,8 @@ class _Constants {
 
 class _AnalyticsNames {
   static const more = 'plot_detail_more_menu';
-  static const remove = 'plot_detail_remove'; 
-  static const rename = 'plot_detail_rename'; 
+  static const remove = 'plot_detail_remove';
+  static const rename = 'plot_detail_rename';
 }
 
 abstract class PlotDetailStyle {
@@ -121,12 +121,14 @@ class _PlotDetailState extends State<PlotDetail> {
   Widget _successBuilder(
       {BuildContext context, AsyncSnapshot<PlotDetailViewModel> snapshot}) {
     final viewModel = snapshot.data;
-    AnalyticsInterface.implementation().impression(PlotDetail.analyticsName, context:viewModel.title);
+    AnalyticsInterface.implementation()
+        .impression(PlotDetail.analyticsName, context: viewModel.title);
     if (_currentStage != viewModel.currentStage) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         _pageController.animateToPage(
           viewModel.currentStage,
-          duration: Duration(seconds: _Constants.slideAnimationDurationInSeconds),
+          duration:
+              Duration(seconds: _Constants.slideAnimationDurationInSeconds),
           curve: Curves.ease,
         );
         _currentStage = viewModel.currentStage;
@@ -142,12 +144,14 @@ class _PlotDetailState extends State<PlotDetail> {
     final header = PlotListItem().buildListItem(
       viewModel: headerViewModel,
       itemStyle: PlotDetailHeaderStyle(),
-      onTap: () { 
-         AnalyticsInterface.implementation().interaction(PlotDetail.analyticsName, context:viewModel.title);
+      onTap: () {
+        AnalyticsInterface.implementation()
+            .interaction(PlotDetail.analyticsName, context: viewModel.title);
         _tappedDetail(
-        context: context,
-        provider: viewModel.detailProvider,
-      );},
+          context: context,
+          provider: viewModel.detailProvider,
+        );
+      },
       needDivider: false,
     );
     final stages = Container(
@@ -201,8 +205,9 @@ class _PlotDetailState extends State<PlotDetail> {
 
   Widget _buildAppBar(BuildContext context, PlotDetailViewModel viewModel) {
     return ContextualAppBar(
-      moreAction: () { 
-        AnalyticsInterface.implementation().interaction(_AnalyticsNames.more, context:viewModel.title);
+      moreAction: () {
+        AnalyticsInterface.implementation()
+            .interaction(_AnalyticsNames.more, context: viewModel.title);
         _moreTapped(context, _moreMenu(viewModel));
       },
     ).build(context);
@@ -213,7 +218,8 @@ class _PlotDetailState extends State<PlotDetail> {
     final buttonViewModel = RoundedButtonViewModel(
         title: _LocalisedStrings.viewMore() + " " + viewModel.title,
         onTap: () {
-           AnalyticsInterface.implementation().interaction(PlotDetail.analyticsName, context:viewModel.title);
+          AnalyticsInterface.implementation()
+              .interaction(PlotDetail.analyticsName, context: viewModel.title);
           _tappedDetail(context: context, provider: viewModel.detailProvider);
         });
     return Padding(
@@ -254,7 +260,8 @@ class _PlotDetailState extends State<PlotDetail> {
   }
 
   void _renameAction(PlotDetailViewModel viewModel) {
-    AnalyticsInterface.implementation().interaction(_AnalyticsNames.rename, context: viewModel.title);
+    AnalyticsInterface.implementation()
+        .interaction(_AnalyticsNames.rename, context: viewModel.title);
     InputAlert.present(_renameInputAlert(viewModel), context);
   }
 
@@ -297,9 +304,8 @@ class _PlotDetailState extends State<PlotDetail> {
   }) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => CropDetail(provider: provider),
-        settings: RouteSettings(name:CropDetail.analyticsName)
-      ),
+          builder: (context) => CropDetail(provider: provider),
+          settings: RouteSettings(name: CropDetail.analyticsName)),
     );
   }
 }
