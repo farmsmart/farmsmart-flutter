@@ -25,6 +25,7 @@ class _LocalisedStrings {
       Intl.message('Get started by adding your first transaction');
 
   static String addATransaction() => Intl.message('Add a transaction');
+  static String profitAndLoss() => Intl.message('Profit And Loss');
 }
 
 class _Strings {
@@ -34,6 +35,12 @@ class _Strings {
 class _Icons {
   static const costIcon = "assets/icons/detail_icon_cost.png";
   static const saleIcon = "assets/icons/detail_icon_sale.png";
+}
+
+class _Constants {
+  static const titlePaddingOnEmptyState = const EdgeInsets.only(top: 62, left: 32);
+  static final TextStyle titleTextStyle = const TextStyle(
+      fontSize: 27, fontWeight: FontWeight.bold, color: Color(0xFF000000));
 }
 
 class ProfitLossListViewModel implements RefreshableViewModel {
@@ -110,21 +117,30 @@ class ProfitLossPage extends StatelessWidget {
 
   Widget _buildEmptyView(
       ProfitLossListViewModel viewModel, BuildContext context) {
-    return Container(
-      height: double.infinity,
-      width: double.infinity,
-      child: EmptyView(
-        viewModel: EmptyViewViewModel(
-          imagePath: _Strings.emptyImagePath,
-          description: _LocalisedStrings.getStartedAddingYourFirstTransaction(),
-          actionText: _LocalisedStrings.addATransaction(),
-          action: () => _addTapped(
-            context: context,
-            viewModel: viewModel,
-          ),
+    return Column( crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+      Padding(
+        padding: _Constants.titlePaddingOnEmptyState,
+        child: Text(
+          _LocalisedStrings.profitAndLoss(),
+          style: _Constants.titleTextStyle,
         ),
       ),
-    );
+      Expanded(
+        child: EmptyView(
+          viewModel: EmptyViewViewModel(
+            imagePath: _Strings.emptyImagePath,
+            description:
+                _LocalisedStrings.getStartedAddingYourFirstTransaction(),
+            actionText: _LocalisedStrings.addATransaction(),
+            action: () => _addTapped(
+              context: context,
+              viewModel: viewModel,
+            ),
+          ),
+        ),
+      )
+    ]);
   }
 
   HeaderAndFooterListView _buildList(ProfitLossListViewModel viewModel) {
