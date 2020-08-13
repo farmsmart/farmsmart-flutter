@@ -511,7 +511,6 @@ class _RecordTransactionListItemState extends State<RecordTransactionListItem> {
       widget._viewModel.selectedItem = selectedCrop;
       widget.parent.userData.crop = selectedCrop;
       widget.parent.isCropFilled = true;
-      widget.parent.setIfRequiredFieldsAreFilled();
     });
   }
 
