@@ -88,12 +88,4 @@ class _FarmSmartAppState extends State<FarmSmartApp> {
       },
     );
   }
-
-  static Future<Locale> matchDeviceLocale(LocaleRepositoryInterface repo){
-    return repo.availableLocales().then((locales) {
-      
-    });
-   
-    
-  }
 }

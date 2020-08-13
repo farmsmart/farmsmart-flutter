@@ -9,13 +9,9 @@ import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 
 class _Constants {
-  static const textPadding =
-      const EdgeInsets.only(top: 24, right: 24, left: 24);
-  
-   static const leftButtonPadding =
-      const EdgeInsets.fromLTRB(0, 20, 10, 20);
-  static const rightButtonPadding =
-      const EdgeInsets.fromLTRB(10, 20, 0, 20);
+
+  static const leftButtonPadding = const EdgeInsets.fromLTRB(0, 20, 10, 20);
+  static const rightButtonPadding = const EdgeInsets.fromLTRB(10, 20, 0, 20);
 
   static const textStyle = TextStyle(
     fontSize: 17,
@@ -41,13 +37,12 @@ class _Constants {
   static final EdgeInsets alertInnerPadding =
       const EdgeInsets.only(left: 24, right: 24, bottom: 0, top: 24);
   static final double actionHeight = 48;
-  static final double actionWidth = 120;
 }
 
 class _LocalisedStrings {
   static String title() => Intl.message('Enable Offline Use');
   static String description() => Intl.message(
-      'To allow offline use, you must download the apps most recent content. Please check your connection to avoid data charges.');
+      'To allow for offline use, you must download the app’s latest content. Connect to wifi to avoid data charges.');
   static String confirm() => Intl.message('Download');
   static String pleaseWait() => Intl.message('Please Wait');
   static String completed() => Intl.message('Completed');
@@ -59,7 +54,6 @@ class OfflineDownloadPageViewModel implements LoadableViewModel {
   final double progress;
   final Error error;
   final Function downloadAction;
-
 
   OfflineDownloadPageViewModel(
       this.loadingStatus, this.downloadAction, this.progress, this.error);
@@ -109,19 +103,23 @@ class OfflineDownloadPage extends StatelessWidget {
       {BuildContext context,
       AsyncSnapshot<OfflineDownloadPageViewModel> snapshot}) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         Text(_LocalisedStrings.title(), style: _Constants.titleTextStyle),
         Padding(
-          padding: const EdgeInsets.only(top:10.0),
+          padding: const EdgeInsets.only(top: 10.0),
           child: _buildDescription(),
         ),
-        Row(mainAxisSize: MainAxisSize.max, children: <Widget>[
-          _buildCancelButton(context),
-          _buildActionButton(snapshot.data),
-        ]),
+        Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Expanded(child: _buildCancelButton(context)),
+              SizedBox(
+                width: 10,
+              ),
+              Expanded(child: _buildActionButton(snapshot.data)),
+            ]),
       ],
     );
   }
@@ -135,27 +133,31 @@ class OfflineDownloadPage extends StatelessWidget {
         _dismiss(context);
       });
     }
-  
+
     return Container(
       decoration: BoxDecoration(color: Colors.white),
       height: 235.0,
       child: Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.center,
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[ Stack(children: <Widget>[
-        CircularProgress(
-            progress: viewModel.progress, size: 127.0, lineWidth: 2.0),
-        SizedBox(height: 127.0, child:
-        Center(
-          child: Text(
-            viewModel.progress < 1.0
-                ? _LocalisedStrings.pleaseWait()
-                : _LocalisedStrings.completed(),
-            style: _Constants.detailTextStyle,
-          ),
-        ))
-      ]), _buildCancelButton(context)]),
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Stack(children: <Widget>[
+              CircularProgress(
+                  progress: viewModel.progress, size: 127.0, lineWidth: 2.0),
+              SizedBox(
+                  height: 127.0,
+                  child: Center(
+                    child: Text(
+                      viewModel.progress < 1.0
+                          ? _LocalisedStrings.pleaseWait()
+                          : _LocalisedStrings.completed(),
+                      style: _Constants.detailTextStyle,
+                    ),
+                  ))
+            ]),
+            _buildCancelButton(context)
+          ]),
     );
   }
 
@@ -173,7 +175,6 @@ class OfflineDownloadPage extends StatelessWidget {
           ),
           style: RoundedButtonStyle.largeRoundedButtonStyle().copyWith(
             height: _Constants.actionHeight,
-            width: _Constants.actionWidth,
           )),
     );
   }
@@ -188,7 +189,6 @@ class OfflineDownloadPage extends StatelessWidget {
           ),
           style: RoundedButtonStyle.actionSheetLargeRoundedButton().copyWith(
             height: _Constants.actionHeight,
-            width: _Constants.actionWidth,
           )),
     );
   }
