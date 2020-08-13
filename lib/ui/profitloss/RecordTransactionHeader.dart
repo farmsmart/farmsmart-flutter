@@ -218,7 +218,7 @@ class _RecordTransactionHeaderState extends State<RecordTransactionHeader> {
   void _initializeAmount() {
     var amount = widget._viewModel.amount;
     if(amount != null && amount.isNotEmpty) {
-      _textFieldController.text = widget._viewModel.amount;
+      _textFieldController.text = '';
     }
   }
 }
