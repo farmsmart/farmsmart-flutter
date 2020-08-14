@@ -52,6 +52,7 @@ class MockRecommendationCardViewModel {
     return RecommendationCardViewModel(
       title: 'Tomatoes',
       subtitle: '92% match',
+        score: 0.92,
       description:
           'Tomatoes are lorem ipsum dolor sit amet consectetur elit sed'
           ' do eiusmod tempor lorem ipsum dolor sit amet',
@@ -67,6 +68,7 @@ class MockRecommendationCardViewModel {
     return RecommendationCardViewModel(
       title: 'Tomatoes',
       subtitle: '92% match',
+      score: 0.92,
       description:
       'Tomatoes are lorem ipsum dolor sit amet consectetur elit sed'
           ' do eiusmod tempor lorem ipsum dolor sit amet',
@@ -82,6 +84,7 @@ class MockRecommendationCardViewModel {
     return RecommendationCardViewModel(
       title: 'Tomatoes',
       subtitle: '92% match',
+        score: 0.92,
       description:
       'Tomatoes are lorem ipsum dolor sit amet consectetur elit sed'
           ' do eiusmod tempor lorem ipsum dolor sit amet',
