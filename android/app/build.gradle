@@ -41,6 +41,7 @@ android {
 
     lintOptions {
         disable 'InvalidPackage'
+        checkReleaseBuilds false
     }
 
     defaultConfig {
@@ -105,6 +106,7 @@ android {
             // To generate apk for uploding to google play store as a release
             // flutter build apk --release --flavor production -t lib/main_production.dart
             dimension "flavors"
+            applicationId "co.farmsmart.app"
         }
 
     }
