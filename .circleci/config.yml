@@ -124,7 +124,7 @@ jobs:
           VERSION_NAME="RC_${CIRCLE_TAG}_${CIRCLE_SHA1:0:7}"
           echo "Building flutter development app - BUILD_NAME:${VERSION_NAME}"
           flutter build appbundle --build-name="${VERSION_NAME}" --target-platform android-arm,android-arm64 --release --flavor production -t lib/main_prod.dart
-          APP_BUILD_PATH=$(find ./build -name '*.aab')
+          APP_BUILD_PATH=$(find ./build/app/outputs -name '*.aab')
           echo "export APP_BUILD_PATH=${APP_BUILD_PATH}" >> ./env.sh
           echo "export VERSION_NAME=${VERSION_NAME}" >> ./env.sh
       - *save_workspace
