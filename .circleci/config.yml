@@ -138,7 +138,7 @@ jobs:
           flutter packages get
           echo "Building flutter appbundle - BUILD_NAME:${VERSION_NAME}, BUILD_NUMBER=${VERSION_CODE}"
           flutter build appbundle --build-name=${VERSION_NAME} --build-number=${VERSION_CODE} --release --flavor production -t lib/main_prod.dart
-          BUILD_PATH=$(find ./build -name '*.aab')
+          BUILD_PATH=$(find ./build/app/outputs -name '*.aab')
           mkdir -p /tmp/workspace/build
           mv ${BUILD_PATH} /tmp/workspace/build/${VERSION_NAME}.aab
       - persist_to_workspace:
