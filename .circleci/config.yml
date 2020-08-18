@@ -36,7 +36,7 @@ jobs:
       - checkout
       - run:
           name: "Decrypt sensitive files"
-          command: | 
+          command: |
             set -euo pipefail
             SECRETS_DIR=./creds
             mkdir -p ${SECRETS_DIR}
@@ -110,7 +110,7 @@ jobs:
           VERSION_NAME="${CIRCLE_BRANCH}_${CIRCLE_SHA1:0:7}"
           echo "Building flutter development appbundle - BUILD_NAME:${VERSION_NAME}"
           flutter build appbundle --build-name="${CIRCLE_SHA1}" --target-platform android-arm,android-arm64 --release --flavor qa -t lib/main_dev.dart
-          APP_BUILD_PATH=$(find ./build -name '*.aab')
+          APP_BUILD_PATH=$(find ./build/app/outputs -name '*.aab')
           echo "export APP_BUILD_PATH=${APP_BUILD_PATH}" >> ./env.sh
           echo "export VERSION_NAME=${VERSION_NAME}" >> ./env.sh
       - *save_workspace
@@ -124,7 +124,7 @@ jobs:
           VERSION_NAME="RC_${CIRCLE_TAG}_${CIRCLE_SHA1:0:7}"
           echo "Building flutter development app - BUILD_NAME:${VERSION_NAME}"
           flutter build appbundle --build-name="${VERSION_NAME}" --target-platform android-arm,android-arm64 --release --flavor production -t lib/main_prod.dart
-          APP_BUILD_PATH=$(find ./build -name '*.aab')
+          APP_BUILD_PATH=$(find ./build/app/outputs -name '*.aab')
           echo "export APP_BUILD_PATH=${APP_BUILD_PATH}" >> ./env.sh
           echo "export VERSION_NAME=${VERSION_NAME}" >> ./env.sh
       - *save_workspace
@@ -206,7 +206,7 @@ workflows:
             - prepare
           filters:
             tags:
-              only: /.*/  
+              only: /.*/
 
 
       - flutter-build-dev:
@@ -216,7 +216,7 @@ workflows:
           filters:
             branches:
               only: /develop|feature.*/
-      
+
       - flutter-build-rc:
           requires:
             - test
