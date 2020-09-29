@@ -19,7 +19,7 @@ class _Field {
 }
 
 class FarmsmartLocalizations {
-  static final defaultLocale = ContentLocale( Locale('en','US'),'English (USA)');
+  static final defaultLocale = ContentLocale( Locale('en','KE'),'English (Kenya)');
   static Future<FarmsmartLocalizations> load() async {
     Locale locale = await getLocale();
     String localeName = _canonicalLocale(locale);

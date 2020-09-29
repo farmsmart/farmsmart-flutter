@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2020-08-10T15:03:41.237189",
+  "@@last_modified": "2020-09-29T15:11:12.123966",
   "Related articles": "Related articles",
   "@Related articles": {
     "type": "text",
@@ -292,6 +292,11 @@
   },
   "Add a transaction": "Add a transaction",
   "@Add a transaction": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "Profit And Loss": "Profit And Loss",
+  "@Profit And Loss": {
     "type": "text",
     "placeholders": {}
   },
