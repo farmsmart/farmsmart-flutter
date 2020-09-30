@@ -106,14 +106,15 @@ class FlameLink {
 
   String _serverFormatLocale() {
     // the CMS uses <languagecode>-<countrycode> , flutter has a _ divider
-    final loc = _locale == null ?  Locale(Intl.getCurrentLocale()): _locale;
-    final serverFormat = loc.languageCode.replaceAll(
+    if(_locale == null )
+    {
+      final serverFormat = Intl.getCurrentLocale().replaceAll(
       _Strings.flutterLocaleDivider,
       _Strings.flamelinkDivider,
-    );
-    if(serverFormat.startsWith("en")){ //massive hack due to server setup
-      return "en-US";
+      );
+      return serverFormat.toLowerCase();
     }
+    final serverFormat = _locale.languageCode + _Strings.flamelinkDivider + _locale.countryCode;
     return serverFormat.toLowerCase();
   }
 }
