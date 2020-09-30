@@ -123,9 +123,12 @@ class LandingPage extends StatelessWidget {
             flex: _Constants.imageFlexValue,
             fit: FlexFit.loose,
             child: Container(
-              child: Image.asset(
-                _viewModel.headerImage,
-                width: double.infinity,
+              child: Padding(
+                padding: const EdgeInsets.only(left:20.0, right:20.0, top: 20.0),
+                child: Image.asset(
+                  _viewModel.headerImage,
+                  width: double.infinity,
+                ),
               ),
             ),
           ),
