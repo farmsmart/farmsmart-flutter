@@ -295,7 +295,7 @@ class ChatProvider implements ViewModelProvider<ChatViewModel> {
         },
       );
 
-  String _formatDate(DateTime date) => _Constants.dateFormatter.format(date);
+  String _formatDate(DateTime date) => DateFormat('dd MMMM yyyy').format(date);
 
   void _setDropdownWidget({InputRequestEntity entity}) =>
       _chatViewModel.interactiveWidget =

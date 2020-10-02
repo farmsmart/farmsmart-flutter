@@ -1,6 +1,7 @@
 import 'package:country_codes/country_codes.dart';
 import 'package:farmsmart_flutter/model/repositories/locale/locale_repository_interface.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart';
 
 import 'package:farmsmart_flutter/l10n/messages_all.dart';
@@ -80,4 +81,8 @@ String _canonicalLocale(Locale locale) {
   final String name = (locale.countryCode??"").isEmpty ? locale.languageCode : locale.toString();
   final String localeName = Intl.canonicalizedLocale(name);
   return localeName;
+}
+
+class MaterialLocalizationTy extends MaterialLocalizationEn {
+  
 }
