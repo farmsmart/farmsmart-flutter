@@ -15,8 +15,8 @@ class _AnalyticsNames {
 }
 
 class _Field {
-  static String locale = 'locale';
-  static String country = 'country';
+  static String locale = 'locale_V2'; //The business decided to have en-ke as default locale and remove en-us, so we need to clear stored locale
+  static String country = 'country_V2';
 }
 
 class FarmsmartLocalizations {

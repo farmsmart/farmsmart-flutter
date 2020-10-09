@@ -176,8 +176,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "Water Frequency" : MessageLookupByLibrary.simpleMessage("Fréquence d \'arrosage"),
     "Your Farm Details" : MessageLookupByLibrary.simpleMessage("Informations sur votre potager"),
     "Your Farm Details" : MessageLookupByLibrary.simpleMessage("Informations sur votre potager"),
-    "assets/responses/farmsmart_chat_ui_flow.json" : MessageLookupByLibrary.simpleMessage("assets/responses/farmsmart_chat_ui_flow.json"),
-    "assets/responses/farmsmart_chat_ui_flow.json" : MessageLookupByLibrary.simpleMessage("assets/responses/farmsmart_chat_ui_flow.json"),
+    "assets/responses/farmsmart_chat_ui_flow.json" : MessageLookupByLibrary.simpleMessage("assets/responses/farmsmart_chat_ui_flow_fr.json"),
+    "assets/responses/farmsmart_chat_ui_flow.json" : MessageLookupByLibrary.simpleMessage("assets/responses/farmsmart_chat_ui_flow_fr.json"),
     "minute read" : MessageLookupByLibrary.simpleMessage("temps de lecture")
   };
 }

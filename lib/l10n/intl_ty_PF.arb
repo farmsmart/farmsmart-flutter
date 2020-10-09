@@ -375,7 +375,7 @@
         "type": "text",
         "placeholders": {}
     },
-    "Send": "A tono atu",
+    "Send": "A tono",
     "@Send": {
         "type": "text",
         "placeholders": {}
@@ -445,7 +445,7 @@
         "type": "text",
         "placeholders": {}
     },
-    "In Progress": "Te faatupuhia nei",
+    "In Progress": "Te tereraa ‘ôhipa",
     "@In Progress": {
         "type": "text",
         "placeholders": {}
@@ -510,7 +510,7 @@
         "type": "text",
         "placeholders": {}
     },
-    "assets/responses/farmsmart_chat_ui_flow.json": "assets/responses/farmsmart_chat_ui_flow.json",
+    "assets/responses/farmsmart_chat_ui_flow.json": "assets/responses/farmsmart_chat_ui_flow_ty.json",
     "@assets/responses/farmsmart_chat_ui_flow.json": {
         "type": "text",
         "placeholders": {}
@@ -600,17 +600,17 @@
         "type": "text",
         "placeholders": {}
     },
-    "Match": "Te tû'atiraa",
+    "Match": "Tû’atiraa",
     "@Match": {
         "type": "text",
         "placeholders": {}
     },
-    "View Details": "Hi'o i te mau 'apa'aparaa",
+    "View Details": "Tâtararaa",
     "@View Details": {
         "type": "text",
         "placeholders": {}
     },
-    "Add to Plot": "Tapa'o i roto i te 'aua faa'apu",
+    "Add to Plot": "Tâpa’o i te faa’apu",
     "@Add to Plot": {
         "type": "text",
         "placeholders": {}

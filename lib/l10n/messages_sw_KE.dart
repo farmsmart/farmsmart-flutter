@@ -176,8 +176,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "Water Frequency" : MessageLookupByLibrary.simpleMessage("Mahitaji ya maji"),
     "Your Farm Details" : MessageLookupByLibrary.simpleMessage("Maelezo kuhusu shamba lako"),
     "Your Farm Details" : MessageLookupByLibrary.simpleMessage("Maelezo kuhusu shamba lako"),
-    "assets/responses/farmsmart_chat_ui_flow.json" : MessageLookupByLibrary.simpleMessage("assets/responses/farmsmart_chat_ui_flow.json"),
-    "assets/responses/farmsmart_chat_ui_flow.json" : MessageLookupByLibrary.simpleMessage("assets/responses/farmsmart_chat_ui_flow.json"),
+    "assets/responses/farmsmart_chat_ui_flow.json" : MessageLookupByLibrary.simpleMessage("assets/responses/farmsmart_chat_ui_flow_sw.json"),
+    "assets/responses/farmsmart_chat_ui_flow.json" : MessageLookupByLibrary.simpleMessage("assets/responses/farmsmart_chat_ui_flow_sw.json"),
     "minute read" : MessageLookupByLibrary.simpleMessage("dakika za kusoma")
   };
 }

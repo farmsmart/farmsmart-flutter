@@ -420,19 +420,19 @@
           "maxSelection": 1,
           "options": [
             {
-              "id": "people.2",
+              "id": "people_2",
               "title": "2"
             },
             {
-              "id": "people.3_5",
+              "id": "people_3_5",
               "title": "3 - 5"
             },
             {
-              "id": "people.5",
+              "id": "people_5",
               "title": "5 +"
             },
             {
-              "id": "people.skip",
+              "id": "people_skip",
               "title": "Skip"
             }
           ]

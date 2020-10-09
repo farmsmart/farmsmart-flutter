@@ -1,5 +1,5 @@
 // DO NOT EDIT. This is code generated via package:intl/generate_localized.dart
-// This is a library that provides messages for a ty locale. All the
+// This is a library that provides messages for a ty_PF locale. All the
 // messages from the main program should be duplicated here with the same
 // function name.
 
@@ -17,7 +17,7 @@ final messages = new MessageLookup();
 typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 
 class MessageLookup extends MessageLookupByLibrary {
-  String get localeName => 'ty';
+  String get localeName => 'ty_PF';
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
@@ -25,7 +25,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "A network and knowledge source for farmers in Kenya" : MessageLookupByLibrary.simpleMessage("Te natiraa e te pû o te mau ite a te mau taata faa\'apu no Porinetia nei"),
     "Add Another Crop" : MessageLookupByLibrary.simpleMessage("Tapa\'o i te tahi atu maa faapu"),
     "Add a transaction" : MessageLookupByLibrary.simpleMessage("Tâpa\'o i te tapihooraa"),
-    "Add to Plot" : MessageLookupByLibrary.simpleMessage("Tapa\'o i roto i te \'aua faa\'apu"),
+    "Add to Plot" : MessageLookupByLibrary.simpleMessage("Tâpa’o i te faa’apu"),
     "Add to your Plot" : MessageLookupByLibrary.simpleMessage("Tâpa\'o i roto i te \'âua faa\'apu"),
     "Added" : MessageLookupByLibrary.simpleMessage("Ua tapa\'o hia"),
     "Advance" : MessageLookupByLibrary.simpleMessage("Taata aravihi"),
@@ -94,7 +94,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "Get started by adding to your plot" : MessageLookupByLibrary.simpleMessage("Haamata i te tâpa\'o i te maa hotu i roto ta \'oe \'âua faa\'apu"),
     "Get started by adding your first transaction" : MessageLookupByLibrary.simpleMessage("Haamata i te tâpa\'o i ta \'oe hooraa matamua"),
     "High" : MessageLookupByLibrary.simpleMessage("Mea rave rahi"),
-    "In Progress" : MessageLookupByLibrary.simpleMessage("Te faatupuhia nei"),
+    "In Progress" : MessageLookupByLibrary.simpleMessage("Te tereraa ‘ôhipa"),
     "In progress crops" : MessageLookupByLibrary.simpleMessage("Te faa\'apu i faa\'ôhipa hia nei"),
     "Intermediate" : MessageLookupByLibrary.simpleMessage("Taata faito tanotano noa"),
     "Invite Friends" : MessageLookupByLibrary.simpleMessage("Tîtau i te mau hoa"),
@@ -106,7 +106,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "Logout" : MessageLookupByLibrary.simpleMessage("Tâpû i te tû\'atiraa itenati"),
     "Low" : MessageLookupByLibrary.simpleMessage("Mea haehaa"),
     "Mark as complete" : MessageLookupByLibrary.simpleMessage("Tapa\'o mai tei oti"),
-    "Match" : MessageLookupByLibrary.simpleMessage("Te tû\'atiraa"),
+    "Match" : MessageLookupByLibrary.simpleMessage("Tû’atiraa"),
     "Medium" : MessageLookupByLibrary.simpleMessage("Mea tanotano noa"),
     "Message should not be empty" : MessageLookupByLibrary.simpleMessage("Eiaha te parau poroi i \'ore i pâpa\'ihia"),
     "My Plot" : MessageLookupByLibrary.simpleMessage("Tâ\'u \'âua faa\'apu"),
@@ -151,7 +151,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "Save" : MessageLookupByLibrary.simpleMessage("Haamana"),
     "Select..." : MessageLookupByLibrary.simpleMessage("A mâ\'iti..."),
     "Select..." : MessageLookupByLibrary.simpleMessage("A mâ\'iti..."),
-    "Send" : MessageLookupByLibrary.simpleMessage("A tono atu"),
+    "Send" : MessageLookupByLibrary.simpleMessage("A tono"),
     "Setup Costs" : MessageLookupByLibrary.simpleMessage("Faanaho i te mau hamâu\'araa"),
     "Single" : MessageLookupByLibrary.simpleMessage("Faa\'apu hô\'ê noa iho maa"),
     "Skip" : MessageLookupByLibrary.simpleMessage("Haapae i teie tuhaa"),
@@ -169,15 +169,15 @@ class MessageLookup extends MessageLookupByLibrary {
     "Upcoming" : MessageLookupByLibrary.simpleMessage("To muri mai"),
     "Upcoming" : MessageLookupByLibrary.simpleMessage("To muri mai"),
     "Username" : MessageLookupByLibrary.simpleMessage("To \'oe I\'oa faa\'ôhiparaa"),
-    "View Details" : MessageLookupByLibrary.simpleMessage("Hi\'o i te mau \'apa\'aparaa"),
+    "View Details" : MessageLookupByLibrary.simpleMessage("Tâtararaa"),
     "View Your Details" : MessageLookupByLibrary.simpleMessage("A hio i ta oe mau tatararaa ti\'araa hôhô\'a"),
     "View more on the Web" : MessageLookupByLibrary.simpleMessage("Hi\'o hau atu i nia i te itenati"),
     "View more on the web" : MessageLookupByLibrary.simpleMessage("Hi\'o hau atu i nia i te itenati"),
     "Water Frequency" : MessageLookupByLibrary.simpleMessage("Te titauraa pape"),
     "Your Farm Details" : MessageLookupByLibrary.simpleMessage("Te apaparaa ô ta \'oe faa\'apu"),
     "Your Farm Details" : MessageLookupByLibrary.simpleMessage("Te apaparaa ô ta \'oe faa\'apu"),
-    "assets/responses/farmsmart_chat_ui_flow.json" : MessageLookupByLibrary.simpleMessage("assets/responses/farmsmart_chat_ui_flow.json"),
-    "assets/responses/farmsmart_chat_ui_flow.json" : MessageLookupByLibrary.simpleMessage("assets/responses/farmsmart_chat_ui_flow.json"),
+    "assets/responses/farmsmart_chat_ui_flow.json" : MessageLookupByLibrary.simpleMessage("assets/responses/farmsmart_chat_ui_flow_ty.json"),
+    "assets/responses/farmsmart_chat_ui_flow.json" : MessageLookupByLibrary.simpleMessage("assets/responses/farmsmart_chat_ui_flow_ty.json"),
     "minute read" : MessageLookupByLibrary.simpleMessage("taime tai\'oraa")
   };
 }

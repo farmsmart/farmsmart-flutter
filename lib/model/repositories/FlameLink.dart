@@ -94,6 +94,7 @@ class FlameLink {
 
   Query documentsQuery({String schema = "", int limit = 0}) {
     final locale = _serverFormatLocale();
+    print(locale);
     var query = content()
         .where(FlameLinkDocumentFields.locale, isEqualTo: locale)
         .where(FlameLinkDocumentFields.env, isEqualTo: _environment)
