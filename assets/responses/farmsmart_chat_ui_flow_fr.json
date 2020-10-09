@@ -31,7 +31,7 @@
         "uri": "Name",
         "localStore": false,
         "inline": true,
-        "title": "nom",
+        "title": "Nom",
         "validationRegex": ".*",
         "responseText": "",
         "optional": false
@@ -51,7 +51,7 @@
         "type": "com.wearemobilefirst.MultiChoice",
         "inline": true,
         "uri": "island",
-        "title": "d’île",
+        "title": "Genre d’île",
         "localStore": true,
         "responseText": "",
         "optional": false,
