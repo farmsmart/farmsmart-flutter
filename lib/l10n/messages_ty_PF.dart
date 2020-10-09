@@ -71,7 +71,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "Crop" : MessageLookupByLibrary.simpleMessage("Faa\'apu"),
     "Crop Type" : MessageLookupByLibrary.simpleMessage("Huru faa\'apu"),
     "Crop name" : MessageLookupByLibrary.simpleMessage("Te i\'oa o teie faa\'apu"),
-    "Currency" : MessageLookupByLibrary.simpleMessage("Moni tapihooraa"),
+    "Currency" : MessageLookupByLibrary.simpleMessage("xpf"),
     "Date" : MessageLookupByLibrary.simpleMessage("Tai\'o mahana"),
     "Date" : MessageLookupByLibrary.simpleMessage("Tai\'o mahana"),
     "Day" : MessageLookupByLibrary.simpleMessage("Mahana"),

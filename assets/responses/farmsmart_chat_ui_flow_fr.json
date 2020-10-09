@@ -1,128 +1,177 @@
 {
   "uid": "1",
-  "title": "René Artois",
-  "subtitle": "Votre assistant personnel de ferme",
+  "title": "Hotu",
+  "subtitle": "Assistant personnel agricole",
   "origin": "com.wearemobilefirst.farmsmart",
   "formResponse": {
     "type": "com.wearemobilefirst.local",
     "uri": "profiles/%UserID/",
     "body": {
       "name": "%Name",
-      "skillLevel": "%SkillLevel",
-      "farmLocation": "%FarmLocation",
-      "agroEcoZone": "%AgroEcoZone",
-      "landSize": "%LandSize",
-      "motivation": "%Motivation",
-      "peopleInHousehold": "%PeopleInHousehold",
-      "soilType": "%SoilType",
-      "startDate": "%StartDate",
-      "usingIrrigation": "%UsingIrrigation"
+      "islandName": "%islandName",
+      "island": "%island",
+      "Intention":"%Intention",
+      "LandSize":"%LandSize",
+      "plantingArea":"%plantingArea"
     }
   },
   "items": [
     {
-      "text": "Salut! Je suis le chatbot FarmSmart, Jata",
+      "text": "Bonjour, je suis Hotu, le chatbot de FarmSmart.",
       "sentiment": "Positive"
     },
     {
-      "text": "Je suis ici pour configurer votre profil et recommander les meilleures cultures pour votre ferme",
+      "text": "Je vais configurer ton profil et te guider sur ce qu'il faut faire pousser dans ton potager.",
       "sentiment": "Positive"
     },
     {
-      "text": "Quel est votre nom?",
+      "text": "Quest est votre nom?",
       "inputRequest": {
         "type": "com.wearemobilefirst.String",
         "uri": "Name",
         "localStore": false,
         "inline": true,
-        "title": "votre nom",
+        "title": "nom",
         "validationRegex": ".*",
-        "responseText": "Je m'appelle %Name",
+        "responseText": "",
         "optional": false
       }
     },
     {
-      "text": "Ravi de vous rencontrer %Name",
+      "text": "Heureux de te connaître %Name",
       "sentiment": "Positive"
     },
     {
-      "text": "Maintenant, je vais poser quelques questions pour m'aider à vous recommander les meilleures cultures",
+      "text": "Avant tout, j’ai quelques questions à te poser",
       "sentiment": "Positive"
     },
     {
-      "text": "À quelle hauteur êtes-vous au-dessus du niveau de la mer?",
+      "text": "Vous habitez sur quel genre d’île?",
       "inputRequest": {
         "type": "com.wearemobilefirst.MultiChoice",
-        "uri": "Hight Above Sea Level",
-        "title": "la taille",
         "inline": true,
-        "localStore": false,
+        "uri": "island",
+        "title": "d’île",
+        "localStore": true,
         "responseText": "",
         "optional": false,
         "args": {
           "maxSelection": 1,
           "options": [
             {
-              "id": "0-2 meters",
-              "title": "0-2 mètres"
+              "id": "Atoll",
+              "title": "Atoll",
+              "description": "",
+              "responseText": "Atoll"
             },
             {
-              "id": "2-15 meters",
-              "title": "2-15 mètres"
-            },
-            {
-              "id": "15+ meters",
-              "title": "15+ mètres"
+              "id": "HighIsland",
+              "title": "Île haute",
+              "description": "",
+              "responseText": "Île haute"
             }
           ]
         }
       }
     },
     {
-      "text": "Quelle est la taille de votre terrain?",
-      "inputRequest": {
-        "type": "com.wearemobilefirst.MultiChoice",
-        "uri": "Farm size",
-        "title": "Taille du terrain",
-        "inline": true,
-        "localStore": false,
-        "responseText": "",
-        "optional": false,
-        "args": {
-          "maxSelection": 1,
-          "options": [
-            {
-              "id": "less than 5 m2",
-              "title": "moins que 5 m2"
-            },
-            {
-              "id": "5 - 20 m2",
-              "title": "5 - 20 m2"
-            },
-            {
-              "id": "20m2+",
-              "title": "20+ m2"
-            }
-          ]
-        }
-      }
-    },
-    {
-      "text": "Sur quelle île habitez-vous?",
+      "text": "Dans quelle île habitez-vous?",
       "inputRequest": {
         "type": "com.wearemobilefirst.String",
-        "uri": "Island",
+        "uri": "islandName",
         "localStore": false,
         "inline": true,
-        "title": "Nom de l'île",
+        "title": "île habitez-vous",
         "validationRegex": ".*",
         "responseText": "",
         "optional": false
       }
     },
-    
     {
-      "text": "Presque fini! Maintenant, je veux confirmer les informations que vous m'avez fournies",
+      "text": "Sur quelle partie de l’ile se trouve votre plantation?",
+      "inputRequest": {
+        "type": "com.wearemobilefirst.MultiChoice",
+        "inline": true,
+        "uri": "plantingArea",
+        "title": "Partie de l’ile",
+        "localStore": true,
+        "responseText": "",
+        "optional": false,
+        "args": {
+          "maxSelection": 1,
+          "options": [
+            {
+              "id": "Plain",
+              "title": "Plaine"
+            },
+            {
+              "id": "Valley",
+              "title": "Vallée"
+            },
+            {
+              "id": "Mountain",
+              "title": "Montagne"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "text": "Quelle est la taille de votre potager?",
+      "inputRequest": {
+        "type": "com.wearemobilefirst.MultiChoice",
+        "uri": "LandSize",
+        "title": "Taille de votre potager",
+        "inline": true,
+        "localStore": false,
+        "responseText": "",
+        "optional": false,
+        "args": {
+          "maxSelection": 1,
+          "options": [
+            {
+              "id": "Less_than_10m2",
+              "title": "Moins de 10m2"
+            },
+            {
+              "id": "10_30m2",
+              "title": "10-30m2"
+            },
+            {
+              "id": "More_than_30m2",
+              "title": "30m2+"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "text": "Quel est le but de votre potager?",
+      "inputRequest": {
+        "type": "com.wearemobilefirst.MultiChoice",
+        "uri": "Intention",
+        "title": "Le but de votre potager",
+        "inline": true,
+        "localStore": false,
+        "responseText": "",
+        "optional": false,
+        "args": {
+          "maxSelection": 1,
+          "options": [
+            {
+              "id": "Sales",
+              "title": "Commerciale"
+            },
+            {
+              "id": "Subsistence",
+              "title": "Familiale"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "text": "Je voudrais confirmer ces informations",
       "renderHint": "center"
     }
   ]

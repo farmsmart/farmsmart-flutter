@@ -71,7 +71,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "Crop" : MessageLookupByLibrary.simpleMessage("Crop"),
     "Crop Type" : MessageLookupByLibrary.simpleMessage("Crop type"),
     "Crop name" : MessageLookupByLibrary.simpleMessage("Crop name"),
-    "Currency" : MessageLookupByLibrary.simpleMessage("Currency"),
+    "Currency" : MessageLookupByLibrary.simpleMessage("ksh"),
     "Date" : MessageLookupByLibrary.simpleMessage("Date"),
     "Date" : MessageLookupByLibrary.simpleMessage("Date"),
     "Day" : MessageLookupByLibrary.simpleMessage("Day"),

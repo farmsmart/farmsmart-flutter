@@ -630,7 +630,7 @@
         "type": "text",
         "placeholders": {}
     },
-    "Currency": "Fedha",
+    "Currency": "ksh",
     "@Currency": {
         "type": "text",
         "placeholders": {}

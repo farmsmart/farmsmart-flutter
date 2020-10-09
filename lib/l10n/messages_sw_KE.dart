@@ -71,7 +71,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "Crop" : MessageLookupByLibrary.simpleMessage("Mmea"),
     "Crop Type" : MessageLookupByLibrary.simpleMessage("Aina ya Mmea"),
     "Crop name" : MessageLookupByLibrary.simpleMessage("Aina ya Mmea"),
-    "Currency" : MessageLookupByLibrary.simpleMessage("Fedha"),
+    "Currency" : MessageLookupByLibrary.simpleMessage("ksh"),
     "Date" : MessageLookupByLibrary.simpleMessage("Tarehe"),
     "Date" : MessageLookupByLibrary.simpleMessage("Tarehe"),
     "Day" : MessageLookupByLibrary.simpleMessage("Siku"),

@@ -630,7 +630,7 @@
         "type": "text",
         "placeholders": {}
     },
-    "Currency": "Devises",
+    "Currency": "xpf",
     "@Currency": {
         "type": "text",
         "placeholders": {}
