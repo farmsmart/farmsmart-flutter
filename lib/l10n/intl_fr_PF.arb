@@ -640,6 +640,11 @@
         "type": "text",
         "placeholders": {}
     },
+    "Profit And Loss": "Profit et perte",
+    "@Profit And Loss": {
+      "type": "text",
+      "placeholders": {}
+    },
     "Record a Sale": "Enregistrer une vente",
     "@Record a Sale": {
         "type": "text",

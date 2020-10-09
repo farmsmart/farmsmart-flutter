@@ -255,6 +255,11 @@
         "type": "text",
         "placeholders": {}
     },
+    "Profit And Loss": "",
+    "@Profit And Loss": {
+      "type": "text",
+      "placeholders": {}
+    },
     "Get started by adding to your plot": "Haamata i te tâpa'o i te maa hotu i roto ta 'oe 'âua faa'apu",
     "@Get started by adding to your plot": {
         "type": "text",

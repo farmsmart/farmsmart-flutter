@@ -1,7 +1,7 @@
 {
   "uid": "1",
   "title": "Hotu",
-  "subtitle": "Assistant personnel agricole",
+  "subtitle": "",
   "origin": "com.wearemobilefirst.farmsmart",
   "formResponse": {
     "type": "com.wearemobilefirst.local",
