@@ -122,6 +122,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "Please Wait" : MessageLookupByLibrary.simpleMessage("Tia\'i maa taime iti"),
     "Please complete previous" : MessageLookupByLibrary.simpleMessage("A faa\'î na mua atu i te \'api i mua atu"),
     "Privacy Policy" : MessageLookupByLibrary.simpleMessage("Ture pâruru"),
+    "Profit And Loss" : MessageLookupByLibrary.simpleMessage("  "),
     "Profitability" : MessageLookupByLibrary.simpleMessage("Te âpîraa"),
     "Provided EMAIL is not valid" : MessageLookupByLibrary.simpleMessage("Aita e mana teie RATA UIRA"),
     "Provided PHONE is not valid" : MessageLookupByLibrary.simpleMessage("Aita e mana teie numera NIUNIU"),

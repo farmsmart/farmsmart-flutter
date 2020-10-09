@@ -122,6 +122,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "Please Wait" : MessageLookupByLibrary.simpleMessage("Veuillez patienter"),
     "Please complete previous" : MessageLookupByLibrary.simpleMessage("Compléter les données antérieures"),
     "Privacy Policy" : MessageLookupByLibrary.simpleMessage("Confidentialité"),
+    "Profit And Loss" : MessageLookupByLibrary.simpleMessage("Profit et perte"),
     "Profitability" : MessageLookupByLibrary.simpleMessage("Rentabilité"),
     "Provided EMAIL is not valid" : MessageLookupByLibrary.simpleMessage("L\'adresse EMAIL fourni est incorrect"),
     "Provided PHONE is not valid" : MessageLookupByLibrary.simpleMessage("Le numéro de téléphone fourni est incorrect"),

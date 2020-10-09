@@ -255,7 +255,7 @@
         "type": "text",
         "placeholders": {}
     },
-    "Profit And Loss": "",
+    "Profit And Loss": "  ",
     "@Profit And Loss": {
       "type": "text",
       "placeholders": {}

@@ -122,6 +122,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "Please Wait" : MessageLookupByLibrary.simpleMessage("Tafadhali subiri"),
     "Please complete previous" : MessageLookupByLibrary.simpleMessage("Tafadhali kamilisha yaliyotangulia"),
     "Privacy Policy" : MessageLookupByLibrary.simpleMessage("Sera ya faragha"),
+    "Profit And Loss" : MessageLookupByLibrary.simpleMessage("  "),
     "Profitability" : MessageLookupByLibrary.simpleMessage("Kiwango cha faida"),
     "Provided EMAIL is not valid" : MessageLookupByLibrary.simpleMessage("Provided EMAIL is not valid"),
     "Provided PHONE is not valid" : MessageLookupByLibrary.simpleMessage("Provided PHONE is not valid"),
