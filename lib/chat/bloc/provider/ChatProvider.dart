@@ -26,8 +26,6 @@ class _Constants {
   static const defaultEmptyString = "";
   static const scrollAnimationOffset = 0.0;
   static const scrollAnimationDuration = 300;
-
-  static final dateFormatter = DateFormat('dd MMMM yyyy');
   static const String typeValueString = "com.wearemobilefirst.String";
   static const String typeValueEmail = "com.wearemobilefirst.Email";
   static const String typeValuePhoneNumber = "com.wearemobilefirst.PhoneNumber";
@@ -35,8 +33,6 @@ class _Constants {
   static const String typeValueMultiChoice = "com.wearemobilefirst.MultiChoice";
   static const String typeValueDropdown = "com.wearemobilefirst.Dropdown";
   static const String typeValueDate = "com.wearemobilefirst.Date";
-
-  
 }
 
 class _AnalyticsNames {
@@ -295,7 +291,7 @@ class ChatProvider implements ViewModelProvider<ChatViewModel> {
         },
       );
 
-  String _formatDate(DateTime date) => _Constants.dateFormatter.format(date);
+  String _formatDate(DateTime date) => DateFormat('dd MMMM yyyy').format(date);
 
   void _setDropdownWidget({InputRequestEntity entity}) =>
       _chatViewModel.interactiveWidget =

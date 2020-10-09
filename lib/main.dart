@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 import 'app_coordinator.dart';
 import 'farmsmart_localizations.dart';
 import 'flavors/app_config.dart';
+import 'l10n/tahitian_support.dart';
 import 'model/analytics_firebase.dart';
 import 'model/bloc/ResetStateWidget.dart';
 import 'model/bloc/ViewModelProvider.dart';
@@ -88,6 +89,7 @@ class _FarmSmartAppState extends State<FarmSmartApp> {
                   FarmsmartLocalizationsDelegate(supportedLocales),
                   GlobalMaterialLocalizations.delegate,
                   GlobalWidgetsLocalizations.delegate,
+                  TyMaterialLocalizations.delegate
                 ],
                 supportedLocales: supportedLocales,
                 theme: ThemeData(

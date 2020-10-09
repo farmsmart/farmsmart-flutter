@@ -1,7 +1,7 @@
 {
   "uid": "1",
   "title": "Hotu",
-  "subtitle": "Assistant personnel agricole",
+  "subtitle": "",
   "origin": "com.wearemobilefirst.farmsmart",
   "formResponse": {
     "type": "com.wearemobilefirst.local",
@@ -17,28 +17,28 @@
   },
   "items": [
     {
-      "text": "Bonjour, je suis Hotu, le chatbot de FarmSmart.",
+      "text": "Ia Orana, ‘ô Hotu teie, te FarmSmart arata’i.",
       "sentiment": "Positive"
     },
     {
-      "text": "Je vais configurer ton profil et te guider sur ce qu'il faut faire pousser dans ton potager.",
+      "text": "‘E arata’i vau ia ‘oe no  te faanaho ‘i tâ ‘oe ti’araa hôho’a, ‘e te mau mea ‘ei tanu ‘i roto ‘i te tûhaa faa’apu.",
       "sentiment": "Positive"
     },
     {
-      "text": "Quest est votre nom?",
+      "text": "E aha to ’oe i’oa?",
       "inputRequest": {
         "type": "com.wearemobilefirst.String",
         "uri": "Name",
         "localStore": false,
         "inline": true,
-        "title": "Nom",
+        "title": "’oe i’oa",
         "validationRegex": ".*",
         "responseText": "",
         "optional": false
       }
     },
     {
-      "text": "Heureux de te connaître %Name",
+      "text": "Mea ‘oa’oa teie fârereiraa %Name",
       "sentiment": "Positive"
     },
     {
@@ -46,12 +46,12 @@
       "sentiment": "Positive"
     },
     {
-      "text": "Vous habitez sur quel genre d’île?",
+      "text": "E aha te huru fenua o ta ‘oe i ora nei ?",
       "inputRequest": {
         "type": "com.wearemobilefirst.MultiChoice",
         "inline": true,
         "uri": "island",
-        "title": "Genre d’île",
+        "title": "Te tuhaa o te fenua I faa’apu ai ‘oe",
         "localStore": true,
         "responseText": "",
         "optional": false,
@@ -60,40 +60,40 @@
           "options": [
             {
               "id": "Atoll",
-              "title": "Atoll",
+              "title": "Motu",
               "description": "",
-              "responseText": "Atoll"
+              "responseText": "Motu"
             },
             {
               "id": "HighIsland",
-              "title": "Île haute",
+              "title": "Fenua mou’a",
               "description": "",
-              "responseText": "Île haute"
+              "responseText": "Fenua mou’a"
             }
           ]
         }
       }
     },
     {
-      "text": "Dans quelle île habitez-vous?",
+      "text": "Te fen o ta ‘oe i ora nei?",
       "inputRequest": {
         "type": "com.wearemobilefirst.String",
         "uri": "islandName",
         "localStore": false,
         "inline": true,
-        "title": "île habitez-vous",
+        "title": "'oe i ora nei",
         "validationRegex": ".*",
         "responseText": "",
         "optional": false
       }
     },
     {
-      "text": "Sur quelle partie de l’ile se trouve votre plantation?",
+      "text": "E aha te tuhaa o te fenua I faa’apu ai ‘oe?",
       "inputRequest": {
         "type": "com.wearemobilefirst.MultiChoice",
         "inline": true,
         "uri": "plantingArea",
-        "title": "Partie de l’ile",
+        "title": "Te tuhaa o te fenua I faa’apu ai ‘oe",
         "localStore": true,
         "responseText": "",
         "optional": false,
@@ -102,26 +102,26 @@
           "options": [
             {
               "id": "Plain",
-              "title": "Plaine"
+              "title": "Mahora pâpû"
             },
             {
               "id": "Valley",
-              "title": "Vallée"
+              "title": "Faa"
             },
             {
               "id": "Mountain",
-              "title": "Montagne"
+              "title": "Mou'a"
             }
           ]
         }
       }
     },
     {
-      "text": "Quelle est la taille de votre potager?",
+      "text": "E aha te faito rarahi o ta ‘oe fa’apu?",
       "inputRequest": {
         "type": "com.wearemobilefirst.MultiChoice",
         "uri": "LandSize",
-        "title": "Taille de votre potager",
+        "title": "Te faito rarahi o ta ‘oe fa’apu",
         "inline": true,
         "localStore": false,
         "responseText": "",
@@ -131,7 +131,7 @@
           "options": [
             {
               "id": "Less_than_10m2",
-              "title": "Moins de 10m2"
+              "title": "-10m2"
             },
             {
               "id": "10_30m2",
@@ -146,11 +146,11 @@
       }
     },
     {
-      "text": "Quel est le but de votre potager?",
+      "text": "E aha te tumu i faa'apu ai ‘oe?",
       "inputRequest": {
         "type": "com.wearemobilefirst.MultiChoice",
         "uri": "Intention",
-        "title": "Le but de votre potager",
+        "title": "Te tumu i faa'apu ai ‘oe",
         "inline": true,
         "localStore": false,
         "responseText": "",
@@ -160,18 +160,18 @@
           "options": [
             {
               "id": "Sales",
-              "title": "Commerciale"
+              "title": "Tapihooraa"
             },
             {
               "id": "Subsistence",
-              "title": "Familiale"
+              "title": "Utuâfare"
             }
           ]
         }
       }
     },
     {
-      "text": "Je voudrais confirmer ces informations",
+      "text": "‘E haamana vau i tetie mau parau tâtararaa.",
       "renderHint": "center"
     }
   ]

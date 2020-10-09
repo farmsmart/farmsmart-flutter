@@ -1,567 +1,663 @@
 {
-  "Confirm": "Thibitisha",
-  "@Confirm": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Cancel": "Futa",
-  "@Cancel": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Related articles": "Nakala inayofanana",
-  "@Related articles": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Related groups": "kikundi fanana",
-  "@Related groups": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Recommendations": "Pendekezo",
-  "@Recommendations": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "My Plot": "Shamba langu",
-  "@My Plot": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Discover": "Gundua",
-  "@Discover": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Community": "Jamii",
-  "@Community": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Join the WhatsApp group and discuss with fellow farmers.": "Unganisha wakulima wenzangu kwa kikundi cha Whatsapp",
-  "@Join the WhatsApp group and discuss with fellow farmers.": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Finish": "Maliza",
-  "@Finish": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Clear Selection": "Futa Uchaguzi",
-  "@Clear Selection": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Oops, there was a problem!": "Lo, kulikuwa na shida!",
-  "@Oops, there was a problem!": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Retry": "Jaribu tena",
-  "@Retry": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Edit Photo": "Hariri Picha",
-  "@Edit Photo": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "No image picked": "Hakuna picha iliyochukuliwa",
-  "@No image picked": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "No cropped image": "Hakuna picha iliyopandwa",
-  "@No cropped image": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Your Farm Details": "Maelezo yako ya shamba",
-  "@Your Farm Details": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Edit Profile": "Hariri Profaili",
-  "@Edit Profile": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Delete Profile": "Futa Profaili",
-  "@Delete Profile": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Delete": "Futa",
-  "@Delete": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Are you sure you want to delete your profile? Doing so will erase all data and this action cannot be undone.": "Una uhakika unataka kufuta wasifu wako? Kufanya hivyo kutafuta data zote na hatua hii haiwezi kutekelezwa.",
-  "@Are you sure you want to delete your profile? Doing so will erase all data and this action cannot be undone.": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "In progress crops": "Katika mazao ya maendeleo",
-  "@In progress crops": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Edit Farm Details": "Hariri Maelezo ya Shambani",
-  "@Edit Farm Details": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Completed": "Imekamilika",
-  "@Completed": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Switch Profile": "Badilisha wasifu",
-  "@Switch Profile": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Switch Language": "Badilisha lugha",
-  "@Switch Language": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Create New Profile": "Unda Wasifu Mpya",
-  "@Create New Profile": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Invite Friends": "Alika Marafiki",
-  "@Invite Friends": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Privacy Policy": "Sera ya faragha",
-  "@Privacy Policy": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Terms of use": "Masharti ya matumizi",
-  "@Terms of use": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Logout": "Logout",
-  "@Logout": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Remove Profile": "Ondoa Profaili",
-  "@Remove Profile": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Pick image from gallery": "Chagua picha kutoka kwa matunzio",
-  "@Pick image from gallery": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Take picture from camera": "Chukua picha kutoka kwa kamera",
-  "@Take picture from camera": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Join to the new smart farming app - FarmSmart  \n https://linktogoogleplay.com": "Jiunge na programu mpya ya kilimo smart - FarmSmart https://linktogoogleplay.com",
-  "@Join to the new smart farming app - FarmSmart  \n https://linktogoogleplay.com": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Are you sure you would like to complete this action?": "Una uhakika ungependa kukamilisha kitendo hiki?",
-  "@Are you sure you would like to complete this action?": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Rename Crop": "Badilishe Mazao",
-  "@Rename Crop": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Remove Crop": "Ondoa Mazao",
-  "@Remove Crop": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Remove crop": "Ondoa mazao",
-  "@Remove crop": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Are you sure you want delete the crop?": "Je! Una uhakika unataka kufuta mazao?",
-  "@Are you sure you want delete the crop?": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Learn more about": "Jifunze zaidi juu",
-  "@Learn more about": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Check out this article from the FarmSmart mobile app \n ": "Angalia nakala hii kutoka kwa programu ya simu ya FarmSmart \n ",
-  "@Check out this article from the FarmSmart mobile app \n ": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "View more on the web": "Angalia zaidi kwenye wavuti",
-  "@View more on the web": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Record a new Cost": "Rekodi gharama",
-  "@Record a new Cost": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Record a new Sale": "Rekodi mauzo",
-  "@Record a new Sale": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Date": "Tarehe",
-  "@Date": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Crop": "Mazao",
-  "@Crop": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Today": "Leo",
-  "@Today": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Select...": "Chagua ...",
-  "@Select...": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Description (optional)...": "Maelezo (hiari) ...",
-  "@Description (optional)...": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Reset Process": "Rudisha Mchakato",
-  "@Reset Process": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Skip": "Ruka",
-  "@Skip": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Confirm Details": "Thibitisha Maelezo",
-  "@Confirm Details": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Option": "Chaguo",
-  "@Option": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Send": "Tuma",
-  "@Send": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Message should not be empty": "Ujumbe haupaswi kuwa tupu",
-  "@Message should not be empty": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Type a message": "Andika ujumbe",
-  "@Type a message": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Provided TEXT is not valid": "Maandishi yaliyotolewa sio sawa",
-  "@Provided TEXT is not valid": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Provided EMAIL is not valid": "Barua pepe iliyotolewa sio sawa",
-  "@Provided EMAIL is not valid": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Provided PHONE is not valid": "Simu iliyotolewa sio halali",
-  "@Provided PHONE is not valid": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Provided summary is not correct": "Muhtasari uliotolewa sio sawa",
-  "@Provided summary is not correct": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "View Your Details": "Angalia Maelezo Yako",
-  "@View Your Details": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Add Another Crop": "Ongeza Mboo Mwingine",
-  "@Add Another Crop": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "View more on the Web": "Angalia zaidi kwenye Wavuti",
-  "@View more on the Web": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Discover much more information using this link...": "Gundua habari zaidi ukitumia kiunga hiki ...",
-  "@Discover much more information using this link...": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Day": "Siku",
-  "@Day": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Upcoming": "Inayokuja",
-  "@Upcoming": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Stage": "Jukwaa",
-  "@Stage": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "In Progress": "Inaendelea",
-  "@In Progress": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Complete": "Kukamilika",
-  "@Complete": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Revert to In Progress": "Rudi kwa mwendo",
-  "@Revert to In Progress": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Begin Stage": "Mwanzo jukwaa",
-  "@Begin Stage": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Please complete previous": "Tafadhali kamilisha yaliyopita",
-  "@Please complete previous": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Mark as complete": "Alama ya kakamilisha",
-  "@Mark as complete": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Begin crop": "Anza mazao",
-  "@Begin crop": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Complete crop": "Mazao kamili",
-  "@Complete crop": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Revert crop": "Rejea mazao",
-  "@Revert crop": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Are you sure you want to mark this stage as in progress?": "Je! Una uhakika unataka kuweka alama hatua hii kama inaendelea?",
-  "@Are you sure you want to mark this stage as in progress?": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Are you sure you want to mark this stage as complete?": "Una uhakika unataka kuweka alama hatua hii kuwa kamili?",
-  "@Are you sure you want to mark this stage as complete?": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Are you sure you want to market this crop as complete?": "Una uhakika unataka kuuza mazao haya kamili?",
-  "@Are you sure you want to market this crop as complete?": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Are you sure you want revert the stage status?": "Je! Una uhakika unataka kubadilisha hali ya hatua?",
-  "@Are you sure you want revert the stage status?": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "assets/responses/farmsmart_chat_ui_flow.json": "assets/responses/farmsmart_chat_ui_flow_sw.json",
-  "@assets/responses/farmsmart_chat_ui_flow.json": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Operation already in progress": "Operesheni tayari inaendelea",
-  "@Operation already in progress": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Best Soil": "Udongo Bora",
-  "@Best Soil": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Water Frequency": "Mara kwa mara ya Maji",
-  "@Water Frequency": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Crop Type": "Aina ya Mazao",
-  "@Crop Type": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Complexity": "Ugumu",
-  "@Complexity": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Setup Costs": "Gharama za Usanidi",
-  "@Setup Costs": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Profitability": "Faida",
-  "@Profitability": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Companion Plants": "Mimea ya Masahaba",
-  "@Companion Plants": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Non-Companion Plants": "Mimea Isiyo ya Ushirika",
-  "@Non-Companion Plants": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Low": "Chini",
-  "@Low": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Medium": "Kati",
-  "@Medium": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "High": "Juu",
-  "@High": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Single": "Moja",
-  "@Single": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Rotation": "Mzunguko",
-  "@Rotation": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Beginner": "Mwanzoni",
-  "@Beginner": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Advance": "Advance",
-  "@Advance": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Intermediate": "Kati",
-  "@Intermediate": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Match": "Mechi",
-  "@Match": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "View Details": "Kutazama Maelezo",
-  "@View Details": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Add to Plot": "Ongeza kwa shamba",
-  "@Add to Plot": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Added": "Imeongezwa",
-  "@Added": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "General": "Jumla",
-  "@General": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Currency": "KSh",
-  "@Currency": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "No description": "Hakuna maelezo",
-  "@No description": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Record a Cost": "Rekodi Gharama",
-  "@Record a Cost": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Record a Sale": "Rekodi mauzo",
-  "@Record a Sale": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Switch profile": "Badilisha wasifu",
-  "@Switch profile": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "minute read": "soma dakika",
-  "@minute read": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "A network and knowledge source for farmers in Kenya": "Mtandao na maarifa ya kufulisha wakulima inchini Kenya ",
-  "@A network and knowledge source for farmers in Kenya": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Get Started": "Anza",
-  "@Get Started": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "Switch language – Badilisha Lugha": "Switch language – Badilisha Lugha",
-  "@Switch language – Badilisha Lugha": {
-    "type": "text",
-    "placeholders": {}
-  }
+    "@@last_modified": "2020-08-10T15:03:41.237189",
+    "Related articles": "Nakala zinazohusiana",
+    "@Related articles": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Related groups": "Makundi yanayohusiana",
+    "@Related groups": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Recommendations": "Mapendekezo",
+    "@Recommendations": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "My Plot": "Ploti yangu",
+    "@My Plot": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Discover": "Gundua",
+    "@Discover": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Community": "Jamii",
+    "@Community": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Join the WhatsApp group and discuss with fellow farmers.": "Jiunge na kikundi cha wakulima cha WhatsAPP ili kujadili na wakulima wengine",
+    "@Join the WhatsApp group and discuss with fellow farmers.": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "A network and knowledge source for farmers in Kenya": "Mtandao na chanzo cha maarifa kwa wakulima nchini Kenya",
+    "@A network and knowledge source for farmers in Kenya": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Get Started": "Anza kwa kuongeza kwenye ploti yako",
+    "@Get Started": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Switch language – Badilisha Lugha": "Badilisha lugha",
+    "@Switch language – Badilisha Lugha": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Finish": "Kamilisha",
+    "@Finish": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Clear Selection": "Futa ulichochagua",
+    "@Clear Selection": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Cancel": "Futa",
+    "@Cancel": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Edit Photo": "Badilisha picha",
+    "@Edit Photo": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "No image picked": "Hakuna picha",
+    "@No image picked": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "No cropped image": "No cropped image",
+    "@No cropped image": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Location": "Mahali",
+    "@Location": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Language": "Lugha",
+    "@Language": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Apply": "Weka",
+    "@Apply": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Oops, there was a problem!": "Pole!…kuna tatizo!",
+    "@Oops, there was a problem!": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Retry": "Jaribu tena",
+    "@Retry": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Confirm": "Thibitisha",
+    "@Confirm": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "In progress crops": "Inaendelea",
+    "@In progress crops": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Edit Farm Details": "Badilisha maelezo ya shamba",
+    "@Edit Farm Details": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Completed": "Imekamilika",
+    "@Completed": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Switch Profile": "Badilisha wasifu",
+    "@Switch Profile": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Your Farm Details": "Maelezo kuhusu shamba lako",
+    "@Your Farm Details": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Create New Profile": "Andika wasifa mpya",
+    "@Create New Profile": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Invite Friends": "Waalike marafiki",
+    "@Invite Friends": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Privacy Policy": "Sera ya faragha",
+    "@Privacy Policy": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Terms of use": "Masharti ya matumizi",
+    "@Terms of use": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Logout": "Ondoka kwenye akaunti",
+    "@Logout": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Remove Profile": "Ondoa wasifa",
+    "@Remove Profile": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Pick image from gallery": "Chagua picha kutoka kwa hifadhi ya picha",
+    "@Pick image from gallery": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Take picture from camera": "Chukua picha kutoka kwa kamera",
+    "@Take picture from camera": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Rename profile": "Badilisha jina la wasifu",
+    "@Rename profile": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Username": "Jina la Mtumiaji",
+    "@Username": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Enable Offline Use": "Wezesha matumizi ya bila mtandao",
+    "@Enable Offline Use": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Join to the new smart farming app - FarmSmart \n": "Join to the new smart farming app - FarmSmart\n",
+    "@Join to the new smart farming app - FarmSmart \n": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Edit Profile": "Badilisha wasifu",
+    "@Edit Profile": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Delete Profile": "Futa",
+    "@Delete Profile": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Delete": "Futa",
+    "@Delete": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Are you sure you want to delete your profile? Doing so will erase all data and this action cannot be undone.": "Una uhakika unataka kufuta wasifu wako? Kufanya hivyo kutafuta data zote na hatua hii haiwezi kubadilishwa.",
+    "@Are you sure you want to delete your profile? Doing so will erase all data and this action cannot be undone.": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Are you sure you would like to complete this action?": "Hatua kamili?",
+    "@Are you sure you would like to complete this action?": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Rename Crop": "Badilisha jina Mmea",
+    "@Rename Crop": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Crop name": "Aina ya Mmea",
+    "@Crop name": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Remove Crop": "Ondoa mmea",
+    "@Remove Crop": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Remove": "Futa",
+    "@Remove": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Remove crop": "Ondoa",
+    "@Remove crop": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Are you sure you want to remove the crop? All progress will be lost.": "Ondoa mmea? Kufanya hivyo kutafuta data zote na hatua hii haiwezi kubadilishwa.",
+    "@Are you sure you want to remove the crop? All progress will be lost.": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Learn more about": "Jifunze zaidi kuhusu",
+    "@Learn more about": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Get started by adding to your plot": "Anza kwa kuongeza kwenye ploti yako",
+    "@Get started by adding to your plot": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Add to your Plot": "Ongeza kwenye ploti yako",
+    "@Add to your Plot": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Check out this article from the FarmSmart mobile app \n ": "Soma makala ",
+    "@Check out this article from the FarmSmart mobile app \n ": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "View more on the web": "Angalia maelezo zaidi kwenye wavuti",
+    "@View more on the web": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Record a new Cost": "Weka rekodi ya gharama",
+    "@Record a new Cost": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Record a new Sale": "Weka rekodi ya mauzo",
+    "@Record a new Sale": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Get started by adding your first transaction": "Anza kwa kuongeza shughuli yako ya kwanza",
+    "@Get started by adding your first transaction": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Add a transaction": "Ongeza shughuli",
+    "@Add a transaction": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Date": "Tarehe",
+    "@Date": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Crop": "Mmea",
+    "@Crop": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Today": "Leo",
+    "@Today": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Select...": "Chagua...",
+    "@Select...": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Description (optional)...": "Maelezo...",
+    "@Description (optional)...": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Edit record": "Badilisha rekodi",
+    "@Edit record": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Save": "Hifadhi",
+    "@Save": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Remove record": "Futa rekodi",
+    "@Remove record": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Are you sure you want to remove this record? This action cannot be undone.": "Una uhakika unataka kufuta wasifu wako? Kufanya hivyo kutafuta data zote na hatua hii haiwezi kubadilishwa.",
+    "@Are you sure you want to remove this record? This action cannot be undone.": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "To allow for offline use, you must download the app’s latest content. Connect to wifi to avoid data charges.": "Ili uwezeshe matumizi bila mtandao, lazima upakue maelezo zaidi ya hivi karibuni ya programu. Tafadhali angalia muunganisho wako ili usitozwe malipo ya data.",
+    "@To allow for offline use, you must download the app’s latest content. Connect to wifi to avoid data charges.": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Download": "Pakua",
+    "@Download": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Please Wait": "Tafadhali subiri",
+    "@Please Wait": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Option": "Chaguo",
+    "@Option": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Reset Process": "Anzisha mchakato upya",
+    "@Reset Process": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Skip": "Ruka",
+    "@Skip": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Confirm Details": "Thibitisha",
+    "@Confirm Details": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Send": "Tuma",
+    "@Send": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Message should not be empty": "Message should not be empty",
+    "@Message should not be empty": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Type a message": "Type a message",
+    "@Type a message": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Provided TEXT is not valid": "Provided TEXT is not valid",
+    "@Provided TEXT is not valid": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Provided EMAIL is not valid": "Provided EMAIL is not valid",
+    "@Provided EMAIL is not valid": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Provided PHONE is not valid": "Provided PHONE is not valid",
+    "@Provided PHONE is not valid": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Provided summary is not correct": "Provided summary is not correct",
+    "@Provided summary is not correct": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "View Your Details": "Angalia maelezo ya kina",
+    "@View Your Details": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Add Another Crop": "Ongeza mmea mwingine",
+    "@Add Another Crop": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Day": "Siku",
+    "@Day": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Upcoming": "Yajayo",
+    "@Upcoming": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "View more on the Web": "View more on the Web",
+    "@View more on the Web": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Discover much more information using this link...": "Gundua zaidi...",
+    "@Discover much more information using this link...": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Stage": "Hatua",
+    "@Stage": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "In Progress": "Inaendelea",
+    "@In Progress": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Complete": "Imekamilika",
+    "@Complete": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Revert to In Progress": "Rejea harakati inayoendelea",
+    "@Revert to In Progress": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Begin Stage": "Anza hatua",
+    "@Begin Stage": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Please complete previous": "Tafadhali kamilisha yaliyotangulia",
+    "@Please complete previous": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Mark as complete": "Weka alama ya kukamilika",
+    "@Mark as complete": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Begin crop": "Anza hatua",
+    "@Begin crop": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Complete crop": "Mazao kamili",
+    "@Complete crop": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Revert crop": "Nyuma",
+    "@Revert crop": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Are you sure you want to mark this stage as in progress?": "Una uhakika unataka kuifanya hatua hii iwe inaendelea?",
+    "@Are you sure you want to mark this stage as in progress?": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Are you sure you want to mark this stage as complete?": "Una uhakika unataka kuifanya hatua hii iwe imekamilika?",
+    "@Are you sure you want to mark this stage as complete?": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Are you sure you want to market this crop as complete?": "Una uhakika unataka kuifanya hatua hii iwe imekamilika?",
+    "@Are you sure you want to market this crop as complete?": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Are you sure you want revert the stage status?": "Una uhakika unataka kurudisha nyuma hatua hii?",
+    "@Are you sure you want revert the stage status?": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "assets/responses/farmsmart_chat_ui_flow.json": "assets/responses/farmsmart_chat_ui_flow_sw.json",
+    "@assets/responses/farmsmart_chat_ui_flow.json": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Operation already in progress": "Operesheni inaendelea",
+    "@Operation already in progress": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Best Soil": "Udongo bora zaidi",
+    "@Best Soil": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Water Frequency": "Mahitaji ya maji",
+    "@Water Frequency": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Crop Type": "Aina ya Mmea",
+    "@Crop Type": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Complexity": "Changamano",
+    "@Complexity": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Setup Costs": "Gharama za kuanzisha",
+    "@Setup Costs": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Profitability": "Kiwango cha faida",
+    "@Profitability": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Companion Plants": "Mimea inayoweza kukua pamoja",
+    "@Companion Plants": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Non-Companion Plants": "Mimea isiyoweza kukua pamoja",
+    "@Non-Companion Plants": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Low": "Kiwango cha chini",
+    "@Low": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Medium": "Kiwango cha wastani",
+    "@Medium": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "High": "Kiwango cha juu",
+    "@High": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Single": "Pekee",
+    "@Single": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Rotation": "Ubadilishaji wa mimea",
+    "@Rotation": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Beginner": "Anayeanza kujifunza",
+    "@Beginner": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Advance": "Ya juu",
+    "@Advance": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Intermediate": "Kiwango cha Kati",
+    "@Intermediate": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Match": "Ulinganifu",
+    "@Match": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "View Details": "Angalia maelezo zaidi",
+    "@View Details": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Add to Plot": "Ongeza kwenye ploti yako",
+    "@Add to Plot": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Added": "Imeongezwa",
+    "@Added": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "No description": "Hakuna maelezo",
+    "@No description": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "General": "Jumla",
+    "@General": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Currency": "ksh",
+    "@Currency": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Profit And Loss": "  ",
+    "@Profit And Loss": {
+      "type": "text",
+      "placeholders": {}
+    },
+    "Record a Cost": "Weka rekodi ya gharama",
+    "@Record a Cost": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Record a Sale": "Weka rekodi ya mauzo",
+    "@Record a Sale": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Switch profile": "Badilisha wasifu",
+    "@Switch profile": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "minute read": "dakika za kusoma",
+    "@minute read": {
+        "type": "text",
+        "placeholders": {}
+    }
 }

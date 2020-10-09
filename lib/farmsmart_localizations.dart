@@ -1,6 +1,7 @@
 import 'package:country_codes/country_codes.dart';
 import 'package:farmsmart_flutter/model/repositories/locale/locale_repository_interface.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart';
 
 import 'package:farmsmart_flutter/l10n/messages_all.dart';
@@ -14,8 +15,8 @@ class _AnalyticsNames {
 }
 
 class _Field {
-  static String locale = 'locale';
-  static String country = 'country';
+  static String locale = 'locale_V2'; //The business decided to have en-ke as default locale and remove en-us, so we need to clear stored locale
+  static String country = 'country_V2';
 }
 
 class FarmsmartLocalizations {
@@ -80,4 +81,8 @@ String _canonicalLocale(Locale locale) {
   final String name = (locale.countryCode??"").isEmpty ? locale.languageCode : locale.toString();
   final String localeName = Intl.canonicalizedLocale(name);
   return localeName;
+}
+
+class MaterialLocalizationTy extends MaterialLocalizationEn {
+  
 }
