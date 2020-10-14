@@ -11,7 +11,7 @@ description: Farmsmart Flutter app
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.0+1
+version: 1.1.0
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -19,29 +19,47 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  image_picker: ^0.6.0+20
+  image_cropper: ^1.0.2
+
+  flutter_localizations:
+    sdk: flutter
+
+  intl_translation: ^0.17.5
+  country_codes: ^1.0.1
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
-  flutter_redux: ^0.5.2
-  redux: ^3.0.0
-  shared_preferences: ^0.4.3
-  redux_logging: ^0.3.0
-  flutter_html: ^0.10.0
+  shared_preferences: ^0.5.3+4
+  flutter_html:
+    git:
+      url: https://github.com/farmsmart/flutter_html.git
+      ref: feature/customImgRender 
   flutter_launcher_icons: ^0.7.0
+  firebase_auth: ^0.16.1
+  cloud_firestore: ^0.13.7
+  firebase_storage: ^3.1.6
+  cloud_functions: ^0.5.0
+  firebase_dynamic_links: ^0.5.0+11
+  firebase_analytics: ^5.0.16
 
-  firebase_storage: ^2.1.1+1
-  cloud_firestore: ^0.10.1
-
-  webview_flutter: ^0.3.6
-  firebase_dynamic_links: ^0.4.0+2
-  flutter_share_me: ^0.1.3
+  webview_flutter: ^0.3.22+1
+  share: ^0.6.1+1
   package_info: ^0.4.0+3
+  cached_network_image: ^2.2.0+1
+  url_launcher: ^5.1.1
+  decimal: ^0.3.0
 
+  json_serializable:
 
+  mockito: ^4.1.0
+
+  provider: ^4.3.1
 
 
 dev_dependencies:
+  test: ^1.15.0
   flutter_test:
     sdk: flutter
 
@@ -57,21 +75,60 @@ flutter:
   # the material Icons class.
   uses-material-design: true
   assets:
-  - assets/icons/app_icon.png
-  - assets/raw/community_mock.webp
-  - assets/raw/profit_mock.webp
-  - assets/raw/placeholder.webp
+    - assets/icons/chatbot_avatar.png
+    - assets/icons/app_icon.png
+    - assets/icons/community_selected.png
+    - assets/icons/community.png
+    - assets/icons/discover_selected.png
+    - assets/icons/discover.png
+    - assets/icons/my_plot_selected.png
+    - assets/icons/my_plot.png
+    - assets/icons/profit_loss_selected.png
+    - assets/icons/profit_loss.png
+    - assets/icons/detail_icon_date.png
+    - assets/icons/detail_icon_description.png
+    - assets/privacy_policy.html
+    - assets/icons/profit_add.png
+    - assets/icons/tick_large.png
+    - assets/icons/detail_icon_companion.png
+    - assets/icons/detail_icon_complexity.png
+    - assets/icons/detail_icon_crop_type.png
+    - assets/icons/detail_icon_non_companion.png
+    - assets/icons/detail_icon_profitability.png
+    - assets/icons/detail_icon_setup_costs.png
+    - assets/icons/detail_icon_water.png
+    - assets/privacy_policy.html
+    - assets/icons/flag_kenya.png
+    - assets/icons/flag_usa.png
+    - assets/icons/detail_icon_sale.png
+    - assets/icons/detail_icon_cost.png
+    - assets/icons/radio_button_default.png
+    - assets/icons/radio_button_active.png
+    - assets/icons/chevron.png
+    - assets/icons/detail_icon_best_soil.png
+    - assets/icons/detail_icon_invite.png
+    - assets/icons/detail_icon_language.png
+    - assets/icons/detail_icon_new_profile.png
+    - assets/icons/detail_icon_pin.png
+    - assets/raw/
+    - assets/icons/
+    - assets/icons/nav_icon_back.png
+    - assets/icons/nav_icon_options.png
+    - assets/icons/nav_icon_cancel.png
+    - assets/responses/create_account_mock_form.json
+    - assets/responses/farmsmart_chat_ui_flow.json
+    - assets/responses/farmsmart_chat_ui_flow_sw.json
+    - assets/responses/farmsmart_chat_ui_flow_fr.json
+    - assets/responses/farmsmart_chat_ui_flow_ty.json
+    
 
-  - assets/icons/community_selected.png
-  - assets/icons/community.png
-  - assets/icons/discover_selected.png
-  - assets/icons/discover.png
-  - assets/icons/my_plot_selected.png
-  - assets/icons/my_plot.png
-  - assets/icons/profit_loss_selected.png
-  - assets/icons/profit_loss.png
+  fonts:
+  - family: IBMPlexSans
+    fonts:
+      - asset: assets/fonts/IBMPlexSans-Bold.ttf
+      - asset: assets/fonts/IBMPlexSans-Medium.ttf
+      - asset: assets/fonts/IBMPlexSans-Regular.ttf
 
-  - assets/privacy_policy.html
 
 flutter_icons:
   android: "launcher_icon"

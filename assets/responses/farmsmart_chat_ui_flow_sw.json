@@ -1,0 +1,541 @@
+{
+  "uid": "1",
+  "title": "Jata",
+  "subtitle": "Msaidizi wako wa shambani",
+  "origin": "com.wearemobilefirst.farmsmart",
+  "formResponse": {
+    "type": "com.wearemobilefirst.local",
+    "uri": "profiles/%UserID/",
+    "body": {
+      "name": "%Name",
+      "skillLevel": "%SkillLevel",
+      "farmLocation": "%FarmLocation",
+      "agroEcoZone": "%AgroEcoZone",
+      "landSize": "%LandSize",
+      "motivation": "%Motivation",
+      "peopleInHousehold": "%PeopleInHousehold",
+      "soilType": "%SoilType",
+      "startDate": "%StartDate",
+      "usingIrrigation": "%UsingIrrigation"
+    }
+  },
+  "items": [
+    {
+      "text": "Jambo, mimi ni gumzo wa FarmSmart, Jata",
+      "sentiment": "Positive"
+    },
+    {
+      "text": "Niko hapa kuanzisha wasifu wako na kupendekeza mimea bora",
+      "sentiment": "Positive"
+    },
+    {
+      "text": "Jina lako nani?",
+      "inputRequest": {
+        "type": "com.wearemobilefirst.String",
+        "uri": "Name",
+        "localStore": false,
+        "inline": true,
+        "title": "Lako nani",
+        "validationRegex": ".*",
+        "responseText": "Jina langu ni %Name",
+        "optional": false
+      }
+    },
+    {
+      "text": "Nimefurahia kukutana nawe %Name",
+      "sentiment": "Positive"
+    },
+    {
+      "text": "Nina maswali machache kwako kupendekeza mimea bora",
+      "sentiment": "Positive"
+    },
+    {
+      "text": "Je! Ni kiwango gani cha ustadi wako wa kilimo\n",
+      "inputRequest": {
+        "type": "com.wearemobilefirst.MultiChoice",
+        "inline": true,
+        "uri": "Skill level",
+        "title": "Kiwango cha ustadi",
+        "localStore": true,
+        "responseText": "",
+        "optional": false,
+        "args": {
+          "maxSelection": 1,
+          "options": [
+            {
+              "id": "Beginner",
+              "title": "Kiwango wa chini",
+              "description": "No experience with farming",
+              "responseText": "I have no experience farming"
+            },
+            {
+              "id": "Intermediate",
+              "title": "Kiwango wa kati",
+              "description": "Some experience farming",
+              "responseText": "I have farming knowledge"
+            },
+            {
+              "id": "Advanced",
+              "title": "Kiwango wa juu",
+              "description": "Experienced farmer",
+              "responseText": "I have experience farming"
+            },
+            {
+              "id": "Trainer",
+              "title": "Trainer",
+              "description": "Experienced farmer",
+              "responseText": "I train other farmers"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "text": "Shamba lako liko wapi?",
+      "inputRequest": {
+        "type": "com.wearemobilefirst.Dropdown",
+        "uri": "Location",
+        "title": "Eneo la shamba",
+        "localStore": false,
+        "responseText": "",
+        "inline": true,
+        "optional": false,
+        "args": {
+          "maxSelection": 1,
+          "options": [
+            {
+              "id": "Baringo",
+              "title": "Baringo"
+            },
+            {
+              "id": "Bomet",
+              "title": "Bomet"
+            },
+            {
+              "id": "Bungoma",
+              "title": "Bungoma"
+            },
+            {
+              "id": "Busia",
+              "title": "Busia"
+            },
+            {
+              "id": "Elgeyo-Marakwet",
+              "title": "Elgeyo-Marakwet"
+            },
+            {
+              "id": "Embu",
+              "title": "Embu"
+            },
+            {
+              "id": "Garissa",
+              "title": "Garissa"
+            },
+            {
+              "id": "Homa Bay",
+              "title": "Homa Bay"
+            },
+            {
+              "id": "Isiolo",
+              "title": "Isiolo"
+            },
+            {
+              "id": "Kajiado",
+              "title": "Kajiado"
+            },
+            {
+              "id": "Kakamega",
+              "title": "Kakamega"
+            },
+            {
+              "id": "Kericho",
+              "title": "Kericho"
+            },
+            {
+              "id": "Kiambu",
+              "title": "Kiambu"
+            },
+            {
+              "id": "Kilifi",
+              "title": "Kilifi"
+            },
+            {
+              "id": "Kirinyaga",
+              "title": "Kirinyaga"
+            },
+            {
+              "id": "Kisii",
+              "title": "Kisii"
+            },
+            {
+              "id": "Kisumu",
+              "title": "Kisumu"
+            },
+            {
+              "id": "Kitui",
+              "title": "Kitui"
+            },
+            {
+              "id": "Kwale",
+              "title": "Kwale"
+            },
+            {
+              "id": "Laikipia",
+              "title": "Laikipia"
+            },
+            {
+              "id": "Lamu",
+              "title": "Lamu"
+            },
+            {
+              "id": "Machakos",
+              "title": "Machakos"
+            },
+            {
+              "id": "Makueni",
+              "title": "Makueni"
+            },
+            {
+              "id": "Mandera",
+              "title": "Mandera"
+            },
+            {
+              "id": "Marsabit",
+              "title": "Marsabit"
+            },
+            {
+              "id": "Meru",
+              "title": "Meru"
+            },
+            {
+              "id": "Migori",
+              "title": "Migori"
+            },
+            {
+              "id": "Mombasa",
+              "title": "Mombasa"
+            },
+            {
+              "id": "Murang'a",
+              "title": "Murang'a"
+            },
+            {
+              "id": "Nairobi",
+              "title": "Nairobi"
+            },
+            {
+              "id": "Nakuru",
+              "title": "Nakuru"
+            },
+            {
+              "id": "Nandi",
+              "title": "Nandi"
+            },
+            {
+              "id": "Narok",
+              "title": "Narok"
+            },
+            {
+              "id": "Nyamira",
+              "title": "Nyamira"
+            },
+            {
+              "id": "Nyandarua",
+              "title": "Nyandarua"
+            },
+            {
+              "id": "Nyeri",
+              "title": "Nyeri"
+            },
+            {
+              "id": "Samburu",
+              "title": "Samburu"
+            },
+            {
+              "id": "Siaya",
+              "title": "Siaya"
+            },
+            {
+              "id": "Taita-Taveta",
+              "title": "Taita-Taveta"
+            },
+            {
+              "id": "Tana River",
+              "title": "Tana River"
+            },
+            {
+              "id": "Tharaka-Nithi",
+              "title": "Tharaka-Nithi"
+            },
+            {
+              "id": "Trans-Nzoia",
+              "title": "Trans-Nzoia"
+            },
+            {
+              "id": "Turkana",
+              "title": "Turkana"
+            },
+            {
+              "id": "Uasin Gishu",
+              "title": "Uasin Gishu"
+            },
+            {
+              "id": "Vihiga",
+              "title": "Vihiga"
+            },
+            {
+              "id": "Wajir",
+              "title": "Wajir"
+            },
+            {
+              "id": "West Pokot",
+              "title": "West Pokot"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "text": "Je! eneo lako la kilimo and ikolojia ni gani?",
+      "inputRequest": {
+        "type": "com.wearemobilefirst.Dropdown",
+        "inline": true,
+        "uri": "Agro zone",
+        "title": "Ukanda wa Ekolojia",
+        "localStore": true,
+        "responseText": "",
+        "optional": false,
+        "args": {
+          "maxSelection": 1,
+          "options": [
+            {
+              "id": "Upper midlands",
+              "title": "Viunga vya juu"
+            },
+            {
+              "id": "Lowland midlands",
+              "title": "Viunga vya chini"
+            },
+            {
+              "id": "Upper highlands",
+              "title": "Nyanda za juu"
+            },
+            {
+              "id": "Lowland highlands",
+              "title": "Nyanda za chini"
+            },
+            {
+              "id": "Inland lowlands",
+              "title": "Maeneo ya chini ya bara"
+            },
+            {
+              "id": "Coastal lowlands",
+              "title": "Maeneo ya chini ya pwani"
+            },
+            {
+              "id": "Don´t know",
+              "title": "Sijui"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "text": "Je! Ukubwa wa ardhi yako ni gani?",
+      "inputRequest": {
+        "type": "com.wearemobilefirst.MultiChoice",
+        "uri": "Land size",
+        "title": "Ukubwa wa ardhi",
+        "inline": true,
+        "localStore": false,
+        "responseText": "",
+        "optional": false,
+        "args": {
+          "maxSelection": 1,
+          "options": [
+            {
+              "id": "Less than 10m2",
+              "title": "Bustani ya mjini"
+            },
+            {
+              "id": "Less than 1/4 acre",
+              "title": "Chini ya robo ekari"
+            },
+            {
+              "id": "1/4 - 1/2 acre",
+              "title": "1/4 - 1/2 ekari"
+            },
+            {
+              "id": "1/2 - 1 acre",
+              "title": "1/2 - 1 ekari"
+            },
+            {
+              "id": "More than 1 acree",
+              "title": "Ekari zaidi ya 1 moja"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "text": "Je! Kwanini unataka kulima chakula kwenye shamba lako?",
+      "inputRequest": {
+        "type": "com.wearemobilefirst.MultiChoice",
+        "uri": "Intention",
+        "title": "Kichocheo",
+        "inline": true,
+        "localStore": false,
+        "responseText": "",
+        "optional": false,
+        "args": {
+          "maxSelection": 1,
+          "options": [
+            {
+              "id": "Sales",
+              "title": "Kilimo biashara"
+            },
+            {
+              "id": "Subsistence",
+              "title": "kwa kulisha familia yangu"
+            },
+            {
+              "id": "Both",
+              "title": "Kwa zote mbili"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "text": "Ni watu wangapi katika kaya yako",
+      "inputRequest": {
+        "type": "com.wearemobilefirst.MultiChoice",
+        "uri": "PeopleInHousehold",
+        "title": "Watu Katika Kaya",
+        "inline": true,
+        "localStore": false,
+        "responseText": "",
+        "optional": false,
+        "args": {
+          "maxSelection": 1,
+          "options": [
+            {
+              "id": "people.2",
+              "title": "2"
+            },
+            {
+              "id": "people.3_5",
+              "title": "3 - 5"
+            },
+            {
+              "id": "people.5",
+              "title": "5 +"
+            },
+            {
+              "id": "people.skip",
+              "title": "Ruka"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "text": "Una aina gani ya mchanga?",
+      "inputRequest": {
+        "type": "com.wearemobilefirst.MultiChoice",
+        "uri": "Soil type",
+        "title": "Aina ya udongo",
+        "inline": true,
+        "localStore": false,
+        "responseText": "",
+        "optional": false,
+        "args": {
+          "maxSelection": 1,
+          "options": [
+            {
+              "id": "Sandy",
+              "title": "changarawe"
+            },
+            {
+              "id": "Sandy clay",
+              "title": "Changarawe kinamo"
+            },
+            {
+              "id": "Sandy loam",
+              "title": "Changarawe mboji"
+            },
+            {
+              "id": "Silt",
+              "title": "Udongo mashapo"
+            },
+            {
+              "id": "Silty loam",
+              "title": "Mboji kinamo"
+            },
+            {
+              "id": "Silty Clay",
+              "title": "Kinamo mashudu/mashapo"
+            },
+            {
+              "id": "Clay",
+              "title": "Udongo kinamo"
+            },
+            {
+              "id": "Clay loam",
+              "title": "Kinamo mlulu"
+            },
+            {
+              "id": "Loam",
+              "title": "Mboji/mluluse"
+            },
+            {
+              "id": "DontKnow",
+              "title": "Sijui"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "text": "Je! Unapanga kuanza kupanda wakati gani",
+      "inputRequest": {
+        "type": "com.wearemobilefirst.Date",
+        "uri": "StartDate",
+        "localStore": false,
+        "inline": true,
+        "title": "Tarehe ya kuanza",
+        "responseText": "",
+        "optional": false
+      }
+    },
+    {
+      "text": "Je! Utakuwa unatumia kilimo cha kunyunyisia kwenye shamba lako\n",
+      "inputRequest": {
+        "type": "com.wearemobilefirst.MultiChoice",
+        "uri": "Irrigation",
+        "title": "Umwagiliaji",
+        "inline": true,
+        "localStore": false,
+        "responseText": "",
+        "optional": false,
+        "args": {
+          "maxSelection": 1,
+          "options": [
+            {
+              "id": "Yes",
+              "title": "Ndio"
+            },
+            {
+              "id": "No",
+              "title": "Hapana"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "text": "Sasa nataka kuthibitisha habari hiyo. Je! Maelezo yafuatayo ni sahihi?",
+      "renderHint": "center"
+    }
+  ]
+}

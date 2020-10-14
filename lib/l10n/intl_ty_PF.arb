@@ -1,0 +1,663 @@
+{
+    "@@last_modified": "2020-08-10T15:03:41.237189",
+    "Related articles": "Te mau parau papa'i tu\"ati",
+    "@Related articles": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Related groups": "Te mau pupu 'ôhipa tu'ati",
+    "@Related groups": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Recommendations": "Te mau arata'iraa",
+    "@Recommendations": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "My Plot": "Tâ'u 'âua faa'apu",
+    "@My Plot": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Discover": "Te iteraa",
+    "@Discover": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Community": "Huitae'ae",
+    "@Community": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Join the WhatsApp group and discuss with fellow farmers.": "Amui i te pupu WhatsApp e te tâu'araa parau i te tahi atu mau taata faa'apu.",
+    "@Join the WhatsApp group and discuss with fellow farmers.": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "A network and knowledge source for farmers in Kenya": "Te natiraa e te pû o te mau ite a te mau taata faa'apu no Porinetia nei",
+    "@A network and knowledge source for farmers in Kenya": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Get Started": "Haamata ana'e",
+    "@Get Started": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Switch language – Badilisha Lugha": "Taui i te reo",
+    "@Switch language – Badilisha Lugha": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Finish": "Faaoti",
+    "@Finish": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Clear Selection": "Tumâ i te mâ'itiraa",
+    "@Clear Selection": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Cancel": "Faa'ore",
+    "@Cancel": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Edit Photo": "Faanaho i te hôhô'a",
+    "@Edit Photo": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "No image picked": "Aita e hôhô'a i mâ'itihia",
+    "@No image picked": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "No cropped image": "Aita e hôhô'a i faanaho hia",
+    "@No cropped image": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Location": "Te vâhi i faa'apu hia",
+    "@Location": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Language": "Te reo",
+    "@Language": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Apply": "Haamana",
+    "@Apply": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Oops, there was a problem!": "Aiiii, e fifi teie e farerei hia!",
+    "@Oops, there was a problem!": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Retry": "Tâmata faahou â",
+    "@Retry": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Confirm": "Haapâpû",
+    "@Confirm": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "In progress crops": "Te faa'apu i faa'ôhipa hia nei",
+    "@In progress crops": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Edit Farm Details": "Taui i te mau faa'iteraa ô ta 'oe faa'apu",
+    "@Edit Farm Details": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Completed": "Ua oti",
+    "@Completed": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Switch Profile": "Taui i te ti'araa hôhô'a",
+    "@Switch Profile": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Your Farm Details": "Te apaparaa ô ta 'oe faa'apu",
+    "@Your Farm Details": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Create New Profile": "Hâmani i te hoe ti'araa hôhô'a api",
+    "@Create New Profile": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Invite Friends": "Tîtau i te mau hoa",
+    "@Invite Friends": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Privacy Policy": "Ture pâruru",
+    "@Privacy Policy": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Terms of use": "Te mau ture faa'ôhipa",
+    "@Terms of use": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Logout": "Tâpû i te tû'atiraa itenati",
+    "@Logout": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Remove Profile": "Tumâ i te ti'araa hôhô'a",
+    "@Remove Profile": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Pick image from gallery": "A mâ'iti hô'ê hôhô'a mai roto mai i te vairaa hôhô'a",
+    "@Pick image from gallery": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Take picture from camera": "A rave atu te hôhô'a mai roto mai i te pata hôhô'a",
+    "@Take picture from camera": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Rename profile": "Taui i te i'oa o ta 'oe ti'araa hôhô'a",
+    "@Rename profile": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Username": "To 'oe I'oa faa'ôhiparaa",
+    "@Username": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Enable Offline Use": "Faa'ôhiparaa aore e Itenati",
+    "@Enable Offline Use": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Join to the new smart farming app - FarmSmart \n": "Amui atu i roto i te faanahoraa afaifai - FarmSmart\n",
+    "@Join to the new smart farming app - FarmSmart \n": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Edit Profile": "Faanaho i te ti'araa hôhô'a",
+    "@Edit Profile": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Delete Profile": "Faa'ore i te ti'araa hôhô'a",
+    "@Delete Profile": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Delete": "Faa'ore",
+    "@Delete": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Are you sure you want to delete your profile? Doing so will erase all data and this action cannot be undone.": "Ua hinaaro pâpû anei 'oe e tûma i ta 'oe ti'araa hohoa? E tûma te reira i te mau putuite atoa, e'ita teie 'ôhipa e nehenehe e faa'ore faahou.",
+    "@Are you sure you want to delete your profile? Doing so will erase all data and this action cannot be undone.": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Are you sure you would like to complete this action?": "E hinaaro papu anei 'oe e faaoti i teie âniraa?",
+    "@Are you sure you would like to complete this action?": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Rename Crop": "Taui i te i'oa faa'apu",
+    "@Rename Crop": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Crop name": "Te i'oa o teie faa'apu",
+    "@Crop name": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Remove Crop": "Faa'ore i teie faa'apu",
+    "@Remove Crop": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Remove": "Tatara",
+    "@Remove": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Remove crop": "Tatara i teie faa'apu",
+    "@Remove crop": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Are you sure you want to remove the crop? All progress will be lost.": "Ua hinaaro pâpû anei oe e tatara i teie faa'apu? E mo'e te mau nuuraa atoa.",
+    "@Are you sure you want to remove the crop? All progress will be lost.": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Learn more about": "Haamaramarama hou atu â",
+    "@Learn more about": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Profit And Loss": "  ",
+    "@Profit And Loss": {
+      "type": "text",
+      "placeholders": {}
+    },
+    "Get started by adding to your plot": "Haamata i te tâpa'o i te maa hotu i roto ta 'oe 'âua faa'apu",
+    "@Get started by adding to your plot": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Add to your Plot": "Tâpa'o i roto i te 'âua faa'apu",
+    "@Add to your Plot": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Check out this article from the FarmSmart mobile app \n ": "A tai'o i teie parau papai i roto i te faanahoraa afaifai FarmSmart ",
+    "@Check out this article from the FarmSmart mobile app \n ": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "View more on the web": "Hi'o hau atu i nia i te itenati",
+    "@View more on the web": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Record a new Cost": "A tâpa'o i te tarifa âpi",
+    "@Record a new Cost": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Record a new Sale": "A tâpa'o i te hooraa âpi",
+    "@Record a new Sale": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Get started by adding your first transaction": "Haamata i te tâpa'o i ta 'oe hooraa matamua",
+    "@Get started by adding your first transaction": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Add a transaction": "Tâpa'o i te tapihooraa",
+    "@Add a transaction": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Date": "Tai'o mahana",
+    "@Date": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Crop": "Faa'apu",
+    "@Crop": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Today": "Teie mahana",
+    "@Today": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Select...": "A mâ'iti...",
+    "@Select...": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Description (optional)...": "Te mau tatararaa...",
+    "@Description (optional)...": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Edit record": "Taui i te haamanaraa",
+    "@Edit record": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Save": "Haamana",
+    "@Save": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Remove record": "Faa'ore teie haamanaraa",
+    "@Remove record": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Are you sure you want to remove this record? This action cannot be undone.": "Ua hinaaro pâpû anei 'oe e tatara i teie haamanaraa? E'ita teie 'ôhipa e nehenehe e faa'ore faahou.",
+    "@Are you sure you want to remove this record? This action cannot be undone.": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "To allow for offline use, you must download the app’s latest content. Connect to wifi to avoid data charges.": "No te faa'ôhipa 'aore e itenati, ua ti'a ia outou ia faauta uira mai i te mau putu'ite hôpe'a roa ae. Tû'ati te wifi no te faaiti i te haamâu'araa.",
+    "@To allow for offline use, you must download the app’s latest content. Connect to wifi to avoid data charges.": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Download": "Faauta uira",
+    "@Download": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Please Wait": "Tia'i maa taime iti",
+    "@Please Wait": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Option": "Rave'a hau atu â",
+    "@Option": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Reset Process": "Faa'âpi faahou â teie faa\"ôhiparaa",
+    "@Reset Process": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Skip": "Haapae i teie tuhaa",
+    "@Skip": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Confirm Details": "Haapapu i te mau faaiteraa",
+    "@Confirm Details": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Send": "A tono",
+    "@Send": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Message should not be empty": "Eiaha te parau poroi i 'ore i pâpa'ihia",
+    "@Message should not be empty": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Type a message": "A papai i te hoe parau poroi",
+    "@Type a message": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Provided TEXT is not valid": "Aita e mana teie parau PAPAI",
+    "@Provided TEXT is not valid": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Provided EMAIL is not valid": "Aita e mana teie RATA UIRA",
+    "@Provided EMAIL is not valid": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Provided PHONE is not valid": "Aita e mana teie numera NIUNIU",
+    "@Provided PHONE is not valid": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Provided summary is not correct": "E ere te pû'ohuraa i te mea tano",
+    "@Provided summary is not correct": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "View Your Details": "A hio i ta oe mau tatararaa ti'araa hôhô'a",
+    "@View Your Details": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Add Another Crop": "Tapa'o i te tahi atu maa faapu",
+    "@Add Another Crop": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Day": "Mahana",
+    "@Day": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Upcoming": "To muri mai",
+    "@Upcoming": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "View more on the Web": "Hi'o hau atu i nia i te itenati",
+    "@View more on the Web": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Discover much more information using this link...": "Haamâramaramaraa hau atu ma te faa'ôhipa i teie hono...",
+    "@Discover much more information using this link...": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Stage": "Tuhaa",
+    "@Stage": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "In Progress": "Te tereraa ‘ôhipa",
+    "@In Progress": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Complete": "Ua oti",
+    "@Complete": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Revert to In Progress": "Faaho'i i te tuhaa \"Te faatupuhia nei\"",
+    "@Revert to In Progress": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Begin Stage": "Haamata i teie tuhaa",
+    "@Begin Stage": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Please complete previous": "A faa'î na mua atu i te 'api i mua atu",
+    "@Please complete previous": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Mark as complete": "Tapa'o mai tei oti",
+    "@Mark as complete": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Begin crop": "Haamata i te faa'apu",
+    "@Begin crop": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Complete crop": "Faaoti i te faa'apu",
+    "@Complete crop": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Revert crop": "Taui i te faa'apu",
+    "@Revert crop": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Are you sure you want to mark this stage as in progress?": "Ua hinaaro pâpû anei 'oe e tapa'o i teie tahua mai te haereraa i mua?",
+    "@Are you sure you want to mark this stage as in progress?": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Are you sure you want to mark this stage as complete?": "Ua hinaaro pâpû anei 'oe e tapa'o i teie tuhaa ei hope?",
+    "@Are you sure you want to mark this stage as complete?": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Are you sure you want to market this crop as complete?": "Ua hinaaro pâpû anei 'oe e tapa'o i teie auhuneraa ei hope?",
+    "@Are you sure you want to market this crop as complete?": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Are you sure you want revert the stage status?": "E hinaaro pâpû anei 'oe e ho'i mai i te faito mâtâmua o teie tuhaa?",
+    "@Are you sure you want revert the stage status?": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "assets/responses/farmsmart_chat_ui_flow.json": "assets/responses/farmsmart_chat_ui_flow_ty.json",
+    "@assets/responses/farmsmart_chat_ui_flow.json": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Operation already in progress": "Tei faatupuhia râ i ta'oe aniraa",
+    "@Operation already in progress": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Best Soil": "Repo maitai ae",
+    "@Best Soil": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Water Frequency": "Te titauraa pape",
+    "@Water Frequency": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Crop Type": "Huru faa'apu",
+    "@Crop Type": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Complexity": "Te mau fifi",
+    "@Complexity": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Setup Costs": "Faanaho i te mau hamâu'araa",
+    "@Setup Costs": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Profitability": "Te âpîraa",
+    "@Profitability": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Companion Plants": "Te faa'apu maa tâpiri",
+    "@Companion Plants": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Non-Companion Plants": "Te faa'apu maa 'aore e tâpiri",
+    "@Non-Companion Plants": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Low": "Mea haehaa",
+    "@Low": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Medium": "Mea tanotano noa",
+    "@Medium": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "High": "Mea rave rahi",
+    "@High": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Single": "Faa'apu hô'ê noa iho maa",
+    "@Single": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Rotation": "Faa'apu faa'ohu",
+    "@Rotation": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Beginner": "Taata haapii",
+    "@Beginner": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Advance": "Taata aravihi",
+    "@Advance": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Intermediate": "Taata faito tanotano noa",
+    "@Intermediate": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Match": "Tû’atiraa",
+    "@Match": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "View Details": "Tâtararaa",
+    "@View Details": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Add to Plot": "Tâpa’o i te faa’apu",
+    "@Add to Plot": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Added": "Ua tapa'o hia",
+    "@Added": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "No description": "Aita e tatararaa",
+    "@No description": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "General": "Hi'oraa rahi",
+    "@General": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Currency": "xpf",
+    "@Currency": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Record a Cost": "Te haamâu'araa",
+    "@Record a Cost": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Record a Sale": "Te hooraa",
+    "@Record a Sale": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Switch profile": "Taui i te ti'araa hôhô'a",
+    "@Switch profile": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "minute read": "taime tai'oraa",
+    "@minute read": {
+        "type": "text",
+        "placeholders": {}
+    }
+}

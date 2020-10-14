@@ -1,0 +1,178 @@
+{
+  "uid": "1",
+  "title": "Hotu",
+  "subtitle": "",
+  "origin": "com.wearemobilefirst.farmsmart",
+  "formResponse": {
+    "type": "com.wearemobilefirst.local",
+    "uri": "profiles/%UserID/",
+    "body": {
+      "name": "%Name",
+      "islandName": "%islandName",
+      "island": "%island",
+      "Intention":"%Intention",
+      "LandSize":"%LandSize",
+      "plantingArea":"%plantingArea"
+    }
+  },
+  "items": [
+    {
+      "text": "Ia Orana, ‘ô Hotu teie, te FarmSmart arata’i.",
+      "sentiment": "Positive"
+    },
+    {
+      "text": "‘E arata’i vau ia ‘oe no  te faanaho ‘i tâ ‘oe ti’araa hôho’a, ‘e te mau mea ‘ei tanu ‘i roto ‘i te tûhaa faa’apu.",
+      "sentiment": "Positive"
+    },
+    {
+      "text": "E aha to ’oe i’oa?",
+      "inputRequest": {
+        "type": "com.wearemobilefirst.String",
+        "uri": "Name",
+        "localStore": false,
+        "inline": true,
+        "title": "’oe i’oa",
+        "validationRegex": ".*",
+        "responseText": "",
+        "optional": false
+      }
+    },
+    {
+      "text": "Mea ‘oa’oa teie fârereiraa %Name",
+      "sentiment": "Positive"
+    },
+    {
+      "text": "Avant tout, j’ai quelques questions à te poser",
+      "sentiment": "Positive"
+    },
+    {
+      "text": "E aha te huru fenua o ta ‘oe i ora nei ?",
+      "inputRequest": {
+        "type": "com.wearemobilefirst.MultiChoice",
+        "inline": true,
+        "uri": "island",
+        "title": "Te tuhaa o te fenua I faa’apu ai ‘oe",
+        "localStore": true,
+        "responseText": "",
+        "optional": false,
+        "args": {
+          "maxSelection": 1,
+          "options": [
+            {
+              "id": "Atoll",
+              "title": "Motu",
+              "description": "",
+              "responseText": "Motu"
+            },
+            {
+              "id": "HighIsland",
+              "title": "Fenua mou’a",
+              "description": "",
+              "responseText": "Fenua mou’a"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "text": "Te fen o ta ‘oe i ora nei?",
+      "inputRequest": {
+        "type": "com.wearemobilefirst.String",
+        "uri": "islandName",
+        "localStore": false,
+        "inline": true,
+        "title": "'oe i ora nei",
+        "validationRegex": ".*",
+        "responseText": "",
+        "optional": false
+      }
+    },
+    {
+      "text": "E aha te tuhaa o te fenua I faa’apu ai ‘oe?",
+      "inputRequest": {
+        "type": "com.wearemobilefirst.MultiChoice",
+        "inline": true,
+        "uri": "plantingArea",
+        "title": "Te tuhaa o te fenua I faa’apu ai ‘oe",
+        "localStore": true,
+        "responseText": "",
+        "optional": false,
+        "args": {
+          "maxSelection": 1,
+          "options": [
+            {
+              "id": "Plain",
+              "title": "Mahora pâpû"
+            },
+            {
+              "id": "Valley",
+              "title": "Faa"
+            },
+            {
+              "id": "Mountain",
+              "title": "Mou'a"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "text": "E aha te faito rarahi o ta ‘oe fa’apu?",
+      "inputRequest": {
+        "type": "com.wearemobilefirst.MultiChoice",
+        "uri": "LandSize",
+        "title": "Te faito rarahi o ta ‘oe fa’apu",
+        "inline": true,
+        "localStore": false,
+        "responseText": "",
+        "optional": false,
+        "args": {
+          "maxSelection": 1,
+          "options": [
+            {
+              "id": "Less_than_10m2",
+              "title": "-10m2"
+            },
+            {
+              "id": "10_30m2",
+              "title": "10-30m2"
+            },
+            {
+              "id": "More_than_30m2",
+              "title": "30m2+"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "text": "E aha te tumu i faa'apu ai ‘oe?",
+      "inputRequest": {
+        "type": "com.wearemobilefirst.MultiChoice",
+        "uri": "Intention",
+        "title": "Te tumu i faa'apu ai ‘oe",
+        "inline": true,
+        "localStore": false,
+        "responseText": "",
+        "optional": false,
+        "args": {
+          "maxSelection": 1,
+          "options": [
+            {
+              "id": "Sales",
+              "title": "Tapihooraa"
+            },
+            {
+              "id": "Subsistence",
+              "title": "Utuâfare"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "text": "‘E haamana vau i tetie mau parau tâtararaa.",
+      "renderHint": "center"
+    }
+  ]
+}

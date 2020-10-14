@@ -73,6 +73,7 @@ coverage
 
 
 # Secrets
+GoogleService-Info.plist
 google-services.json
 google-play-service-account.json
 farmsmart_release_key.jks

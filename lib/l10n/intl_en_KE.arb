@@ -1,0 +1,658 @@
+{
+    "@@last_modified": "2020-08-10T15:03:41.237189",
+    "Related articles": "Related articles",
+    "@Related articles": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Related groups": "Related groups",
+    "@Related groups": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Recommendations": "Recommendations",
+    "@Recommendations": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "My Plot": "My plot",
+    "@My Plot": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Discover": "Discover",
+    "@Discover": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Community": "Community",
+    "@Community": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Join the WhatsApp group and discuss with fellow farmers.": "Join the WhatsApp group to discuss with other farmers.",
+    "@Join the WhatsApp group and discuss with fellow farmers.": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "A network and knowledge source for farmers in Kenya": "A network and knowledge source for farmers",
+    "@A network and knowledge source for farmers in Kenya": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Get Started": "Get Started",
+    "@Get Started": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Switch language – Badilisha Lugha": "Switch language",
+    "@Switch language – Badilisha Lugha": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Finish": "Finish",
+    "@Finish": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Clear Selection": "Clear selection",
+    "@Clear Selection": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Cancel": "Cancel",
+    "@Cancel": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Edit Photo": "Edit photo",
+    "@Edit Photo": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "No image picked": "No image picked",
+    "@No image picked": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "No cropped image": "No cropped image",
+    "@No cropped image": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Location": "Location",
+    "@Location": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Language": "Language",
+    "@Language": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Apply": "Apply",
+    "@Apply": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Oops, there was a problem!": "Oops, there was a problem!",
+    "@Oops, there was a problem!": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Retry": "Retry",
+    "@Retry": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Confirm": "Confirm",
+    "@Confirm": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "In progress crops": "In progress crops",
+    "@In progress crops": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Edit Farm Details": "Edit farm details",
+    "@Edit Farm Details": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Completed": "Completed",
+    "@Completed": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Switch Profile": "Switch profile",
+    "@Switch Profile": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Your Farm Details": "Your farm details",
+    "@Your Farm Details": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Create New Profile": "Create new profile",
+    "@Create New Profile": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Invite Friends": "Invite friends",
+    "@Invite Friends": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Privacy Policy": "Privacy policy",
+    "@Privacy Policy": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Terms of use": "Terms of use",
+    "@Terms of use": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Logout": "Logout",
+    "@Logout": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Remove Profile": "Remove profile",
+    "@Remove Profile": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Pick image from gallery": "Pick image from gallery",
+    "@Pick image from gallery": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Take picture from camera": "Take picture from camera",
+    "@Take picture from camera": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Rename profile": "Rename profile",
+    "@Rename profile": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Username": "Username",
+    "@Username": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Enable Offline Use": "Enable offline use",
+    "@Enable Offline Use": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Join to the new smart farming app - FarmSmart \n": "Join the new smart farming app - FarmSmart\n",
+    "@Join to the new smart farming app - FarmSmart \n": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Edit Profile": "Edit profile",
+    "@Edit Profile": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Delete Profile": "Delete profile",
+    "@Delete Profile": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Delete": "Delete",
+    "@Delete": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Are you sure you want to delete your profile? Doing so will erase all data and this action cannot be undone.": "Are you sure you want to delete your profile? Doing so will erase all data and this action cannot be undone.",
+    "@Are you sure you want to delete your profile? Doing so will erase all data and this action cannot be undone.": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Are you sure you would like to complete this action?": "Are you sure you would like to complete this action?",
+    "@Are you sure you would like to complete this action?": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Rename Crop": "Rename crop",
+    "@Rename Crop": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Crop name": "Crop name",
+    "@Crop name": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Remove Crop": "Remove crop",
+    "@Remove Crop": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Remove": "Remove",
+    "@Remove": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Remove crop": "Remove crop",
+    "@Remove crop": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Are you sure you want to remove the crop? All progress will be lost.": "Are you sure you want to remove the crop? All progress will be lost.",
+    "@Are you sure you want to remove the crop? All progress will be lost.": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Learn more about": "Learn more about",
+    "@Learn more about": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Get started by adding to your plot": "Get started by adding to your plot",
+    "@Get started by adding to your plot": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Add to your Plot": "Add to your plot",
+    "@Add to your Plot": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Check out this article from the FarmSmart mobile app \n ": "Check out this article from the FarmSmart mobile app ",
+    "@Check out this article from the FarmSmart mobile app \n ": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "View more on the web": "View more on the web",
+    "@View more on the web": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Record a new Cost": "Record a new cost",
+    "@Record a new Cost": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Record a new Sale": "Record a new sale",
+    "@Record a new Sale": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Get started by adding your first transaction": "Get started by adding your first transaction",
+    "@Get started by adding your first transaction": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Add a transaction": "Add a transaction",
+    "@Add a transaction": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Date": "Date",
+    "@Date": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Crop": "Crop",
+    "@Crop": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Today": "Today",
+    "@Today": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Select...": "Select...",
+    "@Select...": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Description (optional)...": "Description (optional)...",
+    "@Description (optional)...": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Edit record": "Edit record",
+    "@Edit record": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Save": "Save",
+    "@Save": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Remove record": "Remove record",
+    "@Remove record": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Are you sure you want to remove this record? This action cannot be undone.": "Are you sure you want to remove this record? This action cannot be undone.",
+    "@Are you sure you want to remove this record? This action cannot be undone.": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "To allow for offline use, you must download the app’s latest content. Connect to wifi to avoid data charges.": "To allow for offline use, you must download the app’s latest content. Connect to wifi to avoid data charges.",
+    "@To allow for offline use, you must download the app’s latest content. Connect to wifi to avoid data charges.": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Download": "Download",
+    "@Download": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Please Wait": "Please wait",
+    "@Please Wait": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Option": "Option",
+    "@Option": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Reset Process": "Reset process",
+    "@Reset Process": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Skip": "Skip",
+    "@Skip": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Confirm Details": "Confirm details",
+    "@Confirm Details": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Send": "Send",
+    "@Send": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Message should not be empty": "Message should not be empty",
+    "@Message should not be empty": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Type a message": "Type a message",
+    "@Type a message": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Provided TEXT is not valid": "Provided TEXT is not valid",
+    "@Provided TEXT is not valid": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Provided EMAIL is not valid": "Provided EMAIL is not valid",
+    "@Provided EMAIL is not valid": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Provided PHONE is not valid": "Provided PHONE is not valid",
+    "@Provided PHONE is not valid": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Provided summary is not correct": "Provided summary is not correct",
+    "@Provided summary is not correct": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "View Your Details": "View your details",
+    "@View Your Details": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Add Another Crop": "Add another crop",
+    "@Add Another Crop": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Day": "Day",
+    "@Day": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Upcoming": "Upcoming",
+    "@Upcoming": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "View more on the Web": "View more on the Web",
+    "@View more on the Web": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Discover much more information using this link...": "Discover much more information using this link...",
+    "@Discover much more information using this link...": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Stage": "Stage",
+    "@Stage": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "In Progress": "In progress",
+    "@In Progress": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Complete": "Complete",
+    "@Complete": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Revert to In Progress": "Go back to \"In Progress\"",
+    "@Revert to In Progress": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Begin Stage": "Begin stage",
+    "@Begin Stage": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Please complete previous": "Please complete previous",
+    "@Please complete previous": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Mark as complete": "Mark as complete",
+    "@Mark as complete": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Begin crop": "Begin crop",
+    "@Begin crop": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Complete crop": "Complete crop",
+    "@Complete crop": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Revert crop": "Revert crop",
+    "@Revert crop": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Are you sure you want to mark this stage as in progress?": "Are you sure you want to mark this stage as in progress?",
+    "@Are you sure you want to mark this stage as in progress?": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Are you sure you want to mark this stage as complete?": "Are you sure you want to mark this stage as complete?",
+    "@Are you sure you want to mark this stage as complete?": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Are you sure you want to market this crop as complete?": "Are you sure you want to mark this crop as complete?",
+    "@Are you sure you want to market this crop as complete?": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Are you sure you want revert the stage status?": "Are you sure you want to go back a stage?",
+    "@Are you sure you want revert the stage status?": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "assets/responses/farmsmart_chat_ui_flow.json": "assets/responses/farmsmart_chat_ui_flow.json",
+    "@assets/responses/farmsmart_chat_ui_flow.json": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Operation already in progress": "Operation already in progress",
+    "@Operation already in progress": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Best Soil": "Best soil",
+    "@Best Soil": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Water Frequency": "Water frequency",
+    "@Water Frequency": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Crop Type": "Crop type",
+    "@Crop Type": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Complexity": "Complexity",
+    "@Complexity": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Setup Costs": "Setup costs",
+    "@Setup Costs": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Profitability": "Profitability",
+    "@Profitability": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Companion Plants": "Companion plants",
+    "@Companion Plants": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Non-Companion Plants": "Non-companion plants",
+    "@Non-Companion Plants": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Low": "Low",
+    "@Low": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Medium": "Medium",
+    "@Medium": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "High": "High",
+    "@High": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Single": "Single",
+    "@Single": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Rotation": "Rotation",
+    "@Rotation": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Beginner": "Beginner",
+    "@Beginner": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Advance": "Advance",
+    "@Advance": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Intermediate": "Intermediate",
+    "@Intermediate": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Match": "Match",
+    "@Match": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "View Details": "View details",
+    "@View Details": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Add to Plot": "Add to plot",
+    "@Add to Plot": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Added": "Added",
+    "@Added": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "No description": "No description",
+    "@No description": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "General": "General",
+    "@General": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Currency": "ksh",
+    "@Currency": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Record a Cost": "Record a cost",
+    "@Record a Cost": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Record a Sale": "Record a sale",
+    "@Record a Sale": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "Switch profile": "Switch profile",
+    "@Switch profile": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "minute read": "minute read",
+    "@minute read": {
+        "type": "text",
+        "placeholders": {}
+    }
+}

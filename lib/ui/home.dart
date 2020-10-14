@@ -1,137 +1,297 @@
-import 'package:farmsmart_flutter/data/firebase_const.dart';
-import 'package:farmsmart_flutter/data/managers/firestore_manager.dart';
-import 'package:farmsmart_flutter/data/model/article_entity.dart';
-import 'package:farmsmart_flutter/redux/app/app_state.dart';
-import 'package:farmsmart_flutter/redux/home/discover/discover_actions.dart';
-import 'package:farmsmart_flutter/ui/app_bar.dart';
-import 'package:farmsmart_flutter/ui/community/community_child.dart';
-import 'package:farmsmart_flutter/ui/discover/discover_page.dart';
-import 'package:farmsmart_flutter/ui/home_viewmodel.dart';
-import 'package:farmsmart_flutter/ui/myplot/my_plot_page.dart';
-import 'package:farmsmart_flutter/ui/profitloss/profit_loss_child.dart';
-import 'package:farmsmart_flutter/utils/assets.dart';
-import 'package:farmsmart_flutter/utils/colors.dart';
-import 'package:farmsmart_flutter/utils/dimens.dart';
-import 'package:farmsmart_flutter/utils/strings.dart';
+import 'package:farmsmart_flutter/farmsmart_localizations.dart';
+import 'package:farmsmart_flutter/model/bloc/article/ArticleListProvider.dart';
+import 'package:farmsmart_flutter/model/bloc/home/HomeViewModelProvider.dart';
+import 'package:farmsmart_flutter/model/bloc/plot/PlotListProvider.dart';
+import 'package:farmsmart_flutter/model/bloc/profile/ProfileDetailProvider.dart';
+import 'package:farmsmart_flutter/model/bloc/recommendations/RecommendationListProvider.dart';
+import 'package:farmsmart_flutter/model/bloc/transactions/ProfitLossListProvider.dart';
+import 'package:farmsmart_flutter/model/repositories/article/ArticleRepositoryInterface.dart';
+import 'package:farmsmart_flutter/model/repositories/repository_provider.dart';
+import 'package:farmsmart_flutter/ui/article/ArticleList.dart';
+import 'package:farmsmart_flutter/ui/bottombar/persistent_bottom_navigation_bar.dart';
+import 'package:farmsmart_flutter/ui/bottombar/tab_navigator.dart';
+import 'package:farmsmart_flutter/ui/common/ViewModelProviderBuilder.dart';
+import 'package:farmsmart_flutter/ui/playground/data/playground_datasource_impl.dart';
+import 'package:farmsmart_flutter/ui/playground/playground_view.dart';
+import 'package:farmsmart_flutter/ui/profile/Profile.dart';
+import 'package:farmsmart_flutter/ui/profitloss/ProfitLossList.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
+import 'package:intl/intl.dart';
 
-/// Home "screen" route. Scaffold has all the app subcomponents available inside,
-/// like bottom bar or action bar.
+import 'article/ArticleListStyles.dart';
+import 'common/ProfileAvatar.dart';
+import 'myplot/PlotList.dart';
 
-class Home extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return _HomeState();
-  }
+class _Constants {
+  static final double bottomBarIconSize = 25;
+  static final double iconSize = 27;
+  static final Color bottomBarColor = Colors.white;
+
+  static final myPlotSelectedIcon = 'assets/icons/my_plot_selected.png';
+  static final myPlotIcon = 'assets/icons/my_plot.png';
+  static final profitLossSelectedIcon = 'assets/icons/profit_loss_selected.png';
+  static final profitLossIcon = 'assets/icons/profit_loss.png';
+  static final discoverSelectedIcon = 'assets/icons/discover_selected.png';
+  static final discoverIcon = 'assets/icons/discover.png';
+  static final communitySelectedIcon = 'assets/icons/community_selected.png';
+  static final communityIcon = 'assets/icons/community.png';
 }
 
-class _HomeState extends State<Home> with WidgetsBindingObserver {
-  HomeViewmodel homeViewModel;
+class _LocalisedStrings {
+  static relatedArticles() => Intl.message('Related articles');
 
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addObserver(this);
-  }
+  static relatedGroups() => Intl.message('Related groups');
 
-  @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    super.dispose();
-  }
+  static recommendations() => Intl.message('Recommendations');
 
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) {
-      _retrieveDynamicLink(homeViewModel);
-    }
-  }
+  static myPlot() => Intl.message('My Plot');
 
-  final List<Widget> _children = [
-    HomeMyPlotPage(),
-    HomeProfitLossChild(),
-    HomeDiscoverPage(),
-    HomeCommunityChild()
-  ];
+  static discover() => Intl.message('Discover');
+
+  static community() => Intl.message('Community');
+
+  static joinWhatsAppGroup() =>
+      Intl.message('Join the WhatsApp group and discuss with fellow farmers.');
+}
+
+class _AnalyticsNames {
+  static const myPlot = 'my_plot_tab';
+  static const profitAndLoss = 'profit_and_loss_tab';
+  static const discover = 'discover_tab';
+  static const community = 'community_tab';
+  static const profile = 'profile_tab';
+  static const debug = 'debug_tab';
+}
+
+class _Icons {
+  static final whatsApp = 'assets/icons/WhatsApp_Logo_short.png';
+}
+
+class Home extends StatelessWidget {
+  FarmsmartLocalizations localizations;
+  final RepositoryProvider repositoryProvider;
+  final HomeViewModelProvider homeViewModelProvider;
+  List<TabNavigator> tabList;
+
+  Home({
+    Key key,
+    this.repositoryProvider,
+    this.homeViewModelProvider,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: LayoutBuilder(
-        builder: (context, constraints) => SafeArea(
-              child: Container(
-                color: Color(black),
-                child: StoreConnector<AppState, HomeViewmodel>(
-                    builder: (_, viewModel) => content(viewModel),
-                    converter: (store) => HomeViewmodel.fromStore(store)),
-              ),
-            ),
-      ),
+    localizations = FarmsmartLocalizations.of(context);
+
+    return ViewModelProviderBuilder(
+      provider: homeViewModelProvider,
+      successBuilder: _buildSuccess,
     );
   }
 
-  Widget content(HomeViewmodel viewModel) {
-    homeViewModel = viewModel;
-    return Scaffold(
-      appBar:
-          CustomAppBar.build(viewModel.currentTab, viewModel.goToPrivacyPolicy),
-      // We could share a list of pre defined actions for the app bar.
-      body: _children[viewModel.currentTab],
-      bottomNavigationBar: Theme(
-        data: Theme.of(context).copyWith(primaryColor: Color(primaryGreen)),
-        child: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          onTap: viewModel.changeTab,
-          currentIndex: viewModel.currentTab,
-          items: [
-            BottomNavigationBarItem(
-              activeIcon: Image.asset(Assets.BOTTOM_BAR_MY_PLOT_SELECTED,
-                  height: bottomBarIconSize),
-              icon: Image.asset(Assets.BOTTOM_BAR_MY_PLOT_UNSELECTED,
-                  height: bottomBarIconSize),
-              title: Text(Strings.myPlotTab),
-            ),
-            BottomNavigationBarItem(
-              activeIcon: Image.asset(Assets.BOTTOM_BAR_PROFIT_LOSS_SELECTED,
-                  height: bottomBarIconSize),
-              icon: Image.asset(Assets.BOTTOM_BAR_PROFIT_LOSS_UNSELECTED,
-                  height: bottomBarIconSize),
-              title: Text(Strings.profitLossTab),
-            ),
-            BottomNavigationBarItem(
-              activeIcon: Image.asset(Assets.BOTTOM_BAR_DISCOVER_SELECTED,
-                  height: bottomBarIconSize),
-              icon: Image.asset(Assets.BOTTOM_BAR_DISCOVER_UNSELECTED,
-                  height: bottomBarIconSize),
-              title: Text(Strings.discoverTab),
-            ),
-            BottomNavigationBarItem(
-              activeIcon: Image.asset(Assets.BOTTOM_BAR_COMMUNITY_SELECTED,
-                  height: bottomBarIconSize),
-              icon: Image.asset(Assets.BOTTOM_BAR_COMMUNITY_UNSELECTED,
-                  height: bottomBarIconSize),
-              title: Text(Strings.communityTab),
-            ),
-          ],
+  Widget _buildSuccess(
+      {BuildContext context, AsyncSnapshot<HomeViewModel> snapshot}) {
+    return PersistentBottomNavigationBar(
+      backgroundColor: _Constants.bottomBarColor,
+      tabs: tabs(snapshot.data),
+    );
+  }
+
+  _initTabsList(HomeViewModel viewModel) {
+    tabList = [
+      _buildTabNavigator(
+        _buildMyPlot(viewModel),
+        _Constants.myPlotSelectedIcon,
+        _Constants.myPlotIcon,
+        _AnalyticsNames.myPlot,
+        
+      ),
+      _buildTabNavigator(
+        _buildProfitAndLoss(viewModel),
+        _Constants.profitLossSelectedIcon,
+        _Constants.profitLossIcon,
+        _AnalyticsNames.profitAndLoss,
+      ),
+      _buildTabNavigator(
+        _buildDiscover(),
+        _Constants.discoverSelectedIcon,
+        _Constants.discoverIcon,
+        _AnalyticsNames.discover,
+      ),
+      _buildTabNavigator(
+        _buildCommunity(),
+        _Constants.communitySelectedIcon,
+        _Constants.communityIcon,
+        _AnalyticsNames.community,
+      ),
+      _buildTabNavigatorWithCircleImageWidget(
+          _buildUserProfile(viewModel), viewModel),
+    ];
+
+    if (viewModel.debugMenuVisible) {
+      tabList.add(
+        _buildDebugTabNavigator(
+          _buildPlayground(),
         ),
+      );
+    }
+  }
+
+  List<TabNavigator> tabs(HomeViewModel viewModel) {
+    _initTabsList(viewModel);
+    return tabList;
+  }
+
+  _buildMyPlot(HomeViewModel viewModel) {
+    final recommendationsProvider = RecommendationListProvider(
+      title: _LocalisedStrings.recommendations(),
+      heroThreshold: 0.8,
+      plotRepo:
+          repositoryProvider.getMyPlotRepository(viewModel.currentProfile),
+      cropRepo: repositoryProvider.getCropRepository(),
+      profileRepo: viewModel.currentProfile,
+      ratingRepo: repositoryProvider.getRatingsRepository(),
+    );
+    return PlotList(
+        provider: PlotListProvider(
+            title: _LocalisedStrings.myPlot(),
+            plotRepository: repositoryProvider
+                .getMyPlotRepository(viewModel.currentProfile),
+            recommendationsProvider: recommendationsProvider));
+  }
+
+  _buildProfitAndLoss(HomeViewModel viewModel) {
+    return ProfitLossPage(
+      viewModelProvider: ProfitLossListProvider(
+        transactionsRepository: repositoryProvider
+            .getTransactionRepository(viewModel.currentProfile),
+        plotRepository:
+            repositoryProvider.getMyPlotRepository(viewModel.currentProfile),
       ),
     );
   }
 
-  Future<void> _retrieveDynamicLink(HomeViewmodel viewModel) async {
-    final PendingDynamicLinkData data =
-    await FirebaseDynamicLinks.instance.retrieveDynamicLink();
-    if (data != null) {
-      var decodedDynamicLink = Uri.decodeComponent(data.link.toString());
-      var stringURLtoURI = Uri.parse(decodedDynamicLink);
+  _buildDiscover() {
+    return ArticleList(
+      style: ArticleListStyles.buildForDiscover(),
+      viewModelProvider: ArticleListProvider(
+        title: _LocalisedStrings.discover(),
+        repository: repositoryProvider.getArticleRepository(),
+        group: ArticleCollectionGroup.discovery,
+        relatedTitle: _LocalisedStrings.relatedArticles(),
+      ),
+    );
+  }
 
-      if (stringURLtoURI != null) {
-        String articleId = stringURLtoURI.queryParameters[DeepLink.ParameterID];
-        debugPrint('Fetching id=${articleId}');
-        homeViewModel.getSingleArticle(articleId);
-      }
-    }
+  _buildCommunity() {
+    return ArticleList(
+      style: ArticleListStyles.buildForCommunity(),
+      viewModelProvider: ArticleListProvider(
+        title: _LocalisedStrings.community(),
+        repository: repositoryProvider.getArticleRepository(),
+        group: ArticleCollectionGroup.chatGroups,
+        relatedTitle: _LocalisedStrings.relatedGroups(),
+        contentLinkDescription: _LocalisedStrings.joinWhatsAppGroup(),
+        contentLinkIcon: _Icons.whatsApp,
+      ),
+    );
+  }
+
+  _buildUserProfile(HomeViewModel viewModel) {
+    return Profile(
+      provider: ProfileDetailProvider(
+        accountRepo: viewModel.currentAccount,
+        plotRepo:
+            repositoryProvider.getMyPlotRepository(viewModel.currentProfile),
+        localeRepo: repositoryProvider.getLocaleRepository(),
+        downloader: repositoryProvider.getDownloader(),
+      ),
+    );
+  }
+
+  _buildPlayground() {
+    return PlaygroundView(
+      widgetList: PlaygroundDataSourceImpl().getList(),
+    );
+  }
+
+  TabNavigator _buildTabNavigator(
+    Widget page,
+    String activeIconPath,
+    String iconPath,
+    String analyticsName,
+  ) {
+    return TabNavigator(
+      child: page,
+      barItem: BottomNavigationBarItem(
+        activeIcon: Image.asset(
+          activeIconPath,
+          height: _Constants.bottomBarIconSize,
+        ),
+        icon: Image.asset(
+          iconPath,
+          height: _Constants.bottomBarIconSize,
+        ),
+        title: SizedBox.shrink(),
+      ),
+      analyticsName: analyticsName,
+    );
+  }
+
+  TabNavigator _buildDebugTabNavigator(
+    Widget page,
+  ) {
+    return TabNavigator(
+      child: page,
+      barItem: BottomNavigationBarItem(
+        activeIcon: Text(
+          'Debug',
+          style: TextStyle(color: Color(0xff24d900)),
+        ),
+        icon: Text('Debug'),
+        title: SizedBox.shrink(),
+      ),
+      analyticsName: _AnalyticsNames.debug,
+    );
+  }
+
+  Widget _buildProfileIcon(HomeViewModel viewModel) {
+    return ProfileAvatar(
+      viewModelProvider: ProfileDetailProvider(
+          accountRepo: viewModel.currentAccount,
+          plotRepo:
+              repositoryProvider.getMyPlotRepository(viewModel.currentProfile),
+          localeRepo: repositoryProvider.getLocaleRepository(),
+          downloader: repositoryProvider.getDownloader()),
+      width: _Constants.iconSize,
+      height: _Constants.iconSize,
+    );
+  }
+
+  TabNavigator _buildTabNavigatorWithCircleImageWidget(
+      Widget page, HomeViewModel viewModel) {
+    final profileIcon = _buildProfileIcon(viewModel);
+    return TabNavigator(
+      child: page,
+      barItem: BottomNavigationBarItem(
+        activeIcon: Container(
+          decoration: BoxDecoration(
+            color: Color(0xff24d900),
+            shape: BoxShape.circle,
+          ),
+          padding: EdgeInsets.all(2.0),
+          height: _Constants.iconSize,
+          width: _Constants.iconSize,
+          child: profileIcon,
+        ),
+        icon: Container(
+          height: _Constants.iconSize,
+          width: _Constants.iconSize,
+          child: profileIcon,
+        ),
+        title: SizedBox.shrink(),
+      ),
+      analyticsName: _AnalyticsNames.profile,
+    );
   }
 }

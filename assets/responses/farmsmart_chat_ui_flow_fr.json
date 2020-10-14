@@ -1,0 +1,178 @@
+{
+  "uid": "1",
+  "title": "Hotu",
+  "subtitle": "Assistant personnel agricole",
+  "origin": "com.wearemobilefirst.farmsmart",
+  "formResponse": {
+    "type": "com.wearemobilefirst.local",
+    "uri": "profiles/%UserID/",
+    "body": {
+      "name": "%Name",
+      "islandName": "%islandName",
+      "island": "%island",
+      "Intention":"%Intention",
+      "LandSize":"%LandSize",
+      "plantingArea":"%plantingArea"
+    }
+  },
+  "items": [
+    {
+      "text": "Bonjour, je suis Hotu, le chatbot de FarmSmart.",
+      "sentiment": "Positive"
+    },
+    {
+      "text": "Je vais configurer ton profil et te guider sur ce qu'il faut faire pousser dans ton potager.",
+      "sentiment": "Positive"
+    },
+    {
+      "text": "Quest est votre nom?",
+      "inputRequest": {
+        "type": "com.wearemobilefirst.String",
+        "uri": "Name",
+        "localStore": false,
+        "inline": true,
+        "title": "Nom",
+        "validationRegex": ".*",
+        "responseText": "",
+        "optional": false
+      }
+    },
+    {
+      "text": "Heureux de te connaître %Name",
+      "sentiment": "Positive"
+    },
+    {
+      "text": "Avant tout, j’ai quelques questions à te poser",
+      "sentiment": "Positive"
+    },
+    {
+      "text": "Vous habitez sur quel genre d’île?",
+      "inputRequest": {
+        "type": "com.wearemobilefirst.MultiChoice",
+        "inline": true,
+        "uri": "island",
+        "title": "Genre d’île",
+        "localStore": true,
+        "responseText": "",
+        "optional": false,
+        "args": {
+          "maxSelection": 1,
+          "options": [
+            {
+              "id": "Atoll",
+              "title": "Atoll",
+              "description": "",
+              "responseText": "Atoll"
+            },
+            {
+              "id": "HighIsland",
+              "title": "Île haute",
+              "description": "",
+              "responseText": "Île haute"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "text": "Dans quelle île habitez-vous?",
+      "inputRequest": {
+        "type": "com.wearemobilefirst.String",
+        "uri": "islandName",
+        "localStore": false,
+        "inline": true,
+        "title": "île habitez-vous",
+        "validationRegex": ".*",
+        "responseText": "",
+        "optional": false
+      }
+    },
+    {
+      "text": "Sur quelle partie de l’ile se trouve votre plantation?",
+      "inputRequest": {
+        "type": "com.wearemobilefirst.MultiChoice",
+        "inline": true,
+        "uri": "plantingArea",
+        "title": "Partie de l’ile",
+        "localStore": true,
+        "responseText": "",
+        "optional": false,
+        "args": {
+          "maxSelection": 1,
+          "options": [
+            {
+              "id": "Plain",
+              "title": "Plaine"
+            },
+            {
+              "id": "Valley",
+              "title": "Vallée"
+            },
+            {
+              "id": "Mountain",
+              "title": "Montagne"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "text": "Quelle est la taille de votre potager?",
+      "inputRequest": {
+        "type": "com.wearemobilefirst.MultiChoice",
+        "uri": "LandSize",
+        "title": "Taille de votre potager",
+        "inline": true,
+        "localStore": false,
+        "responseText": "",
+        "optional": false,
+        "args": {
+          "maxSelection": 1,
+          "options": [
+            {
+              "id": "Less_than_10m2",
+              "title": "Moins de 10m2"
+            },
+            {
+              "id": "10_30m2",
+              "title": "10-30m2"
+            },
+            {
+              "id": "More_than_30m2",
+              "title": "30m2+"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "text": "Quel est le but de votre potager?",
+      "inputRequest": {
+        "type": "com.wearemobilefirst.MultiChoice",
+        "uri": "Intention",
+        "title": "Le but de votre potager",
+        "inline": true,
+        "localStore": false,
+        "responseText": "",
+        "optional": false,
+        "args": {
+          "maxSelection": 1,
+          "options": [
+            {
+              "id": "Sales",
+              "title": "Commerciale"
+            },
+            {
+              "id": "Subsistence",
+              "title": "Familiale"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "text": "Je voudrais confirmer ces informations",
+      "renderHint": "center"
+    }
+  ]
+}

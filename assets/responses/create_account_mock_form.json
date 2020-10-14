@@ -1,0 +1,246 @@
+{
+  "uid": "1",
+  "title": "Mobile First Costing Estimate Calculator",
+  "subtitle": "Using the chatbot below, answer some simple questions to get a rough idea of how much your next project could cost.",
+  "origin": "com.wearemobilefirst.testApp",
+  "processMessage": "Creating account ...",
+  "processComplete": "Account created",
+  "formResponse": {
+    "type": "com.google.firebase.database",
+    "uri": "profiles/%UserID/",
+    "body": {
+      "businessCard": {
+        "uri": "%BusinessCardImage",
+        "mimeType": "image/jpg"
+      },
+      "platformDevelop": "%PlatformDevelop",
+      "name": "%Nickname",
+      "email": "%Email",
+      "phoneNumber": "%PhoneNumber",
+      "loginType": "%LogInType",
+      "willUsersCreateProfile": "%WillUsersCreateProfile",
+      "willAppBeConnectedToWebsite": "%WillAppBeConnectedToWebsite",
+      "needHelpForDesign": "%NeedHelpForDesign"
+    }
+  },
+  "items": [
+    {
+      "text": "Hey there, welcome to We Are Mobile first! Before we can get started, we first need to create an account for you. This will only take a minute.",
+      "sentiment": "Positive"
+    },
+    {
+      "text": "What is your first name (the name you prefer to be addressed by)?",
+      "inputRequest": {
+        "type": "com.wearemobilefirst.String",
+        "uri": "%Nickname",
+        "localStore": false,
+        "inline": true,
+        "title": "Nickname?",
+        "validationRegex": "^[a-zA-Z]+$",
+        "responseText": "My name is %Nickname",
+        "optional": false
+      }
+    },
+    {
+      "text": "Nice to meet you %Nickname! Next, what is your email address?",
+      "inputRequest": {
+        "type": "com.wearemobilefirst.Email",
+        "uri": "%Email",
+        "inline": true,
+        "localStore": true,
+        "validationRegex": "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}\\@[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}(\\.[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25})+",
+        "responseText": "My email is %Email",
+        "optional": false
+      }
+    },
+    {
+      "text": "%Nickname! If you want you can leave us your phone number to have a call with you! It is optional!",
+      "inputRequest": {
+        "type": "com.wearemobilefirst.PhoneNumber",
+        "uri": "%PhoneNumber",
+        "inline": true,
+        "localStore": true,
+        "validationRegex": "^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*$",
+        "responseText": "My phone number is %PhoneNumber",
+        "optional": true
+      }
+    },
+    {
+      "text": "Thanks! Now let’s start with a few questions to have a clearer view of what you want!"
+    },
+    {
+      "text": "Are you looking to create an iPhone app or Android app?",
+      "inputRequest": {
+        "type": "com.wearemobilefirst.MultiChoice",
+        "inline": true,
+        "uri": "%PlatformDevelop",
+        "localStore": true,
+        "responseText": "",
+        "optional": false,
+        "args": {
+          "maxSelection": 1,
+          "options": [
+            {
+              "id": "OptionKey1",
+              "title": "Android",
+              "description": "You need an app for Android platform",
+              "responseText": "I need an app for Android",
+              "media": {
+                "mimeType": "images/*",
+                "uri": "https://www.shareicon.net/download/64x64//2016/07/16/635101_android_96x96.png"
+              }
+            },
+            {
+              "id": "OptionKey2",
+              "title": "iOS",
+              "description": "You need an app for iOS platform",
+              "responseText": "I need an app for iOS",
+              "media": {
+                "mimeType": "images/*",
+                "uri": "https://www.shareicon.net/download/128x128//2015/09/18/642803_apple_512x512.png"
+              }
+            },
+            {
+              "id": "OptionKey3",
+              "title": "Both",
+              "description": "You need an app for both platforms",
+              "responseText": "I need an app for both platforms",
+              "media": {
+                "mimeType": "images/*",
+                "uri": "https://cdn-images-1.medium.com/max/1200/1*ilC2Aqp5sZd1wi0CopD1Hw.png"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "text": "Great! What type of log in is required?",
+      "inputRequest": {
+        "type": "com.wearemobilefirst.MultiChoice",
+        "uri": "%logInType",
+        "inline": true,
+        "localStore": false,
+        "responseText": "",
+        "optional": false,
+        "args": {
+          "maxSelection": 1,
+          "options": [
+            {
+              "id": "OptionKey1",
+              "title": "Email",
+              "description": "",
+              "responseText": "Email"
+            },
+            {
+              "id": "OptionKey2",
+              "title": "Social",
+              "description": "",
+              "responseText": "Social"
+            },
+            {
+              "id": "OptionKey3",
+              "title": "None",
+              "description": "",
+              "responseText": "None"
+            },
+            {
+              "id": "OptionKey4",
+              "title": "Not Sure",
+              "description": "",
+              "responseText": "Not Sure"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "text": "Will users create a profile?",
+      "inputRequest": {
+        "type": "com.wearemobilefirst.MultiChoice",
+        "uri": "%WillUsersCreateProfile",
+        "inline": true,
+        "localStore": false,
+        "responseText": "",
+        "optional": false,
+        "args": {
+          "maxSelection": 1,
+          "options": [
+            {
+              "id": "OptionKey1",
+              "title": "Yes",
+              "description": "",
+              "responseText": "Yes"
+            },
+            {
+              "id": "OptionKey2",
+              "title": "No",
+              "description": "",
+              "responseText": "No"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "text": "Will your app need to connect to your website?",
+      "inputRequest": {
+        "type": "com.wearemobilefirst.MultiChoice",
+        "uri": "%WillAppBeConnectedToWebsite",
+        "inline": true,
+        "localStore": false,
+        "responseText": "",
+        "optional": false,
+        "args": {
+          "maxSelection": 1,
+          "options": [
+            {
+              "id": "OptionKey1",
+              "title": "Yes",
+              "description": "",
+              "responseText": "Yes"
+            },
+            {
+              "id": "OptionKey2",
+              "title": "No",
+              "description": "",
+              "responseText": "No"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "text": "Do you need help with the design and/or brand of your app?",
+      "inputRequest": {
+        "type": "com.wearemobilefirst.MultiChoice",
+        "uri": "%NeedHelpForDesign",
+        "inline": true,
+        "localStore": false,
+        "responseText": "",
+        "optional": false,
+        "args": {
+          "maxSelection": 1,
+          "options": [
+            {
+              "id": "OptionKey1",
+              "title": "Yes",
+              "description": "",
+              "responseText": "Yes"
+            },
+            {
+              "id": "OptionKey2",
+              "title": "No",
+              "description": "",
+              "responseText": "No"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "text": "Great, thanks for answering those questions. See your estimate below",
+      "renderHint": "center"
+    }
+  ]
+}
