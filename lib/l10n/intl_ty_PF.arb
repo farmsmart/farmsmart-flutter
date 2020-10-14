@@ -635,7 +635,7 @@
         "type": "text",
         "placeholders": {}
     },
-    "Currency": "Moni tapihooraa",
+    "Currency": "xpf",
     "@Currency": {
         "type": "text",
         "placeholders": {}

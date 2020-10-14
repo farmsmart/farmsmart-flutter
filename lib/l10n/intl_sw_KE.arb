@@ -40,7 +40,7 @@
         "type": "text",
         "placeholders": {}
     },
-    "Get Started": "Anza kwa kuongeza kwenye ploti yako",
+    "Get Started": "Anza",
     "@Get Started": {
         "type": "text",
         "placeholders": {}
@@ -610,7 +610,7 @@
         "type": "text",
         "placeholders": {}
     },
-    "Add to Plot": "Ongeza kwenye ploti yako",
+    "Add to Plot": "Ongeza kwa ploti",
     "@Add to Plot": {
         "type": "text",
         "placeholders": {}
