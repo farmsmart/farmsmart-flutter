@@ -14,7 +14,7 @@ import 'package:intl/date_symbols.dart';
 // ignore: implementation_imports
 import "package:intl/src/date_format_internal.dart" as dfi;
 
-//WARNING: This file is a quick work around to support tahitain, it does not translate all needed for full support, only the elements the app uses. 
+//WARNING: This file is a quick work around to support tahitain, it does not translate all needed for full support, only the elements the app uses.
 
 class _TyMaterialLocalizationsDelegate
     extends LocalizationsDelegate<MaterialLocalizations> {
@@ -34,12 +34,15 @@ class _TyMaterialLocalizationsDelegate
     //Big HACK --- injecting the lookup for ty (tahitian) language
     //instead of calling initializeDateFormatting(localeName, null) we call directly to date_format_internal.dart
     sdMap["ty"] = tyDateSymbols;
+
     dfi.dateTimeSymbols = sdMap;
 
-    tpMap["ty"] =tyDateTimePatterns;
+    tpMap["ty"] = tyDateTimePatterns;
+
     dfi.dateTimePatterns = tpMap;
 
     hack.numberFormatSymbols["ty"] = tyNumberSymbols;
+
     return SynchronousFuture<MaterialLocalizations>(
       TyMaterialLocalizations(
         localeName: localeName,
@@ -359,13 +362,12 @@ class TyMaterialLocalizations extends GlobalMaterialLocalizations {
   String get unspecifiedDateRange => 'Date Range';
 }
 
-
 final tyDateSymbols = DateSymbols(
     NAME: "ty",
     ERAS: const ['BC', 'AD'],
     ERANAMES: const ['Before Christ', 'Anno Domini'],
     NARROWMONTHS: const [
-     'T',
+      'T',
       'F',
       'M',
       'E',
@@ -487,25 +489,10 @@ final tyDateSymbols = DateSymbols(
     NARROWWEEKDAYS: const ['M', '2', '3', '4', '5', 'mā', 'T'],
     STANDALONENARROWWEEKDAYS: const ['M', '2', '3', '4', '5', 'mā', 'T'],
     SHORTQUARTERS: const ['Q1', 'Q2', 'Q3', 'Q4'],
-    QUARTERS: const [
-      '1. Quarter',
-      '2. Quarter',
-      '3. Quarter',
-      '4. Quarter'
-    ],
+    QUARTERS: const ['1. Quarter', '2. Quarter', '3. Quarter', '4. Quarter'],
     AMPMS: const ['a.m.', 'p.m.'],
-    DATEFORMATS: const [
-      'EEEE d. MMMM y',
-      'd. MMMM y',
-      'd. MMM y',
-      'dd.MM.y'
-    ],
-    TIMEFORMATS: const [
-      'HH:mm:ss zzzz',
-      'HH:mm:ss z',
-      'HH:mm:ss',
-      'HH:mm'
-    ],
+    DATEFORMATS: const ['EEEE d. MMMM y', 'd. MMMM y', 'd. MMM y', 'dd.MM.y'],
+    TIMEFORMATS: const ['HH:mm:ss zzzz', 'HH:mm:ss z', 'HH:mm:ss', 'HH:mm'],
     DATETIMEFORMATS: const [
       '{1} {0}',
       '{1} \'kl\'. {0}',
@@ -517,7 +504,7 @@ final tyDateSymbols = DateSymbols(
     FIRSTWEEKCUTOFFDAY: 3);
 
 /// Extended set of localized date/time patterns for locale ty
-final tyDateTimePatterns =   {
+const tyDateTimePatterns = {
   'd': 'd.', // DAY
   'E': 'ccc', // ABBR_WEEKDAY
   'EEEE': 'cccc', // WEEKDAY
@@ -564,7 +551,7 @@ final tyDateTimePatterns =   {
   'ZZZZ': 'ZZZZ' // ABBR_UTC_TZ
 };
 
-final tyNumberSymbols =  NumberSymbols(
+const tyNumberSymbols = NumberSymbols(
     NAME: "ty",
     DECIMAL_SEP: ',',
     GROUP_SEP: '\u00A0',

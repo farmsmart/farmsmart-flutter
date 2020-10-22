@@ -81,7 +81,6 @@ class _FarmSmartAppState extends State<FarmSmartApp> {
             state.availableLocales.map<Locale>((e) => e.locale).toList();
         return MultiProvider(
             providers: [repoProvider, localeProvider],
-            child: ResetStateWidget(
               child: MaterialApp(
                 locale: state.currentLocale.locale,
                 onGenerateTitle: (context) => _String.title(),
@@ -101,7 +100,7 @@ class _FarmSmartAppState extends State<FarmSmartApp> {
                 ),
                 home: AppCoordinator(),
               ),
-            ));
+            );
       },
     );
   }
