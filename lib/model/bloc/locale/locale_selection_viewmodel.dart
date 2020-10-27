@@ -15,7 +15,7 @@ class LocaleSelectionViewModel
     implements RefreshableViewModel, LoadableViewModel {
   final LoadingStatus loadingStatus;
   final Function refresh;
-  final Function(LocaleItemViewModel) selectLocale;
+  final Future<void> Function(LocaleItemViewModel) selectLocale;
   final LocaleItemViewModel current;
   final List<LocaleItemViewModel> items;
 

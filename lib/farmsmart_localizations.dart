@@ -25,17 +25,16 @@ class FarmsmartLocalizations {
     Locale locale = await getLocale();
     String localeName = _canonicalLocale(locale);
     AnalyticsInterface.implementation().userProperty(_AnalyticsNames.localeParameter, locale.toString());
-    return initializeMessages(localeName).then((_) {
-      Intl.defaultLocale = localeName;
-      return FarmsmartLocalizations();
-    });
+    await initializeMessages(localeName);
+    Intl.defaultLocale = localeName;
+    return FarmsmartLocalizations();
   }
 
   static FarmsmartLocalizations of(BuildContext context) {
     return Localizations.of<FarmsmartLocalizations>(context, FarmsmartLocalizations);
   }
 
-  static persistLocale(Locale locale) async {
+  static Future<void> persistLocale(Locale locale) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString(_Field.locale, locale.languageCode);
     prefs.setString(_Field.country, locale.countryCode);
