@@ -147,8 +147,9 @@ class _LocaleSelectionState extends State<LocaleSelection> {
                 onTap: () {
                   if(canSubmit) {
                     Navigator.of(context).pop();
-                    viewmodel.selectLocale(selectedLocale);
-                    ResetStateWidget.resetState(context);
+                    viewmodel.selectLocale(selectedLocale).then((value) {
+                      ResetStateWidget.resetState(context);
+                    });
                   }
                 }),
             style: canSubmit

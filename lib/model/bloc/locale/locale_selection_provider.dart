@@ -48,11 +48,10 @@ class LocaleSelectionProvider
     );
   }
 
-   void _switchLanguage(LocaleItemViewModel locale) async {
+   Future<void> _switchLanguage(LocaleItemViewModel locale) async {
     await FarmsmartLocalizations.persistLocale(locale.locale);
-    FarmsmartLocalizations.load().then((_) {
-      _refresh();
-    });
+    await FarmsmartLocalizations.load();
+    _refresh();
   }
 
   void _refresh() {
